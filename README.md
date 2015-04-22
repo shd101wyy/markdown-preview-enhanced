@@ -25,15 +25,21 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 Screenshot:  
 - real time preview
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">  
+
 - katex support
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="200">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="200">  
+
 - export html
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="200">
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="200">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="200">  
+
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="200">  
+
 - export pdf
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/5.png" height="200">
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="200">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/5.png" height="200">  
+
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="200">  
+
 
 
 
