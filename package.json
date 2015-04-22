@@ -1,0 +1,19 @@
+{
+  "name": "atom-markdown-katex",
+  "main": "./lib/atom-markdown-katex",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "activationCommands": {
+    "atom-workspace": "markdown-katex-preview:toggle"
+  },
+  "repository": "https://github.com/atom/atom-markdown-katex",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {
+      "marked": "latest",
+      "katex": "latest",
+      "highlight.js": "latest"
+  }
+}
