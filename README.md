@@ -24,7 +24,9 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Export current markdown file to html (copy to clipboard).
 
 Screenshot:  
-- real time preview  
+- real time preview
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/0.png" height="300">  
+
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">  
 
 - katex support  
