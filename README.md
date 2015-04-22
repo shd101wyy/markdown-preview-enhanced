@@ -23,8 +23,11 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong>Markdown Katex Preview Export Html</strong>
     - Export current markdown file to html (copy to clipboard).
 
-Screenshot:
- ![screenshot1](https://github.com/shd101wyy/atom-lisp2js-preview/blob/master/screenshot/snip1.png?raw=true)
+Screenshot:  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="300">
+
+
 
 TODO:
 - fix existed bugs

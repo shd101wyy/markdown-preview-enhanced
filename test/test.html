@@ -157,15 +157,42 @@
 <h4 id="by-yiyi-wang-shd101wyy-">By Yiyi Wang (shd101wyy)</h4>
 <p>Beta Version</p>
 <hr>
+<p>This plugin uses</p>
+<ul>
+<li><a href="https://github.com/Khan/KaTeX">katex</a> to render math expressions.<ul>
+<li>expression within <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">$</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">$</mi></mrow><annotation encoding="application/x-tex">\$...\$</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="base textstyle uncramped"><span class="mord">$</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">$</span></span></span></span> will be rendered normally</li>
+<li>expression within <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">$</mi><mi mathvariant="normal">$</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">$</mi><mi mathvariant="normal">$</mi></mrow><annotation encoding="application/x-tex">\$\$...\$\$</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="base textstyle uncramped"><span class="mord">$</span><span class="mord">$</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">$</span><span class="mord">$</span></span></span></span> will be rendered in displayMode.</li>
+</ul>
+</li>
+<li><a href="https://github.com/chjj/marked">marked</a> to convert markdown to html</li>
+</ul>
 <p>Supports:</p>
 <ul>
 <li>Markdown Preview</li>
 <li>export PDF</li>
 <li>export HTML</li>
 </ul>
-<p>Usages:</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y)</span></span>{
-    <span class="hljs-keyword">return</span> x + y;
-}
-</code></pre>
+<p>Usages:<br>To use this package, press <strong> cmd + shift + p </strong> in atom editor first. Then choose the commands below:</p>
+<ul>
+<li><strong>Markdown Katex Preview: Toggle</strong><ul>
+<li>Toggle Markdown file preview with Katex support.</li>
+</ul>
+</li>
+<li><strong>Markdown Katex Preview Export Pdf </strong><ul>
+<li>Export current Markdown file to pdf.</li>
+</ul>
+</li>
+<li><strong>Markdown Katex Preview Export Html</strong><ul>
+<li>Export current markdown file to html (copy to clipboard).</li>
+</ul>
+</li>
+</ul>
+<p>Screenshot:
+ <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" alt="screenshot1"></p>
+<p>TODO:</p>
+<ul>
+<li>fix existed bugs</li>
+<li>allow to customize markdown css.</li>
+</ul>
+<p>Thanks for using this plugin, I feels happy! ;)</p>
 </body></html>
