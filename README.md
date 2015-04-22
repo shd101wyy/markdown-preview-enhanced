@@ -9,6 +9,9 @@ This plugin uses
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
 - [marked](https://github.com/chjj/marked) to convert markdown to html
 
+Online Demo:  
+- [demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html) 
+
 Supports:
 - Markdown Preview
 - export PDF
