@@ -1,11 +1,14 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A short description of your package",
   "activationCommands": {
-    "atom-workspace": ["markdown-katex-preview:toggle", "markdown-katex-preview-export-pdf",
-    "markdown-katex-preview-export-html"]
+    "atom-workspace": [
+      "markdown-katex-preview:toggle",
+      "markdown-katex-preview-export-pdf",
+      "markdown-katex-preview-export-html"
+    ]
   },
   "repository": "https://github.com/shd101wyy/atom-markdown-katex",
   "license": "MIT",
@@ -13,8 +16,8 @@
     "atom": ">=0.174.0 <2.0.0"
   },
   "dependencies": {
-      "marked": "latest",
-      "katex": "latest",
-      "highlight.js": "latest"
+    "marked": "latest",
+    "katex": "latest",
+    "highlight.js": "latest"
   }
 }
