@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "A short description of your package",
   "activationCommands": {
-    "atom-workspace": "markdown-katex-preview:toggle"
+    "atom-workspace": ["markdown-katex-preview:toggle", "markdown-katex-preview-output-pdf"]
   },
   "repository": "https://github.com/atom/atom-markdown-katex",
   "license": "MIT",
