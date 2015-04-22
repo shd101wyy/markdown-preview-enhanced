@@ -50,3 +50,6 @@ TODO:
 - allow to customize markdown css.
 
 Thanks for using this plugin, I feels happy! ;)
+
+
+> MIT License
