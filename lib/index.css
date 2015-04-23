@@ -53,11 +53,11 @@
 .markdown_katex_preview h5,
 .markdown_katex_preview h6 {
     color: #404040;
-    line-height: 48px;
+    line-height: 42px;
 }
 .markdown_katex_preview h1 {
     margin-bottom: 19px;
-    font-size: 48px;
+    font-size: 40px;
 }
 .markdown_katex_preview h2 {
     font-size: 36px;
