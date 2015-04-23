@@ -3,21 +3,22 @@
 Beta Version
 
 ---
-This plugin uses
+<strong>This plugin uses</strong>
 - [KaTex](https://github.com/Khan/KaTeX) to render math expressions.
     - expression within $\$...\$$ will be rendered normally
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
 - [marked](https://github.com/chjj/marked) to convert markdown to html
 
-Online Demo:  
-- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html) 
+<strong>Online Demo:  </strong>
+- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html)
 
-Supports:
+<strong>Supports:</strong>
 - Markdown Preview
 - export PDF
 - export HTML
+- customize Markdown Preview css
 
-Usages:  
+<strong>Usages:</strong>  
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first. Then choose the commands below:
 - <strong>Markdown KaTex Preview: Toggle</strong>
     - Toggle Markdown file preview with KaTex support.
@@ -25,8 +26,10 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Export current Markdown file to pdf.
 - <strong>Markdown KaTex Preview Export Html</strong>
     - Export current markdown file to html (copy to clipboard).
+- <strong>Markdown KaTex Preview Customize CSS</strong>
+    - Customize preview page css.
 
-Screenshot:  
+<strong>Screenshot:  </strong>
 - real time preview  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/0.png" height="300">  
 
@@ -50,7 +53,7 @@ Screenshot:
 
 TODO:
 - fix existed bugs
-- allow to customize markdown css.
+- better pdf print
 
 Thanks for using this plugin, I feel happy! ;)
 

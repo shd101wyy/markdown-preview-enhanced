@@ -12,4 +12,10 @@ var add = function(x, y){
 }
 ```
 
+```lisp
+(def x 12)
+(def y 20)
+
+```
+
 > export your markdown to PDF or HTML

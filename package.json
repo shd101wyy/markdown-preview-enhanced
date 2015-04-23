@@ -7,7 +7,8 @@
     "atom-workspace": [
       "markdown-katex-preview:toggle",
       "markdown-katex-preview-export-pdf",
-      "markdown-katex-preview-export-html"
+      "markdown-katex-preview-export-html",
+      "markdown-katex-preview-customize-css"
     ]
   },
   "repository": "https://github.com/shd101wyy/atom-markdown-katex",
