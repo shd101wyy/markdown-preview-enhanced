@@ -136,19 +136,26 @@
 .markdown_katex_preview * {
 	-webkit-print-color-adjust: exact;
 }
-/*
+
 @media screen and (min-width: 914px) {
-    body {
+    .markdown_katex_preview {
         width: 854px;
         margin:10px auto;
     }
 }
-*/
+
 @media print {
-	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+	/*body,*/ .markdown_katex_preview code,
+            .markdown_katex_preview pre code,
+            .markdown_katex_preview h1,
+            .markdown_katex_preview h2,
+            .markdown_katex_preview h3,
+            .markdown_katex_preview h4,
+            .markdown_katex_preview h5,
+            .markdown_katex_preview h6 {
 		color: black;
 	}
-	table, pre {
+    .markdown_katex_preview table, .markdown_katex_preview pre {
 		page-break-inside: avoid;
 	}
 }

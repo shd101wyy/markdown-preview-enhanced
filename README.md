@@ -10,7 +10,7 @@ This plugin uses
 - [marked](https://github.com/chjj/marked) to convert markdown to html
 
 Online Demo:  
-- [demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html) 
+- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html) 
 
 Supports:
 - Markdown Preview
