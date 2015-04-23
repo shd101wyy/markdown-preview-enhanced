@@ -145,7 +145,8 @@
 }
 
 @media print {
-	/*body,*/ .markdown_katex_preview code,
+	/*body,*/
+            .markdown_katex_preview code,
             .markdown_katex_preview pre code,
             .markdown_katex_preview h1,
             .markdown_katex_preview h2,
