@@ -11,7 +11,7 @@
 }
 .markdown_katex_preview {
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     color: #737373;
     background-color: #fcfcf8;
@@ -93,7 +93,7 @@
     color:#eee;
 }
 .markdown_katex_preview blockquote p {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
     line-height: 18px;
     margin-bottom: 0;
@@ -148,8 +148,8 @@
 	/*body,*/
 
             .markdown_katex_preview,
-            .markdown_katex_preview code,
-            .markdown_katex_preview pre code,
+            /*.markdown_katex_preview code,
+            .markdown_katex_preview pre code,*/
             .markdown_katex_preview h1,
             .markdown_katex_preview h2,
             .markdown_katex_preview h3,
@@ -161,4 +161,9 @@
     .markdown_katex_preview table, .markdown_katex_preview pre {
 		page-break-inside: avoid;
 	}
+    .markdown_katex_preview img{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 }

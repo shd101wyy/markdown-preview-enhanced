@@ -52,8 +52,9 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 
 TODO:
-- fix existed bugs
-- better pdf print
+- fix existed bugs.
+- modify css to make preview look nice.
+- better pdf print.
 
 Thanks for using this plugin, I feel happy! ;)
 
