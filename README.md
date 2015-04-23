@@ -23,6 +23,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong>Markdown KaTex Preview: Toggle</strong>
     - Toggle Markdown file preview with KaTex support.
 - <strong>Markdown KaTex Preview Export Pdf </strong>
+    - Then choose <strong> Save as PDF </strong> afterwards.
     - Export current Markdown file to pdf.
 - <strong>Markdown KaTex Preview Export Html</strong>
     - Export current markdown file to html (copy to clipboard).
