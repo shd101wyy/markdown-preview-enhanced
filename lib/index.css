@@ -11,10 +11,10 @@
 }
 .markdown_katex_preview {
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 24px;
     color: #737373;
-    background-color: white;
+    background-color: #fcfcf8;
     margin: 10px 13px 10px 13px;
     padding: 25px;
 }
@@ -43,7 +43,7 @@
     border: none;
 }
 .markdown_katex_preview p {
-    margin-bottom: 9px;
+    margin-bottom: 12px;
 }
 
 .markdown_katex_preview h1,
@@ -53,23 +53,23 @@
 .markdown_katex_preview h5,
 .markdown_katex_preview h6 {
     color: #404040;
-    line-height: 36px;
+    line-height: 48px;
 }
 .markdown_katex_preview h1 {
-    margin-bottom: 18px;
-    font-size: 30px;
+    margin-bottom: 19px;
+    font-size: 48px;
 }
 .markdown_katex_preview h2 {
-    font-size: 24px;
+    font-size: 36px;
 }
 .markdown_katex_preview h3 {
-    font-size: 18px;
+    font-size: 24px;
 }
 .markdown_katex_preview h4 {
-    font-size: 16px;
+    font-size: 21px;
 }
 .markdown_katex_preview h5 {
-    font-size: 14px;
+    font-size: 18px;
 }
 .markdown_katex_preview h6 {
     font-size: 13px;
@@ -93,7 +93,7 @@
     color:#eee;
 }
 .markdown_katex_preview blockquote p {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 300;
     line-height: 18px;
     margin-bottom: 0;
@@ -107,7 +107,7 @@
     background-color: #f5f4ea;
     color: rgba(0, 0, 0, 0.75);
     padding: 1px 3px;
-    font-size: 12px;
+    font-size: 14px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -117,15 +117,15 @@
     padding: 14px;
     margin: 0 0 18px;
     line-height: 16px;
-    font-size: 11px;
-    border: 1px solid #d9d9d9;
+    font-size: 14px;
+    border: 0px solid #d9d9d9;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 .markdown_katex_preview pre code {
     background-color: #f5f4ea;
     color:#454545;
-    font-size: 11px;
+    font-size: 14px;
     padding: 0;
 }
 .markdown_katex_preview sup {
@@ -146,6 +146,8 @@
 
 @media print {
 	/*body,*/
+
+            .markdown_katex_preview,
             .markdown_katex_preview code,
             .markdown_katex_preview pre code,
             .markdown_katex_preview h1,
