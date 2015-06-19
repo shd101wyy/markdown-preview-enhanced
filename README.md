@@ -32,22 +32,22 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 <strong>Screenshot:  </strong>
 - real time preview  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/0.png" height="300">  
+<img src="./screenshot/0.png" height="300">  
 
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">  
+<img src="./screenshot/1.png" height="300">  
 
 - katex support  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="300">  
+<img src="./screenshot/2.png" height="300">  
 
 - export html  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="300">  
+<img src="./screenshot/3.png" height="300">  
 
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="300">  
+<img src="./screenshot/4.png" height="300">  
 
 - export pdf  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/5.png" height="300">  
+<img src="./screenshot/5.png" height="300">  
 
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="300">  
+<img src="./screenshot/6.png" height="300">  
 
 
 
