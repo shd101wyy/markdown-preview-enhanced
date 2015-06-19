@@ -19,6 +19,7 @@
   "dependencies": {
     "marked": "latest",
     "katex": "latest",
-    "highlight.js": "latest"
+    "highlight.js": "latest",
+    "cheerio": "latest"
   }
 }
