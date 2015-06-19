@@ -1,15 +1,15 @@
-.markdown_katex_preview h1,
-.markdown_katex_preview h2,
-.markdown_katex_preview h3,
-.markdown_katex_preview h4,
-.markdown_katex_preview h5,
-.markdown_katex_preview h6,
-.markdown_katex_preview p,
-.markdown_katex_preview blockquote {
+.markdown-katex-preview h1,
+.markdown-katex-preview h2,
+.markdown-katex-preview h3,
+.markdown-katex-preview h4,
+.markdown-katex-preview h5,
+.markdown-katex-preview h6,
+.markdown-katex-preview p,
+.markdown-katex-preview blockquote {
     margin: 0;
     padding: 0;
 }
-.markdown_katex_preview {
+.markdown-katex-preview {
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
     font-size: 14px;
     line-height: 24px;
@@ -18,92 +18,92 @@
     margin: 10px 13px 10px 13px;
     padding: 25px;
 }
-.markdown_katex_preview table {
+.markdown-katex-preview table {
 	margin: 10px 0 15px 0;
 	border-collapse: collapse;
 }
-.markdown_katex_preview td,
-.markdown_katex_preview th {
+.markdown-katex-preview td,
+.markdown-katex-preview th {
 	border: 1px solid #ddd;
 	padding: 3px 10px;
 }
-.markdown_katex_preview th {
+.markdown-katex-preview th {
 	padding: 5px 10px;
 }
 
-.markdown_katex_preview a {
+.markdown-katex-preview a {
     color: #0069d6;
     text-decoration: none;
 }
-.markdown_katex_preview a:hover {
+.markdown-katex-preview a:hover {
     color: #0050a3;
     text-decoration: none;
 }
-.markdown_katex_preview a img {
+.markdown-katex-preview a img {
     border: none;
 }
-.markdown_katex_preview p {
+.markdown-katex-preview p {
     margin-bottom: 12px;
 }
 
-.markdown_katex_preview h1,
-.markdown_katex_preview h2,
-.markdown_katex_preview h3,
-.markdown_katex_preview h4,
-.markdown_katex_preview h5,
-.markdown_katex_preview h6 {
+.markdown-katex-preview h1,
+.markdown-katex-preview h2,
+.markdown-katex-preview h3,
+.markdown-katex-preview h4,
+.markdown-katex-preview h5,
+.markdown-katex-preview h6 {
     color: #404040;
     line-height: 42px;
 }
-.markdown_katex_preview h1 {
+.markdown-katex-preview h1 {
     margin-bottom: 19px;
     font-size: 36px;
 }
-.markdown_katex_preview h2 {
+.markdown-katex-preview h2 {
     font-size: 29px;
 }
-.markdown_katex_preview h3 {
+.markdown-katex-preview h3 {
     font-size: 24px;
 }
-.markdown_katex_preview h4 {
+.markdown-katex-preview h4 {
     font-size: 21px;
 }
-.markdown_katex_preview h5 {
+.markdown-katex-preview h5 {
     font-size: 18px;
 }
-.markdown_katex_preview h6 {
+.markdown-katex-preview h6 {
     font-size: 13px;
 }
-.markdown_katex_preview hr {
+.markdown-katex-preview hr {
     margin: 0 0 19px;
     border: 0;
     border-bottom: 1px solid #ccc;
 }
-.markdown_katex_preview blockquote {
+.markdown-katex-preview blockquote {
     padding: 13px 13px 21px 15px;
     margin-bottom: 18px;
     font-family:georgia,serif;
     font-style: italic;
 }
-.markdown_katex_preview blockquote:before {
+.markdown-katex-preview blockquote:before {
     content:"\201C";
     font-size:40px;
     margin-left:-10px;
     font-family:georgia,serif;
     color:#eee;
 }
-.markdown_katex_preview blockquote p {
+.markdown-katex-preview blockquote p {
     font-size: 14px;
     font-weight: 300;
     line-height: 18px;
     margin-bottom: 0;
     font-style: italic;
 }
-.markdown_katex_preview code, .markdown_katex_preview pre {
+.markdown-katex-preview code, .markdown-katex-preview pre {
     font-family: Monaco, Andale Mono, Courier New, monospace;
     background-color: #f5f4ea;
 }
-.markdown_katex_preview code {
+.markdown-katex-preview code {
     background-color: #f5f4ea;
     color: rgba(0, 0, 0, 0.75);
     padding: 1px 3px;
@@ -112,7 +112,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-.markdown_katex_preview pre {
+.markdown-katex-preview pre {
     display: block;
     padding: 14px;
     margin: 0 0 18px;
@@ -122,23 +122,23 @@
     white-space: pre-wrap;
     word-wrap: break-word;
 }
-.markdown_katex_preview pre code {
+.markdown-katex-preview pre code {
     background-color: #f5f4ea;
     color:#454545;
     font-size: 13px;
     padding: 0;
 }
-.markdown_katex_preview sup {
+.markdown-katex-preview sup {
     font-size: 0.83em;
     vertical-align: super;
     line-height: 0;
 }
-.markdown_katex_preview * {
+.markdown-katex-preview * {
 	-webkit-print-color-adjust: exact;
 }
 
 @media screen and (min-width: 914px) {
-    .markdown_katex_preview {
+    .markdown-katex-preview {
         width: 854px;
         margin:10px auto;
     }
@@ -147,21 +147,21 @@
 @media print {
 	/*body,*/
 
-            .markdown_katex_preview,
-            /*.markdown_katex_preview code,
-            .markdown_katex_preview pre code,*/
-            .markdown_katex_preview h1,
-            .markdown_katex_preview h2,
-            .markdown_katex_preview h3,
-            .markdown_katex_preview h4,
-            .markdown_katex_preview h5,
-            .markdown_katex_preview h6 {
+            .markdown-katex-preview,
+            /*.markdown-katex-preview code,
+            .markdown-katex-preview pre code,*/
+            .markdown-katex-preview h1,
+            .markdown-katex-preview h2,
+            .markdown-katex-preview h3,
+            .markdown-katex-preview h4,
+            .markdown-katex-preview h5,
+            .markdown-katex-preview h6 {
 		color: black;
 	}
-    .markdown_katex_preview table, .markdown_katex_preview pre {
+    .markdown-katex-preview table, .markdown-katex-preview pre {
 		page-break-inside: avoid;
 	}
-    .markdown_katex_preview img{
+    .markdown-katex-preview img{
         display: block;
         width: 100%;
         height: 100%;

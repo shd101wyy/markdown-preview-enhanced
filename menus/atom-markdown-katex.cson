@@ -3,7 +3,17 @@
   'atom-text-editor': [
     {
       'label': 'Toggle atom-markdown-katex'
-      'command': 'atom-markdown-katex:toggle'
+      'command': 'markdown-katex-preview:toggle'
+    }
+  ],
+  '.markdown-katex-preview': [
+    {
+      'label': 'Copy As HTML'
+      'command': 'markdown-katex-preview:copy-as-html'
+    }
+    {
+      'label': 'Save As PDF'
+      'command': 'markdown-katex-preview:save-as-pdf'
     }
   ]
 'menu': [
@@ -14,7 +24,7 @@
       'submenu': [
         {
           'label': 'Toggle'
-          'command': 'atom-markdown-katex:toggle'
+          'command': 'markdown-katex-preview:toggle'
         }
       ]
     ]
