@@ -1,10 +1,10 @@
-### Simple Markdown Preview with KaTex support
+### Simple Markdown Preview with KaTeX support
 #### By Yiyi Wang (shd101wyy)
 Beta Version
 
 ---
 <strong>This plugin uses</strong>
-- [KaTex](https://github.com/Khan/KaTeX) to render math expressions.
+- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions.
     - expression within $\$...\$$ will be rendered normally
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
 - [marked](https://github.com/chjj/marked) to convert markdown to html
@@ -20,9 +20,9 @@ Beta Version
 
 <strong>Usages:</strong>  
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
-- <strong>Markdown KaTex Preview: Toggle</strong>
+- <strong>Markdown KaTeX Preview: Toggle</strong>
     - Toggle Markdown file preview with KaTex support.
-- <strong>Markdown KaTex Preview: Customize CSS</strong>
+- <strong>Markdown KaTeX Preview: Customize CSS</strong>
     - Customize preview page css.  
     
 ---
@@ -30,7 +30,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 <img src="./screenshot/1.png" height="300">  
 
 ---
-- Real time preview with katex support.  
+- Real time preview with KaTeX support.  
 <img src="./screenshot/2.png" height="300">    
 
 ---
