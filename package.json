@@ -1,7 +1,7 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Markdown preview with KaTex support. Easy export to pdf/html",
   "activationCommands": {
     "atom-workspace": [

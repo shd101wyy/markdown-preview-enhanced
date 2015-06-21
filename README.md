@@ -19,39 +19,30 @@ Beta Version
 - customize Markdown Preview css
 
 <strong>Usages:</strong>  
-To use this package, press <strong> cmd + shift + p </strong> in atom editor first. Then choose the commands below:
+To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
 - <strong>Markdown KaTex Preview: Toggle</strong>
     - Toggle Markdown file preview with KaTex support.
-- <strong>Markdown KaTex Preview Export Pdf </strong>
-    - Then choose <strong> Save as PDF </strong> afterwards.
-    - Export current Markdown file to pdf.
-- <strong>Markdown KaTex Preview Export Html</strong>
-    - Export current markdown file to html (copy to clipboard).
-- <strong>Markdown KaTex Preview Customize CSS</strong>
-    - Customize preview page css.
-
-<strong>Screenshot:  </strong>
-- real time preview  
-<img src="./screenshot/0.png" height="300">  
-
-<img src="./screenshot/1.png" height="300">  
-
-- katex support  
+- <strong>Markdown KaTex Preview: Customize CSS</strong>
+    - Customize preview page css.  
+---
+- Toggle preview
+<img src="./screenshot/1.png" height="300">
+---
+- Real time preview with katex support
 <img src="./screenshot/2.png" height="300">  
-
-- export html  
+---
+- Save As PDF - right click at preview.
 <img src="./screenshot/3.png" height="300">  
-
 <img src="./screenshot/4.png" height="300">  
-
-- export pdf  
 <img src="./screenshot/5.png" height="300">  
-
 <img src="./screenshot/6.png" height="300">  
-
-
-
-
+---
+- Copy As HTML - right click at preview
+<img src="./screenshot/7.png" height="300">  
+---
+- Customize Preview CSS
+<img src="./screenshot/8.png" height="300">  
+---
 TODO:
 - fix existed bugs.
 - modify css to make preview look nice.
