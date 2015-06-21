@@ -24,24 +24,30 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Toggle Markdown file preview with KaTex support.
 - <strong>Markdown KaTex Preview: Customize CSS</strong>
     - Customize preview page css.  
+    
 ---
-- Toggle preview
-<img src="./screenshot/1.png" height="300">
+- Toggle preview.  
+<img src="./screenshot/1.png" height="300">  
+
 ---
-- Real time preview with katex support
-<img src="./screenshot/2.png" height="300">  
+- Real time preview with katex support.  
+<img src="./screenshot/2.png" height="300">    
+
 ---
-- Save As PDF - right click at preview.
+- Save As PDF - right click at preview.  
 <img src="./screenshot/3.png" height="300">  
 <img src="./screenshot/4.png" height="300">  
 <img src="./screenshot/5.png" height="300">  
-<img src="./screenshot/6.png" height="300">  
+<img src="./screenshot/6.png" height="300">    
+
 ---
-- Copy As HTML - right click at preview
-<img src="./screenshot/7.png" height="300">  
+- Copy As HTML - right click at preview.  
+<img src="./screenshot/7.png" height="300">   
+
 ---
-- Customize Preview CSS
-<img src="./screenshot/8.png" height="300">  
+- Customize Preview CSS.  
+<img src="./screenshot/8.png" height="300">    
+
 ---
 TODO:
 - fix existed bugs.
