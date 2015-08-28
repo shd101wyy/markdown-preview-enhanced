@@ -46,7 +46,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 ---
 - Open in Browser - right click at preview.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="500">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/8.png" height="500">
 
 
 ---
