@@ -105,63 +105,69 @@
         </div>
     </body>
     <script>
-        // replace string within $...$ with rendered string
-        function parseKatex(input_string){
-            output_string = "";
-            // return end
-            function findEnd(start, tag){
-                var end = -1;
-                var j;
-                for (var i = start; i < input_string.length; i++){
-                    if (input_string[i] === "\\"){
-                        i += 1;
-                        continue;
-                    }
-                    var match = true;
-                    for(j = 0; j < tag.length; j++){
-                        if (i + j >= input_string.length || input_string[i + j] !== tag[j]){
-                            match = false;
-                            break;
-                        }
-                    }
-                    if (match){
-                        return i;
-                    }
+        // replace string within $...$ or $$...$$ with rendered string
+        function parseKatex(inputString, err_obj) {
+          outputString = ""
+          // return end
+          function findEnd(start, tag) {
+            var end = -1
+            var j
+            for (var i = start; i < inputString.length; i++) {
+              if (inputString[i] === "\\") {
+                i += 1
+                continue;
+              }
+              var match = true
+              for (j = 0; j < tag.length; j++) {
+                if (i + j >= inputString.length || inputString[i + j] !== tag[j]) {
+                  match = false;
+                  break
                 }
-                return end;
+              }
+              if (match) {
+                return i
+              }
             }
-            for(var i = 0; i < input_string.length; i++){
-                if (input_string[i] === "\\"){
-                    output_string += input_string[i];
-                    if (i + 1 < input_string.length){
-                        i += 1;
-                        output_string += input_string[i];
-                    }
+            return end
+          }
+
+          for (var i = 0; i < inputString.length; i++) {
+            if (inputString[i] === "\\") {
+              // fix dollar sign bug
+              // eg  \$12 + \$13   should be rendered as $12 + $13
+              if (i + 1 < inputString.length && inputString[i + 1] === '$') {
+                outputString += '$'
+                i += 1
+              } else {
+                outputString += inputString[i];
+                if (i + 1 < inputString.length) {
+                  i += 1;
+                  outputString += inputString[i]
                 }
-                else if (input_string[i] === "$" || (i + 1 < input_string.length && input_string[i] === "$" && input_string[i + 1] === "$")){
-                        var tag = ((i + 1 < input_string.length && input_string[i] === "$" && input_string[i + 1] === "$") ? "$$" : "$");
-                        var start = i + tag.length;
-                        var end = findEnd(start, tag);
-                        if (end !== -1){
-                            try{
-                                output_string += katex.renderToString(input_string.slice(start, end), {displayMode: (tag === "$" ? false : true)});
-                            }
-                            catch(e){
-                                console.log(e);
-                                return (void 0);
-                            }
-                            i = end + tag.length - 1;
-                        }
-                        else{
-                            output_string += tag+ input_string.slice(start, input_string.length);
-                            break;
-                        }
+              }
+            } else if (inputString[i] === "$" || (i + 1 < inputString.length && inputString[i] === "$" && inputString[i + 1] === "$")) {
+              var tag = ((i + 1 < inputString.length && inputString[i] === "$" && inputString[i + 1] === "$") ? "$$" : "$")
+              var start = i + tag.length
+              var end = findEnd(start, tag)
+              if (end !== -1) {
+                try {
+                  outputString += katex.renderToString(inputString.slice(start, end), {
+                    displayMode: (tag === "$" ? false : true)
+                  });
+                } catch (e) {
+                  err_obj[0] = inputString.slice(start, end)
+                  return (void 0);
                 }
-                else{
-                    output_string += input_string[i];
-                }
+                i = end + tag.length - 1
+              } else {
+                outputString += tag + inputString.slice(start, inputString.length)
+                break
+              }
+            } else {
+              outputString += inputString[i]
             }
-            return output_string;
+          }
+          return outputString
         }
 
         // parse markdown content to html
