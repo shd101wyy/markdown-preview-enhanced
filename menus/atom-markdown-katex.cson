@@ -15,6 +15,10 @@
       'label': 'Save As PDF'
       'command': 'markdown-katex-preview:save-as-pdf'
     }
+    {
+      'label': 'Open in Browser'
+      'command': 'markdown-katex-preview:open-in-browser'
+    }
   ]
 'menu': [
   {
