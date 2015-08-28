@@ -27,26 +27,31 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 ---
 - Toggle preview.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="300">  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="500">  
 
 ---
 - Real time preview with KaTeX support.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/2.png" height="500">
 
 ---
 - Save As PDF - right click at preview.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="300">  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="300">  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/5.png" height="300">  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="500">  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="500">  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/5.png" height="500">  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="500">
 
 ---
 - Copy As HTML - right click at preview.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="500">
+
+---
+- Open in Browser - right click at preview.  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="500">
+
 
 ---
 - Customize Preview CSS.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/8.png" height="300">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/9.png" height="500">
 
 ---
 TODO:

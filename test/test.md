@@ -19,3 +19,8 @@ var add = function(x, y){
 ```
 
 > export your markdown to PDF or HTML
+
+---
+** Bugs Fix **  
+- [\$ bug](https://github.com/shd101wyy/atom-markdown-katex/issues/2)  
+  \$ 12 + \$ 13 = 12
