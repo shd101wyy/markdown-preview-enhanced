@@ -28,6 +28,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 ---
 - Toggle preview.  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="500">  
+  
 ---
 - Right click at preview to see menu.  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/context-menu.png" height="210">
