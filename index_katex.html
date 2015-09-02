@@ -106,7 +106,7 @@
     </body>
     <script>
         // replace string within $...$ or $$...$$ with rendered string
-        function parseKatex(inputString, err_obj) {
+        function parseKatex(inputString) {
           outputString = ""
           // return end
           function findEnd(start, tag) {
@@ -158,8 +158,7 @@
                     displayMode: (tag === "$" ? false : true)
                   });
                 } catch (e) {
-                  err_obj[0] = inputString.slice(start, end)
-                  return (void 0);
+                  outputString += '<span style="color: #ee7f49; font-weight: 500;">{ parse error: ' + inputString.slice(start, end) + ' }</span>'
                 }
                 i = end + tag.length - 1
               } else {
@@ -180,6 +179,7 @@
             if (replaced === void 0)
                 return "error";
             // convert to html
+            console.log(replaced)
             return marked(replaced);
         }
 
