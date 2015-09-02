@@ -1,3 +1,6 @@
+## 0.3.6
+* fix math expression parsing bug... caused by \_underscore\_
+
 ## 0.3.5
 * add \\newpage support
 
