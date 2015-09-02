@@ -106,8 +106,9 @@
     </body>
     <script>
         // replace string within $...$ or $$...$$ with rendered string
-        function parseKatex(inputString) {
+        function parseKatex(inputString, mathExpressions) {
           outputString = ""
+          mathExpCount = 0
           // return end
           function findEnd(start, tag) {
             var end = -1
@@ -148,15 +149,17 @@
                   outputString += inputString[i]
                 }
               }
-            } else if (inputString[i] === "$" || (i + 1 < inputString.length && inputString[i] === "$" && inputString[i + 1] === "$")) {
-              var tag = ((i + 1 < inputString.length && inputString[i] === "$" && inputString[i + 1] === "$") ? "$$" : "$")
+            } else if (inputString[i] === '$' || (i + 1 < inputString.length && inputString[i] === '$' && inputString[i + 1] === '$')) {
+              var tag = (i + 1 < inputString.length && inputString[i] === '$' && inputString[i + 1] === '$') ? '$$' : '$'
               var start = i + tag.length
               var end = findEnd(start, tag)
               if (end !== -1) {
                 try {
-                  outputString += katex.renderToString(inputString.slice(start, end), {
-                    displayMode: (tag === "$" ? false : true)
-                  });
+                  mathExpressions.push(katex.renderToString(inputString.slice(start, end), {
+                    displayMode: (tag === '$' ? false : true)
+                  }))
+                  outputString += '$me' + mathExpCount + '$'
+                  mathExpCount += 1
                 } catch (e) {
                   outputString += '<span style="color: #ee7f49; font-weight: 500;">{ parse error: ' + inputString.slice(start, end) + ' }</span>'
                 }
@@ -175,12 +178,19 @@
         // parse markdown content to html
         function parseMD(input_string){
             // replace math expression
-            var replaced = parseKatex(input_string);
+            var mathExpressions = [];
+            var replaced = parseKatex(input_string, mathExpressions);
             if (replaced === void 0)
                 return "error";
             // convert to html
-            console.log(replaced)
-            return marked(replaced);
+            return replaceMathExpression(marked(replaced), mathExpressions);
+        }
+
+        function replaceMathExpression(html, mathExpressions) {
+          for (var i = 0; i < mathExpressions.length; i++) {
+            html = html.replace('$me' + i + '$', mathExpressions[i])
+          }
+          return html
         }
 
 
