@@ -138,6 +138,9 @@
               if (i + 1 < inputString.length && inputString[i + 1] === '$') {
                 outputString += '$'
                 i += 1
+              } else if (inputString.slice(i + 1, i + 8) === 'newpage') {
+                outputString += '<div class="newpage"></div>'
+                i += 8
               } else {
                 outputString += inputString[i];
                 if (i + 1 < inputString.length) {

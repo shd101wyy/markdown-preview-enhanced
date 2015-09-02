@@ -136,6 +136,9 @@
 .markdown-katex-preview * {
 	-webkit-print-color-adjust: exact;
 }
+.markdown-katex-preview .newpage {
+  page-break-before: always; 
+}
 
 @media screen and (min-width: 914px) {
     .markdown-katex-preview {
