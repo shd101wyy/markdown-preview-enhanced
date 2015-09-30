@@ -20,6 +20,7 @@ var add = function(x, y){
 
 > export your markdown to PDF or HTML
 
+<img src="./1.pic.jpg" height=400>
 ---
 ** Bugs Fix **  
 - [\$ bug](https://github.com/shd101wyy/atom-markdown-katex/issues/2)  

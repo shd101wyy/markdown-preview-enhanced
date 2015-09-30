@@ -1,3 +1,6 @@
+## 0.3.7
+* fix image path bug when export pdf and html
+
 ## 0.3.6
 * fix math expression parsing bug... caused by \_underscore\_
 
