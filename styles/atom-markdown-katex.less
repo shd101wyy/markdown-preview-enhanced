@@ -250,28 +250,20 @@
 
   // Tables
   table {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    word-break: normal;
-    word-break: keep-all; // For Firefox to horizontally scroll wider tables.
+  	margin: 10px 0 15px 0;
+  	border-collapse: collapse;
 
     th {
       font-weight: bold;
     }
 
-    th, td {
-      padding: 6px 13px;
-      border: 1px solid #ddd;
+    td, th {
+    	border: 1px solid #ddd;
+    	padding: 3px 10px;
     }
 
-    tr {
-      background-color: #fff;
-      border-top: 1px solid #ccc;
-
-      &:nth-child(2n) {
-        background-color: #f8f8f8;
-      }
+    th {
+    	padding: 5px 10px;
     }
   }
 
