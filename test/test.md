@@ -1,4 +1,3 @@
-
 ### This is Markdown Preview with Katex Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
@@ -16,7 +15,8 @@ var y = 13
 ```lisp
 (def x 12)
 (def y 20)
-
+(defn add [x, y]
+  (+ x y))
 ```
 
 > export your markdown to PDF or HTML

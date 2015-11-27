@@ -65,5 +65,4 @@ TODO:
 
 Thanks for using this plugin, I feel happy! ;)
 
-
 > MIT License
