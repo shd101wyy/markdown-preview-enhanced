@@ -3,15 +3,16 @@
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
 - write within $\$\$...\$\$$ to render in display mode
-    - $$ \frac{1}{3} + 3x + 4y $$
+    - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
 
 ### 啦啦啦
 ```javascript
 var add = function(x, y){
-    return x + y;
+    return x + y
 }
+var x = 12
+var y = 13
 ```
-
 ```lisp
 (def x 12)
 (def y 20)

@@ -14,10 +14,16 @@
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
+  "scripts": {
+    "build": "babel ./lib --watch --out-dir ./build"
+  },
   "dependencies": {
+    "async": "^1.5.0",
+    "atom-space-pen-views": "^2.1.0",
     "cheerio": "^0.19.0",
     "highlight.js": "^8.2.0",
     "katex": "^0.5.1",
+    "less": "^2.5.3",
     "marked": "^0.3.5",
     "temp": "^0.8.3"
   }
