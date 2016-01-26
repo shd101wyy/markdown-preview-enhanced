@@ -23,6 +23,7 @@
     "highlight.js": "^9.1.0",
     "katex": "^0.5.1",
     "less": "^2.5.3",
+    "remarkable": "^1.6.1",
     "temp": "^0.8.3"
   }
 }

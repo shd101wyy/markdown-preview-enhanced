@@ -7,16 +7,17 @@ Beta Version
 - [KaTeX](https://github.com/Khan/KaTeX) to render math expressions.
     - expression within $\$...\$$ will be rendered normally
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
-- [marked](https://github.com/chjj/marked) to convert markdown to html
+- [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
 
 <strong>Online Demo:  </strong>
 - [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html)
 
 <strong>Supports:</strong>
-- Markdown Preview
+- markdown preview with KaTeX math expression support
 - export PDF
 - export HTML
 - customize Markdown Preview css
+- scroll sync (beta)
 
 <strong>Usages:</strong>  
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
