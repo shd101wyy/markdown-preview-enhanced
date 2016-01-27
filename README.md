@@ -9,15 +9,15 @@ Beta Version
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
 
-<strong>Online Demo:  </strong>
-- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html)
-
 <strong>Supports:</strong>
 - markdown preview with KaTeX math expression support
 - export PDF
 - export HTML
 - customize Markdown Preview css
-- scroll sync (beta)
+- **scroll sync (beta) => New Feature Oh Yeah!**
+
+<strong>Online Demo:  </strong>
+- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html)
 
 <strong>Usages:</strong>  
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
