@@ -48,6 +48,7 @@ Synchronization is cool
 -------------------
 
 StackEdit can be combined with <i class="icon-provider-gdrive"></i> **Google Drive** and <i class="icon-provider-dropbox"></i> **Dropbox** to have your documents saved in the *Cloud*. The synchronization mechanism takes care of uploading your modifications or downloading the latest version of your documents.
+This is very cool because I like it and.
 
 > **Note:**
 
