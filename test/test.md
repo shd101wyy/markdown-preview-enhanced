@@ -29,4 +29,4 @@ var y = 13
   \$ 12 + \$ 13 = 12
 - the local font family for **styles/katex.min.less** should be eg: **atom://atom-markdown-katex/styles/fonts/KaTeX_AMS-Regular.eot** instead of **fonts/blabla.eot**   
 see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-editors-styles/8321/4)
-- Now support **scroll sync!**
+- Now support **2-way scroll sync!**
