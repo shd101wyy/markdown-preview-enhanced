@@ -7,7 +7,7 @@
   // All of our block level items should have the same margin
   overflow: hidden;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
-  font-size: 16px;
+  font-size: 1.2em;
   line-height: 1.6;
   word-wrap: break-word;
   color: #555;
@@ -213,9 +213,22 @@
     margin-bottom: 0;
   }
 
+  & > ul > li {
+    & > p:first-child {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    & > p:only-child {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
   li {
     margin-bottom: 0;
   }
+
 
   li > p {
     // margin-top: @margin;
@@ -244,7 +257,7 @@
     padding: 0 15px;
     color: #777;
     border-left: 4px solid #ddd;
-    margin-left: 0;
+    margin: @margin 0;
 
     > :first-child {
       margin-top: 0;
@@ -266,7 +279,7 @@
 
     td, th {
     	border: 1px solid #ddd;
-    	padding: 3px 10px;
+    	padding: 5px 10px;
     }
 
     th {
@@ -383,7 +396,7 @@
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     margin: 0;
-    font-size: 85%;
+    font-size: 95%;
     background-color: rgba(0,0,0,0.04);
     border-radius: 3px; // don't add padding, gives scrollbars
     color: #4d4d4c;
@@ -418,7 +431,7 @@
   pre {
     padding: @margin;
     overflow: auto;
-    font-size: 85%;
+    font-size: 95%;
     line-height: 1.45;
     background-color: #f7f7f7;
     border-radius: 3px;

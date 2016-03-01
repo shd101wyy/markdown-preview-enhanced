@@ -18,7 +18,6 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "async": "^1.5.2",
     "cheerio": "^0.20.0",
     "highlights": "^1.3.1",
     "katex": "^0.5.1",
@@ -39,9 +38,9 @@
       "description": "Enable or disable KaTeX for Math expression rendering."
     },
     "useGitHubStyle": {
-      "title": "Use style similar to GitHub.com style",
+      "title": "Use GitHub.com style",
       "type": "boolean",
-      "default": true,
+      "default": false,
       "description": "Use the similar CSS styles for preview as the ones used on GitHub.com."
     },
     "liveUpdate": {

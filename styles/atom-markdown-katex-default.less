@@ -11,14 +11,17 @@
 
   @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
 
-  @margin: 1.5em;
+  @margin: 16px;
 
 
-  padding: 2em;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   font-size: 1.2em;
+  line-height: 1.6;
   color: @fg;
   background-color: @bg;
   overflow: auto;
+  margin: 10px 13px 10px 13px;
+  padding: 2em;
 
   & > :first-child {
     margin-top: 0;
@@ -29,13 +32,13 @@
 
   h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
-    margin-top: @margin;
-    margin-bottom: @margin/3;
+    margin-top: 1em;
+    margin-bottom: @margin;
     color: @fg-strong;
   }
 
-  h1 { font-size: 2.4em; font-weight: 300; }
-  h2 { font-size: 1.8em; font-weight: 400; }
+  h1 { font-size: 2.4em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
+  h2 { font-size: 1.8em; font-weight: 400; border-bottom: 1px solid @border;}
   h3 { font-size: 1.5em; font-weight: 500; }
   h4 { font-size: 1.2em; font-weight: 600; }
   h5 { font-size: 1.1em; font-weight: 600; }
@@ -58,6 +61,7 @@
   a,
   a code {
     color: @fg-accent;
+    text-decoration: none;
   }
 
 
@@ -83,15 +87,64 @@
     margin-bottom: @margin;
   }
 
+  ul,
+  ol {
+    padding-left: 2em;
+
+    &.no-list {
+      padding: 0;
+      list-style-type: none;
+    }
+  }
+
+  ul ul,
+  ul ol,
+  ol ol,
+  ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  & > ul > li {
+    & > p:first-child {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    & > p:only-child {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  li {
+    margin-bottom: 0;
+  }
+
+
+  li > p {
+    // margin-top: @margin;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
 
   // Blockquotes --------------------
 
   blockquote {
     margin: @margin 0;
     font-size: inherit;
+    padding: 0 15px;
     color: @fg-subtle;
-    border-color: @border;
-    border-width: 4px;
+    border-left: 4px solid @border;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 
 
@@ -105,19 +158,23 @@
 
 
   // Table --------------------
-
   table {
-    margin: @margin 0;
-  }
+  	margin: 10px 0 15px 0;
+  	border-collapse: collapse;
 
-  th {
-    color: @fg-strong;
-  }
+    th {
+      font-weight: bold;
+      color: @fg-strong;
+    }
 
-  th,
-  td {
-    padding: .66em 1em;
-    border: 1px solid @border;
+    td, th {
+    	border: 1px solid @border;
+    	padding: 5px 10px;
+    }
+
+    th {
+    	padding: 5px 10px;
+    }
   }
 
 
@@ -129,11 +186,76 @@
   }
 
   // YIYI add this
+  // Code tags within code blocks (<pre>s)
+  pre > code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  .highlight {
+    margin-bottom: @margin;
+  }
+
+  .highlight pre,
   pre {
+    padding: @margin;
+    overflow: auto;
+    font-size: 95%;
+    line-height: 1.45;
+
     color: @fg;
-    font-size: 85%;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%));
+
     border: @border;
+    border-radius: 3px;
+  }
+
+  .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+
+  pre {
+    word-wrap: normal;
+  }
+
+  pre code,
+  pre tt {
+    display: inline;
+    max-width: initial;
+    padding: 0;
+    margin: 0;
+    overflow: initial;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+
+    &:before,
+    &:after {
+      content: normal;
+    }
+  }
+
+  p,
+  blockquote,
+  ul, ol, dl,
+  pre {
+    margin-top: 0;
+    margin-bottom: @margin;
+  }
+
+  hr {
+    height: 4px;
+    padding: 0;
+    margin: @margin 0;
+    background-color: #e7e7e7;
+    border: 0 none;
   }
 
   atom-text-editor {
@@ -152,6 +274,49 @@
     border: 1px solid @border;
     border-bottom: 2px solid darken(@border, 6%);
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
+  }
+
+  .newpage {
+    page-break-before: always;
+  }
+
+  @media screen and (min-width: 914px) {
+    width: 854px;
+    margin:10px auto;
+    overflow-y: scroll;
+    background: @bg;
+  }
+
+  @media print {
+    background-color: @bg;
+
+    h1, h2, h3, h4, h5, h6 {
+      color: @fg-strong;
+    }
+
+    blockquote {
+      color: @fg-subtle;
+    }
+
+    table, pre {
+       page-break-inside: avoid;
+    }
+
+    /*
+    pre {
+      border: 2px solid #f6f6f6;
+    }
+
+    code {
+      font-weight: 500;
+    }
+    */
+
+    img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+    }
   }
 
 }
