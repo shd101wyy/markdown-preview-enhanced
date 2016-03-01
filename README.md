@@ -1,23 +1,23 @@
 ### Simple Markdown Preview with KaTeX support
 #### By Yiyi Wang (shd101wyy)
-Beta Version
+Still Beta Version!
 
 ---
-<strong>This plugin uses</strong>
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/demo.gif" height="500">  
+<strong>This package uses</strong>
 - [KaTeX](https://github.com/Khan/KaTeX) to render math expressions.
     - expression within $\$...\$$ will be rendered normally
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
 
 <strong>Supports:</strong>
-- **2-way scroll sync (beta) => New Feature Oh Yeah!**
+- **2-way scroll sync (beta)**
 - markdown preview with KaTeX math expression support
 - export PDF
 - export HTML
 - customize Markdown Preview css
-
-<strong>Online Demo:  </strong>
-- [simple demo](https://rawgit.com/shd101wyy/atom-markdown-katex/master/index_katex.html)
+- New Feature: **Settings Panel** now support!
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/settings.png" height="500">  
 
 <strong>Usages:</strong>  
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
@@ -64,6 +64,6 @@ TODO:
 - modify css to make preview look nice.
 - better pdf print.
 
-Thanks for using this plugin, I feel happy! ;)
+Thanks for using this package, I feel happy! ;)
 
 > MIT License
