@@ -1,8 +1,8 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.4.1",
-  "description": "Markdown preview with KaTeX support. Easy export to pdf/html",
+  "version": "0.4.2",
+  "description": "The best Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync. (我这么说你会不会打我?)",
   "activationCommands": {
     "atom-workspace": [
       "markdown-katex-preview:toggle",
