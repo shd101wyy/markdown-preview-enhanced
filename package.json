@@ -25,5 +25,34 @@
     "less": "^2.6.0",
     "remarkable": "^1.6.2",
     "temp": "^0.8.3"
+  },
+
+  "configSchema": {
+    "breakOnSingleNewline": {
+      "type": "boolean",
+      "default": true,
+      "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source."
+    },
+    "useKaTeX": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable or disable KaTeX for Math expression rendering."
+    },
+    "useGitHubStyle": {
+      "title": "Use style similar to GitHub.com style",
+      "type": "boolean",
+      "default": true,
+      "description": "Use the similar CSS styles for preview as the ones used on GitHub.com."
+    },
+    "liveUpdate": {
+      "type": "boolean",
+      "default": true,
+      "description": "Re-render the preview as the contents of the source changes, without requiring the source buffer to be saved. If disabled, the preview is re-rendered only when the buffer is saved to disk. Disable live update will also disable scroll sync."
+    },
+    "scrollSync": {
+      "type": "boolean",
+      "default": "true",
+      "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling."
+    }
   }
 }

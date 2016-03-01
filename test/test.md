@@ -1,4 +1,4 @@
-### This is Markdown Preview with Katex Support
+### This is Markdown Preview with KaTeX Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
 - write within $\$\$...\$\$$ to render in display mode

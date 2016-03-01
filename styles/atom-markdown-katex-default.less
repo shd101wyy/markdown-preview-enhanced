@@ -123,13 +123,17 @@
 
   // Code --------------------
 
-  pre, code {
+  code {
     color: @fg-strong;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
   }
 
+  // YIYI add this
   pre {
-    border: none;
+    color: @fg;
+    font-size: 85%;
+    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%));
+    border: @border;
   }
 
   atom-text-editor {
