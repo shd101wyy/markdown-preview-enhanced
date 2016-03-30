@@ -1,9 +1,21 @@
 // modified version of https://github.com/atom/markdown-preview/blob/master/assets/primer-markdown.less
-@margin: 16px;
 // This is styling for generic markdownized text. Anything you put in a
 // container with .markdown-body on it should render generally well. It also
 // includes some GitHub Flavored Markdown specific styling (like @mentions)
+@import "syntax-variables";
+
 .markdown-katex-preview[data-use-github-style=true] {
+  @margin: 16px;
+
+  @fg: @syntax-text-color;
+  @bg: @syntax-background-color;
+
+  @fg-accent: @syntax-cursor-color;
+  @fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
+  @fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
+
+  @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
+
   // All of our block level items should have the same margin
   overflow: hidden;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
@@ -433,7 +445,11 @@
     overflow: auto;
     font-size: 95%;
     line-height: 1.45;
-    background-color: #f7f7f7;
+
+    color: @fg;
+    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%));
+
+    border: @border;
     border-radius: 3px;
   }
 
