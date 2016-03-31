@@ -42,6 +42,12 @@
       "default": false,
       "description": "Use the similar CSS styles for preview as the ones used on GitHub.com."
     },
+    "useGitHubSyntaxTheme": {
+      "title": "Use GitHub.com syntax theme",
+      "type": "boolean",
+      "default": false,
+      "description": "Use similar GitHub.com code block syntax theme."
+    },
     "liveUpdate": {
       "type": "boolean",
       "default": true,
