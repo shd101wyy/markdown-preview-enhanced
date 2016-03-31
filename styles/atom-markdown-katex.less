@@ -222,8 +222,16 @@
   // Code --------------------
   code {
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-size: 0.85em !important;
     color: @fg-strong;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
+  }
+
+  &[data-use-github-style=true] {
+    code {
+      background-color: rgba(0, 0, 0, 0.04);
+      color: inherit;
+    }
   }
 
   // YIYI add this
