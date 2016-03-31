@@ -18,11 +18,13 @@ var y = 13
 (defn add [x, y]
   (+ x y))
 ```
+---
 
 > export your markdown to PDF or Haha
 
 <img src="./1.pic.jpg" height=400>
---
+
+---
 
 **Bugs Fix**  
 - [\$ bug](https://github.com/shd101wyy/atom-markdown-katex/issues/2)  
