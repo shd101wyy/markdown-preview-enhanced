@@ -46,13 +46,17 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="500">
 
 ---
+- Save as HTML - right click at preview.
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/save-as-html.png" height="500">
+
+---
 - Copy As HTML - right click at preview.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="500">
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/6.png" height="500">
 
 ---
 - Open in Browser - right click at preview.  
+<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/7.png" height="500">
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/8.png" height="500">
-
 
 ---
 - Customize Preview CSS.  
