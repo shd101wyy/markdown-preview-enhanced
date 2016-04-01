@@ -38,6 +38,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - Right click at **preview** to see menu.  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/context-menu.png" height="210">
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/3.png" height="500">  
+
 ---
 - Save As PDF - right click at preview.  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/4.png" height="500">  
@@ -46,8 +47,10 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 ---
 - Save as HTML - right click at preview.
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/8.png" height="500">
+
 ---
 - Copy As HTML - right click at preview.  
+
 ---
 - Open in Browser - right click at preview.  
 
