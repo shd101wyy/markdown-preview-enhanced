@@ -391,7 +391,7 @@
 
   // github syntax theme
   // forked and modified from https://github.com/smlombardi/inspired-github
-  &[data-use-github-syntax-theme=true] {
+  .github-syntax-theme {
     // General colors
     @syntax-text-color: #333;
     @syntax-cursor-color: #000000;
@@ -741,5 +741,9 @@
     .meta.attribute.html.angular {
       color: @purple !important;
     }
+  }
+
+  &[data-use-github-syntax-theme=true] {
+    .github-syntax-theme() !important; // this has to be important!!!
   }
 }
