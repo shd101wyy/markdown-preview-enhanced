@@ -78,26 +78,33 @@
       "enum": ["portrait", "landscape"],
       "order": 80
     },
-    "printBackground": {
-      "title": "Print Background when generating pdf",
-      "type": "boolean",
-      "default": "true",
-      "description": "Include background color when generating pdf",
-      "order": 90
-    },
     "marginsType": {
       "title": "Pdf Margin type",
       "type": "string",
       "default": "default margin",
       "enum": ["default margin", "no margin", "minimum margin"],
+      "order": 90
+    },
+    "printBackground": {
+      "title": "Print Background when generating pdf",
+      "type": "boolean",
+      "default": "true",
+      "description": "Include background color when generating pdf.",
       "order": 100
     },
     "pdfUseGithub": {
       "title": "Use Github style when generating pdf",
       "type": "boolean",
       "default": "true",
-      "description": "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf",
+      "description": "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf.",
       "order": 110
+    },
+    "pdfOpenAutomatically": {
+      "title": "Open pdf file immediately after it is generated",
+      "type": "boolean",
+      "default": "false",
+      "description": "If you enabled this option, then when pdf is generated, it will be opened by pdf viewer. For example, on Mac OS X, it will be opened by Preview.",
+      "order": 120
     }
   }
 }
