@@ -29,34 +29,75 @@
     "breakOnSingleNewline": {
       "type": "boolean",
       "default": true,
-      "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source."
+      "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source.",
+      "order": 10
     },
     "useKaTeX": {
       "type": "boolean",
       "default": true,
-      "description": "Enable or disable KaTeX for Math expression rendering."
+      "description": "Enable or disable KaTeX for Math expression rendering.",
+      "order": 20
     },
     "useGitHubStyle": {
       "title": "Use GitHub.com style",
       "type": "boolean",
       "default": false,
-      "description": "Use the similar CSS styles for preview as the ones used on GitHub.com."
+      "description": "Use the similar CSS styles for preview as the ones used on GitHub.com.",
+      "order": 30
     },
     "useGitHubSyntaxTheme": {
       "title": "Use GitHub.com syntax theme",
       "type": "boolean",
       "default": false,
-      "description": "Use similar GitHub.com code block syntax theme."
+      "description": "Use similar GitHub.com code block syntax theme.",
+      "order": 40
     },
     "liveUpdate": {
       "type": "boolean",
       "default": true,
-      "description": "Re-render the preview as the contents of the source changes, without requiring the source buffer to be saved. If disabled, the preview is re-rendered only when the buffer is saved to disk. Disable live update will also disable scroll sync."
+      "description": "Re-render the preview as the contents of the source changes, without requiring the source buffer to be saved. If disabled, the preview is re-rendered only when the buffer is saved to disk. Disable live update will also disable scroll sync.",
+      "order": 50
     },
     "scrollSync": {
       "type": "boolean",
       "default": "true",
-      "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling."
+      "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling.",
+      "order": 60
+    },
+    "exportPDFPageFormat": {
+      "title": "Pdf Page Format",
+      "type": "string",
+      "default": "Letter",
+      "enum": ["A3", "A4", "A5", "Legal", "Letter", "Tabloid"],
+      "order": 70
+    },
+    "orientation": {
+      "title": "Pdf Page Orientation",
+      "type": "string",
+      "default": "portrait",
+      "enum": ["portrait", "landscape"],
+      "order": 80
+    },
+    "printBackground": {
+      "title": "Print Background when generating pdf",
+      "type": "boolean",
+      "default": "true",
+      "description": "Include background color when generating pdf",
+      "order": 90
+    },
+    "marginsType": {
+      "title": "Pdf Margin type",
+      "type": "string",
+      "default": "default margin",
+      "enum": ["default margin", "no margin", "minimum margin"],
+      "order": 100
+    },
+    "pdfUseGithub": {
+      "title": "Use Github style when generating pdf",
+      "type": "boolean",
+      "default": "true",
+      "description": "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf",
+      "order": 110
     }
   }
 }

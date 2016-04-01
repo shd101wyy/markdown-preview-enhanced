@@ -8,16 +8,20 @@
   ],
   '.markdown-katex-preview': [
     {
-      'label': 'Copy As HTML'
-      'command': 'markdown-katex-preview:copy-as-html'
-    }
-    {
       'label': 'Save As PDF'
       'command': 'markdown-katex-preview:save-as-pdf'
     }
     {
+      'label': 'Save As HTML'
+      'command': 'markdown-katex-preview:save-as-html'
+    }
+    {
       'label': 'Open in Browser'
       'command': 'markdown-katex-preview:open-in-browser'
+    }
+    {
+      'label': 'Copy As HTML'
+      'command': 'markdown-katex-preview:copy-as-html'
     }
   ]
 'menu': [
