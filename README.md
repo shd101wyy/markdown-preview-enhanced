@@ -11,7 +11,7 @@ Still Beta Version!
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
 
 <strong>Supports:</strong>
-- **2-way scroll sync (beta)**
+- **2-way scroll sync**
 - markdown preview with KaTeX math expression support
 - export PDF
 - export HTML
@@ -31,7 +31,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/1.png" height="500">  
 
 ---
-- Right click at preview to see menu.  
+- Right click at **preview** to see menu.  
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/context-menu.png" height="210">
 
 ---
