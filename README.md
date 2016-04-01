@@ -17,6 +17,7 @@ Still Beta Version!
 - export HTML
 - customize Markdown Preview css
 - settings panel
+
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/settings.png" height="500">  
 
 <strong>Usages:</strong>  
