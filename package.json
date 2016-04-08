@@ -6,6 +6,7 @@
   "activationCommands": {
     "atom-workspace": [
       "markdown-katex-preview:toggle",
+      "markdown-katex-preview:toc-create",
       "markdown-katex-preview:customize-css"
     ]
   },
@@ -20,10 +21,10 @@
   "dependencies": {
     "cheerio": "^0.20.0",
     "katex": "^0.5.1",
+    "markdown-toc": "^0.12.5",
     "remarkable": "^1.6.2",
     "temp": "^0.8.3"
   },
-
   "configSchema": {
     "breakOnSingleNewline": {
       "type": "boolean",
@@ -67,21 +68,35 @@
       "title": "Pdf Page Format",
       "type": "string",
       "default": "Letter",
-      "enum": ["A3", "A4", "A5", "Legal", "Letter", "Tabloid"],
+      "enum": [
+        "A3",
+        "A4",
+        "A5",
+        "Legal",
+        "Letter",
+        "Tabloid"
+      ],
       "order": 70
     },
     "orientation": {
       "title": "Pdf Page Orientation",
       "type": "string",
       "default": "portrait",
-      "enum": ["portrait", "landscape"],
+      "enum": [
+        "portrait",
+        "landscape"
+      ],
       "order": 80
     },
     "marginsType": {
       "title": "Pdf Margin type",
       "type": "string",
       "default": "default margin",
-      "enum": ["default margin", "no margin", "minimum margin"],
+      "enum": [
+        "default margin",
+        "no margin",
+        "minimum margin"
+      ],
       "order": 90
     },
     "printBackground": {
