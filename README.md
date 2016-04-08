@@ -64,12 +64,14 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 ---
 - Create TOC
+
 <img src="https://cloud.githubusercontent.com/assets/1908863/14397944/116927be-fda6-11e5-9d8c-e11c5f9e64bd.gif" height="500">
 
 ---
 - Customize Preview CSS.  
+
 <img src="https://cloud.githubusercontent.com/assets/1908863/14398152/95dbfd7c-fda7-11e5-8899-b7a075613517.gif" height="500">
-add custom styles under `.markdown-katex-preview-custom` section
+  add custom styles under `.markdown-katex-preview-custom` section
 ---
 TODO:
 - fix existed bugs.
