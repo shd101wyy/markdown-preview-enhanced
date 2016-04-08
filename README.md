@@ -8,7 +8,9 @@ Still Beta Version!
 - [KaTeX](https://github.com/Khan/KaTeX) to render math expressions.
     - expression within $\$...\$$ will be rendered normally
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
+    - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
+- [markdown-toc](https://github.com/jonschlinkert/markdown-toc) to create TOC
 
 <strong>Supports:</strong>
 - **2-way scroll sync**
@@ -17,6 +19,7 @@ Still Beta Version!
 - export HTML
 - customize Markdown Preview css
 - settings panel
+- [TOC] generation **(beta)**
 
 <img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/settings.png" height="500">  
 
@@ -26,6 +29,10 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Toggle Markdown file preview with KaTeX support.
 - <strong>Markdown KaTeX Preview: Customize CSS</strong>
     - Customize preview page css.  
+- <strong>Markdown KaTex Preview: Toc Create </strong>
+    - Generate TOC
+- <strong>Markdown KaTex Preview: Toggle Scroll Sync </strong>
+    - Enable/Disable scroll sync for preview
 
 ---
 - Toggle preview.  
@@ -56,9 +63,13 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - Open in Browser - right click at preview.  
 
 ---
-- Customize Preview CSS.  
-<img src="https://raw.githubusercontent.com/shd101wyy/atom-markdown-katex/master/screenshot/9.png" height="500">
+- Create TOC
+<img src="https://cloud.githubusercontent.com/assets/1908863/14397944/116927be-fda6-11e5-9d8c-e11c5f9e64bd.gif" height="500">
 
+---
+- Customize Preview CSS.  
+<img src="https://cloud.githubusercontent.com/assets/1908863/14398152/95dbfd7c-fda7-11e5-8899-b7a075613517.gif" height="500">
+add custom styles under `.markdown-katex-preview-custom` section
 ---
 TODO:
 - fix existed bugs.
