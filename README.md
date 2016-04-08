@@ -69,9 +69,9 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 
 ---
 - Customize Preview CSS.  
-
+    - add custom styles under `.markdown-katex-preview-custom` section
 <img src="https://cloud.githubusercontent.com/assets/1908863/14398152/95dbfd7c-fda7-11e5-8899-b7a075613517.gif" height="500">
-  add custom styles under `.markdown-katex-preview-custom` section
+
 ---
 TODO:
 - fix existed bugs.
