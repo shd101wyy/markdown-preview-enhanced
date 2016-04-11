@@ -1,4 +1,4 @@
-### Simple Markdown Preview with KaTeX support
+### Markdown Preview with KaTeX support
 #### By Yiyi Wang (shd101wyy)
 Still Beta Version!
 
