@@ -124,7 +124,7 @@
     "closePreviewWhenClosingEditor": {
       "title": "Close Preview when closing editor",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "order": 140
     }
   }

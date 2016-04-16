@@ -220,6 +220,7 @@ class MarkdownPreviewEditor extends ScrollView
     @emitter.on 'destroy', callback
 
   destroy: ->
+    @detach()
     @disposables.dispose()
 
 module.exports = MarkdownPreviewEditor
