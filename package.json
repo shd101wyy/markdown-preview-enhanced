@@ -118,7 +118,7 @@
     "openPreviewPaneAutomatically": {
       "title": " Open preview pane automatically when opening a markdown file",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "order": 130
     },
     "closePreviewWhenClosingEditor": {
