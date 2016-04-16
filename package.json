@@ -12,6 +12,7 @@
     "build": "nothing happened"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.20.0",
     "katex": "^0.5.1",
     "markdown-toc": "^0.12.5",
