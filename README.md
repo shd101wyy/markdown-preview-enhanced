@@ -15,7 +15,7 @@ Still Beta Version!
 <strong>Supports:</strong>
 - **2-way scroll sync**
 - markdown preview with **KaTeX** math expression support
-- export PDF
+- export PDF gaga
 - export HTML
 - customize Markdown Preview css
 - settings panel

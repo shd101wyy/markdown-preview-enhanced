@@ -121,6 +121,18 @@
       "default": false,
       "description": "If you enabled this option, then when pdf is generated, it will be opened by pdf viewer. For example, on Mac OS X, it will be opened by Preview.",
       "order": 120
+    },
+    "openPreviewPaneAutomatically": {
+      "title": " Open preview pane automatically when opening a markdown file",
+      "type": "boolean",
+      "default": false,
+      "order": 130
+    },
+    "closePreviewWhenClosingEditor": {
+      "title": "Close Preview when closing editor",
+      "type": "boolean",
+      "default": false,
+      "order": 140
     }
   }
 }
