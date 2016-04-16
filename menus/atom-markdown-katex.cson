@@ -6,7 +6,7 @@
       'command': 'markdown-katex-preview:toggle'
     }
   ],
-  '.markdown-katex-preview': [
+  '.markdown-katex-preview-editor': [
     {
       'label': 'Save As PDF'
       'command': 'markdown-katex-preview:save-as-pdf'
