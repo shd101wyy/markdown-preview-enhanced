@@ -45,12 +45,12 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Customize preview page css.  
 - <strong>Markdown KaTex Preview: Toc Create </strong>
   - Generate TOC
-	 or simply write ` <!-- toc -->` in editor (need preview toggled)
+	 or simply insert ` <!-- toc -->` in editor (need preview toggled)
 - <strong>Markdown KaTex Preview: Toggle Scroll Sync </strong>
     - Enable/Disable scroll sync for preview
 
 ## Preview Context Menu
-Right click at preview to see the menu
+**Right click at preview to see the menu**
 
 ![context menu](https://cloud.githubusercontent.com/assets/1908863/14586062/18852988-0451-11e6-9cc0-578d54384926.gif)
 
