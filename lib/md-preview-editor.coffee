@@ -26,7 +26,7 @@ class MarkdownPreviewEditor extends ScrollView
     @div class: 'markdown-katex-preview-editor'
 
   getTitle: ->
-    indexOfSlash = @uri.lastIndexOf '/'
+    indexOfSlash = @uri.lastIndexOf(if process.platform == 'win32' then '\\' else '/')
     if indexOfSlash >= 0
       @uri.slice indexOfSlash+1
     else
@@ -34,9 +34,9 @@ class MarkdownPreviewEditor extends ScrollView
 
   getFileName: ->
     fileName = @uri.slice(@protocal.length, @uri.lastIndexOf(' preview')).trim()
-    indexOfSlash = fileName.lastIndexOf '/'
+    indexOfSlash = fileName.lastIndexOf(if process.platform == 'win32' then '\\' else '/')
     if indexOfSlash >= 0
-      fileName = fileName.slice indexOf+1
+      fileName = fileName.slice indexOfSlash+1
     fileName
 
   getIconName: ->
