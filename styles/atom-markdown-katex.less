@@ -15,7 +15,8 @@
 
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
-  font-size: 1.2em;
+  // font-size: 1.2em;
+  font-size: 16px;
   line-height: 1.6;
   color: @fg;
   background-color: @bg;
@@ -325,6 +326,11 @@
     margin:10px auto;
     overflow-y: scroll;
     background: @bg;
+  }
+
+  // mobile
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
   }
 
   &[data-use-github-style=true] {

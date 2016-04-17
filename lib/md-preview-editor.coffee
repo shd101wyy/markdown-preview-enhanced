@@ -80,10 +80,11 @@ class MarkdownPreviewEditor extends ScrollView
     <head>
       <title>#{@getFileName()}</title>
       <meta charset=\"utf-8\">
+      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
       #{katexStyle}
     </head>
-    <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\" style=\"font-size: 16px;\">
+    <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
     #{htmlContent}
 
@@ -185,10 +186,11 @@ class MarkdownPreviewEditor extends ScrollView
       <head>
         <title>#{@getFileName()}</title>
         <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
         <style> #{getMarkdownPreviewCSS()} </style>
         #{katexStyle}
       </head>
-      <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\" style=\"font-size: 16px;\">
+      <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
       #{htmlContent}
       </body>
     </html>
