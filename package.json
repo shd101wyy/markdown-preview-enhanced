@@ -15,7 +15,6 @@
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.20.0",
     "katex": "^0.5.1",
-    "markdown-toc": "^0.12.5",
     "remarkable": "^1.6.2",
     "temp": "^0.8.3",
     "uslug": "^1.0.4"

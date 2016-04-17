@@ -10,7 +10,6 @@ Still Beta Version!
     - expression within $\$\$...\$\$$ will be rendered in displayMode.
     - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
-- [markdown-toc](https://github.com/jonschlinkert/markdown-toc) to create TOC
 
 <strong>Supports:</strong>
 - **2-way scroll sync**
