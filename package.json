@@ -1,7 +1,7 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "The 'best' Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync.",
   "repository": "https://github.com/shd101wyy/atom-markdown-katex",
   "license": "MIT",
