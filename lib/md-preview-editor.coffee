@@ -25,6 +25,10 @@ class MarkdownPreviewEditor extends ScrollView
   @content: ->
     @div class: 'markdown-katex-preview-editor'
 
+  attached: ->
+    if (@markdownPreview && @markdownPreview.editor)
+      @markdownPreview.connectPreviewEditor(this)
+
   getTitle: ->
     indexOfSlash = @uri.lastIndexOf(if process.platform == 'win32' then '\\' else '/')
     if indexOfSlash >= 0
