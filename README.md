@@ -1,8 +1,8 @@
 Markdown Preview KaTeX
 ===
-*(atom-markdown-katex)*
-**By Yiyi Wang (shd101wyy)**
-Still Beta Version!
+*(atom-markdown-katex)*  
+**By Yiyi Wang (shd101wyy)**  
+Still Beta Version!  
 
 Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you request new features or you want to report bugs ;)
 
@@ -24,9 +24,9 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 
 ## How it works
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
-- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions.
-    - expression within `$...$` will be rendered normally
-    - expression within `$$...$$` will be rendered in displayMode.
+- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
+    - expression within `$...$` will be rendered normally.  
+    - expression within `$$...$$` will be rendered in displayMode.  
     - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 
 ## Support Features
