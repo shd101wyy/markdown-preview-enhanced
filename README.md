@@ -11,7 +11,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 
 - [Markdown Preview KaTeX](#markdown-preview-katex)
 	- [How it works](#how-it-works)
-	- [Support Features:](#support-features)
+	- [Support Features](#support-features)
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
 	- [Settings Panel](#settings-panel)
@@ -29,7 +29,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
     - expression within `$$...$$` will be rendered in displayMode.
     - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 
-## Support Features:
+## Support Features
 - **2-way scroll sync**
 - markdown preview with **KaTeX** math expression support
 - export PDF
