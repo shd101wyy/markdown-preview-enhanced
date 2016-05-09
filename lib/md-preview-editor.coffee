@@ -84,7 +84,7 @@ class MarkdownPreviewEditor extends ScrollView
       useGitHubStyle = atom.config.get('atom-markdown-katex.pdfUseGithub')
 
     katexStyle = if useKaTeX then "<link rel=\"stylesheet\"
-          href=\"#{path.resolve(__dirname, '../katex-style/katex.min.css')}\">" else ""
+          href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">" else ""
 
     htmlContent = "
   <!DOCTYPE html>

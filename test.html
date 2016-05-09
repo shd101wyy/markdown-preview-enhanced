@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src="node_modules/mermaid/dist/mermaid.min.js"> </script>
+  </head>
+  <body>
+    <div class="mermaid" id="mermaid-0">
+      graph TB
+      a-->b
+    </div>
+  </body>
+  <script>
+    // mermaid.initialize({startOnLoad:true});
+    mermaidAPI.render('mermaid-0', 'graph TB\na-->b', function(html) {console.log(arguments)})
+  </script>
+</html>
