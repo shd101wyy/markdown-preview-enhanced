@@ -16,12 +16,12 @@
       'command': 'markdown-katex-preview:save-as-html'
     }
     {
-      'label': 'Open in Browser'
-      'command': 'markdown-katex-preview:open-in-browser'
+      'label': 'Save As HTML (CDN)'
+      'command': 'markdown-katex-preview:save-as-html-cdn'
     }
     {
-      'label': 'Copy As HTML'
-      'command': 'markdown-katex-preview:copy-as-html'
+      'label': 'Open in Browser'
+      'command': 'markdown-katex-preview:open-in-browser'
     }
   ]
 'menu': [

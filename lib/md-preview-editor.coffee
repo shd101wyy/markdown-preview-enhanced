@@ -52,8 +52,8 @@ class MarkdownPreviewEditor extends ScrollView
   handleEvents: ->
     atom.commands.add @element,
       'markdown-katex-preview:save-as-pdf': => @saveAsPDF()
-      'markdown-katex-preview:save-as-html': => @saveAsHTML()
-      'markdown-katex-preview:copy-as-html': => @copyAsHTML()
+      'markdown-katex-preview:save-as-html': => @saveAsHTML(true)
+      'markdown-katex-preview:save-as-html-cdn': => @saveAsHTML(false)
       'markdown-katex-preview:open-in-browser': => @openInBrowser()
 
   # open html file in browser or open pdf file in reader ... etc
@@ -67,9 +67,9 @@ class MarkdownPreviewEditor extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  # get offline html content
+  # get html content
   # pass in htmlContent to callback function
-  getOfflineHTMLContent: (isForPrint=false)->
+  getHTMLContent: (isForPrint=false, offline=true)->
     return if not @markdownPreview
 
     textContent = @markdownPreview.textContent
@@ -83,8 +83,21 @@ class MarkdownPreviewEditor extends ScrollView
     if isForPrint
       useGitHubStyle = atom.config.get('atom-markdown-katex.pdfUseGithub')
 
-    katexStyle = if useKaTeX then "<link rel=\"stylesheet\"
-          href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">" else ""
+    if useKaTeX
+      if offline
+        katexStyle = "<link rel=\"stylesheet\"
+              href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+      else
+        katexStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+    else
+      katexStyle = ''
+
+    if offline
+      mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
+      mermaidScript = "<script src=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.min.js')}\"></script>"
+    else
+      mermaidStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.css\">"
+      mermaidScript = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.js\"></script>"
 
     htmlContent = "
   <!DOCTYPE html>
@@ -95,6 +108,8 @@ class MarkdownPreviewEditor extends ScrollView
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
       #{katexStyle}
+      #{mermaidStyle}
+      #{mermaidScript}
     </head>
     <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
@@ -154,7 +169,7 @@ class MarkdownPreviewEditor extends ScrollView
   saveAsPDF: ->
     return if not @markdownPreview
 
-    htmlContent = @getOfflineHTMLContent true
+    htmlContent = @getHTMLContent true
     temp.open
       prefix: 'atom-markdown-katex',
       suffix: '.html', (err, info)=>
@@ -163,10 +178,10 @@ class MarkdownPreviewEditor extends ScrollView
           throw err if err
           @printPDF "file://#{info.path}"
 
-  saveAsHTML: ->
+  saveAsHTML: (offline=true)->
     return if not @markdownPreview
 
-    htmlContent = @getOfflineHTMLContent false
+    htmlContent = @getHTMLContent false, offline
     rootDirectoryPath = @markdownPreview.rootDirectoryPath
     fileName = @getFileName()
     htmlFileName = "#{fileName}.html"
@@ -179,43 +194,10 @@ class MarkdownPreviewEditor extends ScrollView
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
 
-  # copy HTML to clipboard
-  copyAsHTML: ->
-    return if not @markdownPreview
-
-    rootDirectoryPath = @markdownPreview.rootDirectoryPath
-    textContent = @markdownPreview.textContent
-    useGitHubStyle = atom.config.get 'atom-markdown-katex.useGitHubStyle'
-    useGitHubSyntaxTheme = atom.config.get 'atom-markdown-katex.useGitHubSyntaxTheme'
-    useKaTeX = atom.config.get 'atom-markdown-katex.useKaTeX'
-    htmlContent = parseMD @markdownPreview
-
-    katexStyle = if useKaTeX then "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css\">" else ''
-
-    htmlContent = "
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>#{@getFileName()}</title>
-        <meta charset=\"utf-8\">
-        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-        <style> #{getMarkdownPreviewCSS()} </style>
-        #{katexStyle}
-      </head>
-      <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
-      #{htmlContent}
-      </body>
-    </html>
-    "
-    atom.clipboard.write htmlContent
-
-    alert("HTML content has bee saved to clipboard")
-
-
   openInBrowser: ->
     return if not @markdownPreview
 
-    htmlContent = @getOfflineHTMLContent false
+    htmlContent = @getHTMLContent false
 
     temp.open
       prefix: 'atom-markdown-katex',

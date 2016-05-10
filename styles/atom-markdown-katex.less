@@ -257,6 +257,13 @@
     border-radius: 3px;
   }
 
+  &[data-use-github-style=true] {
+    .highlight pre, pre {
+      background-color: rgba(0, 0, 0, 0.04);
+      color: inherit;
+    }
+  }
+
   .highlight pre {
     margin-bottom: 0;
     word-break: normal;
@@ -388,7 +395,26 @@
     }
   }
 
+  // mermaid:
+  .mermaid {
+    margin-bottom: @margin;
 
+    .edgePath {
+      .path {
+        stroke: @fg-strong;
+      }
+    }
+  }
+
+  &[data-use-github-style=true] {
+    .mermaid {
+      .edgePath {
+        .path {
+          stroke: #555;
+        }
+      }
+    }
+  }
 
   // github syntax theme
   // forked and modified from https://github.com/smlombardi/inspired-github
