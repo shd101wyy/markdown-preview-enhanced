@@ -10,8 +10,8 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 <!-- toc -->
 
 - [Markdown Preview KaTeX](#markdown-preview-katex)
-	- [How it works](#how-it-works)
 	- [Support Features](#support-features)
+	- [How it works](#how-it-works)
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
 	- [Settings Panel](#settings-panel)
@@ -22,13 +22,6 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 
 ![demo](https://cloud.githubusercontent.com/assets/1908863/14586110/159a9e86-0453-11e6-9d85-98d6ef2a142b.gif)
 
-## How it works
-- [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
-- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
-    - expression within `$...$` will be rendered normally.  
-    - expression within `$$...$$` will be rendered in displayMode.  
-    - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
-
 ## Support Features
 - **2-way scroll sync**
 - markdown preview with **KaTeX** math expression support
@@ -37,6 +30,18 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 - customize Markdown Preview css
 - settings panel
 - [TOC] generation **(beta)**
+- Flowchart / Sequence Diagram **(beta)**
+
+## How it works
+- [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
+- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
+  - expression within `$...$` will be rendered normally.  
+  - expression within `$$...$$` will be rendered in displayMode.  
+  - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
+- [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram  
+	- code block within `mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
+	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
+	- <img src="https://cloud.githubusercontent.com/assets/1908863/15132962/468c0dd0-1624-11e6-868c-cf3033ce3b5d.gif">
 
 ## Usages
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
@@ -59,10 +64,11 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
   - Create PDF in the same directory
 - <strong> Save as HTML </strong>
   - Create HTML in the same directory
+- <strong> Save as HTML (CDN) </strong>  
+	- Create HTML in the same directory.
+	- This method is different from **Save as HTML** as it will load javascript and css dependencies from `cdn.js` instead of doing so locally
 - <strong> Open in Browser </strong>
   - Open HTML in browser
-- <strong> Copy as HTML </strong>
-  - Copy HTML content to clipboard
 
 ## Settings Panel
 ![settings](https://cloud.githubusercontent.com/assets/1908863/14586083/fc84195a-0451-11e6-9778-5d09c0cbd252.gif)
