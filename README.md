@@ -10,7 +10,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 <!-- toc -->
 
 - [Markdown Preview KaTeX](#markdown-preview-katex)
-	- [Support Features](#support-features)
+	- [Features](#features)
 	- [How it works](#how-it-works)
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
@@ -22,7 +22,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 
 ![demo](https://cloud.githubusercontent.com/assets/1908863/14586110/159a9e86-0453-11e6-9d85-98d6ef2a142b.gif)
 
-## Support Features
+## Features
 - **2-way scroll sync**
 - markdown preview with **KaTeX** math expression support
 - export PDF
@@ -66,7 +66,8 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
   - Create HTML in the same directory
 - <strong> Save as HTML (CDN) </strong>  
 	- Create HTML in the same directory.
-	- This method is different from **Save as HTML** as it will load javascript and css dependencies from `cdn.js` instead of doing so locally
+	- Require network connection to render correctly.
+	- This method is different from **Save as HTML** as it will load javascript and css dependencies from `cdn.js` instead of doing so locally.
 - <strong> Open in Browser </strong>
   - Open HTML in browser
 
