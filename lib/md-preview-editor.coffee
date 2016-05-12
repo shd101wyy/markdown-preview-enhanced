@@ -85,12 +85,28 @@ class MarkdownPreviewEditor extends ScrollView
 
     if mathRenderOption == 'KaTeX'
       if offline
-        katexStyle = "<link rel=\"stylesheet\"
+        mathStyle = "<link rel=\"stylesheet\"
               href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
-        katexStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+    else if mathRenderOption == 'MathJax'
+      if offline
+        mathStyle = ''
+      else
+        # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$']],
+                      displayMath: [['$$', '$$']],
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
+        "
     else
-      katexStyle = ''
+      mathStyle = ''
 
     if offline
       mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
@@ -107,7 +123,7 @@ class MarkdownPreviewEditor extends ScrollView
       <meta charset=\"utf-8\">
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
-      #{katexStyle}
+      #{mathStyle}
       #{mermaidStyle}
       #{mermaidScript}
     </head>
