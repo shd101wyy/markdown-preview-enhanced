@@ -91,13 +91,24 @@ class MarkdownPreviewEditor extends ScrollView
         mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
     else if mathRenderOption == 'MathJax'
       if offline
-        mathStyle = ''
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            messageStyle: 'none',
+            tex2jax: {inlineMath: [['$','$']],
+                      displayMath: [['$$', '$$']],
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
         # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
         mathStyle = "
         <script type=\"text/x-mathjax-config\">
           MathJax.Hub.Config({
+            messageStyle: 'none',
             tex2jax: {inlineMath: [['$','$']],
                       displayMath: [['$$', '$$']],
                       processEscapes: true}
