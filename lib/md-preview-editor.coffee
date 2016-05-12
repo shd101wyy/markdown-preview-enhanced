@@ -75,7 +75,7 @@ class MarkdownPreviewEditor extends ScrollView
     textContent = @markdownPreview.textContent
     useGitHubStyle = atom.config.get('atom-markdown-katex.useGitHubStyle')
     useGitHubSyntaxTheme = atom.config.get('atom-markdown-katex.useGitHubSyntaxTheme')
-    useKaTeX = atom.config.get('atom-markdown-katex.useKaTeX')
+    mathRenderOption = atom.config.get('atom-markdown-katex.mathRenderOption')
     htmlContent = parseMD(@markdownPreview)
 
     # as for example black color background doesn't produce nice pdf
@@ -83,7 +83,7 @@ class MarkdownPreviewEditor extends ScrollView
     if isForPrint
       useGitHubStyle = atom.config.get('atom-markdown-katex.pdfUseGithub')
 
-    if useKaTeX
+    if mathRenderOption == 'KaTeX'
       if offline
         katexStyle = "<link rel=\"stylesheet\"
               href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
