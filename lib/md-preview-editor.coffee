@@ -175,23 +175,25 @@ class MarkdownPreviewEditor extends ScrollView
     landscape = atom.config.get('atom-markdown-katex.orientation') == 'landscape'
 
     win.webContents.on 'did-finish-load', ()=>
-      win.webContents.printToPDF
-        pageSize: atom.config.get('atom-markdown-katex.exportPDFPageFormat'),
-        landscape: landscape,
-        printBackground: atom.config.get('atom-markdown-katex.printBackground'),
-        marginsType: marginsType, (err, data)=>
-          throw err if err
-
-          dist = path.resolve rootDirectoryPath, pdfName
-
-          fs.writeFile dist, data, (err)=>
+      setTimeout(()=>
+        win.webContents.printToPDF
+          pageSize: atom.config.get('atom-markdown-katex.exportPDFPageFormat'),
+          landscape: landscape,
+          printBackground: atom.config.get('atom-markdown-katex.printBackground'),
+          marginsType: marginsType, (err, data)=>
             throw err if err
 
-            atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+            dist = path.resolve rootDirectoryPath, pdfName
 
-            # open pdf
-            if atom.config.get('atom-markdown-katex.pdfOpenAutomatically')
-              @openFile dist
+            fs.writeFile dist, data, (err)=>
+              throw err if err
+
+              atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+
+              # open pdf
+              if atom.config.get('atom-markdown-katex.pdfOpenAutomatically')
+                @openFile dist
+      , 500)
 
   saveAsPDF: ->
     return if not @markdownPreview
