@@ -14,6 +14,8 @@
 
   @margin: 16px;
 
+  @github-black: #555;
+
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   // font-size: 1.2em;
@@ -26,7 +28,7 @@
   padding: 2em;
 
   &[data-use-github-style=true] {
-    color: #555;
+    color: @github-black;
     background-color: #fff;
   }
 
@@ -44,7 +46,7 @@
   }
 
   &[data-use-github-style=true] {
-    h1, h2, h3, h4, h5, h6 { color: #555; }
+    h1, h2, h3, h4, h5, h6 { color: @github-black; }
   }
 
 
@@ -68,7 +70,7 @@
   }
 
   &[data-use-github-style=true] {
-    strong { color: #555; }
+    strong { color: @github-black; }
   }
 
   del {
@@ -205,7 +207,7 @@
 
   &[data-use-github-style=true] {
     th {
-      color: #555;
+      color: @github-black;
     }
     td, th {
       border: 1px solid #ddd;
@@ -252,7 +254,7 @@
     line-height: 1.45;
 
     color: @fg;
-    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%)) !important;
+    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%));
 
     border: @border;
     border-radius: 3px;
@@ -261,7 +263,7 @@
   &[data-use-github-style=true] {
     .highlight pre, pre {
       background-color: rgba(0, 0, 0, 0.04);
-      color: inherit;
+      color: @github-black;
     }
   }
 
@@ -319,7 +321,7 @@
 
   &[data-use-github-style=true] {
     kbd {
-      color: #555;
+      color: @github-black;
       background-color: #fcfcfc;
       border: solid 1px #ccc;
       border-bottom-color: #bbb;
@@ -427,25 +429,25 @@
     .mermaid {
       .edgePath {
         .path {
-          stroke: #555;
+          stroke: @github-black;
         }
       }
 
       marker {
         path {
-          fill: #555 !important;
+          fill: @github-black !important;
           opacity: 1 !important;
         }
       }
     }
 
     line, marker {
-      stroke: #555 !important;
+      stroke: @github-black !important;
       opacity: 1 !important;
     }
 
     .messageText {
-      fill: #555;
+      fill: @github-black;
     }
   }
 
