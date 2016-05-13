@@ -75,7 +75,7 @@ class MarkdownPreviewEditor extends ScrollView
     textContent = @markdownPreview.textContent
     useGitHubStyle = atom.config.get('atom-markdown-katex.useGitHubStyle')
     useGitHubSyntaxTheme = atom.config.get('atom-markdown-katex.useGitHubSyntaxTheme')
-    useKaTeX = atom.config.get('atom-markdown-katex.useKaTeX')
+    mathRenderingOption = atom.config.get('atom-markdown-katex.mathRenderingOption')
     htmlContent = parseMD(@markdownPreview)
 
     # as for example black color background doesn't produce nice pdf
@@ -83,14 +83,41 @@ class MarkdownPreviewEditor extends ScrollView
     if isForPrint
       useGitHubStyle = atom.config.get('atom-markdown-katex.pdfUseGithub')
 
-    if useKaTeX
+    if mathRenderingOption == 'KaTeX'
       if offline
-        katexStyle = "<link rel=\"stylesheet\"
+        mathStyle = "<link rel=\"stylesheet\"
               href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
-        katexStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+    else if mathRenderingOption == 'MathJax'
+      if offline
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            messageStyle: 'none',
+            tex2jax: {inlineMath: [['$','$']],
+                      displayMath: [['$$', '$$']],
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        "
+      else
+        # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            messageStyle: 'none',
+            tex2jax: {inlineMath: [['$','$']],
+                      displayMath: [['$$', '$$']],
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
+        "
     else
-      katexStyle = ''
+      mathStyle = ''
 
     if offline
       mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
@@ -107,7 +134,7 @@ class MarkdownPreviewEditor extends ScrollView
       <meta charset=\"utf-8\">
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
-      #{katexStyle}
+      #{mathStyle}
       #{mermaidStyle}
       #{mermaidScript}
     </head>
@@ -148,23 +175,25 @@ class MarkdownPreviewEditor extends ScrollView
     landscape = atom.config.get('atom-markdown-katex.orientation') == 'landscape'
 
     win.webContents.on 'did-finish-load', ()=>
-      win.webContents.printToPDF
-        pageSize: atom.config.get('atom-markdown-katex.exportPDFPageFormat'),
-        landscape: landscape,
-        printBackground: atom.config.get('atom-markdown-katex.printBackground'),
-        marginsType: marginsType, (err, data)=>
-          throw err if err
-
-          dist = path.resolve rootDirectoryPath, pdfName
-
-          fs.writeFile dist, data, (err)=>
+      setTimeout(()=>
+        win.webContents.printToPDF
+          pageSize: atom.config.get('atom-markdown-katex.exportPDFPageFormat'),
+          landscape: landscape,
+          printBackground: atom.config.get('atom-markdown-katex.printBackground'),
+          marginsType: marginsType, (err, data)=>
             throw err if err
 
-            atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+            dist = path.resolve rootDirectoryPath, pdfName
 
-            # open pdf
-            if atom.config.get('atom-markdown-katex.pdfOpenAutomatically')
-              @openFile dist
+            fs.writeFile dist, data, (err)=>
+              throw err if err
+
+              atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+
+              # open pdf
+              if atom.config.get('atom-markdown-katex.pdfOpenAutomatically')
+                @openFile dist
+      , 500)
 
   saveAsPDF: ->
     return if not @markdownPreview

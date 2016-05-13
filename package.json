@@ -1,7 +1,7 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "The 'best' Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync.",
   "repository": "https://github.com/shd101wyy/atom-markdown-katex",
   "license": "MIT",
@@ -27,10 +27,15 @@
       "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source.",
       "order": 10
     },
-    "useKaTeX": {
-      "type": "boolean",
-      "default": true,
-      "description": "Enable or disable KaTeX for Math expression rendering.",
+    "mathRenderingOption": {
+      "type": "string",
+      "default": "KaTeX",
+      "description": "Choose the Math expression rendering method here. You can also disable math rendering if you want by choosing 'None'.",
+      "enum": [
+        "KaTeX",
+        "MathJax",
+        "None"
+      ],
       "order": 20
     },
     "useGitHubStyle": {

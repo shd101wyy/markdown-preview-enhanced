@@ -15,6 +15,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
 	- [Settings Panel](#settings-panel)
+	- [Thanks](#thanks)
 	- [TODO](#todo)
 
 <!-- tocstop -->
@@ -24,7 +25,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 
 ## Features
 - **2-way scroll sync**
-- markdown preview with **KaTeX** math expression support
+- markdown preview with **KaTeX** math expression support. (Now you can choose between **KaTeX** and **MathJax**)
 - export PDF
 - export beautiful HTML (mobile device supported)
 - customize Markdown Preview css
@@ -36,7 +37,9 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
 - [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
   - expression within `$...$` will be rendered normally.  
-  - expression within `$$...$$` will be rendered in displayMode.  
+  - expression within `$$...$$` will be rendered in displayMode.   
+  - [MathJax](https://github.com/mathjax/MathJax) is also supported! You can choose your math rendering method from [settings panel](#settings-panel).   
+		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram  
 	- code block within `mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
@@ -74,9 +77,15 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 ## Settings Panel
 ![settings](https://cloud.githubusercontent.com/assets/1908863/14586083/fc84195a-0451-11e6-9778-5d09c0cbd252.gif)
 
+## Thanks
+Thanks for everyone that supports this library!   
+
+
 ## TODO
 - fix bugs
 - modify css to make preview look nice
 - epub output
 
-Thanks for using this package, I feel happy! ;)
+Thanks for using this package ;)
+
+> MIT License
