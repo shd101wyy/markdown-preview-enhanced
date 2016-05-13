@@ -1,7 +1,7 @@
 {
   "name": "atom-markdown-katex",
   "main": "./lib/atom-markdown-katex",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "The 'best' Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync.",
   "repository": "https://github.com/shd101wyy/atom-markdown-katex",
   "license": "MIT",
@@ -15,7 +15,6 @@
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.20.0",
     "katex": "^0.6.0",
-    "mathjax-electron": "^0.2.0",
     "mermaid": "^0.5.8",
     "remarkable": "^1.6.2",
     "temp": "^0.8.3",
