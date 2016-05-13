@@ -38,7 +38,7 @@ Post [here](https://github.com/shd101wyy/atom-markdown-katex/issues) if you requ
 - [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
   - expression within `$...$` will be rendered normally.  
   - expression within `$$...$$` will be rendered in displayMode.   
-  - [MathJax](https://github.com/mathjax/MathJax) is also supported! You can choose your math rendering method from [settings panel]((#settings-panel)).   
+  - [MathJax](https://github.com/mathjax/MathJax) is also supported! You can choose your math rendering method from [settings panel](#settings-panel).   
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram  
