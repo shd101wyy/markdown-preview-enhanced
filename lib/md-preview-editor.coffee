@@ -16,14 +16,14 @@ class MarkdownPreviewEditor extends ScrollView
   constructor: (uri)->
     super
     @uri = uri
-    @protocal = 'atom-markdown-katex://'
+    @protocal = 'markdown-preview-enhanced://'
     @emitter = new Emitter
     @disposables = new CompositeDisposable
     @markdownPreview = null # controller defined in md-preview.js
     @handleEvents()
 
   @content: ->
-    @div class: 'markdown-katex-preview-editor'
+    @div class: 'markdown-preview-enhanced-editor'
 
   attached: ->
     if (@markdownPreview && @markdownPreview.editor)
@@ -51,10 +51,10 @@ class MarkdownPreviewEditor extends ScrollView
 
   handleEvents: ->
     atom.commands.add @element,
-      'markdown-katex-preview:save-as-pdf': => @saveAsPDF()
-      'markdown-katex-preview:save-as-html': => @saveAsHTML(true)
-      'markdown-katex-preview:save-as-html-cdn': => @saveAsHTML(false)
-      'markdown-katex-preview:open-in-browser': => @openInBrowser()
+      'markdown-preview-enhanced:save-as-pdf': => @saveAsPDF()
+      'markdown-preview-enhanced:save-as-html': => @saveAsHTML(true)
+      'markdown-preview-enhanced:save-as-html-cdn': => @saveAsHTML(false)
+      'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
 
   # open html file in browser or open pdf file in reader ... etc
   openFile: (filePath)->
@@ -73,15 +73,15 @@ class MarkdownPreviewEditor extends ScrollView
     return if not @markdownPreview
 
     textContent = @markdownPreview.textContent
-    useGitHubStyle = atom.config.get('atom-markdown-katex.useGitHubStyle')
-    useGitHubSyntaxTheme = atom.config.get('atom-markdown-katex.useGitHubSyntaxTheme')
-    mathRenderingOption = atom.config.get('atom-markdown-katex.mathRenderingOption')
+    useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
+    useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
+    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     htmlContent = parseMD(@markdownPreview)
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
     if isForPrint
-      useGitHubStyle = atom.config.get('atom-markdown-katex.pdfUseGithub')
+      useGitHubStyle = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
 
     if mathRenderingOption == 'KaTeX'
       if offline
@@ -138,7 +138,7 @@ class MarkdownPreviewEditor extends ScrollView
       #{mermaidStyle}
       #{mermaidScript}
     </head>
-    <body class=\"markdown-katex-preview\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
+    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
     #{htmlContent}
 
@@ -166,20 +166,20 @@ class MarkdownPreviewEditor extends ScrollView
 
 
     # get margins type
-    marginsType = atom.config.get('atom-markdown-katex.marginsType')
+    marginsType = atom.config.get('markdown-preview-enhanced.marginsType')
     marginsType = if marginsType == 'default margin' then 0 else
                   if marginsType == 'no margin' then 1 else 2
 
 
     # get orientation
-    landscape = atom.config.get('atom-markdown-katex.orientation') == 'landscape'
+    landscape = atom.config.get('markdown-preview-enhanced.orientation') == 'landscape'
 
     win.webContents.on 'did-finish-load', ()=>
       setTimeout(()=>
         win.webContents.printToPDF
-          pageSize: atom.config.get('atom-markdown-katex.exportPDFPageFormat'),
+          pageSize: atom.config.get('markdown-preview-enhanced.exportPDFPageFormat'),
           landscape: landscape,
-          printBackground: atom.config.get('atom-markdown-katex.printBackground'),
+          printBackground: atom.config.get('markdown-preview-enhanced.printBackground'),
           marginsType: marginsType, (err, data)=>
             throw err if err
 
@@ -191,7 +191,7 @@ class MarkdownPreviewEditor extends ScrollView
               atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
 
               # open pdf
-              if atom.config.get('atom-markdown-katex.pdfOpenAutomatically')
+              if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
                 @openFile dist
       , 500)
 
@@ -200,7 +200,7 @@ class MarkdownPreviewEditor extends ScrollView
 
     htmlContent = @getHTMLContent true
     temp.open
-      prefix: 'atom-markdown-katex',
+      prefix: 'markdown-preview-enhanced',
       suffix: '.html', (err, info)=>
         throw err if err
         fs.write info.fd, htmlContent, (err)=>
@@ -229,7 +229,7 @@ class MarkdownPreviewEditor extends ScrollView
     htmlContent = @getHTMLContent false
 
     temp.open
-      prefix: 'atom-markdown-katex',
+      prefix: 'markdown-preview-enhanced',
       suffix: '.html', (err, info)=>
         throw err if err
 

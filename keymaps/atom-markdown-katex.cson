@@ -8,4 +8,4 @@
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
 'atom-workspace':
-  'ctrl-alt-o': 'markdown-katex-preview:toggle'
+  'ctrl-alt-o': 'markdown-preview-enhanced:toggle'

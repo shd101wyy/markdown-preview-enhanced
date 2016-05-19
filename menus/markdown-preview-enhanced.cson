@@ -1,0 +1,40 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle markdown-preview-enhanced'
+      'command': 'markdown-preview-enhanced:toggle'
+    }
+  ],
+  '.markdown-preview-enhanced-editor': [
+    {
+      'label': 'Save As PDF'
+      'command': 'markdown-preview-enhanced:save-as-pdf'
+    }
+    {
+      'label': 'Save As HTML'
+      'command': 'markdown-preview-enhanced:save-as-html'
+    }
+    {
+      'label': 'Save As HTML (CDN)'
+      'command': 'markdown-preview-enhanced:save-as-html-cdn'
+    }
+    {
+      'label': 'Open in Browser'
+      'command': 'markdown-preview-enhanced:open-in-browser'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'markdown-preview-enhanced'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'markdown-preview-enhanced:toggle'
+        }
+      ]
+    ]
+  }
+]
