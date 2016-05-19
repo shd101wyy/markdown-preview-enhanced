@@ -59,10 +59,11 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
     - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
   - Generate TOC
-	 or simply insert ` <!-- toc -->` in editor (need preview toggled)
+	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
-    - Enable/Disable scroll sync for preview
-
+    - Enable/Disable scroll sync for preview.
+- <strong>Markdown Preview Enhanced: Insert Table </strong>
+    - Insert a markdown table.
 ## Preview Context Menu
 **Right click at preview to see the menu**
 
