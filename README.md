@@ -2,6 +2,7 @@ Markdown Preview Enhanced
 ===
 **By Yiyi Wang (shd101wyy)**  
 Still Beta Version!  
+This package was named `atom-markdown-katex` before.
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -14,31 +15,35 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
 	- [Settings Panel](#settings-panel)
+	- [Extra](#extra)
+	- [For Developer](#for-developer)
 	- [Thanks](#thanks)
 	- [TODO](#todo)
 
 <!-- tocstop -->
 ---
 
-![demo](https://cloud.githubusercontent.com/assets/1908863/14586110/159a9e86-0453-11e6-9d85-98d6ef2a142b.gif)
+![main](https://cloud.githubusercontent.com/assets/1908863/15383014/14ad19d0-1dc2-11e6-9385-acd90f53a831.gif)
 
 ## Features
-- **2-way scroll sync**
-- markdown preview with **KaTeX** math expression support. (Now you can choose between **KaTeX** and **MathJax**)
-- export PDF
-- export beautiful HTML (mobile device supported)
-- customize Markdown Preview css
-- settings panel
-- [TOC] generation **(beta)**
-- Flowchart / Sequence Diagram **(beta)**
-- Task List *(Github Flavored)* **(beta)**
+- **2-way scroll sync**  
+- markdown preview with math rendering support   
+You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
+- export PDF    
+- export beautiful HTML (mobile device supported)  
+- customize Markdown Preview css  
+- settings panel  
+- [TOC] generation **(beta)**  
+- Flowchart / Sequence Diagram **(beta)**  
+- Task List *(Github Flavored)* **(beta)**  
+- And many more
 
 ## How it works
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
-- [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
+- [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions. ([KaTeX Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
   - expression within `$...$` will be rendered normally.  
   - expression within `$$...$$` will be rendered in displayMode.   
-  - [MathJax](https://github.com/mathjax/MathJax) is also supported! You can choose your math rendering method from [settings panel](#settings-panel).   
+  - You can choose your math rendering method from [settings panel](#settings-panel).   
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram  
@@ -48,14 +53,14 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Usages
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
-- <strong>Markdown KaTeX Preview: Toggle</strong>
+- <strong>Markdown Preview Enhanced: Toggle</strong>
     - Toggle Markdown file preview with KaTeX support.
-- <strong>Markdown KaTeX Preview: Customize CSS</strong>
+- <strong>Markdown Preview Enhanced: Customize CSS</strong>
     - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
-- <strong>Markdown KaTeX Preview: Toc Create </strong>
+- <strong>Markdown Preview Enhanced: Toc Create </strong>
   - Generate TOC
 	 or simply insert ` <!-- toc -->` in editor (need preview toggled)
-- <strong>Markdown KaTeX Preview: Toggle Scroll Sync </strong>
+- <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
     - Enable/Disable scroll sync for preview
 
 ## Preview Context Menu
@@ -74,8 +79,21 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong> Open in Browser </strong>
   - Open HTML in browser
 
-## Settings Panel
-![settings](https://cloud.githubusercontent.com/assets/1908863/14586083/fc84195a-0451-11e6-9778-5d09c0cbd252.gif)
+## Settings Panel  
+![settings_panel](https://cloud.githubusercontent.com/assets/1908863/15383036/44f79cb4-1dc2-11e6-80b3-3b3bdd9ab7d3.gif)
+
+## Extra
+* **Task List**  
+	This package supports *Github Flavored* task list.  
+	More information about how to create **task list** can be found [here](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
+* **Smart Navigation**    
+	You can quickly open another markdown file by clicking its link in preview.  
+	![smart_navigation](https://cloud.githubusercontent.com/assets/1908863/15382175/e5f0a66e-1db9-11e6-9581-3f3ee8dc45dd.gif)  
+* **Preview Auto Open**  
+	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
+
+## For Developer
+Manual installation instruction can be found [here](./DEVELOPER.md)
 
 ## Thanks
 Thanks for everyone that supports this library!   
