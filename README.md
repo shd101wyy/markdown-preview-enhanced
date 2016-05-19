@@ -63,7 +63,8 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
     - Enable/Disable scroll sync for preview.
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
-    - Insert a markdown table.
+    - Insert a markdown table.  
+		
 ## Preview Context Menu
 **Right click at preview to see the menu**
 
