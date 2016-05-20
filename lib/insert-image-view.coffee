@@ -124,5 +124,7 @@ class InsertImageView extends View
 
     @editor = editor
 
+    @urlEditor.setText('')
+
 insertImageView = new InsertImageView()
 module.exports = insertImageView

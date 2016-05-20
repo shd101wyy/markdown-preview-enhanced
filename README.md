@@ -36,7 +36,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - [TOC] generation **(beta)**  
 - Flowchart / Sequence Diagram **(beta)**  
 - Task List *(Github Flavored)* **(beta)**  
-- And many more
+- Image Helper **(beta)**
+- And many more...
 
 ## How it works
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html
@@ -54,17 +55,19 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 ## Usages
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
 - <strong>Markdown Preview Enhanced: Toggle</strong>
-    - Toggle Markdown file preview with KaTeX support.
+  - Toggle Markdown file preview with KaTeX support.
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
-    - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
+  - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
   - Generate TOC
 	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
-    - Enable/Disable scroll sync for preview.
+  - Enable/Disable scroll sync for preview.
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
-    - Insert a markdown table.  
-		
+  - Insert a markdown table.    
+- <strong>Markdown Preview Enhanced: Image Helper</strong>  
+	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.
+
 ## Preview Context Menu
 **Right click at preview to see the menu**
 
@@ -93,19 +96,23 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 	![smart_navigation](https://cloud.githubusercontent.com/assets/1908863/15382175/e5f0a66e-1db9-11e6-9581-3f3ee8dc45dd.gif)  
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
+* **Image Helper**  
+	Image Helper supports image url quick insertion and image upload powered by [imgur](http://imgur.com/).
+	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)
 
 ## For Developer
 Manual installation instruction can be found [here](./DEVELOPER.md)
 
 ## Thanks
-Thanks for everyone that supports this library!   
+Thanks for everyone that supports this package!   
 
 
 ## TODO
-- fix bugs
-- modify css to make preview look nice
-- epub output
+- [ ] fix bugs
+- [ ] modify css to make preview look nice
+- [ ] epub output
+- [ ] support more image upload methods other than imgur (as imgur is blocked in some countries)
 
-Thanks for using this package ;)
+Thanks for using and supporting this package ;)
 
 > MIT License
