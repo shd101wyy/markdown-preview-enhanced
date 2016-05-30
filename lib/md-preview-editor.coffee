@@ -5,7 +5,6 @@ temp = require 'temp'
 {exec} = require 'child_process'
 path = require 'path'
 {parseMD} = require './md.js'
-{startMDPreview} = require './md-preview.js'
 {getMarkdownPreviewCSS} = require './style.js'
 
 
