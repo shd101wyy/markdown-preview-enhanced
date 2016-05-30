@@ -132,6 +132,13 @@
       "type": "boolean",
       "default": true,
       "order": 140
+    },
+    "useOnlyOnePaneForPreview": {
+      "title": "Use only one pane for preview",
+      "description": "If this option is enabled, then only one pane will be opened for markdown preview of all markdown files",
+      "type": "boolean",
+      "default": true,
+      "order": 150
     }
   }
 }
