@@ -1,6 +1,9 @@
 {Emitter, CompositeDisposable} = require 'atom'
 {$, $$$, View, TextEditorView}  = require 'atom-space-pen-views'
+{Directory} = require 'atom'
 imgur = require 'imgur'
+path = require 'path'
+fs = require 'fs'
 
 class InsertImageView extends View
   initialize: ()->
@@ -15,16 +18,21 @@ class InsertImageView extends View
       @h4 'Image Helper'
       @div class: 'upload-div', =>
         @label 'Link'
-        @subview "urlEditor", new TextEditorView(mini: true, placeholderText: 'enter image URL here, then press Enter to insert.')
+        @subview "urlEditor", new TextEditorView(mini: true, placeholderText: 'enter image URL here, then press \'Enter\' to insert.')
+
+        @div class: 'splitter'
+
+        @label 'Copy image to root /assets folder'
+        @div class: 'drop-area paster', =>
+          @p class: 'paster', 'Drop image file here or click me'
+          @input class: 'file-uploader paster', type:'file', style: 'display: none;'
 
         @div class: 'splitter'
 
         @label 'Upload'
-        @div class: 'drop-area', =>
-          @p 'Drop image file here or click me'
-        #@input type: 'checkbox'
-        #@label 'Copy to local ./assets folder and use relative path'
-        @input class: 'file-uploader', type:'file', style: 'display: none;'
+        @div class: 'drop-area uploader', =>
+          @p class: 'uploader', 'Drop image file here or click me'
+          @input class: 'file-uploader uploader', type:'file', style: 'display: none;'
       @div class: 'close-btn btn', 'close'
 
   hidePanel: ->
@@ -44,22 +52,28 @@ class InsertImageView extends View
     fileUploader = $('.file-uploader', @element)
 
 
-    dropArea.on "drop dragend dragstart dragenter dragleave drag dragover", (event)=>
-      event.preventDefault()
-      if (event.type == "drop")
-        @uploadImageFile(event.originalEvent.dataTransfer.files[0])
+    dropArea.on "drop dragend dragstart dragenter dragleave drag dragover", (e)=>
+      e.preventDefault()
+      e.stopPropagation()
+      if e.type == "drop"
+        if e.target.className.indexOf('paster') >= 0 # paste
+          @pasteImageFile(e.originalEvent.dataTransfer.files[0])
+        else # upload
+          @uploadImageFile(e.originalEvent.dataTransfer.files[0])
 
-    dropArea.on 'click', (e) =>
+    dropArea.on 'click', (e) ->
       e.preventDefault()
       e.stopPropagation()
       $(this).find('input[type="file"]').click()
 
-    fileUploader.on 'click', (e)=>
+    fileUploader.on 'click', (e)->
       e.stopPropagation()
 
     fileUploader.on 'change', (e)=>
-      @uploadImageFile(e.target.files[0])
-      fileUploader.val('')
+      if e.target.className.indexOf('paster') >= 0 # paste
+        @pasteImageFile(e.target.files[0])
+      else # upload
+        @uploadImageFile(e.target.files[0])
 
   replaceHint: (editor, lineNo, hint, withStr)->
     if editor && editor.buffer && editor.buffer.lines[lineNo].indexOf(hint) >= 0
@@ -67,6 +81,26 @@ class InsertImageView extends View
       editor.buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line.replace(hint, withStr + '\n'))
       return true
     return false
+
+  pasteImageFile: (file)->
+    @hidePanel()
+
+    editor = @editor
+    projectDirectoryPath = editor.project.getPaths()[0]
+    if file and projectDirectoryPath
+      assetDirectory = new Directory(path.resolve(projectDirectoryPath, './assets'))
+      assetDirectory.create().then (flag)=>
+        fileName = file.name
+        fs.createReadStream(file.path).pipe(fs.createWriteStream(path.resolve(projectDirectoryPath, './assets', fileName)))
+
+        atom.notifications.addSuccess("Finish copying image", detail: "#{fileName} has been copied to folder #{path.resolve(projectDirectoryPath, './assets')}")
+
+        if fileName.lastIndexOf('.')
+          description = fileName.slice(0, fileName.lastIndexOf('.'))
+        else
+          description = fileName
+        editor.insertText("![#{description}](/assets/#{fileName})")
+
 
   uploadImageFile: (file)->
     # console.log(file)
@@ -125,6 +159,7 @@ class InsertImageView extends View
     @editor = editor
 
     @urlEditor.setText('')
+    $(@element).find('input[type="file"]').val('')
 
 insertImageView = new InsertImageView()
 module.exports = insertImageView
