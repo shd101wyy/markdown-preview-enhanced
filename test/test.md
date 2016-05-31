@@ -26,6 +26,8 @@ var y = 13
 
 ---
 
+![markdown-icon](/markdown.png)
+
 **Bugs Fix**  
 - [\$ bug](https://github.com/shd101wyy/markdown-preview-enhanced/issues/2)  
   \$ 12 + \$ 13 = 12
