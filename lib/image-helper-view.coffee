@@ -25,14 +25,14 @@ class InsertImageView extends View
         @label 'Copy image to root /assets folder'
         @div class: 'drop-area paster', =>
           @p class: 'paster', 'Drop image file here or click me'
-          @input class: 'file-uploader paster', type:'file', style: 'display: none;'
+          @input class: 'file-uploader paster', type:'file', style: 'display: none;', multiple: "multiple"
 
         @div class: 'splitter'
 
         @label 'Upload'
         @div class: 'drop-area uploader', =>
           @p class: 'uploader', 'Drop image file here or click me'
-          @input class: 'file-uploader uploader', type:'file', style: 'display: none;'
+          @input class: 'file-uploader uploader', type:'file', style: 'display: none;', multiple: "multiple"
       @div class: 'close-btn btn', 'close'
 
   hidePanel: ->
@@ -57,9 +57,11 @@ class InsertImageView extends View
       e.stopPropagation()
       if e.type == "drop"
         if e.target.className.indexOf('paster') >= 0 # paste
-          @pasteImageFile(e.originalEvent.dataTransfer.files[0])
+          for file in e.originalEvent.dataTransfer.files
+            @pasteImageFile file
         else # upload
-          @uploadImageFile(e.originalEvent.dataTransfer.files[0])
+          for file in e.originalEvent.dataTransfer.files
+            @uploadImageFile file
 
     dropArea.on 'click', (e) ->
       e.preventDefault()
@@ -71,9 +73,11 @@ class InsertImageView extends View
 
     fileUploader.on 'change', (e)=>
       if e.target.className.indexOf('paster') >= 0 # paste
-        @pasteImageFile(e.target.files[0])
+        for file in e.target.files
+          @pasteImageFile file
       else # upload
-        @uploadImageFile(e.target.files[0])
+        for file in e.target.files
+          @uploadImageFile file
 
   replaceHint: (editor, lineNo, hint, withStr)->
     if editor && editor.buffer && editor.buffer.lines[lineNo].indexOf(hint) >= 0
