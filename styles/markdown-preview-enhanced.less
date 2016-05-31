@@ -15,6 +15,7 @@
   @margin: 16px;
 
   @github-black: #555;
+  @github-syntax-background-color: #f7f7f7;
 
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
@@ -270,8 +271,8 @@
   }
 
   &[data-use-github-style=true] {
-    .highlight pre, pre {
-      background-color: rgba(0, 0, 0, 0.04);
+    .highlight pre, pre, pre.editor-colors {
+      background-color: @github-syntax-background-color;
       color: @github-black;
     }
   }
@@ -508,6 +509,11 @@
     @yellow:                hsl(48, 100%, 47%);
 
     atom-text-editor, :host {
+      background-color: @syntax-background-color;
+      color: @syntax-text-color;
+    }
+
+    pre {
       background-color: @syntax-background-color;
       color: @syntax-text-color;
     }

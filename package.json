@@ -122,10 +122,17 @@
       "order": 120
     },
     "openPreviewPaneAutomatically": {
-      "title": " Open preview pane automatically when opening a markdown file",
+      "title": "Open preview pane automatically when opening a markdown file",
       "type": "boolean",
       "default": true,
       "order": 130
+    },
+    "rootImageFolderPath": {
+      "title": "Root image folder path",
+      "description": "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'",
+      "type": "string",
+      "default": "/assets",
+      "order": 140
     }
   }
 }
