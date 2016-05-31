@@ -37,6 +37,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Flowchart / Sequence Diagram **(beta)**  
 - Task List *(Github Flavored)* **(beta)**  
 - Image Helper **(beta)**
+- [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - And many more...
 
 ## How it works
