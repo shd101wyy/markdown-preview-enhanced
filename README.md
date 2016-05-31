@@ -1,6 +1,6 @@
 Markdown Preview Enhanced
 ===
-**By Yiyi Wang (shd101wyy)**  
+**By Yiyi Wang (shd101wyy)**   
 Still Beta Version!  
 This package was named `atom-markdown-katex` before.
 
@@ -37,6 +37,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Flowchart / Sequence Diagram **(beta)**  
 - Task List *(Github Flavored)* **(beta)**  
 - Image Helper **(beta)**
+- [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - And many more...
 
 ## How it works
@@ -55,7 +56,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 ## Usages
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
 - <strong>Markdown Preview Enhanced: Toggle</strong>
-  - Toggle Markdown file preview with KaTeX support.
+  - Toggle Markdown file preview with KaTeX support.   
+	You can also use the keymap `ctrl+shift+m` to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
@@ -66,7 +68,8 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
   - Insert a markdown table.    
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
-	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.
+	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.   
+	Keymap `ctrl+shift+i`
 
 ## Preview Context Menu
 **Right click at preview to see the menu**
@@ -97,7 +100,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
 * **Image Helper**  
-	Image Helper supports image url quick insertion and image upload powered by [imgur](http://imgur.com/).
+	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/).
 	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)
 
 ## For Developer
@@ -112,6 +115,7 @@ Thanks for everyone that supports this package!
 - [ ] modify css to make preview look nice
 - [ ] epub output
 - [ ] support more image upload methods other than imgur (as imgur is blocked in some countries)
+- [ ] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
 
 Thanks for using and supporting this package ;)
 

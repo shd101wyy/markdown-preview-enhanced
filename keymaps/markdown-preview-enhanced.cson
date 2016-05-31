@@ -7,5 +7,6 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-'atom-workspace':
-  'ctrl-alt-o': 'markdown-preview-enhanced:toggle'
+'atom-workspace, atom-workspace atom-text-editor':
+  'ctrl-M': 'markdown-preview-enhanced:toggle'
+  'ctrl-I': 'markdown-preview-enhanced:image-helper'

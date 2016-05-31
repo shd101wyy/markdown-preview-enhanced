@@ -5,7 +5,6 @@ temp = require 'temp'
 {exec} = require 'child_process'
 path = require 'path'
 {parseMD} = require './md.js'
-{startMDPreview} = require './md-preview.js'
 {getMarkdownPreviewCSS} = require './style.js'
 
 
@@ -27,27 +26,33 @@ class MarkdownPreviewEditor extends ScrollView
 
   attached: ->
     if (@markdownPreview && @markdownPreview.editor)
-      @markdownPreview.connectPreviewEditor(this)
+      @markdownPreview.bindEditor(@markdownPreview.editor)
 
   getTitle: ->
-    indexOfSlash = @uri.lastIndexOf(if process.platform == 'win32' then '\\' else '/')
-    if indexOfSlash >= 0
-      @uri.slice indexOfSlash+1
-    else
-      @uri.slice @protocal.length
+    @getFileName() + ' preview'
 
   getFileName: ->
-    fileName = @uri.slice(@protocal.length, @uri.lastIndexOf(' preview')).trim()
-    indexOfSlash = fileName.lastIndexOf(if process.platform == 'win32' then '\\' else '/')
-    if indexOfSlash >= 0
-      fileName = fileName.slice indexOfSlash+1
-    fileName
+    if @markdownPreview and @markdownPreview.editor
+      @markdownPreview.editor.getFileName()
+    else
+      'unknown'
 
   getIconName: ->
     "markdown"
 
   getURI: ->
     @uri
+
+  getGrammar: ->
+    {scopeName: 'source.markdown-preview'}
+
+  setTabTitle: (title)->
+    tabTitle = $('[data-type="MarkdownPreviewEditor"] div.title')
+    if tabTitle.length
+      tabTitle[0].innerText = title
+
+  updateTabTitle: ->
+    @setTabTitle(@getTitle())
 
   handleEvents: ->
     atom.commands.add @element,

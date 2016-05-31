@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "The 'best' Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync.",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -126,12 +126,6 @@
       "type": "boolean",
       "default": true,
       "order": 130
-    },
-    "closePreviewWhenClosingEditor": {
-      "title": "Close Preview when closing editor",
-      "type": "boolean",
-      "default": true,
-      "order": 140
     }
   }
 }
