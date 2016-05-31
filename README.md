@@ -112,6 +112,7 @@ Thanks for everyone that supports this package!
 - [ ] modify css to make preview look nice
 - [ ] epub output
 - [ ] support more image upload methods other than imgur (as imgur is blocked in some countries)
+- [ ] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
 
 Thanks for using and supporting this package ;)
 
