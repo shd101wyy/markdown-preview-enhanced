@@ -74,14 +74,15 @@ class MarkdownPreviewEditor extends ScrollView
 
   # get html content
   # pass in htmlContent to callback function
-  getHTMLContent: (isForPrint=false, offline=true)->
+  getHTMLContent: (isForPrint=false, offline=true, isSavingToHtml=false)->
     return if not @markdownPreview
 
     textContent = @markdownPreview.textContent
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
-    htmlContent = parseMD(@markdownPreview)
+
+    htmlContent = parseMD(@markdownPreview, {isSavingToHtml})
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -203,7 +204,7 @@ class MarkdownPreviewEditor extends ScrollView
   saveAsPDF: ->
     return if not @markdownPreview
 
-    htmlContent = @getHTMLContent true
+    htmlContent = @getHTMLContent true, true
     temp.open
       prefix: 'markdown-preview-enhanced',
       suffix: '.html', (err, info)=>
@@ -215,7 +216,7 @@ class MarkdownPreviewEditor extends ScrollView
   saveAsHTML: (offline=true)->
     return if not @markdownPreview
 
-    htmlContent = @getHTMLContent false, offline
+    htmlContent = @getHTMLContent false, offline, true
     rootDirectoryPath = @markdownPreview.rootDirectoryPath
     fileName = @getFileName()
     htmlFileName = "#{fileName}.html"
@@ -231,7 +232,7 @@ class MarkdownPreviewEditor extends ScrollView
   openInBrowser: ->
     return if not @markdownPreview
 
-    htmlContent = @getHTMLContent false
+    htmlContent = @getHTMLContent false, true, false
 
     temp.open
       prefix: 'markdown-preview-enhanced',

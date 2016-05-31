@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "The 'best' Markdown Preview for Atom with KaTeX support, easy export HTML/PDF, and 2-way scroll sync.",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -42,14 +42,14 @@
     "useGitHubStyle": {
       "title": "Use GitHub.com style",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Use the similar CSS styles for preview as the ones used on GitHub.com.",
       "order": 30
     },
     "useGitHubSyntaxTheme": {
       "title": "Use GitHub.com syntax theme",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Use similar GitHub.com code block syntax theme.",
       "order": 40
     },
@@ -117,7 +117,7 @@
     "pdfOpenAutomatically": {
       "title": "Open pdf file immediately after it is generated",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "If you enabled this option, then when pdf is generated, it will be opened by pdf viewer. For example, on Mac OS X, it will be opened by Preview.",
       "order": 120
     },
