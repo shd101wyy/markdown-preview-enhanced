@@ -67,7 +67,8 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
   - Insert a markdown table.    
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
-	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.
+	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.   
+	Keymap `ctrl+shift+i`
 
 ## Preview Context Menu
 **Right click at preview to see the menu**
@@ -98,7 +99,7 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
 * **Image Helper**  
-	Image Helper supports image url quick insertion and image upload powered by [imgur](http://imgur.com/).
+	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/).
 	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)
 
 ## For Developer

@@ -14,7 +14,7 @@ class InsertImageView extends View
       'core:confirm': => @insertImageURL()
 
   @content: ->
-    @div class: 'insert-image-view', =>
+    @div class: 'image-helper-view', =>
       @h4 'Image Helper'
       @div class: 'upload-div', =>
         @label 'Link'
@@ -103,7 +103,6 @@ class InsertImageView extends View
 
 
   uploadImageFile: (file)->
-    # console.log(file)
     fileName = file.name
 
     @hidePanel()
