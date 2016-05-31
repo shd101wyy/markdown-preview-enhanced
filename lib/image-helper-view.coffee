@@ -22,7 +22,7 @@ class InsertImageView extends View
 
         @div class: 'splitter'
 
-        @label 'Copy image to root /assets folder'
+        @label class: 'copy-label', 'Copy image to root /assets folder'
         @div class: 'drop-area paster', =>
           @p class: 'paster', 'Drop image file here or click me'
           @input class: 'file-uploader paster', type:'file', style: 'display: none;', multiple: "multiple"
@@ -91,19 +91,28 @@ class InsertImageView extends View
 
     editor = @editor
     projectDirectoryPath = editor.project.getPaths()[0]
+    rootImageFolderPath = atom.config.get 'markdown-preview-enhanced.rootImageFolderPath'
+
+    if rootImageFolderPath[rootImageFolderPath.length - 1] == '/'
+      rootImageFolderPath = rootImageFolderPath.slice(0, rootImageFolderPath.length - 1)
+
+    if rootImageFolderPath[0] != '/'
+      rootImageFolderPath = '/' + rootImageFolderPath
+
     if file and projectDirectoryPath
-      assetDirectory = new Directory(path.resolve(projectDirectoryPath, './assets'))
+      assetDirectory = new Directory(path.resolve(projectDirectoryPath, ".#{rootImageFolderPath}"))
+
       assetDirectory.create().then (flag)=>
         fileName = file.name
-        fs.createReadStream(file.path).pipe(fs.createWriteStream(path.resolve(projectDirectoryPath, './assets', fileName)))
+        fs.createReadStream(file.path).pipe(fs.createWriteStream(path.resolve(assetDirectory.path, fileName)))
 
-        atom.notifications.addSuccess("Finish copying image", detail: "#{fileName} has been copied to folder #{path.resolve(projectDirectoryPath, './assets')}")
+        atom.notifications.addSuccess("Finish copying image", detail: "#{fileName} has been copied to folder #{assetDirectory.path}")
 
         if fileName.lastIndexOf('.')
           description = fileName.slice(0, fileName.lastIndexOf('.'))
         else
           description = fileName
-        editor.insertText("![#{description}](/assets/#{fileName})")
+        editor.insertText("![#{description}](#{rootImageFolderPath}/#{fileName})")
 
 
   uploadImageFile: (file)->
@@ -163,6 +172,17 @@ class InsertImageView extends View
 
     @urlEditor.setText('')
     $(@element).find('input[type="file"]').val('')
+
+    copyLabel = $(@element).find('.copy-label')
+    rootImageFolderPath = atom.config.get 'markdown-preview-enhanced.rootImageFolderPath'
+
+    if rootImageFolderPath[rootImageFolderPath.length - 1] == '/'
+      rootImageFolderPath = rootImageFolderPath.slice(0, rootImageFolderPath.length - 1)
+
+    if rootImageFolderPath[0] != '/'
+      rootImageFolderPath = '/' + rootImageFolderPath
+
+    copyLabel.text  "Copy image to root #{rootImageFolderPath} folder"
 
 insertImageView = new InsertImageView()
 module.exports = insertImageView
