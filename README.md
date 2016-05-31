@@ -55,7 +55,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 ## Usages
 To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
 - <strong>Markdown Preview Enhanced: Toggle</strong>
-  - Toggle Markdown file preview with KaTeX support.
+  - Toggle Markdown file preview with KaTeX support.   
+	You can also use the keymap `ctrl+shift+m` to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
