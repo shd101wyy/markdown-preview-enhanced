@@ -159,6 +159,8 @@ class InsertImageView extends View
 
   insertImageURL: ()->
     url = @urlEditor.getText().trim()
+    if url.indexOf(' ') >= 0
+      url = "<#{url}>"
     if (url.length)
       @hidePanel()
       curPos = @editor.getCursorBufferPosition()
