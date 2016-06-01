@@ -112,7 +112,11 @@ class InsertImageView extends View
           description = fileName.slice(0, fileName.lastIndexOf('.'))
         else
           description = fileName
-        editor.insertText("![#{description}](#{rootImageFolderPath}/#{fileName})")
+
+        url = "#{rootImageFolderPath}/#{fileName}"
+        if url.indexOf(' ') >= 0
+          url = "<#{url}>"
+        editor.insertText("![#{description}](#{url})")
 
 
   uploadImageFile: (file)->
