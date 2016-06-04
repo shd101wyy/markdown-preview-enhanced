@@ -132,7 +132,7 @@ class InsertImageView extends View
             return
 
 
-          atom.notifications.addSuccess("Finish copying image", detail: "#{fileName} has been copied to folder #{assetDirectory.path}")
+          atom.notifications.addSuccess("Finish copying image", detail: "#{file.name} has been copied to folder #{assetDirectory.path}")
 
           url = "#{rootImageFolderPath}/#{fileName}"
           if url.indexOf(' ') >= 0
