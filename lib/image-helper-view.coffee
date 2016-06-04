@@ -104,19 +104,40 @@ class InsertImageView extends View
 
       assetDirectory.create().then (flag)=>
         fileName = file.name
-        fs.createReadStream(file.path).pipe(fs.createWriteStream(path.resolve(assetDirectory.path, fileName)))
+        destPath = path.resolve(assetDirectory.path, fileName)
 
-        atom.notifications.addSuccess("Finish copying image", detail: "#{fileName} has been copied to folder #{assetDirectory.path}")
+        fs.stat destPath, (err, stat)=>
+          if err == null # file existed
+            lastDotOffset = fileName.lastIndexOf('.')
+            uid = '_' + Math.random().toString(36).substr(2, 9)
 
-        if fileName.lastIndexOf('.')
-          description = fileName.slice(0, fileName.lastIndexOf('.'))
-        else
-          description = fileName
+            if lastDotOffset > 0
+              description = fileName.slice(0, lastDotOffset)
+              fileName = fileName.slice(0, lastDotOffset) + uid + fileName.slice(lastDotOffset, fileName.length)
+            else
+              description = fileName
+              fileName = fileName + uid
 
-        url = "#{rootImageFolderPath}/#{fileName}"
-        if url.indexOf(' ') >= 0
-          url = "<#{url}>"
-        editor.insertText("![#{description}](#{url})")
+            fs.createReadStream(file.path).pipe(fs.createWriteStream(path.resolve(assetDirectory.path, fileName)))
+
+          else if err.code == 'ENOENT' # file does not exist
+            fs.createReadStream(file.path).pipe(fs.createWriteStream(destPath))
+
+            if fileName.lastIndexOf('.')
+              description = fileName.slice(0, fileName.lastIndexOf('.'))
+            else
+              description = fileName
+          else
+            atom.notifications.addError("Error: #{err}")
+            return
+
+
+          atom.notifications.addSuccess("Finish copying image", detail: "#{file.name} has been copied to folder #{assetDirectory.path}")
+
+          url = "#{rootImageFolderPath}/#{fileName}"
+          if url.indexOf(' ') >= 0
+            url = "<#{url}>"
+          editor.insertText("![#{description}](#{url})")
 
 
   uploadImageFile: (file)->
@@ -188,7 +209,14 @@ class InsertImageView extends View
     if rootImageFolderPath[0] != '/'
       rootImageFolderPath = '/' + rootImageFolderPath
 
-    copyLabel.text  "Copy image to root #{rootImageFolderPath} folder"
+    copyLabel.html  "Copy image to root <a>#{rootImageFolderPath}</a> folder"
+
+    copyLabel.find('a').on 'click', ()=>
+      try
+        atom.workspace.open('atom://config/packages/markdown-preview-enhanced', {split: 'right'})
+        @hidePanel()
+      catch e
+        @hidePanel()
 
 insertImageView = new InsertImageView()
 module.exports = insertImageView
