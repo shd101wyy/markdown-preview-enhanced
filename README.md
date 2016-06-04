@@ -2,7 +2,6 @@ Markdown Preview Enhanced
 ===
 **By Yiyi Wang (shd101wyy)**   
 Still Beta Version!  
-This package was named `atom-markdown-katex` before.
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
