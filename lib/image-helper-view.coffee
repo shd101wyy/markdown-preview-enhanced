@@ -209,7 +209,14 @@ class InsertImageView extends View
     if rootImageFolderPath[0] != '/'
       rootImageFolderPath = '/' + rootImageFolderPath
 
-    copyLabel.text  "Copy image to root #{rootImageFolderPath} folder"
+    copyLabel.html  "Copy image to root <a>#{rootImageFolderPath}</a> folder"
+
+    copyLabel.find('a').on 'click', ()=>
+      try
+        atom.workspace.open('atom://config/packages/markdown-preview-enhanced', {split: 'right'})
+        @hidePanel()
+      catch e
+        @hidePanel()
 
 insertImageView = new InsertImageView()
 module.exports = insertImageView
