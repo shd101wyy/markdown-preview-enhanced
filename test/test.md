@@ -35,12 +35,4 @@ var y = 13
 see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-editors-styles/8321/4)
 - Now support **2-way scroll sync!**
 
-[REQ:slug] Here the requirement title
-
-    Here the requirement text, with *bold*, a [link](https://google.com), and a list:
-
-    - one,
-    - two,
-    - three
-
-[[kkk]]
+[[wikilink]]
