@@ -1,3 +1,6 @@
+## 0.6.9
+* TOC numbered list
+
 ## 0.3.8
 * support better way for customizing markdown down style.
 * change markdown style.
