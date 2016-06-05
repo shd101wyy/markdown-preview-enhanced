@@ -18,6 +18,21 @@ var y = 13
 (defn add [x, y]
   (+ x y))
 ```
+
+```java
+public class Test {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+```
+
+```c
+int main() {
+    printf('Hello World\n');
+    return 0;
+}
+```
 ---
 
 > export your markdown to PDF or Haha
