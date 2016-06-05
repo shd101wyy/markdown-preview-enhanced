@@ -39,31 +39,38 @@
       ],
       "order": 20
     },
+    "enableWikiLinkSyntax": {
+      "title": "Enable Wiki Link syntax",
+      "type": "boolean",
+      "default": true,
+      "description": "Enable Wiki Link syntax support. More information can be found at https://help.github.com/articles/adding-links-to-wikis/",
+      "order": 30
+    },
     "useGitHubStyle": {
       "title": "Use GitHub.com style",
       "type": "boolean",
       "default": true,
       "description": "Use the similar CSS styles for preview as the ones used on GitHub.com.",
-      "order": 30
+      "order": 40
     },
     "useGitHubSyntaxTheme": {
       "title": "Use GitHub.com syntax theme",
       "type": "boolean",
       "default": true,
       "description": "Use similar GitHub.com code block syntax theme.",
-      "order": 40
+      "order": 50
     },
     "liveUpdate": {
       "type": "boolean",
       "default": true,
       "description": "Re-render the preview as the contents of the source changes, without requiring the source buffer to be saved. If disabled, the preview is re-rendered only when the buffer is saved to disk. Disable live update will also disable scroll sync.",
-      "order": 50
+      "order": 60
     },
     "scrollSync": {
       "type": "boolean",
       "default": true,
       "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling.",
-      "order": 60
+      "order": 70
     },
     "exportPDFPageFormat": {
       "title": "Pdf Page Format",
@@ -77,7 +84,7 @@
         "Letter",
         "Tabloid"
       ],
-      "order": 70
+      "order": 80
     },
     "orientation": {
       "title": "Pdf Page Orientation",
@@ -87,7 +94,7 @@
         "portrait",
         "landscape"
       ],
-      "order": 80
+      "order": 90
     },
     "marginsType": {
       "title": "Pdf Margin type",
@@ -98,41 +105,41 @@
         "no margin",
         "minimum margin"
       ],
-      "order": 90
+      "order": 100
     },
     "printBackground": {
       "title": "Print Background when generating pdf",
       "type": "boolean",
       "default": true,
       "description": "Include background color when generating pdf.",
-      "order": 100
+      "order": 110
     },
     "pdfUseGithub": {
       "title": "Use Github style when generating pdf",
       "type": "boolean",
       "default": true,
       "description": "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf.",
-      "order": 110
+      "order": 120
     },
     "pdfOpenAutomatically": {
       "title": "Open pdf file immediately after it is generated",
       "type": "boolean",
       "default": true,
       "description": "If you enabled this option, then when pdf is generated, it will be opened by pdf viewer. For example, on Mac OS X, it will be opened by Preview.",
-      "order": 120
+      "order": 130
     },
     "openPreviewPaneAutomatically": {
       "title": "Open preview pane automatically when opening a markdown file",
       "type": "boolean",
       "default": true,
-      "order": 130
+      "order": 140
     },
     "rootImageFolderPath": {
       "title": "Root image folder path",
       "description": "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'",
       "type": "string",
       "default": "/assets",
-      "order": 140
+      "order": 150
     }
   }
 }
