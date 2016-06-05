@@ -288,6 +288,10 @@
 
   pre {
     word-wrap: normal;
+
+    .section {
+      opacity: 1;
+    }
   }
 
   pre code,
@@ -747,6 +751,11 @@
 
     .punctuation.section.function.scss {
       color: @green
+    }
+
+    .punctuation,
+    .meta.method-call, .meta.method {
+      color: @syntax-text-color;
     }
 
 
