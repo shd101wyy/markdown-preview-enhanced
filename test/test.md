@@ -6,13 +6,14 @@
 
 ### 啦啦啦
 ```javascript
+// this is comment
 var add = function(x, y){
     return x + y
 }
 var x = 12
 var y = 13
 ```
-```lisp
+```clojure 
 (def x 12)
 (def y 20)
 (defn add [x, y]
@@ -28,6 +29,9 @@ public class Test {
 ```
 
 ```c
+/**
+ * This is comment
+ */
 int main() {
     printf('Hello World\n');
     return 0;

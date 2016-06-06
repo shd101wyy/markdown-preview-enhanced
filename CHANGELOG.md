@@ -1,5 +1,13 @@
+## 0.7.1
+* [ ] support customizable math delimiters
+* [ ] increase MathJax rendering speed
+* [x] fix code block `//` comment color bug (现在是黑色的。。。)
+* [ ] fix WikiLink [#45](https://github.com/shd101wyy/markdown-preview-enhanced/issues/45)
+* [ ] fix TOC header bug [#48](https://github.com/shd101wyy/markdown-preview-enhanced/issues/48)
+* [ ] add `javascript` support [#47](https://github.com/shd101wyy/markdown-preview-enhanced/issues/47) (可能无法完成)
+
 ## 0.6.9
-* TOC numbered list
+* [x] TOC numbered list
 
 ## 0.3.8
 * support better way for customizing markdown down style.
