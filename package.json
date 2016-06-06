@@ -50,7 +50,7 @@
       "title": "Block Indicator",
       "type": "string",
       "default": "$$",
-      "description": "Use customized Math expression block indicator. By default it is $$",
+      "description": "Use customized Math expression block indicator(\\n as newline character). By default it is $$",
       "order": 22
     },
     "enableWikiLinkSyntax": {
