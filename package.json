@@ -39,6 +39,20 @@
       ],
       "order": 20
     },
+    "indicatorForMathRenderingInline": {
+      "title": "Inline Indicator",
+      "type": "string",
+      "default": "$",
+      "description": "Use customized Math expression inline indicator. By default it is $",
+      "order": 21
+    },
+    "indicatorForMathRenderingBlock": {
+      "title": "Block Indicator",
+      "type": "string",
+      "default": "$$",
+      "description": "Use customized Math expression block indicator(\\n as newline character). By default it is $$",
+      "order": 22
+    },
     "enableWikiLinkSyntax": {
       "title": "Enable Wiki Link syntax",
       "type": "boolean",
