@@ -90,8 +90,13 @@ class InsertImageView extends View
     @hidePanel()
 
     editor = @editor
-    projectDirectoryPath = editor.project.getPaths()[0]
+    editorPath = editor.getPath()
     rootImageFolderPath = atom.config.get 'markdown-preview-enhanced.rootImageFolderPath'
+
+    for projectDirectory in editor.project.rootDirectories
+      if projectDirectory.contains(editorPath)
+        projectDirectoryPath = projectDirectory.getPath()
+        break
 
     if rootImageFolderPath[rootImageFolderPath.length - 1] == '/'
       rootImageFolderPath = rootImageFolderPath.slice(0, rootImageFolderPath.length - 1)
