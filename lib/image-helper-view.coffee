@@ -91,21 +91,21 @@ class InsertImageView extends View
 
     editor = @editor
     editorPath = editor.getPath()
-    rootImageFolderPath = atom.config.get 'markdown-preview-enhanced.rootImageFolderPath'
+    editorDirectoryPath = editor.getDirectoryPath()
+    imageFolderPath = atom.config.get 'markdown-preview-enhanced.imageFolderPath'
 
-    for projectDirectory in editor.project.rootDirectories
-      if projectDirectory.contains(editorPath)
-        projectDirectoryPath = projectDirectory.getPath()
-        break
+    if imageFolderPath[imageFolderPath.length - 1] == '/'
+      imageFolderPath = imageFolderPath.slice(0, imageFolderPath.length - 1)
 
-    if rootImageFolderPath[rootImageFolderPath.length - 1] == '/'
-      rootImageFolderPath = rootImageFolderPath.slice(0, rootImageFolderPath.length - 1)
-
-    if rootImageFolderPath[0] != '/'
-      rootImageFolderPath = '/' + rootImageFolderPath
-
-    if file and projectDirectoryPath
-      assetDirectory = new Directory(path.resolve(projectDirectoryPath, ".#{rootImageFolderPath}"))
+    if file
+      if imageFolderPath[0] == '/' # root folder
+        for projectDirectory in editor.project.rootDirectories
+          if projectDirectory.contains(editorPath)
+            projectDirectoryPath = projectDirectory.getPath()
+            break
+        assetDirectory = new Directory(path.resolve(projectDirectoryPath, ".#{imageFolderPath}"))
+      else # relative folder
+        assetDirectory = new Directory(path.resolve(editorDirectoryPath, imageFolderPath))
 
       assetDirectory.create().then (flag)=>
         fileName = file.name
@@ -139,7 +139,7 @@ class InsertImageView extends View
 
           atom.notifications.addSuccess("Finish copying image", detail: "#{file.name} has been copied to folder #{assetDirectory.path}")
 
-          url = "#{rootImageFolderPath}/#{fileName}"
+          url = "#{imageFolderPath}/#{fileName}"
           if url.indexOf(' ') >= 0
             url = "<#{url}>"
           editor.insertText("![#{description}](#{url})")
@@ -206,15 +206,12 @@ class InsertImageView extends View
     $(@element).find('input[type="file"]').val('')
 
     copyLabel = $(@element).find('.copy-label')
-    rootImageFolderPath = atom.config.get 'markdown-preview-enhanced.rootImageFolderPath'
+    imageFolderPath = atom.config.get 'markdown-preview-enhanced.imageFolderPath'
 
-    if rootImageFolderPath[rootImageFolderPath.length - 1] == '/'
-      rootImageFolderPath = rootImageFolderPath.slice(0, rootImageFolderPath.length - 1)
+    if imageFolderPath[imageFolderPath.length - 1] == '/'
+      imageFolderPath = imageFolderPath.slice(0, imageFolderPath.length - 1)
 
-    if rootImageFolderPath[0] != '/'
-      rootImageFolderPath = '/' + rootImageFolderPath
-
-    copyLabel.html  "Copy image to root <a>#{rootImageFolderPath}</a> folder"
+    copyLabel.html  "Copy image to #{if imageFolderPath[0] == '/' then 'root' else 'relative'} <a>#{imageFolderPath}</a> folder"
 
     copyLabel.find('a').on 'click', ()=>
       try

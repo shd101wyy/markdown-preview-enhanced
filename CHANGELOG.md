@@ -2,10 +2,10 @@
 * [ ] support customizable math delimiters
 * [ ] increase MathJax rendering speed
 * [x] fix code block `//` comment color bug (现在是黑色的。。。)
-* [ ] fix WikiLink [#45](https://github.com/shd101wyy/markdown-preview-enhanced/issues/45)
+* [x] fix WikiLink [#45](https://github.com/shd101wyy/markdown-preview-enhanced/issues/45)
 * [ ] fix TOC header bug [#48](https://github.com/shd101wyy/markdown-preview-enhanced/issues/48)
 * [ ] add `javascript` support [#47](https://github.com/shd101wyy/markdown-preview-enhanced/issues/47) (可能无法完成)
-* [ ] image path config [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30#issuecomment-224273160)
+* [x] image path config [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30#issuecomment-224273160)
 * [x] fix image project paths bug [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues/34#issuecomment-224303126)
 
 ## 0.6.9

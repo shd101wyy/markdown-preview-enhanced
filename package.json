@@ -134,8 +134,8 @@
       "default": true,
       "order": 140
     },
-    "rootImageFolderPath": {
-      "title": "Root image folder path",
+    "imageFolderPath": {
+      "title": "Image save folder path",
       "description": "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'",
       "type": "string",
       "default": "/assets",
