@@ -30,7 +30,7 @@
     },
     "mathRenderingOption": {
       "type": "string",
-      "default": "MathJax",
+      "default": "KaTeX",
       "description": "Choose the Math expression rendering method here. You can also disable math rendering if you want by choosing 'None'.",
       "enum": [
         "KaTeX",

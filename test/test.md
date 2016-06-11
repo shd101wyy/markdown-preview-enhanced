@@ -13,14 +13,15 @@ var add = function(x, y){
 var x = 12
 var y = 13
 ```
-```clojure 
+```clojure
 (def x 12)
 (def y 20)
-(defn add [x, y]
-  (+ x y))
+(defn add [x y] (+ x y))
 ```
 
 ```java
+// Java Comment
+/**  This is Java Comment **/
 public class Test {
   public static void main(String[] args) {
     System.out.println("Hello World");
