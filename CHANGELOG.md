@@ -1,5 +1,5 @@
 ## 0.7.1
-* [ ] support customizable math delimiters
+* [x] support customizable math delimiters
 * [ ] increase MathJax rendering speed
 * [x] fix code block `//` comment color bug (现在是黑色的。。。)
 * [x] fix WikiLink [#45](https://github.com/shd101wyy/markdown-preview-enhanced/issues/45)
