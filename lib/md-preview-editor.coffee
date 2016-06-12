@@ -96,13 +96,15 @@ class MarkdownPreviewEditor extends ScrollView
       else
         mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
+      inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
+      block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
       if offline
         mathStyle = "
         <script type=\"text/x-mathjax-config\">
           MathJax.Hub.Config({
             messageStyle: 'none',
-            tex2jax: {inlineMath: [['$','$']],
-                      displayMath: [['$$', '$$']],
+            tex2jax: {inlineMath: #{inline},
+                      displayMath: #{block},
                       processEscapes: true}
           });
         </script>
@@ -115,8 +117,8 @@ class MarkdownPreviewEditor extends ScrollView
         <script type=\"text/x-mathjax-config\">
           MathJax.Hub.Config({
             messageStyle: 'none',
-            tex2jax: {inlineMath: [['$','$']],
-                      displayMath: [['$$', '$$']],
+            tex2jax: {inlineMath: #{inline},
+                      displayMath: #{block},
                       processEscapes: true}
           });
         </script>

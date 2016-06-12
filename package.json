@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "The 'best' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "cheerio": "^0.20.0",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
-    "mermaid": "^0.5.8",
+    "mermaid": "^6.0.0",
     "remarkable": "^1.6.2",
     "temp": "^0.8.3",
     "uslug": "^1.0.4"
@@ -42,15 +42,15 @@
     "indicatorForMathRenderingInline": {
       "title": "Inline Indicator",
       "type": "string",
-      "default": "$",
-      "description": "Use customized Math expression inline indicator. By default it is $",
+      "default": "[[\"$\", \"$\"]]",
+      "description": "Use customized Math expression inline indicator. By default it is '[[\"$\", \"$\"]]', which means content within '**$**' and '**$**' will be rendered in inline mode. You can also define multiple indicators separated by comma. For example, '[[\"$\", \"$\"], [\"\\\\\\\\(\", \"\\\\\\\\)\"]]' will render inline math expression within '**$**' and '**$**', '**\\\\(**' and '**\\\\)**'. **You may need to restart atom after making changes here**",
       "order": 21
     },
     "indicatorForMathRenderingBlock": {
       "title": "Block Indicator",
       "type": "string",
-      "default": "$$",
-      "description": "Use customized Math expression block indicator(\\n as newline character). By default it is $$",
+      "default": "[[\"$$\", \"$$\"]]",
+      "description": "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]",
       "order": 22
     },
     "enableWikiLinkSyntax": {

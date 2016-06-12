@@ -99,7 +99,7 @@ class InsertImageView extends View
 
     if file
       if imageFolderPath[0] == '/' # root folder
-        for projectDirectory in editor.project.rootDirectories
+        for projectDirectory in atom.project.rootDirectories
           if projectDirectory.contains(editorPath)
             projectDirectoryPath = projectDirectory.getPath()
             break
