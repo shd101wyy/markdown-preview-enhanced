@@ -99,9 +99,8 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
 * **Image Helper**  
-	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/).
-	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)
-
+	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/) (imgur 用不了的可以用 sm.ms) .
+	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)  
 ## For Developer
 Manual installation instruction can be found [here](./DEVELOPER.md)
 

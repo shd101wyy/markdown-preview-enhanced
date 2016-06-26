@@ -155,6 +155,16 @@
       "type": "string",
       "default": "/assets",
       "order": 150
+    },
+    "imageUploader": {
+      "title": "Image Uploader",
+      "description": "you can choose different image uploader to upload image.",
+      "type": "string",
+      "default": "imgur",
+      "enum": [
+        "imgur",
+        "sm.ms"
+      ]
     }
   }
 }

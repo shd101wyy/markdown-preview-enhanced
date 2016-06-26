@@ -11,7 +11,7 @@ module.exports = MarkdownPreviewEnhanced =
   katexStyle: null,
 
   activate: (state) ->
-    console.log 'actvate markdown-preview-enhanced', state
+    # console.log 'actvate markdown-preview-enhanced', state
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
@@ -44,11 +44,29 @@ module.exports = MarkdownPreviewEnhanced =
         if @preview.editor != editor
           @preview.bindEditor(editor)
 
+    # automatically open preview when activate a markdown file
+    # if 'openPreviewPaneAutomatically' option is enable
+    atom.workspace.onDidOpen (event)=>
+      if atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
+        if event.uri and
+            event.item and
+            event.uri.endsWith('.md')
+          pane = event.pane
+          panes = atom.workspace.getPanes()
+
+          # if the markdown file is opened on the right pane, then move it to the left pane. Issue #25
+          if pane != panes[0]
+            pane.moveItemToPane(event.item, panes[0], 0) # move md to left pane.
+            panes[0].setActiveItem(event.item)
+
+          editor = event.item
+          @startMDPreview(editor)
+
   deactivate: ->
     @subscriptions.dispose()
     @preview.destroy()
 
-    console.log 'deactivate markdown-preview-enhanced'
+    # console.log 'deactivate markdown-preview-enhanced'
 
   serialize: ->
     # console.log 'package serialize'
