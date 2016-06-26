@@ -1,3 +1,6 @@
+## 0.7.2
+* [ ] preview black color background problem
+ 
 ## 0.7.1
 * [x] support customizable math delimiters
 * [ ] increase MathJax rendering speed
