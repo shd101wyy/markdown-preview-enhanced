@@ -159,11 +159,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewScrollDelay = Date.now() + 500
 
       if event.oldScreenPosition.row != event.newScreenPosition.row or event.oldScreenPosition.column == 0
-        if event.newScreenPosition.row == 0
+        lineNo = event.newScreenPosition.row
+        if lineNo == 0
           @element.scrollTop = 0
           return
+        else if lineNo == @editor.getScreenLineCount() - 1 # last row
+          @element.scrollTop = @element.offsetHeight - 16
+          return
 
-        lineNo = event.newScreenPosition.row
         @scrollSyncToLineNo(lineNo)
 
   initViewEvent: ->
@@ -286,8 +289,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   bindTagAClickEvent: ()->
     as = @element.getElementsByTagName('a')
 
-    for a in as
-      href = a.getAttribute('href')
+    analyzeHref = (href)=>
       if href and href[0] == '#'
         targetElement = @element.querySelector("[id=\"#{href.slice(1)}\"]") # fix number id bug
         if targetElement
@@ -299,11 +301,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
               offsetTop += el.offsetTop
               el = el.offsetParent
 
+            console.log offsetTop, el, targetElement
+
             if @element.scrollTop > offsetTop
-              @element.scrollTop = offsetTop - 32
+              @element.scrollTop = offsetTop - 32 - targetElement.offsetHeight
             else
               @element.scrollTop = offsetTop
-
       else
         a.onclick = ()=>
           # open md and markdown preview
@@ -316,10 +319,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
               split: 'left',
               searchAllPanes: true
 
+    for a in as
+      href = a.getAttribute('href')
+      analyzeHref(href)
+
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
     for checkbox in checkboxs
-      checkbox = checkboxs[i]
       this_ = this
       checkbox.onclick = ()->
         if !this_.editor
