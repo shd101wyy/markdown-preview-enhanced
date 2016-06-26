@@ -55,7 +55,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @uri
 
   getProjectDirectoryPath: ->
-    if @editor
+    if !@editor
       return ''
 
     editorPath = @editor.getPath()

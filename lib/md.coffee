@@ -138,7 +138,7 @@ md.renderer.rules.math = (tokens, idx)->
 # inline [[]] rule
 # [[...]]
 md.inline.ruler.before 'autolink', 'wikilink',
-  (state, slient)->
+  (state, silent)->
     if !enableWikiLinkSyntax or !state.src.startsWith('[[', state.pos)
       return false
     content = null
@@ -177,7 +177,7 @@ md.renderer.rules.wikilink = (tokens, idx)->
   linkText = splits[0].trim()
   wikiLink = if splits.length == 2 then "#{splits[1].trim()}.md" else "#{linkText}.md"
 
-  return "<a href=\"#{WikiLink}\">#{linkText}</a>"
+  return "<a href=\"#{wikiLink}\">#{linkText}</a>"
 
 # custom comment
 md.block.ruler.before 'code', 'custom-comment',
@@ -323,6 +323,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
   $('img').each (i, imgElement)->
     img = $(imgElement)
     src = img.attr('src')
+
     if src and
       (!(src.startsWith('http://') or
         src.startsWith('https://') or

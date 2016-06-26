@@ -46,7 +46,8 @@ int main() {
 
 ---
 
-![markdown-icon](/markdown.png)
+![markdown-icon](/markdown.png)  
+![markdown-icon](../markdown.png)
 
 ---
 ```mermaid
