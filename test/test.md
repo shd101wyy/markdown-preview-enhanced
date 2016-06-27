@@ -64,7 +64,6 @@ graph TD;
     A-->B;
     A-->C;
     B-->D;
-    C-->D;
 ```
 
 ```mermaid
@@ -106,7 +105,13 @@ graph LR
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
 
+```puml
+A -> B
+B -> C
+```
+
 **Bugs Fix**  
+- too many bugs
 - [\$ bug](https://github.com/shd101wyy/markdown-preview-enhanced/issues/2)  
   \$ 12 + \$ 13 = 12
 - the local font family for **styles/katex.min.less** should be eg: **atom://markdown-preview-enhanced/styles/fonts/KaTeX_AMS-Regular.eot** instead of **fonts/blabla.eot**   

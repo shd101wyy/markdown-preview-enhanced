@@ -374,13 +374,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)->
         graph = document.createElement 'div'
-        graph.classList.add('plantuml-svg')
+        graph.classList.add('plantuml')
+        graph.setAttribute 'data-original', text
         graph.innerHTML = outputHTML
         el?.parentElement?.replaceChild graph, el
 
     for el in els
-      helper(el, el.innerText)
-      el.innerHTML = 'rendering graph...\n' + el.innerHTML
+      if el.tagName == 'PRE'
+        helper(el, el.innerText)
+        el.innerHTML = 'rendering graph...\n' + el.innerHTML
 
   ## Utilities
   openInBrowser: ()->

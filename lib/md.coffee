@@ -311,7 +311,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # resolve image path and pre code block...
-resolveImagePathAndCodeBlock = (html, markdownPreview, option={isSavingToHTML: false, isForPreview: true})->
+resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
   rootDirectoryPath = markdownPreview.rootDirectoryPath
   projectDirectoryPath = markdownPreview.projectDirectoryPath
 
@@ -351,7 +351,6 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={isSavingToHTML: f
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
     $(preElement).replaceWith(highlightedBlock)
 
-  plantUMLCount = 0
   $('pre').each (i, preElement)->
     if preElement.children[0].name == 'code'
       codeBlock = $(preElement).children().first()
@@ -368,17 +367,38 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={isSavingToHTML: f
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        $(preElement).replaceWith "<div class=\"mermaid\"> #{text} </div>"
-    else if lang == 'plantuml' or lang == 'puml'
-      console.log option
-      if option.isForPreview
-        $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
-      else # just get the rendered graph from preview @element
-        window.markdownPreview = markdownPreview
-        graph = markdownPreview.getElement().getElementsByClassName('plantuml-svg')[plantUMLCount]
-        plantUMLCount += 1
+        if option.isForPreview
+          if !graphData.mermaid_s.length
+            $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\"> #{text} </div>"
+          else
+            element = graphData.mermaid_s.splice(0, 1)[0]# get the first element
+            if element.getAttribute('data-original') == text # graph not changed
+              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\" data-processed=\"true\"> #{element.innerHTML} </div>"
+            else
+              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\"> #{text} </div>"
+        else  # just get the rendered graph from preview @element
+          graph = graphData.mermaid_s.splice(0, 1)[0]
+          if graph
+            $(preElement).replaceWith "<div class=\"mermaid\" data-processed=\"true\">#{graph.innerHTML}</div>"
+          else
+            $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
-        if graph
+    else if lang == 'plantuml' or lang == 'puml'
+      if option.isForPreview
+        # check whether content changed or not
+        if !graphData.plantuml_s.length
+          $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+        else
+          element = graphData.plantuml_s.splice(0, 1)[0] # get the first element
+          if element.getAttribute('data-original') == text # graph not changed
+            $(preElement).replaceWith "<div class=\"plantuml\" data-original=\"#{text}\">#{element.innerHTML}</div>"
+          else
+            $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+
+      else # just get the rendered graph from preview @element
+        graph = graphData.plantuml_s.splice(0, 1)[0]
+
+        if graph and graph.tagName == 'DIV'
           $(preElement).replaceWith "<div>#{graph.innerHTML}</div>"
         else
           $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
@@ -402,6 +422,12 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   tocStartLine = -1
   tocEndLine = -1
   tocOrdered = false
+
+  # set graph data
+  # so that we won't rerender the graph that hasn't changed
+  graphData = {}
+  graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
+  graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -499,7 +525,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         html = md.render(editor.getText())
 
   markdownPreview.headings = headings
-  return resolveImagePathAndCodeBlock(html, markdownPreview, option)
+  return resolveImagePathAndCodeBlock(html, markdownPreview, graphData, option)
 
 module.exports = {
   parseMD,
