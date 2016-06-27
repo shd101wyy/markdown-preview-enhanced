@@ -374,6 +374,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)->
         graph = document.createElement 'div'
+        graph.classList.add('plantuml-svg')
         graph.innerHTML = outputHTML
         el?.parentElement?.replaceChild graph, el
 
@@ -411,11 +412,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHtml})->
+  getHTMLContent: ({isForPrint, offline, isSavingToHTML})->
     isForPrint ?= false
     offline ?= false
-    isSavingToHtml ?= false
-
+    isSavingToHTML ?= false
     return if not @editor
 
     textContent = @editor.getText()
@@ -423,7 +423,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    htmlContent = parseMD(this, {isSavingToHtml})
+    htmlContent = parseMD(this, {isSavingToHTML, isForPreview: false})
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...

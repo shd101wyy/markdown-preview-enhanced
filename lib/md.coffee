@@ -311,7 +311,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # resolve image path and pre code block...
-resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
+resolveImagePathAndCodeBlock = (html, markdownPreview, option={isSavingToHTML: false, isForPreview: true})->
   rootDirectoryPath = markdownPreview.rootDirectoryPath
   projectDirectoryPath = markdownPreview.projectDirectoryPath
 
@@ -332,11 +332,11 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
       (src.startsWith('./') or
         src.startsWith('../') or
         src[0] != '/')
-      if !option.isSavingToHtml
+      if !option.isSavingToHTML
         img.attr('src', path.resolve(rootDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
-      if (option.isSavingToHtml)
+      if (option.isSavingToHTML)
         img.attr('src', path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
         img.attr('src', path.resolve(projectDirectoryPath, '.' + src))
@@ -351,6 +351,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
     $(preElement).replaceWith(highlightedBlock)
 
+  plantUMLCount = 0
   $('pre').each (i, preElement)->
     if preElement.children[0].name == 'code'
       codeBlock = $(preElement).children().first()
@@ -369,7 +370,18 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
       if mermaidAPI.parse(text.trim())
         $(preElement).replaceWith "<div class=\"mermaid\"> #{text} </div>"
     else if lang == 'plantuml' or lang == 'puml'
-      $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+      console.log option
+      if option.isForPreview
+        $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+      else # just get the rendered graph from preview @element
+        window.markdownPreview = markdownPreview
+        graph = markdownPreview.getElement().getElementsByClassName('plantuml-svg')[plantUMLCount]
+        plantUMLCount += 1
+
+        if graph
+          $(preElement).replaceWith "<div>#{graph.innerHTML}</div>"
+        else
+          $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
     else
       renderCodeBlock(preElement, text, lang)
 
@@ -377,7 +389,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
 
 
 # parse markdown content to html
-parseMD = (markdownPreview, option={isSavingToHtml: false})->
+parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})->
   editor = markdownPreview.editor
 
   inputString = editor.getText()
@@ -425,8 +437,8 @@ parseMD = (markdownPreview, option={isSavingToHtml: false})->
       if tocStartLine == -1
         tocStartLine = tokens[idx].line
 
-        option = tokens[idx].option
-        if option.orderedList and option.orderedList != '0'
+        opt = tokens[idx].option
+        if opt.orderedList and opt.orderedList != '0'
           tocOrdered = true
 
       else
