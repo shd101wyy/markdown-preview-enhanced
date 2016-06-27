@@ -6,22 +6,14 @@
       'command': 'markdown-preview-enhanced:toggle'
     }
   ],
-  '.markdown-preview-enhanced-editor': [
-    {
-      'label': 'Save As PDF'
-      'command': 'markdown-preview-enhanced:save-as-pdf'
-    }
-    {
-      'label': 'Save As HTML'
-      'command': 'markdown-preview-enhanced:save-as-html'
-    }
-    {
-      'label': 'Save As HTML (CDN)'
-      'command': 'markdown-preview-enhanced:save-as-html-cdn'
-    }
+  '.markdown-preview-enhanced': [
     {
       'label': 'Open in Browser'
       'command': 'markdown-preview-enhanced:open-in-browser'
+    }
+    {
+      'label': 'Export to Disk'
+      'command': 'markdown-preview-enhanced:export-to-disk'
     }
   ]
 'menu': [

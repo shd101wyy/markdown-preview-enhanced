@@ -1,8 +1,13 @@
 {Emitter, CompositeDisposable} = require 'atom'
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
+fs = require 'fs'
+temp = require 'temp'
+{exec} = require 'child_process'
 
 {parseMD, buildScrollMap} = require './md'
+{getMarkdownPreviewCSS} = require './style'
+documentExporter = require './exporter-view'
 
 
 module.exports =
@@ -35,6 +40,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @resizeEvent = ()=>
       @scrollMap = null
     window.addEventListener 'resize', @resizeEvent
+
+    # right click event
+    atom.commands.add @element,
+      'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
+      'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
 
   @content: ->
     @div class: 'markdown-preview-enhanced', =>
@@ -356,6 +366,123 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
+
+  ## Utilities
+  openInBrowser: ()->
+    return if not @editor
+
+    htmlContent = @getHTMLContent offline: true
+
+    temp.open
+      prefix: 'markdown-preview-enhanced',
+      suffix: '.html', (err, info)=>
+        throw err if err
+
+        fs.write info.fd, htmlContent, (err)=>
+          throw err if err
+          ## open in browser
+          @openFile info.path
+
+  exportToDisk: ()->
+    null
+
+  # open html file in browser or open pdf file in reader ... etc
+  openFile: (filePath)->
+    if process.platform == 'win32'
+      cmd = 'explorer'
+    else if process.platform == 'darwin'
+      cmd = 'open'
+    else
+      cmd = 'xdg-open'
+
+    exec "#{cmd} #{filePath}"
+
+  getHTMLContent: ({isForPrint, offline, isSavingToHtml})->
+    isForPrint ?= false
+    offline ?= false
+    isSavingToHtml ?= false
+
+    return if not @editor
+
+    textContent = @editor.getText()
+    useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
+    useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
+    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
+
+    htmlContent = parseMD(this, {isSavingToHtml})
+
+    # as for example black color background doesn't produce nice pdf
+    # therefore, I decide to print only github style...
+    if isForPrint
+      useGitHubStyle = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
+
+    if mathRenderingOption == 'KaTeX'
+      if offline
+        mathStyle = "<link rel=\"stylesheet\"
+              href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+      else
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+    else if mathRenderingOption == 'MathJax'
+      inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
+      block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
+      if offline
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            messageStyle: 'none',
+            tex2jax: {inlineMath: #{inline},
+                      displayMath: #{block},
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        "
+      else
+        # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+        mathStyle = "
+        <script type=\"text/x-mathjax-config\">
+          MathJax.Hub.Config({
+            messageStyle: 'none',
+            tex2jax: {inlineMath: #{inline},
+                      displayMath: #{block},
+                      processEscapes: true}
+          });
+        </script>
+        <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
+        "
+    else
+      mathStyle = ''
+
+    if offline
+      mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
+      mermaidScript = "<script src=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.min.js')}\"></script>"
+    else
+      mermaidStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.css\">"
+      mermaidScript = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.js\"></script>"
+
+    title = @getFileName()
+    title = title.slice(0, title.length - 3) # remove '.md'
+    htmlContent = "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>#{title}</title>
+      <meta charset=\"utf-8\">
+      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+      <style> #{getMarkdownPreviewCSS()} </style>
+      #{mathStyle}
+      #{mermaidStyle}
+      #{mermaidScript}
+    </head>
+    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
+
+    #{htmlContent}
+
+    </body>
+  </html>
+    "
+
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
