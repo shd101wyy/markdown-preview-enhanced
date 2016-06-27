@@ -12,6 +12,7 @@ toc = require('./toc')
 mathRenderingOption = null
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
+globalMathJaxData = {}
 
 mermaidAPI.initialize startOnLoad: false
 
@@ -133,7 +134,25 @@ md.renderer.rules.math = (tokens, idx)->
     catch error
       return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
   else if mathRenderingOption == 'MathJax'
-    return openTag + content + closeTag
+    text = openTag + content + closeTag
+
+    # if it's for preview
+    # we need to save the math expression data to 'data-original' attribute
+    # then we compared it with text to see whether the math expression is modified or not.
+    if globalMathJaxData.isForPreview
+      if !globalMathJaxData.mathjax_s.length
+        return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{text} </div>"
+      else
+        element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+        if element.getAttribute('data-original') == text  # math expression not changed
+          return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{element.innerHTML} </div>"
+        else
+          return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{text} </div>"
+    else
+      ## this doesn't work
+      # element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+      # return "<div class=\"mathjax-exps\"> #{element.innerHTML} </div>"
+      return text
 
 # inline [[]] rule
 # [[...]]
@@ -424,10 +443,16 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   tocOrdered = false
 
   # set graph data
-  # so that we won't rerender the graph that hasn't changed
+  # so that we won't render the graph that hasn't changed
   graphData = {}
   graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
   graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
+
+  # set globalMathJaxData
+  # so that we won't render the math expression that hasn't changed
+  globalMathJaxData = {}
+  globalMathJaxData.isForPreview = option.isForPreview
+  globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>

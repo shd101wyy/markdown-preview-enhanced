@@ -279,24 +279,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     textContent = @editor.getText()
     html = parseMD(this)
 
-    if @mathRenderingOption == 'MathJax' and typeof(MathJax) != 'undefined'
-      temp = document.createElement('div')
-      temp.innerHTML = html
-
-      MathJax.Hub.Queue  ['Typeset', MathJax.Hub, temp],
-                      () =>
-                        if @element
-                          @element.innerHTML = temp.innerHTML
-                          @bindEvents()
-    else
-      @element.innerHTML = html
-      @bindEvents()
+    @element.innerHTML = html
+    @bindEvents()
 
   bindEvents: ->
     @bindTagAClickEvent()
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
+    @renderMathJax()
     @scrollMap = null
 
   # <a href="" > ... </a> click event
@@ -383,6 +374,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if el.tagName == 'PRE'
         helper(el, el.innerText)
         el.innerHTML = 'rendering graph...\n' + el.innerHTML
+
+  renderMathJax: ()->
+    if @mathRenderingOption != 'MathJax' or typeof(MathJax) == 'undefined'
+      return
+
+    els = @element.getElementsByClassName('mathjax-exps')
+
+    for el in els
+      if !el.children.length
+        MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el]
+
 
   ## Utilities
   openInBrowser: ()->
