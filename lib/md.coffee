@@ -141,13 +141,13 @@ md.renderer.rules.math = (tokens, idx)->
     # then we compared it with text to see whether the math expression is modified or not.
     if globalMathJaxData.isForPreview
       if !globalMathJaxData.mathjax_s.length
-        return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{text} </div>"
+        return "<div class=\"mathjax-exps\"> #{text} </div>"
       else
         element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == text  # math expression not changed
           return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{element.innerHTML} </div>"
         else
-          return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{text} </div>"
+          return "<div class=\"mathjax-exps\"> #{text} </div>"
     else
       ## this doesn't work
       # element = globalMathJaxData.mathjax_s.splice(0, 1)[0]

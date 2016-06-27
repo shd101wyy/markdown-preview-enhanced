@@ -380,10 +380,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
 
     els = @element.getElementsByClassName('mathjax-exps')
+    helper = (el, text)->
+      MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
+        el.setAttribute 'data-original', text
 
     for el in els
       if !el.children.length
-        MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el]
+        helper(el, el.innerText)
 
 
   ## Utilities
