@@ -8,6 +8,7 @@ temp = require 'temp'
 {parseMD, buildScrollMap} = require './md'
 {getMarkdownPreviewCSS} = require './style'
 documentExporter = require './exporter-view'
+plantumlAPI = require './puml'
 
 
 module.exports =
@@ -295,6 +296,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @bindTagAClickEvent()
     @initTaskList()
     @renderMermaid()
+    @renderPlantUML()
     @scrollMap = null
 
   # <a href="" > ... </a> click event
@@ -366,6 +368,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
+
+  renderPlantUML: ()->
+    els = @element.getElementsByClassName('plantuml')
+    helper = (el, text)->
+      plantumlAPI.render text, (outputHTML)->
+        graph = document.createElement 'div'
+        graph.innerHTML = outputHTML
+        el?.parentElement?.replaceChild graph, el
+
+    for el in els
+      helper(el, el.innerText)
+      el.innerHTML = 'rendering graph...\n' + el.innerHTML
 
   ## Utilities
   openInBrowser: ()->

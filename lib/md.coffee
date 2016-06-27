@@ -367,7 +367,9 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        $(preElement).replaceWith("<div class=\"mermaid\"> #{text} </div>")
+        $(preElement).replaceWith "<div class=\"mermaid\"> #{text} </div>"
+    else if lang == 'plantuml' or lang == 'puml'
+      $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
     else
       renderCodeBlock(preElement, text, lang)
 
