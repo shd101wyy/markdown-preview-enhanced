@@ -14,6 +14,7 @@
   "dependencies": {
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.20.0",
+    "html-pdf": "^2.0.1",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
     "mermaid": "^6.0.0",

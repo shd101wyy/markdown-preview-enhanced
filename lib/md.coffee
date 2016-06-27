@@ -135,19 +135,20 @@ md.renderer.rules.math = (tokens, idx)->
       return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
   else if mathRenderingOption == 'MathJax'
     text = openTag + content + closeTag
+    tag = if displayMode then 'div' else 'span'
 
     # if it's for preview
     # we need to save the math expression data to 'data-original' attribute
     # then we compared it with text to see whether the math expression is modified or not.
     if globalMathJaxData.isForPreview
       if !globalMathJaxData.mathjax_s.length
-        return "<div class=\"mathjax-exps\"> #{text} </div>"
+        return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
       else
         element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == text  # math expression not changed
-          return "<div class=\"mathjax-exps\" data-original=\"#{text}\"> #{element.innerHTML} </div>"
+          return "<#{tag} class=\"mathjax-exps\" data-original=\"#{text}\">#{element.innerHTML}</#{tag}>"
         else
-          return "<div class=\"mathjax-exps\"> #{text} </div>"
+          return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
     else
       ## this doesn't work
       # element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
@@ -388,13 +389,13 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
       if mermaidAPI.parse(text.trim())
         if option.isForPreview
           if !graphData.mermaid_s.length
-            $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\"> #{text} </div>"
+            $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
           else
             element = graphData.mermaid_s.splice(0, 1)[0]# get the first element
             if element.getAttribute('data-original') == text # graph not changed
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\" data-processed=\"true\"> #{element.innerHTML} </div>"
+              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\" data-processed=\"true\">#{element.innerHTML}</div>"
             else
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\"> #{text} </div>"
+              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
         else  # just get the rendered graph from preview @element
           graph = graphData.mermaid_s.splice(0, 1)[0]
           if graph
