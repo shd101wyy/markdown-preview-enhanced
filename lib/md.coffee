@@ -352,19 +352,24 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, option={})->
     $(preElement).replaceWith(highlightedBlock)
 
   $('pre').each (i, preElement)->
-    codeBlock = $(preElement).children().first()
-    lang = 'text'
-    if codeBlock.attr('class')
-      lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
+    if preElement.children[0].name == 'code'
+      codeBlock = $(preElement).children().first()
+      lang = 'text'
+      if codeBlock.attr('class')
+        lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
+      text = codeBlock.text()
+    else
+      lang = 'text'
+      text = preElement.children[0].data
 
     if lang == 'mermaid'
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
-      if mermaidAPI.parse(codeBlock.text().trim())
-        $(preElement).replaceWith("<div class=\"mermaid\"> #{codeBlock.text()} </div>")
+      if mermaidAPI.parse(text.trim())
+        $(preElement).replaceWith("<div class=\"mermaid\"> #{text} </div>")
     else
-      renderCodeBlock(preElement, codeBlock.text(), lang)
+      renderCodeBlock(preElement, text, lang)
 
   return $.html()
 
@@ -480,7 +485,6 @@ parseMD = (markdownPreview, option={isSavingToHtml: false})->
         html = md.render(editor.getText())
 
   markdownPreview.headings = headings
-
   return resolveImagePathAndCodeBlock(html, markdownPreview, option)
 
 module.exports = {
