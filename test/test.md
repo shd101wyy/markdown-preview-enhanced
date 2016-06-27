@@ -1,10 +1,19 @@
-### This is Markdown Preview with KaTeX Support
+
+<!-- toc orderedList:0 -->
+
+- [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
+	- [啦啦啦](#啦啦啦)
+
+<!-- tocstop -->
+
+# This is Markdown Preview with KaTeX Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
 - write within $\$\$...\$\$$ to render in display mode
     - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
+		- $sin(x) = 1$
 
-### 啦啦啦
+## 啦啦啦
 ```javascript
 // this is comment
 var add = function(x, y){

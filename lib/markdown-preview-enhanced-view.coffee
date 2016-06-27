@@ -37,7 +37,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     window.addEventListener 'resize', @resizeEvent
 
   @content: ->
-    @div class: 'markdown-preview-enhanced'
+    @div class: 'markdown-preview-enhanced', =>
+      @p style: 'font-size: 24px', 'loading preview...'
 
   getTitle: ->
     @getFileName() + ' preview'
@@ -85,6 +86,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     else
       @editor = editor
+      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
       @initEvents()
 
   initEvents: ->
@@ -270,7 +272,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       temp = document.createElement('div')
       temp.innerHTML = html
 
-      Math.Hub.Queue  ['Typeset', MathJax.Hub, temp],
+      MathJax.Hub.Queue  ['Typeset', MathJax.Hub, temp],
                       () =>
                         if @element
                           @element.innerHTML = temp.innerHTML
@@ -300,8 +302,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
             while el and el != @element
               offsetTop += el.offsetTop
               el = el.offsetParent
-
-            console.log offsetTop, el, targetElement
 
             if @element.scrollTop > offsetTop
               @element.scrollTop = offsetTop - 32 - targetElement.offsetHeight
