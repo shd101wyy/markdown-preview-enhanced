@@ -28,13 +28,17 @@ sanitizeContent = (content)->
   # test ![...](...)
   # test [...](...)
   ## <a name="myAnchor"></a>Anchor Header
-  r = /\!?\[([^\]]*)\]\(([^)]*)\)|<([^>]*)>([^<]*)<\/([^>]*)>/g
+  # test [^footnote]
+  r = /\!?\[([^\]]*)\]\(([^)]*)\)|<([^>]*)>([^<]*)<\/([^>]*)>|\[\^([^\]]*)\]/g
   match = null
   while match = r.exec(content)
     output += content.slice(offset, match.index)
     offset = match.index + match[0].length
+
     if match[0][0] == '<'
       output += match[4]
+    else if match[0][0] == '[' and match[0][1] == '^' # footnote
+      output += ''
     else if match[0][0] != '!'
       output += match[1]
     else # image
