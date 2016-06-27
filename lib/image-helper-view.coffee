@@ -38,8 +38,8 @@ class InsertImageView extends View
         @div class: 'uploader-choice', =>
           @span 'use'
           @select class: 'uploader-select', =>
-            @option value='imgur', 'imgur'
-            @option value='sm.ms', 'sm.ms'
+            @option 'imgur'
+            @option 'sm.ms'
           @span 'to upload images'
       @div class: 'close-btn btn', 'close'
 

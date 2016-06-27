@@ -407,7 +407,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @openFile info.path
 
   exportToDisk: ()->
-    null
+    documentExporter.display(this)
 
   # open html file in browser or open pdf file in reader ... etc
   openFile: (filePath)->
@@ -505,7 +505,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   </html>
     "
 
-
+  # We don't need to use this function...
   # Returns an object that can be retrieved when package is activated
   serialize: ->
     null

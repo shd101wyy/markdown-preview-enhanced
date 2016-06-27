@@ -1,5 +1,5 @@
 ## 0.7.2
-* [ ] preview black color background problem
+* [x] preview black color background problem
 
 ## 0.7.1
 * [x] support customizable math delimiters
