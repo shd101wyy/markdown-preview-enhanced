@@ -372,7 +372,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
     $(preElement).replaceWith(highlightedBlock)
 
   $('pre').each (i, preElement)->
-    if preElement.children[0].name == 'code'
+    if preElement.children[0]?.name == 'code'
       codeBlock = $(preElement).children().first()
       lang = 'text'
       if codeBlock.attr('class')
@@ -380,7 +380,10 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
       text = codeBlock.text()
     else
       lang = 'text'
-      text = preElement.children[0].data
+      if preElement.children[0]
+        text = preElement.children[0].data
+      else
+        text = ''
 
     if lang == 'mermaid'
       mermaid.parseError = (err, hash)->
