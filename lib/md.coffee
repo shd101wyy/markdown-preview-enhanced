@@ -7,7 +7,6 @@ Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_module
 {mermaidAPI} = require('mermaid/dist/mermaid')
 
 toc = require('./toc')
-{loadMathJax} = require './mathjax-wrapper'
 {scopeForLanguageName} = require('./extension-helper')
 mathRenderingOption = null
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -22,9 +21,6 @@ atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
       mathRenderingOption = null
     else
       mathRenderingOption = option
-
-      if mathRenderingOption[0] == 'M' # MathJax
-        loadMathJax document
 
 atom.config.observe 'markdown-preview-enhanced.indicatorForMathRenderingInline',
   (indicatorStr)->

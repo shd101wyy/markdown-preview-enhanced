@@ -8,7 +8,7 @@ temp = require 'temp'
 {parseMD, buildScrollMap} = require './md'
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
-
+{loadMathJax} = require './mathjax-wrapper'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -377,8 +377,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         el.innerHTML = 'rendering graph...\n' + el.innerHTML
 
   renderMathJax: ()->
-    if @mathRenderingOption != 'MathJax' or typeof(MathJax) == 'undefined'
-      return
+    return if @mathRenderingOption != 'MathJax'
+    if typeof(MathJax) == 'undefined'
+      return loadMathJax document, ()=> @renderMathJax()
 
     els = @element.getElementsByClassName('mathjax-exps')
     helper = (el, text)->

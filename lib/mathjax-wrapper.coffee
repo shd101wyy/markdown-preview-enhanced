@@ -1,8 +1,8 @@
 path = require('path')
 
 module.exports =
-  loadMathJax: (document)->
-    if typeof(MathJax) == 'undefined' or !MathJax
+  loadMathJax: (document, callback)->
+    if typeof(MathJax) == 'undefined'
       script = document.createElement('script')
       script.addEventListener 'load', ()->
         inline = [['$', '$']]
@@ -36,9 +36,12 @@ module.exports =
         })
 
         MathJax.Hub.Configured()
-
+        callback?()
 
       script.type = 'text/javascript'
       script.src = path.resolve(__dirname, '../mathjax/MathJax.js?delayStartupUntil=configured')
 
       document.getElementsByTagName('head')[0].appendChild(script)
+
+    else
+      callback?()
