@@ -1,8 +1,11 @@
-@import "syntax-variables";
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
 
 .exporter-view {
-  @fg: @syntax-text-color;
-  @bg: @syntax-background-color;
+  @bg: @base-background-color;
 
   padding: 16px;
 
@@ -15,7 +18,7 @@
     height: 1px;
     margin-bottom: 16px;
     // border-bottom-style: dotted;
-    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 4%));
+    background-color: contrast(@bg, lighten(@bg, 4%), darken(@bg, 4%));
   }
 
   .clearfix:after {
@@ -36,7 +39,7 @@
       padding-left: 6px;
       font-size: 12px;
       line-height: 24px;
-      border-left: 4px solid contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 4%));
+      border-left: 4px solid contrast(@bg, lighten(@bg, 4%), darken(@bg, 4%));
 
       &:hover {
         background-color: lighten(@bg, 10%);
