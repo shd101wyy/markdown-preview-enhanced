@@ -506,6 +506,70 @@ class MarkdownPreviewEnhancedView extends ScrollView
   </html>
     "
 
+  # api doc [printToPDF] function
+  # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
+  printPDF: (htmlPath, dist)->
+    return if not @editor
+
+    BrowserWindow = require('remote').require('browser-window')
+    win = new BrowserWindow show: false
+    win.loadUrl htmlPath
+
+    # get margins type
+    marginsType = atom.config.get('markdown-preview-enhanced.marginsType')
+    marginsType = if marginsType == 'default margin' then 0 else
+                  if marginsType == 'no margin' then 1 else 2
+
+
+    # get orientation
+    landscape = atom.config.get('markdown-preview-enhanced.orientation') == 'landscape'
+
+    lastIndexOfSlash = dist.lastIndexOf '/' || 0
+    pdfName = dist.slice(lastIndexOfSlash + 1)
+
+    win.webContents.on 'did-finish-load', ()=>
+      setTimeout(()=>
+        win.webContents.printToPDF
+          pageSize: atom.config.get('markdown-preview-enhanced.exportPDFPageFormat'),
+          landscape: landscape,
+          printBackground: atom.config.get('markdown-preview-enhanced.printBackground'),
+          marginsType: marginsType, (err, data)=>
+            throw err if err
+
+            fs.writeFile dist, data, (err)=>
+              throw err if err
+
+              atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+
+              # open pdf
+              if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+                @openFile dist
+      , 500)
+
+  saveAsPDF: (dist)->
+    return if not @editor
+
+    htmlContent = @getHTMLContent isForPrint: true, offline: true
+    temp.open
+      prefix: 'markdown-preview-enhanced',
+      suffix: '.html', (err, info)=>
+        throw err if err
+        fs.write info.fd, htmlContent, (err)=>
+          throw err if err
+          @printPDF "file://#{info.path}", dist
+
+  saveAsHTML: (dist, offline=true)->
+    return if not @editor
+
+    htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
+
+    lastIndexOfSlash = dist.lastIndexOf '/' || 0
+    htmlFileName = dist.slice(lastIndexOfSlash + 1)
+
+    fs.writeFile dist, htmlContent, (err)=>
+      throw err if err
+      atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
   # We don't need to use this function...
   # Returns an object that can be retrieved when package is activated
   serialize: ->

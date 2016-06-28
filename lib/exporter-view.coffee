@@ -70,6 +70,20 @@ class ExporterView extends View
     @initHTMLPageEvent()
     @initPDFPageEvent()
 
+    $('.export-btn', @element).click ()=>
+      dist = @fileNameInput.getText().trim()
+      if !@markdownPreview or !dist.length
+        atom.notifications.addError('Failed to export document')
+        return
+
+      @hidePanel()
+      if $('.document-pdf', @element).hasClass('selected') # pdf
+        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+        @markdownPreview.saveAsPDF dist
+      else if $('.document-html', @element).hasClass('selected') # html
+        isCDN = $('.cdn-checkbox', @element)[0].checked
+        @markdownPreview.saveAsHTML dist, !isCDN
+
   initHTMLPageEvent: ->
     $('.document-html', @element).on 'click', (e)=>
       $el = $(e.target)
