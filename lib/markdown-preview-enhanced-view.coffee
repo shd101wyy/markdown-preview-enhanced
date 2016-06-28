@@ -7,7 +7,6 @@ temp = require 'temp'
 
 {parseMD, buildScrollMap} = require './md'
 {getMarkdownPreviewCSS} = require './style'
-documentExporter = require './exporter-view'
 plantumlAPI = require './puml'
 
 
@@ -36,6 +35,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
     @previewScrollDelay = Date.now()
+
+    @documentExporter = null # binded in markdown-preview-enhanced.coffee startMD function
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -407,7 +408,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @openFile info.path
 
   exportToDisk: ()->
-    documentExporter.display(this)
+    @documentExporter.display(this)
 
   # open html file in browser or open pdf file in reader ... etc
   openFile: (filePath)->

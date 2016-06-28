@@ -1,19 +1,23 @@
 MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
 {CompositeDisposable} = require 'atom'
 path = require 'path'
-insertImageView = require './image-helper-view'
-
-
+ImageHelperView = require './image-helper-view'
 {getReplacedTextEditorStyles} = require './style'
+ExporterView = require './exporter-view'
+
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
   katexStyle: null,
+  documentExporter: null,
+  imageHelperView: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
+
+    @imageHelperView ?= new ImageHelperView()
 
     # set opener
     atom.workspace.addOpener (uri)=>
@@ -86,6 +90,10 @@ module.exports = MarkdownPreviewEnhanced =
     else if @checkValidMarkdownFile(editor)
       @appendGlobalStyle()
       @preview.bindEditor editor
+
+      if !@documentExporter
+        @documentExporter = new ExporterView()
+        @preview.documentExporter = @documentExporter
       return true
     else
       return false
@@ -191,6 +199,6 @@ module.exports = MarkdownPreviewEnhanced =
   startImageHelper: ()->
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
-      insertImageView.display(editor)
+      @imageHelperView.display(editor)
     else
       atom.notifications.addError('Failed to open Image Helper panel')

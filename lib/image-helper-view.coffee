@@ -7,7 +7,7 @@ fs = require 'fs'
 
 smAPI = require './sm'
 
-class InsertImageView extends View
+class ImageHelperView extends View
   initialize: ()->
     @bindEvents()
 
@@ -243,5 +243,4 @@ class InsertImageView extends View
     uploader = atom.config.get 'markdown-preview-enhanced.imageUploader'
     $(@element).find('.uploader-select').val(uploader)
 
-insertImageView = new InsertImageView()
-module.exports = insertImageView
+module.exports = ImageHelperView
