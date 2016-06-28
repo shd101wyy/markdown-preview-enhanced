@@ -178,7 +178,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @element.scrollTop = 0
           return
         else if lineNo == @editor.getScreenLineCount() - 1 # last row
-          @element.scrollTop = @element.offsetHeight - 16
+          @element.scrollTop = @element.scrollHeight - 16
           return
 
         @scrollSyncToLineNo(lineNo)
