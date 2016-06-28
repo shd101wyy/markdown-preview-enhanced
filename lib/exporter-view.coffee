@@ -115,16 +115,15 @@ class ExporterView extends View
       @fileNameInput.setText(filePath)
 
     ## select
-    $('.format-select', @element).value = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+    $('.format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
     $('.format-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
 
-    $('.orientation-select', @element).value =
-    atom.config.get('markdown-preview-enhanced.orientation')
+    $('.orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
     $('.orientation-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.orientation', this.value)
 
-    $('.margin-select', @element).value = atom.config.get('markdown-preview-enhanced.marginsType')
+    $('.margin-select', @element).val atom.config.get('markdown-preview-enhanced.marginsType')
     $('.margin-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.marginsType', this.value)
 
@@ -148,6 +147,10 @@ class ExporterView extends View
 
   display: (markdownPreview)->
     @markdownPreview = markdownPreview
+
+    if !@markdownPreview.editor
+      return
+
 
     @panel ?= atom.workspace.addModalPanel(item: this, visible: false)
     @panel.show()
