@@ -47,10 +47,10 @@ class ExporterView extends View
           @option 'no margin'
           @option 'minimum margin'
         @br()
-        @label 'Print Background'
+        @label 'Print background'
         @input type: 'checkbox', class: 'print-background-checkbox'
         @br()
-        @label 'Github Style'
+        @label 'Github style'
         @input type: 'checkbox', class: 'github-style-checkbox'
         @br()
         @label 'Open PDF after generation'
@@ -91,6 +91,8 @@ class ExporterView extends View
         $('.selected', @elemnet).removeClass('selected')
         $el.addClass('selected')
 
+        @fileNameInput.focus()
+
       $('.pdf-div', @element).hide()
       $('.html-div', @element).show()
 
@@ -106,6 +108,8 @@ class ExporterView extends View
       if !$el.hasClass('selected')
         $('.selected', @elemnet).removeClass('selected')
         $el.addClass('selected')
+
+        @fileNameInput.focus()
 
       $('.html-div', @element).hide()
       $('.pdf-div', @element).show()

@@ -31,10 +31,10 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle': => @toggle()
       'markdown-preview-enhanced:customize-css': => @customizeCSS()
       'markdown-preview-enhanced:toc-create': => @createTOC()
-      'markdown-preview-enhanced:toggleScrollSync': => @toggleScrollSync()
+      'markdown-preview-enhanced:toggle-scroll-sync': => @toggleScrollSync()
+      'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
-
 
     # when the preview is displayed
     # preview will display the content of pane that is activated
@@ -176,6 +176,15 @@ module.exports = MarkdownPreviewEnhanced =
       atom.notifications.addInfo('Scroll Sync enabled')
     else
       atom.notifications.addInfo('Scroll Sync disabled')
+
+  toggleBreakOnSingleNewline: ()->
+    flag = atom.config.get 'markdown-preview-enhanced.breakOnSingleNewline'
+    atom.config.set('markdown-preview-enhanced.breakOnSingleNewline', !flag)
+
+    if !flag
+      atom.notifications.addInfo('Enabled breaking on single newline')
+    else
+      atom.notifications.addInfo('Disabled breaking on single newline')
 
   insertTable: ()->
     addSpace = (num)->

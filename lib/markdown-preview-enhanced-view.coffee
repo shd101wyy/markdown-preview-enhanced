@@ -246,7 +246,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # scroll sync?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
-      (flag) => @scrollSync = flag
+      (flag) =>
+        @scrollSync = flag
+        @scrollMap = null
 
     # math?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
