@@ -51,12 +51,16 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 	- code block within `mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
 	- <img src="https://cloud.githubusercontent.com/assets/1908863/15132962/468c0dd0-1624-11e6-868c-cf3033ce3b5d.gif">
+- [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
+	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
+	- code block within `puml` or `plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
+	- ![plantuml](http://ooo.0o0.ooo/2016/06/28/57724f5458a59.gif)
 
 ## Usages
-To use this package, press <strong> cmd + shift + p </strong> in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
+To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
 - <strong>Markdown Preview Enhanced: Toggle</strong>
   - Toggle Markdown file preview with KaTeX support.   
-	You can also use the keymap `ctrl+shift+m` to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
+	You can also use the keymap <kbd>ctrl+shift+m</kbd> to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
@@ -64,27 +68,25 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - Enable/Disable scroll sync for preview.
+- <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
+  - Enable/Disable breaking on single newline.
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
   - Insert a markdown table.    
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
-	- With **Image Helper**(still beta), you can quickly insert image url and upload image to [imgur](http://imgur.com/) using imgur API.   
-	Keymap `ctrl+shift+i`
+	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
+	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    
+	- Keymap <kbd>ctrl+shift+i</kbd>    
+	-  ![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)  
 
 ## Preview Context Menu
 **Right click at preview to see the menu**
 
 ![context menu](https://cloud.githubusercontent.com/assets/1908863/14586062/18852988-0451-11e6-9cc0-578d54384926.gif)
 
-- <strong> Save as PDF </strong>
-  - Create PDF in the same directory
-- <strong> Save as HTML </strong>
-  - Create HTML in the same directory
-- <strong> Save as HTML (CDN) </strong>  
-	- Create HTML in the same directory.
-	- Require network connection to render correctly.
-	- This method is different from **Save as HTML** as it will load javascript and css dependencies from `cdn.js` instead of doing so locally.
 - <strong> Open in Browser </strong>
   - Open HTML in browser
+- **Export to Disk**
+	- Export **HTML** or **PDF** file.
 
 ## Settings Panel  
 ![settings_panel](https://cloud.githubusercontent.com/assets/1908863/15383036/44f79cb4-1dc2-11e6-80b3-3b3bdd9ab7d3.gif)
@@ -98,23 +100,21 @@ To use this package, press <strong> cmd + shift + p </strong> in atom editor fir
 	![smart_navigation](https://cloud.githubusercontent.com/assets/1908863/15382175/e5f0a66e-1db9-11e6-9581-3f3ee8dc45dd.gif)  
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
-* **Image Helper**  
-	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/).
-	![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)
 
 ## For Developer
-Manual installation instruction can be found [here](./DEVELOPER.md)
+Manual installation instruction can be found [here](./DEVELOPER.md)   
 
-## Thanks
-Thanks for everyone that supports this package!   
-
+## Thanks  
+Thanks for everyone that supports this package!    
 
 ## TODO
 - [ ] fix bugs
 - [ ] modify css to make preview look nice
 - [ ] epub output
-- [ ] support more image upload methods other than imgur (as imgur is blocked in some countries)
-- [ ] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
+- [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
+- [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
+- [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
+- [ ] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
 
 Thanks for using and supporting this package ;)
 

@@ -5,7 +5,9 @@ imgur = require 'imgur'
 path = require 'path'
 fs = require 'fs'
 
-class InsertImageView extends View
+smAPI = require './sm'
+
+class ImageHelperView extends View
   initialize: ()->
     @bindEvents()
 
@@ -33,6 +35,12 @@ class InsertImageView extends View
         @div class: 'drop-area uploader', =>
           @p class: 'uploader', 'Drop image file here or click me'
           @input class: 'file-uploader uploader', type:'file', style: 'display: none;', multiple: "multiple"
+        @div class: 'uploader-choice', =>
+          @span 'use'
+          @select class: 'uploader-select', =>
+            @option 'imgur'
+            @option 'sm.ms'
+          @span 'to upload images'
       @div class: 'close-btn btn', 'close'
 
   hidePanel: ->
@@ -51,6 +59,7 @@ class InsertImageView extends View
     dropArea = $('.drop-area', @element)
     fileUploader = $('.file-uploader', @element)
 
+    uploaderSelect = $('.uploader-select', @element)
 
     dropArea.on "drop dragend dragstart dragenter dragleave drag dragover", (e)=>
       e.preventDefault()
@@ -63,7 +72,7 @@ class InsertImageView extends View
           for file in e.originalEvent.dataTransfer.files
             @uploadImageFile file
 
-    dropArea.on 'click', (e) ->
+    dropArea.on 'click', (e)->
       e.preventDefault()
       e.stopPropagation()
       $(this).find('input[type="file"]').click()
@@ -78,6 +87,9 @@ class InsertImageView extends View
       else # upload
         for file in e.target.files
           @uploadImageFile file
+
+    uploaderSelect.on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.imageUploader', this.value)
 
   replaceHint: (editor, lineNo, hint, withStr)->
     if editor && editor.buffer && editor.buffer.lines[lineNo].indexOf(hint) >= 0
@@ -144,6 +156,23 @@ class InsertImageView extends View
             url = "<#{url}>"
           editor.insertText("![#{description}](#{url})")
 
+  setUploadedImageURL: (fileName, url, editor, hint, curPos)->
+    if fileName.lastIndexOf('.')
+      description = fileName.slice(0, fileName.lastIndexOf('.'))
+    else
+      description = fileName
+
+    buffer = editor.buffer
+    line = editor.buffer.lines[curPos.row]
+
+    withStr = "![#{description}](#{url})"
+
+    if not @replaceHint(editor, curPos.row, hint, withStr)
+      i = curPos.row - 20
+      while i <= curPos.row + 20
+        if (@replaceHint(editor, i, hint, withStr))
+          break
+        i++
 
   uploadImageFile: (file)->
     fileName = file.name
@@ -151,37 +180,28 @@ class InsertImageView extends View
     @hidePanel()
 
     editor = @editor
-    hint = "![Uploading #{fileName}…]()"
+    uid = Math.random().toString(36).substr(2, 9)
+    hint = "![Uploading #{fileName}… (#{uid})]()"
     curPos = editor.getCursorBufferPosition()
-    editor.insertText(hint)
+    uploader = atom.config.get 'markdown-preview-enhanced.imageUploader'
 
+    editor.insertText(hint)
     atom.views.getView(@editor).focus()
 
-    # A single image
-    imgur.uploadFile(file.path)
-         .then (json)=>
-            if fileName.lastIndexOf('.')
-              description = fileName.slice(0, fileName.lastIndexOf('.'))
-            else
-              description = fileName
-
-            buffer = editor.buffer
-            line = editor.buffer.lines[curPos.row]
-
-            withStr = "![#{description}](#{json.data.link})"
-
-            if not @replaceHint(editor, curPos.row, hint, withStr)
-              i = curPos.row - 20
-              while i <= curPos.row + 20
-                if (@replaceHint(editor, i, hint, withStr))
-                  break
-                i++
-
-            #buffer.setTextInRange([[curPos.row, 0], [curPos.row+1, 0]], line.replace(hint, "![#{description}](#{json.data.link})") + '\n')
-            #editor.setText(editor.getText().replace(hint, "![#{description}](#{json.data.link})"))
-
-         .catch (err)=>
-            atom.notifications.addError(err.message)
+    if uploader == 'imgur'
+      # A single image
+      imgur.uploadFile(file.path)
+           .then (json)=>
+             @setUploadedImageURL fileName, json.data.link, editor, hint, curPos
+           .catch (err)=>
+              atom.notifications.addError(err.message)
+    else # sm.ms
+      smAPI.uploadFile file.path,
+        (err, url)=>
+          if err
+            atom.notifications.addError(err)
+          else
+            @setUploadedImageURL fileName, url, editor, hint, curPos
 
   insertImageURL: ()->
     url = @urlEditor.getText().trim()
@@ -220,5 +240,7 @@ class InsertImageView extends View
       catch e
         @hidePanel()
 
-insertImageView = new InsertImageView()
-module.exports = insertImageView
+    uploader = atom.config.get 'markdown-preview-enhanced.imageUploader'
+    $(@element).find('.uploader-select').val(uploader)
+
+module.exports = ImageHelperView

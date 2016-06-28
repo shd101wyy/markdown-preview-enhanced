@@ -1,7 +1,5 @@
-'úse strict'
-
-// referred from the official Markdown Preview extension-helper.coffee
-let scopesForLanguageName = {
+# referred from the official Markdown Preview extension-helper.coffee
+scopesForLanguageName =
   'sh': 'source.shell',
   'bash': 'source.shell',
   'c': 'source.c',
@@ -36,8 +34,6 @@ let scopesForLanguageName = {
   'xml': 'text.xml',
   'yaml': 'source.yaml',
   'yml': 'source.yaml',
-}
 
-module.exports.scopeForLanguageName  = function(language) {
-  return scopesForLanguageName[language] || ('source.' + language)
-}
+module.exports.scopeForLanguageName  = (language)->
+  return scopesForLanguageName[language] or ('source.' + language)

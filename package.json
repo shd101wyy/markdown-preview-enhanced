@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "The 'best' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -17,7 +17,9 @@
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
     "mermaid": "^6.0.0",
+    "node-plantuml": "^0.4.4",
     "remarkable": "^1.6.2",
+    "request": "^2.72.0",
     "temp": "^0.8.3",
     "uslug": "^1.0.4"
   },
@@ -154,6 +156,16 @@
       "type": "string",
       "default": "/assets",
       "order": 150
+    },
+    "imageUploader": {
+      "title": "Image Uploader",
+      "description": "you can choose different image uploader to upload image.",
+      "type": "string",
+      "default": "imgur",
+      "enum": [
+        "imgur",
+        "sm.ms"
+      ]
     }
   }
 }
