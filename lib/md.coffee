@@ -4,8 +4,8 @@ path = require 'path'
 remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
-{mermaidAPI} = require('mermaid/dist/mermaid')
-
+{File} = require 'atom'
+{mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 toc = require('./toc')
 {scopeForLanguageName} = require('./extension-helper')
 mathRenderingOption = null
@@ -13,8 +13,36 @@ mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
 globalMathJaxData = {}
 
-mermaidAPI.initialize startOnLoad: false
+####################################################
+## Mermaid
+##################################################
+loadMermaidConfig = ()->
+  # mermaid_config.js
+  configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js')
+  mermaidConfigFile = new File(configPath)
+  mermaidConfigFile.create().then (flag)->
+    return require(configPath) if not flag # file already exists
+    mermaidConfigFile.write """
+'use strict'
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
+let config = {
+  startOnLoad: false
+}
 
+module.exports = config || {startOnLoad: false}
+    """
+    return {startOnLoad: false}
+
+mermaidAPI.initialize(loadMermaidConfig())
+
+
+#################################################
+## Math
+#################################################
 atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
   (option)->
     if option == 'None'
@@ -42,6 +70,9 @@ atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
 
+#################################################
+## Remarkable
+#################################################
 defaults =
   html:         true,        # Enable HTML tags in source
   xhtmlOut:     false,       # Use '/' to close single tags (<br />)
@@ -326,6 +357,24 @@ buildScrollMap = (markdownPreview)->
 
   return _scrollMap  # scrollMap's length == screenLineCount
 
+# graphType = 'mermaid' | 'plantuml' | 'wavedrom'
+checkGraph = (graphType, graphArray, preElement, text, option, $, wavedromOffset)->
+  if option.isForPreview
+    if !graphArray.length
+      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
+    else
+      element = graphArray.splice(0, 1)[0] # get the first element
+      if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" data-processed=\"true\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{element.innerHTML}</div>"
+      else
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
+  else
+    element = graphArray.splice(0, 1)[0]
+    if element
+      $(preElement).replaceWith "<div class=\"#{graphType}\">#{element.innerHTML}</div>"
+    else
+      $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+
 # resolve image path and pre code block...
 resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
   rootDirectoryPath = markdownPreview.rootDirectoryPath
@@ -335,27 +384,33 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
     return
 
   $ = cheerio.load(html)
+  wavedromOffset = 0
 
-  $('img').each (i, imgElement)->
+  $('img, a').each (i, imgElement)->
+    srcTag = 'src'
+    if imgElement.name == 'a'
+      srcTag = 'href'
+
     img = $(imgElement)
-    src = img.attr('src')
+    src = img.attr(srcTag)
 
     if src and
       (!(src.startsWith('http://') or
         src.startsWith('https://') or
         src.startsWith('atom://')  or
-        src.startsWith('file://'))) and
+        src.startsWith('file://')  or
+        src[0] == '#')) and
       (src.startsWith('./') or
         src.startsWith('../') or
         src[0] != '/')
       if !option.isSavingToHTML
-        img.attr('src', path.resolve(rootDirectoryPath,  src))
+        img.attr(srcTag, path.resolve(rootDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
       if (option.isSavingToHTML)
-        img.attr('src', path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
+        img.attr(srcTag, path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
-        img.attr('src', path.resolve(projectDirectoryPath, '.' + src))
+        img.attr(srcTag, path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang)->
     highlighter = new Highlights({registry: atom.grammars})
@@ -386,41 +441,15 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        if option.isForPreview
-          if !graphData.mermaid_s.length
-            $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
-          else
-            element = graphData.mermaid_s.splice(0, 1)[0]# get the first element
-            if element.getAttribute('data-original') == text # graph not changed
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\" data-processed=\"true\">#{element.innerHTML}</div>"
-            else
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
-        else  # just get the rendered graph from preview @element
-          graph = graphData.mermaid_s.splice(0, 1)[0]
-          if graph
-            $(preElement).replaceWith "<div class=\"mermaid\" data-processed=\"true\">#{graph.innerHTML}</div>"
-          else
-            $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+        checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $
 
     else if lang == 'plantuml' or lang == 'puml'
-      if option.isForPreview
-        # check whether content changed or not
-        if !graphData.plantuml_s.length
-          $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
-        else
-          element = graphData.plantuml_s.splice(0, 1)[0] # get the first element
-          if element.getAttribute('data-original') == text # graph not changed
-            $(preElement).replaceWith "<div class=\"plantuml\" data-original=\"#{text}\">#{element.innerHTML}</div>"
-          else
-            $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+      checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-      else # just get the rendered graph from preview @element
-        graph = graphData.plantuml_s.splice(0, 1)[0]
+    else if lang == 'wavedrom'
+      $el = checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
 
-        if graph and graph.tagName == 'DIV'
-          $(preElement).replaceWith "<div>#{graph.innerHTML}</div>"
-        else
-          $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+      wavedromOffset += 1
     else
       renderCodeBlock(preElement, text, lang)
 
@@ -447,6 +476,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   graphData = {}
   graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
   graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
+  graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
 
   # set globalMathJaxData
   # so that we won't render the math expression that hasn't changed
@@ -542,6 +572,12 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         tocEnabled = false
         tocStartLine = -1
         tocEndLine = -1
+
+        # set globalMathJaxData
+        # so that we won't render the math expression that hasn't changed
+        globalMathJaxData = {}
+        globalMathJaxData.isForPreview = option.isForPreview
+        globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500

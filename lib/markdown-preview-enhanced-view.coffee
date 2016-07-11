@@ -5,7 +5,6 @@ fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
 
-{parseMD, buildScrollMap} = require './md'
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
 {loadMathJax} = require './mathjax-wrapper'
@@ -38,6 +37,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @documentExporter = null # binded in markdown-preview-enhanced.coffee startMD function
 
+    # this two variables will be got from './md'
+    @parseMD = null
+    @buildScrollMap = null
+
     # when resize the window, clear the editor
     @resizeEvent = ()=>
       @scrollMap = null
@@ -47,9 +50,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     atom.commands.add @element,
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
+      'core:copy': => @copyToClipboard()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced', =>
+    @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, =>
       @p style: 'font-size: 24px', 'loading preview...'
 
   getTitle: ->
@@ -91,18 +95,23 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if not @editor
       atom.workspace
           .open @uri,
-                split: 'right', activatePane: false, searchAllPanes: true
+                split: 'right', activatePane: false, searchAllPanes: false
           .then (e)=>
             @editor = editor
-            @initEvents()
+            setTimeout(@initEvents.bind(this), 0)
 
     else
       @editor = editor
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
-      @initEvents()
+      setTimeout(@initEvents.bind(this), 0)
 
   initEvents: ->
     @updateTabTitle()
+
+    if not @parseMD
+      {@parseMD, @buildScrollMap} = require './md'
+      require '../dependencies/wavedrom/default.js'
+      require '../dependencies/wavedrom/wavedrom.min.js'
 
     @headings = []
     @scrollMap = null
@@ -118,8 +127,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initViewEvent()
     @initSettingsEvents()
 
-
   initEditorEvent: ->
+    editorElement = @editor.getElement()
+
     @disposables.add @editor.onDidDestroy ()=>
       @setTabTitle('unknown preview')
       if @disposables
@@ -138,14 +148,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if not @liveUpdate
         @updateMarkdown()
 
-    @disposables.add @editor.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate
+    @disposables.add editorElement.onDidChangeScrollTop ()=>
+      if !@scrollSync or !@element or !@liveUpdate or !@editor
         return
       if Date.now() < @editorScrollDelay
         return
 
-      editorElement = @editor.getElement()
-      editorHeight = editorElement.getHeight()
+      editorHeight = @editor.getElement().getHeight()
 
       firstVisibleScreenRow = @editor.getFirstVisibleScreenRow()
       lastVisibleScreenRow = firstVisibleScreenRow + Math.floor(editorHeight / @editor.getLineHeightInPixels())
@@ -153,7 +162,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       lineNo = Math.floor((firstVisibleScreenRow + lastVisibleScreenRow) / 2)
 
       if !@scrollMap
-        @scrollMap = buildScrollMap(this)
+        @scrollMap = @buildScrollMap(this)
 
       # disable markdownHtmlView onscroll
       @previewScrollDelay = Date.now() + 500
@@ -194,7 +203,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # try to find corresponding screen buffer row
       if !@scrollMap
-        @scrollMap = buildScrollMap(this)
+        @scrollMap = @buildScrollMap(this)
 
       i = 0
       j = @scrollMap.length - 1
@@ -258,7 +267,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
-      @scrollMap = buildScrollMap(this)
+      @scrollMap = @buildScrollMap(this)
 
     editorElement = @editor.getElement()
 
@@ -280,7 +289,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseDelay = Date.now() + 200
 
     textContent = @editor.getText()
-    html = parseMD(this)
+    html = @parseMD(this)
 
     @element.innerHTML = html
     @bindEvents()
@@ -290,6 +299,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
+    @renderWavedrom()
     @renderMathJax()
     @scrollMap = null
 
@@ -314,14 +324,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
             else
               @element.scrollTop = offsetTop
       else
-        a.onclick = ()=>
+        a.onclick = ()->
           # open md and markdown preview
-          if href and href.endsWith('.md')
-            mdFilePath = path.resolve(@rootDirectoryPath, href)
-            if href[0] == '/'
-              mdFilePath = path.resolve(@projectDirectoryPath, '.' + href)
+          if href and not (href.startsWith('https://') or href.startsWith('http://'))
 
-            atom.workspace.open mdFilePath,
+            atom.workspace.open href,
               split: 'left',
               searchAllPanes: true
 
@@ -363,20 +370,32 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
 
+  renderWavedrom: ()->
+    els = @element.getElementsByClassName('wavedrom')
+    if els.length
+      # WaveDrom.RenderWaveForm(0, WaveDrom.eva('a0'), 'a')
+      for el in els
+        if el.getAttribute('data-processed') != 'true'
+          offset = parseInt(el.getAttribute('data-offset'))
+          el.id = 'wavedrom'+offset
+          content = JSON.parse(el.innerText.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+          WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
+          el.setAttribute 'data-processed', 'true'
+
+      # disable @element onscroll
+      @previewScrollDelay = Date.now() + 500
+
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)->
-        graph = document.createElement 'div'
-        graph.classList.add('plantuml')
-        graph.setAttribute 'data-original', text
-        graph.innerHTML = outputHTML
-        el?.parentElement?.replaceChild graph, el
+        el.innerHTML = outputHTML
+        el.setAttribute 'data-processed', true
 
     for el in els
-      if el.tagName == 'PRE'
-        helper(el, el.innerText)
-        el.innerHTML = 'rendering graph...\n' + el.innerHTML
+      if el.getAttribute('data-processed') != 'true'
+        helper(el, el.getAttribute('data-original'))
+        el.innerText = 'rendering graph...\n'
 
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax'
@@ -435,7 +454,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    htmlContent = parseMD(this, {isSavingToHTML, isForPreview: false})
+    htmlContent = @parseMD(this, {isSavingToHTML, isForPreview: false})
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -461,7 +480,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                       processEscapes: true}
           });
         </script>
-        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
         "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -480,11 +499,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
-    if offline
-      mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
-    else
-      mermaidStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.css\">"
-
     title = @getFileName()
     title = title.slice(0, title.length - 3) # remove '.md'
     htmlContent = "
@@ -496,7 +510,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
       #{mathStyle}
-      #{mermaidStyle}
     </head>
     <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
@@ -569,6 +582,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
+  copyToClipboard: ->
+    return false if not @editor
+
+    selection = window.getSelection()
+    selectedText = selection.toString()
+
+    atom.clipboard.write(selectedText)
+    true
 
   # We don't need to use this function...
   # Returns an object that can be retrieved when package is activated

@@ -39,7 +39,7 @@ module.exports =
         callback?()
 
       script.type = 'text/javascript'
-      script.src = path.resolve(__dirname, '../mathjax/MathJax.js?delayStartupUntil=configured')
+      script.src = path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?delayStartupUntil=configured')
 
       document.getElementsByTagName('head')[0].appendChild(script)
 

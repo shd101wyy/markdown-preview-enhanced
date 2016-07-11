@@ -1,5 +1,5 @@
 MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
-{CompositeDisposable} = require 'atom'
+{CompositeDisposable, Directory, File} = require 'atom'
 path = require 'path'
 ImageHelperView = require './image-helper-view'
 {getReplacedTextEditorStyles} = require './style'
@@ -35,6 +35,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
+      'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
 
     # when the preview is displayed
     # preview will display the content of pane that is activated
@@ -79,6 +80,9 @@ module.exports = MarkdownPreviewEnhanced =
   toggle: ->
     if @preview.isOnDom()
       @preview.destroy()
+
+      pane = atom.workspace.paneForItem(@preview)
+      pane.destroyItem(@preview)
     else
       ## check if it is valid markdown file
       editor = atom.workspace.getActiveTextEditor()
@@ -89,7 +93,7 @@ module.exports = MarkdownPreviewEnhanced =
       return true
     else if @checkValidMarkdownFile(editor)
       @appendGlobalStyle()
-      @preview.bindEditor editor
+      @preview.bindEditor(editor)
 
       if !@documentExporter
         @documentExporter = new ExporterView()
@@ -211,3 +215,6 @@ module.exports = MarkdownPreviewEnhanced =
       @imageHelperView.display(editor)
     else
       atom.notifications.addError('Failed to open Image Helper panel')
+
+  openMermaidConfig: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))

@@ -2,10 +2,13 @@
 <!-- toc orderedList:0 -->
 
 - [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
-	- [啦啦啦](#啦啦啦)
+	- [Heading 2](#heading-2)
+		- [Heading 3](#heading-3)
+			- [Heading 4](#heading-4)
+				- [Heading 5](#heading-5)
+					- [Heading 6](#heading-6)
 
 <!-- tocstop -->
-
 # This is Markdown Preview with KaTeX Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
@@ -13,7 +16,12 @@
     - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
 		- $sin(x) = 1$
 
-## 啦啦啦
+## Heading 2   
+### Heading 3
+#### Heading 4  
+##### Heading 5
+###### Heading 6
+
 ```javascript
 // this is comment
 var add = function(x, y){
@@ -54,7 +62,7 @@ int main() {
 <img src="./1.pic.jpg" height=400>
 
 ---
-
+Test image paths   
 ![markdown-icon](/markdown.png)  
 ![markdown-icon](../markdown.png)
 
@@ -64,6 +72,7 @@ graph TD;
     A-->B;
     A-->C;
     B-->D;
+		D-->A
 ```
 
 ```mermaid
@@ -105,10 +114,58 @@ graph LR
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
 
+> Test PlantUML
+
 ```puml
 A -> B
 B -> C
 ```
+
+[Graphvizdot](http://www.graphviz.org/)
+```puml
+[*] --> State1
+State1 --> [*]
+State1 : this is a string
+State1 : this is another string
+
+State1 -> State2
+State2 --> [*]
+```
+
+> Test WaveDrom
+```wavedrom
+{ signal: [
+  { name: "cl",  wave: "p......" },
+  { name: "bus",  wave: "x.34.5x",   data: "head body tail" },
+  { name: "wire", wave: "0.1..0." }
+]}
+```
+```wavedrom
+{ signal: [
+  { name: "pclk", wave: 'p.......' },
+  { name: "Pclk", wave: 'P.......' },
+  { name: "nclk", wave: 'n.......' },
+  { name: "Nclk", wave: 'N.......' },
+  {},
+  { name: 'clk0', wave: 'phnlPHNL' },
+  { name: 'clk1', wave: 'xhlhLHl.' },
+  { name: 'clk2', wave: 'hpHplnLn' },
+  { name: 'clk3', wave: 'nhNhplPl' },
+  { name: 'clk4', wave: 'xlh.L.Hx' }
+]}
+
+```
+
+**Test opening files through links**  
+[markdown.png](1.pic.jpg)  
+[markdown.png](/test/1.pic.jpg)  
+[markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)  
+[markdown-preview-enhanced.coffee](../lib/markdown-preview-enhanced.coffee)
+
+**Test Links**  
+[baidu](https://www.baidu.com/)  
+[this baidu should not work](www.baidu.com)
+
 
 **Bugs Fix**  
 - too many bugs
