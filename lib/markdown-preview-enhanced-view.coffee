@@ -5,7 +5,6 @@ fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
 
-{parseMD, buildScrollMap} = require './md'
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
 {loadMathJax} = require './mathjax-wrapper'
@@ -37,6 +36,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @previewScrollDelay = Date.now()
 
     @documentExporter = null # binded in markdown-preview-enhanced.coffee startMD function
+
+    # this two variables will be got from './md'
+    @parseMD = null
+    @buildScrollMap = null
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -105,6 +108,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEvents: ->
     @updateTabTitle()
 
+    if not @parseMD
+      {@parseMD, @buildScrollMap} = require './md'
+
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
@@ -155,7 +161,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       lineNo = Math.floor((firstVisibleScreenRow + lastVisibleScreenRow) / 2)
 
       if !@scrollMap
-        @scrollMap = buildScrollMap(this)
+        @scrollMap = @buildScrollMap(this)
 
       # disable markdownHtmlView onscroll
       @previewScrollDelay = Date.now() + 500
@@ -196,7 +202,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # try to find corresponding screen buffer row
       if !@scrollMap
-        @scrollMap = buildScrollMap(this)
+        @scrollMap = @buildScrollMap(this)
 
       i = 0
       j = @scrollMap.length - 1
@@ -260,7 +266,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
-      @scrollMap = buildScrollMap(this)
+      @scrollMap = @buildScrollMap(this)
 
     editorElement = @editor.getElement()
 
@@ -282,7 +288,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseDelay = Date.now() + 200
 
     textContent = @editor.getText()
-    html = parseMD(this)
+    html = @parseMD(this)
 
     @element.innerHTML = html
     @bindEvents()
@@ -434,7 +440,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    htmlContent = parseMD(this, {isSavingToHTML, isForPreview: false})
+    htmlContent = @parseMD(this, {isSavingToHTML, isForPreview: false})
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...

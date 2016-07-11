@@ -13,7 +13,9 @@ mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
 globalMathJaxData = {}
 
-
+####################################################
+## Mermaid
+##################################################
 loadMermaidConfig = ()->
   # mermaid_config.js
   configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js')
@@ -28,7 +30,7 @@ loadMermaidConfig = ()->
 // you can edit the 'config' variable below
 // everytime you changed this file, you may need to restart atom.
 let config = {
-startOnLoad: false
+  startOnLoad: false
 }
 
 module.exports = config || {startOnLoad: false}
@@ -37,6 +39,10 @@ module.exports = config || {startOnLoad: false}
 
 mermaidAPI.initialize(loadMermaidConfig())
 
+
+#################################################
+## Math
+#################################################
 atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
   (option)->
     if option == 'None'
@@ -64,6 +70,9 @@ atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
 
+#################################################
+## Remarkable
+#################################################
 defaults =
   html:         true,        # Enable HTML tags in source
   xhtmlOut:     false,       # Use '/' to close single tags (<br />)
