@@ -10,7 +10,7 @@
 * [ ] let user choose to use local puml jar or through internet by [encode](https://github.com/markushedvall/plantuml-encoder) (no java required)
 * [x] remove mermaidStyle at markdown-preview-enhanced-view.coffee. (as it is already included in markdown-preview-enhanced.less)
 * [ ] [WaveDrom](https://github.com/shd101wyy/markdown-preview-enhanced/issues/73) support?
-* [ ] preview window copy text.
+* [x] preview window copy text.
 * [ ] mermaid style: three .css file choice.
 
 ## 0.7.2

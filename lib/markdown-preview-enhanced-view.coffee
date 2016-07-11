@@ -47,9 +47,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     atom.commands.add @element,
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
+      'core:copy': => @copyToClipboard()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced', =>
+    @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, =>
       @p style: 'font-size: 24px', 'loading preview...'
 
   getTitle: ->
@@ -563,6 +564,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
+  copyToClipboard: ->
+    return false if not @editor
+
+    selection = window.getSelection()
+    selectedText = selection.toString()
+
+    atom.clipboard.write(selectedText)
+    true
 
   # We don't need to use this function...
   # Returns an object that can be retrieved when package is activated
