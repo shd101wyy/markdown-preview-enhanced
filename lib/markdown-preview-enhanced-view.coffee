@@ -378,9 +378,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if el.getAttribute('data-processed') != 'true'
           offset = parseInt(el.getAttribute('data-offset'))
           el.id = 'wavedrom'+offset
-          content = JSON.parse(el.innerText.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
-          WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
-          el.setAttribute 'data-processed', 'true'
+          text = el.innerText.trim()
+          continue if not text.length
+          try
+            content = JSON.parse(text.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+            WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
+            el.setAttribute 'data-processed', 'true'
+          catch error
+            el.innerText = 'failed to parse JSON'
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500

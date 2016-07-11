@@ -49,7 +49,7 @@ sanitizeContent = (content)->
 
 toc = (tokens, ordered)->
   if !tokens or !tokens.length
-    return []
+    return {content: '', array: []}
 
   outputArr = []
   tocTable = {}
