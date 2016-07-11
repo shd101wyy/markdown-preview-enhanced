@@ -4,7 +4,7 @@ path = require 'path'
 remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
-{mermaidAPI} = require('mermaid/dist/mermaid')
+{mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 
 toc = require('./toc')
 {scopeForLanguageName} = require('./extension-helper')

@@ -461,7 +461,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                       processEscapes: true}
           });
         </script>
-        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
         "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
