@@ -358,16 +358,16 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray, preElement, text, option, $)->
+checkGraph = (graphType, graphArray, preElement, text, option, $, wavedromOffset)->
   if option.isForPreview
     if !graphArray.length
-      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\">#{text}</div>"
+      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" data-processed=\"true\">#{element.innerHTML}</div>"
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" data-processed=\"true\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{element.innerHTML}</div>"
       else
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\">#{text}</div>"
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
   else
     element = graphArray.splice(0, 1)[0]
     if element
@@ -447,7 +447,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
     else if lang == 'wavedrom'
-      $(preElement).replaceWith "<div class=\"wavedrom\" offset=\"#{wavedromOffset}\" data-original=\"#{text}\">#{text}</script>"
+      $el = checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
 
       wavedromOffset += 1
     else
