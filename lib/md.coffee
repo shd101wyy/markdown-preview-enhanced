@@ -543,6 +543,12 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         tocStartLine = -1
         tocEndLine = -1
 
+        # set globalMathJaxData
+        # so that we won't render the math expression that hasn't changed
+        globalMathJaxData = {}
+        globalMathJaxData.isForPreview = option.isForPreview
+        globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500
         markdownPreview.previewScrollDelay = Date.now() + 500

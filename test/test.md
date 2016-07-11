@@ -2,10 +2,13 @@
 <!-- toc orderedList:0 -->
 
 - [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
-	- [啦啦啦](#啦啦啦)
+	- [Heading 2](#heading-2)
+		- [Heading 3](#heading-3)
+			- [Heading 4](#heading-4)
+				- [Heading 5](#heading-5)
+					- [Heading 6](#heading-6)
 
 <!-- tocstop -->
-
 # This is Markdown Preview with KaTeX Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
@@ -13,7 +16,12 @@
     - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
 		- $sin(x) = 1$
 
-## 啦啦啦
+## Heading 2   
+### Heading 3
+#### Heading 4  
+##### Heading 5
+###### Heading 6
+
 ```javascript
 // this is comment
 var add = function(x, y){

@@ -480,11 +480,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
-    if offline
-      mermaidStyle = "<link rel=\"stylesheet\" href=\"#{path.resolve(__dirname, '../node_modules/mermaid/dist/mermaid.css')}\">"
-    else
-      mermaidStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/0.5.8/mermaid.min.css\">"
-
     title = @getFileName()
     title = title.slice(0, title.length - 3) # remove '.md'
     htmlContent = "
@@ -496,7 +491,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
       <style> #{getMarkdownPreviewCSS()} </style>
       #{mathStyle}
-      #{mermaidStyle}
     </head>
     <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
