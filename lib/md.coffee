@@ -4,9 +4,8 @@ path = require 'path'
 remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
+{File} = require 'atom'
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
-mermaidConfig = require(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
-
 toc = require('./toc')
 {scopeForLanguageName} = require('./extension-helper')
 mathRenderingOption = null
@@ -14,7 +13,29 @@ mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
 globalMathJaxData = {}
 
-mermaidAPI.initialize(mermaidConfig)
+
+loadMermaidConfig = ()->
+  # mermaid_config.js
+  configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js')
+  mermaidConfigFile = new File(configPath)
+  mermaidConfigFile.create().then (flag)->
+    return require(configPath) if not flag # file already exists
+    mermaidConfigFile.write """
+'use strict'
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
+let config = {
+startOnLoad: false
+}
+
+module.exports = config || {startOnLoad: false}
+    """
+    return {startOnLoad: false}
+
+mermaidAPI.initialize(loadMermaidConfig())
 
 atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
   (option)->

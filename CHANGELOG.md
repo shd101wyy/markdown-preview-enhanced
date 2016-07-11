@@ -1,13 +1,13 @@
 ## 0.7.3
 * [ ] fix print to pdf deadlock issue (if I can...)
 * [ ] print image [capturePage function](https://github.com/electron/electron/blob/master/docs/api/web-contents.md)
-* [ ] right click on preview displays 'print' option on context menu (**I decide not to implement this**)
+* [x] right click on preview displays 'print' option on context menu (**I decide not to implement this**)
 * [ ] update PlantUML to newest version
 * [x] fix toggle bug. （右边的关不掉）
 * [x] support mermaid customized init function [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-229552470)
 * [ ] [this](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-231215294) is too hard.
 * [x] open other files in atom through links [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/72)
-* [ ] let user choose to use local puml jar or through internet by [encode](https://github.com/markushedvall/plantuml-encoder) (no java required)
+* [ ] let user choose to use local puml jar or through internet by [encode](https://github.com/markushedvall/plantuml-encoder) (no java required)(**I decide not to implement this**)
 * [x] remove mermaidStyle at markdown-preview-enhanced-view.coffee. (as it is already included in markdown-preview-enhanced.less)
 * [ ] [WaveDrom](https://github.com/shd101wyy/markdown-preview-enhanced/issues/73) support?
 * [x] preview window copy text.

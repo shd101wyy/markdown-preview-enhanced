@@ -19,9 +19,6 @@ module.exports = MarkdownPreviewEnhanced =
 
     @imageHelperView ?= new ImageHelperView()
 
-    # create markdown-preview-enhanced folder inside .atom
-    @createFolders()
-
     # set opener
     atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
@@ -218,30 +215,6 @@ module.exports = MarkdownPreviewEnhanced =
       @imageHelperView.display(editor)
     else
       atom.notifications.addError('Failed to open Image Helper panel')
-
-
-  createFolders: ()->
-    configDir = new Directory(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced'))
-
-    configDir.create().then (flag)->
-      return if not flag # directory already exists
-
-      # mermaid_config.js
-      mermaidConfigFile = new File(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
-      mermaidConfigFile.create().then ()->
-        mermaidConfigFile.write """
-'use strict'
-// config mermaid init call
-// http://knsv.github.io/mermaid/#configuration
-//
-// you can edit the 'config' variable below
-// everytime you changed this file, you may need to restart atom.
-let config = {
-  startOnLoad: false
-}
-
-module.exports = config || {startOnLoad: false}
-        """
 
   openMermaidConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
