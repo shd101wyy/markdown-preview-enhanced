@@ -95,15 +95,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if not @editor
       atom.workspace
           .open @uri,
-                split: 'right', activatePane: false, searchAllPanes: true
+                split: 'right', activatePane: false, searchAllPanes: false
           .then (e)=>
             @editor = editor
-            @initEvents()
+            setTimeout(@initEvents.bind(this), 0)
 
     else
       @editor = editor
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
-      @initEvents()
+      setTimeout(@initEvents.bind(this), 0)
 
   initEvents: ->
     @updateTabTitle()
@@ -126,7 +126,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initEditorEvent()
     @initViewEvent()
     @initSettingsEvents()
-
 
   initEditorEvent: ->
     editorElement = @editor.getElement()

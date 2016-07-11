@@ -93,7 +93,7 @@ module.exports = MarkdownPreviewEnhanced =
       return true
     else if @checkValidMarkdownFile(editor)
       @appendGlobalStyle()
-      @preview.bindEditor editor
+      @preview.bindEditor(editor)
 
       if !@documentExporter
         @documentExporter = new ExporterView()
