@@ -72,6 +72,7 @@ graph TD;
     A-->B;
     A-->C;
     B-->D;
+		D-->A
 ```
 
 ```mermaid
@@ -115,8 +116,7 @@ graph LR
 
 ```puml
 A -> B
-B -> C
-C -> D
+B -> C 
 ```
 
 [Graphvizdot](http://www.graphviz.org/)
@@ -130,7 +130,7 @@ State1 -> State2
 State2 --> [*]
 ```
 
-**Test opening files through links**   
+**Test opening files through links**
 [markdown.png](1.pic.jpg)  
 [markdown.png](/test/1.pic.jpg)  
 [markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)  

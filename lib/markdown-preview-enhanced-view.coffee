@@ -110,6 +110,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     if not @parseMD
       {@parseMD, @buildScrollMap} = require './md'
+      require '../dependencies/wavedrom/default.js'
+      require '../dependencies/wavedrom/wavedrom.min.js'
 
     @headings = []
     @scrollMap = null
@@ -298,6 +300,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
+    @renderWavedrom()
     @renderMathJax()
     @scrollMap = null
 
@@ -368,20 +371,30 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
 
+  renderWavedrom: ()->
+    els = @element.getElementsByClassName('wavedrom')
+    if els.length
+      # WaveDrom.RenderWaveForm(0, WaveDrom.eva('a0'), 'a')
+
+      for el in els
+        offset = parseInt(el.getAttribute('offset'))
+        el.id = 'wavedrom'+offset
+        content = JSON.parse(el.innerText.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+        WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
+      # disable @element onscroll
+      @previewScrollDelay = Date.now() + 500
+
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)->
-        graph = document.createElement 'div'
-        graph.classList.add('plantuml')
-        graph.setAttribute 'data-original', text
-        graph.innerHTML = outputHTML
-        el?.parentElement?.replaceChild graph, el
+        el.innerHTML = outputHTML
+        el.setAttribute 'data-processed', true
 
     for el in els
-      if el.tagName == 'PRE'
-        helper(el, el.innerText)
-        el.innerHTML = 'rendering graph...\n' + el.innerHTML
+      if el.getAttribute('data-processed') != 'true'
+        helper(el, el.getAttribute('data-original'))
+        el.innerText = 'rendering graph...\n'
 
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax'

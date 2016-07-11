@@ -357,6 +357,24 @@ buildScrollMap = (markdownPreview)->
 
   return _scrollMap  # scrollMap's length == screenLineCount
 
+# graphType = 'mermaid' | 'plantuml' | 'wavedrom'
+checkGraph = (graphType, graphArray, preElement, text, option, $)->
+  if option.isForPreview
+    if !graphArray.length
+      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\">#{text}</div>"
+    else
+      element = graphArray.splice(0, 1)[0] # get the first element
+      if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" data-processed=\"true\">#{element.innerHTML}</div>"
+      else
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\">#{text}</div>"
+  else
+    element = graphArray.splice(0, 1)[0]
+    if element
+      $(preElement).replaceWith "<div class=\"#{graphType}\">#{element.innerHTML}</div>"
+    else
+      $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+
 # resolve image path and pre code block...
 resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
   rootDirectoryPath = markdownPreview.rootDirectoryPath
@@ -366,6 +384,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
     return
 
   $ = cheerio.load(html)
+  wavedromOffset = 0
 
   $('img, a').each (i, imgElement)->
     srcTag = 'src'
@@ -422,41 +441,15 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        if option.isForPreview
-          if !graphData.mermaid_s.length
-            $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
-          else
-            element = graphData.mermaid_s.splice(0, 1)[0]# get the first element
-            if element.getAttribute('data-original') == text # graph not changed
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\" data-processed=\"true\">#{element.innerHTML}</div>"
-            else
-              $(preElement).replaceWith "<div class=\"mermaid\" data-original=\"#{text}\">#{text}</div>"
-        else  # just get the rendered graph from preview @element
-          graph = graphData.mermaid_s.splice(0, 1)[0]
-          if graph
-            $(preElement).replaceWith "<div class=\"mermaid\" data-processed=\"true\">#{graph.innerHTML}</div>"
-          else
-            $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+        checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $
 
     else if lang == 'plantuml' or lang == 'puml'
-      if option.isForPreview
-        # check whether content changed or not
-        if !graphData.plantuml_s.length
-          $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
-        else
-          element = graphData.plantuml_s.splice(0, 1)[0] # get the first element
-          if element.getAttribute('data-original') == text # graph not changed
-            $(preElement).replaceWith "<div class=\"plantuml\" data-original=\"#{text}\">#{element.innerHTML}</div>"
-          else
-            $(preElement).replaceWith "<pre class=\"plantuml\">#{text}</pre>"
+      checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-      else # just get the rendered graph from preview @element
-        graph = graphData.plantuml_s.splice(0, 1)[0]
+    else if lang == 'wavedrom'
+      $(preElement).replaceWith "<div class=\"wavedrom\" offset=\"#{wavedromOffset}\" data-original=\"#{text}\">#{text}</script>"
 
-        if graph and graph.tagName == 'DIV'
-          $(preElement).replaceWith "<div>#{graph.innerHTML}</div>"
-        else
-          $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
+      wavedromOffset += 1
     else
       renderCodeBlock(preElement, text, lang)
 
@@ -483,6 +476,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   graphData = {}
   graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
   graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
+  graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
 
   # set globalMathJaxData
   # so that we won't render the math expression that hasn't changed
