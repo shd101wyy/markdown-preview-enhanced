@@ -3,6 +3,7 @@ path = require 'path'
 
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
+# Async call 
 generateSVG = (content, callback)->
   content = """
   @startuml

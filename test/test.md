@@ -62,7 +62,7 @@ int main() {
 <img src="./1.pic.jpg" height=400>
 
 ---
-
+Test image paths   
 ![markdown-icon](/markdown.png)  
 ![markdown-icon](../markdown.png)
 
@@ -129,6 +129,17 @@ State1 : this is another string
 State1 -> State2
 State2 --> [*]
 ```
+
+**Test opening files through links**   
+[markdown.png](1.pic.jpg)  
+[markdown.png](/test/1.pic.jpg)  
+[markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)  
+[markdown-preview-enhanced.coffee](../lib/markdown-preview-enhanced.coffee)
+
+**Test Links**  
+[baidu](https://www.baidu.com/)  
+[this baidu should not work](www.baidu.com)
+
 
 **Bugs Fix**  
 - too many bugs

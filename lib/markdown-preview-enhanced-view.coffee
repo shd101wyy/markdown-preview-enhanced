@@ -315,14 +315,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
             else
               @element.scrollTop = offsetTop
       else
-        a.onclick = ()=>
+        a.onclick = ()->
           # open md and markdown preview
-          if href and href.endsWith('.md')
-            mdFilePath = path.resolve(@rootDirectoryPath, href)
-            if href[0] == '/'
-              mdFilePath = path.resolve(@projectDirectoryPath, '.' + href)
+          if href and not (href.startsWith('https://') or href.startsWith('http://'))
 
-            atom.workspace.open mdFilePath,
+            atom.workspace.open href,
               split: 'left',
               searchAllPanes: true
 

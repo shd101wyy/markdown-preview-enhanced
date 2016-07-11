@@ -336,26 +336,31 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
 
   $ = cheerio.load(html)
 
-  $('img').each (i, imgElement)->
+  $('img, a').each (i, imgElement)->
+    srcTag = 'src'
+    if imgElement.name == 'a'
+      srcTag = 'href'
+
     img = $(imgElement)
-    src = img.attr('src')
+    src = img.attr(srcTag)
 
     if src and
       (!(src.startsWith('http://') or
         src.startsWith('https://') or
         src.startsWith('atom://')  or
-        src.startsWith('file://'))) and
+        src.startsWith('file://')  or
+        src[0] == '#')) and
       (src.startsWith('./') or
         src.startsWith('../') or
         src[0] != '/')
       if !option.isSavingToHTML
-        img.attr('src', path.resolve(rootDirectoryPath,  src))
+        img.attr(srcTag, path.resolve(rootDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
       if (option.isSavingToHTML)
-        img.attr('src', path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
+        img.attr(srcTag, path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
-        img.attr('src', path.resolve(projectDirectoryPath, '.' + src))
+        img.attr(srcTag, path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang)->
     highlighter = new Highlights({registry: atom.grammars})
