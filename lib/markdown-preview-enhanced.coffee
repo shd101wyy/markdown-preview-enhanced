@@ -79,6 +79,9 @@ module.exports = MarkdownPreviewEnhanced =
   toggle: ->
     if @preview.isOnDom()
       @preview.destroy()
+
+      pane = atom.workspace.paneForItem(@preview)
+      pane.destroyItem(@preview)
     else
       ## check if it is valid markdown file
       editor = atom.workspace.getActiveTextEditor()
