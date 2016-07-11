@@ -1,4 +1,7 @@
-plantuml = require 'node-plantuml'
+path = require 'path'
+{spawn} = require 'child_process'
+
+plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
 generateSVG = (content, callback)->
   content = """
@@ -6,12 +9,22 @@ generateSVG = (content, callback)->
   #{content}
   @enduml
   """
-  gen = plantuml.generate(content, {format: 'svg', charset: 'UTF-8'})
+
+  task = spawn 'java', ['-jar', plantumlJarPath,
+                            '-Djava.awt.headless=true',
+                            # '-graphvizdot', 'exe'
+                            '-pipe',
+                            '-tsvg',
+                            '-charset', 'UTF-8']
+
+  task.stdin.write(content)
+  task.stdin.end()
 
   chunks = []
-  gen.out.on 'data', (chunk)->
+  task.stdout.on 'data', (chunk)->
     chunks.push(chunk)
-  gen.out.on 'end', ()->
+
+  task.stdout.on 'end', ()->
     data = Buffer.concat(chunks).toString()
     callback(data)
 

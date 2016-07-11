@@ -16,7 +16,6 @@
     "cheerio": "^0.20.0",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
-    "node-plantuml": "^0.4.4",
     "remarkable": "^1.6.2",
     "request": "^2.73.0",
     "temp": "^0.8.3",
