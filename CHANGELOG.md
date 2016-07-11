@@ -2,7 +2,7 @@
 * [ ] fix print to pdf deadlock issue (if I can...)
 * [ ] print image [capturePage function](https://github.com/electron/electron/blob/master/docs/api/web-contents.md)
 * [x] right click on preview displays 'print' option on context menu (**I decide not to implement this**)
-* [ ] update PlantUML to newest version
+* [x] update PlantUML to newest version
 * [x] fix toggle bug. （右边的关不掉）
 * [x] support mermaid customized init function [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-229552470)
 * [ ] [this](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-231215294) is too hard.

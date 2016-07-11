@@ -11,8 +11,8 @@ generateSVG = (content, callback)->
   @enduml
   """
 
-  task = spawn 'java', ['-jar', plantumlJarPath,
-                            '-Djava.awt.headless=true',
+  task = spawn 'java', [    '-Djava.awt.headless=true',
+                            '-jar', plantumlJarPath,
                             # '-graphvizdot', 'exe'
                             '-pipe',
                             '-tsvg',
