@@ -114,9 +114,11 @@ graph LR
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
 
+> Test PlantUML
+
 ```puml
 A -> B
-B -> C 
+B -> C
 ```
 
 [Graphvizdot](http://www.graphviz.org/)
@@ -130,7 +132,31 @@ State1 -> State2
 State2 --> [*]
 ```
 
-**Test opening files through links**
+> Test WaveDrom
+```wavedrom
+{ signal: [
+  { name: "cl",  wave: "p......" },
+  { name: "bus",  wave: "x.34.5x",   data: "head body tail" },
+  { name: "wire", wave: "0.1..0." }
+]}
+```
+```wavedrom
+{ signal: [
+  { name: "pclk", wave: 'p.......' },
+  { name: "Pclk", wave: 'P.......' },
+  { name: "nclk", wave: 'n.......' },
+  { name: "Nclk", wave: 'N.......' },
+  {},
+  { name: 'clk0', wave: 'phnlPHNL' },
+  { name: 'clk1', wave: 'xhlhLHl.' },
+  { name: 'clk2', wave: 'hpHplnLn' },
+  { name: 'clk3', wave: 'nhNhplPl' },
+  { name: 'clk4', wave: 'xlh.L.Hx' }
+]}
+
+```
+
+**Test opening files through links**  
 [markdown.png](1.pic.jpg)  
 [markdown.png](/test/1.pic.jpg)  
 [markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)  
