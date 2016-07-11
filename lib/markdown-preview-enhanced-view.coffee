@@ -121,6 +121,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
 
   initEditorEvent: ->
+    editorElement = @editor.getElement()
+
     @disposables.add @editor.onDidDestroy ()=>
       @setTabTitle('unknown preview')
       if @disposables
@@ -139,13 +141,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if not @liveUpdate
         @updateMarkdown()
 
-    @disposables.add @editor.onDidChangeScrollTop ()=>
+    @disposables.add editorElement.onDidChangeScrollTop ()=>
       if !@scrollSync or !@element or !@liveUpdate
         return
       if Date.now() < @editorScrollDelay
         return
 
-      editorElement = @editor.getElement()
       editorHeight = editorElement.getHeight()
 
       firstVisibleScreenRow = @editor.getFirstVisibleScreenRow()
