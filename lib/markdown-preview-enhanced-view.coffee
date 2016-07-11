@@ -97,15 +97,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
           .open @uri,
                 split: 'right', activatePane: false, searchAllPanes: false
           .then (e)=>
-            @editor = editor
-            setTimeout(@initEvents.bind(this), 0)
+            setTimeout(()=>
+              @initEvents(editor)
+            , 0)
 
     else
-      @editor = editor
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
-      setTimeout(@initEvents.bind(this), 0)
+      setTimeout(()=>
+        @initEvents(editor)
+      , 0)
 
-  initEvents: ->
+  initEvents: (editor)->
+    @editor = editor
     @updateTabTitle()
 
     if not @parseMD
