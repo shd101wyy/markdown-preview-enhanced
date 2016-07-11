@@ -149,7 +149,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @updateMarkdown()
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate
+      if !@scrollSync or !@element or !@liveUpdate or !@editor
         return
       if Date.now() < @editorScrollDelay
         return

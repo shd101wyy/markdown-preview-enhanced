@@ -13,7 +13,6 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	- [How it works](#how-it-works)
 	- [Usages](#usages)
 	- [Preview Context Menu](#preview-context-menu)
-	- [Settings Panel](#settings-panel)
 	- [Extra](#extra)
 	- [For Developer](#for-developer)
 	- [Thanks](#thanks)
@@ -28,13 +27,12 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **2-way scroll sync**  
 - markdown preview with math rendering support   
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
-- export PDF    
+- export PDF (**sometimes buggy**)    
 - export beautiful HTML (mobile device supported)  
 - customize Markdown Preview css  
-- settings panel  
 - [TOC] generation **(beta)**  
-- Flowchart / Sequence Diagram **(beta)**  
-- Task List *(Github Flavored)* **(beta)**  
+- Flowchart / Sequence diagram
+- Task List *(Github Flavored)*  
 - Image Helper **(beta)**
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - And many more...
@@ -54,7 +52,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
 	- code block within `puml` or `plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
-	- ![plantuml](http://ooo.0o0.ooo/2016/06/28/57724f5458a59.gif)
+- [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
+	- code block within `wavedrom` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 
 ## Usages
 To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to toggle <strong> Command Palette </strong>. Then choose the commands below:
@@ -62,7 +61,8 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Toggle Markdown file preview with KaTeX support.   
 	You can also use the keymap <kbd>ctrl+shift+m</kbd> to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
-  - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.
+  - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.  
+  - if you didn't see `markdown-preview-enhanced-custom` section in `style.less` file, you may need to run `Markdown Preview Enhanced: Customize CSS` command first.
 - <strong>Markdown Preview Enhanced: Toc Create </strong>
   - Generate TOC
 	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
@@ -71,7 +71,9 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
   - Enable/Disable breaking on single newline.
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
-  - Insert a markdown table.    
+  - Insert a markdown table.  
+- <strong> Markdown Preview Enhanced: Config Mermaid</strong>
+  - edit `mermaid` init configuration
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
 	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    
@@ -87,9 +89,6 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Open HTML in browser
 - **Export to Disk**
 	- Export **HTML** or **PDF** file.
-
-## Settings Panel  
-![settings_panel](https://cloud.githubusercontent.com/assets/1908863/15383036/44f79cb4-1dc2-11e6-80b3-3b3bdd9ab7d3.gif)
 
 ## Extra
 * **Task List**  
