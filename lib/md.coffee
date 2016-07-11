@@ -5,6 +5,7 @@ remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
+mermaidConfig = require(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
 
 toc = require('./toc')
 {scopeForLanguageName} = require('./extension-helper')
@@ -13,7 +14,7 @@ mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
 globalMathJaxData = {}
 
-mermaidAPI.initialize startOnLoad: false
+mermaidAPI.initialize(mermaidConfig)
 
 atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
   (option)->

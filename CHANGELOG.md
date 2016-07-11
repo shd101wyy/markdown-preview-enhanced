@@ -4,7 +4,7 @@
 * [ ] right click on preview displays 'print' option on context menu (**I decide not to implement this**)
 * [ ] update PlantUML to newest version
 * [x] fix toggle bug. （右边的关不掉）
-* [ ] support mermaid customize init function [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-229552470)
+* [x] support mermaid customized init function [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-229552470)
 * [ ] [this](https://github.com/shd101wyy/markdown-preview-enhanced/issues/9#issuecomment-231215294) is too hard.
 * [x] open other files in atom through links [see this issue](https://github.com/shd101wyy/markdown-preview-enhanced/issues/72)
 * [ ] let user choose to use local puml jar or through internet by [encode](https://github.com/markushedvall/plantuml-encoder) (no java required)
