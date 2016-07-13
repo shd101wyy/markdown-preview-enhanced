@@ -19,10 +19,12 @@ globalMathJaxData = {}
 loadMermaidConfig = ()->
   # mermaid_config.js
   configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js')
-  mermaidConfigFile = new File(configPath)
-  mermaidConfigFile.create().then (flag)->
-    return require(configPath) if not flag # file already exists
-    mermaidConfigFile.write """
+  try
+    return require(configPath)
+  catch error
+    mermaidConfigFile = new File(configPath)
+    mermaidConfigFile.create().then (flag)->
+      mermaidConfigFile.write """
 'use strict'
 // config mermaid init call
 // http://knsv.github.io/mermaid/#configuration
@@ -34,11 +36,10 @@ let config = {
 }
 
 module.exports = config || {startOnLoad: false}
-    """
+"""
     return {startOnLoad: false}
 
 mermaidAPI.initialize(loadMermaidConfig())
-
 
 #################################################
 ## Math
