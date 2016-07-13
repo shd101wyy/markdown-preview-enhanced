@@ -173,7 +173,7 @@ md.renderer.rules.math = (tokens, idx)->
       else
         element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == text  # math expression not changed
-          return "<#{tag} class=\"mathjax-exps\" data-original=\"#{text}\">#{element.innerHTML}</#{tag}>"
+          return "<#{tag} class=\"mathjax-exps\" data-original='#{text}'>#{element.innerHTML}</#{tag}>"
         else
           return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
     else
@@ -358,16 +358,16 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray, preElement, text, option, $, wavedromOffset)->
+checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
   if option.isForPreview
     if !graphArray.length
-      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
+      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>"  # have to use data-original='' and not data-original="". "" will cause error.
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" data-processed=\"true\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{element.innerHTML}</div>"
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' data-processed=\"true\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{element.innerHTML}</div>"
       else
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original=\"#{text}\" #{if graphType=='wavedrom' then "data-offset=\"#{wavedromOffset}\"" else ''}>#{text}</div>"
+        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>"
   else
     element = graphArray.splice(0, 1)[0]
     if element
@@ -385,6 +385,7 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
 
   $ = cheerio.load(html)
   wavedromOffset = 0
+  mermaidOffset = 0
 
   $('img, a').each (i, imgElement)->
     srcTag = 'src'
@@ -441,7 +442,9 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $
+        checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $, mermaidOffset
+
+        mermaidOffset += 1
 
     else if lang == 'plantuml' or lang == 'puml'
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $

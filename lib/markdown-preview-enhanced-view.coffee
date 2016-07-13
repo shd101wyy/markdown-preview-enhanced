@@ -22,7 +22,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = null
-    @textContent = ''
     @projectDirectoryPath = null
 
     @disposables = null
@@ -119,7 +118,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
-    @textContent = @editor.getText()
     @projectDirectoryPath = @getProjectDirectoryPath()
 
     if @disposables # remove all binded events
@@ -291,7 +289,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    textContent = @editor.getText()
     html = @parseMD(this)
 
     @element.innerHTML = html
@@ -369,6 +366,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
     els = @element.getElementsByClassName('mermaid')
     if els.length
       mermaid.init()
+      ###
+      # the code below doesn't seem to be working
+      # I think mermaidAPI.render function has bug
+      cb = (svgGraph)->
+        console.log('enter here', svgGraph, this)
+        this.innerHTML = svgGraph
+        this.setAttribute 'data-processed', 'true'
+
+      for el in els
+        if el.getAttribute('data-processed') != 'true'
+          offset = parseInt(el.getAttribute('data-offset'))
+          el.id = 'mermaid'+offset
+
+          mermaidAPI.render el.id, el.getAttribute('data-original').trim(), cb.bind(el)
+      ###
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
@@ -381,7 +393,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if el.getAttribute('data-processed') != 'true'
           offset = parseInt(el.getAttribute('data-offset'))
           el.id = 'wavedrom'+offset
-          text = el.innerText.trim()
+          text = el.getAttribute('data-original').trim()
           continue if not text.length
           try
             content = JSON.parse(text.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
@@ -457,7 +469,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     isSavingToHTML ?= false
     return if not @editor
 
-    textContent = @editor.getText()
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
