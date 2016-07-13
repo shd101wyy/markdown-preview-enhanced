@@ -363,23 +363,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.getElementsByClassName('mermaid')
+    els = @element.querySelectorAll('.mermaid:not([data-processed])') #@element.getElementsByClassName('mermaid')
     if els.length
-      mermaid.init()
+      mermaid.init(null, els)
+
       ###
       # the code below doesn't seem to be working
       # I think mermaidAPI.render function has bug
-      cb = (svgGraph)->
-        console.log('enter here', svgGraph, this)
-        this.innerHTML = svgGraph
-        this.setAttribute 'data-processed', 'true'
+      cb = (el)->
+        (svgGraph)->
+          el.innerHTML = svgGraph
+          el.setAttribute 'data-processed', 'true'
+
+          # the code below is a hackable way to solve mermaid bug
+          el.firstChild.style.height = el.getAttribute('viewbox').split(' ')[3] + 'px'
 
       for el in els
-        if el.getAttribute('data-processed') != 'true'
-          offset = parseInt(el.getAttribute('data-offset'))
-          el.id = 'mermaid'+offset
+        offset = parseInt(el.getAttribute('data-offset'))
+        el.id = 'mermaid'+offset
 
-          mermaidAPI.render el.id, el.getAttribute('data-original').trim(), cb.bind(el)
+        mermaidAPI.render el.id, el.getAttribute('data-original'), cb(el)
       ###
 
       # disable @element onscroll

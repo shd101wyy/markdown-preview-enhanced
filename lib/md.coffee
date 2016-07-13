@@ -442,7 +442,12 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
         renderCodeBlock(preElement, err, 'text')
 
       if mermaidAPI.parse(text.trim())
-        checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $, mermaidOffset
+        # as mermaid library is buggy with subgraph
+        # I decide to hack it
+        if text.indexOf('subgraph') >= 0
+          $(preElement).replaceWith "<div class=\"mermaid\">#{text}</div>"
+        else
+          checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $, mermaidOffset
 
         mermaidOffset += 1
 
