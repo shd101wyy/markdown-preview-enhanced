@@ -113,6 +113,14 @@ graph LR
     style id1 fill:#f9f,stroke:#333,stroke-width:4px;
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
+subgraphs
+```mermaid
+graph LR
+  f-->z;
+  subgraph haha
+    z-->y
+  end
+```
 
 > Test PlantUML
 
@@ -168,7 +176,7 @@ database "MySql" {
 [Folder 3] --> [Frame 4]
 ```  
 
-	
+
 > Test WaveDrom
 ```wavedrom
 { signal: [
