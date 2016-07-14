@@ -1,5 +1,8 @@
+## 0.7.7
+* [ ] distraction free writing mode like [laverna](https://github.com/Laverna/laverna) or zen. [useful link](https://discuss.atom.io/t/set-atom-cursor-to-font-size-not-line-height/11965/5).
+* [ ] presentation mode like [marp](https://github.com/yhatt/marp)
 ## 0.7.3
-* [ ] fix print to pdf deadlock issue (if I can...)
+* [ ] fix print to pdf deadlock issue (if I can...) (*Update*: It seems to be **electron** related, therefore I can't fix it.)
 * [ ] print image [capturePage function](https://github.com/electron/electron/blob/master/docs/api/web-contents.md)
 * [x] right click on preview displays 'print' option on context menu (**I decide not to implement this**)
 * [x] update PlantUML to newest version
@@ -18,7 +21,7 @@
 
 ## 0.7.1
 * [x] support customizable math delimiters
-* [ ] increase MathJax rendering speed
+* [x] increase MathJax rendering speed
 * [x] fix code block `//` comment color bug (现在是黑色的。。。)
 * [x] fix WikiLink [#45](https://github.com/shd101wyy/markdown-preview-enhanced/issues/45)
 * [x] fix TOC header bug [#48](https://github.com/shd101wyy/markdown-preview-enhanced/issues/48)
