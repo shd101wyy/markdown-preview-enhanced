@@ -8,12 +8,18 @@ atom-text-editor[data-markdown-zen="true"]::shadow {
   atom-text-editor-minimap {
     display: none;
   }
+
+  .vertical-scrollbar {
+    display: none;
+  }
 }
 
 atom-text-editor[data-markdown-zen="true"] {
+  top: 32px !important;
+
   max-width: 874px;
   width: 80%;
-  padding: 32px 0;
+  height: calc(~"100% - 64px");
   margin: 0 auto;
   background-color: @tool-panel-background-color;
 }
