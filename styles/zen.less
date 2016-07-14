@@ -1,0 +1,19 @@
+@import "ui-variables";
+
+atom-text-editor[data-markdown-zen="true"]::shadow {
+  .gutter {
+    display: none;
+  }
+
+  atom-text-editor-minimap {
+    display: none;
+  }
+}
+
+atom-text-editor[data-markdown-zen="true"] {
+  max-width: 874px;
+  width: 80%;
+  padding: 32px 0;
+  margin: 0 auto;
+  background-color: @tool-panel-background-color;
+}
