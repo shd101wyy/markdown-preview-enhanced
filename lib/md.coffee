@@ -410,13 +410,13 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
         src.startsWith('../') or
         src[0] != '/')
       if !option.isSavingToHTML
-        img.attr(srcTag, path.resolve(rootDirectoryPath,  src))
+        img.attr(srcTag, 'file:///'+path.resolve(rootDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
       if (option.isSavingToHTML)
         img.attr(srcTag, path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
-        img.attr(srcTag, path.resolve(projectDirectoryPath, '.' + src))
+        img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang)->
     highlighter = new Highlights({registry: atom.grammars})

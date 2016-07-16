@@ -331,6 +331,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
             if href.endsWith('.pdf') # open pdf file outside atom
               @openFile href
             else
+              if href.startsWith 'file:///'
+                href = href.slice(8) # remove protocal
               atom.workspace.open href,
                 split: 'left',
                 searchAllPanes: true

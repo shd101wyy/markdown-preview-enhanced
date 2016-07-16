@@ -158,7 +158,7 @@
       "title": "PhantomJS margins",
       "description": "Default is 0, units: mm, cm, in, px. You can also define 'top, right, bottom, left' margins in order like '1cm, 1cm, 1cm, 1cm' separated by comma ','.",
       "type": "string",
-      "default": "0",
+      "default": "1cm",
       "order": 132
     },
     "openPreviewPaneAutomatically": {

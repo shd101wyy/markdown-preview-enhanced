@@ -85,7 +85,7 @@ class ExporterView extends View
           @option 'landscape'
         @br()
         @label 'Margin'
-        @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '0')
+        @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '1cm')
         @br()
         @a class: 'header-footer-config', 'click me to config header and footer'
         @br()
