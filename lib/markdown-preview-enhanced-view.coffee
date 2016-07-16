@@ -4,6 +4,7 @@ path = require 'path'
 fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
+pdf = require 'html-pdf'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -468,10 +469,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHTML})->
+  getHTMLContent: ({isForPrint, offline, isSavingToHTML, useOnlyKaTeX})->
     isForPrint ?= false
     offline ?= false
     isSavingToHTML ?= false
+    useOnlyKaTeX ?= false
     return if not @editor
 
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
@@ -485,10 +487,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if isForPrint
       useGitHubStyle = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
 
-    if mathRenderingOption == 'KaTeX'
+    if mathRenderingOption == 'KaTeX' or useOnlyKaTeX
       if offline
         mathStyle = "<link rel=\"stylesheet\"
-              href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+              href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
         mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
@@ -606,6 +608,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
+  phantomJSExport: (dist)->
+    return if not @editor
+
+    htmlContent = @getHTMLContent isForPrint: true, offline: true, useOnlyKaTeX: true  # only use katex to render math
+    pdf
+      .create htmlContent, {}
+      .toFile '/Users/wangyiyi/Desktop/test.pdf', (err, res)->
+        if err
+          atom.notifications.addError err
 
   copyToClipboard: ->
     return false if not @editor
