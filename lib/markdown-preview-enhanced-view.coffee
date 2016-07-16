@@ -619,7 +619,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     catch error
       configFile = new File(configPath)
       configFile.create().then (flag)->
-        return if !flag # already exists
+        if !flag # already exists
+          atom.notifications.addError('Failed to load phantomjs_header_footer_config.js', detail: 'there might be errors in your config file')
+          return
+
         configFile.write """
 'use strict'
 /*
@@ -641,6 +644,7 @@ eg:
   }
 */
 // you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
 let config = {
   'header': {},
   'footer': {}

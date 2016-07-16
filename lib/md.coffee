@@ -24,7 +24,10 @@ loadMermaidConfig = ()->
   catch error
     mermaidConfigFile = new File(configPath)
     mermaidConfigFile.create().then (flag)->
-      return if !flag # already exists
+      if !flag # already exists
+        atom.notifications.addError('Failed to load mermaid_config.js', detail: 'there might be errors in your config file')
+        return
+
       mermaidConfigFile.write """
 'use strict'
 // config mermaid init call
