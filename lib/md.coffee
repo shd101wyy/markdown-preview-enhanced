@@ -24,6 +24,7 @@ loadMermaidConfig = ()->
   catch error
     mermaidConfigFile = new File(configPath)
     mermaidConfigFile.create().then (flag)->
+      return if !flag # already exists
       mermaidConfigFile.write """
 'use strict'
 // config mermaid init call
