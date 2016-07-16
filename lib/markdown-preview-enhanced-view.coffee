@@ -469,11 +469,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHTML, useOnlyKaTeX})->
+  getHTMLContent: ({isForPrint, offline, isSavingToHTML})->
     isForPrint ?= false
     offline ?= false
     isSavingToHTML ?= false
-    useOnlyKaTeX ?= false
     return if not @editor
 
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
@@ -487,7 +486,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if isForPrint
       useGitHubStyle = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
 
-    if mathRenderingOption == 'KaTeX' or useOnlyKaTeX
+    if mathRenderingOption == 'KaTeX'
       if offline
         mathStyle = "<link rel=\"stylesheet\"
               href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
@@ -612,12 +611,43 @@ class MarkdownPreviewEnhancedView extends ScrollView
   phantomJSExport: (dist)->
     return if not @editor
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true, useOnlyKaTeX: true  # only use katex to render math
+    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
+    if mathRenderingOption == 'MathJax'
+      atom.config.set('markdown-preview-enhanced.mathRenderingOption', 'KaTeX')
+
+    htmlContent = @getHTMLContent isForPrint: true, offline: true  # only use katex to render math
+
+    if mathRenderingOption == 'MathJax'
+      atom.config.set('markdown-preview-enhanced.mathRenderingOption', mathRenderingOption)
+
+    fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+    format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+    orientation = atom.config.get('markdown-preview-enhanced.orientation')
+    margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+    if !margin.length
+      margin = '0'
+    else
+      margin = margin.split(',').map (m)->m.trim()
+      if margin.length == 2
+        margin = {'top': margin[0], 'bottom': margin[0], 'left': margin[1], 'right': margin[1]}
+      else if margin.length == 4
+        margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
+      else
+        margin = '0'
+
     pdf
-      .create htmlContent, {}
-      .toFile '/Users/wangyiyi/Desktop/test.pdf', (err, res)->
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100'}
+      .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
+        # open pdf
+        else
+          lastIndexOfSlash = dist.lastIndexOf '/' || 0
+          fileName = dist.slice(lastIndexOfSlash + 1)
+
+          atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
+          if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+            @openFile dist
 
   copyToClipboard: ->
     return false if not @editor

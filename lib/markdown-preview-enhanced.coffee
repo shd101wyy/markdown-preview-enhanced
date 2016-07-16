@@ -25,8 +25,6 @@ module.exports = MarkdownPreviewEnhanced =
 
     @preview = new MarkdownPreviewEnhancedView(state, 'markdown-preview-enhanced://preview')
 
-    window.preview = @preview # delete this line later
-
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace',
       'markdown-preview-enhanced:toggle': => @toggle()

@@ -143,6 +143,24 @@
       "description": "If you enabled this option, then when pdf is generated, it will be opened by pdf viewer. For example, on Mac OS X, it will be opened by Preview.",
       "order": 130
     },
+    "phantomJSExportFileType": {
+      "title": "PhantomJS export file type",
+      "type": "string",
+      "default": "pdf",
+      "enum": [
+        "pdf",
+        "png",
+        "jpeg"
+      ],
+      "order": 131
+    },
+    "phantomJSMargin": {
+      "title": "PhantomJS margins",
+      "description": "Default is 0, units: mm, cm, in, px. You can also define 'top, right, bottom, left' margins in order like '1cm, 1cm, 1cm, 1cm' separated by comma ','.",
+      "type": "string",
+      "default": "0",
+      "order": 132
+    },
     "openPreviewPaneAutomatically": {
       "title": "Open preview pane automatically when opening a markdown file",
       "type": "boolean",

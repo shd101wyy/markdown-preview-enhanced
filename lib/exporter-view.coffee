@@ -17,6 +17,7 @@ class ExporterView extends View
       @div class: 'document-type-div clearfix', =>
         @div class: 'document-type document-html selected', "HTML"
         @div class: 'document-type document-pdf', "PDF"
+        @div class: 'document-type document-phantomjs', "PHANTOMJS(Beta)"
 
       @label class: 'save-as-label', 'Save as'
       @subview 'fileNameInput', new TextEditorView(mini: true, placeholderText: 'enter filename here')
@@ -60,6 +61,34 @@ class ExporterView extends View
         # @label 'image quality'
         # @input type: 'text', class: 'image-quality-input'
 
+      @div class: 'phantomjs-div', =>
+        @div class: 'splitter'
+        @label 'File Type'
+        @select class: 'file-type-select', =>
+          @option 'pdf'
+          @option 'png'
+          @option 'jpeg'
+        @br()
+        @label 'Format'
+        @select class: 'format-select', =>
+          @option 'A3'
+          @option 'A4'
+          @option 'A5'
+          @option 'Legal'
+          @option 'Letter'
+          @option 'Tabloid'
+        @br()
+        @label 'Orientation'
+        @select class: 'orientation-select', =>
+          @option 'portrait'
+          @option 'landscape'
+        @br()
+        @label 'Margin'
+        @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '0')
+        @br()
+        @label 'Open PDF after generation'
+        @input type: 'checkbox', class: 'pdf-auto-open-checkbox'
+
       @div class: 'button-group', =>
         @div class: 'close-btn btn', 'close'
         @div class: 'export-btn btn', 'export'
@@ -69,6 +98,7 @@ class ExporterView extends View
 
     @initHTMLPageEvent()
     @initPDFPageEvent()
+    @initPhantomJSPageEvent()
 
     $('.export-btn', @element).click ()=>
       dist = @fileNameInput.getText().trim()
@@ -83,6 +113,9 @@ class ExporterView extends View
       else if $('.document-html', @element).hasClass('selected') # html
         isCDN = $('.cdn-checkbox', @element)[0].checked
         @markdownPreview.saveAsHTML dist, !isCDN
+      else if $('.document-phantomjs', @element).hasClass('selected') # phantomjs
+        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+        @markdownPreview.phantomJSExport dist
 
   initHTMLPageEvent: ->
     $('.document-html', @element).on 'click', (e)=>
@@ -94,6 +127,7 @@ class ExporterView extends View
         @fileNameInput.focus()
 
       $('.pdf-div', @element).hide()
+      $('.phantomjs-div', @element).hide()
       $('.html-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
@@ -112,37 +146,93 @@ class ExporterView extends View
         @fileNameInput.focus()
 
       $('.html-div', @element).hide()
+      $('.phantomjs-div', @element).hide()
       $('.pdf-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
       filePath = filePath.slice(0, filePath.length-3) + '.pdf'
       @fileNameInput.setText(filePath)
 
+      $('.pdf-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+
+      $('.pdf-div .orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
+
+      $('.pdf-div .margin-select', @element).val atom.config.get('markdown-preview-enhanced.marginsType')
+
+      $('.pdf-div .print-background-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.printBackground')
+
+      $('.pdf-div .github-style-checkbox', @element)[0].checked =   atom.config.get('markdown-preview-enhanced.pdfUseGithub')
+
+      $('.pdf-div .pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+
     ## select
-    $('.format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
-    $('.format-select', @element).on 'change', (e)->
+    $('.pdf-div .format-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
 
-    $('.orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
-    $('.orientation-select', @element).on 'change', (e)->
+    $('.pdf-div .orientation-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.orientation', this.value)
 
-    $('.margin-select', @element).val atom.config.get('markdown-preview-enhanced.marginsType')
-    $('.margin-select', @element).on 'change', (e)->
+    $('.pdf-div .margin-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.marginsType', this.value)
 
     ## checkbox
-    $('.print-background-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.printBackground')
-    $('.print-background-checkbox', @element).on 'change', (e)->
+    $('.pdf-div .print-background-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.printBackground', e.target.checked)
 
-    $('.github-style-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
-    $('.github-style-checkbox', @element).on 'change', (e)->
+    $('.pdf-div .github-style-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.pdfUseGithub', e.target.checked)
 
-    $('.pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-    $('.pdf-auto-open-checkbox', @element).on 'change', (e)->
+    $('.pdf-div .pdf-auto-open-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.pdfOpenAutomatically', e.target.checked)
+
+  initPhantomJSPageEvent: ->
+    $('.document-phantomjs', @element).on 'click', (e)=>
+      $el = $(e.target)
+      if !$el.hasClass('selected')
+        $('.selected', @element).removeClass('selected')
+        $el.addClass('selected')
+
+        @fileNameInput.focus()
+
+      $('.html-div', @element).hide()
+      $('.pdf-div', @element).hide()
+      $('.phantomjs-div', @element).show()
+
+      filePath = @markdownPreview.editor.getPath()
+      filePath = filePath.slice(0, filePath.length-3) + '.' + atom.config.get('markdown-preview-enhanced.phantomJSExportFileType').toLowerCase()
+      @fileNameInput.setText(filePath)
+      @marginInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSMargin'))
+
+      $('.phantomjs-div .file-type-select', @element).val atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+
+      $('.phantomjs-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+
+      $('.phantomjs-div .orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
+
+      $('.phantomjs-div .pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+
+    ## select
+    $('.phantomjs-div .file-type-select', @element).on 'change', (e)=>
+      atom.config.set('markdown-preview-enhanced.phantomJSExportFileType', e.target.value)
+
+      filePath = @markdownPreview.editor.getPath()
+      filePath = filePath.slice(0, filePath.length-3) + '.' + atom.config.get('markdown-preview-enhanced.phantomJSExportFileType').toLowerCase()
+      @fileNameInput.setText(filePath)
+
+    $('.phantomjs-div .format-select', @element).on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
+
+    $('.phantomjs-div .orientation-select', @element).on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.orientation', this.value)
+
+    ## input
+    @marginInput.model.onDidStopChanging (e)=>
+      atom.config.set('markdown-preview-enhanced.phantomJSMargin', @marginInput.getText())
+
+    ## checkbox
+    $('.phantomjs-div .pdf-auto-open-checkbox', @element).on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.pdfOpenAutomatically', e.target.checked)
+
 
 
   hidePanel: ->
