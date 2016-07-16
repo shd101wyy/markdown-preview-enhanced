@@ -1,5 +1,6 @@
 {Emitter, CompositeDisposable} = require 'atom'
 {$, $$$, View, TextEditorView}  = require 'atom-space-pen-views'
+path = require 'path'
 
 class ExporterView extends View
   initialize: ()->
@@ -17,7 +18,7 @@ class ExporterView extends View
       @div class: 'document-type-div clearfix', =>
         @div class: 'document-type document-html selected', "HTML"
         @div class: 'document-type document-pdf', "PDF"
-        @div class: 'document-type document-phantomjs', "PHANTOMJS(Beta)"
+        @div class: 'document-type document-phantomjs', "PHANTOMJS (Beta)"
 
       @label class: 'save-as-label', 'Save as'
       @subview 'fileNameInput', new TextEditorView(mini: true, placeholderText: 'enter filename here')
@@ -85,6 +86,9 @@ class ExporterView extends View
         @br()
         @label 'Margin'
         @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '0')
+        @br()
+        @a class: 'header-footer-config', 'click me to config header and footer'
+        @br()
         @br()
         @label 'Open PDF after generation'
         @input type: 'checkbox', class: 'pdf-auto-open-checkbox'
@@ -233,7 +237,11 @@ class ExporterView extends View
     $('.phantomjs-div .pdf-auto-open-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.pdfOpenAutomatically', e.target.checked)
 
-
+    ## config
+    config = $('.header-footer-config', @element)
+    config.on 'click', ()=>
+      @hidePanel()
+      atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'), {split: 'left'})
 
   hidePanel: ->
     return unless @panel.isVisible()

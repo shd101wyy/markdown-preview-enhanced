@@ -1,4 +1,4 @@
-{Emitter, CompositeDisposable} = require 'atom'
+{Emitter, CompositeDisposable, File} = require 'atom'
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
@@ -608,6 +608,48 @@ class MarkdownPreviewEnhancedView extends ScrollView
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
 
+  ####################################################
+  ## PhantomJS
+  ##################################################
+  loadPhantomJSHeaderFooterConfig: ()->
+    # mermaid_config.js
+    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
+    try
+      return require(configPath)
+    catch error
+      configFile = new File(configPath)
+      configFile.create().then (flag)->
+        return if !flag # already exists
+        configFile.write """
+'use strict'
+/*
+config header and footer
+more information can be found here:
+    https://github.com/marcbachmann/node-html-pdf
+
+eg:
+
+  let config = {
+    "header": {
+      "height": "45mm",
+      "contents": '<div style="text-align: center;">Author: Marc Bachmann</div>'
+    },
+    "footer": {
+      "height": "28mm",
+      "contents": '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>'
+    }
+  }
+*/
+// you can edit the 'config' variable below
+let config = {
+  'header': {},
+  'footer': {}
+}
+
+module.exports = config || {}
+"""
+      return {}
+
   phantomJSExport: (dist)->
     return if not @editor
 
@@ -628,15 +670,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
       margin = '0'
     else
       margin = margin.split(',').map (m)->m.trim()
-      if margin.length == 2
+      if margin.length == 1
+        margin = margin[0]
+      else if margin.length == 2
         margin = {'top': margin[0], 'bottom': margin[0], 'left': margin[1], 'right': margin[1]}
       else if margin.length == 4
         margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
       else
         margin = '0'
 
+    header_footer = @loadPhantomJSHeaderFooterConfig()
+
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100'}
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer}
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err

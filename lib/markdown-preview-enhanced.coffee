@@ -35,6 +35,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
       'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
+      'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
 
     # when the preview is displayed
@@ -218,6 +219,9 @@ module.exports = MarkdownPreviewEnhanced =
 
   openMermaidConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
+
+  openHeaderFooterConfig: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
 
   toggleZenMode: ()->
     editor = atom.workspace.getActiveTextEditor()
