@@ -246,28 +246,26 @@ md.block.ruler.before 'code', 'custom-comment',
         firstIndexOfSpace = content.length if firstIndexOfSpace == -1
 
         subject = content.slice(0, firstIndexOfSpace)
-
         rest = content.slice(firstIndexOfSpace+1).trim()
         option = {}
-        if rest.length
-          rest = '{' + rest + '}'
-          try
-            option = JSON.parse(rest.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
-          catch e
-            # atom.notifications.addError('Failed to parse options', detail: content)
-            null
 
-        state.tokens.push
-          type: 'custom'
-          subject: subject
-          line: state.line
-          option: option
+        rest = '{' + rest + '}'
+        try
+          option = JSON.parse(rest.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
 
-        state.line = start + 1
+          state.tokens.push
+            type: 'custom'
+            subject: subject
+            line: state.line
+            option: option
+        catch e
+          # shouldn't do anything here
+          null
+
+        state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
         return true
       else
         return false
-
 
 #
 # Inject line numbers for sync scroll. Notes:
