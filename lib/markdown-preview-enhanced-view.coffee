@@ -696,7 +696,7 @@ module.exports = config || {}
       else if margin.length == 4
         margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
       else
-        margin = '0'
+        margin = '1cm'
 
     header_footer = @loadPhantomJSHeaderFooterConfig()
 

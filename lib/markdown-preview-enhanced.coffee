@@ -36,6 +36,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
       'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
       'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
 
     # when the preview is displayed
@@ -231,3 +232,8 @@ module.exports = MarkdownPreviewEnhanced =
         editorElement.removeAttribute('data-markdown-zen')
       else
         editorElement.setAttribute('data-markdown-zen', 'true')
+
+  insertNewSlide: ()->
+    editor = atom.workspace.getActiveTextEditor()
+    if editor and editor.buffer
+      editor.insertText '<!-- slide -->'
