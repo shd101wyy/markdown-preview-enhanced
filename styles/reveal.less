@@ -1,0 +1,66 @@
+.markdown-preview-enhanced[data-presentation-mode] {
+  background: #f6f6f6;
+
+  // @import (less) '../dependencies/reveal/reveal.css'; // KaTeX will have problem If I import this
+  @import (less) '../dependencies/reveal/theme/white.css';
+
+  .reveal {
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .slides {
+    width: 100%;
+  }
+
+  /*
+  .slide-container {
+    position: relative;
+    padding-bottom: 75%; // initial ratio 4:3
+    height: 0;
+    margin-bottom: 6px;
+
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    box-shadow: 0px 0px 16px 1px #eeeeee;
+  }
+  */
+
+  .slide {
+    position: relative;
+
+    //width: 100%; # need to be set later
+    //height: 100%;
+
+    padding: 2em !important;
+    text-align: left !important;
+    display: flex;
+    align-items:center;
+
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    box-shadow: 0px 0px 16px 1px #eeeeee;
+  }
+
+  pre {
+    padding: 16px !important;
+    margin: 0 !important;
+  }
+
+  section {
+    display: block;
+    width: 100%;
+    transform-style: preserve-3d;
+    font-size: 100%;
+    font: inherit;
+  }
+}
+
+.markdown-preview-enhanced {
+  .slides {
+    text-align: left !important;
+  }
+}

@@ -41,6 +41,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseMD = null
     @buildScrollMap = null
 
+    # presentation mode
+    @presentationMode = false
+    @presentationConfig = null
+
     # when resize the window, clear the editor
     @resizeEvent = ()=>
       @scrollMap = null
@@ -116,6 +120,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
+      @presentationConfig = @loadPresentationConfig()
+      @presentationConfig.width = 960 if not @presentationConfig.width
+      @presentationConfig.height = 700 if not @presentationConfig.height
+
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
@@ -151,7 +159,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @updateMarkdown()
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate or !@editor
+      if !@scrollSync or !@element or !@liveUpdate or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -173,7 +181,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or !@liveUpdate
+      if !@scrollSync or !@element or !@liveUpdate or @presentationMode
         return
       if Date.now() < @parseDelay
         return
@@ -196,7 +204,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or !@liveUpdate
+      if !@editor or !@scrollSync or !@liveUpdate or @presentationMode
         return
       if Date.now() < @previewScrollDelay
         return
@@ -296,10 +304,54 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    html = @parseMD(this)
+    {html, slideConfigs} = @parseMD(this)
+
+    if slideConfigs.length
+      html = @parseSlides(html, slideConfigs)
+      @element.setAttribute 'data-presentation-mode', ''
+      @presentationMode = true
+    else
+      @element.removeAttribute 'data-presentation-mode'
+      @presentationMode = false
 
     @element.innerHTML = html
     @bindEvents()
+
+    if slideConfigs.length
+      @setSlideDisplayProperties()
+
+  parseSlides: (html, slideConfigs)->
+    slides = html.split '<div class="new-slide"></div>'
+    output = ''
+
+    offset = 1
+    width = @presentationConfig.width
+    height = @presentationConfig.height
+    ratio = height / width * 100 + '%'
+    zoom = (@element.offsetWidth - 64)/width ## 64 is 2*padding
+
+    for slide in slides
+      slide = slide.trim()
+      if slide.length
+        output += """
+          <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom};">
+            <section>#{slide}</section>
+          </div>
+          <div class="pagebreak"> </div>
+        """
+        offset += 1
+
+    """
+    <div class="reveal">
+      <div class="slides">
+        #{output}
+      </div>
+    </div>
+    """
+
+  setSlideDisplayProperties: ()->
+    width = @presentationConfig.width
+    height = @presentationConfig.height
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -410,9 +462,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
           text = el.getAttribute('data-original').trim()
           continue if not text.length
           try
-            content = JSON.parse(text.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+            content = JSON.parse(text.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
             WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
             el.setAttribute 'data-processed', 'true'
+
+            @scrollMap = null
           catch error
             el.innerText = 'failed to parse JSON'
 
@@ -425,6 +479,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       plantumlAPI.render text, (outputHTML)->
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
+        @scrollMap = null
 
     for el in els
       if el.getAttribute('data-processed') != 'true'
@@ -487,7 +542,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    htmlContent = @parseMD(this, {isSavingToHTML, isForPreview: false})
+    res = @parseMD(this, {isSavingToHTML, isForPreview: false})
+    htmlContent = res.html
+    slideConfigs = res.slideConfigs
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -536,6 +593,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
     mermaidTheme = atom.config.get 'markdown-preview-enhanced.mermaidTheme'
     mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
 
+    # presentation
+    if @presentationMode
+      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs)
+      presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+      presentationStyle = """
+      <link rel=\"stylesheet\" href='#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
+      <link rel=\"stylesheet\" href='#{path.resolve(__dirname, '../dependencies/reveal/theme/white.css')}'>
+      <style>
+      .markdown-preview-enhanced {
+        width: 100%;
+      }
+      </style>
+      """
+      presentationInitScript = """
+      <script>
+        Reveal.initialize({})
+      </script>
+      """
+    else
+      presentationScript = ''
+      presentationStyle = ''
+      presentationInitScript = ''
+
     title = @getFileName()
     title = title.slice(0, title.length - 3) # remove '.md'
     htmlContent = "
@@ -550,12 +630,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
       #{mermaidThemeStyle}
       </style>
       #{mathStyle}
+      #{presentationStyle}
+
+      #{presentationScript}
     </head>
     <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
 
     #{htmlContent}
 
     </body>
+    #{presentationInitScript}
   </html>
     "
 
@@ -622,6 +706,55 @@ class MarkdownPreviewEnhancedView extends ScrollView
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
+  ####################################################
+  ## Presentation
+  ##################################################
+  loadPresentationConfig: ()->
+    # presentation_config.js
+    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js')
+    try
+      return require(configPath)
+    catch error
+      configFile = new File(configPath)
+      configFile.create().then (flag)->
+        if !flag # already exists
+          atom.notifications.addError('Failed to load presentation_config.js', detail: 'there might be errors in your config file')
+          return
+
+        configFile.write """
+'use strict'
+/*
+config presentation powered by reveal.js
+more information about configuration can be found here:
+    https://github.com/hakimel/reveal.js#user-content-configuration
+*/
+// you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
+let config = {
+  controls: true,
+}
+
+module.exports = config || {}
+"""
+      return {}
+
+  parseSlidesForExport: (html, slideConfigs)->
+    slides = html.split '<div class="new-slide"></div>'
+    output = ''
+
+    for slide in slides
+      slide = slide.trim()
+      if slide.length
+        output += "<section>#{slide}</section>"
+
+    """
+    <div class="reveal">
+      <div class="slides">
+        #{output}
+      </div>
+    </div>
+    """
 
   ####################################################
   ## PhantomJS
@@ -696,7 +829,7 @@ module.exports = config || {}
       else if margin.length == 4
         margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
       else
-        margin = '0'
+        margin = '1cm'
 
     header_footer = @loadPhantomJSHeaderFooterConfig()
 

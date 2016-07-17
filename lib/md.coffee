@@ -241,20 +241,25 @@ md.block.ruler.before 'code', 'custom-comment',
     if state.src.startsWith('<!--', pos)
       end = state.src.indexOf('-->', pos + 4)
       if (end >= 0)
-        contents = state.src.slice(pos + 4, end).trim().split(' ')
+        content = state.src.slice(pos + 4, end).trim()
+        firstIndexOfSpace = content.indexOf(' ')
+        firstIndexOfSpace = content.length if firstIndexOfSpace == -1
 
-        content = contents[0]
+        subject = content.slice(0, firstIndexOfSpace)
+
+        rest = content.slice(firstIndexOfSpace+1).trim()
         option = {}
-        for i in [1...contents.length]
-          o = contents[i].split(':')
-          if o.length == 2
-            option[o[0]] = o[1]
-          else
-            option[o[0]] = null
+        if rest.length
+          rest = '{' + rest + '}'
+          try
+            option = JSON.parse(rest.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+          catch e
+            # atom.notifications.addError('Failed to parse options', detail: content)
+            null
 
         state.tokens.push
           type: 'custom'
-          content: content
+          subject: subject
           line: state.line
           option: option
 
@@ -479,6 +484,9 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   tocEndLine = -1
   tocOrdered = false
 
+  # slide
+  slideConfigs = []
+
   # set graph data
   # so that we won't render the graph that hasn't changed
   graphData = {}
@@ -515,29 +523,32 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
 
     return "<h#{tokens[idx].hLevel} #{id}>"
 
-  # <!-- content -->
+  # <!-- subject options... -->
   md.renderer.rules.custom = (tokens, idx)=>
-    content = tokens[idx].content
+    subject = tokens[idx].subject
 
-    if content == 'pagebreak' or content == 'newpage'
+    if subject == 'pagebreak' or subject == 'newpage'
       return '<div class="pagebreak"> </div>'
-    else if content == 'toc'
+    else if subject == 'toc'
       tocEnabled = true
       if tocStartLine == -1
         tocStartLine = tokens[idx].line
 
         opt = tokens[idx].option
-        if opt.orderedList and opt.orderedList != '0'
+        if opt.orderedList and opt.orderedList != 0
           tocOrdered = true
 
       else
         throw 'Only one toc is supported'
-    else if (content == 'tocstop')
+    else if (subject == 'tocstop')
       if tocEndLine == -1
         tocEndLine = tokens[idx].line
       else
         throw "Only one toc is supported"
-
+    else if subject == 'slide'
+      opt = tokens[idx].option
+      slideConfigs.push(opt)
+      return '<div class="new-slide"></div>'
     return ''
 
 
@@ -581,6 +592,8 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         tocStartLine = -1
         tocEndLine = -1
 
+        slideConfigs = []
+
         # set globalMathJaxData
         # so that we won't render the math expression that hasn't changed
         globalMathJaxData = {}
@@ -594,7 +607,9 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         html = md.render(editor.getText())
 
   markdownPreview.headings = headings
-  return resolveImagePathAndCodeBlock(html, markdownPreview, graphData, option)
+
+  html = resolveImagePathAndCodeBlock(html, markdownPreview, graphData, option)
+  return {html, slideConfigs}
 
 module.exports = {
   parseMD,
