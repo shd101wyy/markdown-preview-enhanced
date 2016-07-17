@@ -307,10 +307,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     if slideConfigs.length
       html = @parseSlides(html, slideConfigs)
-      @element.setAttribute 'data-presentation-mode', ''
+      @element.setAttribute 'data-presentation-preview-mode', ''
       @presentationMode = true
     else
-      @element.removeAttribute 'data-presentation-mode'
+      @element.removeAttribute 'data-presentation-preview-mode'
       @presentationMode = false
 
     @element.innerHTML = html
@@ -341,10 +341,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         offset += 1
 
     """
-    <div class="reveal">
-      <div class="slides">
-        #{output}
-      </div>
+    <div class="preview-slides">
+      #{output}
     </div>
     """
 
@@ -514,10 +512,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         fs.write info.fd, htmlContent, (err)=>
           throw err if err
-          console.log (info.path + (if isForPresentationPrint then '?print-pdf' else ''))
           if isForPresentationPrint
             url = 'file:///' + info.path + '?print-pdf'
-            atom.notifications.addInfo('Please open the link below in Chrome. Then right click -> choose print -> save as pdf.', dismissable: true, detail: url)
+            atom.notifications.addInfo('Please copy and open the link below in Chrome.\nThen Right Click -> Print -> Save as Pdf.', dismissable: true, detail: url)
           else
             ## open in browser
             @openFile info.path
@@ -615,16 +612,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
         font-size: 24px !important;
         width: 100% !important;
         box-sizing: border-box !important;
+        margin-top: 0 !important;
       }
       .markdown-preview-enhanced::-webkit-scrollbar {
         display: none !important;
       }
+
       #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
       </style>
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize({})
+        Reveal.initialize(#{JSON.stringify(@presentationConfig)})
       </script>
       """
     else
@@ -653,7 +652,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
+    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\"
+    #{if @presentationMode then 'data-presentation-mode' else ''}>
 
     #{htmlContent}
 
