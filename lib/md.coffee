@@ -242,8 +242,12 @@ md.block.ruler.before 'code', 'custom-comment',
       end = state.src.indexOf('-->', pos + 4)
       if (end >= 0)
         content = state.src.slice(pos + 4, end).trim()
-        firstIndexOfSpace = content.indexOf(' ')
-        firstIndexOfSpace = content.length if firstIndexOfSpace == -1
+
+        match = content.match(/(\s|\n)/) # find ' ' or '\n'
+        if !match
+          firstIndexOfSpace = content.length
+        else
+          firstIndexOfSpace = match.index
 
         subject = content.slice(0, firstIndexOfSpace)
         rest = content.slice(firstIndexOfSpace+1).trim()
