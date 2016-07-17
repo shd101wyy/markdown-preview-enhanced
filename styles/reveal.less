@@ -1,3 +1,5 @@
+@import "syntax-variables";
+
 .markdown-preview-enhanced[data-presentation-mode] {
   background: #f6f6f6;
 
@@ -14,19 +16,6 @@
   .slides {
     width: 100%;
   }
-
-  /*
-  .slide-container {
-    position: relative;
-    padding-bottom: 75%; // initial ratio 4:3
-    height: 0;
-    margin-bottom: 6px;
-
-    border: 1px solid #e6e6e6;
-    background-color: #fff;
-    box-shadow: 0px 0px 16px 1px #eeeeee;
-  }
-  */
 
   .slide {
     position: relative;
@@ -45,12 +34,16 @@
     box-shadow: 0px 0px 16px 4px #eeeeee;
 
     font-size: 24px;
+
+    background-color: @syntax-background-color !important;
   }
 
-  pre {
-    padding: 16px !important;
-    margin: 0 !important;
+  &[data-use-github-style=true] {
+    .slide {
+      background-color: #fff !important;
+    }
   }
+
 
   section {
     display: block;

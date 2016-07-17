@@ -607,7 +607,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
 
       .markdown-preview-enhanced {
-        font-size: 32px !important;
+        font-size: 24px !important;
         width: 100% !important;
         box-sizing: border-box !important;
       }
