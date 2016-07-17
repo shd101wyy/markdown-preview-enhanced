@@ -182,7 +182,19 @@
       "enum": [
         "imgur",
         "sm.ms"
-      ]
+      ],
+      "order": 160
+    },
+    "mermaidTheme": {
+      "title": "Mermaid Theme",
+      "type": "string",
+      "default": "mermaid.css",
+      "enum": [
+        "mermaid.css",
+        "mermaid.dark.css",
+        "mermaid.forest.css"
+      ],
+      "order": 170
     }
   }
 }

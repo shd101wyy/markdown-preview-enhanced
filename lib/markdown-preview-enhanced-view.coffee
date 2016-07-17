@@ -267,6 +267,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @mathRenderingOption = option
         @renderMarkdown()
 
+    # mermaid theme
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
+      (theme) =>
+        @element.setAttribute 'data-mermaid-theme', theme
+
+
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
       @scrollMap = @buildScrollMap(this)
@@ -526,6 +532,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
+    # mermaid theme
+    mermaidTheme = atom.config.get 'markdown-preview-enhanced.mermaidTheme'
+    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
+
     title = @getFileName()
     title = title.slice(0, title.length - 3) # remove '.md'
     htmlContent = "
@@ -535,7 +545,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <title>#{title}</title>
       <meta charset=\"utf-8\">
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-      <style> #{getMarkdownPreviewCSS()} </style>
+      <style>
+      #{getMarkdownPreviewCSS()}
+      #{mermaidThemeStyle}
+      </style>
       #{mathStyle}
     </head>
     <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
