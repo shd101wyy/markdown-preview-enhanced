@@ -280,7 +280,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       (theme) =>
         @element.setAttribute 'data-mermaid-theme', theme
 
-
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
       @scrollMap = @buildScrollMap(this)
@@ -328,7 +327,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     width = @presentationConfig.width
     height = @presentationConfig.height
     ratio = height / width * 100 + '%'
-    zoom = (@element.offsetWidth - 64)/width ## 64 is 2*padding
+    zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
 
     for slide in slides
       slide = slide.trim()
@@ -594,15 +593,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
     mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
 
     # presentation
-    if @presentationMode
+    if slideConfigs.length
       htmlContent = @parseSlidesForExport(htmlContent, slideConfigs)
-      presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+      if offline
+        presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+      else
+        presentationScript = "<script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script>"
+
+      #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
       presentationStyle = """
-      <link rel=\"stylesheet\" href='#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
-      <link rel=\"stylesheet\" href='#{path.resolve(__dirname, '../dependencies/reveal/theme/white.css')}'>
+
       <style>
+      #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
+
       .markdown-preview-enhanced {
-        width: 100%;
+        font-size: 32px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .markdown-preview-enhanced::-webkit-scrollbar {
+        display: none !important;
       }
       </style>
       """
@@ -625,12 +635,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <title>#{title}</title>
       <meta charset=\"utf-8\">
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+      #{presentationStyle}
+
       <style>
       #{getMarkdownPreviewCSS()}
       #{mermaidThemeStyle}
       </style>
+
       #{mathStyle}
-      #{presentationStyle}
 
       #{presentationScript}
     </head>
