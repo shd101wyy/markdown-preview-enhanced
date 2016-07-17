@@ -502,10 +502,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
 
   ## Utilities
-  openInBrowser: ()->
+  openInBrowser: (isForPresentationPrint=false)->
     return if not @editor
 
-    htmlContent = @getHTMLContent offline: true
+    htmlContent = @getHTMLContent offline: true, isForPrint: isForPresentationPrint
 
     temp.open
       prefix: 'markdown-preview-enhanced',
@@ -514,8 +514,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         fs.write info.fd, htmlContent, (err)=>
           throw err if err
-          ## open in browser
-          @openFile info.path
+          console.log (info.path + (if isForPresentationPrint then '?print-pdf' else ''))
+          if isForPresentationPrint
+            url = 'file:///' + info.path + '?print-pdf'
+            atom.notifications.addInfo('Please open the link below in Chrome. Then right click -> choose print -> save as pdf.', dismissable: true, detail: url)
+          else
+            ## open in browser
+            @openFile info.path
 
   exportToDisk: ()->
     @documentExporter.display(this)
@@ -614,6 +619,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       .markdown-preview-enhanced::-webkit-scrollbar {
         display: none !important;
       }
+      #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
       </style>
       """
       presentationInitScript = """
@@ -698,6 +704,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   saveAsPDF: (dist)->
     return if not @editor
+
+    if @presentationMode # for presentation, need to print from chrome
+      @openInBrowser(true)
+      return
 
     htmlContent = @getHTMLContent isForPrint: true, offline: true
     temp.open
@@ -817,6 +827,10 @@ module.exports = config || {}
 
   phantomJSExport: (dist)->
     return if not @editor
+
+    if @presentationMode # for presentation, need to print from chrome
+      @openInBrowser(true)
+      return
 
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
     if mathRenderingOption == 'MathJax'
