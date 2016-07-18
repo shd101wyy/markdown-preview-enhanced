@@ -457,7 +457,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
     helper = (el, text)->
-      plantumlAPI.render text, (outputHTML)->
+      plantumlAPI.render text, (outputHTML)=>
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
         @scrollMap = null
