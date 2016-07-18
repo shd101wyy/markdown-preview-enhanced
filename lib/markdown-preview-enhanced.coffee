@@ -240,4 +240,4 @@ module.exports = MarkdownPreviewEnhanced =
   insertNewSlide: ()->
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
-      editor.insertText '<!-- slide -->'
+      editor.insertText '<!-- slide -->\n'

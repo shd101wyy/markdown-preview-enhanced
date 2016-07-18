@@ -1,0 +1,2317 @@
+<!DOCTYPE html> <html> <head> <title>presentation-intro</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<style>
+/*!
+ * reveal.js
+ * http://lab.hakim.se/reveal-js
+ * MIT licensed
+ *
+ * Copyright (C) 2016 Hakim El Hattab, http://hakim.se
+ */
+/*********************************************
+ * RESET STYLES
+ *********************************************/
+html, body, .reveal div, .reveal span, .reveal applet, .reveal object, .reveal iframe,
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6, .reveal p, .reveal blockquote, .reveal pre,
+.reveal a, .reveal abbr, .reveal acronym, .reveal address, .reveal big, .reveal cite, .reveal code,
+.reveal del, .reveal dfn, .reveal em, .reveal img, .reveal ins, .reveal kbd, .reveal q, .reveal s, .reveal samp,
+.reveal small, .reveal strike, .reveal strong, .reveal sub, .reveal sup, .reveal tt, .reveal var,
+.reveal b, .reveal u, .reveal center,
+.reveal dl, .reveal dt, .reveal dd, .reveal ol, .reveal ul, .reveal li,
+.reveal fieldset, .reveal form, .reveal label, .reveal legend,
+.reveal table, .reveal caption, .reveal tbody, .reveal tfoot, .reveal thead, .reveal tr, .reveal th, .reveal td,
+.reveal article, .reveal aside, .reveal canvas, .reveal details, .reveal embed,
+.reveal figure, .reveal figcaption, .reveal footer, .reveal header, .reveal hgroup,
+.reveal menu, .reveal nav, .reveal output, .reveal ruby, .reveal section, .reveal summary,
+.reveal time, .reveal mark, .reveal audio, .reveal video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+.reveal article, .reveal aside, .reveal details, .reveal figcaption, .reveal figure,
+.reveal footer, .reveal header, .reveal hgroup, .reveal menu, .reveal nav, .reveal section {
+  display: block; }
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+
+body {
+  position: relative;
+  line-height: 1;
+  background-color: #fff;
+  color: #000; }
+
+html:-webkit-full-screen-ancestor {
+  background-color: inherit; }
+
+html:-moz-full-screen-ancestor {
+  background-color: inherit; }
+
+/*********************************************
+ * VIEW FRAGMENTS
+ *********************************************/
+.reveal .slides section .fragment {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all .2s ease;
+          transition: all .2s ease; }
+  .reveal .slides section .fragment.visible {
+    opacity: 1;
+    visibility: visible; }
+
+.reveal .slides section .fragment.grow {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.grow.visible {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3); }
+
+.reveal .slides section .fragment.shrink {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.shrink.visible {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+
+.reveal .slides section .fragment.zoom-in {
+  -webkit-transform: scale(0.1);
+          transform: scale(0.1); }
+  .reveal .slides section .fragment.zoom-in.visible {
+    -webkit-transform: none;
+            transform: none; }
+
+.reveal .slides section .fragment.fade-out {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.fade-out.visible {
+    opacity: 0;
+    visibility: hidden; }
+
+.reveal .slides section .fragment.semi-fade-out {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.semi-fade-out.visible {
+    opacity: 0.5;
+    visibility: visible; }
+
+.reveal .slides section .fragment.strike {
+  opacity: 1;
+  visibility: visible; }
+  .reveal .slides section .fragment.strike.visible {
+    text-decoration: line-through; }
+
+.reveal .slides section .fragment.fade-up {
+  -webkit-transform: translate(0, 20%);
+          transform: translate(0, 20%); }
+  .reveal .slides section .fragment.fade-up.visible {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+
+.reveal .slides section .fragment.fade-down {
+  -webkit-transform: translate(0, -20%);
+          transform: translate(0, -20%); }
+  .reveal .slides section .fragment.fade-down.visible {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+
+.reveal .slides section .fragment.fade-right {
+  -webkit-transform: translate(-20%, 0);
+          transform: translate(-20%, 0); }
+  .reveal .slides section .fragment.fade-right.visible {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+
+.reveal .slides section .fragment.fade-left {
+  -webkit-transform: translate(20%, 0);
+          transform: translate(20%, 0); }
+  .reveal .slides section .fragment.fade-left.visible {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+
+.reveal .slides section .fragment.current-visible {
+  opacity: 0;
+  visibility: hidden; }
+  .reveal .slides section .fragment.current-visible.current-fragment {
+    opacity: 1;
+    visibility: visible; }
+
+.reveal .slides section .fragment.highlight-red,
+.reveal .slides section .fragment.highlight-current-red,
+.reveal .slides section .fragment.highlight-green,
+.reveal .slides section .fragment.highlight-current-green,
+.reveal .slides section .fragment.highlight-blue,
+.reveal .slides section .fragment.highlight-current-blue {
+  opacity: 1;
+  visibility: visible; }
+
+.reveal .slides section .fragment.highlight-red.visible {
+  color: #ff2c2d; }
+
+.reveal .slides section .fragment.highlight-green.visible {
+  color: #17ff2e; }
+
+.reveal .slides section .fragment.highlight-blue.visible {
+  color: #1b91ff; }
+
+.reveal .slides section .fragment.highlight-current-red.current-fragment {
+  color: #ff2c2d; }
+
+.reveal .slides section .fragment.highlight-current-green.current-fragment {
+  color: #17ff2e; }
+
+.reveal .slides section .fragment.highlight-current-blue.current-fragment {
+  color: #1b91ff; }
+
+/*********************************************
+ * DEFAULT ELEMENT STYLES
+ *********************************************/
+/* Fixes issue in Chrome where italic fonts did not appear when printing to PDF */
+.reveal:after {
+  content: '';
+  font-style: italic; }
+
+.reveal iframe {
+  z-index: 1; }
+
+/** Prevents layering issues in certain browser/transition combinations */
+.reveal a {
+  position: relative; }
+
+.reveal .stretch {
+  max-width: none;
+  max-height: none; }
+
+.reveal pre.stretch code {
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box; }
+
+/*********************************************
+ * CONTROLS
+ *********************************************/
+.reveal .controls {
+  display: none;
+  position: fixed;
+  width: 110px;
+  height: 110px;
+  z-index: 30;
+  right: 10px;
+  bottom: 10px;
+  -webkit-user-select: none; }
+
+.reveal .controls button {
+  padding: 0;
+  position: absolute;
+  opacity: 0.05;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  border: 12px solid transparent;
+  -webkit-transform: scale(0.9999);
+          transform: scale(0.9999);
+  -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent; }
+
+.reveal .controls .enabled {
+  opacity: 0.7;
+  cursor: pointer; }
+
+.reveal .controls .enabled:active {
+  margin-top: 1px; }
+
+.reveal .controls .navigate-left {
+  top: 42px;
+  border-right-width: 22px;
+  border-right-color: #000; }
+
+.reveal .controls .navigate-left.fragmented {
+  opacity: 0.3; }
+
+.reveal .controls .navigate-right {
+  left: 74px;
+  top: 42px;
+  border-left-width: 22px;
+  border-left-color: #000; }
+
+.reveal .controls .navigate-right.fragmented {
+  opacity: 0.3; }
+
+.reveal .controls .navigate-up {
+  left: 42px;
+  border-bottom-width: 22px;
+  border-bottom-color: #000; }
+
+.reveal .controls .navigate-up.fragmented {
+  opacity: 0.3; }
+
+.reveal .controls .navigate-down {
+  left: 42px;
+  top: 74px;
+  border-top-width: 22px;
+  border-top-color: #000; }
+
+.reveal .controls .navigate-down.fragmented {
+  opacity: 0.3; }
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  position: fixed;
+  display: none;
+  height: 3px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.reveal .progress:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  top: -20px; }
+
+.reveal .progress span {
+  display: block;
+  height: 100%;
+  width: 0px;
+  background-color: #000;
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+          transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/*********************************************
+ * SLIDE NUMBER
+ *********************************************/
+.reveal .slide-number {
+  position: fixed;
+  display: block;
+  right: 8px;
+  bottom: 8px;
+  z-index: 31;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px; }
+
+.reveal .slide-number-delimiter {
+  margin: 0 3px; }
+
+/*********************************************
+ * SLIDES
+ *********************************************/
+.reveal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -ms-touch-action: none;
+      touch-action: none; }
+
+.reveal .slides {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: visible;
+  z-index: 1;
+  text-align: center;
+  -webkit-perspective: 600px;
+          perspective: 600px;
+  -webkit-perspective-origin: 50% 40%;
+          perspective-origin: 50% 40%; }
+
+.reveal .slides > section {
+  -ms-perspective: 600px; }
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+  display: none;
+  position: absolute;
+  width: 100%;
+  padding: 20px 0px;
+  z-index: 10;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), -webkit-transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+          transition: transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985), opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/* Global transition speed settings */
+.reveal[data-transition-speed="fast"] .slides section {
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms; }
+
+.reveal[data-transition-speed="slow"] .slides section {
+  -webkit-transition-duration: 1200ms;
+          transition-duration: 1200ms; }
+
+/* Slide-specific transition speed overrides */
+.reveal .slides section[data-transition-speed="fast"] {
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms; }
+
+.reveal .slides section[data-transition-speed="slow"] {
+  -webkit-transition-duration: 1200ms;
+          transition-duration: 1200ms; }
+
+.reveal .slides > section.stack {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.reveal .slides > section.present,
+.reveal .slides > section > section.present {
+  display: block;
+  z-index: 11;
+  opacity: 1; }
+
+.reveal.center,
+.reveal.center .slides,
+.reveal.center .slides section {
+  min-height: 0 !important; }
+
+/* Don't allow interaction with invisible slides */
+.reveal .slides > section.future,
+.reveal .slides > section > section.future,
+.reveal .slides > section.past,
+.reveal .slides > section > section.past {
+  pointer-events: none; }
+
+.reveal.overview .slides > section,
+.reveal.overview .slides > section > section {
+  pointer-events: auto; }
+
+.reveal .slides > section.past,
+.reveal .slides > section.future,
+.reveal .slides > section > section.past,
+.reveal .slides > section > section.future {
+  opacity: 0; }
+
+/*********************************************
+ * Mixins for readability of transitions
+ *********************************************/
+/*********************************************
+ * SLIDE TRANSITION
+ * Aliased 'linear' for backwards compatibility
+ *********************************************/
+.reveal.slide section {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden; }
+
+.reveal .slides > section[data-transition=slide].past,
+.reveal .slides > section[data-transition~=slide-out].past,
+.reveal.slide .slides > section:not([data-transition]).past {
+  -webkit-transform: translate(-150%, 0);
+          transform: translate(-150%, 0); }
+
+.reveal .slides > section[data-transition=slide].future,
+.reveal .slides > section[data-transition~=slide-in].future,
+.reveal.slide .slides > section:not([data-transition]).future {
+  -webkit-transform: translate(150%, 0);
+          transform: translate(150%, 0); }
+
+.reveal .slides > section > section[data-transition=slide].past,
+.reveal .slides > section > section[data-transition~=slide-out].past,
+.reveal.slide .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate(0, -150%);
+          transform: translate(0, -150%); }
+
+.reveal .slides > section > section[data-transition=slide].future,
+.reveal .slides > section > section[data-transition~=slide-in].future,
+.reveal.slide .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate(0, 150%);
+          transform: translate(0, 150%); }
+
+.reveal.linear section {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden; }
+
+.reveal .slides > section[data-transition=linear].past,
+.reveal .slides > section[data-transition~=linear-out].past,
+.reveal.linear .slides > section:not([data-transition]).past {
+  -webkit-transform: translate(-150%, 0);
+          transform: translate(-150%, 0); }
+
+.reveal .slides > section[data-transition=linear].future,
+.reveal .slides > section[data-transition~=linear-in].future,
+.reveal.linear .slides > section:not([data-transition]).future {
+  -webkit-transform: translate(150%, 0);
+          transform: translate(150%, 0); }
+
+.reveal .slides > section > section[data-transition=linear].past,
+.reveal .slides > section > section[data-transition~=linear-out].past,
+.reveal.linear .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate(0, -150%);
+          transform: translate(0, -150%); }
+
+.reveal .slides > section > section[data-transition=linear].future,
+.reveal .slides > section > section[data-transition~=linear-in].future,
+.reveal.linear .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate(0, 150%);
+          transform: translate(0, 150%); }
+
+/*********************************************
+ * CONVEX TRANSITION
+ * Aliased 'default' for backwards compatibility
+ *********************************************/
+.reveal .slides > section[data-transition=default].past,
+.reveal .slides > section[data-transition~=default-out].past,
+.reveal.default .slides > section:not([data-transition]).past {
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0); }
+
+.reveal .slides > section[data-transition=default].future,
+.reveal .slides > section[data-transition~=default-in].future,
+.reveal.default .slides > section:not([data-transition]).future {
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0); }
+
+.reveal .slides > section > section[data-transition=default].past,
+.reveal .slides > section > section[data-transition~=default-out].past,
+.reveal.default .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0);
+          transform: translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0); }
+
+.reveal .slides > section > section[data-transition=default].future,
+.reveal .slides > section > section[data-transition~=default-in].future,
+.reveal.default .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0);
+          transform: translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0); }
+
+.reveal .slides > section[data-transition=convex].past,
+.reveal .slides > section[data-transition~=convex-out].past,
+.reveal.convex .slides > section:not([data-transition]).past {
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0); }
+
+.reveal .slides > section[data-transition=convex].future,
+.reveal .slides > section[data-transition~=convex-in].future,
+.reveal.convex .slides > section:not([data-transition]).future {
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0); }
+
+.reveal .slides > section > section[data-transition=convex].past,
+.reveal .slides > section > section[data-transition~=convex-out].past,
+.reveal.convex .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0);
+          transform: translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0); }
+
+.reveal .slides > section > section[data-transition=convex].future,
+.reveal .slides > section > section[data-transition~=convex-in].future,
+.reveal.convex .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0);
+          transform: translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0); }
+
+/*********************************************
+ * CONCAVE TRANSITION
+ *********************************************/
+.reveal .slides > section[data-transition=concave].past,
+.reveal .slides > section[data-transition~=concave-out].past,
+.reveal.concave .slides > section:not([data-transition]).past {
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0); }
+
+.reveal .slides > section[data-transition=concave].future,
+.reveal .slides > section[data-transition~=concave-in].future,
+.reveal.concave .slides > section:not([data-transition]).future {
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0); }
+
+.reveal .slides > section > section[data-transition=concave].past,
+.reveal .slides > section > section[data-transition~=concave-out].past,
+.reveal.concave .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate3d(0, -80%, 0) rotateX(-70deg) translate3d(0, -80%, 0);
+          transform: translate3d(0, -80%, 0) rotateX(-70deg) translate3d(0, -80%, 0); }
+
+.reveal .slides > section > section[data-transition=concave].future,
+.reveal .slides > section > section[data-transition~=concave-in].future,
+.reveal.concave .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate3d(0, 80%, 0) rotateX(70deg) translate3d(0, 80%, 0);
+          transform: translate3d(0, 80%, 0) rotateX(70deg) translate3d(0, 80%, 0); }
+
+/*********************************************
+ * ZOOM TRANSITION
+ *********************************************/
+.reveal .slides section[data-transition=zoom],
+.reveal.zoom .slides section:not([data-transition]) {
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease; }
+
+.reveal .slides > section[data-transition=zoom].past,
+.reveal .slides > section[data-transition~=zoom-out].past,
+.reveal.zoom .slides > section:not([data-transition]).past {
+  visibility: hidden;
+  -webkit-transform: scale(16);
+          transform: scale(16); }
+
+.reveal .slides > section[data-transition=zoom].future,
+.reveal .slides > section[data-transition~=zoom-in].future,
+.reveal.zoom .slides > section:not([data-transition]).future {
+  visibility: hidden;
+  -webkit-transform: scale(0.2);
+          transform: scale(0.2); }
+
+.reveal .slides > section > section[data-transition=zoom].past,
+.reveal .slides > section > section[data-transition~=zoom-out].past,
+.reveal.zoom .slides > section > section:not([data-transition]).past {
+  -webkit-transform: translate(0, -150%);
+          transform: translate(0, -150%); }
+
+.reveal .slides > section > section[data-transition=zoom].future,
+.reveal .slides > section > section[data-transition~=zoom-in].future,
+.reveal.zoom .slides > section > section:not([data-transition]).future {
+  -webkit-transform: translate(0, 150%);
+          transform: translate(0, 150%); }
+
+/*********************************************
+ * CUBE TRANSITION
+ *********************************************/
+.reveal.cube .slides {
+  -webkit-perspective: 1300px;
+          perspective: 1300px; }
+
+.reveal.cube .slides section {
+  padding: 30px;
+  min-height: 700px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  box-sizing: border-box; }
+
+.reveal.center.cube .slides section {
+  min-height: 0; }
+
+.reveal.cube .slides section:not(.stack):before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  -webkit-transform: translateZ(-20px);
+          transform: translateZ(-20px); }
+
+.reveal.cube .slides section:not(.stack):after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 90%;
+  height: 30px;
+  left: 5%;
+  bottom: 0;
+  background: none;
+  z-index: 1;
+  border-radius: 4px;
+  box-shadow: 0px 95px 25px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateZ(-90px) rotateX(65deg);
+          transform: translateZ(-90px) rotateX(65deg); }
+
+.reveal.cube .slides > section.stack {
+  padding: 0;
+  background: none; }
+
+.reveal.cube .slides > section.past {
+  -webkit-transform-origin: 100% 0%;
+          transform-origin: 100% 0%;
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+          transform: translate3d(-100%, 0, 0) rotateY(-90deg); }
+
+.reveal.cube .slides > section.future {
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(90deg);
+          transform: translate3d(100%, 0, 0) rotateY(90deg); }
+
+.reveal.cube .slides > section > section.past {
+  -webkit-transform-origin: 0% 100%;
+          transform-origin: 0% 100%;
+  -webkit-transform: translate3d(0, -100%, 0) rotateX(90deg);
+          transform: translate3d(0, -100%, 0) rotateX(90deg); }
+
+.reveal.cube .slides > section > section.future {
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+  -webkit-transform: translate3d(0, 100%, 0) rotateX(-90deg);
+          transform: translate3d(0, 100%, 0) rotateX(-90deg); }
+
+/*********************************************
+ * PAGE TRANSITION
+ *********************************************/
+.reveal.page .slides {
+  -webkit-perspective-origin: 0% 50%;
+          perspective-origin: 0% 50%;
+  -webkit-perspective: 3000px;
+          perspective: 3000px; }
+
+.reveal.page .slides section {
+  padding: 30px;
+  min-height: 700px;
+  box-sizing: border-box; }
+
+.reveal.page .slides section.past {
+  z-index: 12; }
+
+.reveal.page .slides section:not(.stack):before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  -webkit-transform: translateZ(-20px);
+          transform: translateZ(-20px); }
+
+.reveal.page .slides section:not(.stack):after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 90%;
+  height: 30px;
+  left: 5%;
+  bottom: 0;
+  background: none;
+  z-index: 1;
+  border-radius: 4px;
+  box-shadow: 0px 95px 25px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateZ(-90px) rotateX(65deg); }
+
+.reveal.page .slides > section.stack {
+  padding: 0;
+  background: none; }
+
+.reveal.page .slides > section.past {
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+  -webkit-transform: translate3d(-40%, 0, 0) rotateY(-80deg);
+          transform: translate3d(-40%, 0, 0) rotateY(-80deg); }
+
+.reveal.page .slides > section.future {
+  -webkit-transform-origin: 100% 0%;
+          transform-origin: 100% 0%;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.reveal.page .slides > section > section.past {
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+  -webkit-transform: translate3d(0, -40%, 0) rotateX(80deg);
+          transform: translate3d(0, -40%, 0) rotateX(80deg); }
+
+.reveal.page .slides > section > section.future {
+  -webkit-transform-origin: 0% 100%;
+          transform-origin: 0% 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+/*********************************************
+ * FADE TRANSITION
+ *********************************************/
+.reveal .slides section[data-transition=fade],
+.reveal.fade .slides section:not([data-transition]),
+.reveal.fade .slides > section > section:not([data-transition]) {
+  -webkit-transform: none;
+          transform: none;
+  -webkit-transition: opacity 0.5s;
+          transition: opacity 0.5s; }
+
+.reveal.fade.overview .slides section,
+.reveal.fade.overview .slides > section > section {
+  -webkit-transition: none;
+          transition: none; }
+
+/*********************************************
+ * NO TRANSITION
+ *********************************************/
+.reveal .slides section[data-transition=none],
+.reveal.none .slides section:not([data-transition]) {
+  -webkit-transform: none;
+          transform: none;
+  -webkit-transition: none;
+          transition: none; }
+
+/*********************************************
+ * PAUSED MODE
+ *********************************************/
+.reveal .pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 100;
+  -webkit-transition: all 1s ease;
+          transition: all 1s ease; }
+
+.reveal.paused .pause-overlay {
+  visibility: visible;
+  opacity: 1; }
+
+/*********************************************
+ * FALLBACK
+ *********************************************/
+.no-transforms {
+  overflow-y: auto; }
+
+.no-transforms .reveal .slides {
+  position: relative;
+  width: 80%;
+  height: auto !important;
+  top: 0;
+  left: 50%;
+  margin: 0;
+  text-align: center; }
+
+.no-transforms .reveal .controls,
+.no-transforms .reveal .progress {
+  display: none !important; }
+
+.no-transforms .reveal .slides section {
+  display: block !important;
+  opacity: 1 !important;
+  position: relative !important;
+  height: auto;
+  min-height: 0;
+  top: 0;
+  left: -50%;
+  margin: 70px 0;
+  -webkit-transform: none;
+          transform: none; }
+
+.no-transforms .reveal .slides section section {
+  left: 0; }
+
+.reveal .no-transition,
+.reveal .no-transition * {
+  -webkit-transition: none !important;
+          transition: none !important; }
+
+/*********************************************
+ * PER-SLIDE BACKGROUNDS
+ *********************************************/
+.reveal .backgrounds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  -webkit-perspective: 600px;
+          perspective: 600px; }
+
+.reveal .slide-background {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  background-color: transparent;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-transition: all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+          transition: all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+.reveal .slide-background.stack {
+  display: block; }
+
+.reveal .slide-background.present {
+  opacity: 1;
+  visibility: visible; }
+
+.print-pdf .reveal .slide-background {
+  opacity: 1 !important;
+  visibility: visible !important; }
+
+/* Video backgrounds */
+.reveal .slide-background video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  top: 0;
+  left: 0; }
+
+/* Immediate transition style */
+.reveal[data-background-transition=none] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition=none] {
+  -webkit-transition: none;
+          transition: none; }
+
+/* Slide */
+.reveal[data-background-transition=slide] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition=slide] {
+  opacity: 1;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden; }
+
+.reveal[data-background-transition=slide] > .backgrounds .slide-background.past,
+.reveal > .backgrounds .slide-background.past[data-background-transition=slide] {
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0); }
+
+.reveal[data-background-transition=slide] > .backgrounds .slide-background.future,
+.reveal > .backgrounds .slide-background.future[data-background-transition=slide] {
+  -webkit-transform: translate(100%, 0);
+          transform: translate(100%, 0); }
+
+.reveal[data-background-transition=slide] > .backgrounds .slide-background > .slide-background.past,
+.reveal > .backgrounds .slide-background > .slide-background.past[data-background-transition=slide] {
+  -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%); }
+
+.reveal[data-background-transition=slide] > .backgrounds .slide-background > .slide-background.future,
+.reveal > .backgrounds .slide-background > .slide-background.future[data-background-transition=slide] {
+  -webkit-transform: translate(0, 100%);
+          transform: translate(0, 100%); }
+
+/* Convex */
+.reveal[data-background-transition=convex] > .backgrounds .slide-background.past,
+.reveal > .backgrounds .slide-background.past[data-background-transition=convex] {
+  opacity: 0;
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0); }
+
+.reveal[data-background-transition=convex] > .backgrounds .slide-background.future,
+.reveal > .backgrounds .slide-background.future[data-background-transition=convex] {
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0); }
+
+.reveal[data-background-transition=convex] > .backgrounds .slide-background > .slide-background.past,
+.reveal > .backgrounds .slide-background > .slide-background.past[data-background-transition=convex] {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0) rotateX(90deg) translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0) rotateX(90deg) translate3d(0, -100%, 0); }
+
+.reveal[data-background-transition=convex] > .backgrounds .slide-background > .slide-background.future,
+.reveal > .backgrounds .slide-background > .slide-background.future[data-background-transition=convex] {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 100%, 0) rotateX(-90deg) translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0) rotateX(-90deg) translate3d(0, 100%, 0); }
+
+/* Concave */
+.reveal[data-background-transition=concave] > .backgrounds .slide-background.past,
+.reveal > .backgrounds .slide-background.past[data-background-transition=concave] {
+  opacity: 0;
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0); }
+
+.reveal[data-background-transition=concave] > .backgrounds .slide-background.future,
+.reveal > .backgrounds .slide-background.future[data-background-transition=concave] {
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0); }
+
+.reveal[data-background-transition=concave] > .backgrounds .slide-background > .slide-background.past,
+.reveal > .backgrounds .slide-background > .slide-background.past[data-background-transition=concave] {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0) rotateX(-90deg) translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0) rotateX(-90deg) translate3d(0, -100%, 0); }
+
+.reveal[data-background-transition=concave] > .backgrounds .slide-background > .slide-background.future,
+.reveal > .backgrounds .slide-background > .slide-background.future[data-background-transition=concave] {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 100%, 0) rotateX(90deg) translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0) rotateX(90deg) translate3d(0, 100%, 0); }
+
+/* Zoom */
+.reveal[data-background-transition=zoom] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition=zoom] {
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease; }
+
+.reveal[data-background-transition=zoom] > .backgrounds .slide-background.past,
+.reveal > .backgrounds .slide-background.past[data-background-transition=zoom] {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(16);
+          transform: scale(16); }
+
+.reveal[data-background-transition=zoom] > .backgrounds .slide-background.future,
+.reveal > .backgrounds .slide-background.future[data-background-transition=zoom] {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(0.2);
+          transform: scale(0.2); }
+
+.reveal[data-background-transition=zoom] > .backgrounds .slide-background > .slide-background.past,
+.reveal > .backgrounds .slide-background > .slide-background.past[data-background-transition=zoom] {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(16);
+          transform: scale(16); }
+
+.reveal[data-background-transition=zoom] > .backgrounds .slide-background > .slide-background.future,
+.reveal > .backgrounds .slide-background > .slide-background.future[data-background-transition=zoom] {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(0.2);
+          transform: scale(0.2); }
+
+/* Global transition speed settings */
+.reveal[data-transition-speed="fast"] > .backgrounds .slide-background {
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms; }
+
+.reveal[data-transition-speed="slow"] > .backgrounds .slide-background {
+  -webkit-transition-duration: 1200ms;
+          transition-duration: 1200ms; }
+
+/*********************************************
+ * OVERVIEW
+ *********************************************/
+.reveal.overview {
+  -webkit-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%;
+  -webkit-perspective: 700px;
+          perspective: 700px; }
+  .reveal.overview .slides section {
+    height: 100%;
+    top: 0 !important;
+    opacity: 1 !important;
+    overflow: hidden;
+    visibility: visible !important;
+    cursor: pointer;
+    box-sizing: border-box; }
+  .reveal.overview .slides section:hover,
+  .reveal.overview .slides section.present {
+    outline: 10px solid rgba(150, 150, 150, 0.4);
+    outline-offset: 10px; }
+  .reveal.overview .slides section .fragment {
+    opacity: 1;
+    -webkit-transition: none;
+            transition: none; }
+  .reveal.overview .slides section:after,
+  .reveal.overview .slides section:before {
+    display: none !important; }
+  .reveal.overview .slides > section.stack {
+    padding: 0;
+    top: 0 !important;
+    background: none;
+    outline: none;
+    overflow: visible; }
+  .reveal.overview .backgrounds {
+    -webkit-perspective: inherit;
+            perspective: inherit; }
+  .reveal.overview .backgrounds .slide-background {
+    opacity: 1;
+    visibility: visible;
+    outline: 10px solid rgba(150, 150, 150, 0.1);
+    outline-offset: 10px; }
+
+.reveal.overview .slides section,
+.reveal.overview-deactivating .slides section {
+  -webkit-transition: none;
+          transition: none; }
+
+.reveal.overview .backgrounds .slide-background,
+.reveal.overview-deactivating .backgrounds .slide-background {
+  -webkit-transition: none;
+          transition: none; }
+
+.reveal.overview-animated .slides {
+  -webkit-transition: -webkit-transform 0.4s ease;
+          transition: transform 0.4s ease; }
+
+/*********************************************
+ * RTL SUPPORT
+ *********************************************/
+.reveal.rtl .slides,
+.reveal.rtl .slides h1,
+.reveal.rtl .slides h2,
+.reveal.rtl .slides h3,
+.reveal.rtl .slides h4,
+.reveal.rtl .slides h5,
+.reveal.rtl .slides h6 {
+  direction: rtl;
+  font-family: sans-serif; }
+
+.reveal.rtl pre,
+.reveal.rtl code {
+  direction: ltr; }
+
+.reveal.rtl ol,
+.reveal.rtl ul {
+  text-align: right; }
+
+.reveal.rtl .progress span {
+  float: right; }
+
+/*********************************************
+ * PARALLAX BACKGROUND
+ *********************************************/
+.reveal.has-parallax-background .backgrounds {
+  -webkit-transition: all 0.8s ease;
+          transition: all 0.8s ease; }
+
+/* Global transition speed settings */
+.reveal.has-parallax-background[data-transition-speed="fast"] .backgrounds {
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms; }
+
+.reveal.has-parallax-background[data-transition-speed="slow"] .backgrounds {
+  -webkit-transition-duration: 1200ms;
+          transition-duration: 1200ms; }
+
+/*********************************************
+ * LINK PREVIEW OVERLAY
+ *********************************************/
+.reveal .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+
+.reveal .overlay.visible {
+  opacity: 1;
+  visibility: visible; }
+
+.reveal .overlay .spinner {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  z-index: 10;
+  background-image: url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);
+  visibility: visible;
+  opacity: 0.6;
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+
+.reveal .overlay header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 2;
+  border-bottom: 1px solid #222; }
+
+.reveal .overlay header a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  float: right;
+  opacity: 0.6;
+  box-sizing: border-box; }
+
+.reveal .overlay header a:hover {
+  opacity: 1; }
+
+.reveal .overlay header a .icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-position: 50% 50%;
+  background-size: 100%;
+  background-repeat: no-repeat; }
+
+.reveal .overlay header a.close .icon {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC); }
+
+.reveal .overlay header a.external .icon {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==); }
+
+.reveal .overlay .viewport {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.reveal .overlay.overlay-preview .viewport iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+
+.reveal .overlay.overlay-preview.loaded .viewport iframe {
+  opacity: 1;
+  visibility: visible; }
+
+.reveal .overlay.overlay-preview.loaded .spinner {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(0.2);
+          transform: scale(0.2); }
+
+.reveal .overlay.overlay-help .viewport {
+  overflow: auto;
+  color: #fff; }
+
+.reveal .overlay.overlay-help .viewport .viewport-inner {
+  width: 600px;
+  margin: auto;
+  padding: 20px 20px 80px 20px;
+  text-align: center;
+  letter-spacing: normal; }
+
+.reveal .overlay.overlay-help .viewport .viewport-inner .title {
+  font-size: 20px; }
+
+.reveal .overlay.overlay-help .viewport .viewport-inner table {
+  border: 1px solid #fff;
+  border-collapse: collapse;
+  font-size: 16px; }
+
+.reveal .overlay.overlay-help .viewport .viewport-inner table th,
+.reveal .overlay.overlay-help .viewport .viewport-inner table td {
+  width: 200px;
+  padding: 14px;
+  border: 1px solid #fff;
+  vertical-align: middle; }
+
+.reveal .overlay.overlay-help .viewport .viewport-inner table th {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
+/*********************************************
+ * PLAYBACK COMPONENT
+ *********************************************/
+.reveal .playback {
+  position: fixed;
+  left: 15px;
+  bottom: 20px;
+  z-index: 30;
+  cursor: pointer;
+  -webkit-transition: all 400ms ease;
+          transition: all 400ms ease; }
+
+.reveal.overview .playback {
+  opacity: 0;
+  visibility: hidden; }
+
+/*********************************************
+ * ROLLING LINKS
+ *********************************************/
+.reveal .roll {
+  display: inline-block;
+  line-height: 1.2;
+  overflow: hidden;
+  vertical-align: top;
+  -webkit-perspective: 400px;
+          perspective: 400px;
+  -webkit-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; }
+
+.reveal .roll:hover {
+  background: none;
+  text-shadow: none; }
+
+.reveal .roll span {
+  display: block;
+  position: relative;
+  padding: 0 2px;
+  pointer-events: none;
+  -webkit-transition: all 400ms ease;
+          transition: all 400ms ease;
+  -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden; }
+
+.reveal .roll:hover span {
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-transform: translate3d(0px, 0px, -45px) rotateX(90deg);
+          transform: translate3d(0px, 0px, -45px) rotateX(90deg); }
+
+.reveal .roll span:after {
+  content: attr(data-title);
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 2px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+  -webkit-transform: translate3d(0px, 110%, 0px) rotateX(-90deg);
+          transform: translate3d(0px, 110%, 0px) rotateX(-90deg); }
+
+/*********************************************
+ * SPEAKER NOTES
+ *********************************************/
+.reveal aside.notes {
+  display: none; }
+
+.reveal .speaker-notes {
+  display: none;
+  position: absolute;
+  width: 70%;
+  max-height: 15%;
+  left: 15%;
+  bottom: 26px;
+  padding: 10px;
+  z-index: 1;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  box-sizing: border-box;
+  text-align: left;
+  font-family: Helvetica, sans-serif;
+  -webkit-overflow-scrolling: touch; }
+
+.reveal .speaker-notes.visible:not(:empty) {
+  display: block; }
+
+@media screen and (max-width: 1024px) {
+  .reveal .speaker-notes {
+    font-size: 14px; } }
+
+@media screen and (max-width: 600px) {
+  .reveal .speaker-notes {
+    width: 90%;
+    left: 5%; } }
+
+/*********************************************
+ * ZOOM PLUGIN
+ *********************************************/
+.zoomed .reveal *,
+.zoomed .reveal *:before,
+.zoomed .reveal *:after {
+  -webkit-backface-visibility: visible !important;
+          backface-visibility: visible !important; }
+
+.zoomed .reveal .progress,
+.zoomed .reveal .controls {
+  opacity: 0; }
+
+.zoomed .reveal .roll span {
+  background: none; }
+
+.zoomed .reveal .roll span:after {
+  visibility: hidden; }
+
+
+.markdown-preview-enhanced {
+  font-size: 24px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+.markdown-preview-enhanced::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+</style> <style> .markdown-preview-enhanced pre::shadow .asciidoc .markup.bold, .markdown-preview-enhanced .host .asciidoc .markup.bold { font-weight: bold; }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.italic, .markdown-preview-enhanced .host .asciidoc .markup.italic { font-style: italic; }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.mark, .markdown-preview-enhanced .host .asciidoc .markup.mark { color: rgb(194, 78, 156); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.highlight, .markdown-preview-enhanced .host .asciidoc .markup.highlight { color: black; background-color: rgb(191, 191, 12); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.character-reference, .markdown-preview-enhanced .host .asciidoc .markup.character-reference { font-style: italic; color: rgb(249, 198, 194); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.biblioref, .markdown-preview-enhanced .host .asciidoc .markup.biblioref, .markdown-preview-enhanced pre::shadow .asciidoc .markup.blockid, .markdown-preview-enhanced .host .asciidoc .markup.blockid { font-weight: bold; color: rgb(198, 224, 194); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.xref, .markdown-preview-enhanced .host .asciidoc .markup.xref { font-style: italic; }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.admonition, .markdown-preview-enhanced .host .asciidoc .markup.admonition, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading, .markdown-preview-enhanced .host .asciidoc .markup.heading, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-0, .markdown-preview-enhanced .host .asciidoc .markup.heading-0, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-1, .markdown-preview-enhanced .host .asciidoc .markup.heading-1, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-2, .markdown-preview-enhanced .host .asciidoc .markup.heading-2, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-3, .markdown-preview-enhanced .host .asciidoc .markup.heading-3, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-4, .markdown-preview-enhanced .host .asciidoc .markup.heading-4, .markdown-preview-enhanced pre::shadow .asciidoc .markup.heading-5, .markdown-preview-enhanced .host .asciidoc .markup.heading-5 { font-weight: bold; color: rgb(255, 255, 255); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.meta.attribute-list, .markdown-preview-enhanced .host .asciidoc .markup.meta.attribute-list, .markdown-preview-enhanced pre::shadow .asciidoc .markup.substitution, .markdown-preview-enhanced .host .asciidoc .markup.substitution { color: rgba(248, 248, 242, 0.498039); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.heading.blocktitle, .markdown-preview-enhanced .host .asciidoc .markup.heading.blocktitle { color: rgb(255, 255, 255); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.todo.box, .markdown-preview-enhanced .host .asciidoc .markup.todo.box, .markdown-preview-enhanced pre::shadow .asciidoc .markup.list.bullet, .markdown-preview-enhanced .host .asciidoc .markup.list.bullet { color: rgb(251, 149, 145); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.macro.block, .markdown-preview-enhanced .host .asciidoc .markup.macro.block { font-weight: bold; }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.super, .markdown-preview-enhanced .host .asciidoc .markup.super { color: rgb(124, 188, 121); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.sub, .markdown-preview-enhanced .host .asciidoc .markup.sub { color: rgb(124, 188, 121); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.table.cell.delimiter, .markdown-preview-enhanced .host .asciidoc .markup.table.cell.delimiter, .markdown-preview-enhanced pre::shadow .asciidoc .markup.table.delimiter, .markdown-preview-enhanced .host .asciidoc .markup.table.delimiter { color: rgb(97, 174, 239); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.table.content, .markdown-preview-enhanced .host .asciidoc .markup.table.content { color: rgb(239, 239, 225); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.block.sidebar, .markdown-preview-enhanced .host .asciidoc .markup.block.sidebar, .markdown-preview-enhanced pre::shadow .asciidoc .markup.block.passthrough, .markdown-preview-enhanced .host .asciidoc .markup.block.passthrough, .markdown-preview-enhanced pre::shadow .asciidoc .markup.block.front-matter, .markdown-preview-enhanced .host .asciidoc .markup.block.front-matter, .markdown-preview-enhanced pre::shadow .asciidoc .markup.block.example, .markdown-preview-enhanced .host .asciidoc .markup.block.example { color: rgba(248, 248, 242, 0.701961); }
+.markdown-preview-enhanced pre::shadow .asciidoc .markup.block.listing, .markdown-preview-enhanced .host .asciidoc .markup.block.listing, .markdown-preview-enhanced pre::shadow .asciidoc .markup.block.literal, .markdown-preview-enhanced .host .asciidoc .markup.block.literal { color: rgb(151, 195, 120); }
+.markdown-preview-enhanced pre::shadow .asciidoc .super, .markdown-preview-enhanced .host .asciidoc .super { vertical-align: text-top; font-size: 9.1px; }
+.markdown-preview-enhanced pre::shadow .asciidoc .sub, .markdown-preview-enhanced .host .asciidoc .sub { vertical-align: text-bottom; font-size: 9.1px; }
+.markdown-preview-enhanced pre, .markdown-preview-enhanced .host { color: rgb(248, 248, 242); background-color: rgb(40, 40, 40); }
+.markdown-preview-enhanced pre .invisible-character, .markdown-preview-enhanced .host .invisible-character { color: rgba(197, 200, 198, 0.2); }
+.markdown-preview-enhanced pre .indent-guide, .markdown-preview-enhanced .host .indent-guide { color: rgba(255, 255, 255, 0.14902); }
+.markdown-preview-enhanced pre .wrap-guide, .markdown-preview-enhanced .host .wrap-guide { background-color: rgba(255, 255, 255, 0.0980392); }
+.markdown-preview-enhanced pre .gutter, .markdown-preview-enhanced .host .gutter { background-color: rgb(48, 48, 48); }
+.markdown-preview-enhanced pre .line-number.cursor-line-no-selection, .markdown-preview-enhanced .host .line-number.cursor-line-no-selection { background-color: rgb(73, 72, 62); }
+.markdown-preview-enhanced pre .invisible, .markdown-preview-enhanced .host .invisible { color: rgb(248, 248, 242); }
+.markdown-preview-enhanced pre .cursor, .markdown-preview-enhanced .host .cursor { border-color: rgb(248, 248, 240); }
+.markdown-preview-enhanced pre .selection .region, .markdown-preview-enhanced .host .selection .region { background-color: rgb(73, 72, 62); }
+.markdown-preview-enhanced pre .search-results .marker .region, .markdown-preview-enhanced .host .search-results .marker .region { border: 1px solid rgb(136, 136, 136); background-color: transparent; }
+.markdown-preview-enhanced pre .search-results .marker.current-result .region, .markdown-preview-enhanced .host .search-results .marker.current-result .region { border: 1px solid rgb(255, 255, 255); }
+.markdown-preview-enhanced pre .gfm .markup.heading, .markdown-preview-enhanced .host .gfm .markup.heading { color: rgb(166, 226, 46); font-weight: bold; }
+.markdown-preview-enhanced pre .gfm .markup.underline, .markdown-preview-enhanced .host .gfm .markup.underline { color: rgb(230, 219, 116); text-decoration: underline; }
+.markdown-preview-enhanced pre .gfm .bold, .markdown-preview-enhanced .host .gfm .bold { font-weight: bold; }
+.markdown-preview-enhanced pre .gfm .italic, .markdown-preview-enhanced .host .gfm .italic { font-style: italic; }
+.markdown-preview-enhanced pre .gfm .raw, .markdown-preview-enhanced .host .gfm .raw { color: rgb(102, 217, 239); }
+.markdown-preview-enhanced pre .gfm .variable.list, .markdown-preview-enhanced .host .gfm .variable.list { color: rgb(249, 38, 114); font-weight: bold; }
+.markdown-preview-enhanced pre .gfm .link, .markdown-preview-enhanced .host .gfm .link { color: rgb(204, 204, 204); }
+.markdown-preview-enhanced pre .gfm .link .entity, .markdown-preview-enhanced .host .gfm .link .entity { color: rgb(174, 129, 255); }
+.markdown-preview-enhanced { font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif; font-size: 16px; line-height: 1.6; color: rgb(248, 248, 242); overflow: auto; margin: 10px 13px; padding: 2em; background-color: rgb(40, 40, 40); }
+.markdown-preview-enhanced[data-use-github-style="true"] { color: rgb(85, 85, 85); background-color: rgb(255, 255, 255); }
+.markdown-preview-enhanced > :first-child { margin-top: 0px; }
+.markdown-preview-enhanced[is="space-pen-div"] { width: 100%; margin: 0px; z-index: 999; overflow: scroll; font-size: 16px; display: block; box-sizing: border-box; position: absolute; }
+.markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { line-height: 1.2; margin-top: 1em; margin-bottom: 16px; color: rgb(255, 255, 255); }
+.markdown-preview-enhanced[data-use-github-style="true"] h1, .markdown-preview-enhanced[data-use-github-style="true"] h2, .markdown-preview-enhanced[data-use-github-style="true"] h3, .markdown-preview-enhanced[data-use-github-style="true"] h4, .markdown-preview-enhanced[data-use-github-style="true"] h5, .markdown-preview-enhanced[data-use-github-style="true"] h6 { color: rgb(85, 85, 85); }
+.markdown-preview-enhanced h1 { font-size: 2.4em; font-weight: 300; padding-bottom: 0.3em; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(81, 81, 81); }
+.markdown-preview-enhanced h2 { font-size: 1.8em; font-weight: 400; padding-bottom: 0.3em; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(81, 81, 81); }
+.markdown-preview-enhanced h3 { font-size: 1.5em; font-weight: 500; }
+.markdown-preview-enhanced h4 { font-size: 1.2em; font-weight: 600; }
+.markdown-preview-enhanced h5 { font-size: 1.1em; font-weight: 600; }
+.markdown-preview-enhanced h6 { font-size: 1em; font-weight: 600; }
+.markdown-preview-enhanced[data-use-github-style="true"] h1, .markdown-preview-enhanced[data-use-github-style="true"] h2 { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(231, 231, 231); }
+.markdown-preview-enhanced strong { color: rgb(255, 255, 255); }
+.markdown-preview-enhanced[data-use-github-style="true"] strong { color: rgb(85, 85, 85); }
+.markdown-preview-enhanced del { color: rgb(219, 219, 189); }
+.markdown-preview-enhanced a:not([href]) { color: inherit; text-decoration: none; }
+.markdown-preview-enhanced a { color: rgb(0, 136, 204); text-decoration: none; }
+.markdown-preview-enhanced a:hover { color: rgb(0, 80, 163); text-decoration: none; }
+.markdown-preview-enhanced img { max-width: 100%; }
+.markdown-preview-enhanced > p { margin-top: 0px; margin-bottom: 16px; word-wrap: break-word; }
+.markdown-preview-enhanced > ul, .markdown-preview-enhanced > ol { margin-bottom: 16px; }
+.markdown-preview-enhanced ul, .markdown-preview-enhanced ol { padding-left: 2em; }
+.markdown-preview-enhanced ul.no-list, .markdown-preview-enhanced ol.no-list { padding: 0px; list-style-type: none; }
+.markdown-preview-enhanced ul ul, .markdown-preview-enhanced ul ol, .markdown-preview-enhanced ol ol, .markdown-preview-enhanced ol ul { margin-top: 0px; margin-bottom: 0px; }
+.markdown-preview-enhanced li { margin-bottom: 0px; }
+.markdown-preview-enhanced li.task-list-item { list-style: none; }
+.markdown-preview-enhanced li > p { margin-top: 0px; margin-bottom: 0px; }
+.markdown-preview-enhanced .task-list-item-checkbox { margin: 0px 0.2em 0.25em -1.6em; vertical-align: middle; }
+.markdown-preview-enhanced .task-list-item-checkbox:hover { cursor: pointer; }
+.markdown-preview-enhanced blockquote { margin: 16px 0px; font-size: inherit; padding: 0px 15px; color: rgb(219, 219, 189); border-left-width: 4px; border-left-style: solid; border-left-color: rgb(81, 81, 81); }
+.markdown-preview-enhanced blockquote > :first-child { margin-top: 0px; }
+.markdown-preview-enhanced blockquote > :last-child { margin-bottom: 0px; }
+.markdown-preview-enhanced[data-use-github-style="true"] blockquote { color: rgb(119, 119, 119); border-left-width: 4px; border-left-style: solid; border-left-color: rgb(221, 221, 221); }
+.markdown-preview-enhanced hr { height: 4px; margin: 32px 0px; border: 0px none; background-color: rgb(81, 81, 81); }
+.markdown-preview-enhanced[data-use-github-style="true"] hr { background-color: rgb(231, 231, 231); }
+.markdown-preview-enhanced table { margin: 10px 0px 15px; border-collapse: collapse; }
+.markdown-preview-enhanced table th { font-weight: bold; color: rgb(255, 255, 255); }
+.markdown-preview-enhanced table td, .markdown-preview-enhanced table th { border: 1px solid rgb(81, 81, 81); padding: 5px 10px; }
+.markdown-preview-enhanced table th { padding: 5px 10px; }
+.markdown-preview-enhanced[data-use-github-style="true"] th { color: rgb(85, 85, 85); }
+.markdown-preview-enhanced[data-use-github-style="true"] td, .markdown-preview-enhanced[data-use-github-style="true"] th { border: 1px solid rgb(221, 221, 221); }
+.markdown-preview-enhanced code { font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; color: rgb(255, 255, 255); font-size: 0.85em !important; background-color: rgb(60, 60, 60); }
+.markdown-preview-enhanced[data-use-github-style="true"] code { color: inherit; background-color: rgba(0, 0, 0, 0.0392157); }
+.markdown-preview-enhanced pre > code { padding: 0px; margin: 0px; word-break: normal; white-space: pre; border: 0px; font-size: 0.85em !important; background: transparent; }
+.markdown-preview-enhanced .highlight { margin-bottom: 16px; }
+.markdown-preview-enhanced .highlight pre, .markdown-preview-enhanced pre { font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; padding: 16px; overflow: auto; line-height: 1.45; color: rgb(248, 248, 242); border: rgb(81, 81, 81); border-radius: 3px; font-size: 0.85em !important; background-color: rgb(50, 50, 50); }
+.markdown-preview-enhanced .highlight pre { margin-bottom: 0px; word-break: normal; }
+.markdown-preview-enhanced pre { word-wrap: break-word; }
+.markdown-preview-enhanced pre .section { opacity: 1; }
+.markdown-preview-enhanced pre code, .markdown-preview-enhanced pre tt { display: inline; max-width: initial; padding: 0px; margin: 0px; overflow: initial; line-height: inherit; word-wrap: normal; border: 0px; background-color: transparent; }
+.markdown-preview-enhanced pre code::before, .markdown-preview-enhanced pre tt::before, .markdown-preview-enhanced pre code::after, .markdown-preview-enhanced pre tt::after { content: normal; }
+.markdown-preview-enhanced p, .markdown-preview-enhanced blockquote, .markdown-preview-enhanced ul, .markdown-preview-enhanced ol, .markdown-preview-enhanced dl, .markdown-preview-enhanced pre { margin-top: 0px; margin-bottom: 16px; }
+.markdown-preview-enhanced pre.editor-colors { margin: 16px 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(50, 50, 50); }
+.markdown-preview-enhanced kbd { color: rgb(255, 255, 255); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(81, 81, 81) rgb(81, 81, 81) rgb(66, 66, 66); background-color: rgb(60, 60, 60); }
+.markdown-preview-enhanced[data-use-github-style="true"] kbd { color: rgb(85, 85, 85); border-style: solid; border-width: 1px; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; background-color: rgb(252, 252, 252); }
+.markdown-preview-enhanced .pagebreak, .markdown-preview-enhanced .newpage { page-break-before: always; }
+@media screen and (min-width: 914px) { 
+  .markdown-preview-enhanced { width: 854px; margin: 10px auto; overflow-y: scroll; background: rgb(40, 40, 40); }
+}
+@media screen and (max-width: 400px) { 
+  .markdown-preview-enhanced { font-size: 14px; }
+}
+@media screen and (min-width: 914px) { 
+  .markdown-preview-enhanced[data-use-github-style="true"] { background: rgb(255, 255, 255); }
+}
+@media print { 
+  .markdown-preview-enhanced { background-color: rgb(40, 40, 40); }
+  .markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { color: rgb(255, 255, 255); }
+  .markdown-preview-enhanced blockquote { color: rgb(219, 219, 189); }
+  .markdown-preview-enhanced table, .markdown-preview-enhanced pre { page-break-inside: avoid; }
+  .markdown-preview-enhanced img { display: block; max-width: 100%; max-height: 100%; }
+  .markdown-preview-enhanced pre, .markdown-preview-enhanced code { word-wrap: break-word; }
+}
+@media print { 
+  .markdown-preview-enhanced[data-use-github-style="true"] { background: rgb(255, 255, 255); }
+  .markdown-preview-enhanced[data-use-github-style="true"] h1, .markdown-preview-enhanced[data-use-github-style="true"] h2, .markdown-preview-enhanced[data-use-github-style="true"] h3, .markdown-preview-enhanced[data-use-github-style="true"] h4, .markdown-preview-enhanced[data-use-github-style="true"] h5, .markdown-preview-enhanced[data-use-github-style="true"] h6 { color: rgb(34, 34, 34); }
+  .markdown-preview-enhanced[data-use-github-style="true"] blockquote { color: rgb(119, 119, 119); }
+  .markdown-preview-enhanced[data-use-github-style="true"] pre { border: 2px solid rgb(246, 246, 246); }
+}
+.markdown-preview-enhanced .mermaid { margin-bottom: 16px; }
+.markdown-preview-enhanced .mermaid .edgePath .path { stroke: rgb(255, 255, 255); }
+.markdown-preview-enhanced .mermaid .edgePath marker path { fill: rgb(255, 255, 255) !important; opacity: 1 !important; }
+.markdown-preview-enhanced .mermaid line, .markdown-preview-enhanced .mermaid marker { stroke: rgb(255, 255, 255) !important; opacity: 1 !important; }
+.markdown-preview-enhanced .mermaid .messageText { fill: rgb(255, 255, 255); }
+.markdown-preview-enhanced[data-use-github-style="true"] .mermaid .edgePath .path { stroke: rgb(85, 85, 85); }
+.markdown-preview-enhanced[data-use-github-style="true"] .mermaid marker path { fill: rgb(85, 85, 85) !important; opacity: 1 !important; }
+.markdown-preview-enhanced[data-use-github-style="true"] line, .markdown-preview-enhanced[data-use-github-style="true"] marker { stroke: rgb(85, 85, 85) !important; opacity: 1 !important; }
+.markdown-preview-enhanced[data-use-github-style="true"] .messageText { fill: rgb(85, 85, 85); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors, .markdown-preview-enhanced .github-syntax-theme .host { color: rgb(51, 51, 51); background-color: rgb(247, 247, 247); }
+.markdown-preview-enhanced .github-syntax-theme pre { color: rgb(51, 51, 51); background-color: rgb(247, 247, 247); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter, .markdown-preview-enhanced .github-syntax-theme .host .gutter { color: rgb(179, 179, 179); background-color: rgb(255, 255, 255); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number.cursor-line, .markdown-preview-enhanced .github-syntax-theme .host .gutter .line-number.cursor-line { color: rgb(77, 77, 77); background-color: rgb(245, 245, 245); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number.cursor-line-no-selection, .markdown-preview-enhanced .github-syntax-theme .host .gutter .line-number.cursor-line-no-selection { color: rgb(77, 77, 77); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .wrap-guide, .markdown-preview-enhanced .github-syntax-theme .host .wrap-guide { color: rgb(223, 223, 223); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .indent-guide, .markdown-preview-enhanced .github-syntax-theme .host .indent-guide { color: rgb(223, 223, 223); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .invisible-character, .markdown-preview-enhanced .github-syntax-theme .host .invisible-character { color: rgb(223, 223, 223); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .search-results .marker .region, .markdown-preview-enhanced .github-syntax-theme .host .search-results .marker .region { border: rgb(0, 0, 0); background-color: transparent; }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .search-results .marker.current-result .region, .markdown-preview-enhanced .github-syntax-theme .host .search-results .marker.current-result .region { border: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors.is-focused .cursor, .markdown-preview-enhanced .github-syntax-theme .host(.is-focused) .cursor { border-color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors.is-focused .selection .region, .markdown-preview-enhanced .github-syntax-theme .host(.is-focused) .selection .region { background-color: rgba(178, 215, 255, 0.4); }
+.markdown-preview-enhanced .github-syntax-theme pre.editor-colors.is-focused .line-number.cursor-line-no-selection, .markdown-preview-enhanced .github-syntax-theme pre.editor-colors.is-focused .line.cursor-line, .markdown-preview-enhanced .github-syntax-theme .host(.is-focused) .line-number.cursor-line-no-selection, .markdown-preview-enhanced .github-syntax-theme .host(.is-focused) .line.cursor-line { background-color: rgba(240, 240, 240, 0.498039); }
+.markdown-preview-enhanced .github-syntax-theme .comment, .markdown-preview-enhanced .github-syntax-theme .punctuation.comment { color: rgb(176, 176, 176); }
+.markdown-preview-enhanced .github-syntax-theme .string, .markdown-preview-enhanced .github-syntax-theme .string .constant.character.escape { color: rgb(34, 115, 195); }
+.markdown-preview-enhanced .github-syntax-theme .constant.numeric { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .constant.language { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .constant.character, .markdown-preview-enhanced .github-syntax-theme .constant.other.rgb-value { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .constant.numeric.line-number.find-in-files, .markdown-preview-enhanced .github-syntax-theme .constant.numeric.line-number.match.find-in-files { color: rgb(171, 176, 179); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.class { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .entity.other.inherited-class { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .meta.tag.any.html, .markdown-preview-enhanced .github-syntax-theme .meta.tag.block.any.html { color: rgb(171, 176, 179); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.tag { color: rgb(99, 163, 92); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.function { color: rgb(133, 103, 181); }
+.markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name, .markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name .punctuation.definition.entity.scss, .markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name.id.css, .markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name.id.css .punctuation.definition.entity.css, .markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name.class.css .punctuation.definition.entity.css { color: rgb(133, 103, 181); }
+.markdown-preview-enhanced .github-syntax-theme .punctuation.definition.tag.begin.html, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.tag.end.html, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.tag.html, .markdown-preview-enhanced .github-syntax-theme .meta.tag.block.any.html { color: rgb(51, 51, 51); }
+.markdown-preview-enhanced .github-syntax-theme .keyword.control { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .keyword.operator { color: rgb(133, 103, 181); }
+.markdown-preview-enhanced .github-syntax-theme .storage { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .storage.type { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .support.function { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .support.constant { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .support.type, .markdown-preview-enhanced .github-syntax-theme .support.class, .markdown-preview-enhanced .github-syntax-theme .meta.property-name.scss { color: rgb(0, 153, 204); }
+.markdown-preview-enhanced .github-syntax-theme .support.other.variable { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme .invalid, .markdown-preview-enhanced .github-syntax-theme .invalid.illegal { color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
+.markdown-preview-enhanced .github-syntax-theme .invalid.deprecated { color: rgb(181, 42, 29); background-color: rgb(255, 255, 255); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.filename.find-in-files { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme .source.css .punctuation.definition.entity, .markdown-preview-enhanced .github-syntax-theme .punctuation.terminator.rule.scss { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme .source.css .entity.other.attribute-name.pseudo-class, .markdown-preview-enhanced .github-syntax-theme .source.css .entity.other.attribute-name.pseudo-element { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .source.css .meta.value, .markdown-preview-enhanced .github-syntax-theme .source.css .support.constant, .markdown-preview-enhanced .github-syntax-theme .source.css .support.function { color: rgb(99, 163, 92); }
+.markdown-preview-enhanced .github-syntax-theme .source.scss .entity.other.attribute-name.pseudo-class, .markdown-preview-enhanced .github-syntax-theme .source.scss .entity.other.attribute-name.pseudo-element { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .support.constant.property-value, .markdown-preview-enhanced .github-syntax-theme .source.scss .support.function, .markdown-preview-enhanced .github-syntax-theme .meta.property-value.scss { color: rgb(99, 163, 92); }
+.markdown-preview-enhanced .github-syntax-theme .variable, .markdown-preview-enhanced .github-syntax-theme .source.scss .variable, .markdown-preview-enhanced .github-syntax-theme .variable.interpolation.scss, .markdown-preview-enhanced .github-syntax-theme .source.scss .meta.set.variable { color: rgb(222, 104, 173); }
+.markdown-preview-enhanced .github-syntax-theme .keyword.control.else.scss, .markdown-preview-enhanced .github-syntax-theme .keyword.control.if.scss, .markdown-preview-enhanced .github-syntax-theme .keyword.control.content.scss { color: rgb(99, 163, 92); }
+.markdown-preview-enhanced .github-syntax-theme .keyword.other.unit { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .keyword.other.important { color: rgb(235, 69, 53); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.tag.reference.scss { color: rgb(181, 127, 0); }
+.markdown-preview-enhanced .github-syntax-theme .entity.name.type.new.js { color: rgb(133, 103, 181); }
+.markdown-preview-enhanced .github-syntax-theme .variable.language.js { color: rgb(238, 106, 66); }
+.markdown-preview-enhanced .github-syntax-theme .variable.parameter.function { color: rgb(181, 127, 0); }
+.markdown-preview-enhanced .github-syntax-theme .source.js .meta.function .entity.name.function, .markdown-preview-enhanced .github-syntax-theme .source.js .entity.name.function .meta.function { color: rgb(133, 103, 181); }
+.markdown-preview-enhanced .github-syntax-theme .source.php .entity.name.type.class { color: rgb(238, 106, 66); }
+.markdown-preview-enhanced .github-syntax-theme .punctuation.definition.heading.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.italic.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.bold.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.string.begin.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.string.end.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.metadata.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.link.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.blockquote.markdown, .markdown-preview-enhanced .github-syntax-theme .punctuation.definition.raw.markdown { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .punctuation.section.function.scss { color: rgb(99, 163, 92); }
+.markdown-preview-enhanced .github-syntax-theme .punctuation, .markdown-preview-enhanced .github-syntax-theme .meta.method-call, .markdown-preview-enhanced .github-syntax-theme .meta.method { color: rgb(51, 51, 51); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .meta.separator { color: rgb(179, 179, 179); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.raw.block { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.raw.inline { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .meta.link, .markdown-preview-enhanced .github-syntax-theme .text.html.markdown .meta.image { color: rgb(65, 131, 196); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.underline.link, .markdown-preview-enhanced .github-syntax-theme .text.html.markdown .constant.other.reference { font-style: italic; }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.list { color: rgb(238, 106, 66); }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.bold { font-weight: bold; }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.italic { font-style: italic; }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.bold .markup.italic { font-weight: bold; font-style: italic; }
+.markdown-preview-enhanced .github-syntax-theme .text.html.markdown .markup.italic .markup.bold { font-weight: bold; font-style: italic; }
+.markdown-preview-enhanced .github-syntax-theme .string.quoted.double.html .invalid.illegal.bad-ampersand.html { color: rgb(34, 115, 195); background-color: rgb(255, 255, 255); }
+.markdown-preview-enhanced .github-syntax-theme .bracket-matcher .region { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgba(240, 192, 0, 0.8); z-index: 100; background-color: rgba(255, 214, 51, 0.0980392); }
+.markdown-preview-enhanced .github-syntax-theme .meta.tag.template.angular { color: rgb(34, 115, 195); }
+.markdown-preview-enhanced .github-syntax-theme .meta.tag.template.angular .punctuation.definition.block.begin.angular, .markdown-preview-enhanced .github-syntax-theme .meta.tag.template.angular .punctuation.definition.block.end.angular, .markdown-preview-enhanced .github-syntax-theme .meta.tag.template.angular .meta.brace.curly.js { color: rgb(173, 28, 93); }
+.markdown-preview-enhanced .github-syntax-theme .entity.other.attribute-name.html.angular, .markdown-preview-enhanced .github-syntax-theme .meta.attribute.html.angular { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host { color: rgb(51, 51, 51) !important; background-color: rgb(247, 247, 247) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre { color: rgb(51, 51, 51) !important; background-color: rgb(247, 247, 247) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .gutter, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .gutter { color: rgb(179, 179, 179) !important; background-color: rgb(255, 255, 255) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .gutter .line-number.cursor-line, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .gutter .line-number.cursor-line { color: rgb(77, 77, 77) !important; background-color: rgb(245, 245, 245) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .gutter .line-number.cursor-line-no-selection, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .gutter .line-number.cursor-line-no-selection { color: rgb(77, 77, 77) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .wrap-guide, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .wrap-guide { color: rgb(223, 223, 223) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .indent-guide, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .indent-guide { color: rgb(223, 223, 223) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .invisible-character, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .invisible-character { color: rgb(223, 223, 223) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .search-results .marker .region, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .search-results .marker .region { border: rgb(0, 0, 0) !important; background-color: transparent !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors .search-results .marker.current-result .region, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host .search-results .marker.current-result .region { border: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors.is-focused .cursor, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host(.is-focused) .cursor { border-color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors.is-focused .selection .region, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host(.is-focused) .selection .region { background-color: rgba(178, 215, 255, 0.4) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors.is-focused .line-number.cursor-line-no-selection, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] pre.editor-colors.is-focused .line.cursor-line, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host(.is-focused) .line-number.cursor-line-no-selection, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .host(.is-focused) .line.cursor-line { background-color: rgba(240, 240, 240, 0.498039) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .comment, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.comment { color: rgb(176, 176, 176) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .string, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .string .constant.character.escape { color: rgb(34, 115, 195) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.numeric { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.language { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.character, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.other.rgb-value { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.numeric.line-number.find-in-files, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .constant.numeric.line-number.match.find-in-files { color: rgb(171, 176, 179) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.class { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.inherited-class { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.any.html, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.block.any.html { color: rgb(171, 176, 179) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.tag { color: rgb(99, 163, 92) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.function { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name .punctuation.definition.entity.scss, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name.id.css, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name.id.css .punctuation.definition.entity.css, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name.class.css .punctuation.definition.entity.css { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.tag.begin.html, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.tag.end.html, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.tag.html, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.block.any.html { color: rgb(51, 51, 51) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.control { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.operator { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .storage { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .storage.type { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.function { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.constant { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.type, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.class, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.property-name.scss { color: rgb(0, 153, 204) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.other.variable { color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .invalid, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .invalid.illegal { color: rgb(248, 248, 248) !important; background-color: rgb(181, 42, 29) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .invalid.deprecated { color: rgb(181, 42, 29) !important; background-color: rgb(255, 255, 255) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.filename.find-in-files { color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .punctuation.definition.entity, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.terminator.rule.scss { color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .entity.other.attribute-name.pseudo-class, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .entity.other.attribute-name.pseudo-element { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .meta.value, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .support.constant, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.css .support.function { color: rgb(99, 163, 92) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.scss .entity.other.attribute-name.pseudo-class, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.scss .entity.other.attribute-name.pseudo-element { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .support.constant.property-value, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.scss .support.function, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.property-value.scss { color: rgb(99, 163, 92) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .variable, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.scss .variable, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .variable.interpolation.scss, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.scss .meta.set.variable { color: rgb(222, 104, 173) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.control.else.scss, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.control.if.scss, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.control.content.scss { color: rgb(99, 163, 92) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.other.unit { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .keyword.other.important { color: rgb(235, 69, 53) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.tag.reference.scss { color: rgb(181, 127, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.name.type.new.js { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .variable.language.js { color: rgb(238, 106, 66) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .variable.parameter.function { color: rgb(181, 127, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.js .meta.function .entity.name.function, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.js .entity.name.function .meta.function { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .source.php .entity.name.type.class { color: rgb(238, 106, 66) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.heading.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.italic.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.bold.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.string.begin.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.string.end.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.metadata.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.link.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.blockquote.markdown, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.definition.raw.markdown { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation.section.function.scss { color: rgb(99, 163, 92) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .punctuation, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.method-call, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.method { color: rgb(51, 51, 51) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .meta.separator { color: rgb(179, 179, 179) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.raw.block { color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.raw.inline { color: rgb(0, 0, 0) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .meta.link, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .meta.image { color: rgb(65, 131, 196) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.underline.link, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .constant.other.reference { font-style: italic !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.list { color: rgb(238, 106, 66) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.bold { font-weight: bold !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.italic { font-style: italic !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.bold .markup.italic { font-weight: bold !important; font-style: italic !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .text.html.markdown .markup.italic .markup.bold { font-weight: bold !important; font-style: italic !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .string.quoted.double.html .invalid.illegal.bad-ampersand.html { color: rgb(34, 115, 195) !important; background-color: rgb(255, 255, 255) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .bracket-matcher .region { border-bottom-width: 1px !important; border-bottom-style: solid !important; border-bottom-color: rgba(240, 192, 0, 0.8) !important; z-index: 100 !important; background-color: rgba(255, 214, 51, 0.0980392) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular { color: rgb(34, 115, 195) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .punctuation.definition.block.begin.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .punctuation.definition.block.end.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .meta.brace.curly.js { color: rgb(173, 28, 93) !important; }
+.markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name.html.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.attribute.html.angular { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-presentation-mode] h1, .markdown-preview-enhanced[data-presentation-mode] h2, .markdown-preview-enhanced[data-presentation-mode] h3, .markdown-preview-enhanced[data-presentation-mode] h4, .markdown-preview-enhanced[data-presentation-mode] h5, .markdown-preview-enhanced[data-presentation-mode] h6 { margin-top: 0px; }
+.markdown-preview-enhanced[data-presentation-mode] strong { font-weight: bold; }
+.markdown-preview-enhanced .slides { text-align: left !important; }
+@media print { 
+  .markdown-preview-enhanced-custom { font-size: 13px; }
+}
+@media print { 
+  .markdown-preview-enhanced { font-size: 13px; }
+}
+pre.editor-colors::shadow .asciidoc .markup.bold,
+.host .asciidoc .markup.bold {
+  font-weight: bold;
+}
+pre.editor-colors::shadow .asciidoc .markup.italic,
+.host .asciidoc .markup.italic {
+  font-style: italic;
+}
+pre.editor-colors::shadow .asciidoc .markup.mark,
+.host .asciidoc .markup.mark {
+  color: #c24e9c;
+}
+pre.editor-colors::shadow .asciidoc .markup.highlight,
+.host .asciidoc .markup.highlight {
+  color: black;
+  background-color: #bfbf0c;
+}
+pre.editor-colors::shadow .asciidoc .markup.character-reference,
+.host .asciidoc .markup.character-reference {
+  font-style: italic;
+  color: #f9c6c2;
+}
+pre.editor-colors::shadow .asciidoc .markup.biblioref,
+.host .asciidoc .markup.biblioref,
+pre.editor-colors::shadow .asciidoc .markup.blockid,
+.host .asciidoc .markup.blockid {
+  font-weight: bold;
+  color: #c6e0c2;
+}
+pre.editor-colors::shadow .asciidoc .markup.xref,
+.host .asciidoc .markup.xref {
+  font-style: italic;
+}
+pre.editor-colors::shadow .asciidoc .markup.admonition,
+.host .asciidoc .markup.admonition,
+pre.editor-colors::shadow .asciidoc .markup.heading,
+.host .asciidoc .markup.heading,
+pre.editor-colors::shadow .asciidoc .markup.heading-0,
+.host .asciidoc .markup.heading-0,
+pre.editor-colors::shadow .asciidoc .markup.heading-1,
+.host .asciidoc .markup.heading-1,
+pre.editor-colors::shadow .asciidoc .markup.heading-2,
+.host .asciidoc .markup.heading-2,
+pre.editor-colors::shadow .asciidoc .markup.heading-3,
+.host .asciidoc .markup.heading-3,
+pre.editor-colors::shadow .asciidoc .markup.heading-4,
+.host .asciidoc .markup.heading-4,
+pre.editor-colors::shadow .asciidoc .markup.heading-5,
+.host .asciidoc .markup.heading-5 {
+  font-weight: bold;
+  color: #ffffff;
+}
+pre.editor-colors::shadow .asciidoc .markup.meta.attribute-list,
+.host .asciidoc .markup.meta.attribute-list,
+pre.editor-colors::shadow .asciidoc .markup.substitution,
+.host .asciidoc .markup.substitution {
+  color: rgba(248, 248, 242, 0.5);
+}
+pre.editor-colors::shadow .asciidoc .markup.heading.blocktitle,
+.host .asciidoc .markup.heading.blocktitle {
+  color: #ffffff;
+}
+pre.editor-colors::shadow .asciidoc .markup.todo.box,
+.host .asciidoc .markup.todo.box,
+pre.editor-colors::shadow .asciidoc .markup.list.bullet,
+.host .asciidoc .markup.list.bullet {
+  color: #fb9591;
+}
+pre.editor-colors::shadow .asciidoc .markup.macro.block,
+.host .asciidoc .markup.macro.block {
+  font-weight: bold;
+}
+pre.editor-colors::shadow .asciidoc .markup.super,
+.host .asciidoc .markup.super {
+  color: #7cbc79;
+}
+pre.editor-colors::shadow .asciidoc .markup.sub,
+.host .asciidoc .markup.sub {
+  color: #7cbc79;
+}
+pre.editor-colors::shadow .asciidoc .markup.table.cell.delimiter,
+.host .asciidoc .markup.table.cell.delimiter,
+pre.editor-colors::shadow .asciidoc .markup.table.delimiter,
+.host .asciidoc .markup.table.delimiter {
+  color: #61aeef;
+}
+pre.editor-colors::shadow .asciidoc .markup.table.content,
+.host .asciidoc .markup.table.content {
+  color: #efefe1;
+}
+pre.editor-colors::shadow .asciidoc .markup.block.sidebar,
+.host .asciidoc .markup.block.sidebar,
+pre.editor-colors::shadow .asciidoc .markup.block.passthrough,
+.host .asciidoc .markup.block.passthrough,
+pre.editor-colors::shadow .asciidoc .markup.block.front-matter,
+.host .asciidoc .markup.block.front-matter,
+pre.editor-colors::shadow .asciidoc .markup.block.example,
+.host .asciidoc .markup.block.example {
+  color: rgba(248, 248, 242, 0.7);
+}
+pre.editor-colors::shadow .asciidoc .markup.block.listing,
+.host .asciidoc .markup.block.listing,
+pre.editor-colors::shadow .asciidoc .markup.block.literal,
+.host .asciidoc .markup.block.literal {
+  color: #97c378;
+}
+pre.editor-colors::shadow .asciidoc .super,
+.host .asciidoc .super {
+  vertical-align: text-top;
+  font-size: 9.1px;
+}
+pre.editor-colors::shadow .asciidoc .sub,
+.host .asciidoc .sub {
+  vertical-align: text-bottom;
+  font-size: 9.1px;
+}
+
+.markdown-themeable-pdf-page-break {
+  border-top: 2px dotted #0098ff;
+}
+.markdown-themeable-pdf-page-break span {
+  opacity: .35;
+}
+
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+
+pre.editor-colors,
+.host {
+  background-color: #282828;
+  color: #f8f8f2;
+}
+pre.editor-colors .invisible-character,
+.host .invisible-character {
+  color: rgba(197, 200, 198, 0.2);
+}
+pre.editor-colors .indent-guide,
+.host .indent-guide {
+  color: rgba(255, 255, 255, 0.15);
+}
+pre.editor-colors .wrap-guide,
+.host .wrap-guide {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+pre.editor-colors .gutter,
+.host .gutter {
+  background-color: #303030;
+}
+pre.editor-colors .line-number.cursor-line-no-selection,
+.host .line-number.cursor-line-no-selection {
+  background-color: #49483e;
+}
+pre.editor-colors .invisible,
+.host .invisible {
+  color: #f8f8f2;
+}
+pre.editor-colors .cursor,
+.host .cursor {
+  border-color: #f8f8f0;
+}
+pre.editor-colors .selection .region,
+.host .selection .region {
+  background-color: #49483e;
+}
+pre.editor-colors .search-results .marker .region,
+.host .search-results .marker .region {
+  background-color: transparent;
+  border: 1px solid #888888;
+}
+pre.editor-colors .search-results .marker.current-result .region,
+.host .search-results .marker.current-result .region {
+  border: 1px solid #ffffff;
+}
+pre.editor-colors .gfm .markup.heading,
+.host .gfm .markup.heading {
+  color: #a6e22e;
+  font-weight: bold;
+}
+pre.editor-colors .gfm .markup.underline,
+.host .gfm .markup.underline {
+  color: #e6db74;
+  text-decoration: underline;
+}
+pre.editor-colors .gfm .bold,
+.host .gfm .bold {
+  font-weight: bold;
+}
+pre.editor-colors .gfm .italic,
+.host .gfm .italic {
+  font-style: italic;
+}
+pre.editor-colors .gfm .raw,
+.host .gfm .raw {
+  color: #66d9ef;
+}
+pre.editor-colors .gfm .variable.list,
+.host .gfm .variable.list {
+  color: #f92672;
+  font-weight: bold;
+}
+pre.editor-colors .gfm .link,
+.host .gfm .link {
+  color: #cccccc;
+}
+pre.editor-colors .gfm .link .entity,
+.host .gfm .link .entity {
+  color: #ae81ff;
+}
+.comment {
+  color: #75715e;
+}
+.constant.character,
+.constant.language,
+.constant.numeric,
+.constant.other {
+  color: #ae81ff;
+}
+.entity.name.class {
+  text-decoration: none;
+  color: #a6e22e;
+}
+.entity.name.function {
+  color: #a6e22e;
+}
+.entity.name.instance {
+  color: #66d9ef;
+}
+.entity.name.tag {
+  color: #f92672;
+}
+.entity.other.attribute-name {
+  color: #a6e22e;
+}
+.entity.other.inherited-class {
+  font-style: italic;
+  text-decoration: none;
+  color: #a6e22e;
+}
+.invalid {
+  color: #f8f8f0;
+  background-color: #f92672;
+}
+.invalid.deprecated {
+  background-color: #ae81ff;
+}
+.keyword {
+  color: #f92672 !important;
+}
+.meta.tag {
+  color: #f8f8f2;
+}
+.storage {
+  color: #f92672;
+}
+.storage.type {
+  font-style: italic;
+  color: #66d9ef;
+}
+.string {
+  color: #e6db74;
+}
+.support.constant,
+.support.function {
+  color: #66d9ef;
+}
+.support.class,
+.support.type {
+  font-style: italic;
+  color: #66d9ef;
+}
+.variable.parameter {
+  font-style: italic;
+  color: #fd971f;
+}
+.variable.language.python,
+.variable.language.js {
+  color: #f92672;
+}
+.class.jade {
+  color: #ae81ff;
+}
+.leading-whitespace,
+.trailing-whitespace {
+  display: inline-block;
+}
+ /* Flowchart variables */
+/* Sequence Diagram variables */
+/* Gantt chart variables */
+.mermaid .label {
+  font-family: 'trebuchet ms', verdana, arial;
+  color: #333;
+}
+.node rect,
+.node circle,
+.node ellipse,
+.node polygon {
+  fill: #cde498;
+  stroke: #13540c;
+  stroke-width: 1px;
+}
+.edgePath .path {
+  stroke: green;
+  stroke-width: 1.5px;
+}
+.edgeLabel {
+  background-color: #e8e8e8;
+}
+.cluster rect {
+  fill: #cdffb2 !important;
+  rx: 4  !important;
+  stroke: #6eaa49 !important;
+  stroke-width: 1px !important;
+}
+.cluster text {
+  fill: #333;
+}
+.actor {
+  stroke: #13540c;
+  fill: #cde498;
+}
+text.actor {
+  fill: black;
+  stroke: none;
+}
+.actor-line {
+  stroke: grey;
+}
+.messageLine0 {
+  stroke-width: 1.5;
+  stroke-dasharray: "2 2";
+  marker-end: "url(#arrowhead)";
+  stroke: #333;
+}
+.messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: "2 2";
+  stroke: #333;
+}
+#arrowhead {
+  fill: #333;
+}
+#crosshead path {
+  fill: #333 !important;
+  stroke: #333 !important;
+}
+.messageText {
+  fill: #333;
+  stroke: none;
+}
+.labelBox {
+  stroke: #326932;
+  fill: #cde498;
+}
+.labelText {
+  fill: black;
+  stroke: none;
+}
+.loopText {
+  fill: black;
+  stroke: none;
+}
+.loopLine {
+  stroke-width: 2;
+  stroke-dasharray: "2 2";
+  marker-end: "url(#arrowhead)";
+  stroke: #326932;
+}
+.note {
+  stroke: #6eaa49;
+  fill: #fff5ad;
+}
+.noteText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+/** Section styling */
+.section {
+  stroke: none;
+  opacity: 0.2;
+}
+.section0 {
+  fill: #6eaa49;
+}
+.section2 {
+  fill: #6eaa49;
+}
+.section1,
+.section3 {
+  fill: white;
+  opacity: 0.2;
+}
+.sectionTitle0 {
+  fill: #333;
+}
+.sectionTitle1 {
+  fill: #333;
+}
+.sectionTitle2 {
+  fill: #333;
+}
+.sectionTitle3 {
+  fill: #333;
+}
+.sectionTitle {
+  text-anchor: start;
+  font-size: 11px;
+  text-height: 14px;
+}
+/* Grid and axis */
+.grid .tick {
+  stroke: lightgrey;
+  opacity: 0.3;
+  shape-rendering: crispEdges;
+}
+.grid path {
+  stroke-width: 0;
+}
+/* Today line */
+.today {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
+}
+/* Task styling */
+/* Default task */
+.task {
+  stroke-width: 2;
+}
+.taskText {
+  text-anchor: middle;
+  font-size: 11px;
+}
+.taskTextOutsideRight {
+  fill: black;
+  text-anchor: start;
+  font-size: 11px;
+}
+.taskTextOutsideLeft {
+  fill: black;
+  text-anchor: end;
+  font-size: 11px;
+}
+/* Specific task settings for the sections*/
+.taskText0,
+.taskText1,
+.taskText2,
+.taskText3 {
+  fill: white;
+}
+.task0,
+.task1,
+.task2,
+.task3 {
+  fill: #487e3a;
+  stroke: #13540c;
+}
+.taskTextOutside0,
+.taskTextOutside2 {
+  fill: black;
+}
+.taskTextOutside1,
+.taskTextOutside3 {
+  fill: black;
+}
+/* Active task */
+.active0,
+.active1,
+.active2,
+.active3 {
+  fill: #cde498;
+  stroke: #13540c;
+}
+.activeText0,
+.activeText1,
+.activeText2,
+.activeText3 {
+  fill: black !important;
+}
+/* Completed task */
+.done0,
+.done1,
+.done2,
+.done3 {
+  stroke: grey;
+  fill: lightgrey;
+  stroke-width: 2;
+}
+.doneText0,
+.doneText1,
+.doneText2,
+.doneText3 {
+  fill: black !important;
+}
+/* Tasks on the critical line */
+.crit0,
+.crit1,
+.crit2,
+.crit3 {
+  stroke: #ff8888;
+  fill: red;
+  stroke-width: 2;
+}
+.activeCrit0,
+.activeCrit1,
+.activeCrit2,
+.activeCrit3 {
+  stroke: #ff8888;
+  fill: #cde498;
+  stroke-width: 2;
+}
+.doneCrit0,
+.doneCrit1,
+.doneCrit2,
+.doneCrit3 {
+  stroke: #ff8888;
+  fill: lightgrey;
+  stroke-width: 2;
+  cursor: pointer;
+  shape-rendering: crispEdges;
+}
+.doneCritText0,
+.doneCritText1,
+.doneCritText2,
+.doneCritText3 {
+  fill: black !important;
+}
+.activeCritText0,
+.activeCritText1,
+.activeCritText2,
+.activeCritText3 {
+  fill: black !important;
+}
+.titleText {
+  text-anchor: middle;
+  font-size: 18px;
+  fill: black;
+}
+/*
+
+
+*/
+g.classGroup text {
+  fill: #13540c;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+g.classGroup rect {
+  fill: #cde498;
+  stroke: #13540c;
+}
+g.classGroup line {
+  stroke: #13540c;
+  stroke-width: 1;
+}
+svg .classLabel .box {
+  stroke: none;
+  stroke-width: 0;
+  fill: #cde498;
+  opacity: 0.5;
+}
+svg .classLabel .label {
+  fill: #13540c;
+}
+.relation {
+  stroke: #13540c;
+  stroke-width: 1;
+  fill: none;
+}
+.composition {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#compositionStart {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#compositionEnd {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+.aggregation {
+  fill: #cde498;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#aggregationStart {
+  fill: #cde498;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#aggregationEnd {
+  fill: #cde498;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#dependencyStart {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#dependencyEnd {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#extensionStart {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+#extensionEnd {
+  fill: #13540c;
+  stroke: #13540c;
+  stroke-width: 1;
+}
+.node text {
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+div.mermaidTooltip {
+  position: absolute;
+  text-align: center;
+  max-width: 200px;
+  padding: 2px;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 12px;
+  background: #cdffb2;
+  border: 1px solid #6eaa49;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100;
+}
+ </style> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css"> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced" data-use-github-style="true" data-use-github-syntax-theme="true" data-presentation-mode> <div class="reveal">
+  <div class="slides">
+    <section ><h1 class="line" data-line="1" id="presentation-mode-beta">Presentation Mode (Beta)</h1>
+<p class="line" data-line="2">by <strong>Markdown Preview Enhanced</strong><br>
+powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a></p>
+</section><section ><p class="line" data-line="5">You can easily create beautiful presentation by running command<br>
+<center> <code>Markdown Preview Enhanced: Insert New Slide</code> </center></p>
+</section><section ><p class="line" data-line="9">Just like this</p>
+<p class="line" data-line="11"><img src="http://ooo.0o0.ooo/2016/07/17/578c61408dd73.gif" alt="presentation"></p>
+</section><section ><p class="line" data-line="14">The style of the presentation is consistent with the style of your beloved <strong>Atom</strong>.</p>
+<pre class="editor-colors lang-javascript"><div class="line"><span class="source js"><span class="storage modifier js"><span>const</span></span><span>&nbsp;さかもと&nbsp;</span><span class="keyword operator assignment js"><span>=</span></span><span>&nbsp;</span><span class="string quoted single js"><span class="punctuation definition string begin js"><span>&#39;</span></span><span>cool&nbsp;cooler&nbsp;coolest</span><span class="punctuation definition string end js"><span>&#39;</span></span></span></span></div></pre>
+</section><section ><p class="line" data-line="20">You can config slide background very easily.<br>
+For example:</p>
+<pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&lt;!--&nbsp;slide&nbsp;data-background-color:&quot;#ff0000&quot;&nbsp;--&gt;</span></span></span></div></pre>
+</section><section ><p class="line" data-line="27">Of course you can do more about slide background.<br>
+<strong>Image Background</strong></p>
+<table>
+<thead>
+<tr><th>Atribute</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>data-background-image</td><td></td><td>URL of the image to show. GIFs restart when the slide opens.</td></tr>
+<tr><td>data-background-size</td><td>cover</td><td>See <a href="https://developer.mozilla.org/docs/Web/CSS/background-size">background-size</a> on MDN.</td></tr>
+<tr><td>data-background-position</td><td>center</td><td>See <a href="https://developer.mozilla.org/docs/Web/CSS/background-position">background-position</a> on MDN.</td></tr>
+<tr><td>data-background-repeat</td><td>no-repeat</td><td>See <a href="https://developer.mozilla.org/docs/Web/CSS/background-repeat">background-repeat</a> on MDN.</td></tr>
+</tbody>
+</table>
+</section><section ><p class="line" data-line="37">For example, the markdown snippet below will generate slide like…</p>
+<pre class="editor-colors lang-html"><div class="line"><span class="text html basic"><span class="comment block html"><span class="punctuation definition comment html"><span>&lt;!--</span></span><span>&nbsp;slide&nbsp;data-background-image:&quot;</span><span class="markup underline link http hyperlink"><span>http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg</span></span><span>&quot;</span></span></span></div><div class="line"><span class="text html basic"><span class="comment block html"><span class="punctuation definition comment html"><span>--&gt;</span></span></span></span></div><div class="line"><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;</span></span><span class="entity name tag block any html"><span>p</span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>align</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>right</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span><span>雷姆党头顶青天</span><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;/</span></span><span class="entity name tag block any html"><span>p</span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span></span></div><div class="line"><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;</span></span><span class="entity name tag block any html"><span>p</span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>align</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>right</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span><span>雷姆党头顶青天</span><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;/</span></span><span class="entity name tag block any html"><span>p</span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span></span></div><div class="line"><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;</span></span><span class="entity name tag block any html"><span>p</span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>align</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>right</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span><span>雷姆党头顶青天</span><span class="meta tag block any html"><span class="punctuation definition tag begin html"><span>&lt;/</span></span><span class="entity name tag block any html"><span>p</span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span></span></div></pre>
+</section><section data-background-image='http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg'><p align="right">雷姆党头顶青天</p>
+<p align="right">雷姆党头顶青天</p>
+<p align="right">雷姆党头顶青天</p>
+</section><section ><p class="line" data-line="53">You can check your presentation in browser by<br>
+right clicking at the preview, then choose <code>Open in Browser</code> option.</p>
+</section><section ><p class="line" data-line="57"><strong>Markdown Preview Enhanced</strong> can also generate beautiful <strong>HTML</strong> or <strong>PDF</strong> files for your presentation.</p>
+</section><section ><p class="line" data-line="60">You can also set initialization config for your presentation.<br>
+Run <code>Markdown Preview Enhanced: Config Presentation</code> command to open the config file.<br>
+More information about configuration can be found at <a href="https://github.com/hakimel/reveal.js#configuration">reveal.js</a> website.</p>
+</section><section ><h4 class="line" data-line="65" id="star-this-project-if-you-like-it">Star this project if you like it ;)</h4>
+<ul>
+<li><p class="line" data-line="66">Github Repository can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced">here</a></p></li>
+<li><p class="line" data-line="67">Feel free to post issues and request new features <a href="https://github.com/shd101wyy/markdown-preview-enhanced/issues">here</a></p></li>
+<li><p class="line" data-line="68">Source code of this presentation can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md">here</a>, <a href="https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md">raw</a></p></li>
+</ul>
+</section><section data-background-image='http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg'></section>
+  </div>
+</div> </body> <script>
+  Reveal.initialize({"controls":true,"width":960,"height":700})
+</script> </html>
