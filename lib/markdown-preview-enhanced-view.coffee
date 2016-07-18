@@ -334,69 +334,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.innerHTML = html
     @bindEvents()
 
-    if slideConfigs.length
-      @setSlideDisplayProperties()
-
-  parseSlides: (html, slideConfigs)->
-    slides = html.split '<div class="new-slide"></div>'
-    slides = slides.slice(1)
-    output = ''
-
-    offset = 0
-    width = @presentationConfig.width
-    height = @presentationConfig.height
-    ratio = height / width * 100 + '%'
-    zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
-
-    for slide in slides
-      # slide = slide.trim()
-      # if slide.length
-      slideConfig = slideConfigs[offset]
-      styleString = ''
-      if slideConfig['data-background-image']
-        styleString += "background-image: url('#{slideConfig['data-background-image']}');"
-
-        if slideConfig['data-background-size']
-          styleString += "background-size: #{slideConfig['data-background-size']};"
-        else
-          styleString += "background-size: cover;"
-
-        if slideConfig['data-background-size']
-          styleString += "background-size: #{slideConfig['data-background-size']};"
-        else
-          styleString += "background-size: cover;"
-
-        if slideConfig['data-background-position']
-          styleString += "background-position: #{slideConfig['data-background-position']};"
-        else
-          styleString += "background-position: center;"
-
-        if slideConfig['data-background-repeat']
-          styleString += "background-repeat: #{slideConfig['data-background-repeat']};"
-        else
-          styleString += "background-repeat: no-repeat;"
-
-      else if slideConfig['data-background-color']
-        styleString += "background-color: #{slideConfig['data-background-color']} !important;"
-
-
-      output += """
-        <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
-          <section>#{slide}</section>
-        </div>
-      """
-      offset += 1
-
-    """
-    <div class="preview-slides">
-      #{output}
-    </div>
-    """
-
-  setSlideDisplayProperties: ()->
-    width = @presentationConfig.width
-    height = @presentationConfig.height
-
   bindEvents: ->
     @bindTagAClickEvent()
     @initTaskList()
@@ -660,6 +597,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         width: 100% !important;
         box-sizing: border-box !important;
         margin-top: 0 !important;
+        padding: 0 !important;
       }
       .markdown-preview-enhanced::-webkit-scrollbar {
         display: none !important;
@@ -809,14 +747,88 @@ module.exports = config || {}
 """
       return {}
 
-  parseSlidesForExport: (html, slideConfigs)->
+  parseSlides: (html, slideConfigs)->
     slides = html.split '<div class="new-slide"></div>'
+    slides = slides.slice(1)
     output = ''
 
+    offset = 0
+    width = @presentationConfig.width
+    height = @presentationConfig.height
+    ratio = height / width * 100 + '%'
+    zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
+
     for slide in slides
-      slide = slide.trim()
-      if slide.length
-        output += "<section>#{slide}</section>"
+      # slide = slide.trim()
+      # if slide.length
+      slideConfig = slideConfigs[offset]
+      styleString = ''
+      if slideConfig['data-background-image']
+        styleString += "background-image: url('#{slideConfig['data-background-image']}');"
+
+        if slideConfig['data-background-size']
+          styleString += "background-size: #{slideConfig['data-background-size']};"
+        else
+          styleString += "background-size: cover;"
+
+        if slideConfig['data-background-size']
+          styleString += "background-size: #{slideConfig['data-background-size']};"
+        else
+          styleString += "background-size: cover;"
+
+        if slideConfig['data-background-position']
+          styleString += "background-position: #{slideConfig['data-background-position']};"
+        else
+          styleString += "background-position: center;"
+
+        if slideConfig['data-background-repeat']
+          styleString += "background-repeat: #{slideConfig['data-background-repeat']};"
+        else
+          styleString += "background-repeat: no-repeat;"
+
+      else if slideConfig['data-background-color']
+        styleString += "background-color: #{slideConfig['data-background-color']} !important;"
+
+
+      output += """
+        <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
+          <section>#{slide}</section>
+        </div>
+      """
+      offset += 1
+
+    """
+    <div class="preview-slides">
+      #{output}
+    </div>
+    """
+
+  parseSlidesForExport: (html, slideConfigs)->
+    slides = html.split '<div class="new-slide"></div>'
+    slides = slides.slice(1)
+    output = ''
+
+    offset = 0
+    for slide in slides
+      slideConfig = slideConfigs[offset]
+      attrString = ''
+      if slideConfig['data-background-image']
+        attrString += "data-background-image='#{slideConfig['data-background-image']}'"
+
+      if slideConfig['data-background-size']
+        attrString += "data-background-size='#{slideConfig['data-background-size']}'"
+
+      if slideConfig['data-background-position']
+        attrString += "data-background-position='#{slideConfig['data-background-position']}'"
+
+      if slideConfig['data-background-repeat']
+        attrString += "data-background-repeat='#{slideConfig['data-background-repeat']}'"
+
+      if slideConfig['data-background-color']
+        attrString += "data-background-color='#{slideConfig['data-background-color']}'"
+
+      output += "<section #{attrString}>#{slide}</section>"
+      offset += 1
 
     """
     <div class="reveal">

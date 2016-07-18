@@ -32,10 +32,11 @@ Of course you can do more about slide background.
 For example  
 
 
-<!--
-  slide data-background-image:"http://img4.imgtn.bdimg.com/it/u=478178916,514097182&fm=11&gp=0.jpg" 
+<!-- slide data-background-image:"http://newwallpaperhd.com/wp-content/uploads/2016/06/beautiful-Anime-Rem-Re-Zero-Kara-Hajimeru-Isekai-Seikatsu-wallpaper.jpg"
 -->
-gegee
+<p align="right">雷姆党头顶青天</p>
+<p align="right">雷姆党头顶青天</p>
+<p align="right">雷姆党头顶青天</p>
 
 <!-- slide -->
 **Markdown Preview Enhanced** can also help you generate beautiful HTML or PDF for your presentation.  
