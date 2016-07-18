@@ -1,13 +1,30 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.7.7",
-  "description": "The 'best' Markdown Preview you need for Atom Editor!",
+  "version": "0.7.8",
+  "description": "The 'AWESOME' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0"
   },
+  "keywords": [
+    "markdown",
+    "presentation",
+    "image helper",
+    "katex",
+    "mathjax",
+    "mermaid",
+    "plantuml",
+    "wavedrom",
+    "pdf",
+    "html",
+    "image",
+    "exporter",
+    "phantomjs",
+    "toc",
+    "footer"
+  ],
   "scripts": {
     "build": "nothing happened"
   },

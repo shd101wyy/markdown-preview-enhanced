@@ -596,7 +596,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         font-size: 24px !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        margin-top: 0 !important;
+        margin: 0 !important;
         padding: 0 !important;
       }
       .markdown-preview-enhanced::-webkit-scrollbar {
