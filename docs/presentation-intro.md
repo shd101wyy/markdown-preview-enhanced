@@ -29,4 +29,13 @@ Of course you can do more about slide background.
 |data-background-repeat	|no-repeat	|See [background-repeat](https://developer.mozilla.org/docs/Web/CSS/background-repeat) on MDN.|  
 
 <!-- slide -->
+For example  
+
+
+<!--
+  slide data-background-image:"http://img4.imgtn.bdimg.com/it/u=478178916,514097182&fm=11&gp=0.jpg" 
+-->
+gegee
+
+<!-- slide -->
 **Markdown Preview Enhanced** can also help you generate beautiful HTML or PDF for your presentation.  

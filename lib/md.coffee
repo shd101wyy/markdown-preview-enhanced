@@ -251,20 +251,28 @@ md.block.ruler.before 'code', 'custom-comment',
 
         subject = content.slice(0, firstIndexOfSpace)
         rest = content.slice(firstIndexOfSpace+1).trim()
-        option = {}
 
-        rest = '{' + rest + '}'
-        try
-          option = JSON.parse(rest.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+        match = rest.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
 
-          state.tokens.push
-            type: 'custom'
-            subject: subject
-            line: state.line
-            option: option
-        catch e
-          # shouldn't do anything here
-          null
+        if match
+          option = {}
+          i = 0
+          while i < match.length
+            key = match[i]
+            value = match[i+1]
+            try
+              option[key] = JSON.parse(value)
+            catch e
+              null # do nothing
+            i += 2
+        else
+          option = {}
+
+        state.tokens.push
+          type: 'custom'
+          subject: subject
+          line: state.line
+          option: option
 
         state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
         return true
