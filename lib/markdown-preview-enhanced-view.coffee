@@ -1,9 +1,10 @@
-{Emitter, CompositeDisposable} = require 'atom'
+{Emitter, CompositeDisposable, File} = require 'atom'
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
+pdf = require 'html-pdf'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -39,6 +40,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this two variables will be got from './md'
     @parseMD = null
     @buildScrollMap = null
+
+    # presentation mode
+    @presentationMode = false
+    @presentationConfig = null
+    @slideConfigs = null
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -115,6 +121,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
+      @presentationConfig = @loadPresentationConfig()
+      @presentationConfig.width = 960 if not @presentationConfig.width
+      @presentationConfig.height = 700 if not @presentationConfig.height
+
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
@@ -150,7 +160,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @updateMarkdown()
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate or !@editor
+      if !@scrollSync or !@element or !@liveUpdate or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -182,6 +192,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # disable preview onscroll
       @previewScrollDelay = Date.now() + 500
 
+      if @presentationMode and @slideConfigs
+        return @scrollSyncForPresentation(event.newBufferPosition.row)
+
       if event.oldScreenPosition.row != event.newScreenPosition.row or event.oldScreenPosition.column == 0
         lineNo = event.newScreenPosition.row
         if lineNo == 0
@@ -195,7 +208,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or !@liveUpdate
+      if !@editor or !@scrollSync or !@liveUpdate or @presentationMode
         return
       if Date.now() < @previewScrollDelay
         return
@@ -266,6 +279,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @mathRenderingOption = option
         @renderMarkdown()
 
+    # mermaid theme
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
+      (theme) =>
+        @element.setAttribute 'data-mermaid-theme', theme
+
+  scrollSyncForPresentation: (bufferLineNo)->
+    i = @slideConfigs.length - 1
+    while i >= 0
+      if bufferLineNo >= @slideConfigs[i].line
+        break
+      i-=1
+    slideElement = @element.querySelector(".slide[data-offset=\"#{i}\"]")
+
+    return if not slideElement
+
+    # set slide to middle of preview
+    @element.scrollTop = -@element.offsetHeight/2 + (slideElement.offsetTop + slideElement.offsetHeight/2)*parseFloat(slideElement.style.zoom)
+
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
       @scrollMap = @buildScrollMap(this)
@@ -289,7 +320,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    html = @parseMD(this)
+    {html, slideConfigs} = @parseMD(this)
+
+    if slideConfigs.length
+      html = @parseSlides(html, slideConfigs)
+      @element.setAttribute 'data-presentation-preview-mode', ''
+      @presentationMode = true
+      @slideConfigs = slideConfigs
+    else
+      @element.removeAttribute 'data-presentation-preview-mode'
+      @presentationMode = false
 
     @element.innerHTML = html
     @bindEvents()
@@ -324,13 +364,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
             else
               @element.scrollTop = offsetTop
       else
-        a.onclick = ()->
+        a.onclick = ()=>
           # open md and markdown preview
           if href and not (href.startsWith('https://') or href.startsWith('http://'))
-
-            atom.workspace.open href,
-              split: 'left',
-              searchAllPanes: true
+            if href.endsWith('.pdf') # open pdf file outside atom
+              @openFile href
+            else
+              if href.startsWith 'file:///'
+                href = href.slice(8) # remove protocal
+              atom.workspace.open href,
+                split: 'left',
+                searchAllPanes: true
 
     for a in as
       href = a.getAttribute('href')
@@ -399,9 +443,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
           text = el.getAttribute('data-original').trim()
           continue if not text.length
           try
-            content = JSON.parse(text.replace((/([\w]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
+            content = JSON.parse(text.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
             WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
             el.setAttribute 'data-processed', 'true'
+
+            @scrollMap = null
           catch error
             el.innerText = 'failed to parse JSON'
 
@@ -411,9 +457,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
     helper = (el, text)->
-      plantumlAPI.render text, (outputHTML)->
+      plantumlAPI.render text, (outputHTML)=>
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
+        @scrollMap = null
 
     for el in els
       if el.getAttribute('data-processed') != 'true'
@@ -437,10 +484,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
 
   ## Utilities
-  openInBrowser: ()->
+  openInBrowser: (isForPresentationPrint=false)->
     return if not @editor
 
-    htmlContent = @getHTMLContent offline: true
+    htmlContent = @getHTMLContent offline: true, isForPrint: isForPresentationPrint
 
     temp.open
       prefix: 'markdown-preview-enhanced',
@@ -449,8 +496,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         fs.write info.fd, htmlContent, (err)=>
           throw err if err
-          ## open in browser
-          @openFile info.path
+          if isForPresentationPrint
+            url = 'file:///' + info.path + '?print-pdf'
+            atom.notifications.addInfo('Please copy and open the link below in Chrome.\nThen Right Click -> Print -> Save as Pdf.', dismissable: true, detail: url)
+          else
+            ## open in browser
+            @openFile info.path
 
   exportToDisk: ()->
     @documentExporter.display(this)
@@ -476,7 +527,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    htmlContent = @parseMD(this, {isSavingToHTML, isForPreview: false})
+    res = @parseMD(this, {isSavingToHTML, isForPreview: false})
+    htmlContent = res.html
+    slideConfigs = res.slideConfigs
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -486,7 +539,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if mathRenderingOption == 'KaTeX'
       if offline
         mathStyle = "<link rel=\"stylesheet\"
-              href=\"#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+              href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
         mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
@@ -521,6 +574,48 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
+    # mermaid theme
+    mermaidTheme = atom.config.get 'markdown-preview-enhanced.mermaidTheme'
+    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
+
+    # presentation
+    if slideConfigs.length
+      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs)
+      if offline
+        presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+      else
+        presentationScript = "<script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script>"
+
+      #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
+      presentationStyle = """
+
+      <style>
+      #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
+
+      .markdown-preview-enhanced {
+        font-size: 24px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+      }
+      .markdown-preview-enhanced::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
+      </style>
+      """
+      presentationInitScript = """
+      <script>
+        Reveal.initialize(#{JSON.stringify(@presentationConfig)})
+      </script>
+      """
+    else
+      presentationScript = ''
+      presentationStyle = ''
+      presentationInitScript = ''
+
     title = @getFileName()
     title = title.slice(0, title.length - 3) # remove '.md'
     htmlContent = "
@@ -530,14 +625,25 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <title>#{title}</title>
       <meta charset=\"utf-8\">
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-      <style> #{getMarkdownPreviewCSS()} </style>
+
+      #{presentationStyle}
+
+      <style>
+      #{getMarkdownPreviewCSS()}
+      #{mermaidThemeStyle}
+      </style>
+
       #{mathStyle}
+
+      #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\">
+    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\"
+    #{if @presentationMode then 'data-presentation-mode' else ''}>
 
     #{htmlContent}
 
     </body>
+    #{presentationInitScript}
   </html>
     "
 
@@ -584,6 +690,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
   saveAsPDF: (dist)->
     return if not @editor
 
+    if @presentationMode # for presentation, need to print from chrome
+      @openInBrowser(true)
+      return
+
     htmlContent = @getHTMLContent isForPrint: true, offline: true
     temp.open
       prefix: 'markdown-preview-enhanced',
@@ -604,6 +714,224 @@ class MarkdownPreviewEnhancedView extends ScrollView
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
       atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+
+  ####################################################
+  ## Presentation
+  ##################################################
+  loadPresentationConfig: ()->
+    # presentation_config.js
+    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js')
+    try
+      return require(configPath)
+    catch error
+      configFile = new File(configPath)
+      configFile.create().then (flag)->
+        if !flag # already exists
+          atom.notifications.addError('Failed to load presentation_config.js', detail: 'there might be errors in your config file')
+          return
+
+        configFile.write """
+'use strict'
+/*
+config presentation powered by reveal.js
+more information about configuration can be found here:
+    https://github.com/hakimel/reveal.js#user-content-configuration
+*/
+// you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
+let config = {
+  controls: true,
+}
+
+module.exports = config || {}
+"""
+      return {}
+
+  parseSlides: (html, slideConfigs)->
+    slides = html.split '<div class="new-slide"></div>'
+    slides = slides.slice(1)
+    output = ''
+
+    offset = 0
+    width = @presentationConfig.width
+    height = @presentationConfig.height
+    ratio = height / width * 100 + '%'
+    zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
+
+    for slide in slides
+      # slide = slide.trim()
+      # if slide.length
+      slideConfig = slideConfigs[offset]
+      styleString = ''
+      if slideConfig['data-background-image']
+        styleString += "background-image: url('#{slideConfig['data-background-image']}');"
+
+        if slideConfig['data-background-size']
+          styleString += "background-size: #{slideConfig['data-background-size']};"
+        else
+          styleString += "background-size: cover;"
+
+        if slideConfig['data-background-size']
+          styleString += "background-size: #{slideConfig['data-background-size']};"
+        else
+          styleString += "background-size: cover;"
+
+        if slideConfig['data-background-position']
+          styleString += "background-position: #{slideConfig['data-background-position']};"
+        else
+          styleString += "background-position: center;"
+
+        if slideConfig['data-background-repeat']
+          styleString += "background-repeat: #{slideConfig['data-background-repeat']};"
+        else
+          styleString += "background-repeat: no-repeat;"
+
+      else if slideConfig['data-background-color']
+        styleString += "background-color: #{slideConfig['data-background-color']} !important;"
+
+
+      output += """
+        <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
+          <section>#{slide}</section>
+        </div>
+      """
+      offset += 1
+
+    """
+    <div class="preview-slides">
+      #{output}
+    </div>
+    """
+
+  parseSlidesForExport: (html, slideConfigs)->
+    slides = html.split '<div class="new-slide"></div>'
+    slides = slides.slice(1)
+    output = ''
+
+    offset = 0
+    for slide in slides
+      slideConfig = slideConfigs[offset]
+      attrString = ''
+      if slideConfig['data-background-image']
+        attrString += "data-background-image='#{slideConfig['data-background-image']}'"
+
+      if slideConfig['data-background-size']
+        attrString += "data-background-size='#{slideConfig['data-background-size']}'"
+
+      if slideConfig['data-background-position']
+        attrString += "data-background-position='#{slideConfig['data-background-position']}'"
+
+      if slideConfig['data-background-repeat']
+        attrString += "data-background-repeat='#{slideConfig['data-background-repeat']}'"
+
+      if slideConfig['data-background-color']
+        attrString += "data-background-color='#{slideConfig['data-background-color']}'"
+
+      output += "<section #{attrString}>#{slide}</section>"
+      offset += 1
+
+    """
+    <div class="reveal">
+      <div class="slides">
+        #{output}
+      </div>
+    </div>
+    """
+
+  ####################################################
+  ## PhantomJS
+  ##################################################
+  loadPhantomJSHeaderFooterConfig: ()->
+    # mermaid_config.js
+    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
+    try
+      return require(configPath)
+    catch error
+      configFile = new File(configPath)
+      configFile.create().then (flag)->
+        if !flag # already exists
+          atom.notifications.addError('Failed to load phantomjs_header_footer_config.js', detail: 'there might be errors in your config file')
+          return
+
+        configFile.write """
+'use strict'
+/*
+config header and footer
+more information can be found here:
+    https://github.com/marcbachmann/node-html-pdf
+
+eg:
+
+  let config = {
+    "header": {
+      "height": "45mm",
+      "contents": '<div style="text-align: center;">Author: Marc Bachmann</div>'
+    },
+    "footer": {
+      "height": "28mm",
+      "contents": '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>'
+    }
+  }
+*/
+// you can edit the 'config' variable below
+// everytime you changed this file, you may need to restart atom.
+let config = {
+  'header': {},
+  'footer': {}
+}
+
+module.exports = config || {}
+"""
+      return {}
+
+  phantomJSExport: (dist)->
+    return if not @editor
+
+    if @presentationMode # for presentation, need to print from chrome
+      @openInBrowser(true)
+      return
+
+    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
+    if mathRenderingOption == 'MathJax'
+      atom.config.set('markdown-preview-enhanced.mathRenderingOption', 'KaTeX')
+
+    htmlContent = @getHTMLContent isForPrint: true, offline: true  # only use katex to render math
+
+    if mathRenderingOption == 'MathJax'
+      atom.config.set('markdown-preview-enhanced.mathRenderingOption', mathRenderingOption)
+
+    fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+    format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+    orientation = atom.config.get('markdown-preview-enhanced.orientation')
+    margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+    if !margin.length
+      margin = '0'
+    else
+      margin = margin.split(',').map (m)->m.trim()
+      if margin.length == 1
+        margin = margin[0]
+      else if margin.length == 2
+        margin = {'top': margin[0], 'bottom': margin[0], 'left': margin[1], 'right': margin[1]}
+      else if margin.length == 4
+        margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
+      else
+        margin = '1cm'
+
+    header_footer = @loadPhantomJSHeaderFooterConfig()
+
+    pdf
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer}
+      .toFile dist, (err, res)=>
+        if err
+          atom.notifications.addError err
+        # open pdf
+        else
+          lastIndexOfSlash = dist.lastIndexOf '/' || 0
+          fileName = dist.slice(lastIndexOfSlash + 1)
+
+          atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
+          if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+            @openFile dist
 
   copyToClipboard: ->
     return false if not @editor

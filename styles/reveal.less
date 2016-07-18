@@ -1,0 +1,67 @@
+@import "syntax-variables";
+
+[data-presentation-preview-mode] {
+  background-color: #f6f6f6;
+
+  .preview-slides {
+    width: 100%;
+
+    .slide {
+      position: relative;
+
+      //width: 100%; # need to be set later
+      //height: 100%;
+
+      padding: 2em !important;
+      margin-bottom: 12px;
+      text-align: left !important;
+      display: flex;
+      align-items:center;
+
+      border: 1px solid #e6e6e6;
+      background-color: #fff;
+      box-shadow: 0px 0px 16px 4px #eeeeee;
+
+      font-size: 24px;
+
+      background-color: @syntax-background-color !important;
+
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &[data-use-github-style=true] {
+    .slide {
+      background-color: #fff !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+    }
+  }
+
+  section {
+    display: block;
+    width: 100%;
+    transform-style: preserve-3d;
+    font-size: 100%;
+    font: inherit;
+  }
+}
+
+.markdown-preview-enhanced[data-presentation-mode] {
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+  }
+  strong {
+    font-weight: bold; // without this line, the output <strong> doesn't have wrong effect.
+  }
+}
+
+.markdown-preview-enhanced {
+  .slides {
+    text-align: left !important;
+  }
+}

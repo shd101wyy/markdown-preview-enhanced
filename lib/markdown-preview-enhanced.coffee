@@ -5,7 +5,6 @@ ImageHelperView = require './image-helper-view'
 {getReplacedTextEditorStyles} = require './style'
 ExporterView = require './exporter-view'
 
-
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
   katexStyle: null,
@@ -36,6 +35,10 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
       'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
+      'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:config-presentation': => @openPresentationConfig()
+      'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
+      'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
 
     # when the preview is displayed
     # preview will display the content of pane that is activated
@@ -218,3 +221,23 @@ module.exports = MarkdownPreviewEnhanced =
 
   openMermaidConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mermaid_config.js'))
+
+  openHeaderFooterConfig: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
+
+  openPresentationConfig: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js'))
+
+  toggleZenMode: ()->
+    editor = atom.workspace.getActiveTextEditor()
+    editorElement = editor.getElement()
+    if editor and editor.buffer
+      if editorElement.getAttribute('data-markdown-zen') == 'true'
+        editorElement.removeAttribute('data-markdown-zen')
+      else
+        editorElement.setAttribute('data-markdown-zen', 'true')
+
+  insertNewSlide: ()->
+    editor = atom.workspace.getActiveTextEditor()
+    if editor and editor.buffer
+      editor.insertText '<!-- slide -->'
