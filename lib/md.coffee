@@ -549,6 +549,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         throw "Only one toc is supported"
     else if subject == 'slide'
       opt = tokens[idx].option
+      opt.line = tokens[idx].line
       slideConfigs.push(opt)
       return '<div class="new-slide"></div>'
     return ''

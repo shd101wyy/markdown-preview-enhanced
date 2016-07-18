@@ -44,6 +44,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
+    @slideConfigs = null
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -181,7 +182,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or !@liveUpdate or @presentationMode
+      if !@scrollSync or !@element or !@liveUpdate
         return
       if Date.now() < @parseDelay
         return
@@ -190,6 +191,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @editorScrollDelay = Date.now() + 500
       # disable preview onscroll
       @previewScrollDelay = Date.now() + 500
+
+      if @presentationMode and @slideConfigs
+        return @scrollSyncForPresentation(event.newBufferPosition.row)
 
       if event.oldScreenPosition.row != event.newScreenPosition.row or event.oldScreenPosition.column == 0
         lineNo = event.newScreenPosition.row
@@ -280,6 +284,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
       (theme) =>
         @element.setAttribute 'data-mermaid-theme', theme
 
+  scrollSyncForPresentation: (bufferLineNo)->
+    i = @slideConfigs.length - 1
+    while i >= 0
+      if bufferLineNo >= @slideConfigs[i].line
+        break
+      i-=1
+    slideElement = @element.querySelector(".slide[data-offset=\"#{i+1}\"]")
+
+    # set slide to middle of preview
+    @element.scrollTop = -@element.offsetHeight/2 + (slideElement.offsetTop + slideElement.offsetHeight/2)*parseFloat(slideElement.style.zoom)
+
   scrollSyncToLineNo: (lineNo)->
     if !@scrollMap
       @scrollMap = @buildScrollMap(this)
@@ -309,6 +324,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       html = @parseSlides(html, slideConfigs)
       @element.setAttribute 'data-presentation-preview-mode', ''
       @presentationMode = true
+      @slideConfigs = slideConfigs
     else
       @element.removeAttribute 'data-presentation-preview-mode'
       @presentationMode = false
@@ -336,7 +352,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
           <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom};">
             <section>#{slide}</section>
           </div>
-          <div class="pagebreak"> </div>
         """
         offset += 1
 
