@@ -1,3 +1,9 @@
+## 0.7.9
+* [ ] viz.js dot language
+* [ ] customize reveal css
+* [ ] check custom comment subject
+* [ ] shield.io
+* [ ] table formatter
 ## 0.7.7
 * [ ] distraction free writing mode like [laverna](https://github.com/Laverna/laverna) or zen. [useful link](https://discuss.atom.io/t/set-atom-cursor-to-font-size-not-line-height/11965/5).
 * [x] presentation mode like [marp](https://github.com/yhatt/marp)
