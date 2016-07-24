@@ -41,6 +41,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseMD = null
     @buildScrollMap = null
 
+    # this variable will be got from 'viz.js'
+    @Viz = null
+
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
@@ -120,6 +123,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       {@parseMD, @buildScrollMap} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
+      @Viz = require('../dependencies/viz/viz.js')
 
       @presentationConfig = @loadPresentationConfig()
       @presentationConfig.width = 960 if not @presentationConfig.width
@@ -340,6 +344,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderMermaid()
     @renderPlantUML()
     @renderWavedrom()
+    @renderViz()
     @renderMathJax()
     @scrollMap = null
 
@@ -466,6 +471,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if el.getAttribute('data-processed') != 'true'
         helper(el, el.getAttribute('data-original'))
         el.innerText = 'rendering graph...\n'
+
+  renderViz: ()->
+    els = @element.getElementsByClassName('viz')
+
+    for el in els
+      if el.getAttribute('data-processed') != 'true'
+        try
+          el.innerHTML = @Viz(el.getAttribute('data-original')) # default svg
+        catch error
+          el.innerHTML = error
 
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax'
