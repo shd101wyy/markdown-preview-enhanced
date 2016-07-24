@@ -592,17 +592,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       <style>
       #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
 
-      .markdown-preview-enhanced {
-        font-size: 24px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .markdown-preview-enhanced::-webkit-scrollbar {
-        display: none !important;
-      }
-
       #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
       </style>
       """

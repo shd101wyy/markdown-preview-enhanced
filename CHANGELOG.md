@@ -1,6 +1,6 @@
 ## 0.7.9
 * [ ] viz.js dot language
-* [ ] customize reveal css
+* [x] customize reveal css
 * [x] check custom comment subject
 * [x] shield.io
 * [ ] table formatter

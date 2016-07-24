@@ -156,6 +156,14 @@ module.exports = MarkdownPreviewEnhanced =
   @media print {
 
   }
+
+
+  // custom presentation style
+  .preview-slides .slide,
+  &[data-presentation-mode] {
+    // eg
+    // background-color: #000;
+  }
 }
 
 // please don't modify the .markdown-preview-enhanced section below
@@ -164,7 +172,7 @@ module.exports = MarkdownPreviewEnhanced =
 }
 """
         text = editor.getText()
-        if text.indexOf('.markdown-preview-enhanced-custom {') < 0 or         text.indexOf('.markdown-preview-enhanced {') < 0
+        if text.indexOf('.markdown-preview-enhanced-custom {') < 0 or text.indexOf('.markdown-preview-enhanced {') < 0
           editor.setText(text + customCssTemplate)
 
   # insert toc table
