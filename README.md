@@ -60,6 +60,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 	- code block within `puml` or `plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
 - [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
 	- code block within `wavedrom` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
+- [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
 	- code block within `viz` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
