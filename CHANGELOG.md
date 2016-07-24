@@ -1,5 +1,5 @@
 ## 0.7.9
-* [ ] viz.js dot language
+* [x] viz.js dot language
 * [x] customize reveal css
 * [x] check custom comment subject
 * [x] shield.io
