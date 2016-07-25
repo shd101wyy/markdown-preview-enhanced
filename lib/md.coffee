@@ -251,7 +251,11 @@ md.block.ruler.before 'code', 'custom-comment',
           firstIndexOfSpace = match.index
 
         subject = content.slice(0, firstIndexOfSpace)
-        return false if !customSubjects[subject] # check if it is a valid subject
+
+        if !customSubjects[subject] # check if it is a valid subject
+          # it's not a valid subject, therefore escape it
+          state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
+          return true
 
         rest = content.slice(firstIndexOfSpace+1).trim()
 
