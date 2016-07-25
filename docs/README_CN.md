@@ -10,7 +10,7 @@ Markdown Preview Enhanced
 [点击这里](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
 
 
-如果你发现了 bug，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
+如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
 <!-- toc orderedList:0 -->
 
@@ -116,7 +116,7 @@ Markdown Preview Enhanced
   你可以在 settings panel 中禁用此功能。
 
 ## 开发者
-手动安装只能可以在 [这里](./DEVELOPER.md) 找到。   
+手动安装指南可以在 [这里](./DEVELOPER.md) 找到。   
 
 ## 感谢  
 感谢所有支持这个插件的人们！    
