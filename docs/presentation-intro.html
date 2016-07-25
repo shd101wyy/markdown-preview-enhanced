@@ -1333,17 +1333,6 @@ html:-moz-full-screen-ancestor {
   visibility: hidden; }
 
 
-.markdown-preview-enhanced {
-  font-size: 24px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.markdown-preview-enhanced::-webkit-scrollbar {
-  display: none !important;
-}
-
 
 </style> <style> .markdown-preview-enhanced pre::shadow .asciidoc .markup.bold, .markdown-preview-enhanced .host .asciidoc .markup.bold { font-weight: bold; }
 .markdown-preview-enhanced pre::shadow .asciidoc .markup.italic, .markdown-preview-enhanced .host .asciidoc .markup.italic { font-style: italic; }
@@ -1613,8 +1602,10 @@ html:-moz-full-screen-ancestor {
 .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular { color: rgb(34, 115, 195) !important; }
 .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .punctuation.definition.block.begin.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .punctuation.definition.block.end.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.tag.template.angular .meta.brace.curly.js { color: rgb(173, 28, 93) !important; }
 .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .entity.other.attribute-name.html.angular, .markdown-preview-enhanced[data-use-github-syntax-theme="true"] .meta.attribute.html.angular { color: rgb(133, 103, 181) !important; }
+.markdown-preview-enhanced[data-presentation-mode] { font-size: 24px; width: 100%; box-sizing: border-box; margin: 0px; padding: 0px; }
 .markdown-preview-enhanced[data-presentation-mode] h1, .markdown-preview-enhanced[data-presentation-mode] h2, .markdown-preview-enhanced[data-presentation-mode] h3, .markdown-preview-enhanced[data-presentation-mode] h4, .markdown-preview-enhanced[data-presentation-mode] h5, .markdown-preview-enhanced[data-presentation-mode] h6 { margin-top: 0px; }
 .markdown-preview-enhanced[data-presentation-mode] strong { font-weight: bold; }
+.markdown-preview-enhanced[data-presentation-mode]::-webkit-scrollbar { display: none; }
 .markdown-preview-enhanced .slides { text-align: left !important; }
 @media print { 
   .markdown-preview-enhanced-custom { font-size: 13px; }
@@ -2268,7 +2259,7 @@ div.mermaidTooltip {
 }
  </style> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css"> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced" data-use-github-style="true" data-use-github-syntax-theme="true" data-presentation-mode> <div class="reveal">
   <div class="slides">
-    <section ><h1 class="line" data-line="1" id="presentation-mode-beta">Presentation Mode (Beta)</h1>
+    <section ><h1 class="line" data-line="1" id="presentation-writer-beta">Presentation Writer (Beta)</h1>
 <p class="line" data-line="2">by <strong>Markdown Preview Enhanced</strong><br>
 powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a></p>
 </section><section ><p class="line" data-line="5">You can easily create beautiful presentation by running command<br>
