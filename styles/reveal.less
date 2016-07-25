@@ -1,7 +1,11 @@
 @import "syntax-variables";
 
 [data-presentation-preview-mode] {
-  background-color: #f6f6f6;
+  background-color: #f4f4f4;
+
+  &[data-use-github-style="true"] {
+    background-color: #f4f4f4;
+  }
 
   .preview-slides {
     width: 100%;
@@ -52,11 +56,21 @@
 }
 
 .markdown-preview-enhanced[data-presentation-mode] {
+  font-size: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
   }
   strong {
     font-weight: bold; // without this line, the output <strong> doesn't have wrong effect.
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 

@@ -1,8 +1,8 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.7.8",
-  "description": "The 'AWESOME' Markdown Preview you need for Atom Editor!",
+  "version": "0.7.9",
+  "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
   "engines": {
@@ -19,11 +19,12 @@
     "wavedrom",
     "pdf",
     "html",
-    "image",
     "exporter",
     "phantomjs",
     "toc",
-    "footer"
+    "footer",
+    "graphviz",
+    "dot language"
   ],
   "scripts": {
     "build": "nothing happened"

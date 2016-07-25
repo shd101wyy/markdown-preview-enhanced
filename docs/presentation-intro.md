@@ -1,5 +1,5 @@
 <!-- slide -->
-# Presentation Mode (Beta)
+# Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
 powered by [reveal.js](https://github.com/hakimel/reveal.js)
 <!-- slide -->

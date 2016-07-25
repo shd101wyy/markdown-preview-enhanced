@@ -41,6 +41,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseMD = null
     @buildScrollMap = null
 
+    # this variable will be got from 'viz.js'
+    @Viz = null
+
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
@@ -340,6 +343,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderMermaid()
     @renderPlantUML()
     @renderWavedrom()
+    @renderViz()
     @renderMathJax()
     @scrollMap = null
 
@@ -467,6 +471,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
         helper(el, el.getAttribute('data-original'))
         el.innerText = 'rendering graph...\n'
 
+  renderViz: ()->
+    els = @element.getElementsByClassName('viz')
+
+    if els.length
+      @Viz ?= require('../dependencies/viz/viz.js')
+      for el in els
+        if el.getAttribute('data-processed') != 'true'
+          try
+            el.innerHTML = @Viz(el.getAttribute('data-original')) # default svg
+            el.setAttribute 'data-processed', true
+          catch error
+            el.innerHTML = error
+
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax'
     if typeof(MathJax) == 'undefined'
@@ -591,17 +608,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       <style>
       #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
-
-      .markdown-preview-enhanced {
-        font-size: 24px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .markdown-preview-enhanced::-webkit-scrollbar {
-        display: none !important;
-      }
 
       #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
       </style>

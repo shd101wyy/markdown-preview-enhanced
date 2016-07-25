@@ -7,7 +7,8 @@ Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_module
 {File} = require 'atom'
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 toc = require('./toc')
-{scopeForLanguageName} = require('./extension-helper')
+{scopeForLanguageName} = require './extension-helper'
+customSubjects = require './custom-comment'
 mathRenderingOption = null
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
@@ -250,11 +251,17 @@ md.block.ruler.before 'code', 'custom-comment',
           firstIndexOfSpace = match.index
 
         subject = content.slice(0, firstIndexOfSpace)
+
+        if !customSubjects[subject] # check if it is a valid subject
+          # it's not a valid subject, therefore escape it
+          state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
+          return true
+
         rest = content.slice(firstIndexOfSpace+1).trim()
 
         match = rest.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
 
-        if match
+        if match and match.length % 2 == 0
           option = {}
           i = 0
           while i < match.length
@@ -470,9 +477,12 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
     else if lang == 'wavedrom'
-      $el = checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
+      checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
 
       wavedromOffset += 1
+    else if lang == 'viz'
+      checkGraph 'viz', graphData.viz_s, preElement, text, option, $
+
     else
       renderCodeBlock(preElement, text, lang)
 
@@ -503,6 +513,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
   graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
   graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
+  graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
 
   # set globalMathJaxData
   # so that we won't render the math expression that hasn't changed
