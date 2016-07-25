@@ -387,14 +387,24 @@ buildScrollMap = (markdownPreview)->
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
 checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
   if option.isForPreview
+    $preElement = $(preElement)
     if !graphArray.length
-      $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>"  # have to use data-original='' and not data-original="". "" will cause error.
+      $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>")
+      $el.attr 'data-original', text
+
+      $preElement.replaceWith $el
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' data-processed=\"true\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{element.innerHTML}</div>"
+        $el = $("<div class=\"#{graphType}\" data-processed=\"true\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{element.innerHTML}</div>")
+        $el.attr 'data-original', text
+
+        $preElement.replaceWith $el
       else
-        $(preElement).replaceWith "<div class=\"#{graphType}\" data-original='#{text}' #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>"
+        $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>")
+        $el.attr('data-original', text)
+
+        $preElement.replaceWith $el
   else
     element = graphArray.splice(0, 1)[0]
     if element
