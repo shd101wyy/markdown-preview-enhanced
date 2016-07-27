@@ -1,9 +1,6 @@
-MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
 {CompositeDisposable, Directory, File} = require 'atom'
 path = require 'path'
-ImageHelperView = require './image-helper-view'
 {getReplacedTextEditorStyles} = require './style'
-ExporterView = require './exporter-view'
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -16,14 +13,10 @@ module.exports = MarkdownPreviewEnhanced =
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
-    @imageHelperView ?= new ImageHelperView()
-
     # set opener
     @subscriptions.add atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
         return @preview
-
-    @preview = new MarkdownPreviewEnhancedView(state, 'markdown-preview-enhanced://preview')
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -47,8 +40,7 @@ module.exports = MarkdownPreviewEnhanced =
         	editor.buffer and
         	editor.getGrammar and
         	editor.getGrammar().scopeName == 'source.gfm' and
-        	@preview and
-        	@preview.isOnDom()
+        	@preview?.isOnDom()
         if @preview.editor != editor
           @preview.bindEditor(editor)
 
@@ -72,16 +64,13 @@ module.exports = MarkdownPreviewEnhanced =
 
   deactivate: ->
     @subscriptions.dispose()
-    @preview.destroy()
+    @preview?.destroy()
+    @preview = null
 
     # console.log 'deactivate markdown-preview-enhanced'
 
-  serialize: ->
-    # console.log 'package serialize'
-    state: @preview.serialize()
-
   toggle: ->
-    if @preview.isOnDom()
+    if @preview?.isOnDom()
       @preview.destroy()
 
       pane = atom.workspace.paneForItem(@preview)
@@ -92,6 +81,10 @@ module.exports = MarkdownPreviewEnhanced =
       @startMDPreview(editor)
 
   startMDPreview: (editor)->
+    MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
+    ExporterView = require './exporter-view'
+
+    @preview ?= new MarkdownPreviewEnhancedView('markdown-preview-enhanced://preview')
     if @preview.editor == editor
       return true
     else if @checkValidMarkdownFile(editor)
@@ -221,8 +214,11 @@ module.exports = MarkdownPreviewEnhanced =
 
   # start image helper
   startImageHelper: ()->
+    ImageHelperView = require './image-helper-view'
+
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
+      @imageHelperView ?= new ImageHelperView()
       @imageHelperView.display(editor)
     else
       atom.notifications.addError('Failed to open Image Helper panel')
