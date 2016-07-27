@@ -22,11 +22,9 @@ All features of **Markdown Preview Enhanced** are supported.
 Such as Math typesetting, mermaid graph, etc...  
 <br>
 $$
-u(x) =
- \begin{cases}
-  \exp{x} & \text{if } x \geq 0 \\
-  1       & \text{if } x < 0
- \end{cases}
+f(x) = \int_{-\infty}^\infty
+    \hat f(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi
 $$
 
 <!-- slide -->
