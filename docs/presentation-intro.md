@@ -18,6 +18,18 @@ const さかもと = 'cool cooler coolest'
 ```
 
 <!-- slide -->
+All features of **Markdown Preview Enhanced** are supported.   
+Such as Math typesetting, mermaid graph, etc...  
+<br>
+$$
+u(x) =
+ \begin{cases}
+  \exp{x} & \text{if } x \geq 0 \\
+  1       & \text{if } x < 0
+ \end{cases}
+$$
+
+<!-- slide -->
 You can config slide background very easily.   
 For example:
 ```
@@ -37,8 +49,7 @@ Of course you can do more about slide background.
 <!-- slide -->
 For example, the markdown snippet below will generate slide like...  
 ```html
-<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg"
--->
+<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg" -->
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
