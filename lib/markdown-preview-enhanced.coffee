@@ -64,6 +64,8 @@ module.exports = MarkdownPreviewEnhanced =
 
   deactivate: ->
     @subscriptions.dispose()
+    @imageHelperView?.destroy()
+    @imageHelperView = null
     @preview?.destroy()
     @preview = null
 

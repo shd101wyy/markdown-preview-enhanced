@@ -8,12 +8,20 @@ fs = require 'fs'
 smAPI = require './sm'
 
 class ImageHelperView extends View
+  subscriptions: new CompositeDisposable
+
   initialize: ()->
     @bindEvents()
 
-    atom.commands.add @element,
+    @subscriptions.add atom.commands.add @element,
       'core:cancel': => @hidePanel(),
       'core:confirm': => @insertImageURL()
+
+  destroy: ->
+    @subscriptions.dispose()
+    @panel?.destroy()
+    @panel = null
+    @editor = null
 
   @content: ->
     @div class: 'image-helper-view', =>
@@ -44,8 +52,9 @@ class ImageHelperView extends View
       @div class: 'close-btn btn', 'close'
 
   hidePanel: ->
-    return unless @panel.isVisible()
+    return unless @panel?.isVisible()
     @panel.hide()
+    @editor = null
 
   bindEvents: ->
     closeBtn = $('.close-btn', @element)
