@@ -19,7 +19,7 @@ module.exports = MarkdownPreviewEnhanced =
     @imageHelperView ?= new ImageHelperView()
 
     # set opener
-    atom.workspace.addOpener (uri)=>
+    @subscriptions.add atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
         return @preview
 
