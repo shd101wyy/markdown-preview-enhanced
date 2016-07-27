@@ -240,10 +240,10 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     editorElement = editor.getElement()
     if editor and editor.buffer
-      if editorElement.getAttribute('data-markdown-zen') == 'true'
+      if editorElement.hasAttribute('data-markdown-zen')
         editorElement.removeAttribute('data-markdown-zen')
       else
-        editorElement.setAttribute('data-markdown-zen', 'true')
+        editorElement.setAttribute('data-markdown-zen', '')
 
   insertNewSlide: ()->
     editor = atom.workspace.getActiveTextEditor()

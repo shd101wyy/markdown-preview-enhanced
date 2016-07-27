@@ -254,12 +254,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # github style?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
       (useGitHubStyle) =>
-        @element.setAttribute('data-use-github-style', if useGitHubStyle then 'true' else 'false')
+        if useGitHubStyle
+          @element.setAttribute('data-use-github-style', '')
+        else
+          @element.removeAttribute('data-use-github-style')
 
     # github syntax theme
     @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
       (useGitHubSyntaxTheme)=>
-        @element.setAttribute('data-use-github-syntax-theme', if useGitHubSyntaxTheme then 'true' else 'false')
+        if useGitHubSyntaxTheme
+          @element.setAttribute('data-use-github-syntax-theme', '')
+        else
+          @element.removeAttribute('data-use-github-syntax-theme')
 
     # break line?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
@@ -643,8 +649,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\"
-    #{if @presentationMode then 'data-presentation-mode' else ''}>
+    <body class=\"markdown-preview-enhanced\"
+        #{if useGitHubStyle then 'data-use-github-style' else ''}
+        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}
+        #{if @presentationMode then 'data-presentation-mode' else ''}>
 
     #{htmlContent}
 
@@ -926,7 +934,7 @@ module.exports = config || {}
     header_footer = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer}
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
