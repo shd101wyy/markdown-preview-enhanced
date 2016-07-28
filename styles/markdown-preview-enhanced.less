@@ -26,10 +26,6 @@
   margin: 10px 13px 10px 13px;
   padding: 2em;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
   &[data-use-github-style] {
     color: @github-black;
     background-color: #fff;
@@ -49,6 +45,10 @@
     display: block;
     box-sizing: border-box;
     position: absolute;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
 
