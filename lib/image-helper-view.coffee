@@ -51,11 +51,6 @@ class ImageHelperView extends View
           @span 'to upload images'
       @div class: 'close-btn btn', 'close'
 
-  hidePanel: ->
-    return unless @panel?.isVisible()
-    @panel.hide()
-    @editor = null
-
   bindEvents: ->
     closeBtn = $('.close-btn', @element)
     closeBtn.click ()=>
@@ -195,7 +190,7 @@ class ImageHelperView extends View
     uploader = atom.config.get 'markdown-preview-enhanced.imageUploader'
 
     editor.insertText(hint)
-    atom.views.getView(@editor).focus()
+    atom.views.getView(editor).focus()
 
     if uploader == 'imgur'
       # A single image
@@ -223,6 +218,9 @@ class ImageHelperView extends View
       @editor.setSelectedBufferRange([[curPos.row, curPos.column + 2], [curPos.row, curPos.column + 30]])
       atom.views.getView(@editor).focus()
 
+  hidePanel: ->
+    return unless @panel?.isVisible()
+    @panel.hide()
 
   display: (editor)->
     @panel ?= atom.workspace.addModalPanel(item: this, visible: false)

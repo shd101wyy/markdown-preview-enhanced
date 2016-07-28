@@ -35,7 +35,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @editorScrollDelay = Date.now()
     @previewScrollDelay = Date.now()
 
-    @documentExporter = null # binded in markdown-preview-enhanced.coffee startMD function
+    @documentExporterView = null # binded in markdown-preview-enhanced.coffee startMD function
 
     # this two variables will be got from './md'
     @parseMD = null
@@ -527,7 +527,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             @openFile info.path
 
   exportToDisk: ()->
-    @documentExporter.display(this)
+    @documentExporterView.display(this)
 
   # open html file in browser or open pdf file in reader ... etc
   openFile: (filePath)->

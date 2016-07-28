@@ -3,14 +3,21 @@
 path = require 'path'
 
 class ExporterView extends View
+  subscriptions: new CompositeDisposable
+
   initialize: ()->
 
     @markdownPreview = null
 
-    atom.commands.add @element,
+    @subscriptions.add atom.commands.add @element,
       'core:cancel': => @hidePanel()
 
     @bindEvents()
+
+  destroy: ->
+    @subscriptions.dispose()
+    @panel?.destroy()
+    @panel = null
 
   @content: ->
     @div class: 'exporter-view', =>
@@ -280,7 +287,7 @@ class ExporterView extends View
       @fileNameInput.setText(filePath)
 
   hidePanel: ->
-    return unless @panel.isVisible()
+    return unless @panel?.isVisible()
     @panel.hide()
 
   display: (markdownPreview)->

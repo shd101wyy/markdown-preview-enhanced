@@ -5,7 +5,7 @@ path = require 'path'
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
   katexStyle: null,
-  documentExporter: null,
+  documentExporterView: null,
   imageHelperView: null,
 
   activate: (state) ->
@@ -66,6 +66,8 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.dispose()
     @imageHelperView?.destroy()
     @imageHelperView = null
+    @documentExporterView?.destroy()
+    @documentExporterView = null 
     @preview?.destroy()
     @preview = null
 
@@ -93,9 +95,9 @@ module.exports = MarkdownPreviewEnhanced =
       @appendGlobalStyle()
       @preview.bindEditor(editor)
 
-      if !@documentExporter
-        @documentExporter = new ExporterView()
-        @preview.documentExporter = @documentExporter
+      if !@documentExporterView
+        @documentExporterView = new ExporterView()
+        @preview.documentExporterView = @documentExporterView
       return true
     else
       return false
