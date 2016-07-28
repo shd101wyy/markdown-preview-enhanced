@@ -8,6 +8,7 @@ pdf = require 'html-pdf'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
+ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 
 module.exports =
@@ -1013,7 +1014,7 @@ module.exports = config || {}
       useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
 
       title = ebookConfig.title || 'no title'
-      mathStyle = ''
+      mathStyle = if outputHTML.indexOf('class="katex"') > 0 then "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">" else ''
 
       outputHTML = """
   <!DOCTYPE html>
@@ -1038,6 +1039,9 @@ module.exports = config || {}
   </html>
       """
 
+      fileName = 'test.epub'
+      dist = '/Users/wangyiyi/Desktop/test.epub'
+
       temp.open
         prefix: 'markdown-preview-enhanced',
         suffix: '.html', (err, info)=>
@@ -1046,6 +1050,9 @@ module.exports = config || {}
           fs.write info.fd, outputHTML, (err)=>
             throw err if err
             @openFile info.path
+            ebookConvert info.path, dist, ebookConfig, (err)=>
+              throw err if err
+              atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
 
 
 
