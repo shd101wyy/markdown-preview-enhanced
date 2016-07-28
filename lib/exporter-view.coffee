@@ -18,7 +18,8 @@ class ExporterView extends View
       @div class: 'document-type-div clearfix', =>
         @div class: 'document-type document-html selected', "HTML"
         @div class: 'document-type document-pdf', "PDF"
-        @div class: 'document-type document-phantomjs', "PHANTOMJS (Beta)"
+        @div class: 'document-type document-phantomjs', "PHANTOMJS"
+        @div class: 'document-type document-ebook', 'EBOOK'
 
       @label class: 'save-as-label', 'Save as'
       @subview 'fileNameInput', new TextEditorView(mini: true, placeholderText: 'enter filename here')
@@ -93,6 +94,12 @@ class ExporterView extends View
         @label 'Open PDF after generation'
         @input type: 'checkbox', class: 'pdf-auto-open-checkbox'
 
+      @div class: 'ebook-div', =>
+        @select class: 'ebook-format-select', =>
+          @option 'epub'
+          @option 'mobi'
+          @option 'pdf'
+
       @div class: 'button-group', =>
         @div class: 'close-btn btn', 'close'
         @div class: 'export-btn btn', 'export'
@@ -103,6 +110,7 @@ class ExporterView extends View
     @initHTMLPageEvent()
     @initPDFPageEvent()
     @initPhantomJSPageEvent()
+    @initEBookPageEvent()
 
     $('.export-btn', @element).click ()=>
       dist = @fileNameInput.getText().trim()
@@ -120,6 +128,9 @@ class ExporterView extends View
       else if $('.document-phantomjs', @element).hasClass('selected') # phantomjs
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
         @markdownPreview.phantomJSExport dist
+      else if $('.document-ebook', @element).hasClass('selected') # ebook
+        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+        @markdownPreview.generateEbook dist
 
   initHTMLPageEvent: ->
     $('.document-html', @element).on 'click', (e)=>
@@ -132,6 +143,7 @@ class ExporterView extends View
 
       $('.pdf-div', @element).hide()
       $('.phantomjs-div', @element).hide()
+      $('.ebook-div', @element).hide()
       $('.html-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
@@ -151,6 +163,7 @@ class ExporterView extends View
 
       $('.html-div', @element).hide()
       $('.phantomjs-div', @element).hide()
+      $('.ebook-div', @element).hide()
       $('.pdf-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
@@ -200,6 +213,7 @@ class ExporterView extends View
 
       $('.html-div', @element).hide()
       $('.pdf-div', @element).hide()
+      $('.ebook-div', @element).hide()
       $('.phantomjs-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
@@ -242,6 +256,29 @@ class ExporterView extends View
     config.on 'click', ()=>
       @hidePanel()
       atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'), {split: 'left'})
+
+  initEBookPageEvent: ->
+    $('.document-ebook', @element).on 'click', (e)=>
+      $el = $(e.target)
+      if !$el.hasClass('selected')
+        $('.selected', @elemnet).removeClass('selected')
+        $el.addClass('selected')
+
+        filePath = @markdownPreview.editor.getPath()
+        filePath = filePath.slice(0, filePath.length-3) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
+        @fileNameInput.setText(filePath)
+        @fileNameInput.focus()
+
+      $('.html-div', @element).hide()
+      $('.pdf-div', @element).hide()
+      $('.phantomjs-div', @element).hide()
+      $('.ebook-div', @element).show()
+
+    ## select
+    $('.ebook-div .ebook-format-select', @element).on 'change', (e)=>
+      filePath = @markdownPreview.editor.getPath()
+      filePath = filePath.slice(0, filePath.length-3) + '.' + e.target.value
+      @fileNameInput.setText(filePath)
 
   hidePanel: ->
     return unless @panel.isVisible()

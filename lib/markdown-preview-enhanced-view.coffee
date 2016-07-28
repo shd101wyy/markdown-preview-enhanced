@@ -949,7 +949,7 @@ module.exports = config || {}
             @openFile dist
 
   ## EBOOK
-  generateEbook: ->
+  generateEbook: (dist)->
     {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
     if !ebookConfig.isEbook
       return atom.notifications.addError('<!-- book --> not found')
@@ -1007,8 +1007,7 @@ module.exports = config || {}
 
           outputHTML += html
         catch error
-          console.log(error)
-          atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath)
+          atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
           return
 
       # render viz
@@ -1045,8 +1044,7 @@ module.exports = config || {}
   </html>
       """
 
-      fileName = 'test.epub'
-      dist = '/Users/wangyiyi/Desktop/test.epub'
+      fileName = path.basename(dist)
 
       temp.open
         prefix: 'markdown-preview-enhanced',
@@ -1055,7 +1053,7 @@ module.exports = config || {}
 
           fs.write info.fd, outputHTML, (err)=>
             throw err if err
-            @openFile info.path
+
             ebookConvert info.path, dist, ebookConfig, (err)=>
               throw err if err
               atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
