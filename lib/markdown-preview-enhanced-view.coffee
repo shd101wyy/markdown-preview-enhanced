@@ -13,10 +13,9 @@ ebookConvert = require './ebook-convert'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
-  constructor: (state=null, uri)->
+  constructor: (uri)->
     super
 
-    @state = state
     @uri = uri
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
@@ -1075,11 +1074,6 @@ module.exports = config || {}
 
     atom.clipboard.write(selectedText)
     true
-
-  # We don't need to use this function...
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
-    null
 
   # Tear down any state and detach
   destroy: ->
