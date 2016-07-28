@@ -34,6 +34,11 @@ ISBN of the book
 http://path-to-image.png  
 * **epub-toc-at-end**  
 whether to put TOC at the end
+* **margin-top**  
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
+* **margin-right**
+* **margin-bottom**
+* **margin-left**
 * **cdn**  
 only used for `.html` file generation. When set to `true`, css file like `katex.min.css` will be retrieved from `cdn.js`
 

@@ -695,7 +695,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             fs.writeFile dist, data, (err)=>
               throw err if err
 
-              atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dist}"
 
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
@@ -728,7 +728,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
-      atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dist}")
 
   ####################################################
   ## Presentation
@@ -944,7 +944,7 @@ module.exports = config || {}
           lastIndexOfSlash = dist.lastIndexOf '/' || 0
           fileName = dist.slice(lastIndexOfSlash + 1)
 
-          atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
+          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
           if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
             @openFile dist
 
@@ -1056,7 +1056,7 @@ module.exports = config || {}
 
             ebookConvert info.path, dist, ebookConfig, (err)=>
               throw err if err
-              atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{fileName} was created, detail: "path: #{dist}"
 
 
 

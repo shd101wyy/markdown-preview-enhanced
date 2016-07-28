@@ -8,7 +8,7 @@ path = require 'path'
 # dest: output path
 ebookConvert = (src, dest, config={}, callback)->
   # config
-  title = config.title || null
+  title = config.title || 'No Title'
   authors = config.authors || null
   publisher = config.publisher || null
   bookProducer = config['book-producer'] || null
@@ -16,6 +16,10 @@ ebookConvert = (src, dest, config={}, callback)->
   isbn = config['isbn'] || null
   cover = config['cover'] || null
   epubTOCAtEnd = config['epub-toc-at-end'] || false
+  marginTop = config['margin-top'] || 72
+  marginRight = config['margin-right'] || 72
+  marginBottom = config['margin-bottom'] || 72
+  marginLeft = config['margin-left'] || 72
 
   args = [  src,
             dest,
@@ -54,6 +58,22 @@ ebookConvert = (src, dest, config={}, callback)->
 
   if epubTOCAtEnd
     args.push '--epub-toc-at-end'
+
+  if marginTop
+    args.push '--margin-top'
+    args.push marginTop
+
+  if marginRight
+    args.push '--margin-right'
+    args.push marginRight
+
+  if marginBottom
+    args.push '--margin-bottom'
+    args.push marginBottom
+
+  if marginLeft
+    args.push '--margin-left'
+    args.push marginLeft
 
   execFile 'ebook-convert',
             args,
