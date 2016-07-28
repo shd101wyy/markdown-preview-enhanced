@@ -54,7 +54,6 @@ ebookConvert = (src, dest, config={}, callback)->
 
   if epubTOCAtEnd
     args.push '--epub-toc-at-end'
-    args.push epubTOCAtEnd
 
   execFile 'ebook-convert',
             args,
