@@ -123,7 +123,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
 
 ## For Developer
-Manual installation instruction can be found [here](./DEVELOPER.md)   
+Manual installation instruction can be found [here](./docs/DEVELOPER.md)   
 
 ## Thanks  
 Thanks for everyone that supports this package!    
