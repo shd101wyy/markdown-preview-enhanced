@@ -1,11 +1,9 @@
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
-* [ ] merge pull request [#86](https://github.com/shd101wyy/markdown-preview-enhanced/pull/86)
+* [x] merge pull request [#86](https://github.com/shd101wyy/markdown-preview-enhanced/pull/86)
 * [ ] presentation print pdf link not working
-* [ ] epub generation. useful links [manual](http://pandoc.org/MANUAL.html) and [epub](http://pandoc.org/epub.html)
-* Attention
-  * epub-gen. need to replace `&nbsp;` with `space`
-  * epub-gen. need to change `<body class="markdown-preview-enhanced">...</body>` to `<div class="markdown-preview-enhanced">...</div>`
+* [x] epub generation. useful links [manual](http://pandoc.org/MANUAL.html) and [epub](http://pandoc.org/epub.html)
+
 ## 0.7.9
 * [x] viz.js dot language
 * [x] customize reveal css
