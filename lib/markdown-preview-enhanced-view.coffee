@@ -952,9 +952,18 @@ module.exports = config || {}
   generateEbook: (dist)->
     {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
     if !ebookConfig.isEbook
-      return atom.notifications.addError('book config not found', detail: 'please insert <!-- book --> to your markdown file')
+      return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
       atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+
+      if ebookConfig.cover # change cover to absolute path if necessary
+        cover = ebookConfig.cover
+        if cover.startsWith('./') or cover.startsWith('../')
+          cover = path.resolve(@rootDirectoryPath, cover)
+          ebookConfig.cover = cover
+        else if cover.startsWith('/')
+          cover = path.resolve(@projectDirectoryPath, '.'+cover)
+          ebookConfig.cover = cover
 
       div = document.createElement('div')
       div.innerHTML = html
@@ -974,6 +983,7 @@ module.exports = config || {}
           headingOffset += 1
 
           a.href = '#'+id # change id
+          a.classList.add('ebook-heading')
 
           if li.childElementCount > 1
             getStructure(li.children[1], level+1)
