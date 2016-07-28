@@ -947,6 +947,109 @@ module.exports = config || {}
           if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
             @openFile dist
 
+  ## EBOOK
+  generateEbook: ->
+    {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
+    if !ebookConfig.isEbook
+      return atom.notifications.addError('<!-- book --> not found')
+    else
+      window.ebookConfig = ebookConfig
+
+      div = document.createElement('div')
+      div.innerHTML = html
+      window.div = div
+
+      structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
+      headingOffset = 0
+
+      # load the last ul, analyze toc links.
+      getStructure = (ul, level)->
+        for li in ul.children
+          a = li.children[0].getElementsByTagName('a')[0]
+          filePath = a.getAttribute('href') # assume markdown file path
+          heading = a.innerHTML
+          id = 'ebook-heading-id-'+headingOffset
+
+          structure.push {level: level, filePath: filePath, heading: heading, id: id}
+          headingOffset += 1
+
+          a.href = '#'+id # change id
+
+          if li.childElementCount > 1
+            getStructure(li.children[1], level+1)
+
+      children = div.children
+      i = children.length - 1
+      while i >= 0
+        if children[i].tagName == 'UL' # find table of contents
+          getStructure(children[i], 0)
+          break
+        i -= 1
+
+      outputHTML = div.innerHTML
+
+      # append files according to structure
+      for obj in structure
+        heading = obj.heading
+        id = obj.id
+        level = obj.level
+        filePath = obj.filePath
+
+        outputHTML += "<h#{level+1} id=\"#{id}\">#{heading}</h#{level+1}>"
+
+        if filePath.startsWith('file:///')
+          filePath = filePath.slice(8)
+
+        try
+          text = fs.readFileSync(filePath, {encoding: 'utf-8'})
+          {html} = @parseMD text, {isSavingToHTML: false, isForPreview: false, isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+
+          outputHTML += html
+        catch error
+          console.log(error)
+          atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath)
+          return
+
+      useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
+
+      title = ebookConfig.title || 'no title'
+      mathStyle = ''
+
+      outputHTML = """
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>#{title}</title>
+      <meta charset=\"utf-8\">
+      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+      <style>
+      #{getMarkdownPreviewCSS()}
+      </style>
+
+      #{mathStyle}
+    </head>
+    <body class=\"markdown-preview-enhanced\" data-use-github-style
+        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}>
+
+    #{outputHTML}
+
+    </body>
+  </html>
+      """
+
+      temp.open
+        prefix: 'markdown-preview-enhanced',
+        suffix: '.html', (err, info)=>
+          throw err if err
+
+          fs.write info.fd, outputHTML, (err)=>
+            throw err if err
+            @openFile info.path
+
+
+
+
   copyToClipboard: ->
     return false if not @editor
 
