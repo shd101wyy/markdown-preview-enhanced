@@ -406,7 +406,19 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
 
         $preElement.replaceWith $el
   else if option.isForEbook
-    $(preElement).replaceWith "<pre>Graph is not supported in EBook</pre>"
+    ### doesn't work...
+    if graphType == 'viz'
+      Viz = require('../dependencies/viz/viz.js')
+      $el = $("<div></div>")
+      $el.html(Viz(text))
+      $(preElement).replaceWith $el
+    else
+      $(preElement).replaceWith "<pre>Graph is not supported in EBook</pre>"
+    ###
+    $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
+    $el.attr 'data-original', text
+
+    $(preElement).replaceWith $el
   else
     element = graphArray.splice(0, 1)[0]
     if element

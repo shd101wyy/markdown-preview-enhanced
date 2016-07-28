@@ -478,8 +478,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         helper(el, el.getAttribute('data-original'))
         el.innerText = 'rendering graph...\n'
 
-  renderViz: ()->
-    els = @element.getElementsByClassName('viz')
+  renderViz: (element=@element)->
+    els = element.getElementsByClassName('viz')
 
     if els.length
       @Viz ?= require('../dependencies/viz/viz.js')
@@ -1011,9 +1011,15 @@ module.exports = config || {}
           atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath)
           return
 
+      # render viz
+      div.innerHTML = outputHTML
+      @renderViz(div)
+      outputHTML = div.innerHTML
+
       useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
 
       title = ebookConfig.title || 'no title'
+
       mathStyle = if outputHTML.indexOf('class="katex"') > 0 then "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">" else ''
 
       outputHTML = """
