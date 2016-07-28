@@ -952,13 +952,12 @@ module.exports = config || {}
   generateEbook: (dist)->
     {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
     if !ebookConfig.isEbook
-      return atom.notifications.addError('<!-- book --> not found')
+      return atom.notifications.addError('book config not found', detail: 'please insert <!-- book --> to your markdown file')
     else
-      window.ebookConfig = ebookConfig
+      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
       div = document.createElement('div')
       div.innerHTML = html
-      window.div = div
 
       structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
       headingOffset = 0
@@ -1056,10 +1055,7 @@ module.exports = config || {}
 
             ebookConvert info.path, dist, ebookConfig, (err)=>
               throw err if err
-              atom.notifications.addInfo "File #{fileName} was created, detail: "path: #{dist}"
-
-
-
+              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
 
   copyToClipboard: ->
     return false if not @editor

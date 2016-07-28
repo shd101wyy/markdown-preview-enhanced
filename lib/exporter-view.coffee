@@ -129,7 +129,6 @@ class ExporterView extends View
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
         @markdownPreview.phantomJSExport dist
       else if $('.document-ebook', @element).hasClass('selected') # ebook
-        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
         @markdownPreview.generateEbook dist
 
   initHTMLPageEvent: ->
@@ -264,10 +263,10 @@ class ExporterView extends View
         $('.selected', @elemnet).removeClass('selected')
         $el.addClass('selected')
 
-        filePath = @markdownPreview.editor.getPath()
-        filePath = filePath.slice(0, filePath.length-3) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
-        @fileNameInput.setText(filePath)
-        @fileNameInput.focus()
+      filePath = @markdownPreview.editor.getPath()
+      filePath = filePath.slice(0, filePath.length-3) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
+      @fileNameInput.setText(filePath)
+      @fileNameInput.focus()
 
       $('.html-div', @element).hide()
       $('.pdf-div', @element).hide()
@@ -295,7 +294,6 @@ class ExporterView extends View
     @panel.show()
 
     @fileNameInput.focus()
-    $('.selected', @lement).click()
+    $('.selected', @element).click()
 
-# documentExporter = new ExporterView()
 module.exports = ExporterView
