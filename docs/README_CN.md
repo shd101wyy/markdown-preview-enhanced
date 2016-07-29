@@ -3,9 +3,9 @@ Markdown Preview Enhanced
 测试 Beta 版本    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
-[English Doc](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/README.md)  
+[English Doc](../README.md)  
 
-现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/tree/master/docs/ebook.md) 。
+现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](./ebook.md) 。
 
 **Presentation Writer** 特性现已支持!  
 [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
@@ -108,7 +108,7 @@ Markdown Preview Enhanced
 
 ## 额外支持
 * **EBook 电子书**  
-	更多关于如何创建 电子书 请参阅 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/tree/master/docs/ebook.md)。
+	更多关于如何创建 电子书 请参阅 [这里](./ebook.md)。
 * **Presentation Writer**  
 	更多关于如何创建 Presentation 请参阅 [这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)。
 * **Task List 任务列表**    

@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.7.9",
+  "version": "0.8.0",
   "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -24,7 +24,9 @@
     "toc",
     "footer",
     "graphviz",
-    "dot language"
+    "dot language",
+    "ePub",
+    "ebook"
   ],
   "scripts": {
     "build": "nothing happened"
