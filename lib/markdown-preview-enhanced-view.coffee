@@ -890,8 +890,6 @@ eg:
 // you can edit the 'config' variable below
 // everytime you changed this file, you may need to restart atom.
 let config = {
-  'header': {},
-  'footer': {}
 }
 
 module.exports = config || {}
@@ -919,7 +917,7 @@ module.exports = config || {}
     orientation = atom.config.get('markdown-preview-enhanced.orientation')
     margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
     if !margin.length
-      margin = '0'
+      margin = '1cm'
     else
       margin = margin.split(',').map (m)->m.trim()
       if margin.length == 1
@@ -931,6 +929,7 @@ module.exports = config || {}
       else
         margin = '1cm'
 
+    # get header and footer
     header_footer = @loadPhantomJSHeaderFooterConfig()
 
     pdf
