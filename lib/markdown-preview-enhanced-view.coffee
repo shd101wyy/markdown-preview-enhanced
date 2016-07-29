@@ -1028,6 +1028,13 @@ module.exports = config || {}
 
       # convert image to base64 if output html
       if path.extname(dist) == '.html'
+        # check cover
+        if ebookConfig.cover
+          cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
+          coverImg = document.createElement('img')
+          coverImg.setAttribute('src', cover)
+          div.insertBefore(coverImg, div.firstChild)
+
         imageElements = div.getElementsByTagName('img')
         for img in imageElements
           src = img.getAttribute('src')
