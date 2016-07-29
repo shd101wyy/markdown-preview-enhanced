@@ -40,6 +40,8 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 * **margin-left**  
 All values of settings should be within double quote.     
 For example, I created a `SUMMARY.md` file, and I added the following configuration.
+* **cdn**  
+Load css and javascript files from `cdn.js`. This option is only used when output `.html` file.
 ```
 <!--  ebook
       title:"Markdown Preview Enhanced"

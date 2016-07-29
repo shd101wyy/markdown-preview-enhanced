@@ -1031,7 +1031,12 @@ module.exports = config || {}
 
       title = ebookConfig.title || 'no title'
 
-      mathStyle = if outputHTML.indexOf('class="katex"') > 0 then "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">" else ''
+      mathStyle = ''
+      if outputHTML.indexOf('class="katex"') > 0
+        if path.extname(dist) == '.html' and ebookConfig.cdn
+          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        else
+          mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
       outputHTML = """
   <!DOCTYPE html>
@@ -1058,6 +1063,14 @@ module.exports = config || {}
 
       fileName = path.basename(dist)
 
+      # save as html
+      if path.extname(dist) == '.html'
+        fs.writeFile dist, outputHTML, (err)=>
+          throw err if err
+          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dist}")
+        return
+
+      # use ebook-convert to generate ePub, mobi, PDF.
       temp.open
         prefix: 'markdown-preview-enhanced',
         suffix: '.html', (err, info)=>

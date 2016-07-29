@@ -106,6 +106,7 @@ class ExporterView extends View
           @option 'epub'
           @option 'mobi'
           @option 'pdf'
+          @option 'html'
 
       @div class: 'button-group', =>
         @div class: 'close-btn btn', 'close'
