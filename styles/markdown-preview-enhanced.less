@@ -12,7 +12,7 @@
 
   @margin: 16px;
 
-  @github-black: #555;
+  @github-black: #333;
   @github-syntax-background-color: #f7f7f7;
 
 
@@ -22,11 +22,11 @@
   line-height: 1.6;
   color: @fg;
   background-color: @bg;
-  overflow: auto;
+  overflow: initial;
   margin: 10px 13px 10px 13px;
   padding: 2em;
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     color: @github-black;
     background-color: #fff;
   }
@@ -45,6 +45,10 @@
     display: block;
     box-sizing: border-box;
     position: absolute;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
 
@@ -56,7 +60,7 @@
     color: @fg-strong;
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     h1, h2, h3, h4, h5, h6 { color: @github-black; }
   }
 
@@ -68,7 +72,7 @@
   h5 { font-size: 1.1em; font-weight: 600; }
   h6 { font-size: 1.0em; font-weight: 600; }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     h1, h2 {
       border-bottom: 1px solid #e7e7e7;
     }
@@ -80,7 +84,7 @@
     color: @fg-strong;
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     strong { color: @github-black; }
   }
 
@@ -188,7 +192,7 @@
     }
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     blockquote {
       color: #777;
       border-left: 4px solid #ddd;
@@ -204,7 +208,7 @@
     border: 0 none;
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     hr {
       background-color: #e7e7e7;
     }
@@ -230,7 +234,7 @@
     }
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     th {
       color: @github-black;
     }
@@ -247,7 +251,7 @@
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     code {
       background-color: rgba(0, 0, 0, 0.04);
       color: inherit;
@@ -291,7 +295,9 @@
   }
 
   pre {
-    word-wrap: break-word;;
+    word-wrap: break-word;
+    white-space: normal;
+    word-break: break-all;
 
     .section {
       opacity: 1;
@@ -341,7 +347,7 @@
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     kbd {
       color: @github-black;
       background-color: #fcfcfc;
@@ -359,7 +365,6 @@
   @media screen and (min-width: 914px) {
     width: 854px;
     margin:10px auto;
-    overflow-y: scroll;
     background: @bg;
   }
 
@@ -368,7 +373,7 @@
     font-size: 14px;
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     @media screen and (min-width: 914px) {
       background: #fff;
     }
@@ -399,12 +404,13 @@
 
     pre, code {
         word-wrap: break-word;
+        white-space: normal;
     }
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     @media print {
-      background: #fff;
+      background-color: #fff;
 
       h1, h2, h3, h4, h5, h6 {
         color: #222;
@@ -447,7 +453,7 @@
     }
   }
 
-  &[data-use-github-style=true] {
+  &[data-use-github-style] {
     .mermaid {
       .edgePath {
         .path {
@@ -837,7 +843,7 @@
     }
   }
 
-  &[data-use-github-syntax-theme=true] {
+  &[data-use-github-syntax-theme] {
     .github-syntax-theme() !important; // this has to be important!!!
   }
 }

@@ -5,7 +5,7 @@ path = require 'path'
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
   katexStyle: null,
-  documentExporter: null,
+  documentExporterView: null,
   imageHelperView: null,
 
   activate: (state) ->
@@ -66,6 +66,8 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.dispose()
     @imageHelperView?.destroy()
     @imageHelperView = null
+    @documentExporterView?.destroy()
+    @documentExporterView = null 
     @preview?.destroy()
     @preview = null
 
@@ -93,9 +95,9 @@ module.exports = MarkdownPreviewEnhanced =
       @appendGlobalStyle()
       @preview.bindEditor(editor)
 
-      if !@documentExporter
-        @documentExporter = new ExporterView()
-        @preview.documentExporter = @documentExporter
+      if !@documentExporterView
+        @documentExporterView = new ExporterView()
+        @preview.documentExporterView = @documentExporterView
       return true
     else
       return false
@@ -238,10 +240,10 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     editorElement = editor.getElement()
     if editor and editor.buffer
-      if editorElement.getAttribute('data-markdown-zen') == 'true'
+      if editorElement.hasAttribute('data-markdown-zen')
         editorElement.removeAttribute('data-markdown-zen')
       else
-        editorElement.setAttribute('data-markdown-zen', 'true')
+        editorElement.setAttribute('data-markdown-zen', '')
 
   insertNewSlide: ()->
     editor = atom.workspace.getActiveTextEditor()

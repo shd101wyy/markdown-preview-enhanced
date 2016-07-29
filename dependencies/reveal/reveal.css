@@ -25,7 +25,6 @@ html, body, .reveal div, .reveal span, .reveal applet, .reveal object, .reveal i
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline; }
 
 .reveal article, .reveal aside, .reveal details, .reveal figcaption, .reveal figure,

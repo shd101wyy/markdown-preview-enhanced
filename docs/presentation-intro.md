@@ -18,6 +18,16 @@ const さかもと = 'cool cooler coolest'
 ```
 
 <!-- slide -->
+All features of **Markdown Preview Enhanced** are supported.   
+Such as Math typesetting, mermaid graph, etc...  
+<br>
+$$
+f(x) = \int_{-\infty}^\infty
+    \hat f(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi
+$$
+
+<!-- slide -->
 You can config slide background very easily.   
 For example:
 ```
@@ -37,8 +47,7 @@ Of course you can do more about slide background.
 <!-- slide -->
 For example, the markdown snippet below will generate slide like...  
 ```html
-<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg"
--->
+<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg" -->
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>

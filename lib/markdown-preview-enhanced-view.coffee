@@ -8,6 +8,7 @@ pdf = require 'html-pdf'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
+ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 
 module.exports =
@@ -34,7 +35,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @editorScrollDelay = Date.now()
     @previewScrollDelay = Date.now()
 
-    @documentExporter = null # binded in markdown-preview-enhanced.coffee startMD function
+    @documentExporterView = null # binded in markdown-preview-enhanced.coffee startMD function
 
     # this two variables will be got from './md'
     @parseMD = null
@@ -253,12 +254,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # github style?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
       (useGitHubStyle) =>
-        @element.setAttribute('data-use-github-style', if useGitHubStyle then 'true' else 'false')
+        if useGitHubStyle
+          @element.setAttribute('data-use-github-style', '')
+        else
+          @element.removeAttribute('data-use-github-style')
 
     # github syntax theme
     @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
       (useGitHubSyntaxTheme)=>
-        @element.setAttribute('data-use-github-syntax-theme', if useGitHubSyntaxTheme then 'true' else 'false')
+        if useGitHubSyntaxTheme
+          @element.setAttribute('data-use-github-syntax-theme', '')
+        else
+          @element.removeAttribute('data-use-github-syntax-theme')
 
     # break line?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
@@ -470,8 +477,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         helper(el, el.getAttribute('data-original'))
         el.innerText = 'rendering graph...\n'
 
-  renderViz: ()->
-    els = @element.getElementsByClassName('viz')
+  renderViz: (element=@element)->
+    els = element.getElementsByClassName('viz')
 
     if els.length
       @Viz ?= require('../dependencies/viz/viz.js')
@@ -520,7 +527,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             @openFile info.path
 
   exportToDisk: ()->
-    @documentExporter.display(this)
+    @documentExporterView.display(this)
 
   # open html file in browser or open pdf file in reader ... etc
   openFile: (filePath)->
@@ -642,8 +649,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\" data-use-github-style=\"#{useGitHubStyle}\" data-use-github-syntax-theme=\"#{useGitHubSyntaxTheme}\"
-    #{if @presentationMode then 'data-presentation-mode' else ''}>
+    <body class=\"markdown-preview-enhanced\"
+        #{if useGitHubStyle then 'data-use-github-style' else ''}
+        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}
+        #{if @presentationMode then 'data-presentation-mode' else ''}>
 
     #{htmlContent}
 
@@ -685,7 +694,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             fs.writeFile dist, data, (err)=>
               throw err if err
 
-              atom.notifications.addInfo "File #{pdfName} was created in the same directory", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dist}"
 
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
@@ -718,7 +727,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     fs.writeFile dist, htmlContent, (err)=>
       throw err if err
-      atom.notifications.addInfo("File #{htmlFileName} was created in the same directory", detail: "path: #{dist}")
+      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dist}")
 
   ####################################################
   ## Presentation
@@ -881,8 +890,6 @@ eg:
 // you can edit the 'config' variable below
 // everytime you changed this file, you may need to restart atom.
 let config = {
-  'header': {},
-  'footer': {}
 }
 
 module.exports = config || {}
@@ -910,7 +917,7 @@ module.exports = config || {}
     orientation = atom.config.get('markdown-preview-enhanced.orientation')
     margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
     if !margin.length
-      margin = '0'
+      margin = '1cm'
     else
       margin = margin.split(',').map (m)->m.trim()
       if margin.length == 1
@@ -922,10 +929,11 @@ module.exports = config || {}
       else
         margin = '1cm'
 
+    # get header and footer
     header_footer = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer}
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
@@ -934,9 +942,169 @@ module.exports = config || {}
           lastIndexOfSlash = dist.lastIndexOf '/' || 0
           fileName = dist.slice(lastIndexOfSlash + 1)
 
-          atom.notifications.addInfo "File #{fileName} was created in the same directory", detail: "path: #{dist}"
+          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
           if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
             @openFile dist
+
+  ## EBOOK
+  generateEbook: (dist)->
+    {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
+    if !ebookConfig.isEbook
+      return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
+    else
+      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+
+      if ebookConfig.cover # change cover to absolute path if necessary
+        cover = ebookConfig.cover
+        if cover.startsWith('./') or cover.startsWith('../')
+          cover = path.resolve(@rootDirectoryPath, cover)
+          ebookConfig.cover = cover
+        else if cover.startsWith('/')
+          cover = path.resolve(@projectDirectoryPath, '.'+cover)
+          ebookConfig.cover = cover
+
+      div = document.createElement('div')
+      div.innerHTML = html
+
+      structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
+      headingOffset = 0
+
+      # load the last ul, analyze toc links.
+      getStructure = (ul, level)->
+        for li in ul.children
+          a = li.children[0].getElementsByTagName('a')[0]
+          filePath = a.getAttribute('href') # assume markdown file path
+          heading = a.innerHTML
+          id = 'ebook-heading-id-'+headingOffset
+
+          structure.push {level: level, filePath: filePath, heading: heading, id: id}
+          headingOffset += 1
+
+          a.href = '#'+id # change id
+
+          if li.childElementCount > 1
+            getStructure(li.children[1], level+1)
+
+      children = div.children
+      i = children.length - 1
+      while i >= 0
+        if children[i].tagName == 'UL' # find table of contents
+          getStructure(children[i], 0)
+          break
+        i -= 1
+
+      outputHTML = div.innerHTML
+
+      # append files according to structure
+      for obj in structure
+        heading = obj.heading
+        id = obj.id
+        level = obj.level
+        filePath = obj.filePath
+
+        if filePath.startsWith('file:///')
+          filePath = filePath.slice(8)
+
+        try
+          text = fs.readFileSync(filePath, {encoding: 'utf-8'})
+          {html} = @parseMD text, {isSavingToHTML: false, isForPreview: false, isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+
+          # add to TOC
+          div.innerHTML = html
+          if div.childElementCount
+            div.children[0].id = id
+            div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
+            div.children[0].setAttribute('heading', heading)
+
+          outputHTML += div.innerHTML
+        catch error
+          atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
+          return
+
+      # render viz
+      div.innerHTML = outputHTML
+      @renderViz(div)
+
+      # convert image to base64 if output html
+      if path.extname(dist) == '.html'
+        # check cover
+        if ebookConfig.cover
+          cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
+          coverImg = document.createElement('img')
+          coverImg.setAttribute('src', cover)
+          div.insertBefore(coverImg, div.firstChild)
+
+        imageElements = div.getElementsByTagName('img')
+        for img in imageElements
+          src = img.getAttribute('src')
+          if src.startsWith('file:///')
+            src = src.slice(8)
+            imageType = path.extname(src).slice(1)
+            try
+              base64 = new Buffer(fs.readFileSync(src)).toString('base64')
+
+              img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
+            catch error
+              throw 'Image file not found: ' + src
+
+
+      outputHTML = div.innerHTML
+
+      useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
+
+      title = ebookConfig.title || 'no title'
+
+      mathStyle = ''
+      if outputHTML.indexOf('class="katex"') > 0
+        if path.extname(dist) == '.html' and ebookConfig.cdn
+          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        else
+          mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+
+      outputHTML = """
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>#{title}</title>
+      <meta charset=\"utf-8\">
+      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+      <style>
+      #{getMarkdownPreviewCSS()}
+      </style>
+
+      #{mathStyle}
+    </head>
+    <body class=\"markdown-preview-enhanced\" data-use-github-style
+        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}>
+
+    #{outputHTML}
+
+    </body>
+  </html>
+      """
+
+      fileName = path.basename(dist)
+
+      # save as html
+      if path.extname(dist) == '.html'
+        fs.writeFile dist, outputHTML, (err)=>
+          throw err if err
+          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dist}")
+        return
+
+      # use ebook-convert to generate ePub, mobi, PDF.
+      temp.open
+        prefix: 'markdown-preview-enhanced',
+        suffix: '.html', (err, info)=>
+          throw err if err
+
+          fs.write info.fd, outputHTML, (err)=>
+            throw err if err
+            # @openFile info.path
+            ebookConvert info.path, dist, ebookConfig, (err)=>
+              throw err if err
+              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
 
   copyToClipboard: ->
     return false if not @editor

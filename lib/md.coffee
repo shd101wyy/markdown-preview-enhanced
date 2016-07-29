@@ -405,6 +405,20 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
         $el.attr('data-original', text)
 
         $preElement.replaceWith $el
+  else if option.isForEbook
+    ### doesn't work...
+    if graphType == 'viz'
+      Viz = require('../dependencies/viz/viz.js')
+      $el = $("<div></div>")
+      $el.html(Viz(text))
+      $(preElement).replaceWith $el
+    else
+      $(preElement).replaceWith "<pre>Graph is not supported in EBook</pre>"
+    ###
+    $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
+    $el.attr 'data-original', text
+
+    $(preElement).replaceWith $el
   else
     element = graphArray.splice(0, 1)[0]
     if element
@@ -413,9 +427,9 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
 # resolve image path and pre code block...
-resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
-  rootDirectoryPath = markdownPreview.rootDirectoryPath
-  projectDirectoryPath = markdownPreview.projectDirectoryPath
+resolveImagePathAndCodeBlock = (html, {rootDirectoryPath, projectDirectoryPath}, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
+  rootDirectoryPath ?= null
+  projectDirectoryPath ?= null
 
   if !rootDirectoryPath
     return
@@ -500,10 +514,23 @@ resolveImagePathAndCodeBlock = (html, markdownPreview, graphData={plantuml_s: []
 
 
 # parse markdown content to html
-parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})->
-  editor = markdownPreview.editor
+parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: false})->
+  if typeof(arg) == 'string'
+    markdownPreview = null
+    editor = null
+    inputString = arg
 
-  inputString = editor.getText()
+    # if arg is text, then rootDirectoryPath and projectDirectoryPath
+    # has to be provided inside option
+    rootDirectoryPath = option.rootDirectoryPath
+    projectDirectoryPath = option.projectDirectoryPath
+  else
+    markdownPreview = arg
+    editor = markdownPreview.editor
+    inputString = editor.getText()
+    rootDirectoryPath = markdownPreview.rootDirectoryPath
+    projectDirectoryPath = markdownPreview.projectDirectoryPath
+
   headings = []
 
   # toc
@@ -517,19 +544,24 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
   # slide
   slideConfigs = []
 
+  # ebook
+  ebookConfig = {}
+
   # set graph data
   # so that we won't render the graph that hasn't changed
   graphData = {}
-  graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
-  graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
-  graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
-  graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
+  if markdownPreview
+    graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
+    graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
+    graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
+    graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
 
   # set globalMathJaxData
   # so that we won't render the math expression that hasn't changed
   globalMathJaxData = {}
-  globalMathJaxData.isForPreview = option.isForPreview
-  globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+  if markdownPreview
+    globalMathJaxData.isForPreview = option.isForPreview
+    globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -581,13 +613,16 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
       opt.line = tokens[idx].line
       slideConfigs.push(opt)
       return '<div class="new-slide"></div>'
+    else if subject == 'ebook'
+      opt = tokens[idx].option
+      ebookConfig = Object.assign({isEbook: true}, opt)
     return ''
 
 
   html = md.render(inputString)
 
   # check toc update
-  if tocEnabled
+  if markdownPreview and tocEnabled
     oldHeadingsLength = markdownPreview.headings.length
     newHeadingsLength = headings.length
     if tocStartLine >= 0 and tocEndLine == -1
@@ -625,6 +660,7 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
         tocEndLine = -1
 
         slideConfigs = []
+        ebookConfig = {}
 
         # set globalMathJaxData
         # so that we won't render the math expression that hasn't changed
@@ -638,10 +674,10 @@ parseMD = (markdownPreview, option={isSavingToHTML: false, isForPreview: true})-
 
         html = md.render(editor.getText())
 
-  markdownPreview.headings = headings
+  markdownPreview?.headings = headings
 
-  html = resolveImagePathAndCodeBlock(html, markdownPreview, graphData, option)
-  return {html, slideConfigs}
+  html = resolveImagePathAndCodeBlock(html, {rootDirectoryPath, projectDirectoryPath}, graphData, option)
+  return {html, slideConfigs, ebookConfig}
 
 module.exports = {
   parseMD,

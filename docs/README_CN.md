@@ -3,10 +3,12 @@ Markdown Preview Enhanced
 测试 Beta 版本    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
-[English Doc](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/README.md)  
+[English Doc](../README.md)  
+
+现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](./ebook.md) 。
 
 **Presentation Writer** 特性现已支持!  
-[点击这里](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
+[点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
 
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
@@ -30,10 +32,11 @@ Markdown Preview Enhanced
 
 ## 支持特性
 - **编辑与预览滑动同步**  
-- **Presentation Writer** (beta) [介绍](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)
+- **Presentation Writer** (beta) [介绍](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)
 - 数学编辑支持     
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
+- 导出 **ePub**, **Mobi**, **PDF** 电子书文件
 - 导出 **HTML** （完美支持移动端设备）  
 - 自定义 Markdown Preview 样式（css）  
 - [TOC] 自动生成 **(beta)**  
@@ -63,7 +66,7 @@ Markdown Preview Enhanced
 - [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) 图形.  
 	- 代码块 `viz` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
 - [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的 presentations.
-	- [点击这里](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
+	- [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
 
 ## 使用
 使用此插件, 请在 Atom 中按 <kbd>cmd + shift + p</kbd> 调出 <strong> Command Palette </strong>。然后选择以下的命令：
@@ -104,6 +107,10 @@ Markdown Preview Enhanced
 	- 导出 **HTML**, **PDF**, **PNG**, **JPEG** 文件。
 
 ## 额外支持
+* **EBook 电子书**  
+	更多关于如何创建 电子书 请参阅 [这里](./ebook.md)。
+* **Presentation Writer**  
+	更多关于如何创建 Presentation 请参阅 [这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)。
 * **Task List 任务列表**    
 	本插件支持 *Github Flavored* task list.  
 	更多信息可在 [这里](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments) 查看。
@@ -123,11 +130,11 @@ Markdown Preview Enhanced
 ## TODO
 - [ ] fix bugs
 - [ ] modify css to make preview look nice
-- [ ] epub output
+- [x] ePub output
 - [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
 - [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
 - [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
-- [ ] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
+- [x] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
 
 谢谢你使用并支持此插件 ;)
 
