@@ -1025,6 +1025,23 @@ module.exports = config || {}
       # render viz
       div.innerHTML = outputHTML
       @renderViz(div)
+
+      # convert image to base64 if output html
+      if path.extname(dist) == '.html'
+        imageElements = div.getElementsByTagName('img')
+        for img in imageElements
+          src = img.getAttribute('src')
+          if src.startsWith('file:///')
+            src = src.slice(8)
+            imageType = path.extname(src).slice(1)
+            try
+              base64 = new Buffer(fs.readFileSync(src)).toString('base64')
+
+              img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
+            catch error
+              throw 'Image file not found: ' + src
+
+
       outputHTML = div.innerHTML
 
       useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
