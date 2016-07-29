@@ -1,7 +1,7 @@
 path = require 'path'
 {execFile} = require 'child_process'
 # ebook-convert is requied (calibre), which can be got from https://calibre-ebook.com/download
-# example command: ebook-convert test.html test.epub --level1-toc '//h:h1' --level2-toc '//h:h2' --level3-toc '//h:h3' --title 'I am handsome'
+# xpath http://www.w3schools.com/xsl/xpath_syntax.asp
 
 # Async call
 # src: link to .html file
@@ -23,9 +23,10 @@ ebookConvert = (src, dest, config={}, callback)->
 
   args = [  src,
             dest,
-            '--level1-toc', '//h:h1',
-            '--level2-toc', '//h:h2',
-            '--level3-toc', '//h:h3'
+            '--level1-toc', '//*[@ebook-toc-level-1]/@heading',
+            '--level2-toc', '//*[@ebook-toc-level-2]/@heading',
+            '--level3-toc', '//*[@ebook-toc-level-3]/@heading',
+            '--no-chapters-in-toc'
           ]
 
   if title

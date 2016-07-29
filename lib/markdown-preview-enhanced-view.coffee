@@ -982,7 +982,6 @@ module.exports = config || {}
           headingOffset += 1
 
           a.href = '#'+id # change id
-          a.classList.add('ebook-heading')
 
           if li.childElementCount > 1
             getStructure(li.children[1], level+1)
@@ -1004,8 +1003,6 @@ module.exports = config || {}
         level = obj.level
         filePath = obj.filePath
 
-        outputHTML += "<h#{level+1} id=\"#{id}\">#{heading}</h#{level+1}>"
-
         if filePath.startsWith('file:///')
           filePath = filePath.slice(8)
 
@@ -1013,7 +1010,14 @@ module.exports = config || {}
           text = fs.readFileSync(filePath, {encoding: 'utf-8'})
           {html} = @parseMD text, {isSavingToHTML: false, isForPreview: false, isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
 
-          outputHTML += html
+          # add to TOC
+          div.innerHTML = html
+          if div.childElementCount
+            div.children[0].id = id
+            div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
+            div.children[0].setAttribute('heading', heading)
+
+          outputHTML += div.innerHTML
         catch error
           atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
           return
@@ -1061,7 +1065,7 @@ module.exports = config || {}
 
           fs.write info.fd, outputHTML, (err)=>
             throw err if err
-
+            # @openFile info.path
             ebookConvert info.path, dist, ebookConfig, (err)=>
               throw err if err
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
