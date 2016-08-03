@@ -1376,7 +1376,6 @@ html:-moz-full-screen-ancestor {
 .markdown-preview-enhanced[data-use-github-style] { color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); }
 .markdown-preview-enhanced > :first-child { margin-top: 0px; }
 .markdown-preview-enhanced[is="space-pen-div"] { width: 100%; margin: 0px; z-index: 999; overflow: scroll; font-size: 16px; display: block; box-sizing: border-box; position: absolute; }
-.markdown-preview-enhanced[is="space-pen-div"]::-webkit-scrollbar { display: none; }
 .markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { line-height: 1.2; margin-top: 1em; margin-bottom: 16px; color: rgb(255, 255, 255); }
 .markdown-preview-enhanced[data-use-github-style] h1, .markdown-preview-enhanced[data-use-github-style] h2, .markdown-preview-enhanced[data-use-github-style] h3, .markdown-preview-enhanced[data-use-github-style] h4, .markdown-preview-enhanced[data-use-github-style] h5, .markdown-preview-enhanced[data-use-github-style] h6 { color: rgb(51, 51, 51); }
 .markdown-preview-enhanced h1 { font-size: 2.4em; font-weight: 300; padding-bottom: 0.3em; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(81, 81, 81); }
@@ -1607,12 +1606,6 @@ html:-moz-full-screen-ancestor {
 .markdown-preview-enhanced[data-presentation-mode] strong { font-weight: bold; }
 .markdown-preview-enhanced[data-presentation-mode]::-webkit-scrollbar { display: none; }
 .markdown-preview-enhanced .slides { text-align: left !important; }
-@media print { 
-  .markdown-preview-enhanced-custom { font-size: 13px; }
-}
-@media print { 
-  .markdown-preview-enhanced { font-size: 13px; }
-}
 pre.editor-colors::shadow .asciidoc .markup.bold,
 .host .asciidoc .markup.bold {
   font-weight: bold;
@@ -2196,7 +2189,7 @@ f(x) = \int_{-\infty}^\infty
     \hat f(\xi)\,e^{2 \pi i \xi x}
     \,d\xi
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.36em;"></span><span class="strut bottom" style="height:2.330581em;vertical-align:-0.970581em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mop"><span class="op-symbol large-op mop" style="margin-right:0.44445em;top:-0.0011249999999999316em;">∫</span><span class="vlist"><span style="top:0.91225em;margin-left:-0.44445em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord">−</span><span class="mord mathrm">∞</span></span></span></span><span style="top:-0.974em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">∞</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.10764em;">f</span></span><span style="top:-0.26343999999999995em;margin-left:0.33334em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04601em;">ξ</span><span class="mclose">)</span><span class="mord mspace thinspace"></span><span class="mord"><span class="mord mathit">e</span><span class="vlist"><span style="top:-0.41300000000000003em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathit" style="margin-right:0.03588em;">π</span><span class="mord mathit">i</span><span class="mord mathit" style="margin-right:0.04601em;">ξ</span><span class="mord mathit">x</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mspace thinspace"></span><span class="mord mathit">d</span><span class="mord mathit" style="margin-right:0.04601em;">ξ</span></span></span></span></span></p>
-</section><section ><p class="line" data-line="30">You can config slide background very easily.<br>
+</section><section ><p class="line" data-line="30">You can set slide background very easily.<br>
 For example:</p>
 <pre class="editor-colors lang-text"><div class="line"><span class="text plain"><span class="meta paragraph text"><span>&lt;!--&nbsp;slide&nbsp;data-background-color:&quot;#ff0000&quot;&nbsp;--&gt;</span></span></span></div></pre>
 </section><section ><p class="line" data-line="37">Of course you can do more about slide background.<br>

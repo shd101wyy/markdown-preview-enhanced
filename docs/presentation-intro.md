@@ -28,7 +28,7 @@ f(x) = \int_{-\infty}^\infty
 $$
 
 <!-- slide -->
-You can config slide background very easily.   
+You can set slide background very easily.   
 For example:
 ```
 <!-- slide data-background-color:"#ff0000" -->

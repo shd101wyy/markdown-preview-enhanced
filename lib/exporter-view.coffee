@@ -95,7 +95,7 @@ class ExporterView extends View
         @label 'Margin'
         @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '1cm')
         @br()
-        @a class: 'header-footer-config', 'click me to config header and footer'
+        @a class: 'header-footer-config', 'click me to open header and footer config'
         @br()
         @br()
         @label 'Open PDF after generation'
