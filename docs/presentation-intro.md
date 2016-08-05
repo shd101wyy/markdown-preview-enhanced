@@ -60,6 +60,19 @@ For example, the markdown snippet below will generate slide like...
 <p align="right">雷姆党头顶青天</p>
 
 <!-- slide -->
+It is also very easy to customize presentation css.  
+Run `Markdown Preview Enhanced: Customize Css` command,   
+then edit section:
+```less
+.preview-slides .slide,
+&[data-presentation-mode] {
+  // eg
+  // background-color: #000;
+}
+```
+
+
+<!-- slide -->
 You can check your presentation in browser by   
 right clicking at the preview, then choose `Open in Browser` option.  
 

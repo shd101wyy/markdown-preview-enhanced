@@ -94,6 +94,10 @@ atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
     md.set({breaks: breakOnSingleNewline})
 
+atom.config.observe 'markdown-preview-enhanced.enableTypographer', (enableTypographer)->
+  md.set({typographer: enableTypographer})
+
+
 # inline MATH rule
 # $...$
 # $$...$$

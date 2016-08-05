@@ -49,6 +49,12 @@
       "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source.",
       "order": 10
     },
+    "enableTypographer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable smartypants and other sweet transforms.",
+      "order": 11
+    },
     "mathRenderingOption": {
       "type": "string",
       "default": "KaTeX",

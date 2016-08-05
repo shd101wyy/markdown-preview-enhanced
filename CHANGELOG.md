@@ -1,7 +1,9 @@
 ## 0.8.1
 * [ ] refactor **parseMD** function. (it's too messy now)  
 * [ ] for KaTeX rendering, save rendered results like MathJax.
-    
+* [ ] split on left side
+* [ ] typographer [#94](https://github.com/shd101wyy/markdown-preview-enhanced/issues/94)
+
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
 * [x] merge pull request [#86](https://github.com/shd101wyy/markdown-preview-enhanced/pull/86)

@@ -103,7 +103,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if not @editor
       atom.workspace
           .open @uri,
-                split: 'right', activatePane: false, searchAllPanes: false
+                split: 'right',
+                activatePane: false,
+                searchAllPanes: false
           .then (e)=>
             setTimeout(()=>
               @initEvents(editor)
@@ -270,6 +272,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # break line?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
       (breakOnSingleNewline)=>
+        @renderMarkdown()
+
+    # typographer?
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
+      (enableTypographer)=>
         @renderMarkdown()
 
     # liveUpdate?
