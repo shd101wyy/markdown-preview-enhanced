@@ -578,7 +578,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@editor.getText(), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath})
+    res = @parseMD(@editor.getText(), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
     htmlContent = res.html
     slideConfigs = res.slideConfigs
 
