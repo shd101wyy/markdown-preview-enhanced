@@ -12,7 +12,15 @@ customSubjects = require './custom-comment'
 mathRenderingOption = null
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = false
-globalMathJaxData = {}
+globalMathTypesettingData = {}
+
+String.prototype.escape = ()->
+  tagsToReplace = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  }
+  this.replace /[&<>]/g, (tag)-> tagsToReplace[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -166,10 +174,23 @@ md.renderer.rules.math = (tokens, idx)->
     return
 
   if mathRenderingOption == 'KaTeX'
-    try
-      return katex.renderToString content, {displayMode}
-    catch error
-      return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
+    if globalMathTypesettingData.isForPreview
+      displayModeAttr = if displayMode then 'display-mode' else ''
+      if !globalMathTypesettingData.katex_s.length
+        return "<span class='katex-exps' #{displayModeAttr}>#{content.escape()}</span>"
+      else
+        element = globalMathTypesettingData.katex_s.splice(0, 1)[0]
+        if element.getAttribute('data-original') == content and element.hasAttribute('display-mode') == displayMode
+          return "<span class='katex-exps' data-original='#{content}' data-processed #{displayModeAttr}>#{element.innerHTML}</span>"
+        else
+          return "<span class='katex-exps' #{displayModeAttr}>#{content.escape()}</span>"
+
+    else # not for preview
+      try
+        return katex.renderToString content, {displayMode}
+      catch error
+        return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
+
   else if mathRenderingOption == 'MathJax'
     text = openTag + content + closeTag
     tag = if displayMode then 'div' else 'span'
@@ -177,18 +198,18 @@ md.renderer.rules.math = (tokens, idx)->
     # if it's for preview
     # we need to save the math expression data to 'data-original' attribute
     # then we compared it with text to see whether the math expression is modified or not.
-    if globalMathJaxData.isForPreview
-      if !globalMathJaxData.mathjax_s.length
+    if globalMathTypesettingData.isForPreview
+      if !globalMathTypesettingData.mathjax_s.length
         return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
       else
-        element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+        element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == text  # math expression not changed
           return "<#{tag} class=\"mathjax-exps\" data-original='#{text}'>#{element.innerHTML}</#{tag}>"
         else
           return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
     else
       ## this doesn't work
-      # element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+      # element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
       # return "<div class=\"mathjax-exps\"> #{element.innerHTML} </div>"
       return text
 
@@ -561,12 +582,15 @@ parseMD = (inputString, option={})->
     graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
     graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
 
-  # set globalMathJaxData
+  # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed
-  globalMathJaxData = {}
+  globalMathTypesettingData = {}
   if markdownPreview
-    globalMathJaxData.isForPreview = option.isForPreview
-    globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+    globalMathTypesettingData.isForPreview = option.isForPreview
+    if mathRenderingOption == 'KaTeX'
+      globalMathTypesettingData.katex_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('katex-exps')
+    else if mathRenderingOption == 'MathJax'
+      globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -667,11 +691,11 @@ parseMD = (inputString, option={})->
         slideConfigs = []
         ebookConfig = {}
 
-        # set globalMathJaxData
+        # set globalMathTypesettingData
         # so that we won't render the math expression that hasn't changed
-        globalMathJaxData = {}
-        globalMathJaxData.isForPreview = option.isForPreview
-        globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+        globalMathTypesettingData = {}
+        globalMathTypesettingData.isForPreview = option.isForPreview
+        globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500

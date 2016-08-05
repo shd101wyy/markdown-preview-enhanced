@@ -5,6 +5,7 @@ fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
 pdf = require 'html-pdf'
+katex = require 'katex'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -357,6 +358,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderPlantUML()
     @renderWavedrom()
     @renderViz()
+    @renderKaTeX()
     @renderMathJax()
     @scrollMap = null
 
@@ -512,6 +514,23 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if !el.children.length
         helper(el, el.innerText.trim())
 
+  renderKaTeX: ()->
+    return if @mathRenderingOption != 'KaTeX'
+    els = @element.getElementsByClassName('katex-exps')
+
+    for el in els
+      if el.hasAttribute('data-processed')
+        continue
+      else
+        displayMode = el.hasAttribute('display-mode')
+        dataOriginal = el.innerText
+        try
+          katex.render(el.innerText, el, {displayMode})
+        catch e
+          el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{dataOriginal} }</span>"
+
+        el.setAttribute('data-processed', 'true')
+        el.setAttribute('data-original', dataOriginal)
 
   ## Utilities
   openInBrowser: (isForPresentationPrint=false)->
