@@ -336,7 +336,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs} = @parseMD(this)
+    {html, slideConfigs} = @parseMD(@editor.getText(), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
 
     if slideConfigs.length
       html = @parseSlides(html, slideConfigs)
@@ -557,7 +557,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(this, {isSavingToHTML, isForPreview: false})
+    res = @parseMD(@editor.getText(), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath})
     htmlContent = res.html
     slideConfigs = res.slideConfigs
 
@@ -955,7 +955,7 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dist)->
-    {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
+    {html, ebookConfig} = @parseMD(@editor.getText(), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
     if !ebookConfig.isEbook
       return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
@@ -1014,7 +1014,7 @@ module.exports = config || {}
 
         try
           text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-          {html} = @parseMD text, {isSavingToHTML: false, isForPreview: false, isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          {html} = @parseMD text, {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
 
           # add to TOC
           div.innerHTML = html

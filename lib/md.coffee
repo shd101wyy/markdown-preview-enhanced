@@ -431,9 +431,9 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
 # resolve image path and pre code block...
-resolveImagePathAndCodeBlock = (html, {rootDirectoryPath, projectDirectoryPath}, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
-  rootDirectoryPath ?= null
-  projectDirectoryPath ?= null
+# check parseMD function, 'option' is the same as the option in paseMD.
+resolveImagePathAndCodeBlock = (html, graphData={plantuml_s: [], mermaid_s: []},  option={})->
+  {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath
     return
@@ -517,23 +517,23 @@ resolveImagePathAndCodeBlock = (html, {rootDirectoryPath, projectDirectoryPath},
   return $.html()
 
 
+###
 # parse markdown content to html
-parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: false})->
-  if typeof(arg) == 'string'
-    markdownPreview = null
-    editor = null
-    inputString = arg
 
-    # if arg is text, then rootDirectoryPath and projectDirectoryPath
-    # has to be provided inside option
-    rootDirectoryPath = option.rootDirectoryPath
-    projectDirectoryPath = option.projectDirectoryPath
-  else
-    markdownPreview = arg
-    editor = markdownPreview.editor
-    inputString = editor.getText()
-    rootDirectoryPath = markdownPreview.rootDirectoryPath
-    projectDirectoryPath = markdownPreview.projectDirectoryPath
+inputString:         string, required
+option = {
+  isSavingToHTML:       bool, optional
+  isForPreview:         bool, optional
+  isForEbook:           bool, optional
+  markdownPreview:      MarkdownPreviewEnhancedView. optional
+  rootDirectoryPath:    string, required
+                        the directory path of the markdown file.
+  projectDirectoryPath: string, required
+}
+
+###
+parseMD = (inputString, option={})->
+  {markdownPreview} = option
 
   headings = []
 
@@ -553,8 +553,9 @@ parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: f
 
   # set graph data
   # so that we won't render the graph that hasn't changed
-  graphData = {}
+  graphData = null
   if markdownPreview
+    graphData = {}
     graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
     graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
     graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
@@ -680,7 +681,7 @@ parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: f
 
   markdownPreview?.headings = headings
 
-  html = resolveImagePathAndCodeBlock(html, {rootDirectoryPath, projectDirectoryPath}, graphData, option)
+  html = resolveImagePathAndCodeBlock(html, graphData, option)
   return {html, slideConfigs, ebookConfig}
 
 module.exports = {
