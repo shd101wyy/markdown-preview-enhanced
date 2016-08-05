@@ -666,11 +666,11 @@ parseMD = (inputString, option={})->
           tocNeedUpdate = true
           break
 
-
     if markdownPreview.tocOrdered != tocOrdered
       markdownPreview.tocOrdered = tocOrdered
       tocNeedUpdate = true
 
+    editor = markdownPreview.editor
     if tocNeedUpdate and editor
       tocObject = toc(headings, tocOrdered)
       buffer = editor.buffer
@@ -690,12 +690,6 @@ parseMD = (inputString, option={})->
 
         slideConfigs = []
         ebookConfig = {}
-
-        # set globalMathTypesettingData
-        # so that we won't render the math expression that hasn't changed
-        globalMathTypesettingData = {}
-        globalMathTypesettingData.isForPreview = option.isForPreview
-        globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500

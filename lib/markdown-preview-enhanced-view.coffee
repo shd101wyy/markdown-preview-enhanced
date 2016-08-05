@@ -30,7 +30,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @liveUpdate = true
     @scrollSync = true
-    @mathRenderingOption = null
+
+    @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
+    @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
