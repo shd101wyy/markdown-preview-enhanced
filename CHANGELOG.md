@@ -1,8 +1,10 @@
 ## 0.8.1
-* [ ] refactor **parseMD** function. (it's too messy now)  
-* [ ] for KaTeX rendering, save rendered results like MathJax.
-* [ ] split on left side
-* [ ] typographer [#94](https://github.com/shd101wyy/markdown-preview-enhanced/issues/94)
+* [x] refactor **parseMD** function. (it's too messy now)  
+* [x] for KaTeX rendering, save rendered results like MathJax.
+* [ ] split on left side (it seems that `atom.workspace.open ` doesn't work as I expected)
+* [x] typographer [#94](https://github.com/shd101wyy/markdown-preview-enhanced/issues/94)
+* [ ] format markdown on save
+* [ ] modify `mermaid.css` [#95](https://github.com/shd101wyy/markdown-preview-enhanced/issues/95)
 
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
