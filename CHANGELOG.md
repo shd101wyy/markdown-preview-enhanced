@@ -4,7 +4,8 @@
 * [ ] split on left side (it seems that `atom.workspace.open ` doesn't work as I expected)
 * [x] typographer [#94](https://github.com/shd101wyy/markdown-preview-enhanced/issues/94)
 * [ ] format markdown on save
-* [ ] modify `mermaid.css` [#95](https://github.com/shd101wyy/markdown-preview-enhanced/issues/95)
+* [x] modify `mermaid.css` [#95](https://github.com/shd101wyy/markdown-preview-enhanced/issues/95)
+* [x] fix [#97](https://github.com/shd101wyy/markdown-preview-enhanced/issues/97)
 
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)

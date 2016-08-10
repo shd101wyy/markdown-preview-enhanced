@@ -388,7 +388,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         a.onclick = ()=>
           # open md and markdown preview
           if href and not (href.startsWith('https://') or href.startsWith('http://'))
-            if href.endsWith('.pdf') # open pdf file outside atom
+            if path.extname(href) in ['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'] # issue #97
               @openFile href
             else
               if href.startsWith 'file:///'
