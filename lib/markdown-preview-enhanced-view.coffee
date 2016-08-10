@@ -887,7 +887,8 @@ module.exports = config || {}
     # mermaid_config.js
     configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
     try
-      return require(configPath)
+      delete require.cache[require.resolve(configPath)] # return uncached
+      return require(configPath) || {}
     catch error
       configFile = new File(configPath)
       configFile.create().then (flag)->
@@ -898,9 +899,10 @@ module.exports = config || {}
         configFile.write """
 'use strict'
 /*
-config header and footer
+configure header and footer (and other options)
 more information can be found here:
     https://github.com/marcbachmann/node-html-pdf
+Attention: this config will override your config in exporter panel.
 
 eg:
 
@@ -916,7 +918,6 @@ eg:
   }
 */
 // you can edit the 'config' variable below
-// everytime you changed this file, you may need to restart atom.
 let config = {
 }
 
@@ -958,10 +959,10 @@ module.exports = config || {}
         margin = '1cm'
 
     # get header and footer
-    header_footer = @loadPhantomJSHeaderFooterConfig()
+    config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err

@@ -6,6 +6,7 @@
 * [ ] format markdown on save
 * [x] modify `mermaid.css` [#95](https://github.com/shd101wyy/markdown-preview-enhanced/issues/95)
 * [x] fix [#97](https://github.com/shd101wyy/markdown-preview-enhanced/issues/97)
+* [ ] fix [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93) specify image resolution when exporting png/jpeg using phantomjs 
 
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
