@@ -189,7 +189,7 @@ md.renderer.rules.math = (tokens, idx)->
       try
         return katex.renderToString content, {displayMode}
       catch error
-        return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
+        return "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
 
   else if mathRenderingOption == 'MathJax'
     text = openTag + content + closeTag

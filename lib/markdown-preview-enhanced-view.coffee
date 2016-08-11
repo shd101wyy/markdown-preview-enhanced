@@ -528,8 +528,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         dataOriginal = el.innerText
         try
           katex.render(el.innerText, el, {displayMode})
-        catch e
-          el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{dataOriginal} }</span>"
+        catch error
+          el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
 
         el.setAttribute('data-processed', 'true')
         el.setAttribute('data-original', dataOriginal)
