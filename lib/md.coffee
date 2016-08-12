@@ -10,9 +10,11 @@ matter = require('gray-matter')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
-mathRenderingOption = null
+
+mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
-enableWikiLinkSyntax = false
+enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
+renderFrontMatterAsTable = atom.config.get('markdown-preview-enhanced.renderFrontMatterAsTable')
 globalMathTypesettingData = {}
 
 String.prototype.escape = ()->
@@ -84,6 +86,10 @@ atom.config.observe 'markdown-preview-enhanced.indicatorForMathRenderingBlock',
 atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
+
+atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable',
+  (flag)->
+    renderFrontMatterAsTable = flag
 
 #################################################
 ## Remarkable
@@ -556,26 +562,31 @@ processFrontMatter = (inputString)->
   if inputString.startsWith('---\n')
     end = inputString.indexOf('---\n', 4)
     if end > 0
-      yamlStr = inputString.slice(0, end+4)
-      content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
-      data = matter(yamlStr).data
+      if renderFrontMatterAsTable
+        yamlStr = inputString.slice(0, end+4)
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+        data = matter(yamlStr).data
 
-      # to table
-      if typeof(data) == 'object'
-        thead = "<thead><tr>"
-        tbody = "<tbody><tr>"
+        # to table
+        if typeof(data) == 'object'
+          thead = "<thead><tr>"
+          tbody = "<tbody><tr>"
 
-        for key of data
-          thead += "<th>#{key}</th>"
-          tbody += "<td>#{data[key]}</td>"
+          for key of data
+            thead += "<th>#{key}</th>"
+            tbody += "<td>#{data[key]}</td>"
 
-        thead += "</thead></tr>"
-        tbody += "</tbody></tr>"
-        table = "<table>#{thead}#{tbody}</table>"
+          thead += "</thead></tr>"
+          tbody += "</tbody></tr>"
+          table = "<table>#{thead}#{tbody}</table>"
+        else
+          table = "<pre>Failed to parse YAML.</pre>"
+
+        return {content, table}
       else
-        table = "<pre>Failed to parse YAML.</pre>"
-
-      return {content, table}
+        yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
+        content = yamlStr + inputString.slice(end+4)
+        return {content, table: ''}
 
   {content: inputString, table: ''}
 

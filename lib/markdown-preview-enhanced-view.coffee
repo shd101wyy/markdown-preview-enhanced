@@ -303,6 +303,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       (theme) =>
         @element.setAttribute 'data-mermaid-theme', theme
 
+    # render front matter as table?
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable', (theme) =>
+      @renderMarkdown()
+
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
     while i >= 0

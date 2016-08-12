@@ -222,6 +222,13 @@
         "mermaid.forest.css"
       ],
       "order": 170
+    },
+    "renderFrontMatterAsTable": {
+      "title": "Render front matter as table",
+      "description": "If this option is enabled, then front matter will be rendered as table; otherwise it will be rendered as yaml code block",
+      "type": "boolean",
+      "default": "true",
+      "order": 180
     }
   }
 }
