@@ -569,15 +569,18 @@ processFrontMatter = (inputString)->
 
         # to table
         if typeof(data) == 'object'
-          thead = "<thead><tr>"
-          tbody = "<tbody><tr>"
+          thead = "<thead>
+                    <tr>
+                      <th>name</th>
+                      <th>value</th>
+                    </tr>
+                  </thead>"
 
+          tbody = "<tbody>"
           for key of data
-            thead += "<th>#{key}</th>"
-            tbody += "<td>#{data[key]}</td>"
+            tbody += "<tr><td>#{key}</td><td>#{data[key]}</td></tr>"
+          tbody += "</tbody>"
 
-          thead += "</thead></tr>"
-          tbody += "</tbody></tr>"
           table = "<table>#{thead}#{tbody}</table>"
         else
           table = "<pre>Failed to parse YAML.</pre>"
