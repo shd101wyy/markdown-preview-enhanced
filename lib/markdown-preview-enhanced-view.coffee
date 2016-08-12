@@ -14,10 +14,11 @@ ebookConvert = require './ebook-convert'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
-  constructor: (uri)->
+  constructor: (uri, mainModule)->
     super
 
     @uri = uri
+    @mainModule = mainModule
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
 
@@ -332,6 +333,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @element.scrollTop = scrollTop
 
+  formatStringBeforeParsing: (str)->
+    @mainModule.hook.chain('on-will-parse-markdown', str)
+
+  formatStringAfterParsing: (str)->
+    @mainModule.hook.chain('on-did-parse-markdown', str)
+
   updateMarkdown: ->
     @editorScrollDelay = Date.now() + 500
     @previewScrollDelay = Date.now() + 500
@@ -343,7 +350,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs} = @parseMD(@editor.getText(), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+    {html, slideConfigs} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+
+    html = @formatStringAfterParsing(html)
 
     if slideConfigs.length
       html = @parseSlides(html, slideConfigs)
@@ -356,6 +365,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @element.innerHTML = html
     @bindEvents()
+
+    @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -582,8 +593,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@editor.getText(), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
-    htmlContent = res.html
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
+    htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
 
     # as for example black color background doesn't produce nice pdf
@@ -981,7 +992,9 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dist)->
-    {html, ebookConfig} = @parseMD(@editor.getText(), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
+    {html, ebookConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
+    html = @formatStringAfterParsing(html)
+
     if !ebookConfig.isEbook
       return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
@@ -1040,7 +1053,8 @@ module.exports = config || {}
 
         try
           text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-          {html} = @parseMD text, {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          {html} = @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          html = @formatStringAfterParsing(html)
 
           # add to TOC
           div.innerHTML = html
