@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -34,6 +34,7 @@
   "dependencies": {
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.15.0",
+    "gray-matter": "^2.0.2",
     "html-pdf": "^2.0.1",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
@@ -48,6 +49,12 @@
       "default": true,
       "description": "In Markdown, a single newline character doesn't cause a line break in the generated HTML. In GitHub Flavored Markdown, that is not true. Enable this config option to insert line breaks in rendered HTML for single newlines in Markdown source.",
       "order": 10
+    },
+    "enableTypographer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable smartypants and other sweet transforms.",
+      "order": 11
     },
     "mathRenderingOption": {
       "type": "string",
@@ -106,6 +113,13 @@
       "default": true,
       "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling.",
       "order": 70
+    },
+    "renderFrontMatterAsTable": {
+      "title": "Render front matter as table",
+      "description": "If this option is enabled, then front matter will be rendered as table; otherwise it will be rendered as yaml code block",
+      "type": "boolean",
+      "default": true,
+      "order": 75
     },
     "exportPDFPageFormat": {
       "title": "Pdf Page Format",

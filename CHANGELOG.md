@@ -1,7 +1,16 @@
 ## 0.8.1
-* [ ] refactor **parseMD** function. (it's too messy now)  
-* [ ] for KaTeX rendering, save rendered results like MathJax.
-    
+* [x] refactor **parseMD** function. (it's too messy now)  
+* [x] for KaTeX rendering, save rendered results like MathJax.
+* [ ] split on left side (it seems that `atom.workspace.open ` doesn't work as I expected)
+* [x] typographer [#94](https://github.com/shd101wyy/markdown-preview-enhanced/issues/94)
+* [ ] format markdown on save
+* [x] modify `mermaid.css` [#95](https://github.com/shd101wyy/markdown-preview-enhanced/issues/95)
+* [x] fix [#97](https://github.com/shd101wyy/markdown-preview-enhanced/issues/97)
+* [ ] fix [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93) specify image resolution when exporting png/jpeg using phantomjs
+* [x] support front matter [#100](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+* [ ] support hooks [#101](https://github.com/shd101wyy/markdown-preview-enhanced/issues/101)
+* [ ] **found [issue](https://github.com/marcbachmann/node-html-pdf/issues/156)**, I might implement phantomjs html2pdf by myself in the future... 
+
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
 * [x] merge pull request [#86](https://github.com/shd101wyy/markdown-preview-enhanced/pull/86)

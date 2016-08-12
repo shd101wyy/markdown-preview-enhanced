@@ -5,6 +5,7 @@ fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
 pdf = require 'html-pdf'
+katex = require 'katex'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -13,10 +14,11 @@ ebookConvert = require './ebook-convert'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
-  constructor: (uri)->
+  constructor: (uri, mainModule)->
     super
 
     @uri = uri
+    @mainModule = mainModule
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
 
@@ -29,7 +31,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @liveUpdate = true
     @scrollSync = true
-    @mathRenderingOption = null
+
+    @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
+    @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
@@ -103,7 +107,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if not @editor
       atom.workspace
           .open @uri,
-                split: 'right', activatePane: false, searchAllPanes: false
+                split: 'right',
+                activatePane: false,
+                searchAllPanes: false
           .then (e)=>
             setTimeout(()=>
               @initEvents(editor)
@@ -272,6 +278,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       (breakOnSingleNewline)=>
         @renderMarkdown()
 
+    # typographer?
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
+      (enableTypographer)=>
+        @renderMarkdown()
+
     # liveUpdate?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
       (flag) => @liveUpdate = flag
@@ -292,6 +303,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @disposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
       (theme) =>
         @element.setAttribute 'data-mermaid-theme', theme
+
+    # render front matter as table?
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable', (theme) =>
+      @renderMarkdown()
 
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
@@ -318,6 +333,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @element.scrollTop = scrollTop
 
+  formatStringBeforeParsing: (str)->
+    @mainModule.hook.chain('on-will-parse-markdown', str)
+
+  formatStringAfterParsing: (str)->
+    @mainModule.hook.chain('on-did-parse-markdown', str)
+
   updateMarkdown: ->
     @editorScrollDelay = Date.now() + 500
     @previewScrollDelay = Date.now() + 500
@@ -329,7 +350,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs} = @parseMD(this)
+    {html, slideConfigs} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+
+    html = @formatStringAfterParsing(html)
 
     if slideConfigs.length
       html = @parseSlides(html, slideConfigs)
@@ -343,6 +366,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.innerHTML = html
     @bindEvents()
 
+    @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
+
   bindEvents: ->
     @bindTagAClickEvent()
     @initTaskList()
@@ -350,6 +375,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderPlantUML()
     @renderWavedrom()
     @renderViz()
+    @renderKaTeX()
     @renderMathJax()
     @scrollMap = null
 
@@ -377,7 +403,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         a.onclick = ()=>
           # open md and markdown preview
           if href and not (href.startsWith('https://') or href.startsWith('http://'))
-            if href.endsWith('.pdf') # open pdf file outside atom
+            if path.extname(href) in ['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'] # issue #97
               @openFile href
             else
               if href.startsWith 'file:///'
@@ -505,6 +531,23 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if !el.children.length
         helper(el, el.innerText.trim())
 
+  renderKaTeX: ()->
+    return if @mathRenderingOption != 'KaTeX'
+    els = @element.getElementsByClassName('katex-exps')
+
+    for el in els
+      if el.hasAttribute('data-processed')
+        continue
+      else
+        displayMode = el.hasAttribute('display-mode')
+        dataOriginal = el.innerText
+        try
+          katex.render(el.innerText, el, {displayMode})
+        catch error
+          el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
+
+        el.setAttribute('data-processed', 'true')
+        el.setAttribute('data-original', dataOriginal)
 
   ## Utilities
   openInBrowser: (isForPresentationPrint=false)->
@@ -550,8 +593,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(this, {isSavingToHTML, isForPreview: false})
-    htmlContent = res.html
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
+    htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
 
     # as for example black color background doesn't produce nice pdf
@@ -859,7 +902,8 @@ module.exports = config || {}
     # mermaid_config.js
     configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
     try
-      return require(configPath)
+      delete require.cache[require.resolve(configPath)] # return uncached
+      return require(configPath) || {}
     catch error
       configFile = new File(configPath)
       configFile.create().then (flag)->
@@ -870,9 +914,10 @@ module.exports = config || {}
         configFile.write """
 'use strict'
 /*
-config header and footer
+configure header and footer (and other options)
 more information can be found here:
     https://github.com/marcbachmann/node-html-pdf
+Attention: this config will override your config in exporter panel.
 
 eg:
 
@@ -888,7 +933,6 @@ eg:
   }
 */
 // you can edit the 'config' variable below
-// everytime you changed this file, you may need to restart atom.
 let config = {
 }
 
@@ -930,10 +974,10 @@ module.exports = config || {}
         margin = '1cm'
 
     # get header and footer
-    header_footer = @loadPhantomJSHeaderFooterConfig()
+    config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
@@ -948,7 +992,9 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dist)->
-    {html, ebookConfig} = @parseMD(this, {isSavingToHTML: false, isForPreview: false, isForEbook: true})
+    {html, ebookConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
+    html = @formatStringAfterParsing(html)
+
     if !ebookConfig.isEbook
       return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
@@ -973,6 +1019,7 @@ module.exports = config || {}
       getStructure = (ul, level)->
         for li in ul.children
           a = li.children[0].getElementsByTagName('a')[0]
+          continue if not a
           filePath = a.getAttribute('href') # assume markdown file path
           heading = a.innerHTML
           id = 'ebook-heading-id-'+headingOffset
@@ -1007,7 +1054,8 @@ module.exports = config || {}
 
         try
           text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-          {html} = @parseMD text, {isSavingToHTML: false, isForPreview: false, isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          {html} = @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          html = @formatStringAfterParsing(html)
 
           # add to TOC
           div.innerHTML = html

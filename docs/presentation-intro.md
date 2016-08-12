@@ -1,7 +1,8 @@
 <!-- slide -->
 # Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
-powered by [reveal.js](https://github.com/hakimel/reveal.js)
+powered by [reveal.js](https://github.com/hakimel/reveal.js)  
+
 <!-- slide -->
 You can easily create beautiful presentation by running command   
 <center> `Markdown Preview Enhanced: Insert New Slide` </center>  
@@ -34,11 +35,11 @@ For example:
 <!-- slide data-background-color:"#ff0000" -->
 ```
 
-<!-- slide -->
+<!-- slide data-background-color:"#f6ffb1"-->
 Of course you can do more about slide background.  
 **Image Background**
 | Atribute | Default | Description |  
-|--|--|--|  
+|---|---|---|  
 | data-background-image	 |  | URL of the image to show. GIFs restart when the slide opens.|  
 | data-background-size	| cover | See [background-size](https://developer.mozilla.org/docs/Web/CSS/background-size) on MDN.|  
 | data-background-position| center |See [background-position](https://developer.mozilla.org/docs/Web/CSS/background-position) on MDN.|  
@@ -58,6 +59,19 @@ For example, the markdown snippet below will generate slide like...
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
+
+<!-- slide -->
+It is also very easy to customize presentation css.  
+Run `Markdown Preview Enhanced: Customize Css` command,   
+then edit section:
+```less
+.preview-slides .slide,
+&[data-presentation-mode] {
+  // eg
+  // background-color: #000;
+}
+```
+
 
 <!-- slide -->
 You can check your presentation in browser by   

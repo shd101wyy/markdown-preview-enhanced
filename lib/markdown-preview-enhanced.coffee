@@ -1,6 +1,7 @@
-{CompositeDisposable, Directory, File} = require 'atom'
+{CompositeDisposable, Emitter, Directory, File} = require 'atom'
 path = require 'path'
 {getReplacedTextEditorStyles} = require './style'
+Hook = require './hook'
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -12,6 +13,9 @@ module.exports = MarkdownPreviewEnhanced =
     # console.log 'actvate markdown-preview-enhanced', state
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
+
+    @emitter = new Emitter
+    @hook = new Hook
 
     # set opener
     @subscriptions.add atom.workspace.addOpener (uri)=>
@@ -64,10 +68,13 @@ module.exports = MarkdownPreviewEnhanced =
 
   deactivate: ->
     @subscriptions.dispose()
+    @emitter.dispose()
+    @hook.dispose()
+
     @imageHelperView?.destroy()
     @imageHelperView = null
     @documentExporterView?.destroy()
-    @documentExporterView = null 
+    @documentExporterView = null
     @preview?.destroy()
     @preview = null
 
@@ -88,7 +95,7 @@ module.exports = MarkdownPreviewEnhanced =
     MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
     ExporterView = require './exporter-view'
 
-    @preview ?= new MarkdownPreviewEnhancedView('markdown-preview-enhanced://preview')
+    @preview ?= new MarkdownPreviewEnhancedView('markdown-preview-enhanced://preview', this)
     if @preview.editor == editor
       return true
     else if @checkValidMarkdownFile(editor)
@@ -208,9 +215,9 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
       cursorPos = editor.getCursorBufferPosition()
-      editor.insertText """|  |  |
-  #{addSpace(cursorPos.column)}|--|--|
-  #{addSpace(cursorPos.column)}|  |  |
+      editor.insertText """|   |   |
+  #{addSpace(cursorPos.column)}|---|---|
+  #{addSpace(cursorPos.column)}|   |   |
   """
       editor.setCursorBufferPosition([cursorPos.row, cursorPos.column + 2])
     else
@@ -249,3 +256,13 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
       editor.insertText '<!-- slide -->\n'
+
+  # HOOKS Issue #101
+  onWillParseMarkdown: (callback)->
+    @hook.on 'on-will-parse-markdown', callback
+
+  onDidParseMarkdown: (callback)->
+    @hook.on 'on-did-parse-markdown', callback
+
+  onDidRenderPreview: (callback)->
+    @emitter.on 'on-did-render-preview', callback

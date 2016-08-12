@@ -5,249 +5,249 @@
   font-family: 'trebuchet ms', verdana, arial;
   color: #333;
 }
-.node rect,
-.node circle,
-.node ellipse,
-.node polygon {
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon {
   fill: #cde498;
   stroke: #13540c;
   stroke-width: 1px;
 }
-.edgePath .path {
+.mermaid .edgePath .path {
   stroke: green;
   stroke-width: 1.5px;
 }
-.edgeLabel {
+.mermaid .edgeLabel {
   background-color: #e8e8e8;
 }
-.cluster rect {
+.mermaid .cluster rect {
   fill: #cdffb2 !important;
   rx: 4  !important;
   stroke: #6eaa49 !important;
   stroke-width: 1px !important;
 }
-.cluster text {
+.mermaid .cluster text {
   fill: #333;
 }
-.actor {
+.mermaid .actor {
   stroke: #13540c;
   fill: #cde498;
 }
-text.actor {
+.mermaid text.actor {
   fill: black;
   stroke: none;
 }
-.actor-line {
+.mermaid .actor-line {
   stroke: grey;
 }
-.messageLine0 {
+.mermaid .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: "2 2";
   marker-end: "url(#arrowhead)";
   stroke: #333;
 }
-.messageLine1 {
+.mermaid .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: "2 2";
   stroke: #333;
 }
-#arrowhead {
+.mermaid #arrowhead {
   fill: #333;
 }
-#crosshead path {
+.mermaid #crosshead path {
   fill: #333 !important;
   stroke: #333 !important;
 }
-.messageText {
+.mermaid .messageText {
   fill: #333;
   stroke: none;
 }
-.labelBox {
+.mermaid .labelBox {
   stroke: #326932;
   fill: #cde498;
 }
-.labelText {
+.mermaid .labelText {
   fill: black;
   stroke: none;
 }
-.loopText {
+.mermaid .loopText {
   fill: black;
   stroke: none;
 }
-.loopLine {
+.mermaid .loopLine {
   stroke-width: 2;
   stroke-dasharray: "2 2";
   marker-end: "url(#arrowhead)";
   stroke: #326932;
 }
-.note {
+.mermaid .note {
   stroke: #6eaa49;
   fill: #fff5ad;
 }
-.noteText {
+.mermaid .noteText {
   fill: black;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
 }
 /** Section styling */
-.section {
+.mermaid .section {
   stroke: none;
   opacity: 0.2;
 }
-.section0 {
+.mermaid .section0 {
   fill: #6eaa49;
 }
-.section2 {
+.mermaid .section2 {
   fill: #6eaa49;
 }
-.section1,
-.section3 {
+.mermaid .section1,
+.mermaid .section3 {
   fill: white;
   opacity: 0.2;
 }
-.sectionTitle0 {
+.mermaid .sectionTitle0 {
   fill: #333;
 }
-.sectionTitle1 {
+.mermaid .sectionTitle1 {
   fill: #333;
 }
-.sectionTitle2 {
+.mermaid .sectionTitle2 {
   fill: #333;
 }
-.sectionTitle3 {
+.mermaid .sectionTitle3 {
   fill: #333;
 }
-.sectionTitle {
+.mermaid .sectionTitle {
   text-anchor: start;
   font-size: 11px;
   text-height: 14px;
 }
 /* Grid and axis */
-.grid .tick {
+.mermaid .grid .tick {
   stroke: lightgrey;
   opacity: 0.3;
   shape-rendering: crispEdges;
 }
-.grid path {
+.mermaid .grid path {
   stroke-width: 0;
 }
 /* Today line */
-.today {
+.mermaid .today {
   fill: none;
   stroke: red;
   stroke-width: 2px;
 }
 /* Task styling */
 /* Default task */
-.task {
+.mermaid .task {
   stroke-width: 2;
 }
-.taskText {
+.mermaid .taskText {
   text-anchor: middle;
   font-size: 11px;
 }
-.taskTextOutsideRight {
+.mermaid .taskTextOutsideRight {
   fill: black;
   text-anchor: start;
   font-size: 11px;
 }
-.taskTextOutsideLeft {
+.mermaid .taskTextOutsideLeft {
   fill: black;
   text-anchor: end;
   font-size: 11px;
 }
 /* Specific task settings for the sections*/
-.taskText0,
-.taskText1,
-.taskText2,
-.taskText3 {
+.mermaid .taskText0,
+.mermaid .taskText1,
+.mermaid .taskText2,
+.mermaid .taskText3 {
   fill: white;
 }
-.task0,
-.task1,
-.task2,
-.task3 {
+.mermaid .task0,
+.mermaid .task1,
+.mermaid .task2,
+.mermaid .task3 {
   fill: #487e3a;
   stroke: #13540c;
 }
-.taskTextOutside0,
-.taskTextOutside2 {
+.mermaid .taskTextOutside0,
+.mermaid .taskTextOutside2 {
   fill: black;
 }
-.taskTextOutside1,
-.taskTextOutside3 {
+.mermaid .taskTextOutside1,
+.mermaid .taskTextOutside3 {
   fill: black;
 }
 /* Active task */
-.active0,
-.active1,
-.active2,
-.active3 {
+.mermaid .active0,
+.mermaid .active1,
+.mermaid .active2,
+.mermaid .active3 {
   fill: #cde498;
   stroke: #13540c;
 }
-.activeText0,
-.activeText1,
-.activeText2,
-.activeText3 {
+.mermaid .activeText0,
+.mermaid .activeText1,
+.mermaid .activeText2,
+.mermaid .activeText3 {
   fill: black !important;
 }
 /* Completed task */
-.done0,
-.done1,
-.done2,
-.done3 {
+.mermaid .done0,
+.mermaid .done1,
+.mermaid .done2,
+.mermaid .done3 {
   stroke: grey;
   fill: lightgrey;
   stroke-width: 2;
 }
-.doneText0,
-.doneText1,
-.doneText2,
-.doneText3 {
+.mermaid .doneText0,
+.mermaid .doneText1,
+.mermaid .doneText2,
+.mermaid .doneText3 {
   fill: black !important;
 }
 /* Tasks on the critical line */
-.crit0,
-.crit1,
-.crit2,
-.crit3 {
+.mermaid .crit0,
+.mermaid .crit1,
+.mermaid .crit2,
+.mermaid .crit3 {
   stroke: #ff8888;
   fill: red;
   stroke-width: 2;
 }
-.activeCrit0,
-.activeCrit1,
-.activeCrit2,
-.activeCrit3 {
+.mermaid .activeCrit0,
+.mermaid .activeCrit1,
+.mermaid .activeCrit2,
+.mermaid .activeCrit3 {
   stroke: #ff8888;
   fill: #cde498;
   stroke-width: 2;
 }
-.doneCrit0,
-.doneCrit1,
-.doneCrit2,
-.doneCrit3 {
+.mermaid .doneCrit0,
+.mermaid .doneCrit1,
+.mermaid .doneCrit2,
+.mermaid .doneCrit3 {
   stroke: #ff8888;
   fill: lightgrey;
   stroke-width: 2;
   cursor: pointer;
   shape-rendering: crispEdges;
 }
-.doneCritText0,
-.doneCritText1,
-.doneCritText2,
-.doneCritText3 {
+.mermaid .doneCritText0,
+.mermaid .doneCritText1,
+.mermaid .doneCritText2,
+.mermaid .doneCritText3 {
   fill: black !important;
 }
-.activeCritText0,
-.activeCritText1,
-.activeCritText2,
-.activeCritText3 {
+.mermaid .activeCritText0,
+.mermaid .activeCritText1,
+.mermaid .activeCritText2,
+.mermaid .activeCritText3 {
   fill: black !important;
 }
-.titleText {
+.mermaid .titleText {
   text-anchor: middle;
   font-size: 18px;
   fill: black;
@@ -256,85 +256,85 @@ text.actor {
 
 
 */
-g.classGroup text {
+.mermaid g.classGroup text {
   fill: #13540c;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
 }
-g.classGroup rect {
+.mermaid g.classGroup rect {
   fill: #cde498;
   stroke: #13540c;
 }
-g.classGroup line {
+.mermaid g.classGroup line {
   stroke: #13540c;
   stroke-width: 1;
 }
-svg .classLabel .box {
+.mermaid svg .classLabel .box {
   stroke: none;
   stroke-width: 0;
   fill: #cde498;
   opacity: 0.5;
 }
-svg .classLabel .label {
+.mermaid svg .classLabel .label {
   fill: #13540c;
 }
-.relation {
+.mermaid .relation {
   stroke: #13540c;
   stroke-width: 1;
   fill: none;
 }
-.composition {
+.mermaid .composition {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-#compositionStart {
+.mermaid #compositionStart {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-#compositionEnd {
+.mermaid #compositionEnd {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-.aggregation {
+.mermaid .aggregation {
   fill: #cde498;
   stroke: #13540c;
   stroke-width: 1;
 }
-#aggregationStart {
+.mermaid #aggregationStart {
   fill: #cde498;
   stroke: #13540c;
   stroke-width: 1;
 }
-#aggregationEnd {
+.mermaid #aggregationEnd {
   fill: #cde498;
   stroke: #13540c;
   stroke-width: 1;
 }
-#dependencyStart {
+.mermaid #dependencyStart {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-#dependencyEnd {
+.mermaid #dependencyEnd {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-#extensionStart {
+.mermaid #extensionStart {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-#extensionEnd {
+.mermaid #extensionEnd {
   fill: #13540c;
   stroke: #13540c;
   stroke-width: 1;
 }
-.node text {
+.mermaid .node text {
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
 }

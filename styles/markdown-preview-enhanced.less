@@ -49,6 +49,19 @@
     // &::-webkit-scrollbar {
     //  display: none;
     // }
+
+    &[data-use-github-style] {
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(218, 218, 218, 0.6);
+        background-color: #f4f4f4;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #ccc;
+        border-color: transparent; // rgba(204, 204, 204, 0.9);
+      } /* this will style the thumb, ignoring the track */
+    }
   }
 
 
@@ -216,8 +229,12 @@
 
   // Table --------------------
   table {
+    display: block;
   	margin: 10px 0 15px 0;
   	border-collapse: collapse;
+    overflow: auto;
+    width: 100%;
+    word-break: keep-all;
 
     th {
       font-weight: bold;
@@ -240,6 +257,24 @@
     }
     td, th {
       border: 1px solid #ddd;
+    }
+  }
+
+  // Definition List
+  dl {
+    padding: 0;
+
+    dt {
+      padding: 0;
+      margin-top: 16px;
+      font-size: 1em;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    dd {
+      padding: 0 16px;
+      margin-bottom: 16px;
     }
   }
 
@@ -328,6 +363,7 @@
   pre {
     margin-top: 0;
     margin-bottom: @margin;
+    // word-wrap: break-word;
   }
 
   atom-text-editor {
@@ -394,6 +430,11 @@
 
     table, pre {
        page-break-inside: avoid;
+    }
+
+    table {
+      display: table;
+      overflow: hidden;
     }
 
     img {

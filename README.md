@@ -33,8 +33,9 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Features
 - **2-way scroll sync**  
-- **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)
-- markdown preview with math rendering support   
+- **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
+- **[Extensible](#for-developer)**
+- markdown preview with math typesetting support   
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
 - export **ePub**, **Mobi**, and **PDF** ebook
@@ -45,6 +46,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Task List *(Github Flavored)*  
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
+- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
 - And many more...
 
 ## How it works
@@ -124,6 +126,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 
 ## For Developer
 Manual installation instruction can be found [here](./docs/DEVELOPER.md).   
+It is also very easy to write your own extension, more information can be found [here](./docs/extension.md).
 
 ## Thanks  
 Thanks for everyone that supports this package!    

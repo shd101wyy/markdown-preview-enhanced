@@ -6,13 +6,24 @@ uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
 {File} = require 'atom'
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
+matter = require('gray-matter')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
-mathRenderingOption = null
+
+mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
-enableWikiLinkSyntax = false
-globalMathJaxData = {}
+enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
+renderFrontMatterAsTable = atom.config.get('markdown-preview-enhanced.renderFrontMatterAsTable')
+globalMathTypesettingData = {}
+
+String.prototype.escape = ()->
+  tagsToReplace = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  }
+  this.replace /[&<>]/g, (tag)-> tagsToReplace[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -76,6 +87,10 @@ atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
 
+atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable',
+  (flag)->
+    renderFrontMatterAsTable = flag
+
 #################################################
 ## Remarkable
 #################################################
@@ -93,6 +108,10 @@ md = new remarkable('full', defaults)
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
     md.set({breaks: breakOnSingleNewline})
+
+atom.config.observe 'markdown-preview-enhanced.enableTypographer', (enableTypographer)->
+  md.set({typographer: enableTypographer})
+
 
 # inline MATH rule
 # $...$
@@ -162,10 +181,23 @@ md.renderer.rules.math = (tokens, idx)->
     return
 
   if mathRenderingOption == 'KaTeX'
-    try
-      return katex.renderToString content, {displayMode}
-    catch error
-      return "<span style=\"color: #ee7f49; font-weight: 500;\">{ parse error: #{content} }</span>"
+    if globalMathTypesettingData.isForPreview
+      displayModeAttr = if displayMode then 'display-mode' else ''
+      if !globalMathTypesettingData.katex_s.length
+        return "<span class='katex-exps' #{displayModeAttr}>#{content.escape()}</span>"
+      else
+        element = globalMathTypesettingData.katex_s.splice(0, 1)[0]
+        if element.getAttribute('data-original') == content and element.hasAttribute('display-mode') == displayMode
+          return "<span class='katex-exps' data-original='#{content}' data-processed #{displayModeAttr}>#{element.innerHTML}</span>"
+        else
+          return "<span class='katex-exps' #{displayModeAttr}>#{content.escape()}</span>"
+
+    else # not for preview
+      try
+        return katex.renderToString content, {displayMode}
+      catch error
+        return "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
+
   else if mathRenderingOption == 'MathJax'
     text = openTag + content + closeTag
     tag = if displayMode then 'div' else 'span'
@@ -173,18 +205,18 @@ md.renderer.rules.math = (tokens, idx)->
     # if it's for preview
     # we need to save the math expression data to 'data-original' attribute
     # then we compared it with text to see whether the math expression is modified or not.
-    if globalMathJaxData.isForPreview
-      if !globalMathJaxData.mathjax_s.length
+    if globalMathTypesettingData.isForPreview
+      if !globalMathTypesettingData.mathjax_s.length
         return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
       else
-        element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+        element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == text  # math expression not changed
           return "<#{tag} class=\"mathjax-exps\" data-original='#{text}'>#{element.innerHTML}</#{tag}>"
         else
           return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
     else
       ## this doesn't work
-      # element = globalMathJaxData.mathjax_s.splice(0, 1)[0]
+      # element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
       # return "<div class=\"mathjax-exps\"> #{element.innerHTML} </div>"
       return text
 
@@ -385,7 +417,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
+checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
@@ -427,9 +459,9 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
 # resolve image path and pre code block...
-resolveImagePathAndCodeBlock = (html, {rootDirectoryPath, projectDirectoryPath}, graphData={plantuml_s: [], mermaid_s: []},  option={isSavingToHTML: false, isForPreview: true})->
-  rootDirectoryPath ?= null
-  projectDirectoryPath ?= null
+# check parseMD function, 'option' is the same as the option in paseMD.
+resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
+  {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath
     return
@@ -512,24 +544,81 @@ resolveImagePathAndCodeBlock = (html, {rootDirectoryPath, projectDirectoryPath},
 
   return $.html()
 
+###
+# process input string, skip front-matter
 
+if display table
+  return {
+    content: rest of input string after skipping front matter (but with '\n' included)
+    table: string of <table>...</table> generated from data
+  }
+else
+  return {
+    content: replace ---\n with ```yaml
+    table: '',
+  }
+###
+processFrontMatter = (inputString)->
+  toTable = (arg)->
+    if arg instanceof Array
+      tbody = "<tbody><tr>"
+      for item in arg
+        tbody += "<td>#{toTable(item)}</td>"
+      tbody += "</tr></tbody>"
+
+      "<table>#{tbody}</table>"
+    else if typeof(arg) == 'object'
+      thead = "<thead><tr>"
+      tbody = "<tbody><tr>"
+      for key of arg
+        thead += "<th>#{key}</th>"
+        tbody += "<td>#{toTable(arg[key])}</td>"
+      thead += "</tr></thead>"
+      tbody += "</tr></tbody>"
+
+      "<table>#{thead}#{tbody}</table>"
+    else
+      arg
+
+  if inputString.startsWith('---\n')
+    end = inputString.indexOf('---\n', 4)
+    if end > 0
+      if renderFrontMatterAsTable
+        yamlStr = inputString.slice(0, end+4)
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+        data = matter(yamlStr).data
+
+        # to table
+        if typeof(data) == 'object'
+          table = toTable(data)
+        else
+          table = "<pre>Failed to parse YAML.</pre>"
+
+        return {content, table}
+      else
+        yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
+        content = yamlStr + inputString.slice(end+4)
+        return {content, table: ''}
+
+  {content: inputString, table: ''}
+
+###
 # parse markdown content to html
-parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: false})->
-  if typeof(arg) == 'string'
-    markdownPreview = null
-    editor = null
-    inputString = arg
 
-    # if arg is text, then rootDirectoryPath and projectDirectoryPath
-    # has to be provided inside option
-    rootDirectoryPath = option.rootDirectoryPath
-    projectDirectoryPath = option.projectDirectoryPath
-  else
-    markdownPreview = arg
-    editor = markdownPreview.editor
-    inputString = editor.getText()
-    rootDirectoryPath = markdownPreview.rootDirectoryPath
-    projectDirectoryPath = markdownPreview.projectDirectoryPath
+inputString:         string, required
+option = {
+  isSavingToHTML:       bool, optional
+  isForPreview:         bool, optional
+  isForEbook:           bool, optional
+  markdownPreview:      MarkdownPreviewEnhancedView. optional
+  rootDirectoryPath:    string, required
+                        the directory path of the markdown file.
+  projectDirectoryPath: string, required
+}
+
+###
+parseMD = (inputString, option={})->
+  {markdownPreview} = option
 
   headings = []
 
@@ -549,19 +638,26 @@ parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: f
 
   # set graph data
   # so that we won't render the graph that hasn't changed
-  graphData = {}
+  graphData = null
   if markdownPreview
+    graphData = {}
     graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
     graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
     graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
     graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
 
-  # set globalMathJaxData
+  # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed
-  globalMathJaxData = {}
+  globalMathTypesettingData = {}
   if markdownPreview
-    globalMathJaxData.isForPreview = option.isForPreview
-    globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+    globalMathTypesettingData.isForPreview = option.isForPreview
+    if mathRenderingOption == 'KaTeX'
+      globalMathTypesettingData.katex_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('katex-exps')
+    else if mathRenderingOption == 'MathJax'
+      globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+
+  # check front-matter
+  {table:frontMatterTable, content:inputString} = processFrontMatter(inputString)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -637,11 +733,11 @@ parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: f
           tocNeedUpdate = true
           break
 
-
     if markdownPreview.tocOrdered != tocOrdered
       markdownPreview.tocOrdered = tocOrdered
       tocNeedUpdate = true
 
+    editor = markdownPreview.editor
     if tocNeedUpdate and editor
       tocObject = toc(headings, tocOrdered)
       buffer = editor.buffer
@@ -662,22 +758,17 @@ parseMD = (arg, option={isSavingToHTML: false, isForPreview: true, isForEbook: f
         slideConfigs = []
         ebookConfig = {}
 
-        # set globalMathJaxData
-        # so that we won't render the math expression that hasn't changed
-        globalMathJaxData = {}
-        globalMathJaxData.isForPreview = option.isForPreview
-        globalMathJaxData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
-
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500
         markdownPreview.previewScrollDelay = Date.now() + 500
 
-        html = md.render(editor.getText())
+        {content:inputString} = processFrontMatter(editor.getText())
+        html = md.render(inputString)
 
   markdownPreview?.headings = headings
 
-  html = resolveImagePathAndCodeBlock(html, {rootDirectoryPath, projectDirectoryPath}, graphData, option)
-  return {html, slideConfigs, ebookConfig}
+  html = resolveImagePathAndCodeBlock(html, graphData, option)
+  return {html: frontMatterTable+html, slideConfigs, ebookConfig}
 
 module.exports = {
   parseMD,
