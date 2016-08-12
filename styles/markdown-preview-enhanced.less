@@ -29,18 +29,6 @@
   &[data-use-github-style] {
     color: @github-black;
     background-color: #fff;
-
-
-    ::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 3px rgba(218, 218, 218, 0.6);
-      background-color: #f4f4f4;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: #ccc;
-      border-color: transparent; // rgba(204, 204, 204, 0.9);
-    } /* this will style the thumb, ignoring the track */
   }
 
   & > :first-child {
@@ -61,6 +49,19 @@
     // &::-webkit-scrollbar {
     //  display: none;
     // }
+
+    &[data-use-github-style] {
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(218, 218, 218, 0.6);
+        background-color: #f4f4f4;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #ccc;
+        border-color: transparent; // rgba(204, 204, 204, 0.9);
+      } /* this will style the thumb, ignoring the track */
+    }
   }
 
 
