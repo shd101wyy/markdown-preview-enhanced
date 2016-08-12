@@ -35,7 +35,7 @@ For example:
 <!-- slide data-background-color:"#ff0000" -->
 ```
 
-<!-- slide data-background-color:"#f6ffb1"-->
+<!-- slide data-background-color:"#ffebcf"-->
 Of course you can do more about slide background.  
 **Image Background**
 | Atribute | Default | Description |  
