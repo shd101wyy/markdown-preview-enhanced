@@ -39,7 +39,7 @@ For example:
 Of course you can do more about slide background.  
 **Image Background**
 | Atribute | Default | Description |  
-|--|--|--|  
+|---|---|---|  
 | data-background-image	 |  | URL of the image to show. GIFs restart when the slide opens.|  
 | data-background-size	| cover | See [background-size](https://developer.mozilla.org/docs/Web/CSS/background-size) on MDN.|  
 | data-background-position| center |See [background-position](https://developer.mozilla.org/docs/Web/CSS/background-position) on MDN.|  

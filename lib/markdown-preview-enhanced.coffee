@@ -215,9 +215,9 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
       cursorPos = editor.getCursorBufferPosition()
-      editor.insertText """|  |  |
-  #{addSpace(cursorPos.column)}|--|--|
-  #{addSpace(cursorPos.column)}|  |  |
+      editor.insertText """|   |   |
+  #{addSpace(cursorPos.column)}|---|---|
+  #{addSpace(cursorPos.column)}|   |   |
   """
       editor.setCursorBufferPosition([cursorPos.row, cursorPos.column + 2])
     else

@@ -28,7 +28,7 @@ atom.packages.onDidActivatePackage (pkg) ->
 Calls your `callback` before the `markdown` string is parsed by [remarkable](https://github.com/jonschlinkert/remarkable).    
 
 | Argument | Description |    
-|--|--|   
+|---|---|   
 | callback(`markdown`) | Function |     
 | &nbsp;&nbsp;&nbsp;&nbsp;`markdown` | String |
 
@@ -43,7 +43,7 @@ pkg.mainModule.onWillParseMarkdown (markdown)->
 Calls your `callback` after parsing markdown.  
 
 | Argument | Description |    
-|--|--|   
+|---|---|   
 | callback(`htmlString`) | Function |     
 | &nbsp;&nbsp;&nbsp;&nbsp;`htmlString` | String |    
 
@@ -63,7 +63,7 @@ pkg.mainModule.onDidParseMarkdown (htmlString)->
 Calls your `callback` after the preview has rendered html   
 
 | Argument | Description |    
-|--|--|   
+|---|---|   
 | callback(`event`) | Function |     
 | &nbsp;&nbsp;&nbsp;&nbsp;`event` | Object |  
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `.htmlString`| String |
