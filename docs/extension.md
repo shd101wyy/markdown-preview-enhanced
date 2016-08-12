@@ -1,6 +1,17 @@
 # How to write extensions
 APIs design is still in *beta stage*, so there might be changes in the future.  
-The idea is from [issue #101](https://github.com/shd101wyy/markdown-preview-enhanced/issues/101).  
+The idea is from [issue #101](https://github.com/shd101wyy/markdown-preview-enhanced/issues/101).
+
+<!-- toc orderedList:0 -->
+
+- [How to write extensions](#how-to-write-extensions)
+	- [Synchronous](#synchronous)
+		- [::onWillParseMarkdown(callback)](#onwillparsemarkdowncallback)
+		- [::onDidParseMarkdown(callback)](#ondidparsemarkdowncallback)
+	- [Asynchronous](#asynchronous)
+		- [::onDidRenderPreview(callback)](#ondidrenderpreviewcallback)
+
+<!-- tocstop -->
 
 ---
 
@@ -23,8 +34,8 @@ atom.packages.onDidActivatePackage (pkg) ->
 
 ---  
 
-### Synchronous  
-**::onWillParseMarkdown(callback)**  
+## Synchronous  
+### ::onWillParseMarkdown(callback)
 Calls your `callback` before the `markdown` string is parsed by [remarkable](https://github.com/jonschlinkert/remarkable).    
 
 | Argument | Description |    
@@ -39,7 +50,7 @@ pkg.mainModule.onWillParseMarkdown (markdown)->
   "# This is heading will be added in front\n" + markdown
 ```
 <br>  
-**::onDidParseMarkdown(callback)**  
+### ::onDidParseMarkdown(callback)
 Calls your `callback` after parsing markdown.  
 
 | Argument | Description |    
@@ -56,10 +67,10 @@ pkg.mainModule.onDidParseMarkdown (htmlString)->
 
 ---  
 
-### Asynchronous
+## Asynchronous
 `callback` doesn't have to return a value   
 <br>  
-**::onDidRenderPreview(callback)**  
+### ::onDidRenderPreview(callback)  
 Calls your `callback` after the preview has rendered html   
 
 | Argument | Description |    

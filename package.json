@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -227,7 +227,7 @@
       "title": "Render front matter as table",
       "description": "If this option is enabled, then front matter will be rendered as table; otherwise it will be rendered as yaml code block",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "order": 180
     }
   }

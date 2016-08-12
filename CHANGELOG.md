@@ -9,6 +9,7 @@
 * [ ] fix [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93) specify image resolution when exporting png/jpeg using phantomjs
 * [x] support front matter [#100](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
 * [ ] support hooks [#101](https://github.com/shd101wyy/markdown-preview-enhanced/issues/101)
+* [ ] **found [issue](https://github.com/marcbachmann/node-html-pdf/issues/156)**, I might implement phantomjs html2pdf by myself in the future... 
 
 ## 0.8.0
 * [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
