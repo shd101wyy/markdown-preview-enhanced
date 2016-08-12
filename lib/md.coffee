@@ -6,6 +6,7 @@ uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
 {File} = require 'atom'
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
+matter = require('gray-matter')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
@@ -592,6 +593,27 @@ parseMD = (inputString, option={})->
     else if mathRenderingOption == 'MathJax'
       globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
+  # check front-matter
+  frontMatterTable = ''
+  if inputString.startsWith('---\n')
+    end = inputString.indexOf('---\n', 4)
+    if end > 0
+      yamlStr = inputString.slice(0, end+4)
+      inputString = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+      data = matter(yamlStr).data
+
+      # to table
+      thead = "<thead><tr>"
+      tbody = "<tbody><tr>"
+
+      for key of data
+        thead += "<th>#{key}</th>"
+        tbody += "<td>#{data[key]}</td>"
+
+      thead += "</thead></tr>"
+      tbody += "</tbody></tr>"
+      frontMatterTable = "<table>#{thead}#{tbody}</table>"
+
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
     line = null
@@ -695,12 +717,12 @@ parseMD = (inputString, option={})->
         markdownPreview.editorScrollDelay = Date.now() + 500
         markdownPreview.previewScrollDelay = Date.now() + 500
 
-        html = md.render(editor.getText())
+        html = md.render(inputString)
 
   markdownPreview?.headings = headings
 
   html = resolveImagePathAndCodeBlock(html, graphData, option)
-  return {html, slideConfigs, ebookConfig}
+  return {html: frontMatterTable+html, slideConfigs, ebookConfig}
 
 module.exports = {
   parseMD,
