@@ -559,6 +559,27 @@ else
   }
 ###
 processFrontMatter = (inputString)->
+  toTable = (arg)->
+    if arg instanceof Array
+      tbody = "<tbody><tr>"
+      for item in arg
+        tbody += "<td>#{toTable(item)}</td>"
+      tbody += "</tr></tbody>"
+
+      "<table>#{tbody}</table>"
+    else if typeof(arg) == 'object'
+      thead = "<thead><tr>"
+      tbody = "<tbody><tr>"
+      for key of arg
+        thead += "<th>#{key}</th>"
+        tbody += "<td>#{toTable(arg[key])}</td>"
+      thead += "</tr></thead>"
+      tbody += "</tr></tbody>"
+
+      "<table>#{thead}#{tbody}</table>"
+    else
+      arg
+
   if inputString.startsWith('---\n')
     end = inputString.indexOf('---\n', 4)
     if end > 0
@@ -569,19 +590,7 @@ processFrontMatter = (inputString)->
 
         # to table
         if typeof(data) == 'object'
-          thead = "<thead>
-                    <tr>
-                      <th>name</th>
-                      <th>value</th>
-                    </tr>
-                  </thead>"
-
-          tbody = "<tbody>"
-          for key of data
-            tbody += "<tr><td>#{key}</td><td>#{data[key]}</td></tr>"
-          tbody += "</tbody>"
-
-          table = "<table>#{thead}#{tbody}</table>"
+          table = toTable(data)
         else
           table = "<pre>Failed to parse YAML.</pre>"
 
