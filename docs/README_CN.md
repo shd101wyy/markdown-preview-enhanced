@@ -44,6 +44,7 @@ Markdown Preview Enhanced
 - Task List 任务列表 *(Github Flavored)*  
 - 图片助手
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
+- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
 - 以及更多特性...
 
 ## 该插件如何工作

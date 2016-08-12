@@ -45,6 +45,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Task List *(Github Flavored)*  
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
+- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
 - And many more...
 
 ## How it works

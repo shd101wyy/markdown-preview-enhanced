@@ -538,6 +538,46 @@ resolveImagePathAndCodeBlock = (html, graphData={plantuml_s: [], mermaid_s: []},
 
   return $.html()
 
+###
+# process input string, skip front-matter
+
+if display table
+  return {
+    content: rest of input string after skipping front matter (but with '\n' included)
+    table: string of <table>...</table> generated from data
+  }
+else
+  return {
+    content: replace ---\n with ```yaml
+    table: '',
+  }
+###
+processFrontMatter = (inputString)->
+  if inputString.startsWith('---\n')
+    end = inputString.indexOf('---\n', 4)
+    if end > 0
+      yamlStr = inputString.slice(0, end+4)
+      content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+      data = matter(yamlStr).data
+
+      # to table
+      if typeof(data) == 'object'
+        thead = "<thead><tr>"
+        tbody = "<tbody><tr>"
+
+        for key of data
+          thead += "<th>#{key}</th>"
+          tbody += "<td>#{data[key]}</td>"
+
+        thead += "</thead></tr>"
+        tbody += "</tbody></tr>"
+        table = "<table>#{thead}#{tbody}</table>"
+      else
+        table = "<pre>Failed to parse YAML.</pre>"
+
+      return {content, table}
+
+  {content: inputString, table: ''}
 
 ###
 # parse markdown content to html
@@ -594,25 +634,7 @@ parseMD = (inputString, option={})->
       globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # check front-matter
-  frontMatterTable = ''
-  if inputString.startsWith('---\n')
-    end = inputString.indexOf('---\n', 4)
-    if end > 0
-      yamlStr = inputString.slice(0, end+4)
-      inputString = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
-      data = matter(yamlStr).data
-
-      # to table
-      thead = "<thead><tr>"
-      tbody = "<tbody><tr>"
-
-      for key of data
-        thead += "<th>#{key}</th>"
-        tbody += "<td>#{data[key]}</td>"
-
-      thead += "</thead></tr>"
-      tbody += "</tbody></tr>"
-      frontMatterTable = "<table>#{thead}#{tbody}</table>"
+  {table:frontMatterTable, content:inputString} = processFrontMatter(inputString)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -717,6 +739,7 @@ parseMD = (inputString, option={})->
         markdownPreview.editorScrollDelay = Date.now() + 500
         markdownPreview.previewScrollDelay = Date.now() + 500
 
+        {content:inputString} = processFrontMatter(editor.getText())
         html = md.render(inputString)
 
   markdownPreview?.headings = headings

@@ -1,7 +1,8 @@
 <!-- slide -->
 # Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
-powered by [reveal.js](https://github.com/hakimel/reveal.js)
+powered by [reveal.js](https://github.com/hakimel/reveal.js)  
+
 <!-- slide -->
 You can easily create beautiful presentation by running command   
 <center> `Markdown Preview Enhanced: Insert New Slide` </center>  
@@ -34,7 +35,7 @@ For example:
 <!-- slide data-background-color:"#ff0000" -->
 ```
 
-<!-- slide -->
+<!-- slide data-background-color:"#f6ffb1"-->
 Of course you can do more about slide background.  
 **Image Background**
 | Atribute | Default | Description |  
