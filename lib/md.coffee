@@ -417,7 +417,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
+checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
@@ -460,7 +460,7 @@ checkGraph = (graphType, graphArray, preElement, text, option, $, offset)->
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
-resolveImagePathAndCodeBlock = (html, graphData={plantuml_s: [], mermaid_s: []},  option={})->
+resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
   {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath

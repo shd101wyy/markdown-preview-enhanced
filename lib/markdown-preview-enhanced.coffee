@@ -259,10 +259,10 @@ module.exports = MarkdownPreviewEnhanced =
 
   # HOOKS Issue #101
   onWillParseMarkdown: (callback)->
-    @hook.on('on-will-parse-markdown', callback)
+    @hook.on 'on-will-parse-markdown', callback
 
   onDidParseMarkdown: (callback)->
-    @hook.on('on-did-parse-markdown', callback)
+    @hook.on 'on-did-parse-markdown', callback
 
   onDidRenderPreview: (callback)->
     @emitter.on 'on-did-render-preview', callback
