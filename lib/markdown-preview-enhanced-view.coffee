@@ -1019,6 +1019,7 @@ module.exports = config || {}
       getStructure = (ul, level)->
         for li in ul.children
           a = li.children[0].getElementsByTagName('a')[0]
+          continue if not a
           filePath = a.getAttribute('href') # assume markdown file path
           heading = a.innerHTML
           id = 'ebook-heading-id-'+headingOffset

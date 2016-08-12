@@ -33,7 +33,7 @@ Markdown Preview Enhanced
 ## 支持特性
 - **编辑与预览滑动同步**  
 - **Presentation Writer** (beta) [介绍](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
-- **[易于扩展 (beta)](#开发者)**
+- **[支持扩展 (beta)](#开发者)**
 - 数学编辑支持     
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
