@@ -9,6 +9,8 @@ module.exports = MarkdownPreviewEnhanced =
   documentExporterView: null,
   imageHelperView: null,
 
+  marsView: null,
+
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -21,6 +23,12 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.add atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
         return @preview
+
+    @subscriptions.add atom.workspace.addOpener (uri)=>
+      if uri.startsWith 'mars://'
+        MarsView = require './mars-view'
+        @marsView ?= new MarsView('mars://mars editor') 
+        return @marsView
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -36,6 +44,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:config-presentation': => @openPresentationConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
+      'markdown-preview-enhanced:toggle-mars': => @toggleMars()
 
     # when the preview is displayed
     # preview will display the content of pane that is activated
@@ -266,3 +275,8 @@ module.exports = MarkdownPreviewEnhanced =
 
   onDidRenderPreview: (callback)->
     @emitter.on 'on-did-render-preview', callback
+
+
+  # Test
+  toggleMars: ->
+    atom.workspace.open 'mars://mars editor', split: 'right', activatePane: false, searchAllPanes: true
