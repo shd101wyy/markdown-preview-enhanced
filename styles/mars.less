@@ -1,0 +1,29 @@
+@import "syntax-variables";
+
+.mars {
+  @fg: @syntax-text-color;
+  @bg: @syntax-background-color;
+
+  @fg-accent: @syntax-cursor-color;
+  @fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
+  @fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
+
+  @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
+
+  @margin: 16px;
+
+  @github-black: #333;
+  @github-syntax-background-color: #f7f7f7;
+
+  .heading-hint {
+    font-weight: bold;
+    /*
+    &[data-heading="h1"]{ font-size: 2.4em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
+    &[data-heading="h2"] { font-size: 1.8em; font-weight: 400; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
+    &[data-heading="h3"] { font-size: 1.5em; font-weight: 500; }
+    &[data-heading="h4"] { font-size: 1.2em; font-weight: 600; }
+    &[data-heading="h5"] { font-size: 1.1em; font-weight: 600; }
+    &[data-heading="h6"] { font-size: 1.0em; font-weight: 600; }
+    */
+  }
+}
