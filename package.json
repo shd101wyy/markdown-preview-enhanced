@@ -44,6 +44,12 @@
     "uslug": "^1.0.4"
   },
   "configSchema": {
+    "fileExtension": {
+      "type": "string",
+      "default": ".md, .mmark, .markdown",
+      "description": "You may need restart Atom after making changes here.",
+      "order": 0
+    },
     "breakOnSingleNewline": {
       "type": "boolean",
       "default": true,
