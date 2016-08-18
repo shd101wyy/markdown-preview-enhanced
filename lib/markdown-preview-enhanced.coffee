@@ -8,6 +8,7 @@ module.exports = MarkdownPreviewEnhanced =
   katexStyle: null,
   documentExporterView: null,
   imageHelperView: null,
+  fileExtensions: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
@@ -16,6 +17,9 @@ module.exports = MarkdownPreviewEnhanced =
 
     @emitter = new Emitter
     @hook = new Hook
+
+    # file extensions?
+    @fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
 
     # set opener
     @subscriptions.add atom.workspace.addOpener (uri)=>
@@ -54,7 +58,7 @@ module.exports = MarkdownPreviewEnhanced =
       if atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
         if event.uri and
             event.item and
-            event.uri.endsWith('.md')
+            path.extname(event.uri) in @fileExtensions
           pane = event.pane
           panes = atom.workspace.getPanes()
 
@@ -115,8 +119,8 @@ module.exports = MarkdownPreviewEnhanced =
       return false
 
     fileName = editor.getFileName().trim()
-    if !fileName.endsWith('.md')
-      atom.notifications.addError('Invalid Markdown file: ' + fileName + '. The file extension should be .md' )
+    if !(path.extname(fileName) in @fileExtensions)
+      atom.notifications.addError("Invalid Markdown file: #{fileName} with wrong extension #{path.extname(fileName)}.", detail: "only '#{@fileExtensions.join(', ')}' are supported." )
       return false
 
     buffer = editor.buffer

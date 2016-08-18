@@ -672,7 +672,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       presentationInitScript = ''
 
     title = @getFileName()
-    title = title.slice(0, title.length - 3) # remove '.md'
+    title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
     htmlContent = "
   <!DOCTYPE html>
   <html>

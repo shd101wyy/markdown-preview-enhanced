@@ -1,5 +1,7 @@
 ## 0.8.2  
 * [ ] fix issue [#106](https://github.com/shd101wyy/markdown-preview-enhanced/issues/106)
+* [x] add file extensions support [#102](https://github.com/shd101wyy/markdown-preview-enhanced/issues/104)
+
 ## 0.8.1
 * [x] refactor **parseMD** function. (it's too messy now)  
 * [x] for KaTeX rendering, save rendered results like MathJax.
