@@ -71,6 +71,7 @@ class MarsView extends ScrollView
 
   bindEvents: ->
     @element.addEventListener 'input', @handleInput.bind(this)
+    @element.addEventListener 'keydown', @handleKeydown.bind(this)
     # @editor.subscribe('editableInput', @handleInput.bind(this))
 
   handleInput: (event)->
@@ -104,6 +105,23 @@ class MarsView extends ScrollView
       currentSelectedElement.removeAttribute('data-heading')
 
       @formatHeadings()
+
+  handleKeydown: (event)->
+    code = event.which
+    # console.log(code)
+
+    if code == 13 # enter
+      currentSelectedElement = @getSelectedParentElement()
+      if currentSelectedElement.parentElement?.tagName == 'BLOCKQUOTE' and currentSelectedElement.textContent.length == 0
+        event.preventDefault()
+
+        p = document.createElement('p')
+        p.innerHTML = '<br>'
+
+        currentSelectedElement.parentElement.insertAdjacentElement 'afterend', p
+
+        currentSelectedElement.remove()
+        @setCursor p
 
   formatHeadings: ()->
     headings = document.getElementsByClassName('heading')
