@@ -99,6 +99,15 @@ class MarsView extends ScrollView
 
       currentSelectedElement.parentElement.replaceChild(blockquote, currentSelectedElement)
       @setCursor(p)
+    else if (listTest = textContent.match(/^(\*|-|\+|[0-9]+.)\s/)) and listTest
+      list = document.createElement(if listTest[1] in ['*', '-', '+'] then 'ul' else 'ol')
+      listItem = document.createElement('li')
+      p = @createP()
+      listItem.appendChild(p)
+      list.appendChild(listItem)
+
+      currentSelectedElement.parentElement.replaceChild list, currentSelectedElement
+      @setCursor p
     else
       # remove all unnecessary classes and attributes
       currentSelectedElement.classList.remove('heading')
@@ -115,12 +124,50 @@ class MarsView extends ScrollView
       if currentSelectedElement.parentElement?.tagName == 'BLOCKQUOTE' and currentSelectedElement.textContent.length == 0
         event.preventDefault()
 
-        p = document.createElement('p')
-        p.innerHTML = '<br>'
+        p = @createP()
 
         currentSelectedElement.parentElement.insertAdjacentElement 'afterend', p
 
         currentSelectedElement.remove()
+        @setCursor p
+      else if currentSelectedElement.parentElement?.tagName == 'LI' and  currentSelectedElement.textContent.length == 0
+        if currentSelectedElement.parentElement?.parentElement?.parentElement?.tagName in ['UL', 'OL']
+          event.preventDefault()
+
+          listItem = document.createElement 'li'
+          p = @createP()
+          listItem.appendChild p
+
+          currentSelectedElement.parentElement.parentElement.insertAdjacentElement 'afterend', listItem
+          currentSelectedElement.parentElement.remove()
+
+          @setCursor p
+        else
+          event.preventDefault()
+
+          p = @createP()
+
+          currentSelectedElement.parentElement.parentElement.insertAdjacentElement 'afterend', p
+          currentSelectedElement.parentElement.remove()
+
+          @setCursor p
+
+    else if code == 9 # tab
+      currentSelectedElement = @getSelectedParentElement()
+      if currentSelectedElement.parentElement?.tagName == 'LI' and currentSelectedElement.textContent.length == 0
+        event.preventDefault()
+
+        listItem = currentSelectedElement.parentElement
+        list = currentSelectedElement.parentElement.parentElement
+
+        newList = document.createElement list.tagName
+        newListItem = document.createElement 'li'
+        p = @createP()
+        newListItem.appendChild p
+        newList.appendChild newListItem
+
+        list.replaceChild newList, listItem
+
         @setCursor p
 
   formatHeadings: ()->
@@ -135,6 +182,10 @@ class MarsView extends ScrollView
 
       headingElement.parentElement?.replaceChild(newHeadingElement, headingElement)
 
+  createP: ()->
+    p = document.createElement('p')
+    p.innerHTML = '<br>'
+    return p
   ###
   handleInput: (event, editable)->
     console.log(event)
