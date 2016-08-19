@@ -621,7 +621,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                       processEscapes: true}
           });
         </script>
-        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
         "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -947,6 +947,7 @@ module.exports = config || {}
       @openInBrowser(true)
       return
 
+    ###
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
     if mathRenderingOption == 'MathJax'
       atom.config.set('markdown-preview-enhanced.mathRenderingOption', 'KaTeX')
@@ -955,6 +956,9 @@ module.exports = config || {}
 
     if mathRenderingOption == 'MathJax'
       atom.config.set('markdown-preview-enhanced.mathRenderingOption', mathRenderingOption)
+    ###
+
+    htmlContent = @getHTMLContent isForPrint: true, offline: true
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
@@ -977,7 +981,7 @@ module.exports = config || {}
     config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000}, config)
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
