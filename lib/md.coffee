@@ -165,7 +165,7 @@ md.inline.ruler.before 'escape', 'math',
     if content and !silent
       state.push
         type: 'math'
-        content: content
+        content: content.trim(),
         openTag: openTag
         closeTag: closeTag
         displayMode: displayMode
