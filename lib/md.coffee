@@ -188,7 +188,7 @@ md.renderer.rules.math = (tokens, idx)->
       else
         element = globalMathTypesettingData.katex_s.splice(0, 1)[0]
         if element.getAttribute('data-original') == content and element.hasAttribute('display-mode') == displayMode
-          return "<span class='katex-exps' data-original='#{content}' data-processed #{displayModeAttr}>#{element.innerHTML}</span>"
+          return "<span class='katex-exps' data-original=\"#{content}\" data-processed #{displayModeAttr}>#{element.innerHTML}</span>"
         else
           return "<span class='katex-exps' #{displayModeAttr}>#{content.escape()}</span>"
 
@@ -207,13 +207,13 @@ md.renderer.rules.math = (tokens, idx)->
     # then we compared it with text to see whether the math expression is modified or not.
     if globalMathTypesettingData.isForPreview
       if !globalMathTypesettingData.mathjax_s.length
-        return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
+        return "<#{tag} class=\"mathjax-exps\">#{text.escape()}</#{tag}>"
       else
         element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
-        if element.getAttribute('data-original') == text  # math expression not changed
-          return "<#{tag} class=\"mathjax-exps\" data-original='#{text}'>#{element.innerHTML}</#{tag}>"
+        if element.getAttribute('data-original') == text and element.tagName.toLowerCase() == tag and element.hasAttribute('data-processed')  # math expression not changed
+          return "<#{tag} class=\"mathjax-exps\" data-original=\"#{text}\" data-processed>#{element.innerHTML}</#{tag}>"
         else
-          return "<#{tag} class=\"mathjax-exps\">#{text}</#{tag}>"
+          return "<#{tag} class=\"mathjax-exps\">#{text.escape()}</#{tag}>"
     else
       ## this doesn't work
       # element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]

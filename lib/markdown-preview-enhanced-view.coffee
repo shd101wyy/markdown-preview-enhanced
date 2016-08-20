@@ -48,6 +48,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this variable will be got from 'viz.js'
     @Viz = null
 
+    # this variable will check if it is the first time to render MathJax for markdown.
+    @firstTimeRenderMathJax = true
+
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
@@ -138,6 +141,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
+    @firstTimeRenderMathJax = true
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -521,15 +525,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
-    els = @element.getElementsByClassName('mathjax-exps')
-    helper = (el, text)->
-      MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
-        if el?.children.length
-          el?.setAttribute 'data-original', text
+    if @firstTimeRenderMathJax
+      els = @element.getElementsByClassName('mathjax-exps')
+      for el in els
+        el.setAttribute 'data-original', el.innerText
 
-    for el in els
-      if !el.children.length
-        helper(el, el.innerText.trim())
+      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=>
+        for el in els
+          el.setAttribute 'data-processed', true
+        @firstTimeRenderMathJax = false 
+    else
+      els = @element.getElementsByClassName('mathjax-exps')
+
+      helper = (el, text)->
+        MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
+          el?.setAttribute 'data-original', text
+          el?.setAttribute 'data-processed', true
+
+      for el in els
+        if el.hasAttribute('data-processed')
+          continue
+        else
+          helper(el, el.innerText)
 
   renderKaTeX: ()->
     return if @mathRenderingOption != 'KaTeX'
