@@ -964,6 +964,8 @@ module.exports = config || {}
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
     orientation = atom.config.get('markdown-preview-enhanced.orientation')
     margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+    zoomFactor =  atom.config.get('markdown-preview-enhanced.phantomJSImageZoomFactor') || '1'
+
     if !margin.length
       margin = '1cm'
     else
@@ -981,7 +983,7 @@ module.exports = config || {}
     config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, zoomFactor: zoomFactor, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
