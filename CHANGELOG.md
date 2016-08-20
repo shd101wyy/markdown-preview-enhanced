@@ -2,7 +2,10 @@
 * [x] fix issue [#106](https://github.com/shd101wyy/markdown-preview-enhanced/issues/106)
 * [x] add file extensions support [#102](https://github.com/shd101wyy/markdown-preview-enhanced/issues/104)
 * [x] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107), now can use MathJax for phantomjs export
-* [x] add zoomFactor [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93)
+* [x] add zoomFactor [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93)  
+
+Known issues:  
+* `"` in MathJax are not escaped. `getAttribute('data-original')`
 
 ## 0.8.1
 * [x] refactor **parseMD** function. (it's too messy now)  
