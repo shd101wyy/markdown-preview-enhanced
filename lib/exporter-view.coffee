@@ -94,9 +94,6 @@ class ExporterView extends View
         @br()
         @label 'Margin'
         @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '1cm')
-        @div class: 'image-settings', =>
-          @label 'Zoom'
-          @subview 'imageZoomFactorInput', new TextEditorView(mini: true, placeholderText: '1')
         @br()
         @a class: 'header-footer-config', 'click me to open header and footer config'
         @br()
@@ -231,7 +228,6 @@ class ExporterView extends View
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
       @marginInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSMargin'))
-      @imageZoomFactorInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSImageZoomFactor'))
 
       $('.phantomjs-div .file-type-select', @element).val extension
 
@@ -240,11 +236,6 @@ class ExporterView extends View
       $('.phantomjs-div .orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
 
       $('.phantomjs-div .pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-
-      if extension == 'pdf'
-        $('.phantomjs-div .image-settings', @element).hide()
-      else
-        $('.phantomjs-div .image-settings', @element).show()
 
     ## select
     $('.phantomjs-div .file-type-select', @element).on 'change', (e)=>
@@ -255,11 +246,6 @@ class ExporterView extends View
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
 
-      if extension == 'pdf'
-        $('.phantomjs-div .image-settings', @element).hide()
-      else
-        $('.phantomjs-div .image-settings', @element).show()
-
     $('.phantomjs-div .format-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
 
@@ -269,9 +255,6 @@ class ExporterView extends View
     ## input
     @marginInput.model.onDidStopChanging (e)=>
       atom.config.set('markdown-preview-enhanced.phantomJSMargin', @marginInput.getText())
-
-    @imageZoomFactorInput.model.onDidStopChanging (e)=>
-      atom.config.set('markdown-preview-enhanced.phantomJSImageZoomFactor', @imageZoomFactorInput.getText() || '1')
 
     ## checkbox
     $('.phantomjs-div .pdf-auto-open-checkbox', @element).on 'change', (e)->

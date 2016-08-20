@@ -201,13 +201,6 @@
       "default": "1cm",
       "order": 132
     },
-    "phantomJSImageZoomFactor": {
-      "title": "PhantomJS image zoom factor",
-      "description": "This property specifies the scaling factor for the image.",
-      "type": "string",
-      "default": "1",
-      "order": 133
-    },
     "openPreviewPaneAutomatically": {
       "title": "Open preview pane automatically when opening a markdown file",
       "type": "boolean",
