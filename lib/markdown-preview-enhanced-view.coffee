@@ -533,7 +533,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=>
         for el in els
           el.setAttribute 'data-processed', true
-        @firstTimeRenderMathJax = false 
+        @firstTimeRenderMathJax = false
     else
       els = @element.getElementsByClassName('mathjax-exps')
 
@@ -600,10 +600,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHTML})->
+  getHTMLContent: ({isForPrint, offline, isSavingToHTML, phantomjsType})->
     isForPrint ?= false
     offline ?= false
     isSavingToHTML ?= false
+    phantomjsType ?= false # pdf | png | jpeg | false
     return if not @editor
 
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
@@ -688,6 +689,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       presentationStyle = ''
       presentationInitScript = ''
 
+    # phantomjs
+    phantomjsClass = ""
+    if phantomjsType
+      if phantomjsType == '.pdf'
+        phantomjsClass = 'phantomjs-pdf'
+      else if phantomjsType == '.png' or phantomjsType == '.jpeg'
+        phantomjsClass = 'phantomjs-image'
+
     title = @getFileName()
     title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
     htmlContent = "
@@ -709,7 +718,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\"
+    <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
         #{if useGitHubStyle then 'data-use-github-style' else ''}
         #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}
         #{if @presentationMode then 'data-presentation-mode' else ''}>
@@ -964,7 +973,7 @@ module.exports = config || {}
       @openInBrowser(true)
       return
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true
+    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dist)
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')

@@ -166,6 +166,15 @@ module.exports = MarkdownPreviewEnhanced =
 
   }
 
+  // custom phantomjs png/jpeg export style
+  &.phantomjs-image {
+
+  }
+
+  //custom phantomjs pdf export style
+  &.phantomjs-pdf {
+    
+  }
 
   // custom presentation style
   .preview-slides .slide,
