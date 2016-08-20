@@ -86,6 +86,7 @@ Markdown Preview Enhanced
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
+- <strong>Markdown Preview Enhanced: Insert Page Break </strong>
 - <strong> Markdown Preview Enhanced: Config Mermaid</strong>
   - 编辑 `mermaid` 初始化设置。
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>

@@ -39,6 +39,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
       'markdown-preview-enhanced:config-presentation': => @openPresentationConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
+      'markdown-preview-enhanced:insert-page-break': => @insertPageBreak()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
 
     # when the preview is displayed
@@ -260,6 +261,11 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
     if editor and editor.buffer
       editor.insertText '<!-- slide -->\n'
+
+  insertPageBreak: ()->
+    editor = atom.workspace.getActiveTextEditor()
+    if editor and editor.buffer
+      editor.insertText '<!-- pagebreak -->\n'
 
   # HOOKS Issue #101
   onWillParseMarkdown: (callback)->
