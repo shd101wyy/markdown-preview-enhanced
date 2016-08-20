@@ -3,6 +3,7 @@
 * [x] add file extensions support [#102](https://github.com/shd101wyy/markdown-preview-enhanced/issues/104)
 * [x] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107), now can use MathJax for phantomjs export
 * [x] add zoomFactor [#93](https://github.com/shd101wyy/markdown-preview-enhanced/issues/93)  
+* [ ] image drop to upload like github.  
 
 Known issues:  
 * `"` in MathJax are not escaped. `getAttribute('data-original')`
