@@ -154,7 +154,7 @@ class ExporterView extends View
       $('.html-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.html'
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.html'
       @fileNameInput.setText(filePath)
 
 
@@ -174,7 +174,7 @@ class ExporterView extends View
       $('.pdf-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.pdf'
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.pdf'
       @fileNameInput.setText(filePath)
 
       $('.pdf-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
@@ -224,11 +224,12 @@ class ExporterView extends View
       $('.phantomjs-div', @element).show()
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.' + atom.config.get('markdown-preview-enhanced.phantomJSExportFileType').toLowerCase()
+      extension = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
       @marginInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSMargin'))
 
-      $('.phantomjs-div .file-type-select', @element).val atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+      $('.phantomjs-div .file-type-select', @element).val extension
 
       $('.phantomjs-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
 
@@ -238,10 +239,11 @@ class ExporterView extends View
 
     ## select
     $('.phantomjs-div .file-type-select', @element).on 'change', (e)=>
-      atom.config.set('markdown-preview-enhanced.phantomJSExportFileType', e.target.value)
+      extension = e.target.value
+      atom.config.set('markdown-preview-enhanced.phantomJSExportFileType', extension)
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.' + atom.config.get('markdown-preview-enhanced.phantomJSExportFileType').toLowerCase()
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
 
     $('.phantomjs-div .format-select', @element).on 'change', (e)->
@@ -272,7 +274,7 @@ class ExporterView extends View
         $el.addClass('selected')
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
       @fileNameInput.setText(filePath)
       @fileNameInput.focus()
 
@@ -284,7 +286,7 @@ class ExporterView extends View
     ## select
     $('.ebook-div .ebook-format-select', @element).on 'change', (e)=>
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-3) + '.' + e.target.value
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + e.target.value
       @fileNameInput.setText(filePath)
 
   hidePanel: ->

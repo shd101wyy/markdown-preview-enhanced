@@ -48,6 +48,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this variable will be got from 'viz.js'
     @Viz = null
 
+    # this variable will check if it is the first time to render MathJax for markdown.
+    @firstTimeRenderMathJax = true
+
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
@@ -138,6 +141,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
+    @firstTimeRenderMathJax = true
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -521,15 +525,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
-    els = @element.getElementsByClassName('mathjax-exps')
-    helper = (el, text)->
-      MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
-        if el?.children.length
-          el?.setAttribute 'data-original', text
+    if @firstTimeRenderMathJax
+      els = @element.getElementsByClassName('mathjax-exps')
+      for el in els
+        el.setAttribute 'data-original', el.innerText
 
-    for el in els
-      if !el.children.length
-        helper(el, el.innerText.trim())
+      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=>
+        for el in els
+          el.setAttribute 'data-processed', true
+        @firstTimeRenderMathJax = false
+    else
+      els = @element.getElementsByClassName('mathjax-exps')
+
+      helper = (el, text)->
+        MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
+          el?.setAttribute 'data-original', text
+          el?.setAttribute 'data-processed', true
+
+      for el in els
+        if el.hasAttribute('data-processed')
+          continue
+        else
+          helper(el, el.innerText)
 
   renderKaTeX: ()->
     return if @mathRenderingOption != 'KaTeX'
@@ -583,10 +600,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHTML})->
+  getHTMLContent: ({isForPrint, offline, isSavingToHTML, phantomjsType})->
     isForPrint ?= false
     offline ?= false
     isSavingToHTML ?= false
+    phantomjsType ?= false # pdf | png | jpeg | false
     return if not @editor
 
     useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
@@ -621,7 +639,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                       processEscapes: true}
           });
         </script>
-        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
         "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -671,8 +689,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
       presentationStyle = ''
       presentationInitScript = ''
 
+    # phantomjs
+    phantomjsClass = ""
+    if phantomjsType
+      if phantomjsType == '.pdf'
+        phantomjsClass = 'phantomjs-pdf'
+      else if phantomjsType == '.png' or phantomjsType == '.jpeg'
+        phantomjsClass = 'phantomjs-image'
+
     title = @getFileName()
-    title = title.slice(0, title.length - 3) # remove '.md'
+    title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
     htmlContent = "
   <!DOCTYPE html>
   <html>
@@ -692,7 +718,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       #{presentationScript}
     </head>
-    <body class=\"markdown-preview-enhanced\"
+    <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
         #{if useGitHubStyle then 'data-use-github-style' else ''}
         #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}
         #{if @presentationMode then 'data-presentation-mode' else ''}>
@@ -947,19 +973,13 @@ module.exports = config || {}
       @openInBrowser(true)
       return
 
-    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
-    if mathRenderingOption == 'MathJax'
-      atom.config.set('markdown-preview-enhanced.mathRenderingOption', 'KaTeX')
-
-    htmlContent = @getHTMLContent isForPrint: true, offline: true  # only use katex to render math
-
-    if mathRenderingOption == 'MathJax'
-      atom.config.set('markdown-preview-enhanced.mathRenderingOption', mathRenderingOption)
+    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dist)
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
     orientation = atom.config.get('markdown-preview-enhanced.orientation')
     margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+
     if !margin.length
       margin = '1cm'
     else
@@ -977,7 +997,7 @@ module.exports = config || {}
     config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000}, config)
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err

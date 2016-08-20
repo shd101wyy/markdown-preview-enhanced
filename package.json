@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.15.0",
     "gray-matter": "^2.0.2",
-    "html-pdf": "^2.0.1",
+    "html-pdf": "^2.1.0",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
     "remarkable": "^1.6.2",
@@ -44,6 +44,12 @@
     "uslug": "^1.0.4"
   },
   "configSchema": {
+    "fileExtension": {
+      "type": "string",
+      "default": ".md, .mmark, .markdown",
+      "description": "You may need restart Atom after making changes here.",
+      "order": 0
+    },
     "breakOnSingleNewline": {
       "type": "boolean",
       "default": true,

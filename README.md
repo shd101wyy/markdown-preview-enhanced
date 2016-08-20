@@ -88,6 +88,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Enable/Disable breaking on single newline.
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
+- <strong>Markdown Preview Enhanced: Insert Page Break </strong>
 - <strong> Markdown Preview Enhanced: Config Mermaid</strong>
   - edit `mermaid` init configuration.
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>

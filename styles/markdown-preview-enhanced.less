@@ -25,6 +25,8 @@
   overflow: initial;
   margin: 10px 13px 10px 13px;
   padding: 2em;
+  box-sizing: border-box;
+  word-wrap: break-word;
 
   &[data-use-github-style] {
     color: @github-black;
@@ -43,7 +45,6 @@
     overflow: scroll;
     font-size: 16px;
     display: block;
-    box-sizing: border-box;
     position: absolute;
 
     // &::-webkit-scrollbar {
@@ -229,13 +230,15 @@
 
   // Table --------------------
   table {
-    display: block;
-  	margin: 10px 0 15px 0;
+    margin: 10px 0 15px 0;
   	border-collapse: collapse;
-    overflow: auto;
+    border-spacing: 0;
+
+    display: block;
     width: 100%;
+    overflow: auto;
+    word-break: normal;
     word-break: keep-all;
-    white-space: nowrap;
 
     th {
       font-weight: bold;
@@ -244,11 +247,7 @@
 
     td, th {
     	border: 1px solid @border;
-    	padding: 5px 10px;
-    }
-
-    th {
-    	padding: 5px 10px;
+    	padding: 6px 13px;
     }
   }
 
@@ -423,6 +422,7 @@
 
     h1, h2, h3, h4, h5, h6 {
       color: @fg-strong;
+      page-break-after: avoid;
     }
 
     blockquote {
@@ -435,7 +435,6 @@
 
     table {
       display: table;
-      overflow: hidden;
     }
 
     img {
