@@ -228,7 +228,7 @@ class ExporterView extends View
 
       filePath = @markdownPreview.editor.getPath()
       extension = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
-      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension.toLowerCase()
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
       @marginInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSMargin'))
       @imageZoomFactorInput.setText(atom.config.get('markdown-preview-enhanced.phantomJSImageZoomFactor'))
@@ -252,7 +252,7 @@ class ExporterView extends View
       atom.config.set('markdown-preview-enhanced.phantomJSExportFileType', extension)
 
       filePath = @markdownPreview.editor.getPath()
-      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension.toLowerCase()
+      filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
 
       if extension == 'pdf'
