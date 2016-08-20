@@ -621,7 +621,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                       processEscapes: true}
           });
         </script>
-        <script type=\"text/javascript\" async src=\"#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+        <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
         "
       else
         # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -672,7 +672,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       presentationInitScript = ''
 
     title = @getFileName()
-    title = title.slice(0, title.length - 3) # remove '.md'
+    title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
     htmlContent = "
   <!DOCTYPE html>
   <html>
@@ -947,19 +947,14 @@ module.exports = config || {}
       @openInBrowser(true)
       return
 
-    mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption') # only use katex to render math
-    if mathRenderingOption == 'MathJax'
-      atom.config.set('markdown-preview-enhanced.mathRenderingOption', 'KaTeX')
-
-    htmlContent = @getHTMLContent isForPrint: true, offline: true  # only use katex to render math
-
-    if mathRenderingOption == 'MathJax'
-      atom.config.set('markdown-preview-enhanced.mathRenderingOption', mathRenderingOption)
+    htmlContent = @getHTMLContent isForPrint: true, offline: true
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
     orientation = atom.config.get('markdown-preview-enhanced.orientation')
     margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+    zoomFactor =  atom.config.get('markdown-preview-enhanced.phantomJSImageZoomFactor') || '1'
+
     if !margin.length
       margin = '1cm'
     else
@@ -977,7 +972,7 @@ module.exports = config || {}
     config = @loadPhantomJSHeaderFooterConfig()
 
     pdf
-      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000}, config)
+      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, zoomFactor: zoomFactor, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err

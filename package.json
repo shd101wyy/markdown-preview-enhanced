@@ -35,7 +35,7 @@
     "atom-space-pen-views": "^2.2.0",
     "cheerio": "^0.15.0",
     "gray-matter": "^2.0.2",
-    "html-pdf": "^2.0.1",
+    "html-pdf": "^2.1.0",
     "imgur": "^0.1.7",
     "katex": "^0.6.0",
     "remarkable": "^1.6.2",
@@ -44,6 +44,12 @@
     "uslug": "^1.0.4"
   },
   "configSchema": {
+    "fileExtension": {
+      "type": "string",
+      "default": ".md, .mmark, .markdown",
+      "description": "You may need restart Atom after making changes here.",
+      "order": 0
+    },
     "breakOnSingleNewline": {
       "type": "boolean",
       "default": true,
@@ -194,6 +200,13 @@
       "type": "string",
       "default": "1cm",
       "order": 132
+    },
+    "phantomJSImageZoomFactor": {
+      "title": "PhantomJS image zoom factor",
+      "description": "This property specifies the scaling factor for the image.",
+      "type": "string",
+      "default": "1",
+      "order": 133
     },
     "openPreviewPaneAutomatically": {
       "title": "Open preview pane automatically when opening a markdown file",

@@ -8,8 +8,7 @@ module.exports = MarkdownPreviewEnhanced =
   katexStyle: null,
   documentExporterView: null,
   imageHelperView: null,
-
-  marsView: null,
+  fileExtensions: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
@@ -19,16 +18,13 @@ module.exports = MarkdownPreviewEnhanced =
     @emitter = new Emitter
     @hook = new Hook
 
+    # file extensions?
+    @fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
+
     # set opener
     @subscriptions.add atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
         return @preview
-
-    @subscriptions.add atom.workspace.addOpener (uri)=>
-      if uri.startsWith 'mars://'
-        MarsView = require './mars-view'
-        @marsView ?= new MarsView('mars://mars editor') 
-        return @marsView
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -44,7 +40,6 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:config-presentation': => @openPresentationConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
-      'markdown-preview-enhanced:toggle-mars': => @toggleMars()
 
     # when the preview is displayed
     # preview will display the content of pane that is activated
@@ -63,7 +58,7 @@ module.exports = MarkdownPreviewEnhanced =
       if atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
         if event.uri and
             event.item and
-            event.uri.endsWith('.md')
+            path.extname(event.uri) in @fileExtensions
           pane = event.pane
           panes = atom.workspace.getPanes()
 
@@ -124,8 +119,8 @@ module.exports = MarkdownPreviewEnhanced =
       return false
 
     fileName = editor.getFileName().trim()
-    if !fileName.endsWith('.md')
-      atom.notifications.addError('Invalid Markdown file: ' + fileName + '. The file extension should be .md' )
+    if !(path.extname(fileName) in @fileExtensions)
+      atom.notifications.addError("Invalid Markdown file: #{fileName} with wrong extension #{path.extname(fileName)}.", detail: "only '#{@fileExtensions.join(', ')}' are supported." )
       return false
 
     buffer = editor.buffer
@@ -275,8 +270,3 @@ module.exports = MarkdownPreviewEnhanced =
 
   onDidRenderPreview: (callback)->
     @emitter.on 'on-did-render-preview', callback
-
-
-  # Test
-  toggleMars: ->
-    atom.workspace.open 'mars://mars editor', split: 'right', activatePane: false, searchAllPanes: true
