@@ -31,6 +31,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @liveUpdate = true
     @scrollSync = true
+    @scrollDuration = null
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
@@ -297,6 +298,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollSync = flag
         @scrollMap = null
 
+    # scroll duration
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollDuration', (duration)=>
+      duration = parseInt(duration) or 0
+      if duration < 0
+        @scrollDuration = 120
+      else
+        @scrollDuration = duration
+
     # math?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
       (option) =>
@@ -351,7 +360,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     delay = 10
 
-    helper = (duration)=>
+    helper = (duration=0)=>
       @scrollTimeout = setTimeout =>
         if duration <= 0
           if editorElement
@@ -384,7 +393,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         helper duration-delay
       , delay
 
-    helper(120)
+    helper(@scrollDuration)
 
   formatStringBeforeParsing: (str)->
     @mainModule.hook.chain('on-will-parse-markdown', str)
