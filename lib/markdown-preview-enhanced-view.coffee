@@ -253,7 +253,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         count++
 
       if (screenRow >= 0)
-        @editor.getElement().setScrollTop(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2)
+        @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2, @editor.getElement())
+        # @editor.getElement().setScrollTop
 
         # track currnet time to disable onDidChangeScrollTop
         @editorScrollDelay = Date.now() + 500
@@ -339,7 +340,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollToPos scrollTop
 
   # smooth scroll @element to scrollTop
-  scrollToPos: (scrollTop)->
+  # if editorElement is provided, then editorElement.setScrollTop(scrollTop)
+  scrollToPos: (scrollTop, editorElement=null)->
     if @scrollTimeout
       clearTimeout @scrollTimeout
       @scrollTimeout = null
@@ -352,16 +354,32 @@ class MarkdownPreviewEnhancedView extends ScrollView
     helper = (duration)=>
       @scrollTimeout = setTimeout =>
         if duration <= 0
-          @element.scrollTop = scrollTop
+          if editorElement
+            editorElement.setScrollTop scrollTop
+          else
+            @element.scrollTop = scrollTop
           return
-        difference = scrollTop - @element.scrollTop
+
+        if editorElement
+          difference = scrollTop - editorElement.getScrollTop()
+        else
+          difference = scrollTop - @element.scrollTop
+
         perTick = difference / duration * delay
 
-        # disable preview onscroll
-        @previewScrollDelay = Date.now() + 500
+        if editorElement
+          # disable editor scroll
+          @editorScrollDelay = Date.now() + 500
 
-        @element.scrollTop += perTick
-        return if @element.scrollTop == scrollTop
+          s = editorElement.getScrollTop() + perTick
+          editorElement.setScrollTop s
+          return if s == scrollTop
+        else
+          # disable preview onscroll
+          @previewScrollDelay = Date.now() + 500
+
+          @element.scrollTop += perTick
+          return if @element.scrollTop == scrollTop
 
         helper duration-delay
       , delay

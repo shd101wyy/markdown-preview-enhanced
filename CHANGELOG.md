@@ -1,10 +1,10 @@
 ## 0.8.3  
-* [ ] add option to `hide` frontmatter.  
+* [x] add option to `hide` frontmatter.  
 * [x] change to `UIUC` license
 * [x] upgrade APIs to match newest `electron`  
 * [ ] solve lagging issue  
 * [ ] header/footer for presentation  
-* [ ] smooth scroll sync
+* [x] smooth scroll sync
 
 ## 0.8.2  
 * [x] fix issue [#106](https://github.com/shd101wyy/markdown-preview-enhanced/issues/106)
