@@ -615,6 +615,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
         el.setAttribute('data-processed', 'true')
         el.setAttribute('data-original', dataOriginal)
 
+  ###
+  convert './a.txt' '/a.txt'
+  ###
+  resolveFilePath: (filePath, relative=false)->
+    if filePath.startsWith('./') or filePath.startsWith('/')
+      if relative
+        if filePath[0] == '.'
+          return filePath
+        else
+          return path.relative(@rootDirectoryPath, path.resolve(@projectDirectoryPath, '.'+filePath))
+      else
+        if filePath[0] == '.'
+          return 'file:///'+path.resolve(@rootDirectoryPath, filePath)
+        else
+          return 'file:///'+path.resolve(@projectDirectoryPath, '.'+filePath)
+    else
+      return filePath
+
   ## Utilities
   openInBrowser: (isForPresentationPrint=false)->
     return if not @editor
@@ -713,7 +731,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation
     if slideConfigs.length
-      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs)
+      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
       if offline
         presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
       else
@@ -898,7 +916,7 @@ module.exports = config || {}
       videoString = ''
       iframeString = ''
       if slideConfig['data-background-image']
-        styleString += "background-image: url('#{slideConfig['data-background-image']}');"
+        styleString += "background-image: url('#{@resolveFilePath(slideConfig['data-background-image'])}');"
 
         if slideConfig['data-background-size']
           styleString += "background-size: #{slideConfig['data-background-size']};"
@@ -931,14 +949,14 @@ module.exports = config || {}
         loop_ = if videoLoop then 'loop' else ''
 
         videoString = """
-        <video #{muted_} #{loop_} playsinline autoplay class=\"background-video\">
-          <source src=\"#{slideConfig['data-background-video']}\">
+        <video #{muted_} #{loop_} playsinline autoplay class=\"background-video\" src=\"#{@resolveFilePath(slideConfig['data-background-video'])}\">
         </video>
         """
+        #           <source src=\"#{slideConfig['data-background-video']}\">
 
       else if slideConfig['data-background-iframe']
         iframeString = """
-        <iframe class=\"background-iframe\" src=\"#{slideConfig['data-background-iframe']}\" frameborder="0" > </iframe>
+        <iframe class=\"background-iframe\" src=\"#{@resolveFilePath(slideConfig['data-background-iframe'])}\" frameborder="0" > </iframe>
         <div class=\"background-iframe-overlay\"></div>
         """
 
@@ -957,7 +975,7 @@ module.exports = config || {}
     </div>
     """
 
-  parseSlidesForExport: (html, slideConfigs)->
+  parseSlidesForExport: (html, slideConfigs, isSavingToHTML)->
     slides = html.split '<div class="new-slide"></div>'
     slides = slides.slice(1)
     output = ''
@@ -967,7 +985,7 @@ module.exports = config || {}
       slideConfig = slideConfigs[offset]
       attrString = ''
       if slideConfig['data-background-image']
-        attrString += " data-background-image='#{slideConfig['data-background-image']}'"
+        attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], isSavingToHTML)}'"
 
       if slideConfig['data-background-size']
         attrString += " data-background-size='#{slideConfig['data-background-size']}'"
@@ -982,7 +1000,7 @@ module.exports = config || {}
         attrString += " data-background-color='#{slideConfig['data-background-color']}'"
 
       if slideConfig['data-background-video']
-        attrString += " data-background-video='#{slideConfig['data-background-video']}'"
+        attrString += " data-background-video='#{@resolveFilePath(slideConfig['data-background-video'], isSavingToHTML)}'"
 
       if slideConfig['data-background-video-loop']
         attrString += " data-background-video-loop"
@@ -994,7 +1012,7 @@ module.exports = config || {}
         attrString += " data-transition='#{slideConfig['data-transition']}'"
 
       if slideConfig['data-background-iframe']
-        attrString += " data-background-iframe='#{slideConfig['data-background-iframe']}'"
+        attrString += " data-background-iframe='#{@resolveFilePath(slideConfig['data-background-iframe'], isSavingToHTML)}'"
 
       output += "<section #{attrString}>#{slide}</section>"
       offset += 1
