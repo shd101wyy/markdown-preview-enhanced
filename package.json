@@ -123,6 +123,7 @@
     "frontMatterRenderingOption": {
       "title": "Front Matter rendering option",
       "type": "string",
+      "description": "You can choose how to render front matter here. 'none' option will hide front matter.",
       "default": "table",
       "enum": ["table", "code block", "none"],
       "order": 75

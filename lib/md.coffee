@@ -365,11 +365,8 @@ buildScrollMap = (markdownPreview)->
 
   _scrollMap = []
   nonEmptyList = []
-  lineHeightMap = []
 
   acc = 0
-  lines.forEach (str, n)->
-    lineHeightMap.push(editor.screenRowForBufferRow(n))
 
   linesCount = editor.getScreenLineCount()
 
@@ -390,7 +387,7 @@ buildScrollMap = (markdownPreview)->
     if !t
       continue
 
-    t = lineHeightMap[parseInt(t)] # get screen buffer row
+    t = editor.screenRowForBufferRow(parseInt(t)) # get screen buffer row
     if t != 0
       nonEmptyList.push(t)
 

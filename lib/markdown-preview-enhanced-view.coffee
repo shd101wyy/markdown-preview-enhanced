@@ -185,13 +185,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       lineNo = Math.floor((firstVisibleScreenRow + lastVisibleScreenRow) / 2)
 
-      if !@scrollMap
-        @scrollMap = @buildScrollMap(this)
+      @scrollMap ?= @buildScrollMap(this)
 
       # disable markdownHtmlView onscroll
       @previewScrollDelay = Date.now() + 500
 
-      @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
+      # @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
+      @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
@@ -211,10 +211,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if event.oldScreenPosition.row != event.newScreenPosition.row or event.oldScreenPosition.column == 0
         lineNo = event.newScreenPosition.row
         if lineNo == 0
-          @element.scrollTop = 0
+          @scrollToPos(0)
           return
         else if lineNo == @editor.getScreenLineCount() - 1 # last row
-          @element.scrollTop = @element.scrollHeight - 16
+          @scrollToPos(@element.scrollHeight - 16)
           return
 
         @scrollSyncToLineNo(lineNo)
@@ -229,8 +229,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       top = @element.scrollTop + @element.offsetHeight / 2
 
       # try to find corresponding screen buffer row
-      if !@scrollMap
-        @scrollMap = @buildScrollMap(this)
+      @scrollMap ?= @buildScrollMap(this)
 
       i = 0
       j = @scrollMap.length - 1
@@ -325,17 +324,49 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # set slide to middle of preview
     @element.scrollTop = -@element.offsetHeight/2 + (slideElement.offsetTop + slideElement.offsetHeight/2)*parseFloat(slideElement.style.zoom)
 
+  # lineNo here is screen buffer row.
   scrollSyncToLineNo: (lineNo)->
-    if !@scrollMap
-      @scrollMap = @buildScrollMap(this)
+    @scrollMap ?= @buildScrollMap(this)
+
+    #window.scrollMap = @scrollMap
+    #console.log(lineNo)
 
     editorElement = @editor.getElement()
 
     firstVisibleScreenRow = @editor.getFirstVisibleScreenRow()
     posRatio = (lineNo - firstVisibleScreenRow) / (editorElement.getHeight() / @editor.getLineHeightInPixels())
-    scrollTop = @scrollMap[lineNo] - (if posRatio > 1 then 1 else posRatio) * editorElement.getHeight()
 
-    @element.scrollTop = scrollTop
+    scrollTop = @scrollMap[lineNo] - (if posRatio > 1 then 1 else posRatio) * editorElement.getHeight()
+    scrollTop = 0 if scrollTop < 0
+
+    @scrollToPos scrollTop
+
+  # smooth scroll @element to scrollTop
+  scrollToPos: (scrollTop)->
+    if @scrollTimeout
+      clearTimeout @scrollTimeout
+      @scrollTimeout = null
+
+    if not @editor or not @editor.alive or scrollTop < 0
+      return
+
+    delay = 10
+
+    helper = (duration)=>
+      @scrollTimeout = setTimeout =>
+        difference = scrollTop - @element.scrollTop
+        perTick = difference / duration * delay
+
+        # disable preview onscroll
+        @previewScrollDelay = Date.now() + 500
+
+        @element.scrollTop += perTick
+        return if @element.scrollTop == scrollTop
+
+        helper duration-delay
+      , delay
+
+    helper(150)
 
   formatStringBeforeParsing: (str)->
     @mainModule.hook.chain('on-will-parse-markdown', str)
