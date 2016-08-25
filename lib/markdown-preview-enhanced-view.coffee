@@ -896,6 +896,7 @@ module.exports = config || {}
       slideConfig = slideConfigs[offset]
       styleString = ''
       videoString = ''
+      iframeString = ''
       if slideConfig['data-background-image']
         styleString += "background-image: url('#{slideConfig['data-background-image']}');"
 
@@ -935,10 +936,16 @@ module.exports = config || {}
         </video>
         """
 
+      else if slideConfig['data-background-iframe']
+        iframeString = """
+        <iframe class=\"background-iframe\" src=\"#{slideConfig['data-background-iframe']}\" frameborder="0" > </iframe>
+        <div class=\"background-iframe-overlay\"></div>
+        """
 
       output += """
         <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
           #{videoString}
+          #{iframeString}
           <section>#{slide}</section>
         </div>
       """
@@ -985,6 +992,9 @@ module.exports = config || {}
 
       if slideConfig['data-transition']
         attrString += " data-transition='#{slideConfig['data-transition']}'"
+
+      if slideConfig['data-background-iframe']
+        attrString += " data-background-iframe='#{slideConfig['data-background-iframe']}'"
 
       output += "<section #{attrString}>#{slide}</section>"
       offset += 1

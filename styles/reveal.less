@@ -41,6 +41,20 @@
         width: 100%;
         height: 100%;
       }
+
+      .background-iframe, .background-iframe-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border: none;
+        z-index: 1;
+      }
+
+      .background-iframe-overlay {
+        z-index: 2;
+      }
     }
   }
 
@@ -60,6 +74,7 @@
     transform-style: preserve-3d;
     font-size: 100%;
     font: inherit;
+    z-index: 100;
   }
 }
 
