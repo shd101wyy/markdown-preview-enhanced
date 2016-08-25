@@ -383,20 +383,24 @@ buildScrollMap = (markdownPreview)->
   for i in [0...lineElements.length]
     el = lineElements[i]
     t = el.getAttribute('data-line')
-
-    if !t
-      continue
+    continue if !t
 
     t = editor.screenRowForBufferRow(parseInt(t)) # get screen buffer row
-    if t != 0
+
+    continue if !t
+
+    # this is for ignoring footnote scroll match
+    if t < nonEmptyList[nonEmptyList.length - 1]
+      el.removeAttribute('data-line')
+    else
       nonEmptyList.push(t)
 
-    offsetTop = 0
-    while el and el != markdownHtmlView
-      offsetTop += el.offsetTop
-      el = el.offsetParent
+      offsetTop = 0
+      while el and el != markdownHtmlView
+        offsetTop += el.offsetTop
+        el = el.offsetParent
 
-    _scrollMap[t] = Math.round(offsetTop)
+      _scrollMap[t] = Math.round(offsetTop)
 
   nonEmptyList.push(linesCount)
   _scrollMap.push(markdownHtmlView.scrollHeight)

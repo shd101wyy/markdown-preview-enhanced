@@ -336,9 +336,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     scrollTop = @scrollMap[lineNo] - (if posRatio > 1 then 1 else posRatio) * editorElement.getHeight()
     scrollTop = 0 if scrollTop < 0
 
-    # console.log(lineNo, scrollTop)
-    # window.scrollMap = @scrollMap
-
     @scrollToPos scrollTop
 
   # smooth scroll @element to scrollTop
