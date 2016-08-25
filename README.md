@@ -143,4 +143,4 @@ Thanks for everyone that supports this package!
 
 Thanks for using and supporting this package ;)
 
-> MIT License
+> UIUC License

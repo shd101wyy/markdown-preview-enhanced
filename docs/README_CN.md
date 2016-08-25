@@ -142,4 +142,4 @@ Markdown Preview Enhanced
 
 谢谢你使用并支持此插件 ;)
 
-> MIT License
+> UIUC License
