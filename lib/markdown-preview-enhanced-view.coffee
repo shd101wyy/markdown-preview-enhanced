@@ -253,6 +253,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         count++
 
+      if screenRow == -1
+        screenRow = mid
+
       if (screenRow >= 0)
         @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2, @editor.getElement())
         # @editor.getElement().setScrollTop
