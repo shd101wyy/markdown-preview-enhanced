@@ -46,6 +46,16 @@ Of course you can do more about slide background.
 |data-background-repeat	|no-repeat	|See [background-repeat](https://developer.mozilla.org/docs/Web/CSS/background-repeat) on MDN.|    
 
 <!-- slide -->
+You can also set **video background** and **iframe background**.  
+*Please note that video background doesn't work in preview*
+| Attribute  | Default  | Description |
+|---|---|---|
+| data-background-video	  |   | A single video source, or a comma separated list of video sources. |
+|data-background-video-loop|false|Flags if the video should play repeatedly.|
+|data-background-video-muted|false|Flags if the audio should be muted.|
+|data-background-iframe||Embeds a web page as a background. |
+
+<!-- slide -->
 For example, the markdown snippet below will generate slide like...  
 ```html
 <!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg" -->
@@ -55,6 +65,7 @@ For example, the markdown snippet below will generate slide like...
 ```
 
 <!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg"
+data-transition:"zoom"
 -->
 <p align="right">雷姆党头顶青天</p>
 <p align="right">雷姆党头顶青天</p>
