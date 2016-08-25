@@ -256,12 +256,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if screenRow == -1
         screenRow = mid
 
-      if (screenRow >= 0)
-        @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2, @editor.getElement())
-        # @editor.getElement().setScrollTop
+      @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2, @editor.getElement())
+      # @editor.getElement().setScrollTop
 
-        # track currnet time to disable onDidChangeScrollTop
-        @editorScrollDelay = Date.now() + 500
+      # track currnet time to disable onDidChangeScrollTop
+      @editorScrollDelay = Date.now() + 500
 
   initSettingsEvents: ->
     # settings changed
