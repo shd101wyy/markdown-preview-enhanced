@@ -895,6 +895,7 @@ module.exports = config || {}
       # if slide.length
       slideConfig = slideConfigs[offset]
       styleString = ''
+      videoString = ''
       if slideConfig['data-background-image']
         styleString += "background-image: url('#{slideConfig['data-background-image']}');"
 
@@ -921,9 +922,23 @@ module.exports = config || {}
       else if slideConfig['data-background-color']
         styleString += "background-color: #{slideConfig['data-background-color']} !important;"
 
+      else if slideConfig['data-background-video']
+        videoMuted = slideConfig['data-background-video-muted']
+        videoLoop = slideConfig['data-background-video-loop']
+
+        muted_ = if videoMuted then 'muted' else ''
+        loop_ = if videoLoop then 'loop' else ''
+
+        videoString = """
+        <video #{muted_} #{loop_} playsinline autoplay class=\"background-video\">
+          <source src=\"#{slideConfig['data-background-video']}\">
+        </video>
+        """
+
 
       output += """
         <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
+          #{videoString}
           <section>#{slide}</section>
         </div>
       """
@@ -945,19 +960,31 @@ module.exports = config || {}
       slideConfig = slideConfigs[offset]
       attrString = ''
       if slideConfig['data-background-image']
-        attrString += "data-background-image='#{slideConfig['data-background-image']}'"
+        attrString += " data-background-image='#{slideConfig['data-background-image']}'"
 
       if slideConfig['data-background-size']
-        attrString += "data-background-size='#{slideConfig['data-background-size']}'"
+        attrString += " data-background-size='#{slideConfig['data-background-size']}'"
 
       if slideConfig['data-background-position']
-        attrString += "data-background-position='#{slideConfig['data-background-position']}'"
+        attrString += " data-background-position='#{slideConfig['data-background-position']}'"
 
       if slideConfig['data-background-repeat']
-        attrString += "data-background-repeat='#{slideConfig['data-background-repeat']}'"
+        attrString += " data-background-repeat='#{slideConfig['data-background-repeat']}'"
 
       if slideConfig['data-background-color']
-        attrString += "data-background-color='#{slideConfig['data-background-color']}'"
+        attrString += " data-background-color='#{slideConfig['data-background-color']}'"
+
+      if slideConfig['data-background-video']
+        attrString += " data-background-video='#{slideConfig['data-background-video']}'"
+
+      if slideConfig['data-background-video-loop']
+        attrString += " data-background-video-loop"
+
+      if slideConfig['data-background-video-muted']
+        attrString += " data-background-video-muted"
+
+      if slideConfig['data-transition']
+        attrString += " data-transition='#{slideConfig['data-transition']}'"
 
       output += "<section #{attrString}>#{slide}</section>"
       offset += 1
