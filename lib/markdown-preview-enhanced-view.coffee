@@ -309,7 +309,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @element.setAttribute 'data-mermaid-theme', theme
 
     # render front matter as table?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable', (theme) =>
+    @disposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', (theme) =>
       @renderMarkdown()
 
   scrollSyncForPresentation: (bufferLineNo)->
@@ -737,7 +737,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     BrowserWindow = require('remote').require('browser-window')
     win = new BrowserWindow show: false
-    win.loadUrl htmlPath
+    win.loadURL htmlPath
 
     # get margins type
     marginsType = atom.config.get('markdown-preview-enhanced.marginsType')

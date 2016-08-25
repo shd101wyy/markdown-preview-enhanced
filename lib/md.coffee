@@ -14,7 +14,7 @@ customSubjects = require './custom-comment'
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
-renderFrontMatterAsTable = atom.config.get('markdown-preview-enhanced.renderFrontMatterAsTable')
+frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 
 String.prototype.escape = ()->
@@ -87,9 +87,9 @@ atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
 
-atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable',
+atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
   (flag)->
-    renderFrontMatterAsTable = flag
+    frontMatterRenderingOption = flag
 
 #################################################
 ## Remarkable
@@ -583,7 +583,7 @@ processFrontMatter = (inputString)->
   if inputString.startsWith('---\n')
     end = inputString.indexOf('---\n', 4)
     if end > 0
-      if renderFrontMatterAsTable
+      if frontMatterRenderingOption[0] == 't' # table
         yamlStr = inputString.slice(0, end+4)
         content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         data = matter(yamlStr).data
@@ -595,10 +595,12 @@ processFrontMatter = (inputString)->
           table = "<pre>Failed to parse YAML.</pre>"
 
         return {content, table}
-      else
+      else if frontMatterRenderingOption[0] == 'c' # code block
         yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
         content = yamlStr + inputString.slice(end+4)
         return {content, table: ''}
+      else # hide
+        return {content: inputString.slice(end+4), table: ''}
 
   {content: inputString, table: ''}
 
