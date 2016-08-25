@@ -328,9 +328,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
   scrollSyncToLineNo: (lineNo)->
     @scrollMap ?= @buildScrollMap(this)
 
-    #window.scrollMap = @scrollMap
-    #console.log(lineNo)
-
     editorElement = @editor.getElement()
 
     firstVisibleScreenRow = @editor.getFirstVisibleScreenRow()
@@ -338,6 +335,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     scrollTop = @scrollMap[lineNo] - (if posRatio > 1 then 1 else posRatio) * editorElement.getHeight()
     scrollTop = 0 if scrollTop < 0
+
+    # console.log(lineNo, scrollTop)
+    # window.scrollMap = @scrollMap
 
     @scrollToPos scrollTop
 
@@ -354,6 +354,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     helper = (duration)=>
       @scrollTimeout = setTimeout =>
+        if duration <= 0
+          @element.scrollTop = scrollTop
+          return
         difference = scrollTop - @element.scrollTop
         perTick = difference / duration * delay
 
@@ -366,7 +369,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         helper duration-delay
       , delay
 
-    helper(150)
+    helper(120)
 
   formatStringBeforeParsing: (str)->
     @mainModule.hook.chain('on-will-parse-markdown', str)
