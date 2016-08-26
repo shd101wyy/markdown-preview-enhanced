@@ -1,3 +1,7 @@
+## 0.8.4  
+* [ ] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107)  
+* [ ] add TOC sidebar [#117](https://github.com/shd101wyy/markdown-preview-enhanced/issues/117)  
+
 ## 0.8.3  
 * [x] add option to `hide` frontmatter.  
 * [x] change to `UIUC` license

@@ -98,10 +98,12 @@ page.onLoadFinished = function (status) {
     if (allDone) {
       clearInterval(interval)
 
-      page.render(filename, fileOptions)
-      system.stdout.write(JSON.stringify({filename: filename}))
+      setTimeout(function() {
+        page.render(filename, fileOptions)
+        system.stdout.write(JSON.stringify({filename: filename}))
 
-      exit(null)
+        exit(null)
+      }, 2000)
     }
   }, 100)
 }
