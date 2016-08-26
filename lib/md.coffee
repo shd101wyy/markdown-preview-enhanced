@@ -601,7 +601,9 @@ processFrontMatter = (inputString)->
         content = yamlStr + inputString.slice(end+4)
         return {content, table: ''}
       else # hide
-        return {content: inputString.slice(end+4), table: ''}
+        yamlStr = inputString.slice(0, end+4)
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+        return {content, table: ''}
 
   {content: inputString, table: ''}
 
