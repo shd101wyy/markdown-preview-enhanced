@@ -114,18 +114,25 @@
       "description": "Re-render the preview as the contents of the source changes, without requiring the source buffer to be saved. If disabled, the preview is re-rendered only when the buffer is saved to disk. Disable live update will also disable scroll sync.",
       "order": 60
     },
+    "frontMatterRenderingOption": {
+      "title": "Front Matter rendering option",
+      "type": "string",
+      "description": "You can choose how to render front matter here. 'none' option will hide front matter.",
+      "default": "table",
+      "enum": ["table", "code block", "none"],
+      "order": 70
+    },
     "scrollSync": {
       "type": "boolean",
       "default": true,
       "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling.",
-      "order": 70
-    },
-    "renderFrontMatterAsTable": {
-      "title": "Render front matter as table",
-      "description": "If this option is enabled, then front matter will be rendered as table; otherwise it will be rendered as yaml code block",
-      "type": "boolean",
-      "default": true,
       "order": 75
+    },
+    "scrollDuration": {
+      "type": "string",
+      "default": "120",
+      "description": "Scroll duration is defined in milliseconds. Lower value indicates faster scrolling speed. Default is 120ms",
+      "order": 76
     },
     "exportPDFPageFormat": {
       "title": "Pdf Page Format",

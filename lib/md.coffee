@@ -14,7 +14,7 @@ customSubjects = require './custom-comment'
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
-renderFrontMatterAsTable = atom.config.get('markdown-preview-enhanced.renderFrontMatterAsTable')
+frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 
 String.prototype.escape = ()->
@@ -87,9 +87,9 @@ atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
 
-atom.config.observe 'markdown-preview-enhanced.renderFrontMatterAsTable',
+atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
   (flag)->
-    renderFrontMatterAsTable = flag
+    frontMatterRenderingOption = flag
 
 #################################################
 ## Remarkable
@@ -365,11 +365,8 @@ buildScrollMap = (markdownPreview)->
 
   _scrollMap = []
   nonEmptyList = []
-  lineHeightMap = []
 
   acc = 0
-  lines.forEach (str, n)->
-    lineHeightMap.push(editor.screenRowForBufferRow(n))
 
   linesCount = editor.getScreenLineCount()
 
@@ -386,20 +383,24 @@ buildScrollMap = (markdownPreview)->
   for i in [0...lineElements.length]
     el = lineElements[i]
     t = el.getAttribute('data-line')
+    continue if !t
 
-    if !t
-      continue
+    t = editor.screenRowForBufferRow(parseInt(t)) # get screen buffer row
 
-    t = lineHeightMap[parseInt(t)] # get screen buffer row
-    if t != 0
+    continue if !t
+
+    # this is for ignoring footnote scroll match
+    if t < nonEmptyList[nonEmptyList.length - 1]
+      el.removeAttribute('data-line')
+    else
       nonEmptyList.push(t)
 
-    offsetTop = 0
-    while el and el != markdownHtmlView
-      offsetTop += el.offsetTop
-      el = el.offsetParent
+      offsetTop = 0
+      while el and el != markdownHtmlView
+        offsetTop += el.offsetTop
+        el = el.offsetParent
 
-    _scrollMap[t] = Math.round(offsetTop)
+      _scrollMap[t] = Math.round(offsetTop)
 
   nonEmptyList.push(linesCount)
   _scrollMap.push(markdownHtmlView.scrollHeight)
@@ -583,7 +584,7 @@ processFrontMatter = (inputString)->
   if inputString.startsWith('---\n')
     end = inputString.indexOf('---\n', 4)
     if end > 0
-      if renderFrontMatterAsTable
+      if frontMatterRenderingOption[0] == 't' # table
         yamlStr = inputString.slice(0, end+4)
         content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         data = matter(yamlStr).data
@@ -595,9 +596,13 @@ processFrontMatter = (inputString)->
           table = "<pre>Failed to parse YAML.</pre>"
 
         return {content, table}
-      else
+      else if frontMatterRenderingOption[0] == 'c' # code block
         yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
         content = yamlStr + inputString.slice(end+4)
+        return {content, table: ''}
+      else # hide
+        yamlStr = inputString.slice(0, end+4)
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         return {content, table: ''}
 
   {content: inputString, table: ''}
