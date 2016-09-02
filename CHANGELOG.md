@@ -1,9 +1,9 @@
 ## 0.8.4  
 * [ ] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107)  
 * [ ] add TOC sidebar [#117](https://github.com/shd101wyy/markdown-preview-enhanced/issues/117)  
-* [ ] fix issue [#121](https://github.com/shd101wyy/markdown-preview-enhanced/issues/121) location save
+* [x] fix issue [#121](https://github.com/shd101wyy/markdown-preview-enhanced/issues/121) location save
 * [x] add default document export path [#120](https://github.com/shd101wyy/markdown-preview-enhanced/issues/120)
-* [ ] fix issue [#118](https://github.com/shd101wyy/markdown-preview-enhanced/issues/118) add hint for image paste
+* [x] fix issue [#118](https://github.com/shd101wyy/markdown-preview-enhanced/issues/118) add hint for image paste
 * [ ] support **pandoc**
 
 ## 0.8.3  

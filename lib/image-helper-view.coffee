@@ -115,10 +115,14 @@ class ImageHelperView extends View
 
     if file
       if imageFolderPath[0] == '/' # root folder
+        projectDirectoryPath = null
         for projectDirectory in atom.project.rootDirectories
           if projectDirectory.contains(editorPath)
             projectDirectoryPath = projectDirectory.getPath()
             break
+        if !projectDirectoryPath
+          atom.notifications.addError('You have to \'Add Project Folder\' first', detail: 'project directory path not found')
+          return
         assetDirectory = new Directory(path.resolve(projectDirectoryPath, ".#{imageFolderPath}"))
       else # relative folder
         assetDirectory = new Directory(path.resolve(editorDirectoryPath, imageFolderPath))
