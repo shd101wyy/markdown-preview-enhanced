@@ -52,6 +52,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this variable will check if it is the first time to render MathJax for markdown.
     @firstTimeRenderMathJax = true
 
+    # this variable will check if it is the first time to render markdown
+    @firstTimeRenderMarkdowon = true
+
     # presentation mode
     @presentationMode = false
     @presentationConfig = null
@@ -143,6 +146,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
     @firstTimeRenderMathJax = true
+    @firstTimeRenderMarkdowon = true
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -431,6 +435,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @bindEvents()
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
+
+    if @firstTimeRenderMarkdowon
+      @firstTimeRenderMarkdowon = false
+      cursor = @editor.cursors[0]
+      return if not cursor
+      if @presentationMode
+        @scrollSyncForPresentation cursor.getBufferRow()
+      else
+        @scrollSyncToLineNo cursor.getScreenRow()
 
   bindEvents: ->
     @bindTagAClickEvent()
