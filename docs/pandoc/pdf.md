@@ -75,12 +75,16 @@ Available metadata variables include:
 
 | Variable  | Description  |
 |---|---|
+| papersize | paper size, e.g. `letter`, `A4` |
 | lang  | Document language code |
 | fontsize | Font size (e.g. 10pt, 11pt, 12pt) |
 | documentclass | LaTeX document class (e.g. article) |
 | classoption | Option for documentclass (e.g. oneside); may be repeated |
 | geometry | Options for geometry class (e.g. margin=1in); may be repeated |
 | linkcolor, urlcolor, citecolor	|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
+| thanks | specifies contents of acknowledgments footnote after document title. |  
+
+More available variables can be found [here](http://pandoc.org/MANUAL.html#variables-for-latex).
 
 ## Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  

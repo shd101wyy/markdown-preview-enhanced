@@ -1309,13 +1309,13 @@ module.exports = config || {}
     console.log('advanced document export')
     atom.notifications.addInfo('Your document is being prepared', detail: ':)')
     {content, data} = @processFrontMatter(@editor.getText())
-    ###
+
     content = content.trim()
     if content.startsWith('```yaml\n')
       end = content.indexOf('```\n')
       content = content.slice(0, end+4)
-    ###
-    pandocConvert @editor.getText(), this, data
+
+    pandocConvert content, this, data
 
   copyToClipboard: ->
     return false if not @editor

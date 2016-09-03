@@ -1,6 +1,7 @@
 # Advanced document export (beta)
 After version `0.8.4`, **Markdown Preview Enhanced** will support `advanced document export` feature that works similar to `RStudio Markdown`.   
-To use this feature, you need to have [pandoc](http://pandoc.org/) installed.  
+To use this feature, you need to have [pandoc](http://pandoc.org/) installed.   
+Installation instruction of pandoc can be found [here](http://pandoc.org/installing.html).  
 You can use `advanced document export` by right clicking at the preview, then you will see it on the context menu.  
 
 ---

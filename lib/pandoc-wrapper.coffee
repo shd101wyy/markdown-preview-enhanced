@@ -1,5 +1,8 @@
 path = require 'path'
+fs = require 'fs'
 {execFile} = require 'child_process'
+matter = require('gray-matter')
+# temp = require 'temp'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document'
@@ -22,6 +25,12 @@ processOutputConfig = (config, args)->
   if config['highlight']
     args.push('--highlight-style='+config['highlight'])
 
+loadOutputYAML = (md)->
+  yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
+  yaml = fs.readFileSync yamlPath
+  data = matter('---\n'+yaml+'---\n').data
+  data || {}
+
 ###
 title
 author
@@ -30,7 +39,8 @@ path: ./
 output:
 ###
 pandocConvert = (text, md, config={})->
-  console.log text, config
+  config = Object.assign({}, loadOutputYAML(md), config)
+  text = matter.stringify(text, config)
   args = []
 
   extension = null
@@ -58,13 +68,21 @@ pandocConvert = (text, md, config={})->
     outputFilePath = md.editor.getPath()
     outputFilePath = outputFilePath.slice(0, outputFilePath.length - path.extname(outputFilePath).length) + '.' + extension
     args.push '-o', outputFilePath
+  # args.push(md.editor.getPath())
 
-  args.push(md.editor.getPath())
+  console.log args.join(' ')
 
-  console.log args.join(' '), args
+  program = execFile 'pandoc', args
+  program.stdin.end(text)
 
-  execFile 'pandoc', args, (error)->
-    throw error if error
+  program.on 'exit', ()->
     atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
 
+  program.on 'error', (err)->
+    throw err
+  ###
+  , (error)->
+    throw error if error
+    atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
+  ###
 module.exports = pandocConvert
