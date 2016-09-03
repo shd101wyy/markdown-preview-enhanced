@@ -24,12 +24,27 @@ processOutputConfig = (config, args)->
     args.push('--toc-depth='+config['toc_depth'])
   if config['highlight']
     args.push('--highlight-style='+config['highlight'])
+  if config['pandoc_args']
+    for arg in config['pandoc_args']
+      args.push(arg)
 
-loadOutputYAML = (md)->
+loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   yaml = fs.readFileSync yamlPath
   data = matter('---\n'+yaml+'---\n').data
-  data || {}
+  data = data || {}
+
+  if config['output']
+    if typeof(config['output']) == 'string' && data[config['output']]
+      format = config['output']
+      config['output'] = {}
+      config['output'][format] = data[format]
+    else
+      format = Object.keys(config['output'])[0]
+      if data[format]
+        config['output'][format] = Object.assign({}, data[format], config['output'][format])
+
+  Object.assign({}, data, config)
 
 ###
 title
@@ -39,9 +54,11 @@ path: ./
 output:
 ###
 pandocConvert = (text, md, config={})->
-  config = Object.assign({}, loadOutputYAML(md), config)
+  config = loadOutputYAML md, config
   text = matter.stringify(text, config)
   args = []
+
+  console.log config
 
   extension = null
   outputConfig = null
