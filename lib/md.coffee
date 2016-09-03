@@ -595,15 +595,15 @@ processFrontMatter = (inputString)->
         else
           table = "<pre>Failed to parse YAML.</pre>"
 
-        return {content, table}
+        return {content, table, data}
       else if frontMatterRenderingOption[0] == 'c' # code block
         yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
         content = yamlStr + inputString.slice(end+4)
-        return {content, table: ''}
+        return {content, table: '', data}
       else # hide
         yamlStr = inputString.slice(0, end+4)
         content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
-        return {content, table: ''}
+        return {content, table: '', data}
 
   {content: inputString, table: ''}
 
@@ -777,5 +777,6 @@ parseMD = (inputString, option={})->
 
 module.exports = {
   parseMD,
-  buildScrollMap
+  buildScrollMap,
+  processFrontMatter
 }

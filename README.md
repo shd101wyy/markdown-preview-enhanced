@@ -32,7 +32,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 ![main](https://cloud.githubusercontent.com/assets/1908863/15383014/14ad19d0-1dc2-11e6-9385-acd90f53a831.gif)
 
 ## Features
-- **2-way scroll sync**  
+- **2-side scroll sync**  
 - **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
 - **[Extensible](#for-developer)**
 - markdown preview with math typesetting support   

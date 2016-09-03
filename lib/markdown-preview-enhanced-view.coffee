@@ -11,6 +11,7 @@ katex = require 'katex'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
+pandocConvert = require './pandoc-wrapper'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -45,6 +46,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this two variables will be got from './md'
     @parseMD = null
     @buildScrollMap = null
+    @processFrontMatter = null
 
     # this variable will be got from 'viz.js'
     @Viz = null
@@ -69,6 +71,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     atom.commands.add @element,
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
+      'markdown-preview-enhanced:advanced-document-export': => @advancedDocumentExport()
       'core:copy': => @copyToClipboard()
 
   @content: ->
@@ -133,7 +136,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @updateTabTitle()
 
     if not @parseMD
-      {@parseMD, @buildScrollMap} = require './md'
+      {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
@@ -1301,6 +1304,18 @@ module.exports = config || {}
             ebookConvert info.path, dist, ebookConfig, (err)=>
               throw err if err
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+
+  advancedDocumentExport: ->
+    console.log('advanced document export')
+    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+    {content, data} = @processFrontMatter(@editor.getText())
+    ###
+    content = content.trim()
+    if content.startsWith('```yaml\n')
+      end = content.indexOf('```\n')
+      content = content.slice(0, end+4)
+    ###
+    pandocConvert @editor.getText(), this, data
 
   copyToClipboard: ->
     return false if not @editor

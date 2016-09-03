@@ -4,6 +4,7 @@
 
 - [PDF Document](#pdf-document)
 	- [Overview](#overview)
+	- [Export Path](#export-path)
 	- [Table of Contents](#table-of-contents)
 	- [Syntax Highlighting](#syntax-highlighting)
 	- [LaTeX Options](#latex-options)
@@ -23,6 +24,16 @@ date: March 22, 2005
 output: pdf_document
 ---
 ```
+## Export Path  
+You can define the document export path by specifying `path` option. For example:  
+```yaml
+---
+title: "Habits"
+path: /Exports/Habits.pdf
+---
+```   
+If `path` is not defined, then document will be generated under the same directory.
+
 ## Table of Contents
 You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:  
 ```yaml
@@ -60,7 +71,8 @@ fontsize: 11pt
 geometry: margin=1in
 ---
 ```
-Available metadata variables include:  
+Available metadata variables include:   
+
 | Variable  | Description  |
 |---|---|
 | lang  | Document language code |
@@ -68,7 +80,7 @@ Available metadata variables include:
 | documentclass | LaTeX document class (e.g. article) |
 | classoption | Option for documentclass (e.g. oneside); may be repeated |
 | geometry | Options for geometry class (e.g. margin=1in); may be repeated |
-|linkcolor, urlcolor, citecolor	|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
+| linkcolor, urlcolor, citecolor	|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
 
 ## Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
