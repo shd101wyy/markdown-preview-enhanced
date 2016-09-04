@@ -1007,9 +1007,7 @@ module.exports = config || {}
     slides = slides.slice(1)
     output = ''
 
-    offset = 0
-    for slide in slides
-      slideConfig = slideConfigs[offset]
+    parseAttrString = (slideConfig)=>
       attrString = ''
       if slideConfig['data-background-image']
         attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], isSavingToHTML)}'"
@@ -1040,9 +1038,32 @@ module.exports = config || {}
 
       if slideConfig['data-background-iframe']
         attrString += " data-background-iframe='#{@resolveFilePath(slideConfig['data-background-iframe'], isSavingToHTML)}'"
+      attrString
 
-      output += "<section #{attrString}>#{slide}</section>"
-      offset += 1
+    i = 0
+    while i < slides.length
+      slide = slides[i]
+      slideConfig = slideConfigs[i]
+      attrString = parseAttrString(slideConfig)
+
+      if !slideConfig['vertical']
+        if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
+          output += '</section>'
+        output += "<section #{attrString}>#{slide}</section>"
+        i += 1
+      else # vertical
+        if i > 0
+          if !slideConfigs[i-1]['vertical'] # start of vertical slides
+            output += "<section><section #{attrString}>#{slide}</section>"
+          else
+            output += "<section #{attrString}>#{slide}</section>"
+        else
+          output += "<section><section #{attrString}>#{slide}</section>"
+
+        i += 1
+
+    if slideConfigs[i-1]['vertical'] # end of vertical slides
+      output += "</section>"
 
     """
     <div class="reveal">
