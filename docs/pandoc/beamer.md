@@ -5,6 +5,7 @@
 
 - [Beamer Document](#beamer-document)
 	- [Overview](#overview)
+	- [Export Path](#export-path)
 	- [Incremental Bullets](#incremental-bullets)
 	- [Themes](#themes)
 	- [Table of Contents](#table-of-contents)
@@ -57,6 +58,20 @@ output: beamer_presentation
 - Get in bed
 - Count sheep
 ```  
+
+## Export Path  
+You can define the document export path by specifying `path` option. For example:    
+
+```yaml
+---
+title: "Habits"
+output:
+  beamer_presentation:
+    path: /Exports/Habits.pdf
+---
+```   
+If `path` is not defined, then document will be generated under the same directory.
+
 ## Incremental Bullets
 You can render bullets incrementally by adding the `incremental` option:
 ```yaml

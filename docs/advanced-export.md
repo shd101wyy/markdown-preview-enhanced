@@ -11,7 +11,7 @@ more information and tutorial about how to write `front-matter` can be found [he
 
 ## Formats
 The following formats are currently supported, **more formats will be supported in the future.**  
-(Some example are referred from [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html))  
+(Some examples are referred from [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html))  
 Click the link below to see the document format that you want to export.  
 
 * [PDF](./pandoc/pdf.md)  

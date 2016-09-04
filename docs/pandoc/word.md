@@ -4,6 +4,7 @@
 
 - [Word Document](#word-document)
 	- [Overview](#overview)
+	- [Export Path](#export-path)
 	- [Syntax Highlighting](#syntax-highlighting)
 	- [Style Reference](#style-reference)
 	- [Pandoc Arguments](#pandoc-arguments)
@@ -22,6 +23,20 @@ date: March 22, 2005
 output: word_document
 ---
 ```  
+
+## Export Path  
+You can define the document export path by specifying `path` option. For example:    
+
+```yaml
+---
+title: "Habits"
+output:
+  word_document:
+    path: /Exports/Habits.docx
+---
+```   
+If `path` is not defined, then document will be generated under the same directory.
+
 ## Syntax Highlighting  
 You can use the `highlight` option to control the syntax highlighting theme. For example:  
 ```yaml

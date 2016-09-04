@@ -4,6 +4,7 @@
 
 - [RTF Document](#rtf-document)
 	- [Overview](#overview)
+	- [Export Path](#export-path)
 	- [Table of Contents](#table-of-contents)
 	- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
@@ -21,6 +22,19 @@ date: March 22, 2005
 output: rtf_document
 ---
 ```
+
+## Export Path  
+You can define the document export path by specifying `path` option. For example:    
+
+```yaml
+---
+title: "Habits"
+output:
+  rtf_document:
+    path: /Exports/Habits.rtf
+---
+```   
+If `path` is not defined, then document will be generated under the same directory.
 
 ## Table of Contents
 You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:  
