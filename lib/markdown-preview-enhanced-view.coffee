@@ -70,7 +70,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     atom.commands.add @element,
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
-      'markdown-preview-enhanced:advanced-document-export': => @advancedDocumentExport()
+      'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
       'core:copy': => @copyToClipboard()
 
   @content: ->
@@ -1303,7 +1303,7 @@ module.exports = config || {}
               throw err if err
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
 
-  advancedDocumentExport: ->
+  pandocDocumentExport: ->
     {content, data} = @processFrontMatter(@editor.getText())
 
     content = content.trim()

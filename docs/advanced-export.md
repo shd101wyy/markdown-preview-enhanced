@@ -1,12 +1,12 @@
-# Advanced document export (beta)
-After version `0.8.4`, **Markdown Preview Enhanced** will support `advanced document export` feature that works similar to `RStudio Markdown`.   
+# Pandoc document export (beta)
+After version `0.8.4`, **Markdown Preview Enhanced** will support `pandoc document export` feature that works similar to `RStudio Markdown`.   
 To use this feature, you need to have [pandoc](http://pandoc.org/) installed.   
 Installation instruction of pandoc can be found [here](http://pandoc.org/installing.html).  
-You can use `advanced document export` by right clicking at the preview, then you will see it on the context menu.  
+You can use `pandoc document export` by right clicking at the preview, then you will see it on the context menu.  
 
 ---
 ## Front-Matter   
-`advanced document export` requires writing `front-matter`.  
+`pandoc document export` requires writing `front-matter`.  
 more information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).
 
 ## Formats
@@ -27,4 +27,4 @@ You can also define your own custom document:
 * [Bibliographies and Citations](./pandoc/bibliographies-and-citations.md)
 
 ## Attention
-graphs like `mermaid, wavedrom, viz, plantuml` will not be working with `advanced document export`
+graphs like `mermaid, wavedrom, viz, plantuml` will not be working with `pandoc document export`

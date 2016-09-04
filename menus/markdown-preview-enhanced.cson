@@ -16,8 +16,8 @@
       'command': 'markdown-preview-enhanced:export-to-disk'
     }
     {
-      'label': 'Advanced Document Export'
-      'command': 'markdown-preview-enhanced:advanced-document-export'
+      'label': 'Pandoc'
+      'command': 'markdown-preview-enhanced:pandoc-document-export'
     }
   ]
 'menu': [
