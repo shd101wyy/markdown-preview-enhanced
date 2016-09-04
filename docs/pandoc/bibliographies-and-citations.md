@@ -109,9 +109,9 @@ You can also write an in-text citation, as follows:
 ```
 ### Unused References (nocite)
 If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy `nocite` metadata field and put the citations there:
-```yaml
+```
 ---
-nocite: \|
+nocite: |
   @item1, @item2
 ...
 

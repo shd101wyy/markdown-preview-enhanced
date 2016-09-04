@@ -42,6 +42,9 @@ processOutputConfig = (config, args)->
     else if config['citation_package'] == 'biblatex'
       args.push('--biblatex')
 
+  if config['number_sections']
+    args.push('--number-sections')
+
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   yaml = fs.readFileSync yamlPath
