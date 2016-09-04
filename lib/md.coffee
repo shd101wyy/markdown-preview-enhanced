@@ -581,34 +581,38 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
     else
       arg
 
-  if inputString.startsWith('---\n')
-    end = inputString.indexOf('---\n', 4)
-    if end > 0
-      if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
-        yamlStr = inputString.slice(0, end+4)
-        data = matter(yamlStr).data
+  # https://regexper.com/
+  r = /^-{3}[\n\r]([\w|\W]+?)[\n\r]-{3}[\n\r]/
 
-        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
-        return {content, table: '', data}
-      else if frontMatterRenderingOption[0] == 't' # table
-        yamlStr = inputString.slice(0, end+4)
-        data = matter(yamlStr).data
+  match = r.exec(inputString)
 
-        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+  if match
+    if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
+      yamlStr = match[0]
+      data = matter(yamlStr).data
 
-        # to table
-        if typeof(data) == 'object'
-          table = toTable(data)
-        else
-          table = "<pre>Failed to parse YAML.</pre>"
+      content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
+      return {content, table: '', data}
+    else if frontMatterRenderingOption[0] == 't' # table
+      yamlStr = match[0]
+      data = matter(yamlStr).data
 
-        return {content, table, data}
-      else # if frontMatterRenderingOption[0] == 'c' # code block
-        yamlStr = inputString.slice(0, end+4)
-        data = matter(yamlStr).data
+      content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
 
-        content = '```yaml\n' + inputString.slice(4, end) + '```\n' + inputString.slice(end+4)
-        return {content, table: '', data}
+      # to table
+      if typeof(data) == 'object'
+        table = toTable(data)
+      else
+        table = "<pre>Failed to parse YAML.</pre>"
+
+      return {content, table, data}
+    else # if frontMatterRenderingOption[0] == 'c' # code block
+      yamlStr = match[0]
+      data = matter(yamlStr).data
+
+      content = '```yaml\n' + match[1] + '\n```\n' + inputString.slice(yamlStr.length)
+
+      return {content, table: '', data}
 
   {content: inputString, table: ''}
 

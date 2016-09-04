@@ -5,7 +5,8 @@
 * [x] add default document export path [#120](https://github.com/shd101wyy/markdown-preview-enhanced/issues/120)
 * [x] fix issue [#118](https://github.com/shd101wyy/markdown-preview-enhanced/issues/118) add hint for image paste
 * [x] support **pandoc**
-* [x] add vertical slides for presentation [#123](https://github.com/shd101wyy/markdown-preview-enhanced/issues/123) 
+* [x] add vertical slides for presentation [#123](https://github.com/shd101wyy/markdown-preview-enhanced/issues/123)
+* [x] remove `Markdown Preview Enhanced: Config Presentation`, use front-matter instead   
 
 ## 0.8.3  
 * [x] add option to `hide` frontmatter.  
