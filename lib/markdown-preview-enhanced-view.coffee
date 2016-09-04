@@ -1137,10 +1137,14 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dist)->
-    {html, ebookConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
+    {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
     html = @formatStringAfterParsing(html)
 
-    if !ebookConfig.isEbook
+    ebookConfig = null
+    if yamlConfig
+      ebookConfig = yamlConfig['ebook']
+
+    if !ebookConfig
       return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
       atom.notifications.addInfo('Your document is being prepared', detail: ':)')

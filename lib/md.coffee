@@ -559,7 +559,7 @@ else
     table: '',
   }
 ###
-processFrontMatter = (inputString)->
+processFrontMatter = (inputString, hideFrontMatter=false)->
   toTable = (arg)->
     if arg instanceof Array
       tbody = "<tbody><tr>"
@@ -584,7 +584,12 @@ processFrontMatter = (inputString)->
   if inputString.startsWith('---\n')
     end = inputString.indexOf('---\n', 4)
     if end > 0
-      if frontMatterRenderingOption[0] == 't' # table
+      if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
+        yamlStr = inputString.slice(0, end+4)
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
+        data = matter(yamlStr).data
+        return {content, table: '', data}
+      else if frontMatterRenderingOption[0] == 't' # table
         yamlStr = inputString.slice(0, end+4)
         content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         data = matter(yamlStr).data
@@ -596,13 +601,9 @@ processFrontMatter = (inputString)->
           table = "<pre>Failed to parse YAML.</pre>"
 
         return {content, table, data}
-      else if frontMatterRenderingOption[0] == 'c' # code block
+      else # if frontMatterRenderingOption[0] == 'c' # code block
         yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
         content = yamlStr + inputString.slice(end+4)
-        return {content, table: '', data}
-      else # hide
-        yamlStr = inputString.slice(0, end+4)
-        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         return {content, table: '', data}
 
   {content: inputString, table: ''}
@@ -615,6 +616,7 @@ option = {
   isSavingToHTML:       bool, optional
   isForPreview:         bool, optional
   isForEbook:           bool, optional
+  hideFrontMatter:      bool, optional
   markdownPreview:      MarkdownPreviewEnhancedView. optional
   rootDirectoryPath:    string, required
                         the directory path of the markdown file.
@@ -637,9 +639,6 @@ parseMD = (inputString, option={})->
 
   # slide
   slideConfigs = []
-
-  # ebook
-  ebookConfig = {}
 
   # yaml
   yamlConfig = null
@@ -665,7 +664,7 @@ parseMD = (inputString, option={})->
       globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # check front-matter
-  {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString)
+  {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -717,9 +716,6 @@ parseMD = (inputString, option={})->
       opt.line = tokens[idx].line
       slideConfigs.push(opt)
       return '<div class="new-slide"></div>'
-    else if subject == 'ebook'
-      opt = tokens[idx].option
-      ebookConfig = Object.assign({isEbook: true}, opt)
     return ''
 
 
@@ -764,19 +760,18 @@ parseMD = (inputString, option={})->
         tocEndLine = -1
 
         slideConfigs = []
-        ebookConfig = {}
 
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
         markdownPreview.editorScrollDelay = Date.now() + 500
         markdownPreview.previewScrollDelay = Date.now() + 500
 
-        {content:inputString} = processFrontMatter(editor.getText())
+        {content:inputString} = processFrontMatter(editor.getText(), option.hideFrontMatter)
         html = md.render(inputString)
 
   markdownPreview?.headings = headings
 
   html = resolveImagePathAndCodeBlock(html, graphData, option)
-  return {html: frontMatterTable+html, slideConfigs, ebookConfig, yamlConfig}
+  return {html: frontMatterTable+html, slideConfigs, yamlConfig}
 
 module.exports = {
   parseMD,
