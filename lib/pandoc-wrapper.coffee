@@ -1,8 +1,9 @@
 path = require 'path'
 fs = require 'fs'
 {execFile} = require 'child_process'
-matter = require('gray-matter')
+matter = require 'gray-matter'
 # temp = require 'temp'
+{parseMD} = require './md'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document'
@@ -46,6 +47,38 @@ loadOutputYAML = (md, config)->
 
   Object.assign({}, data, config)
 
+processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
+  match = null
+  offset = 0
+  output = ''
+
+  resolvePath = (src)->
+    if src.startsWith('http://') or
+       src.startsWith('https://') or
+       src.startsWith('atom://') or
+       src.startsWith('file://') or
+       src.startsWith('#')
+      return src
+    else if src.startsWith('/')
+      return path.relative(outputDir, path.resolve(projectDirectoryPath, '.'+src))
+    else # ./test.png or test.png
+      return path.relative(outputDir, path.resolve(rootDirectoryPath, src))
+
+  # replace path in ![](...) and []()
+  r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
+  text = text.replace r, (whole, a, b, c)->
+    if b[0] == '<'
+      b = b.slice(1, b.length-1)
+      a + '<' + resolvePath(b.trim()) + '> ' + c
+    else
+      a + resolvePath(b.trim()) + ' ' + c
+
+  # replace path in tag
+  r = /(<[img|a|iframe].*?[src|href]=['"])(.+?)(['"].*?>)/gi
+  text = text.replace r, (whole, a, b, c)->
+    a + resolvePath(b) + c
+
+  text
 ###
 title
 author
@@ -57,8 +90,6 @@ pandocConvert = (text, md, config={})->
   config = loadOutputYAML md, config
   text = matter.stringify(text, config)
   args = []
-
-  console.log config
 
   extension = null
   outputConfig = null
@@ -89,17 +120,17 @@ pandocConvert = (text, md, config={})->
 
   console.log args.join(' ')
 
-  program = execFile 'pandoc', args
+  # change link path to relative path
+  text = processPaths text, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
+
+  # change working directory
+  cwd = process.cwd()
+  process.chdir(path.dirname(outputFilePath))
+
+  program = execFile 'pandoc', args, (err)->
+    process.chdir(cwd) # change cwd back
+    throw err if err
+    atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
   program.stdin.end(text)
 
-  program.on 'exit', ()->
-    atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
-
-  program.on 'error', (err)->
-    throw err
-  ###
-  , (error)->
-    throw error if error
-    atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
-  ###
 module.exports = pandocConvert
