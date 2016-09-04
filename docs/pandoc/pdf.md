@@ -10,6 +10,7 @@
 	- [LaTeX Options](#latex-options)
 		- [LaTeX Packages for Citations](#latex-packages-for-citations)
 	- [Advanced Customization](#advanced-customization)
+		- [LaTeX Engine](#latex-engine)
 		- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
 
@@ -113,6 +114,17 @@ output:
 ```
 
 ## Advanced Customization
+### LaTeX Engine  
+By default PDF documents are rendered using `pdflatex`. You can specify an alternate engine using the `latex_engine` option. Available engines are “pdflatex”, “xelatex”, and “lualatex”. For example:  
+```yaml
+---
+title: "Habits"
+output:
+  pdf_document:
+    latex_engine: xelatex
+---
+```
+
 ### Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
 ```yaml

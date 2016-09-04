@@ -62,6 +62,9 @@ processOutputConfig = (config, args)->
   if config['fonttheme']
     args.push('-V', 'fonttheme:'+config['fonttheme'])
 
+  if config['latex_engine']
+    args.push('--latex-engine='+config['latex_engine'])
+
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   try
