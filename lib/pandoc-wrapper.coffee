@@ -62,7 +62,11 @@ processOutputConfig = (config, args)->
 
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
-  yaml = fs.readFileSync yamlPath
+  try
+    yaml = fs.readFileSync yamlPath
+  catch error
+    return Object.assign({}, config)
+    
   data = matter('---\n'+yaml+'---\n').data
   data = data || {}
 
