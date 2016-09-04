@@ -44,9 +44,9 @@ If there are pandoc features you want to use that lack equivilants in the YAML o
 ---
 title: "Habits"
 output:
-  pdf_document:
+  rtf_document:
     pandoc_args: [
-      "--no-tex-ligatures"
+      "--csl", "/var/csl/acs-nano.csl"
     ]
 ---
 ```
@@ -56,8 +56,7 @@ If you want to specify a set of default options to be shared by multiple documen
 
 **_output.yaml**
 ```yaml
-pdf_document:
+rtf_document:
   toc: true
-  highlight: zenburn
 ```
 All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.

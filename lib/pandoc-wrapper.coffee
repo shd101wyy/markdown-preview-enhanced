@@ -6,7 +6,7 @@ matter = require 'gray-matter'
 {parseMD} = require './md'
 
 getFileExtension = (documentType)->
-  if documentType == 'pdf_document'
+  if documentType == 'pdf_document' or documentType == 'beamer_presentation'
     'pdf'
   else if documentType == 'word_document'
     'docx'
@@ -44,6 +44,12 @@ processOutputConfig = (config, args)->
 
   if config['number_sections']
     args.push('--number-sections')
+
+  if config['incremental']
+    args.push('--incremental')
+
+  if config['slide_level']
+    args.push('--slide-level='+config['slide_level'])
 
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
@@ -140,9 +146,11 @@ pandocConvert = (text, md, config={})->
 
   extension = null
   outputConfig = null
+  documentFormat = null
   if config['output']
     if typeof(config['output']) == 'string'
-      extension = getFileExtension(config['output'])
+      documentFormat = config['output']
+      extension = getFileExtension(documentFormat)
     else
       documentFormat = Object.keys(config['output'])[0]
       extension = getFileExtension(documentFormat)
@@ -150,6 +158,10 @@ pandocConvert = (text, md, config={})->
   else
     atom.notifications.addError('Output format needs to be specified')
   return if not extension
+
+  #
+  if documentFormat == 'beamer_presentation'
+    args.push('-t', 'beamer')
 
   if outputConfig
     processOutputConfig outputConfig, args

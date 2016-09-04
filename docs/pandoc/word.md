@@ -62,8 +62,7 @@ If you want to specify a set of default options to be shared by multiple documen
 
 **_output.yaml**
 ```yaml
-pdf_document:
-  toc: true
+word_document:
   highlight: zenburn
 ```
 All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.

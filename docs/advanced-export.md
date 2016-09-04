@@ -17,6 +17,7 @@ Click the link below to see the document format that you want to export.
 * [PDF](./pandoc/pdf.md)  
 * [Word](./pandoc/word.md)
 * [RTF](./pandoc/rtf.md)
+* [Beamer](./pandoc/beamer.md)
 <!-- * [HTML](./pandoc/html.md) -->
 <!-- * [Beamer](./pandoc/beamer.md) -->
 <!-- * [ODT](./pandoc/odt.md) -->
