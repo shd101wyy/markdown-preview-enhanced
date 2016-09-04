@@ -103,8 +103,16 @@ right clicking at the preview, then choose `Open in Browser` option.
 
 <!-- slide -->   
 You can also set initialization config for your presentation.  
-Run `Markdown Preview Enhanced: Config Presentation` command to open the config file.   
-More information about configuration can be found at [reveal.js](https://github.com/hakimel/reveal.js#configuration) website.
+Just add front-matter to your presentation markdown file.  
+```yaml
+---
+presentation:
+  width: 800
+  height: 600
+  controls: false
+---
+```
+More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/docs/presentation-front-matter.md).
 
 <!-- slide -->  
 #### Star this project if you like it ;)    
