@@ -1306,8 +1306,6 @@ module.exports = config || {}
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
 
   advancedDocumentExport: ->
-    console.log('advanced document export')
-    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
     {content, data} = @processFrontMatter(@editor.getText())
 
     content = content.trim()

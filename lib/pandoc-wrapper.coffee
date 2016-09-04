@@ -51,6 +51,15 @@ processOutputConfig = (config, args)->
   if config['slide_level']
     args.push('--slide-level='+config['slide_level'])
 
+  if config['theme']
+    args.push('-V', 'theme:'+config['theme'])
+
+  if config['colortheme']
+    args.push('-V', 'colortheme:'+config['colortheme'])
+
+  if config['fonttheme']
+    args.push('-V', 'fonttheme:'+config['fonttheme'])
+
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   yaml = fs.readFileSync yamlPath
@@ -168,19 +177,21 @@ pandocConvert = (text, md, config={})->
 
   # src/dist
   if outputConfig and outputConfig['path']
-    # TODO: check extension
     outputFilePath = outputConfig['path']
     if outputFilePath.startsWith('/')
       outputFilePath = path.resolve(md.projectDirectoryPath, '.'+outputFilePath)
     else
       outputFilePath = path.resolve(md.rootDirectoryPath, outputFilePath)
 
+    if path.extname(outputFilePath) != '.' + extension
+      atom.notifications.addError('Invalid extension for ' + documentFormat, detail: 'required .' + extension + ', but ' + path.extname(outputFilePath) + ' was provided.')
+      return
+
     args.push '-o', outputFilePath
   else
     outputFilePath = md.editor.getPath()
     outputFilePath = outputFilePath.slice(0, outputFilePath.length - path.extname(outputFilePath).length) + '.' + extension
     args.push '-o', outputFilePath
-  # args.push(md.editor.getPath())
 
   # resolve paths in front-matter(yaml)
   processConfigPaths config, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
@@ -199,7 +210,9 @@ pandocConvert = (text, md, config={})->
   if config['bibliography'] or config['references']
     args.push('--filter', 'pandoc-citeproc')
 
-  console.log args.join(' ')
+  # console.log args.join(' ')
+
+  atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
   program = execFile 'pandoc', args, (err)->
     process.chdir(cwd) # change cwd back
