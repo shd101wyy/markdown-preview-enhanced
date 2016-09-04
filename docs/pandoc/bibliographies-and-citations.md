@@ -27,7 +27,14 @@ title: "Sample Document"
 output: html_document
 bibliography: bibliography.bib
 ---
-```  
+```   
+
+If you are including multiple bibliography files, you can then define like this:  
+```yaml
+---
+bibliography: [ bibliography1.bib, bibliography2.bib ]
+---
+```
 
 The bibliography may have any of these formats:  
 
@@ -50,29 +57,23 @@ Alternatively you can use a `references` field in the document’s YAML metadata
 ```yaml
 ---
 references:
-- type: article-journal
-  id: WatsonCrick1953
+- id: fenner2012a
+  title: One-click science marketing
   author:
-  - family: Watson
-    given: J. D.
-  - family: Crick
-    given: F. H. C.
+  - family: Fenner
+    given: Martin
+  container-title: Nature Materials
+  volume: 11
+  URL: 'http://dx.doi.org/10.1038/nmat3283'
+  DOI: 10.1038/nmat3283
+  issue: 4
+  publisher: Nature Publishing Group
+  page: 261-263
+  type: article-journal
   issued:
-    date-parts:
-    - - 1953
-      - 4
-      - 25
-  title: 'Molecular structure of nucleic acids: a structure for deoxyribose
-    nucleic acid'
-  title-short: Molecular structure of nucleic acids
-  container-title: Nature
-  volume: 171
-  issue: 4356
-  page: 737-738
-  DOI: 10.1038/171737a0
-  URL: http://www.nature.com/nature/journal/v171/n4356/abs/171737a0.html
-  language: en-GB
-...
+    year: 2012
+    month: 3
+---
 ```
 
 ### Bibliography Placement

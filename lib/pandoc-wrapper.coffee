@@ -60,6 +60,35 @@ loadOutputYAML = (md, config)->
 
   Object.assign({}, data, config)
 
+processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath)->
+  # same as the one in processPaths function
+  # TODO: refactor in the future
+  resolvePath = (src)->
+    if src.startsWith('http://') or
+       src.startsWith('https://') or
+       src.startsWith('atom://') or
+       src.startsWith('file://') or
+       src.startsWith('#')
+      return src
+    else if src.startsWith('/')
+      return path.relative(outputDir, path.resolve(projectDirectoryPath, '.'+src))
+    else # ./test.png or test.png
+      return path.relative(outputDir, path.resolve(rootDirectoryPath, src))
+
+  helper = (data)->
+    if typeof(data) == 'string'
+      return resolvePath(data)
+    else if data.constructor == Array
+      return data.map (d)->resolvePath(d)
+    else
+      data
+
+  if config['bibliography']
+    config['bibliography'] = helper(config['bibliography'])
+
+  if config['csl']
+    config['csl'] = helper(config['csl'])
+
 processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
   match = null
   offset = 0
@@ -101,7 +130,6 @@ output:
 ###
 pandocConvert = (text, md, config={})->
   config = loadOutputYAML md, config
-  text = matter.stringify(text, config)
   args = []
 
   extension = null
@@ -121,9 +149,14 @@ pandocConvert = (text, md, config={})->
     processOutputConfig outputConfig, args
 
   # src/dist
-  if config['path']
+  if outputConfig and outputConfig['path']
     # TODO: check extension
-    outputFilePath = config['path']
+    outputFilePath = outputConfig['path']
+    if outputFilePath.startsWith('/')
+      outputFilePath = path.resolve(md.projectDirectoryPath, '.'+outputFilePath)
+    else
+      outputFilePath = path.resolve(md.rootDirectoryPath, outputFilePath)
+
     args.push '-o', outputFilePath
   else
     outputFilePath = md.editor.getPath()
@@ -131,7 +164,11 @@ pandocConvert = (text, md, config={})->
     args.push '-o', outputFilePath
   # args.push(md.editor.getPath())
 
-  console.log args.join(' ')
+  # resolve paths in front-matter(yaml)
+  processConfigPaths config, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
+
+  # add front-matter(yaml) to text
+  text = matter.stringify(text, config)
 
   # change link path to relative path
   text = processPaths text, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
@@ -143,6 +180,8 @@ pandocConvert = (text, md, config={})->
   # citation
   if config['bibliography'] or config['references']
     args.push('--filter', 'pandoc-citeproc')
+
+  console.log args.join(' ')
 
   program = execFile 'pandoc', args, (err)->
     process.chdir(cwd) # change cwd back

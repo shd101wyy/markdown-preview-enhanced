@@ -27,11 +27,14 @@ output: pdf_document
 ---
 ```
 ## Export Path  
-You can define the document export path by specifying `path` option. For example:  
+You can define the document export path by specifying `path` option. For example:    
+
 ```yaml
 ---
 title: "Habits"
-path: /Exports/Habits.pdf
+output:
+  pdf_document:
+    path: /Exports/Habits.pdf
 ---
 ```   
 If `path` is not defined, then document will be generated under the same directory.
