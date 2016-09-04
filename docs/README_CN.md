@@ -33,6 +33,7 @@ Markdown Preview Enhanced
 
 ## 支持特性
 - **编辑与预览滑动同步**  
+- **[pandoc](./advanced-export.md)**
 - **Presentation Writer** (beta) [介绍](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
 - **[支持扩展 (beta)](#开发者)**
 - 数学编辑支持     

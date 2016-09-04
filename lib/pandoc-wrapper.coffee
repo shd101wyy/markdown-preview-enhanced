@@ -14,6 +14,8 @@ getFileExtension = (documentType)->
     'html'
   else if documentType == 'rtf_document'
     'rtf'
+  else if documentType == 'custom_document'
+    '*'
   else
     atom.notifications.addError('Invalid output format', detail: documentType)
     null
@@ -66,7 +68,7 @@ loadOutputYAML = (md, config)->
     yaml = fs.readFileSync yamlPath
   catch error
     return Object.assign({}, config)
-    
+
   data = matter('---\n'+yaml+'---\n').data
   data = data || {}
 
@@ -172,6 +174,10 @@ pandocConvert = (text, md, config={})->
     atom.notifications.addError('Output format needs to be specified')
   return if not extension
 
+  # custom_document requires path to be defined
+  if documentFormat == 'custom_document' and (!outputConfig || !outputConfig['path'])
+    return atom.notifications.addError('custom_document requires path to be defined')
+
   #
   if documentFormat == 'beamer_presentation'
     args.push('-t', 'beamer')
@@ -187,9 +193,8 @@ pandocConvert = (text, md, config={})->
     else
       outputFilePath = path.resolve(md.rootDirectoryPath, outputFilePath)
 
-    if path.extname(outputFilePath) != '.' + extension
-      atom.notifications.addError('Invalid extension for ' + documentFormat, detail: 'required .' + extension + ', but ' + path.extname(outputFilePath) + ' was provided.')
-      return
+    if documentFormat != 'custom_document' and path.extname(outputFilePath) != '.' + extension
+      return atom.notifications.addError('Invalid extension for ' + documentFormat, detail: 'required .' + extension + ', but ' + path.extname(outputFilePath) + ' was provided.')
 
     args.push '-o', outputFilePath
   else

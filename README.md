@@ -35,6 +35,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Features
 - **2-side scroll sync**  
+- **[pandoc](./docs/advanced-export.md)**
 - **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
 - **[Extensible](#for-developer)**
 - markdown preview with math typesetting support   

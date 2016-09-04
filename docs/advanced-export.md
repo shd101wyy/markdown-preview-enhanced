@@ -17,7 +17,11 @@ Click the link below to see the document format that you want to export.
 * [PDF](./pandoc/pdf.md)  
 * [Word](./pandoc/word.md)
 * [RTF](./pandoc/rtf.md)
-* [Beamer](./pandoc/beamer.md)
+* [Beamer](./pandoc/beamer.md)  
+
+
+You can also define your own custom document:  
+* [custom](./pandoc/custom.md)
 
 ## Articles  
 * [Bibliographies and Citations](./pandoc/bibliographies-and-citations.md)
