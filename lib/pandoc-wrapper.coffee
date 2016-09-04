@@ -23,8 +23,14 @@ processOutputConfig = (config, args)->
     args.push '--toc'
   if config['toc_depth']
     args.push('--toc-depth='+config['toc_depth'])
+
   if config['highlight']
+    if config['highlight'] == 'default'
+      config['highlight'] = 'pygments'
     args.push('--highlight-style='+config['highlight'])
+  if config['highlight'] == null
+    args.push('--no-highlight')
+
   if config['pandoc_args']
     for arg in config['pandoc_args']
       args.push(arg)
