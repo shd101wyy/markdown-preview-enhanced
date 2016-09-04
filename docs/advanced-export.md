@@ -21,5 +21,8 @@ Click the link below to see the document format that you want to export.
 <!-- * [Beamer](./pandoc/beamer.md) -->
 <!-- * [ODT](./pandoc/odt.md) -->
 
+## Articles  
+* [Bibliographies and Citations](./pandoc/bibliographies-and-citations.md)
+
 ## Attention
 graphs like `mermaid, wavedrom, viz, plantuml` will not be working with `advanced document export`

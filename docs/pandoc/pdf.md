@@ -8,7 +8,9 @@
 	- [Table of Contents](#table-of-contents)
 	- [Syntax Highlighting](#syntax-highlighting)
 	- [LaTeX Options](#latex-options)
-	- [Pandoc Arguments](#pandoc-arguments)
+		- [LaTeX Packages for Citations](#latex-packages-for-citations)
+	- [Advanced Customization](#advanced-customization)
+		- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
 
 <!-- tocstop -->
@@ -86,7 +88,18 @@ Available metadata variables include:
 
 More available variables can be found [here](http://pandoc.org/MANUAL.html#variables-for-latex).
 
-## Pandoc Arguments   
+### LaTeX Packages for Citations
+By default, citations are processed through `pandoc-citeproc`, which works for all output formats. For PDF output, sometimes it is better to use LaTeX packages to process citations, such as `natbib` or `biblatex`. To use one of these packages, just set the option `citation_package` to be `natbib` or `biblatex`, e.g.  
+```yaml
+---
+output:
+  pdf_document:
+    citation_package: natbib
+---
+```
+
+## Advanced Customization
+### Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
 ```yaml
 ---

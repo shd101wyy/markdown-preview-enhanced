@@ -18,6 +18,7 @@ getFileExtension = (documentType)->
     atom.notifications.addError('Invalid output format', detail: documentType)
     null
 
+# eg: process config inside pdf_document block
 processOutputConfig = (config, args)->
   if config['toc']
     args.push '--toc'
@@ -34,6 +35,12 @@ processOutputConfig = (config, args)->
   if config['pandoc_args']
     for arg in config['pandoc_args']
       args.push(arg)
+
+  if config['citation_package']
+    if config['citation_package'] == 'natbib'
+      args.push('--natbib')
+    else if config['citation_package'] == 'biblatex'
+      args.push('--biblatex')
 
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
@@ -132,6 +139,10 @@ pandocConvert = (text, md, config={})->
   # change working directory
   cwd = process.cwd()
   process.chdir(path.dirname(outputFilePath))
+
+  # citation
+  if config['bibliography'] or config['references']
+    args.push('--filter', 'pandoc-citeproc')
 
   program = execFile 'pandoc', args, (err)->
     process.chdir(cwd) # change cwd back
