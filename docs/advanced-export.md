@@ -15,9 +15,9 @@ The following formats are currently supported, **more formats will be supported 
 Click the link below to see the document format that you want to export.  
 
 * [PDF](./pandoc/pdf.md)  
-* [HTML](./pandoc/html.md)
 * [Word](./pandoc/word.md)
 * [RTF](./pandoc/rtf.md)
+<!-- * [HTML](./pandoc/html.md) -->
 <!-- * [Beamer](./pandoc/beamer.md) -->
 <!-- * [ODT](./pandoc/odt.md) -->
 

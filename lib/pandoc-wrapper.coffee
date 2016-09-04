@@ -92,6 +92,9 @@ processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath
   if config['csl']
     config['csl'] = helper(config['csl'])
 
+  if config['output'] && typeof(config['output'])!='string' && config['output']['word_document'] && config['output']['word_document']['reference_docx']
+    config['output']['word_document']['reference_docx'] = helper(config['output']['word_document']['reference_docx'])
+
 processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
   match = null
   offset = 0

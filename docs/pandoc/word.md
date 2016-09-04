@@ -5,6 +5,7 @@
 - [Word Document](#word-document)
 	- [Overview](#overview)
 	- [Syntax Highlighting](#syntax-highlighting)
+	- [Style Reference](#style-reference)
 	- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
 
@@ -32,6 +33,16 @@ output:
 ---
 ```
 
+## Style Reference
+Use the specified file as a style reference in producing a docx file. For best results, the reference docx should be a modified version of a docx file produced using pandoc. The contents of the reference docx are ignored, but its stylesheets and document properties (including margins, page size, header, and footer) are used in the new docx. If no reference docx is specified on the command line, pandoc will look for a file `reference.docx` in the user data directory (see --data-dir). If this is not found either, sensible defaults will be used.  
+```yaml
+---
+title: "Habits"
+output:
+  word_document:
+    reference_docx: mystyles.docx
+---
+```
 
 ## Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
@@ -39,9 +50,9 @@ If there are pandoc features you want to use that lack equivilants in the YAML o
 ---
 title: "Habits"
 output:
-  pdf_document:
+  word_document:
     pandoc_args: [
-      "--no-tex-ligatures"
+      "--csl", "/var/csl/acs-nano.csl"
     ]
 ---
 ```
