@@ -28,6 +28,16 @@ f(x) = \int_{-\infty}^\infty
     \,d\xi
 $$
 
+<!-- slide vertical:true -->
+By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical:true`.  
+For example:  
+```
+<!-- slide vertical:true -->
+```  
+
+<!-- slide vertical:true -->
+You just discovered a vertical slide!
+
 <!-- slide -->
 You can set slide background very easily.   
 For example:
