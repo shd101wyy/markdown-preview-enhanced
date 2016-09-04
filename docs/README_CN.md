@@ -93,8 +93,6 @@ Markdown Preview Enhanced
   - 编辑 `mermaid` 初始化设置。
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>
   - 编辑导出 **PDF** 的 header 和 footer 设置。
-- <strong> Markdown Preview Enhanced: Config Presentation</strong>
-  - 编辑 `reveal` 初始化设置。
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper 图片助手支持快速插入图片链接，拷贝本地图片，和上传图片（powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/)）。       
 	（如果 **imgur** 被墙了， 请使用 **sm.ms** ）    

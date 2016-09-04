@@ -59,7 +59,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation mode
     @presentationMode = false
-    @presentationConfig = null
     @slideConfigs = null
 
     # when resize the window, clear the editor
@@ -139,10 +138,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
-
-      @presentationConfig = @loadPresentationConfig()
-      @presentationConfig.width = 960 if not @presentationConfig.width
-      @presentationConfig.height = 700 if not @presentationConfig.height
 
     @headings = []
     @scrollMap = null
@@ -421,12 +416,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+    {html, slideConfigs, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
 
     html = @formatStringAfterParsing(html)
 
     if slideConfigs.length
-      html = @parseSlides(html, slideConfigs)
+      html = @parseSlides(html, slideConfigs, yamlConfig)
       @element.setAttribute 'data-presentation-preview-mode', ''
       @presentationMode = true
       @slideConfigs = slideConfigs
@@ -708,6 +703,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
+    yamlConfig = res.yamlConfig || {}
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -775,7 +771,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize(#{JSON.stringify(@presentationConfig)})
+        Reveal.initialize(#{JSON.stringify(yamlConfig['presentation'])})
       </script>
       """
     else
@@ -895,43 +891,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ####################################################
   ## Presentation
   ##################################################
-  loadPresentationConfig: ()->
-    # presentation_config.js
-    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js')
-    try
-      return require(configPath)
-    catch error
-      configFile = new File(configPath)
-      configFile.create().then (flag)->
-        if !flag # already exists
-          atom.notifications.addError('Failed to load presentation_config.js', detail: 'there might be errors in your config file')
-          return
-
-        configFile.write """
-'use strict'
-/*
-config presentation powered by reveal.js
-more information about configuration can be found here:
-    https://github.com/hakimel/reveal.js#user-content-configuration
-*/
-// you can edit the 'config' variable below
-// everytime you changed this file, you may need to restart atom.
-let config = {
-  controls: true,
-}
-
-module.exports = config || {}
-"""
-      return {}
-
-  parseSlides: (html, slideConfigs)->
+  parseSlides: (html, slideConfigs, yamlConfig)->
     slides = html.split '<div class="new-slide"></div>'
     slides = slides.slice(1)
     output = ''
 
     offset = 0
-    width = @presentationConfig.width
-    height = @presentationConfig.height
+    width = 960
+    height = 700
+
+    if yamlConfig and yamlConfig['presentation']
+      presentationConfig = yamlConfig['presentation']
+      width = presentationConfig['width'] || 960
+      height = presentationConfig['height'] || 700
+
     ratio = height / width * 100 + '%'
     zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
 

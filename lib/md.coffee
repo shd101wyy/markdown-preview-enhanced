@@ -641,6 +641,9 @@ parseMD = (inputString, option={})->
   # ebook
   ebookConfig = {}
 
+  # yaml
+  yamlConfig = null
+
   # set graph data
   # so that we won't render the graph that hasn't changed
   graphData = null
@@ -662,7 +665,7 @@ parseMD = (inputString, option={})->
       globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
   # check front-matter
-  {table:frontMatterTable, content:inputString} = processFrontMatter(inputString)
+  {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -773,7 +776,7 @@ parseMD = (inputString, option={})->
   markdownPreview?.headings = headings
 
   html = resolveImagePathAndCodeBlock(html, graphData, option)
-  return {html: frontMatterTable+html, slideConfigs, ebookConfig}
+  return {html: frontMatterTable+html, slideConfigs, ebookConfig, yamlConfig}
 
 module.exports = {
   parseMD,

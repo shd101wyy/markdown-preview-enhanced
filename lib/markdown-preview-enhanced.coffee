@@ -37,7 +37,6 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
       'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
       'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
-      'markdown-preview-enhanced:config-presentation': => @openPresentationConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:insert-page-break': => @insertPageBreak()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
@@ -173,7 +172,7 @@ module.exports = MarkdownPreviewEnhanced =
 
   //custom phantomjs pdf export style
   &.phantomjs-pdf {
-    
+
   }
 
   // custom presentation style
@@ -253,9 +252,6 @@ module.exports = MarkdownPreviewEnhanced =
 
   openHeaderFooterConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
-
-  openPresentationConfig: ()->
-    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js'))
 
   toggleZenMode: ()->
     editor = atom.workspace.getActiveTextEditor()

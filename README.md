@@ -96,8 +96,6 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - edit `mermaid` init configuration.
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>
   - **PDF** export header and footer configuration.
-- <strong> Markdown Preview Enhanced: Config Presentation</strong>
-  - edit `reveal` init configuration
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
 	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    
