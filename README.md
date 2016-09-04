@@ -5,6 +5,8 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)  
 
+Feature **Advanced Document Export** is not supported after version `0.8.4`! More information can be found [here](./docs/advanced-export.md)
+
 You can now create **EBook** using this plugin! More information can be found [here](./docs/ebook.md).
 
 Feature **Presentation Writer** is now supported after version `0.7.7`!  
@@ -110,6 +112,8 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Open HTML in browser
 - **Export to Disk**
 	- Export **HTML**, **PDF**, **PNG**, **JPEG** files.
+- **Advanced Document Export**
+	- [doc](./docs/advanced-export.md)
 
 ## Extra
 * **EBook**  
