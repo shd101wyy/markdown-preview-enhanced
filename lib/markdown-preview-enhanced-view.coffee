@@ -1304,12 +1304,12 @@ module.exports = config || {}
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
 
   pandocDocumentExport: ->
-    {content, data} = @processFrontMatter(@editor.getText())
+    {data} = @processFrontMatter(@editor.getText())
 
-    content = content.trim()
-    if content.startsWith('```yaml\n')
-      end = content.indexOf('```\n')
-      content = content.slice(0, end+4)
+    content = @editor.getText().trim()
+    if content.startsWith('---\n')
+      end = content.indexOf('---\n', 4)
+      content = content.slice(end+4)
 
     pandocConvert content, this, data
 

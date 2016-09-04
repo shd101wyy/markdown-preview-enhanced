@@ -586,13 +586,15 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
     if end > 0
       if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
         yamlStr = inputString.slice(0, end+4)
-        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         data = matter(yamlStr).data
+
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         return {content, table: '', data}
       else if frontMatterRenderingOption[0] == 't' # table
         yamlStr = inputString.slice(0, end+4)
-        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
         data = matter(yamlStr).data
+
+        content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(end+4)
 
         # to table
         if typeof(data) == 'object'
@@ -602,8 +604,10 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
 
         return {content, table, data}
       else # if frontMatterRenderingOption[0] == 'c' # code block
-        yamlStr = "```yaml\n" + inputString.slice(4, end) + '```\n'
-        content = yamlStr + inputString.slice(end+4)
+        yamlStr = inputString.slice(0, end+4)
+        data = matter(yamlStr).data
+
+        content = '```yaml\n' + inputString.slice(4, end) + '```\n' + inputString.slice(end+4)
         return {content, table: '', data}
 
   {content: inputString, table: ''}
