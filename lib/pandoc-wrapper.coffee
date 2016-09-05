@@ -8,8 +8,6 @@ getFileExtension = (documentType)->
     'pdf'
   else if documentType == 'word_document'
     'docx'
-  else if documentType == 'html_document'
-    'html'
   else if documentType == 'rtf_document'
     'rtf'
   else if documentType == 'custom_document'
