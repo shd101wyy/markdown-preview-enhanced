@@ -1035,7 +1035,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         i += 1
 
-    if slideConfigs[i-1]['vertical'] # end of vertical slides
+    if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
       output += "</section>"
 
     """
