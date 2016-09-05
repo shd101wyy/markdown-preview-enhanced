@@ -84,6 +84,9 @@ processOutputConfig = (config, args)->
     if includesConfig['after_body']
       helper('--include-after-body=', includesConfig['after_body'])
 
+  if config['template']
+    args.push('--template=' + config['template'])
+
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   try
@@ -148,6 +151,9 @@ processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath
 
     if outputConfig['reference_docx']
       outputConfig['reference_docx'] = helper(outputConfig['reference_docx'])
+
+    if outputConfig['template']
+      outputConfig['template'] = helper(outputConfig['template'])
 
 processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
   match = null

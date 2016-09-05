@@ -12,6 +12,7 @@
 	- [Advanced Customization](#advanced-customization)
 		- [LaTeX Engine](#latex-engine)
 		- [Include](#include)
+		- [Custom Templates](#custom-templates)
 		- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
 
@@ -139,6 +140,18 @@ output:
       after_body: doc_suffix.tex
 ---
 ```
+
+### Custom Templates
+You can also replace the underlying pandoc template using the `template` option:
+```yaml
+---
+title: "Habits"
+output:
+  pdf_document:
+    template: quarterly_report.tex
+---
+```
+Consult the documentation on [pandoc templates](http://pandoc.org/README.html#templates) for additional details on templates. You can also study the [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) as an example.
 
 ### Pandoc Arguments   
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
