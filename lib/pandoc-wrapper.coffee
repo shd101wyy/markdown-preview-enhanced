@@ -2,6 +2,7 @@ path = require 'path'
 fs = require 'fs'
 {execFile} = require 'child_process'
 matter = require 'gray-matter'
+{Directory} = require 'atom'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -242,13 +243,17 @@ pandocConvert = (text, md, config={})->
     args.push('--filter', 'pandoc-citeproc')
 
   # console.log args.join(' ')
+  #
+  # pandoc will cause error if directory doesn't exist,
+  # therefore I will create directory first.
+  directory = new Directory(path.dirname(outputFilePath))
+  directory.create().then (flag)->
+    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-  atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-
-  program = execFile 'pandoc', args, (err)->
-    process.chdir(cwd) # change cwd back
-    throw err if err
-    atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
-  program.stdin.end(text)
+    program = execFile 'pandoc', args, (err)->
+      process.chdir(cwd) # change cwd back
+      throw err if err
+      atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
+    program.stdin.end(text)
 
 module.exports = pandocConvert
