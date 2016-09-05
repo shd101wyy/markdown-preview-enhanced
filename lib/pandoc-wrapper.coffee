@@ -84,7 +84,7 @@ processOutputConfig = (config, args)->
     args.push('--template=' + config['template'])
 
 loadOutputYAML = (md, config)->
-  yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
+  yamlPath = path.resolve(md.rootDirectoryPath, '_output.yaml')
   try
     yaml = fs.readFileSync yamlPath
   catch error
