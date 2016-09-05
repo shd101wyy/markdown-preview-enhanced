@@ -822,7 +822,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   # api doc [printToPDF] function
   # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
-  printPDF: (htmlPath, dist)->
+  printPDF: (htmlPath, dest)->
     return if not @editor
 
     BrowserWindow = require('remote').require('browser-window')
@@ -838,8 +838,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # get orientation
     landscape = atom.config.get('markdown-preview-enhanced.orientation') == 'landscape'
 
-    lastIndexOfSlash = dist.lastIndexOf '/' || 0
-    pdfName = dist.slice(lastIndexOfSlash + 1)
+    lastIndexOfSlash = dest.lastIndexOf '/' || 0
+    pdfName = dest.slice(lastIndexOfSlash + 1)
 
     win.webContents.on 'did-finish-load', ()=>
       setTimeout(()=>
@@ -850,17 +850,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
           marginsType: marginsType, (err, data)=>
             throw err if err
 
-            fs.writeFile dist, data, (err)=>
+            fs.writeFile dest, data, (err)=>
               throw err if err
 
-              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dest}"
 
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-                @openFile dist
+                @openFile dest
       , 500)
 
-  saveAsPDF: (dist)->
+  saveAsPDF: (dest)->
     return if not @editor
 
     if @presentationMode # for presentation, need to print from chrome
@@ -874,19 +874,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
         throw err if err
         fs.write info.fd, htmlContent, (err)=>
           throw err if err
-          @printPDF "file://#{info.path}", dist
+          @printPDF "file://#{info.path}", dest
 
-  saveAsHTML: (dist, offline=true)->
+  saveAsHTML: (dest, offline=true)->
     return if not @editor
 
     htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
 
-    lastIndexOfSlash = dist.lastIndexOf '/' || 0
-    htmlFileName = dist.slice(lastIndexOfSlash + 1)
+    lastIndexOfSlash = dest.lastIndexOf '/' || 0
+    htmlFileName = dest.slice(lastIndexOfSlash + 1)
 
-    fs.writeFile dist, htmlContent, (err)=>
+    fs.writeFile dest, htmlContent, (err)=>
       throw err if err
-      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dist}")
+      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dest}")
 
   ####################################################
   ## Presentation
@@ -1091,14 +1091,14 @@ module.exports = config || {}
 """
       return {}
 
-  phantomJSExport: (dist)->
+  phantomJSExport: (dest)->
     return if not @editor
 
     if @presentationMode # for presentation, need to print from chrome
       @openInBrowser(true)
       return
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dist)
+    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dest)
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
@@ -1123,20 +1123,20 @@ module.exports = config || {}
 
     pdf
       .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
-      .toFile dist, (err, res)=>
+      .toFile dest, (err, res)=>
         if err
           atom.notifications.addError err
         # open pdf
         else
-          lastIndexOfSlash = dist.lastIndexOf '/' || 0
-          fileName = dist.slice(lastIndexOfSlash + 1)
+          lastIndexOfSlash = dest.lastIndexOf '/' || 0
+          fileName = dest.slice(lastIndexOfSlash + 1)
 
-          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
           if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-            @openFile dist
+            @openFile dest
 
   ## EBOOK
-  generateEbook: (dist)->
+  generateEbook: (dest)->
     {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
     html = @formatStringAfterParsing(html)
 
@@ -1223,7 +1223,7 @@ module.exports = config || {}
       @renderViz(div)
 
       # convert image to base64 if output html
-      if path.extname(dist) == '.html'
+      if path.extname(dest) == '.html'
         # check cover
         if ebookConfig.cover
           cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
@@ -1253,7 +1253,7 @@ module.exports = config || {}
 
       mathStyle = ''
       if outputHTML.indexOf('class="katex"') > 0
-        if path.extname(dist) == '.html' and ebookConfig.cdn
+        if path.extname(dest) == '.html' and ebookConfig.cdn
           mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
         else
           mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
@@ -1281,13 +1281,13 @@ module.exports = config || {}
   </html>
       """
 
-      fileName = path.basename(dist)
+      fileName = path.basename(dest)
 
       # save as html
-      if path.extname(dist) == '.html'
-        fs.writeFile dist, outputHTML, (err)=>
+      if path.extname(dest) == '.html'
+        fs.writeFile dest, outputHTML, (err)=>
           throw err if err
-          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dist}")
+          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
         return
 
       # use ebook-convert to generate ePub, mobi, PDF.
@@ -1299,9 +1299,9 @@ module.exports = config || {}
           fs.write info.fd, outputHTML, (err)=>
             throw err if err
             # @openFile info.path
-            ebookConvert info.path, dist, ebookConfig, (err)=>
+            ebookConvert info.path, dest, ebookConfig, (err)=>
               throw err if err
-              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
 
   pandocDocumentExport: ->
     {data} = @processFrontMatter(@editor.getText())

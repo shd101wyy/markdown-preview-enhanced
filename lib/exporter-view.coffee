@@ -122,23 +122,23 @@ class ExporterView extends View
     @initEBookPageEvent()
 
     $('.export-btn', @element).click ()=>
-      dist = @fileNameInput.getText().trim()
-      if !@markdownPreview or !dist.length
+      dest = @fileNameInput.getText().trim()
+      if !@markdownPreview or !dest.length
         atom.notifications.addError('Failed to export document')
         return
 
       @hidePanel()
       if $('.document-pdf', @element).hasClass('selected') # pdf
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-        @markdownPreview.saveAsPDF dist
+        @markdownPreview.saveAsPDF dest
       else if $('.document-html', @element).hasClass('selected') # html
         isCDN = $('.cdn-checkbox', @element)[0].checked
-        @markdownPreview.saveAsHTML dist, !isCDN
+        @markdownPreview.saveAsHTML dest, !isCDN
       else if $('.document-phantomjs', @element).hasClass('selected') # phantomjs
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-        @markdownPreview.phantomJSExport dist
+        @markdownPreview.phantomJSExport dest
       else if $('.document-ebook', @element).hasClass('selected') # ebook
-        @markdownPreview.generateEbook dist
+        @markdownPreview.generateEbook dest
 
   initHTMLPageEvent: ->
     $('.document-html', @element).on 'click', (e)=>
