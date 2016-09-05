@@ -1,7 +1,16 @@
+---
+presentation:
+  width: 960
+  height: 700
+  help: true
+---
+
 <!-- slide -->
 # Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
 powered by [reveal.js](https://github.com/hakimel/reveal.js)  
+<br>
+<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>
 
 <!-- slide -->
 You can easily create beautiful presentation by running command   

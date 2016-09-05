@@ -24,7 +24,7 @@
 ```yaml
 ---
 title: "Sample Document"
-output: html_document
+output: pdf_document
 bibliography: bibliography.bib
 ---
 ```   

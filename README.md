@@ -5,7 +5,7 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)  
 
-Feature **Pandoc Document Export** is now supported after version `0.8.4`! More information can be found [here](./docs/advanced-export.md)
+**Pandoc Document Export** is now supported after version `0.8.4`! More information can be found [here](./docs/advanced-export.md).
 
 You can now create **EBook** using this plugin! More information can be found [here](./docs/ebook.md).
 
