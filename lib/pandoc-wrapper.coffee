@@ -109,20 +109,14 @@ loadOutputYAML = (md, config)->
 
   Object.assign({}, data, config)
 
-processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath)->
+processConfigPaths = (config, rootDirectoryPath, projectDirectoryPath)->
   # same as the one in processPaths function
   # TODO: refactor in the future
   resolvePath = (src)->
-    if src.startsWith('http://') or
-       src.startsWith('https://') or
-       src.startsWith('atom://') or
-       src.startsWith('file://') or
-       src.startsWith('#')
-      return src
-    else if src.startsWith('/')
-      return path.relative(outputDir, path.resolve(projectDirectoryPath, '.'+src))
+    if src.startsWith('/')
+      return path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
     else # ./test.png or test.png
-      return path.relative(outputDir, path.resolve(rootDirectoryPath, src))
+      return src
 
   helper = (data)->
     if typeof(data) == 'string'
@@ -155,22 +149,16 @@ processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath
     if outputConfig['template']
       outputConfig['template'] = helper(outputConfig['template'])
 
-processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
+processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
   match = null
   offset = 0
   output = ''
 
   resolvePath = (src)->
-    if src.startsWith('http://') or
-       src.startsWith('https://') or
-       src.startsWith('atom://') or
-       src.startsWith('file://') or
-       src.startsWith('#')
-      return src
-    else if src.startsWith('/')
-      return path.relative(outputDir, path.resolve(projectDirectoryPath, '.'+src))
+    if src.startsWith('/')
+      return path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
     else # ./test.png or test.png
-      return path.relative(outputDir, path.resolve(rootDirectoryPath, src))
+      return src
 
   # replace path in ![](...) and []()
   r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
@@ -239,7 +227,7 @@ pandocConvert = (text, md, config={})->
     args.push '-o', outputFilePath
 
   # resolve paths in front-matter(yaml)
-  processConfigPaths config, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
+  processConfigPaths config, md.rootDirectoryPath, md.projectDirectoryPath
 
   if outputConfig
     processOutputConfig outputConfig, args
@@ -248,11 +236,11 @@ pandocConvert = (text, md, config={})->
   text = matter.stringify(text, config)
 
   # change link path to relative path
-  text = processPaths text, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
+  text = processPaths text, md.rootDirectoryPath, md.projectDirectoryPath
 
   # change working directory
   cwd = process.cwd()
-  process.chdir(path.dirname(outputFilePath))
+  process.chdir(md.rootDirectoryPath)
 
   # citation
   if config['bibliography'] or config['references']
