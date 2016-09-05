@@ -17,7 +17,7 @@ Download and Install the [Calibre Application](https://calibre-ebook.com/downloa
 Add `ebook-convert` to your system path.
 
 ## Start writing EBook    
-You can set up a ebook configuration by simply inserting `<!-- ebook -->` into your markdown file.  
+You can set up a ebook configuration by simply adding `ebook front-matter` into your markdown file.  
 General settings:  
 * **title**  
 title of your book  
@@ -46,17 +46,21 @@ Load css and javascript files from `cdn.js`. This option is only used when expor
 All values of settings should be within **double quotes**.     
 For example, I created a `SUMMARY.md` file, and I added the following configuration.
 
-```
-<!--  ebook
-      title:"Markdown Preview Enhanced"
-      author:"shd101wyy" -->
+```yaml
+---
+ebook:
+  title: Markdown Preview Enhanced
+  author: shd101wyy
+---
 ```
 
 The `SUMMARY.md` should also have a TOC to help organize the book:
 ```markdown
-<!--  ebook
-      title:"Markdown Preview Enhanced"
-      author:"shd101wyy" -->
+---
+ebook:
+  title: Markdown Preview Enhanced
+  author: shd101wyy
+---
 
 # Preface  
 This is the preface, but not necessary.

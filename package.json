@@ -134,6 +134,13 @@
       "description": "Scroll duration is defined in milliseconds. Lower value indicates faster scrolling speed. Default is 120ms",
       "order": 76
     },
+    "documentExportPath": {
+      "title": "document export folder path",
+      "description": "When exporting document to disk, by default the document will be generated at the root path './'",
+      "type": "string",
+      "default": "./",
+      "order": 77
+    },
     "exportPDFPageFormat": {
       "title": "Pdf Page Format",
       "type": "string",

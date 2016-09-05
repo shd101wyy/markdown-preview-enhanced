@@ -1,7 +1,16 @@
+---
+presentation:
+  width: 960
+  height: 700
+  help: true
+---
+
 <!-- slide -->
 # Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
 powered by [reveal.js](https://github.com/hakimel/reveal.js)  
+<br>
+<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>
 
 <!-- slide -->
 You can easily create beautiful presentation by running command   
@@ -27,6 +36,16 @@ f(x) = \int_{-\infty}^\infty
     \hat f(\xi)\,e^{2 \pi i \xi x}
     \,d\xi
 $$
+
+<!-- slide vertical:true -->
+By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical:true`.  
+For example:  
+```
+<!-- slide vertical:true -->
+```  
+
+<!-- slide vertical:true -->
+You just discovered a vertical slide!
 
 <!-- slide -->
 You can set slide background very easily.   
@@ -93,8 +112,16 @@ right clicking at the preview, then choose `Open in Browser` option.
 
 <!-- slide -->   
 You can also set initialization config for your presentation.  
-Run `Markdown Preview Enhanced: Config Presentation` command to open the config file.   
-More information about configuration can be found at [reveal.js](https://github.com/hakimel/reveal.js#configuration) website.
+Just add front-matter to your presentation markdown file.  
+```yaml
+---
+presentation:
+  width: 800
+  height: 600
+  controls: false
+---
+```
+More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/docs/presentation-front-matter.md).
 
 <!-- slide -->  
 #### Star this project if you like it ;)    

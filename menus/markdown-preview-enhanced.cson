@@ -15,6 +15,10 @@
       'label': 'Export to Disk'
       'command': 'markdown-preview-enhanced:export-to-disk'
     }
+    {
+      'label': 'Pandoc'
+      'command': 'markdown-preview-enhanced:pandoc-document-export'
+    }
   ]
 'menu': [
   {

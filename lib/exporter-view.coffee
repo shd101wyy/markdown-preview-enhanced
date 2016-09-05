@@ -8,6 +8,7 @@ class ExporterView extends View
   initialize: ()->
 
     @markdownPreview = null
+    @documentExportPath = null
 
     @subscriptions.add atom.commands.add @element,
       'core:cancel': => @hidePanel()
@@ -30,13 +31,14 @@ class ExporterView extends View
 
       @label class: 'save-as-label', 'Save as'
       @subview 'fileNameInput', new TextEditorView(mini: true, placeholderText: 'enter filename here')
+      @label class: 'copy-label', 'Export document to ./ folder'
+      @div class: 'splitter'
 
       @div class: 'html-div', =>
         @label 'CDN (network required)'
         @input class: 'cdn-checkbox', type: 'checkbox'
 
       @div class: 'pdf-div', =>
-        @div class: 'splitter'
         @label 'Format'
         @select class: 'format-select', =>
           @option 'A3'
@@ -71,7 +73,6 @@ class ExporterView extends View
         # @input type: 'text', class: 'image-quality-input'
 
       @div class: 'phantomjs-div', =>
-        @div class: 'splitter'
         @label 'File Type'
         @select class: 'file-type-select', =>
           @option 'pdf'
@@ -121,23 +122,23 @@ class ExporterView extends View
     @initEBookPageEvent()
 
     $('.export-btn', @element).click ()=>
-      dist = @fileNameInput.getText().trim()
-      if !@markdownPreview or !dist.length
+      dest = @fileNameInput.getText().trim()
+      if !@markdownPreview or !dest.length
         atom.notifications.addError('Failed to export document')
         return
 
       @hidePanel()
       if $('.document-pdf', @element).hasClass('selected') # pdf
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-        @markdownPreview.saveAsPDF dist
+        @markdownPreview.saveAsPDF dest
       else if $('.document-html', @element).hasClass('selected') # html
         isCDN = $('.cdn-checkbox', @element)[0].checked
-        @markdownPreview.saveAsHTML dist, !isCDN
+        @markdownPreview.saveAsHTML dest, !isCDN
       else if $('.document-phantomjs', @element).hasClass('selected') # phantomjs
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-        @markdownPreview.phantomJSExport dist
+        @markdownPreview.phantomJSExport dest
       else if $('.document-ebook', @element).hasClass('selected') # ebook
-        @markdownPreview.generateEbook dist
+        @markdownPreview.generateEbook dest
 
   initHTMLPageEvent: ->
     $('.document-html', @element).on 'click', (e)=>
@@ -153,7 +154,7 @@ class ExporterView extends View
       $('.ebook-div', @element).hide()
       $('.html-div', @element).show()
 
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.html'
       @fileNameInput.setText(filePath)
 
@@ -173,7 +174,7 @@ class ExporterView extends View
       $('.ebook-div', @element).hide()
       $('.pdf-div', @element).show()
 
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.pdf'
       @fileNameInput.setText(filePath)
 
@@ -223,7 +224,7 @@ class ExporterView extends View
       $('.ebook-div', @element).hide()
       $('.phantomjs-div', @element).show()
 
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       extension = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
@@ -242,7 +243,7 @@ class ExporterView extends View
       extension = e.target.value
       atom.config.set('markdown-preview-enhanced.phantomJSExportFileType', extension)
 
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + extension
       @fileNameInput.setText(filePath)
 
@@ -273,7 +274,7 @@ class ExporterView extends View
         $('.selected', @elemnet).removeClass('selected')
         $el.addClass('selected')
 
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + $('.ebook-div .ebook-format-select', @element)[0].value
       @fileNameInput.setText(filePath)
       @fileNameInput.focus()
@@ -285,7 +286,7 @@ class ExporterView extends View
 
     ## select
     $('.ebook-div .ebook-format-select', @element).on 'change', (e)=>
-      filePath = @markdownPreview.editor.getPath()
+      filePath = path.resolve(@documentExportPath, @markdownPreview.editor.getFileName())
       filePath = filePath.slice(0, filePath.length-path.extname(filePath).length) + '.' + e.target.value
       @fileNameInput.setText(filePath)
 
@@ -302,6 +303,20 @@ class ExporterView extends View
 
     @panel ?= atom.workspace.addModalPanel(item: this, visible: false)
     @panel.show()
+
+    copyLabel = $('.copy-label', @element)
+    @documentExportPath = atom.config.get 'markdown-preview-enhanced.documentExportPath'
+    copyLabel.html "<i>Export document to <a>#{@documentExportPath}</a> folder</i>"
+    copyLabel.find('a').on 'click', ()=>
+      try
+        atom.workspace.open('atom://config/packages/markdown-preview-enhanced', {split: 'right'})
+        @hidePanel()
+      catch e
+        @hidePanel()
+    if @documentExportPath.startsWith('/')
+      @documentExportPath = path.resolve(markdownPreview.projectDirectoryPath, '.'+@documentExportPath)
+    else
+      @documentExportPath = path.resolve(markdownPreview.rootDirectoryPath, @documentExportPath)
 
     @fileNameInput.focus()
     $('.selected', @element).click()

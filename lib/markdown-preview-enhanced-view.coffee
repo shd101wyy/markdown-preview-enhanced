@@ -11,6 +11,7 @@ katex = require 'katex'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
+pandocConvert = require './pandoc-wrapper'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -45,6 +46,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this two variables will be got from './md'
     @parseMD = null
     @buildScrollMap = null
+    @processFrontMatter = null
 
     # this variable will be got from 'viz.js'
     @Viz = null
@@ -52,9 +54,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this variable will check if it is the first time to render MathJax for markdown.
     @firstTimeRenderMathJax = true
 
+    # this variable will check if it is the first time to render markdown
+    @firstTimeRenderMarkdowon = true
+
     # presentation mode
     @presentationMode = false
-    @presentationConfig = null
     @slideConfigs = null
 
     # when resize the window, clear the editor
@@ -66,6 +70,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     atom.commands.add @element,
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
+      'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
       'core:copy': => @copyToClipboard()
 
   @content: ->
@@ -130,19 +135,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @updateTabTitle()
 
     if not @parseMD
-      {@parseMD, @buildScrollMap} = require './md'
+      {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
-
-      @presentationConfig = @loadPresentationConfig()
-      @presentationConfig.width = 960 if not @presentationConfig.width
-      @presentationConfig.height = 700 if not @presentationConfig.height
 
     @headings = []
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
     @firstTimeRenderMathJax = true
+    @firstTimeRenderMarkdowon = true
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -414,12 +416,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+    {html, slideConfigs, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
 
     html = @formatStringAfterParsing(html)
 
     if slideConfigs.length
-      html = @parseSlides(html, slideConfigs)
+      html = @parseSlides(html, slideConfigs, yamlConfig)
       @element.setAttribute 'data-presentation-preview-mode', ''
       @presentationMode = true
       @slideConfigs = slideConfigs
@@ -431,6 +433,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @bindEvents()
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
+
+    if @firstTimeRenderMarkdowon
+      @firstTimeRenderMarkdowon = false
+      cursor = @editor.cursors[0]
+      return if not cursor
+      if @presentationMode
+        @scrollSyncForPresentation cursor.getBufferRow()
+      else
+        @scrollSyncToLineNo cursor.getScreenRow()
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -692,6 +703,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
+    yamlConfig = res.yamlConfig || {}
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -759,7 +771,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize(#{JSON.stringify(@presentationConfig)})
+        Reveal.initialize(#{JSON.stringify(yamlConfig['presentation'])})
       </script>
       """
     else
@@ -810,7 +822,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   # api doc [printToPDF] function
   # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
-  printPDF: (htmlPath, dist)->
+  printPDF: (htmlPath, dest)->
     return if not @editor
 
     BrowserWindow = require('remote').require('browser-window')
@@ -826,8 +838,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # get orientation
     landscape = atom.config.get('markdown-preview-enhanced.orientation') == 'landscape'
 
-    lastIndexOfSlash = dist.lastIndexOf '/' || 0
-    pdfName = dist.slice(lastIndexOfSlash + 1)
+    lastIndexOfSlash = dest.lastIndexOf '/' || 0
+    pdfName = dest.slice(lastIndexOfSlash + 1)
 
     win.webContents.on 'did-finish-load', ()=>
       setTimeout(()=>
@@ -838,17 +850,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
           marginsType: marginsType, (err, data)=>
             throw err if err
 
-            fs.writeFile dist, data, (err)=>
-              throw err if err
-
-              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dist}"
-
+            destFile = new File(dest)
+            destFile.create().then (flag)=>
+              destFile.write data
+              atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dest}"
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-                @openFile dist
+                @openFile dest
       , 500)
 
-  saveAsPDF: (dist)->
+  saveAsPDF: (dest)->
     return if not @editor
 
     if @presentationMode # for presentation, need to print from chrome
@@ -862,60 +873,38 @@ class MarkdownPreviewEnhancedView extends ScrollView
         throw err if err
         fs.write info.fd, htmlContent, (err)=>
           throw err if err
-          @printPDF "file://#{info.path}", dist
+          @printPDF "file://#{info.path}", dest
 
-  saveAsHTML: (dist, offline=true)->
+  saveAsHTML: (dest, offline=true)->
     return if not @editor
 
     htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
 
-    lastIndexOfSlash = dist.lastIndexOf '/' || 0
-    htmlFileName = dist.slice(lastIndexOfSlash + 1)
+    lastIndexOfSlash = dest.lastIndexOf '/' || 0
+    htmlFileName = dest.slice(lastIndexOfSlash + 1)
 
-    fs.writeFile dist, htmlContent, (err)=>
-      throw err if err
-      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dist}")
+    destFile = new File(dest)
+    destFile.create().then (flag)->
+      destFile.write htmlContent
+      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dest}")
 
   ####################################################
   ## Presentation
   ##################################################
-  loadPresentationConfig: ()->
-    # presentation_config.js
-    configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/presentation_config.js')
-    try
-      return require(configPath)
-    catch error
-      configFile = new File(configPath)
-      configFile.create().then (flag)->
-        if !flag # already exists
-          atom.notifications.addError('Failed to load presentation_config.js', detail: 'there might be errors in your config file')
-          return
-
-        configFile.write """
-'use strict'
-/*
-config presentation powered by reveal.js
-more information about configuration can be found here:
-    https://github.com/hakimel/reveal.js#user-content-configuration
-*/
-// you can edit the 'config' variable below
-// everytime you changed this file, you may need to restart atom.
-let config = {
-  controls: true,
-}
-
-module.exports = config || {}
-"""
-      return {}
-
-  parseSlides: (html, slideConfigs)->
+  parseSlides: (html, slideConfigs, yamlConfig)->
     slides = html.split '<div class="new-slide"></div>'
     slides = slides.slice(1)
     output = ''
 
     offset = 0
-    width = @presentationConfig.width
-    height = @presentationConfig.height
+    width = 960
+    height = 700
+
+    if yamlConfig and yamlConfig['presentation']
+      presentationConfig = yamlConfig['presentation']
+      width = presentationConfig['width'] || 960
+      height = presentationConfig['height'] || 700
+
     ratio = height / width * 100 + '%'
     zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
 
@@ -991,9 +980,7 @@ module.exports = config || {}
     slides = slides.slice(1)
     output = ''
 
-    offset = 0
-    for slide in slides
-      slideConfig = slideConfigs[offset]
+    parseAttrString = (slideConfig)=>
       attrString = ''
       if slideConfig['data-background-image']
         attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], isSavingToHTML)}'"
@@ -1024,9 +1011,32 @@ module.exports = config || {}
 
       if slideConfig['data-background-iframe']
         attrString += " data-background-iframe='#{@resolveFilePath(slideConfig['data-background-iframe'], isSavingToHTML)}'"
+      attrString
 
-      output += "<section #{attrString}>#{slide}</section>"
-      offset += 1
+    i = 0
+    while i < slides.length
+      slide = slides[i]
+      slideConfig = slideConfigs[i]
+      attrString = parseAttrString(slideConfig)
+
+      if !slideConfig['vertical']
+        if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
+          output += '</section>'
+        output += "<section #{attrString}>#{slide}</section>"
+        i += 1
+      else # vertical
+        if i > 0
+          if !slideConfigs[i-1]['vertical'] # start of vertical slides
+            output += "<section><section #{attrString}>#{slide}</section>"
+          else
+            output += "<section #{attrString}>#{slide}</section>"
+        else
+          output += "<section><section #{attrString}>#{slide}</section>"
+
+        i += 1
+
+    if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
+      output += "</section>"
 
     """
     <div class="reveal">
@@ -1081,14 +1091,14 @@ module.exports = config || {}
 """
       return {}
 
-  phantomJSExport: (dist)->
+  phantomJSExport: (dest)->
     return if not @editor
 
     if @presentationMode # for presentation, need to print from chrome
       @openInBrowser(true)
       return
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dist)
+    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dest)
 
     fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
     format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
@@ -1113,24 +1123,28 @@ module.exports = config || {}
 
     pdf
       .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
-      .toFile dist, (err, res)=>
+      .toFile dest, (err, res)=>
         if err
           atom.notifications.addError err
         # open pdf
         else
-          lastIndexOfSlash = dist.lastIndexOf '/' || 0
-          fileName = dist.slice(lastIndexOfSlash + 1)
+          lastIndexOfSlash = dest.lastIndexOf '/' || 0
+          fileName = dest.slice(lastIndexOfSlash + 1)
 
-          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
           if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-            @openFile dist
+            @openFile dest
 
   ## EBOOK
-  generateEbook: (dist)->
-    {html, ebookConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath})
+  generateEbook: (dest)->
+    {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
     html = @formatStringAfterParsing(html)
 
-    if !ebookConfig.isEbook
+    ebookConfig = null
+    if yamlConfig
+      ebookConfig = yamlConfig['ebook']
+
+    if !ebookConfig
       return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
     else
       atom.notifications.addInfo('Your document is being prepared', detail: ':)')
@@ -1209,7 +1223,7 @@ module.exports = config || {}
       @renderViz(div)
 
       # convert image to base64 if output html
-      if path.extname(dist) == '.html'
+      if path.extname(dest) == '.html'
         # check cover
         if ebookConfig.cover
           cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
@@ -1239,7 +1253,7 @@ module.exports = config || {}
 
       mathStyle = ''
       if outputHTML.indexOf('class="katex"') > 0
-        if path.extname(dist) == '.html' and ebookConfig.cdn
+        if path.extname(dest) == '.html' and ebookConfig.cdn
           mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
         else
           mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
@@ -1267,13 +1281,13 @@ module.exports = config || {}
   </html>
       """
 
-      fileName = path.basename(dist)
+      fileName = path.basename(dest)
 
       # save as html
-      if path.extname(dist) == '.html'
-        fs.writeFile dist, outputHTML, (err)=>
+      if path.extname(dest) == '.html'
+        fs.writeFile dest, outputHTML, (err)=>
           throw err if err
-          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dist}")
+          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
         return
 
       # use ebook-convert to generate ePub, mobi, PDF.
@@ -1285,9 +1299,19 @@ module.exports = config || {}
           fs.write info.fd, outputHTML, (err)=>
             throw err if err
             # @openFile info.path
-            ebookConvert info.path, dist, ebookConfig, (err)=>
+            ebookConvert info.path, dest, ebookConfig, (err)=>
               throw err if err
-              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
+
+  pandocDocumentExport: ->
+    {data} = @processFrontMatter(@editor.getText())
+
+    content = @editor.getText().trim()
+    if content.startsWith('---\n')
+      end = content.indexOf('---\n', 4)
+      content = content.slice(end+4)
+
+    pandocConvert content, this, data
 
   copyToClipboard: ->
     return false if not @editor

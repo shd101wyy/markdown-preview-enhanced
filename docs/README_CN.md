@@ -4,8 +4,9 @@ Markdown Preview Enhanced
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
 [English Doc](../README.md)  
+**Pandoc Document Export** 特性现已支持！更多信息请点击[这里](./advanced-export.md)。
 
-现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](./ebook.md) 。
+现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](./ebook.md)。
 
 **Presentation Writer** 特性现已支持!  
 [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
@@ -32,6 +33,7 @@ Markdown Preview Enhanced
 
 ## 支持特性
 - **编辑与预览滑动同步**  
+- **[pandoc](./advanced-export.md)**
 - **Presentation Writer** (beta) [介绍](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
 - **[支持扩展 (beta)](#开发者)**
 - 数学编辑支持     
@@ -91,8 +93,6 @@ Markdown Preview Enhanced
   - 编辑 `mermaid` 初始化设置。
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>
   - 编辑导出 **PDF** 的 header 和 footer 设置。
-- <strong> Markdown Preview Enhanced: Config Presentation</strong>
-  - 编辑 `reveal` 初始化设置。
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper 图片助手支持快速插入图片链接，拷贝本地图片，和上传图片（powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/)）。       
 	（如果 **imgur** 被墙了， 请使用 **sm.ms** ）    
@@ -108,6 +108,8 @@ Markdown Preview Enhanced
   - 在浏览器中打开。
 - **Export to Disk**
 	- 导出 **HTML**, **PDF**, **PNG**, **JPEG** 文件。
+- **Pandoc Document Export**
+	- [文档](./advanced-export.md)
 
 ## 额外支持
 * **EBook 电子书**  

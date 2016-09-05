@@ -1,5 +1,6 @@
 path = require 'path'
 {execFile} = require 'child_process'
+{Directory} = require 'atom'
 # ebook-convert is requied (calibre), which can be got from https://calibre-ebook.com/download
 # xpath http://www.w3schools.com/xsl/xpath_syntax.asp
 
@@ -76,9 +77,13 @@ ebookConvert = (src, dest, config={}, callback)->
     args.push '--margin-left'
     args.push marginLeft
 
-  execFile 'ebook-convert',
-            args,
-            callback
+  # ebook-convert will cause error if directory doesn't exist,
+  # therefore I will create directory first.
+  directory = new Directory(path.dirname(dest))
+  directory.create().then (flag)->
+    execFile 'ebook-convert',
+              args,
+              callback
 
 module.exports = ebookConvert
 

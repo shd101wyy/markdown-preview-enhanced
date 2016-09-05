@@ -5,6 +5,8 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)  
 
+**Pandoc Document Export** is now supported after version `0.8.4`! More information can be found [here](./docs/advanced-export.md).
+
 You can now create **EBook** using this plugin! More information can be found [here](./docs/ebook.md).
 
 Feature **Presentation Writer** is now supported after version `0.7.7`!  
@@ -32,7 +34,8 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 ![main](https://cloud.githubusercontent.com/assets/1908863/15383014/14ad19d0-1dc2-11e6-9385-acd90f53a831.gif)
 
 ## Features
-- **2-way scroll sync**  
+- **2-side scroll sync**  
+- **[pandoc](./docs/advanced-export.md)**
 - **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
 - **[Extensible](#for-developer)**
 - markdown preview with math typesetting support   
@@ -93,8 +96,6 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - edit `mermaid` init configuration.
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>
   - **PDF** export header and footer configuration.
-- <strong> Markdown Preview Enhanced: Config Presentation</strong>
-  - edit `reveal` init configuration
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
 	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    
@@ -110,6 +111,8 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Open HTML in browser
 - **Export to Disk**
 	- Export **HTML**, **PDF**, **PNG**, **JPEG** files.
+- **Pandoc Document Export**
+	- [doc](./docs/advanced-export.md)
 
 ## Extra
 * **EBook**  
