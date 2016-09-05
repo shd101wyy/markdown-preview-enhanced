@@ -2,8 +2,6 @@ path = require 'path'
 fs = require 'fs'
 {execFile} = require 'child_process'
 matter = require 'gray-matter'
-# temp = require 'temp'
-{parseMD} = require './md'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
