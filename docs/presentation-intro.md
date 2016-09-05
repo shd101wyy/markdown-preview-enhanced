@@ -121,7 +121,7 @@ presentation:
   controls: false
 ---
 ```
-More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/docs/presentation-front-matter.md).
+More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-front-matter.md).
 
 <!-- slide -->  
 #### Star this project if you like it ;)    
