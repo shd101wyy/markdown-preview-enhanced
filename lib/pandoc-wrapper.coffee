@@ -201,11 +201,10 @@ pandocConvert = (text, md, config={})->
   if documentFormat == 'custom_document' and (!outputConfig || !outputConfig['path'])
     return atom.notifications.addError('custom_document requires path to be defined')
 
-  #
   if documentFormat == 'beamer_presentation'
     args.push('-t', 'beamer')
 
-  # src/dist
+  # dest
   if outputConfig and outputConfig['path']
     outputFilePath = outputConfig['path']
     if outputFilePath.startsWith('/')

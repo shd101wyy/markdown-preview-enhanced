@@ -850,11 +850,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
           marginsType: marginsType, (err, data)=>
             throw err if err
 
-            fs.writeFile dest, data, (err)=>
-              throw err if err
-
+            destFile = new File(dest)
+            destFile.create().then (flag)=>
+              destFile.write data
               atom.notifications.addInfo "File #{pdfName} was created", detail: "path: #{dest}"
-
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
                 @openFile dest
@@ -884,8 +883,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     lastIndexOfSlash = dest.lastIndexOf '/' || 0
     htmlFileName = dest.slice(lastIndexOfSlash + 1)
 
-    fs.writeFile dest, htmlContent, (err)=>
-      throw err if err
+    destFile = new File(dest)
+    destFile.create().then (flag)->
+      destFile.write htmlContent
       atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dest}")
 
   ####################################################
