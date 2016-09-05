@@ -65,6 +65,25 @@ processOutputConfig = (config, args)->
   if config['latex_engine']
     args.push('--latex-engine='+config['latex_engine'])
 
+  if config['includes'] and typeof(config['includes']) == 'object'
+    includesConfig = config['includes']
+    helper = (prefix, data)->
+      if typeof(data) == 'string'
+        args.push prefix+data
+      else if data.constructor == Array
+        data.forEach (d)->
+          args.push prefix+d
+      else
+        args.push prefix+data
+
+    # TODO: includesConfig['in_header'] is array
+    if includesConfig['in_header']
+      helper('--include-in-header=', includesConfig['in_header'])
+    if includesConfig['before_body']
+      helper('--include-before-body=', includesConfig['before_body'])
+    if includesConfig['after_body']
+      helper('--include-after-body=', includesConfig['after_body'])
+
 loadOutputYAML = (md, config)->
   yamlPath = path.resolve(path.dirname(md.editor.getPath()), '_output.yaml')
   try
@@ -76,7 +95,7 @@ loadOutputYAML = (md, config)->
   data = data || {}
 
   if config['output']
-    if typeof(config['output']) == 'string' && data[config['output']]
+    if typeof(config['output']) == 'string' and data[config['output']]
       format = config['output']
       config['output'] = {}
       config['output'][format] = data[format]
@@ -116,8 +135,19 @@ processConfigPaths = (config, outputDir, projectDirectoryPath, rootDirectoryPath
   if config['csl']
     config['csl'] = helper(config['csl'])
 
-  if config['output'] && typeof(config['output'])!='string' && config['output']['word_document'] && config['output']['word_document']['reference_docx']
-    config['output']['word_document']['reference_docx'] = helper(config['output']['word_document']['reference_docx'])
+  if config['output'] and typeof(config['output']) == 'object'
+    documentFormat = Object.keys(config['output'])[0]
+    outputConfig = config['output'][documentFormat]
+    if outputConfig['includes']
+      if outputConfig['includes']['in_header']
+        outputConfig['includes']['in_header'] = helper(outputConfig['includes']['in_header'])
+      if outputConfig['includes']['before_body']
+        outputConfig['includes']['before_body'] = helper(outputConfig['includes']['before_body'])
+      if outputConfig['includes']['after_body']
+        outputConfig['includes']['after_body'] = helper(outputConfig['includes']['after_body'])
+
+    if outputConfig['reference_docx']
+      outputConfig['reference_docx'] = helper(outputConfig['reference_docx'])
 
 processPaths = (text, outputDir, projectDirectoryPath, rootDirectoryPath)->
   match = null
@@ -185,9 +215,6 @@ pandocConvert = (text, md, config={})->
   if documentFormat == 'beamer_presentation'
     args.push('-t', 'beamer')
 
-  if outputConfig
-    processOutputConfig outputConfig, args
-
   # src/dist
   if outputConfig and outputConfig['path']
     outputFilePath = outputConfig['path']
@@ -207,6 +234,9 @@ pandocConvert = (text, md, config={})->
 
   # resolve paths in front-matter(yaml)
   processConfigPaths config, path.dirname(outputFilePath), md.projectDirectoryPath, md.rootDirectoryPath
+
+  if outputConfig
+    processOutputConfig outputConfig, args
 
   # add front-matter(yaml) to text
   text = matter.stringify(text, config)

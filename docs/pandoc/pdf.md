@@ -11,6 +11,7 @@
 		- [LaTeX Packages for Citations](#latex-packages-for-citations)
 	- [Advanced Customization](#advanced-customization)
 		- [LaTeX Engine](#latex-engine)
+		- [Include](#include)
 		- [Pandoc Arguments](#pandoc-arguments)
 	- [Shared Options](#shared-options)
 
@@ -122,6 +123,20 @@ title: "Habits"
 output:
   pdf_document:
     latex_engine: xelatex
+---
+```
+
+### Include
+You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:  
+```yaml
+---
+title: "Habits"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+      before_body: doc_prefix.tex
+      after_body: doc_suffix.tex
 ---
 ```
 
