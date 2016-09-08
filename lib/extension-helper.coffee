@@ -34,6 +34,14 @@ scopesForLanguageName =
   'xml': 'text.xml',
   'yaml': 'source.yaml',
   'yml': 'source.yaml',
+  # extended
+  'yaml_table': 'source.yaml',
+  '{mermaid}': 'mermaid',
+  '{plantuml}': 'plantuml',
+  '{puml}': 'plantuml',
+  '{wavedrom}': 'wavedrom',
+  '{viz}': 'viz',
+  '{erd}': 'erd'
 
 module.exports.scopeForLanguageName  = (language)->
   return scopesForLanguageName[language] or ('source.' + language)
