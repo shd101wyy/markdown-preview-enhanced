@@ -26,7 +26,10 @@
     "graphviz",
     "dot language",
     "ePub",
-    "ebook"
+    "ebook",
+    "pandoc",
+    "beamer",
+    "latex"
   ],
   "scripts": {
     "build": "nothing happened"

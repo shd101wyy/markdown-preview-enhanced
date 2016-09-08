@@ -213,10 +213,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       if event.oldScreenPosition.row != event.newScreenPosition.row or event.oldScreenPosition.column == 0
         lineNo = event.newScreenPosition.row
-        if lineNo == 0
+        if lineNo <= 1  # first 2nd rows
           @scrollToPos(0)
           return
-        else if lineNo == @editor.getScreenLineCount() - 1 # last row
+        else if lineNo >= @editor.getScreenLineCount() - 2 # last 2nd rows
           @scrollToPos(@element.scrollHeight - 16)
           return
 

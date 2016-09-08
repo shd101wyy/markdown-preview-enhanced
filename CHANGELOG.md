@@ -1,3 +1,8 @@
+## 0.8.5
+* [ ] support `yaml_table`
+* [ ] support `erd` [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128)
+* [ ] scroll preview to the very bottom when cursor is in last 2 lines. (right now it is the last line)
+
 ## 0.8.4  
 * [ ] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107)  
 * [ ] add TOC sidebar [#117](https://github.com/shd101wyy/markdown-preview-enhanced/issues/117)  
