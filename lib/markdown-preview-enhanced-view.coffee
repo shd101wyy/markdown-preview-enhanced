@@ -1222,12 +1222,13 @@ module.exports = config || {}
       div.innerHTML = outputHTML
       @renderViz(div)
 
-      # download images
+      # download images for .epub and .mobi
       imagesToDownload = []
-      for img in div.getElementsByTagName('img')
-        src = img.getAttribute('src')
-        if src.startsWith('http://') or src.startsWith('https://')
-          imagesToDownload.push(img)
+      if path.extname(dest) in ['.epub', '.mobi']
+        for img in div.getElementsByTagName('img')
+          src = img.getAttribute('src')
+          if src.startsWith('http://') or src.startsWith('https://')
+            imagesToDownload.push(img)
 
       request = require('request')
       async = require('async')
