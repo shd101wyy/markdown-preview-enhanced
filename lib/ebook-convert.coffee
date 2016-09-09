@@ -77,6 +77,9 @@ ebookConvert = (src, dest, config={}, callback)->
     args.push '--margin-left'
     args.push marginLeft
 
+  if config['base-font-size']
+    args.push("--base-font-size="+config['base-font-size'])
+
   ebookArgs = config.args || []
   ebookArgs.forEach (arg)->
     args.push(arg)

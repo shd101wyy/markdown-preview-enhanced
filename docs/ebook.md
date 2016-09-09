@@ -2,7 +2,7 @@
 Inspired by *GitBook*  
 **Markdown Preview Enhanced** can output content as ebook (ePub, Mobi, PDF).   
 
-![Screen Shot 2016-07-29 at 3.25.38 PM](http://ooo.0o0.ooo/2016/07/29/579b0559c9e3d.png)  
+![Screen Shot 2016-09-08 at 9.42.43 PM](http://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
 
 To generate ebook, you need to have `ebook-convert` installed.  
 
@@ -35,6 +35,8 @@ ISBN of the book
 http://path-to-image.png  
 * **epub-toc-at-end**  
 whether to put TOC at the end
+* **base-font-size**  
+The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa.
 * **margin-top**  
 Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
 * **margin-right**
@@ -53,6 +55,7 @@ For example, I created a `SUMMARY.md` file, and I added the following configurat
 ebook:
   title: Markdown Preview Enhanced
   author: shd101wyy
+  base-font-size: 8
   args: ["--no-default-epub-cover"]
 ---
 ```
