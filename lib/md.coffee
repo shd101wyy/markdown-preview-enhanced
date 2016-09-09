@@ -422,19 +422,19 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
-      $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>")
+      $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
       $el.attr 'data-original', text
 
       $preElement.replaceWith $el
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $el = $("<div class=\"#{graphType}\" data-processed=\"true\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{element.innerHTML}</div>")
+        $el = $("<div class=\"#{graphType}\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
         $el.attr 'data-original', text
 
         $preElement.replaceWith $el
       else
-        $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>#{text}</div>")
+        $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
         $el.attr('data-original', text)
 
         $preElement.replaceWith $el
@@ -521,7 +521,8 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       else
         text = ''
 
-    if lang == 'mermaid'
+    # TODO: remove 'mermaid', only keep {mermaid}
+    if lang in ['mermaid', '{mermaid}']
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -530,14 +531,14 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
         mermaidOffset += 1
 
-    else if lang == 'plantuml' or lang == 'puml'
+    else if lang in ['plantuml', 'puml', '{plantuml}', '{puml}']
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang == 'wavedrom'
+    else if lang in ['wavedrom', '{wavedrom}']
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
 
       wavedromOffset += 1
-    else if lang == 'viz'
+    else if lang in ['viz', '{viz}']
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
 
     else

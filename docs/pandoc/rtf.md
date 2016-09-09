@@ -53,7 +53,7 @@ If the table of contents depth isn’t explicitly specified then it defaults to 
 
 
 ## Pandoc Arguments   
-If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
+If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
 ```yaml
 ---
 title: "Habits"
