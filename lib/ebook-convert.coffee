@@ -54,12 +54,12 @@ processAppearance = (config={}, args)->
   if config['line-height']
     args.push('--line-height='+config['line-height'])
 
+  marginTop = 72
+  marginRight = 72
+  marginBottom = 72
+  marginLeft = 72
   if config['margin']
     margin = config['margin']
-    marginTop = 72
-    marginRight = 72
-    marginBottom = 72
-    marginLeft = 72
     if margin.constructor == Array
       if margin.length == 1
         marginTop = margin[0]
@@ -81,19 +81,47 @@ processAppearance = (config={}, args)->
       marginBottom = margin
       marginLeft = margin
       marginRight = margin
-    args.push('--margin-top='+marginTop)
-    args.push('--margin-bottom='+marginBottom)
-    args.push('--margin-left='+marginLeft)
-    args.push('--margin-right='+marginRight)
   else
     if config['margin-top']
-      args.push('--margin-top='+config['margin-top'])
+      marginTop = config['margin-top']
     if config['margin-right']
-      args.push('--margin-right='+config['margin-right'])
+      marginRight = config['margin-right']
     if config['margin-bottom']
-      args.push('--margin-bottom='+config['margin-bottom'])
+      marginBottom = config['margin-bottom']
     if config['margin-left']
-      args.push('--margin-left='+config['margin-left'])
+      marginLeft = config['margin-left']
+  args.push('--margin-top='+marginTop)
+  args.push('--margin-bottom='+marginBottom)
+  args.push('--margin-left='+marginLeft)
+  args.push('--margin-right='+marginRight)
+
+
+processEPub = (config={}, args)->
+  if config['no-default-epub-cover']
+    args.push '--no-default-epub-cover'
+  if config['no-svg-cover']
+    args.push '--no-svg-cover'
+  if config['pretty-print']
+    args.push '--pretty-print'
+
+processPDF = (config={}, args)->
+  if config['paper-size']
+    args.push '--paper-size', config['paper-size']
+
+  if config['default-font-size']
+    args.push('--pdf-default-font-size='+config['default-font-size'])
+
+  if config['header-template']
+    args.push('--pdf-header-template', config['header-template'])
+
+  if config['footer-template']
+    args.push('--pdf-footer-template', config['footer-template'])
+
+  if config['page-numbers']
+    args.push('--pdf-page-numbers')
+
+  if config['pretty-print']
+    args.push('--pretty-print')
 
 # Async call
 # src: link to .html file
@@ -124,6 +152,12 @@ ebookConvert = (src, dest, config={}, callback)->
   processMetadata(config, args)
   processAppearance(config, args)
 
+  # output formats
+  format = path.extname(dest).slice(1)
+  if format == 'epub'
+    processEPub(config['epub'], args)
+  else if format == 'pdf'
+    processPDF(config['pdf'], args)
 
   # arguments
   ebookArgs = config.args || []

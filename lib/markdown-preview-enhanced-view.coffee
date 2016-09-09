@@ -1281,7 +1281,7 @@ module.exports = config || {}
 
         mathStyle = ''
         if outputHTML.indexOf('class="katex"') > 0
-          if path.extname(dest) == '.html' and ebookConfig.cdn
+          if path.extname(dest) == '.html' and ebookConfig.html?.cdn
             mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
           else
             mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
