@@ -140,7 +140,9 @@ Normally, if the input file has no cover and you don't specify one, a default co
 * **no-svg-cover** `[true/false]`  
 Do not use SVG for the book cover. Use this option if your EPUB is going to be used on a device that does not support SVG, like the iPhone or the JetBook Lite. Without this option, such devices will display the cover as a blank page.
 * **pretty-print** `[true/false]`  
-If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.
+If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.   
+
+
 ### PDF  
 To configure `pdf` output, simply add `pdf` after `ebook`.   
 ```yaml
