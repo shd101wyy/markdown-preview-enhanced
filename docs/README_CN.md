@@ -34,12 +34,12 @@ Markdown Preview Enhanced
 ## 支持特性
 - **编辑与预览滑动同步**  
 - **[pandoc](./advanced-export.md)**
-- **Presentation Writer** (beta) [介绍](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
-- **[支持扩展 (beta)](#开发者)**
+- **[ebook](./docs/ebook.md)**  
+- **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
+- **[支持扩展](#开发者)**
 - 数学编辑支持     
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
-- 导出 **ePub**, **Mobi**, **PDF** 电子书文件
 - 导出 **HTML** （完美支持移动端设备）  
 - 自定义 Markdown Preview 样式（css）  
 - [TOC] 自动生成 **(beta)**  
@@ -59,16 +59,16 @@ Markdown Preview Enhanced
 		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。  
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) 来渲染 flowchart 和 sequence diagram  
-	- 代码块 `mermaid` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
+	- 代码块 `{mermaid}` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
 	- 查看 [mermaid 文档](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) 来了解如何画图。   
-	- <img src="https://cloud.githubusercontent.com/assets/1908863/15132962/468c0dd0-1624-11e6-868c-cf3033ce3b5d.gif">
+	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
 - [PlantUML](http://plantuml.com/) 来渲染图形。 (**Java** 是必须的依赖)  
 	- 你可以安装 [Graphviz](http://www.graphviz.org/) （非必需） 来生成其他种类的图形。  
-	- 代码块 `puml` 或者 `plantuml` 里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
+	- 代码块 `{puml}` 或者 `{plantuml}` 里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
 - [WaveDrom](http://wavedrom.com/) 来渲染 digital timing diagram.  
-	- 代码块 `wavedrom` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
+	- 代码块 `{wavedrom}` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
 - [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) 图形.  
-	- 代码块 `viz` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
+	- 代码块 `{viz}` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
 - [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的 presentations.
 	- [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
 
@@ -102,12 +102,12 @@ Markdown Preview Enhanced
 ## 预览菜单
 **在 预览 右键点击唤起菜单**
 
-![context menu](https://cloud.githubusercontent.com/assets/1908863/14586062/18852988-0451-11e6-9cc0-578d54384926.gif)
+![contextmenu](http://i.imgur.com/hOxseAS.gif)
 
 - <strong> Open in Browser </strong>
   - 在浏览器中打开。
 - **Export to Disk**
-	- 导出 **HTML**, **PDF**, **PNG**, **JPEG** 文件。
+	- 导出 **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** 等文件。
 - **Pandoc Document Export**
 	- [文档](./advanced-export.md)
 
@@ -121,7 +121,6 @@ Markdown Preview Enhanced
 	更多信息可在 [这里](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments) 查看。
 * **Smart Navigation 智能跳转**    
 	你可以很快的切换到其他的 markdown 文件通过在预览中点击它的链接。  
-	![smart_navigation](https://cloud.githubusercontent.com/assets/1908863/15382175/e5f0a66e-1db9-11e6-9581-3f3ee8dc45dd.gif)  
 * **Preview Auto Open 自动打开预览**  
 	当你打开一个 markdown 文件时，自动打开预览。  
   你可以在 settings panel 中禁用此功能。

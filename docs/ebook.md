@@ -4,6 +4,7 @@
 
 - [EBook generation (beta)](#ebook-generation-beta)
 	- [Installing ebook-convert](#installing-ebook-convert)
+	- [EBook Example](#ebook-example)
 	- [Start writing EBook](#start-writing-ebook)
 		- [Metadata](#metadata)
 		- [Feel and Look](#feel-and-look)
@@ -13,7 +14,6 @@
 		- [HTML](#html)
 	- [ebook-convert Arguments](#ebook-convert-arguments)
 	- [Demo](#demo)
-	- [EBook Example](#ebook-example)
 	- [Known Issues & Limitations](#known-issues-limitations)
 
 <!-- tocstop -->
@@ -34,6 +34,9 @@ $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/
 **Windows**  
 Download and Install the [Calibre Application](https://calibre-ebook.com/download).  
 Add `ebook-convert` to your system path.
+
+## EBook Example
+An EBook example project can be found [here](https://github.com/shd101wyy/ebook-example).   
 
 ## Start writing EBook    
 You can set up a ebook configuration by simply adding `ebook front-matter` into your markdown file.   
@@ -149,17 +152,18 @@ To configure `pdf` output, simply add `pdf` after `ebook`.
 ebook:
   pdf:
     paper-size: letter
+    default-font-size: 12
     header-template: "<span> Written by shd101wyy _PAGENUM_ </span>"
 ```
 the following options are provided:  
 * **paper-size**  
 The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`, `b0`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `legal`, `letter`
-* **default-font-size**  
+* **default-font-size** `[number]`    
 The default font size
 * **footer-template**  
 An HTML template used to generate footers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
 * **header-template**  
-An HTML template used to generate headers on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
+An HTML template used to generate headers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
 * **page-numbers** `[true/false]`     
 `default: false`  
 Add page numbers to the bottom of every page in the generated PDF file. If you specify a footer template, it will take precedence over this option.
@@ -193,8 +197,7 @@ You can find a list of arguments in [ebook-convert manual](https://manual.calibr
 ---
 
 ## Demo
-
-The `SUMMARY.md` should also have a TOC to help organize the book:
+`Summary.md` is a sample entry file. It should also have a TOC to help organize the book:  
 ```markdown
 ---
 ebook:
@@ -218,9 +221,6 @@ The link's title is used as the chapter's title, and the link's target is a path
 ---
 
 To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
-
-## EBook Example
-An EBook example project can be found [here](https://github.com/shd101wyy/ebook-example).   
 
 ## Known Issues & Limitations
 * EBook generation is still under development.

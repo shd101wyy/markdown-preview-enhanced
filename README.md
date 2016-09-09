@@ -36,12 +36,12 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 ## Features
 - **2-side scroll sync**  
 - **[pandoc](./docs/advanced-export.md)**
-- **Presentation Writer** (beta) [Introduction](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  
+- **[ebook](./docs/ebook.md)**
+- **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[Extensible](#for-developer)**
 - markdown preview with math typesetting support   
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
-- export **ePub**, **Mobi**, and **PDF** ebook
 - export beautiful **HTML** (mobile device supported)  
 - customize Markdown Preview css  
 - [TOC] generation **(beta)**  
@@ -61,16 +61,16 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram.  
-	- code block within `mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
+	- code block within `{mermaid}` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
-	- <img src="https://cloud.githubusercontent.com/assets/1908863/15132962/468c0dd0-1624-11e6-868c-cf3033ce3b5d.gif">
+	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
-	- code block within `puml` or `plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
+	- code block within `{puml}` or `{plantuml}` notation will be rendered by [PlantUML](http://plantuml.com/).  
 - [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
-	- code block within `wavedrom` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
+	- code block within `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
-	- code block within `viz` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
+	- code block within `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
 
@@ -105,12 +105,12 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 ## Preview Context Menu
 **Right click at preview to see the menu**
 
-![context menu](https://cloud.githubusercontent.com/assets/1908863/14586062/18852988-0451-11e6-9cc0-578d54384926.gif)
+![contextmenu](http://i.imgur.com/hOxseAS.gif)
 
 - <strong> Open in Browser </strong>
   - Open HTML in browser
 - **Export to Disk**
-	- Export **HTML**, **PDF**, **PNG**, **JPEG** files.
+	- Export **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** etc files.
 - **Pandoc Document Export**
 	- [doc](./docs/advanced-export.md)
 
@@ -124,7 +124,6 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 	More information about how to create **task list** can be found [here](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
 * **Smart Navigation**    
 	You can quickly open another markdown file by clicking its link in preview.  
-	![smart_navigation](https://cloud.githubusercontent.com/assets/1908863/15382175/e5f0a66e-1db9-11e6-9581-3f3ee8dc45dd.gif)  
 * **Preview Auto Open**  
 	Open preview pane automatically when you open a markdown file. You can disable this functionality from settings panel.
 
