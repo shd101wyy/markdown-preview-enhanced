@@ -36,12 +36,12 @@ scopesForLanguageName =
   'yml': 'source.yaml',
   # extended
   'yaml_table': 'source.yaml',
-  '{mermaid}': 'mermaid',
-  '{plantuml}': 'plantuml',
-  '{puml}': 'plantuml',
-  '{wavedrom}': 'wavedrom',
-  '{viz}': 'viz',
-  '{erd}': 'erd'
+  '{mermaid}': 'source.mermaid',
+  '{plantuml}': 'source.plantuml',
+  '{puml}': 'source.plantuml',
+  '{wavedrom}': 'source.wavedrom',
+  '{viz}': 'source.viz',
+  '{erd}': 'source.erd'
 
 module.exports.scopeForLanguageName  = (language)->
   return scopesForLanguageName[language] or ('source.' + language)

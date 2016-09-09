@@ -4,7 +4,7 @@
   "version": "0.8.4",
   "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
-  "license": "UIUC",
+  "license": "University of Illinois/NCSA Open Source License",
   "engines": {
     "atom": ">=0.174.0"
   },

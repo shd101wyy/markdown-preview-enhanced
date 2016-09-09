@@ -146,4 +146,4 @@ Thanks for everyone that supports this package!
 
 Thanks for using and supporting this package ;)
 
-> UIUC License
+> University of Illinois/NCSA Open Source License

@@ -1145,7 +1145,7 @@ module.exports = config || {}
       ebookConfig = yamlConfig['ebook']
 
     if !ebookConfig
-      return atom.notifications.addError('ebook config not found', detail: 'please insert <!-- ebook --> to your markdown file')
+      return atom.notifications.addError('ebook config not found', detail: 'please insert ebook front-matter to your markdown file')
     else
       atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 

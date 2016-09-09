@@ -1,7 +1,9 @@
 ## 0.8.5
-* [ ] support `yaml_table`
+* [ ] support `yaml_table` [**not implement**]
 * [ ] support `erd` [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128)
-* [ ] scroll preview to the very bottom when cursor is in last 2 lines. (right now it is the last line)
+* [x] scroll preview to the very bottom when cursor is in last 2 lines. (right now it is the last line)
+* [ ] fix ebook network image error [#129](https://github.com/shd101wyy/markdown-preview-enhanced/issues/129#issuecomment-245778986)
+* [ ] support `ebook-convert` args option 
 
 ## 0.8.4  
 * [ ] fix issue [#107](https://github.com/shd101wyy/markdown-preview-enhanced/issues/107)  

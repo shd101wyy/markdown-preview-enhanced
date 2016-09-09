@@ -144,4 +144,4 @@ Markdown Preview Enhanced
 
 谢谢你使用并支持此插件 ;)
 
-> UIUC License
+> University of Illinois/NCSA Open Source License
