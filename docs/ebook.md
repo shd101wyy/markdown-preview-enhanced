@@ -42,6 +42,8 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 * **margin-left**  
 * **cdn**  
 Load css and javascript files from `cdn.js`. This option is only used when exporting `.html` file.  
+* **args**  
+A list of arguments that you want to pass to [ebook-convert](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) command.  
 
 All values of settings should be within **double quotes**.     
 For example, I created a `SUMMARY.md` file, and I added the following configuration.
@@ -51,6 +53,7 @@ For example, I created a `SUMMARY.md` file, and I added the following configurat
 ebook:
   title: Markdown Preview Enhanced
   author: shd101wyy
+  args: ["--no-default-epub-cover"]
 ---
 ```
 

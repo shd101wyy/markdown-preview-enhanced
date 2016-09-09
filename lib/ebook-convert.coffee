@@ -77,6 +77,10 @@ ebookConvert = (src, dest, config={}, callback)->
     args.push '--margin-left'
     args.push marginLeft
 
+  ebookArgs = config.args || []
+  ebookArgs.forEach (arg)->
+    args.push(arg)
+
   # ebook-convert will cause error if directory doesn't exist,
   # therefore I will create directory first.
   directory = new Directory(path.dirname(dest))
