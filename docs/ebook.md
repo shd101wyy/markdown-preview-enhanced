@@ -18,7 +18,7 @@ Add `ebook-convert` to your system path.
 
 ## Start writing EBook    
 You can set up a ebook configuration by simply adding `ebook front-matter` into your markdown file.  
-General settings:  
+General metadata:  
 * **title**  
 title of your book  
 * **authors**  
@@ -56,7 +56,7 @@ ebook:
   title: Markdown Preview Enhanced
   author: shd101wyy
   base-font-size: 8
-  args: ["--no-default-epub-cover"]
+  args: ["--no-default-epub-cover", "--pdf-page-numbers"]
 ---
 ```
 

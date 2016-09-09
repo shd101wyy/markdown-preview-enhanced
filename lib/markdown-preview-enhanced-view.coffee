@@ -1222,86 +1222,123 @@ module.exports = config || {}
       div.innerHTML = outputHTML
       @renderViz(div)
 
-      # convert image to base64 if output html
-      if path.extname(dest) == '.html'
-        # check cover
-        if ebookConfig.cover
-          cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
-          coverImg = document.createElement('img')
-          coverImg.setAttribute('src', cover)
-          div.insertBefore(coverImg, div.firstChild)
+      # download images
+      imagesToDownload = []
+      for img in div.getElementsByTagName('img')
+        src = img.getAttribute('src')
+        if src.startsWith('http://') or src.startsWith('https://')
+          imagesToDownload.push(img)
 
-        imageElements = div.getElementsByTagName('img')
-        for img in imageElements
-          src = img.getAttribute('src')
-          if src.startsWith('file:///')
-            src = src.slice(8)
-            imageType = path.extname(src).slice(1)
-            try
-              base64 = new Buffer(fs.readFileSync(src)).toString('base64')
+      request = require('request')
+      async = require('async')
 
-              img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
-            catch error
-              throw 'Image file not found: ' + src
+      if imagesToDownload.length
+        atom.notifications.addInfo('downloading images...')
+
+      asyncFunctions = imagesToDownload.map (img)=>
+        (callback)=>
+          httpSrc = img.getAttribute('src')
+          savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
+          savePath =  path.resolve(@rootDirectoryPath, savePath)
+
+          stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
+
+          stream.on 'finish', ()->
+            img.setAttribute 'src', 'file:///'+savePath
+            callback(null, savePath)
 
 
-      outputHTML = div.innerHTML
+      async.parallel asyncFunctions, (error, downloadedImagePaths=[])=>
+        # convert image to base64 if output html
+        if path.extname(dest) == '.html'
+          # check cover
+          if ebookConfig.cover
+            cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
+            coverImg = document.createElement('img')
+            coverImg.setAttribute('src', cover)
+            div.insertBefore(coverImg, div.firstChild)
 
-      useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
+          imageElements = div.getElementsByTagName('img')
+          for img in imageElements
+            src = img.getAttribute('src')
+            if src.startsWith('file:///')
+              src = src.slice(8)
+              imageType = path.extname(src).slice(1)
+              try
+                base64 = new Buffer(fs.readFileSync(src)).toString('base64')
 
-      title = ebookConfig.title || 'no title'
+                img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
+              catch error
+                throw 'Image file not found: ' + src
 
-      mathStyle = ''
-      if outputHTML.indexOf('class="katex"') > 0
-        if path.extname(dest) == '.html' and ebookConfig.cdn
-          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
-        else
-          mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+        # retrieve html
+        outputHTML = div.innerHTML
 
-      outputHTML = """
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>#{title}</title>
-      <meta charset=\"utf-8\">
-      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+        useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
 
-      <style>
-      #{getMarkdownPreviewCSS()}
-      </style>
+        title = ebookConfig.title || 'no title'
 
-      #{mathStyle}
-    </head>
-    <body class=\"markdown-preview-enhanced\" data-use-github-style
-        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}>
+        mathStyle = ''
+        if outputHTML.indexOf('class="katex"') > 0
+          if path.extname(dest) == '.html' and ebookConfig.cdn
+            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+          else
+            mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
-    #{outputHTML}
+        outputHTML = """
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>#{title}</title>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 
-    </body>
-  </html>
-      """
+        <style>
+        #{getMarkdownPreviewCSS()}
+        </style>
 
-      fileName = path.basename(dest)
+        #{mathStyle}
+      </head>
+      <body class=\"markdown-preview-enhanced\" data-use-github-style
+          #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}>
 
-      # save as html
-      if path.extname(dest) == '.html'
-        fs.writeFile dest, outputHTML, (err)=>
-          throw err if err
-          atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
-        return
+      #{outputHTML}
 
-      # use ebook-convert to generate ePub, mobi, PDF.
-      temp.open
-        prefix: 'markdown-preview-enhanced',
-        suffix: '.html', (err, info)=>
-          throw err if err
+      </body>
+    </html>
+        """
 
-          fs.write info.fd, outputHTML, (err)=>
+        fileName = path.basename(dest)
+
+        # save as html
+        if path.extname(dest) == '.html'
+          fs.writeFile dest, outputHTML, (err)=>
             throw err if err
-            # @openFile info.path
-            ebookConvert info.path, dest, ebookConfig, (err)=>
-              throw err if err
-              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
+            atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
+          return
+
+        # this func will be called later
+        deleteDownloadedImages = ()->
+          downloadedImagePaths.forEach (imagePath)->
+            fs.unlink(imagePath)
+
+        # use ebook-convert to generate ePub, mobi, PDF.
+        temp.open
+          prefix: 'markdown-preview-enhanced',
+          suffix: '.html', (err, info)=>
+            if err
+              deleteDownloadedImages()
+              throw err
+
+            fs.write info.fd, outputHTML, (err)=>
+              if err
+                deleteDownloadedImages()
+                throw err
+
+              ebookConvert info.path, dest, ebookConfig, (err)=>
+                deleteDownloadedImages()
+                throw err if err
+                atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
 
   pandocDocumentExport: ->
     {data} = @processFrontMatter(@editor.getText())
