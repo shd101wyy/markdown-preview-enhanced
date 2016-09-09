@@ -285,6 +285,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # break line?
     @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
       (breakOnSingleNewline)=>
+        @parseDelay = Date.now() # <- fix 'loading preview' stuck bug
         @renderMarkdown()
 
     # typographer?

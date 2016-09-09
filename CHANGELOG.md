@@ -5,7 +5,7 @@
 * [x] fix ebook network image error [#129](https://github.com/shd101wyy/markdown-preview-enhanced/issues/129#issuecomment-245778986)
 * [x] support `ebook-convert` args option
 * [x] improve `ebook` config
-* [ ] fix `loading preview` stuck bug   
+* [x] fix `loading preview` stuck bug   
 * [ ] remove `Markdown  Preivew Enhanced: Config Header and Footer`, use `front-matter` instead. [**Might be implemented in next release**]
 
 ## 0.8.4  
