@@ -3,17 +3,9 @@ Markdown Preview Enhanced
 测试 Beta 版本    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
-[English Doc](../README.md)  
-**Pandoc Document Export** 特性现已支持！更多信息请点击[这里](./advanced-export.md)。
-
-现在你可以使用这个插件来创建 **EBook** 了！ 更多信息有关创建电子书请查看 [这里](./ebook.md)。
-
-**Presentation Writer** 特性现已支持!  
-[点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看由 **Markdown Preview Enhanced** 生成的幻灯片。  
-
-
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
+（以下 TOC 由该插件命令 `Markdown Preview Enhanced: Toc Create` 生成）
 <!-- toc orderedList:0 -->
 
 - [Markdown Preview Enhanced](#markdown-preview-enhanced)
@@ -29,12 +21,12 @@ Markdown Preview Enhanced
 <!-- tocstop -->
 ---
 
-![main](https://cloud.githubusercontent.com/assets/1908863/15383014/14ad19d0-1dc2-11e6-9385-acd90f53a831.gif)
+![intro](http://i.imgur.com/HG1jMTK.gif)
 
 ## 支持特性
 - **编辑与预览滑动同步**  
 - **[pandoc](./advanced-export.md)**
-- **[ebook](./docs/ebook.md)**  
+- **[ebook](./ebook.md)**  
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[支持扩展](#开发者)**
 - 数学编辑支持     
