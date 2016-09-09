@@ -154,7 +154,7 @@ output:
 Consult the documentation on [pandoc templates](http://pandoc.org/README.html#templates) for additional details on templates. You can also study the [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) as an example.
 
 ### Pandoc Arguments   
-If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
+If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
 ```yaml
 ---
 title: "Habits"
