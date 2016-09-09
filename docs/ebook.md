@@ -91,15 +91,15 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 * **line-height** `[number]`  
 The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
 * **margin-top** `[number]`  
-`default: 5.0` Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
+`default: 72.0` Set the top margin in pts. Default is 72. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
 * **margin-right** `[number]`  
-`default: 5.0`
+`default: 72.0`
 * **margin-bottom** `[number]`  
-`default: 5.0`
+`default: 72.0`
 * **margin-left** `[number]`  
-`default: 5.0`
+`default: 72.0`
 * **margin** `[number/array]`  
-`default: 5.0`  
+`default: 72.0`  
 You can define **margin top/right/bottom/left** at the same time.  For example:  
 ```yaml
 ebook:
