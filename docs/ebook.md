@@ -8,7 +8,7 @@
 	- [Start writing EBook](#start-writing-ebook)
 		- [Metadata](#metadata)
 		- [Feel and Look](#feel-and-look)
-	- [Ouptut Formats](#ouptut-formats)
+	- [Output Formats](#output-formats)
 		- [ePub](#epub)
 		- [PDF](#pdf)
 		- [HTML](#html)
@@ -124,7 +124,7 @@ ebook:
   base-font-size: 8
   margin: 72
 ```
-## Ouptut Formats
+## Output Formats
 Right now you can output ebook in format of `ePub`, `mobi`, `pdf`, `html`.  
 
 ### ePub
