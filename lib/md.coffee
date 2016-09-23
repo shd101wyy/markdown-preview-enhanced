@@ -627,7 +627,8 @@ option = {
   isForPreview:         bool, optional
   isForEbook:           bool, optional
   hideFrontMatter:      bool, optional
-  markdownPreview:      MarkdownPreviewEnhancedView. optional
+  markdownPreview:      MarkdownPreviewEnhancedView, optional
+
   rootDirectoryPath:    string, required
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
@@ -657,12 +658,7 @@ parseMD = (inputString, option={})->
   # so that we won't render the graph that hasn't changed
   graphData = null
   if markdownPreview
-    graphData = {}
-    graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
-    graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
-    graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
-    graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
-    graphData.erd_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('erd')
+    graphData = markdownPreview.graphData
 
   # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed

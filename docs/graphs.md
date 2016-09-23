@@ -24,7 +24,7 @@ mv ./dist/build/erd/erd /usr/local/bin
 ```
 
 ### Create graph
-you can create `erd` graph within `{erd}` code block. You can find more at [erd github repo](https://github.com/BurntSushi/erd).  
+you can create `erd` graph within `{erd}` code block. You can find more information at [erd github repo](https://github.com/BurntSushi/erd).  
 
     ```{erd}
     # Entities are declared in '[' ... ']'. All attributes after the entity header

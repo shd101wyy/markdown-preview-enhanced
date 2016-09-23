@@ -62,6 +62,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @presentationMode = false
     @slideConfigs = null
 
+    # graph data used to save rendered graphs
+    @graphData = null
+
     # when resize the window, clear the editor
     @resizeEvent = ()=>
       @scrollMap = null
@@ -432,6 +435,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @presentationMode = false
 
     @element.innerHTML = html
+    @graphData = {}
     @bindEvents()
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
@@ -521,9 +525,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.querySelectorAll('.mermaid:not([data-processed])') #@element.getElementsByClassName('mermaid')
+    els = @element.getElementsByClassName('mermaid')
     if els.length
-      mermaid.init(null, els)
+      @graphData.mermaid_s = Array.prototype.slice.call(els)
+
+      notProcessedEls = @element.querySelectorAll('.mermaid:not([data-processed])')
+
+      if notProcessedEls.length
+        mermaid.init(null, notProcessedEls)
 
       ###
       # the code below doesn't seem to be working
@@ -549,6 +558,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
   renderWavedrom: ()->
     els = @element.getElementsByClassName('wavedrom')
     if els.length
+      @graphData.wavedrom_s = Array.prototype.slice.call(els)
+
       # WaveDrom.RenderWaveForm(0, WaveDrom.eva('a0'), 'a')
       for el in els
         if el.getAttribute('data-processed') != 'true'
@@ -570,6 +581,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
+
+    if els.length
+      @graphData.plantuml_s = Array.prototype.slice.call(els)
+
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)=>
         el.innerHTML = outputHTML
@@ -583,6 +598,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderERD: ()->
     els = @element.getElementsByClassName('erd')
+
+    if els.length
+      @graphData.erd_s = Array.prototype.slice.call(els)
+
     helper = (el, text)->
       erdAPI.render text, 'svg', (outputHTML)=>
         el.innerHTML = outputHTML
@@ -598,6 +617,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     els = element.getElementsByClassName('viz')
 
     if els.length
+      @graphData.viz_s = Array.prototype.slice.call(els)
+
       @Viz ?= require('../dependencies/viz/viz.js')
       for el in els
         if el.getAttribute('data-processed') != 'true'
