@@ -1,3 +1,13 @@
+## 0.8.6  
+* [ ] ebook export exception [#136](https://github.com/shd101wyy/markdown-preview-enhanced/issues/136)
+* [ ] TOC heading level bug [#134](https://github.com/shd101wyy/markdown-preview-enhanced/issues/134)
+* [ ] extend table notation [#133](https://github.com/shd101wyy/markdown-preview-enhanced/issues/133)
+* [ ] ERD [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128)
+* [ ] ebook glossary like gitbook.
+* [ ] change graph APIs.
+* [ ] change parseMD function to async function with callback.
+* [ ] pandoc graph include [**may be implemented in next version**]
+
 ## 0.8.5
 * [ ] support `yaml_table` [**not implement**]
 * [ ] support `erd` [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128) [**not implement**]

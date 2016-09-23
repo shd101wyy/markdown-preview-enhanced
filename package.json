@@ -2,7 +2,7 @@
   "name": "markdown-preview-enhanced",
   "main": "./lib/markdown-preview-enhanced",
   "version": "0.8.5",
-  "description": "The 'BEST' Markdown Preview you need for Atom Editor!",
+  "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "University of Illinois/NCSA Open Source License",
   "engines": {
