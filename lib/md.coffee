@@ -484,6 +484,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
         src.startsWith('https://') or
         src.startsWith('atom://')  or
         src.startsWith('file://')  or
+        src.startsWith('data:image/') or
         src[0] == '#')) and
       (src.startsWith('./') or
         src.startsWith('../') or
