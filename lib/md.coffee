@@ -418,7 +418,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
+checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)->
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
@@ -540,7 +540,8 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       wavedromOffset += 1
     else if lang in ['viz', '{viz}']
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
-
+    else if lang in ['{erd}']
+      checkGraph 'erd', graphData.erd_s, preElement, text, option, $
     else
       renderCodeBlock(preElement, text, lang)
 
@@ -661,6 +662,7 @@ parseMD = (inputString, option={})->
     graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
     graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
     graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
+    graphData.erd_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('erd')
 
   # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed
