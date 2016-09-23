@@ -742,7 +742,7 @@ parseMD = (inputString, option={})->
       tocNeedUpdate = true
     else
       for i in [0...headings.length]
-        if markdownPreview.headings[i].content != headings[i].content
+        if markdownPreview.headings[i].content != headings[i].content or markdownPreview.headings[i].level != headings[i].level
           tocNeedUpdate = true
           break
 
