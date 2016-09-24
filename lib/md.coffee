@@ -605,12 +605,9 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     else if lang in ['wavedrom', '{wavedrom}']
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
-
       wavedromOffset += 1
     else if lang in ['viz', '{viz}']
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
-    else if lang in ['{erd}']
-      checkGraph 'erd', graphData.erd_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
     else

@@ -5,11 +5,12 @@
 	- [Options](#options)
 	- [Macro](#macro)
 	- [Demo](#demo)
+	- [Showcases](#showcases)
 
 <!-- tocstop -->
 
 # Code Chunk (Beta)
-**Markdown Preview Enhanced** allows you to run code on your system.   
+**Markdown Preview Enhanced** allows you to render code output into documents.     
 
     ```{bash}
     ls .
@@ -73,12 +74,41 @@ Please **Do Not** modify it.
 * **input_file**  
 `input_file` is automatically generated under the same directory of your markdown file and will be deleted after running code that is copied to `input_file`.      
 By default, it is appended at the very end of arguments.  
-However, you can set the position of `input_file` path in your `args` option by `{input_file}` macro. eg:  
+However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
 
-		```{program args:["-i", "{input_file}", "-o", "./output.png"]}
 
+    ```{program args:["-i", "{input_file}", "-o", "./output.png"]}
+
+    ```
 
 ## Demo
+This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
+
+    ```{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}
+
+    [Person]
+    *name
+    height
+    weight
+    +birth_location_id
+
+    [Location]
+    *id
+    city
+    state
+    country
+
+    Person *--1 Location
+    ```
+
+`{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}`  
+means that we are running `erd` program, and we will append the running result as `html`. `args` field shows the arguments that we will use.  
+
+Then we can click the `run` button at the preview to run our code.  
+
+![code_chunk](http://i.imgur.com/a7LkJYD.gif)
+
+## Showcases
 **bash**  
 ![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
 
@@ -87,4 +117,3 @@ However, you can set the position of `input_file` path in your `args` option by 
 
 **gnuplot with svg output**    
 ![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
-

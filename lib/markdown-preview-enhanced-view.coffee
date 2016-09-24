@@ -9,7 +9,6 @@ katex = require 'katex'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
-erdAPI = require './erd'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 pandocConvert = require './pandoc-wrapper'
@@ -467,7 +466,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
-    @renderERD()
     @renderWavedrom()
     @renderViz()
     @renderKaTeX()
@@ -694,23 +692,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)=>
-        el.innerHTML = outputHTML
-        el.setAttribute 'data-processed', true
-        @scrollMap = null
-
-    for el in els
-      if el.getAttribute('data-processed') != 'true'
-        helper(el, el.getAttribute('data-original'))
-        el.innerText = 'rendering graph...\n'
-
-  renderERD: ()->
-    els = @element.getElementsByClassName('erd')
-
-    if els.length
-      @graphData.erd_s = Array.prototype.slice.call(els)
-
-    helper = (el, text)->
-      erdAPI.render text, 'svg', (outputHTML)=>
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
         @scrollMap = null
