@@ -2,7 +2,7 @@
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
-temp = require 'temp'
+temp = require('temp').track()
 {exec} = require 'child_process'
 pdf = require 'html-pdf'
 katex = require 'katex'
