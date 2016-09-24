@@ -22,10 +22,13 @@ where the first argument within `{}` is the path to your program.
 You can define code chunk options in format of `{path/to/program opt1:value1, opt2:value2, ...}`   
 
 **output**  
-`html`, `text`   
+`html`, `text`, `png`, `none`  
+
 defines how to render code output.   
 `html` will append output as html.   
-`text` will append output within `pre` block.   
+`text` will append output within `pre` block.    
+`png` will append output as `base64` to an image.  
+`none` will hide the output.  
 
 eg:     
 

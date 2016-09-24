@@ -523,20 +523,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
           if (error)
             return
-          if codeChunk.childElementCount == 3
-            outputDiv = codeChunk.children[2]
-          else
+
+          outputDiv = codeChunk.getElementsByClassName('output')?[0]
+          if !outputDiv
             outputDiv = document.createElement 'div'
-            outputDiv.classList.add('output')
+            outputDiv.classList.add 'output'
 
           if options.output == 'html'
             outputDiv.innerHTML = data
+          else if options.output == 'png'
+            imageElement = document.createElement 'img'
+            imageData = Buffer(data).toString('base64')
+            imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
+            outputDiv.appendChild imageElement
+          else if options.output == 'none'
+            outputDiv.innerHTML = ''
           else
             preElement = document.createElement 'pre'
             preElement.innerText = data
             outputDiv.appendChild preElement
 
           codeChunk.appendChild outputDiv
+          @scrollMap = null
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)

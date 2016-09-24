@@ -16,7 +16,7 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
       return
 
     args.push savePath
-    task = spawn cmd, args
+    task = spawn cmd, args, {cwd: rootDirectoryPath}
     task.stdin.end()
 
     chunks = []
