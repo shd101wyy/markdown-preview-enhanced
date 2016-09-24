@@ -532,6 +532,12 @@
     .code-chunk {
       position: relative;
 
+      &:hover {
+        .run-all-btn {
+          display: block !important;
+        }
+      }
+
       .run-btn {
         position: absolute;
         top: 4px;
@@ -546,6 +552,22 @@
         &:hover {
           cursor: pointer;
           background-color: darken(#93BB7C, 10%);
+        }
+      }
+
+      .run-all-btn {
+        position: absolute;
+        top: 4px;
+        right: 32px;
+
+        padding: 0 4px;
+        background-color: #93BB7C;
+        border-radius: 4px;
+        color: #fff;
+
+        &:hover {
+          cursor: pointer;
+          background-color: darken(#93BB7C, 10%);  
         }
       }
 
