@@ -15,6 +15,8 @@ ebookConvert = require './ebook-convert'
 pandocConvert = require './pandoc-wrapper'
 codeChunkAPI = require './code-chunk'
 
+codeChunksDataCache = {} # key is @editor.getFilePath(), value is @codeChunksData
+
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
   constructor: (uri, mainModule)->
@@ -132,6 +134,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     else
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
+
+      # save codeChunksDataCache
+      codeChunksDataCache[@editor.getPath()] = @codeChunksData || {}
+
       setTimeout(()=>
         @initEvents(editor)
       , 0)
@@ -155,6 +161,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if @disposables # remove all binded events
       @disposables.dispose()
     @disposables = new CompositeDisposable()
+
+    # restore codeChunksData if already in cache
+    if codeChunksDataCache[@editor.getPath()]
+      @codeChunksData = codeChunksDataCache[@editor.getPath()]
 
     @initEditorEvent()
     @initViewEvent()

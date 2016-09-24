@@ -10,7 +10,7 @@
 * [x] fix scroll sync bug for code block
 * [x] support Code Chunk
 * [x] change `Markdown Preview Enhanced: Toc Create` to `Markdown Preview Enhanced: Create Toc`
-* [ ] save `codeChunksData` state for each editor.
+* [x] save `codeChunksData` state for each editor.
 
 ## 0.8.5
 * [ ] support `yaml_table` [**not implement**]
