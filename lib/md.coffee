@@ -568,7 +568,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
       outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
 
-    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="btn-group"><div class="run-btn btn" style="display: none;"></div>' + "<div class=\"run-all-btn btn\" style=\"display: none;\">all</div></div>" + highlightedBlock + outputDiv + '</div>')
+    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="btn-group"><div class="run-btn btn" style="display: none;"><span>▶︎</span></div>' + "<div class=\"run-all-btn btn\" style=\"display: none;\">all</div></div>" + highlightedBlock + outputDiv + '</div>')
     $el.attr 'data-args', parameters
 
     $(preElement).replaceWith $el

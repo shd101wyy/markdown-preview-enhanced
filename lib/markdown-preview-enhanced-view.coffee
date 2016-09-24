@@ -518,12 +518,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
     setupCodeChunk = (codeChunk)=>
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn.addEventListener 'click', ()=>
-        @runCodeChunk(codeChunk)
+        @runCodeChunk(codeChunk) if !codeChunk.classList.contains('running')
 
       runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
       runAllBtn.addEventListener 'click', ()=>
-        for codeChunk in codeChunks
-          @runCodeChunk(codeChunk)
+        for chunk in codeChunks
+          @runCodeChunk(chunk) if !chunk.classList.contains('running')
 
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
@@ -548,11 +548,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
 
-    runBtn = codeChunk.getElementsByClassName('run-btn')[0]
-    runBtn.classList.add('running')
+    codeChunk.classList.add('running')
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
-      runBtn.classList.remove('running')
+      codeChunk.classList.remove('running')
       if (error)
         return
 
@@ -596,6 +595,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         line = buffer.lines[lineNo]
         line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+        codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
 
         @parseDelay = Date.now() + 500 # prevent renderMarkdown
 

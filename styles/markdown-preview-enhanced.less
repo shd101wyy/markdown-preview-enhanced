@@ -580,16 +580,20 @@
 
           &.run-btn {
             display: block !important;
-            &:before {
-              content: "▶︎";
-            }
-            &.running {
-              cursor: not-allowed;
+          }
+        }
+      }
 
-              &:before {
-                content: "ᕕ(╯°□°)ᕗ";
-              }
-            }
+      &.running {
+        .run-btn {
+          span {
+            display: none;
+          }
+          &:after {
+            content: "ᕕ(╯°□°)ᕗ";
+          }
+          &:hover {
+            cursor: not-allowed;
           }
         }
       }
