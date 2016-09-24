@@ -27,7 +27,7 @@ generateSVG = (content, callback)->
 
   task.stdout.on 'end', ()->
     data = Buffer.concat(chunks).toString()
-    callback(data)
+    callback?(data)
 
 # generateSVG('A -> B')
 plantumlAPI = {

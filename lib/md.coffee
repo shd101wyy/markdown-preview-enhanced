@@ -17,13 +17,14 @@ enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLink
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 
-String.prototype.escape = ()->
-  tagsToReplace = {
+TAGS_TO_REPLACE = {
     '&': '&amp;',
     '<': '&lt;',
-    '>': '&gt;'
-  }
-  this.replace /[&<>]/g, (tag)-> tagsToReplace[tag] || tag
+    '>': '&gt;',
+    '"': '&quot;'
+}
+String.prototype.escape = ()->
+  this.replace /[&<>"]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -354,6 +355,27 @@ md.renderer.rules.list_item_open = (tokens, idx)->
   else
     return '<li>'
 
+# code fences
+# modified to support code chunk
+# check https://github.com/jonschlinkert/remarkable/blob/875554aedb84c9dd190de8d0b86c65d2572eadd5/lib/rules.js
+md.renderer.rules.fence = (tokens, idx, options, env, instance)->
+  token = tokens[idx]
+  langClass = ''
+  langPrefix = options.langPrefix
+  langName = ''
+
+  if token.params
+    langClass = ' class="' + langPrefix + token.params.escape() + '"';
+
+  # get code content
+  content = token.content.escape()
+
+  # copied from getBreak function.
+  break_ = '\n'
+  if idx < tokens.length && tokens[idx].type == 'list_item_close'
+    break_ = ''
+
+  return '<pre><code' + langClass + '>' + content + '</code></pre>' + break_
 
 # Build offsets for each line (lines can be wrapped)
 # That's a bit dirty to process each line everytime, but ok for demo.
@@ -508,6 +530,25 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
     $(preElement).replaceWith(highlightedBlock)
 
+  # parse eg:
+  # {node args:["-v"], output:"html"}
+  renderCodeChunk = (preElement, text, parameters)->
+    lang = parameters.slice(1, parameters.length-1).trim()
+    parameters = ''
+    indexOfSpace = lang.indexOf(' ')
+    if (indexOfSpace > 0)
+      parameters = lang.slice(indexOfSpace).trim()
+      lang = lang.slice(0, indexOfSpace)
+
+    highlighter = new Highlights({registry: atom.grammars})
+    html = highlighter.highlightSync
+            fileContents: text,
+            scopeName: scopeForLanguageName(lang)
+
+    highlightedBlock = $(html)
+    highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+    $(preElement).replaceWith('<div class="code-chunk" data-cmd=\''+lang+'\' data-args=\''+parameters+'\'><div class="run-btn" style="display: none;">▶︎</div>'+highlightedBlock+'</div>')
+
   $('pre').each (i, preElement)->
     if preElement.children[0]?.name == 'code'
       codeBlock = $(preElement).children().first()
@@ -543,6 +584,8 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang in ['{erd}']
       checkGraph 'erd', graphData.erd_s, preElement, text, option, $
+    else if lang[0] == '{' && lang[lang.length-1] == '}'
+      renderCodeChunk(preElement, text, lang)
     else
       renderCodeBlock(preElement, text, lang)
 

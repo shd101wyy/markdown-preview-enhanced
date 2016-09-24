@@ -13,6 +13,7 @@ erdAPI = require './erd'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 pandocConvert = require './pandoc-wrapper'
+codeChunkAPI = require './code-chunk'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -451,6 +452,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEvents: ->
     @bindTagAClickEvent()
+    @bindRunBtnClickEvent()
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
@@ -497,6 +499,47 @@ class MarkdownPreviewEnhancedView extends ScrollView
     for a in as
       href = a.getAttribute('href')
       analyzeHref(href)
+
+  bindRunBtnClickEvent: ()->
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    return if !codeChunks.length
+
+    setupCodeChunk = (codeChunk)=>
+      runBtn = codeChunk.children[0]
+      codeBlock = codeChunk.children[1]
+      code = codeBlock.innerText
+
+      runBtn.addEventListener 'click', ()=>
+        dataArgs = codeChunk.getAttribute('data-args')
+        cmd = codeChunk.getAttribute('data-cmd')
+
+        options = null
+        try
+          options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+        catch error
+          atom.notifications.addError('Invalid options', detail: dataArgs)
+          return
+
+        codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+          if (error)
+            return
+          if codeChunk.childElementCount == 3
+            outputDiv = codeChunk.children[2]
+          else
+            outputDiv = document.createElement 'div'
+            outputDiv.classList.add('output')
+
+          if options.output == 'html'
+            outputDiv.innerHTML = data
+          else
+            preElement = document.createElement 'pre'
+            preElement.innerText = data
+            outputDiv.appendChild preElement
+
+          codeChunk.appendChild outputDiv
+
+    for codeChunk in codeChunks
+      setupCodeChunk(codeChunk)
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
