@@ -547,51 +547,50 @@
       }
 
       &:hover {
-        .run-btn {
-          background-color: #93BB7C;
-        }
         .run-all-btn {
           display: block !important;
         }
-      }
 
-      .run-btn {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        width: 36px;
-        height: 24px;
-        text-align: center;
-
-        display: block !important;
-        padding: 0 4px;
-        background-color: lighten(#93BB7C, 25%);
-        border-radius: 4px;
-        color: #fff;
-
-        &:hover {
-          cursor: pointer;
-          background-color: darken(#93BB7C, 10%);
+        .btn-group {
+          opacity: 1;
         }
       }
 
-      .run-all-btn {
+      .btn-group {
         position: absolute;
-        top: 4px;
-        right: 42px;
-        width: 40px;
-        height: 24px;
-        text-align: center;
+        right: 0;
+        top: 0;
+        padding: 4px;
+        opacity: 0.4;
 
-        padding: 0.1em 4px;
-        background-color: #93BB7C;
-        border-radius: 4px;
-        color: #fff;
-        font-size: 0.8em;
+        .btn {
+          text-align: center;
+          color: #fff;
+          background-color: #93BB7C;
+          background-image: none;
+          float: right;
+          margin-left: 2px;
+          border-radius: 4px;
+          border-style: none;
 
-        &:hover {
-          cursor: pointer;
-          background-color: darken(#93BB7C, 10%);
+          &:hover {
+            cursor: pointer;
+            background-color: darken(#93BB7C, 10%);
+          }
+
+          &.run-btn {
+            display: block !important;
+            &:before {
+              content: "▶︎";
+            }
+            &.running {
+              cursor: not-allowed;
+
+              &:before {
+                content: "ᕕ(╯°□°)ᕗ";
+              }
+            }
+          }
         }
       }
 
@@ -609,7 +608,7 @@
   &:not([is="space-pen-div"]) {
     // not in preview mode, so hide some elements
     .code-chunk.hide-chunk {
-      pre.editor-colors, .run-btn, .run-all-btn {
+      pre.editor-colors, .btn-group {
         display: none;
       }
 

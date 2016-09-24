@@ -548,7 +548,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
 
+    runBtn = codeChunk.getElementsByClassName('run-btn')[0]
+    runBtn.classList.add('running')
+
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+      runBtn.classList.remove('running')
       if (error)
         return
 
