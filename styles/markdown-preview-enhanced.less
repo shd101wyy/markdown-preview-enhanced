@@ -533,6 +533,7 @@
       position: relative;
 
       &.hide-chunk {
+        display: block !important;
         /*
         pre.editor-colors {
           opacity: 0.8;
@@ -594,13 +595,26 @@
         }
       }
 
-      .output {
+      .output-div {
         overflow-x: auto;
         margin-bottom: @margin;
       }
 
       pre {
         cursor: text;
+      }
+    }
+  }
+
+  &:not([is="space-pen-div"]) {
+    // not in preview mode, so hide some elements
+    .code-chunk.hide-chunk {
+      pre.editor-colors, .run-btn, .run-all-btn {
+        display: none;
+      }
+
+      .output-div {
+        display: block;
       }
     }
   }
