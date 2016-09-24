@@ -330,7 +330,7 @@ md.renderer.rules.paragraph_open = (tokens, idx)->
   lineNo = null
   if tokens[idx].lines # /*&& tokens[idx].level == 0*/)
     lineNo = tokens[idx].lines[0]
-    return '<p class="line" data-line="' + lineNo + '">'
+    return '<p class="sync-line" data-line="' + lineNo + '">'
   return '<p>'
 
 
@@ -363,9 +363,13 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   langClass = ''
   langPrefix = options.langPrefix
   langName = ''
+  lineStr = ''
 
   if token.params
-    langClass = ' class="' + langPrefix + token.params.escape() + '"';
+    langClass = ' class="' + langPrefix + token.params.escape() + '" ';
+
+  if token.lines
+    lineStr = " data-line=\"#{token.lines[0]}\" "
 
   # get code content
   content = token.content.escape()
@@ -375,7 +379,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   if idx < tokens.length && tokens[idx].type == 'list_item_close'
     break_ = ''
 
-  return '<pre><code' + langClass + '>' + content + '</code></pre>' + break_
+  return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
 
 # Build offsets for each line (lines can be wrapped)
 # That's a bit dirty to process each line everytime, but ok for demo.
@@ -400,7 +404,7 @@ buildScrollMap = (markdownPreview)->
 
   # 把有标记 data-line 的 element 的 offsetTop 记录到 _scrollMap
   # write down the offsetTop of element that has 'data-line' property to _scrollMap
-  lineElements = markdownHtmlView.getElementsByClassName('line')
+  lineElements = markdownHtmlView.getElementsByClassName('sync-line')
 
   for i in [0...lineElements.length]
     el = lineElements[i]
@@ -520,7 +524,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
-  renderCodeBlock = (preElement, text, lang)->
+  renderCodeBlock = (preElement, text, lang, lineNo=null)->
     highlighter = new Highlights({registry: atom.grammars})
     html = highlighter.highlightSync
             fileContents: text,
@@ -528,11 +532,16 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+
+    if lineNo != null
+      highlightedBlock.attr({'data-line': lineNo})
+      highlightedBlock.addClass('sync-line')
+
     $(preElement).replaceWith(highlightedBlock)
 
   # parse eg:
   # {node args:["-v"], output:"html"}
-  renderCodeChunk = (preElement, text, parameters)->
+  renderCodeChunk = (preElement, text, parameters, lineNo=null)->
     lang = parameters.slice(1, parameters.length-1).trim()
     parameters = ''
     indexOfSpace = lang.indexOf(' ')
@@ -547,15 +556,23 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+
+    if lineNo != null
+      highlightedBlock.attr({'data-line': lineNo})
+      highlightedBlock.addClass('sync-line')
+
     $(preElement).replaceWith('<div class="code-chunk" data-cmd=\''+lang+'\' data-args=\''+parameters+'\'><div class="run-btn" style="display: none;">▶︎</div>'+highlightedBlock+'</div>')
 
   $('pre').each (i, preElement)->
+    lineNo = null
     if preElement.children[0]?.name == 'code'
       codeBlock = $(preElement).children().first()
       lang = 'text'
       if codeBlock.attr('class')
         lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
       text = codeBlock.text()
+
+      lineNo = codeBlock.attr('data-line')
     else
       lang = 'text'
       if preElement.children[0]
@@ -585,9 +602,9 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
     else if lang in ['{erd}']
       checkGraph 'erd', graphData.erd_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
-      renderCodeChunk(preElement, text, lang)
+      renderCodeChunk(preElement, text, lang, lineNo)
     else
-      renderCodeBlock(preElement, text, lang)
+      renderCodeBlock(preElement, text, lang, lineNo)
 
   return $.html()
 
@@ -736,7 +753,7 @@ parseMD = (inputString, option={})->
     id = if id then "id=#{id}" else ''
     if tokens[idx].lines
       line = tokens[idx].lines[0]
-      return "<h#{tokens[idx].hLevel} class=\"line\" data-line=\"#{line}\" #{id}>"
+      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{line}\" #{id}>"
 
     return "<h#{tokens[idx].hLevel} #{id}>"
 

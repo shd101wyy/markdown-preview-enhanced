@@ -50,4 +50,9 @@ args that appends to your first command. eg:
     ```
 
 **hide**  
-`hide` will hide code chunk but only leave the output.
+`hide` will hide code chunk but only leave the output. default: `false`  
+eg:
+
+    ```{python hide:true}
+    print('you can see this message, but not this code')
+    ```

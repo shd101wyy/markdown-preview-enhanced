@@ -7,6 +7,7 @@
 * [x] change graph APIs.
 * [ ] change parseMD function to async function with callback.
 * [ ] pandoc graph include [**may be implemented in next version**]
+* [x] fix scroll sync bug for code block
 
 ## 0.8.5
 * [ ] support `yaml_table` [**not implement**]
