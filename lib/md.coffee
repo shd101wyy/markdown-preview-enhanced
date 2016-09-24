@@ -542,12 +542,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
   # parse eg:
   # {node args:["-v"], output:"html"}
   renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData={})->
-    lang = parameters.slice(1, parameters.length-1).trim()
-    parameters = ''
-    indexOfSpace = lang.indexOf(' ')
-    if (indexOfSpace > 0)
-      parameters = lang.slice(indexOfSpace).trim()
-      lang = lang.slice(0, indexOfSpace)
+    match = parameters.match(/^\{\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)}$/)
+    lang = match[1].trim()
+    parameters = match[2].trim()
+    lang = lang.slice(1, lang.length-1).trim() if lang[0] == '"'
 
     return if !lang
 
