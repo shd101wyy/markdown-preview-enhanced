@@ -458,7 +458,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if @presentationMode
         @scrollSyncForPresentation cursor.getBufferRow()
       else
+        t = @scrollDuration
+        @scrollDuration = 0
         @scrollSyncToLineNo cursor.getScreenRow()
+        @scrollDuration = t
 
   bindEvents: ->
     @bindTagAClickEvent()
