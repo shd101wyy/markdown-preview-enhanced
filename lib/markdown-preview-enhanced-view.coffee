@@ -506,7 +506,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
-    @codeChunksData = codeChunks # save to codeChunksData
+    @codeChunksData = Array.prototype.slice.call(codeChunks) # save to codeChunksData
 
     setupCodeChunk = (codeChunk)=>
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
@@ -515,7 +515,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
       runAllBtn.addEventListener 'click', ()=>
-        for codeChunk in @codeChunksData
+        for codeChunk in codeChunks
           @runCodeChunk(codeChunk)
 
     for codeChunk in codeChunks
@@ -539,10 +539,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if (error)
         return
 
-      outputDiv = codeChunk.getElementsByClassName('output')?[0]
+      outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv
         outputDiv = document.createElement 'div'
-        outputDiv.classList.add 'output'
+        outputDiv.classList.add 'output-div'
       else
         outputDiv.innerHTML = ''
 
@@ -557,13 +557,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
         outputDiv.remove()
         outputDiv = null
       else
-        preElement = document.createElement 'pre'
-        preElement.innerText = data
-        outputDiv.appendChild preElement
+        if data.length
+          preElement = document.createElement 'pre'
+          preElement.innerText = data
+          outputDiv.appendChild preElement
 
       if outputDiv
         codeChunk.appendChild outputDiv
         @scrollMap = null
+      codeChunk.setAttribute 'data-processed', true
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')

@@ -487,7 +487,7 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
-resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
+resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData=[],  option={})->
   {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath
@@ -541,7 +541,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
   # parse eg:
   # {node args:["-v"], output:"html"}
-  renderCodeChunk = (preElement, text, parameters, lineNo=null)->
+  renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData=[])->
     lang = parameters.slice(1, parameters.length-1).trim()
     parameters = ''
     indexOfSpace = lang.indexOf(' ')
@@ -562,8 +562,19 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       highlightedBlock.addClass('sync-line')
 
     hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
+    outputDiv = ''
 
-    $(preElement).replaceWith("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\" data-args=\"#{parameters}\">" + '<div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" + "<div class=\"toggle-btn\" style=\"display: none;\">#{if hide then 'show' else 'hide'}</div>" + highlightedBlock+'</div>')
+    if codeChunksData.length
+      codeChunk = codeChunksData.splice(0, 1)[0]
+      console.log(codeChunk)
+      # oldLineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+
+      ## if lineNo and Math.abs(oldLineNo - lineNo)<=1
+      outputDiv = '<div class="output-div">' + (codeChunk.getElementsByClassName('output-div')[0]?.innerHTML || '') + '</div>'
+    else
+      null
+
+    $(preElement).replaceWith("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\" data-args=\"#{parameters}\">" + '<div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" + highlightedBlock + outputDiv + '</div>')
 
   $('pre').each (i, preElement)->
     lineNo = null
@@ -604,7 +615,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
     else if lang in ['{erd}']
       checkGraph 'erd', graphData.erd_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
-      renderCodeChunk(preElement, text, lang, lineNo)
+      renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
     else
       renderCodeBlock(preElement, text, lang, lineNo)
 
@@ -717,11 +728,12 @@ parseMD = (inputString, option={})->
   # yaml
   yamlConfig = null
 
-  # set graph data
-  # so that we won't render the graph that hasn't changed
+  # we won't render the graph that hasn't changed
   graphData = null
+  codeChunksData = null
   if markdownPreview
     graphData = markdownPreview.graphData
+    codeChunksData = markdownPreview.codeChunksData
 
   # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed
@@ -840,7 +852,7 @@ parseMD = (inputString, option={})->
 
   markdownPreview?.headings = headings
 
-  html = resolveImagePathAndCodeBlock(html, graphData, option)
+  html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
   return {html: frontMatterTable+html, slideConfigs, yamlConfig}
 
 module.exports = {
