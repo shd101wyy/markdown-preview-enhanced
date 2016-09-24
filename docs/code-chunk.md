@@ -76,11 +76,12 @@ Please **Do Not** modify it.
 By default, it is appended at the very end of arguments.  
 However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
 
-
-    ```{program args:["-i", "{input_file}", "-o", "./output.png"]}
-
-    ```
-
+<pre>
+```{program args:["-i", "{input_file}", "-o", "./output.png"]}
+...your code here
+```
+</pre>
+   
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
