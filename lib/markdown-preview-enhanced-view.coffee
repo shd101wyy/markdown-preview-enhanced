@@ -65,6 +65,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # graph data used to save rendered graphs
     @graphData = null
+    @codeChunksData = []
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -501,55 +502,68 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   bindRunBtnClickEvent: ()->
+    @codeChunks = []
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
+    @codeChunksData = codeChunks # save to codeChunksData
+
     setupCodeChunk = (codeChunk)=>
-      runBtn = codeChunk.children[0]
-      codeBlock = codeChunk.children[1]
-      code = codeBlock.innerText
-
+      runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn.addEventListener 'click', ()=>
-        dataArgs = codeChunk.getAttribute('data-args')
-        cmd = codeChunk.getAttribute('data-cmd')
+        @runCodeChunk(codeChunk)
 
-        options = null
-        try
-          options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
-        catch error
-          atom.notifications.addError('Invalid options', detail: dataArgs)
-          return
-
-        codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
-          if (error)
-            return
-
-          outputDiv = codeChunk.getElementsByClassName('output')?[0]
-          if !outputDiv
-            outputDiv = document.createElement 'div'
-            outputDiv.classList.add 'output'
-
-          if options.output == 'html'
-            outputDiv.innerHTML = data
-          else if options.output == 'png'
-            imageElement = document.createElement 'img'
-            imageData = Buffer(data).toString('base64')
-            imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
-            outputDiv.appendChild imageElement
-          else if options.output == 'none'
-            outputDiv.remove()
-            outputDiv = null
-          else
-            preElement = document.createElement 'pre'
-            preElement.innerText = data
-            outputDiv.appendChild preElement
-
-          if outputDiv
-            codeChunk.appendChild outputDiv
-            @scrollMap = null
+      runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
+      runAllBtn.addEventListener 'click', ()=>
+        for codeChunk in @codeChunksData
+          @runCodeChunk(codeChunk)
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
+
+  runCodeChunk: (codeChunk)->
+    codeBlock = codeChunk.getElementsByTagName('PRE')[0]
+    code = codeBlock.innerText
+
+    dataArgs = codeChunk.getAttribute('data-args')
+    cmd = codeChunk.getAttribute('data-cmd')
+
+    options = null
+    try
+      options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+    catch error
+      atom.notifications.addError('Invalid options', detail: dataArgs)
+      return
+
+    codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+      if (error)
+        return
+
+      outputDiv = codeChunk.getElementsByClassName('output')?[0]
+      if !outputDiv
+        outputDiv = document.createElement 'div'
+        outputDiv.classList.add 'output'
+      else
+        outputDiv.innerHTML = ''
+
+      if options.output == 'html'
+        outputDiv.innerHTML = data
+      else if options.output == 'png'
+        imageElement = document.createElement 'img'
+        imageData = Buffer(data).toString('base64')
+        imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
+        outputDiv.appendChild imageElement
+      else if options.output == 'none'
+        outputDiv.remove()
+        outputDiv = null
+      else
+        preElement = document.createElement 'pre'
+        preElement.innerText = data
+        outputDiv.appendChild preElement
+
+      if outputDiv
+        codeChunk.appendChild outputDiv
+        @scrollMap = null
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')

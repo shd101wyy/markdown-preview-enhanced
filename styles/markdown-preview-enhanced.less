@@ -533,6 +533,9 @@
       position: relative;
 
       &:hover {
+        .run-btn {
+          background-color: #93BB7C;
+        }
         .run-all-btn {
           display: block !important;
         }
@@ -545,7 +548,7 @@
 
         display: block !important;
         padding: 0 4px;
-        background-color: #93BB7C;
+        background-color: lighten(#93BB7C, 25%);
         border-radius: 4px;
         color: #fff;
 
@@ -567,13 +570,17 @@
 
         &:hover {
           cursor: pointer;
-          background-color: darken(#93BB7C, 10%);  
+          background-color: darken(#93BB7C, 10%);
         }
       }
 
       .output {
         overflow-x: auto;
         margin-bottom: @margin;
+      }
+
+      pre {
+        cursor: text;
       }
     }
   }
