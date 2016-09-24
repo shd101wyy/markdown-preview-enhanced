@@ -537,14 +537,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
             imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
             outputDiv.appendChild imageElement
           else if options.output == 'none'
-            outputDiv.innerHTML = ''
+            outputDiv.remove()
+            outputDiv = null
           else
             preElement = document.createElement 'pre'
             preElement.innerText = data
             outputDiv.appendChild preElement
 
-          codeChunk.appendChild outputDiv
-          @scrollMap = null
+          if outputDiv
+            codeChunk.appendChild outputDiv
+            @scrollMap = null
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
