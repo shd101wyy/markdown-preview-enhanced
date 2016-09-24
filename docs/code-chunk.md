@@ -6,10 +6,14 @@
 	- [Macro](#macro)
 	- [Demo](#demo)
 	- [Showcases](#showcases)
+	- [Limitations](#limitations)
 
 <!-- tocstop -->
 
-# Code Chunk (Beta)
+![code_chunk_intro](http://i.imgur.com/wsJRRzH.gif)
+
+# Code Chunk (Beta)  
+**Changes might happen in the future.**  
 **Markdown Preview Enhanced** allows you to render code output into documents.     
 
     ```{bash}
@@ -21,10 +25,10 @@
     console.log(date.toString())
     ```
 
-where the first argument within `{}` is the path to your program.   
+where the first argument within <code>```{...}</code> is the path to your program.   
 
 ## Options
-You can define code chunk options in format of `{path/to/program  opt1:value1, opt2:value2, ...}`   
+You can configure code chunk options in format of `{path/to/program  opt1:value1, opt2:value2, ...}`   
 
 **output**  
 `html`, `text`, `png`, `none`  
@@ -73,7 +77,7 @@ Please **Do Not** modify it.
 ## Macro
 * **input_file**  
 `input_file` is automatically generated under the same directory of your markdown file and will be deleted after running code that is copied to `input_file`.      
-By default, it is appended at the very end of arguments.  
+By default, it is appended at the very end of program arguments.  
 However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
 
 <pre>
@@ -81,7 +85,7 @@ However, you can set the position of `input_file` in your `args` option by `{inp
 ...your code here
 ```
 </pre>
-   
+
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
@@ -103,7 +107,10 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
     ```
 
 `{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}`  
-means that we are running `erd` program, and we will append the running result as `html`. `args` field shows the arguments that we will use.  
+* `erd` the program that we are using. (*you need to have the program installed first*)  
+* `output:"html"` we will append the running result as `html`.  
+* `args` field shows the arguments that we will use.  
+* `id` is a unique identifier automatically generated, you don't need to care about it.  
 
 Then we can click the `run` button at the preview to run our code.  
 
@@ -118,3 +125,6 @@ Then we can click the `run` button at the preview to run our code.
 
 **gnuplot with svg output**    
 ![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
+
+## Limitations
+* Doesn't work with `pandoc document export` and `ebook` yet.  

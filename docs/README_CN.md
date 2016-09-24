@@ -5,6 +5,10 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)  
 
+**0.8.6** 版本以后, markdown-preview-enhanced 将支持 [Code Chunks (beta)](./code-chunk.md) 使你在 markdown 文件中插入各种代码的运行结果。   
+使用 [Code Chunks (beta)](./code-chunk.md), 你可以在 markdown 文件里运行 **gnuplot**, **python**, **nodejs** 等所有你拥有的程序。          
+![code_chunk_intro](http://i.imgur.com/wsJRRzH.gif)
+
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
 （以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
@@ -27,6 +31,7 @@ Markdown Preview Enhanced
 
 ## 支持特性
 - **编辑与预览滑动同步**  
+- **[Code Chunks (beta)](./code-chunk.md)**
 - **[pandoc](./advanced-export.md)**
 - **[ebook](./ebook.md)**  
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
@@ -106,6 +111,7 @@ Markdown Preview Enhanced
 	- [文档](./advanced-export.md)
 
 ## 额外支持
+* **Code Chunks 运行内嵌代码** [文档](./code-chunk.md)。
 * **EBook 电子书**  
 	更多关于如何创建 电子书 请参阅 [这里](./ebook.md)。
 * **Presentation Writer**  
