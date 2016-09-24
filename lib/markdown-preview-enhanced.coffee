@@ -30,7 +30,7 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.add atom.commands.add 'atom-workspace',
       'markdown-preview-enhanced:toggle': => @toggle()
       'markdown-preview-enhanced:customize-css': => @customizeCSS()
-      'markdown-preview-enhanced:toc-create': => @createTOC()
+      'markdown-preview-enhanced:create-toc': => @createTOC()
       'markdown-preview-enhanced:toggle-scroll-sync': => @toggleScrollSync()
       'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()

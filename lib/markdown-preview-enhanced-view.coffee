@@ -2,7 +2,7 @@
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
-temp = require 'temp'
+temp = require('temp').track()
 {exec} = require 'child_process'
 pdf = require 'html-pdf'
 katex = require 'katex'
@@ -12,6 +12,9 @@ plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 pandocConvert = require './pandoc-wrapper'
+codeChunkAPI = require './code-chunk'
+
+codeChunksDataCache = {} # key is @editor.getFilePath(), value is @codeChunksData
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -60,6 +63,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # presentation mode
     @presentationMode = false
     @slideConfigs = null
+
+    # graph data used to save rendered graphs
+    @graphData = null
+    @codeChunksData = null
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -126,6 +133,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     else
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
+
+      # save codeChunksDataCache
+      codeChunksDataCache[@editor.getPath()] = @codeChunksData || {}
+
       setTimeout(()=>
         @initEvents(editor)
       , 0)
@@ -149,6 +160,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if @disposables # remove all binded events
       @disposables.dispose()
     @disposables = new CompositeDisposable()
+
+    # restore codeChunksData if already in cache
+    if codeChunksDataCache[@editor.getPath()]
+      @codeChunksData = codeChunksDataCache[@editor.getPath()]
 
     @initEditorEvent()
     @initViewEvent()
@@ -431,6 +446,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @presentationMode = false
 
     @element.innerHTML = html
+    @graphData = {}
     @bindEvents()
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
@@ -442,10 +458,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if @presentationMode
         @scrollSyncForPresentation cursor.getBufferRow()
       else
+        t = @scrollDuration
+        @scrollDuration = 0
         @scrollSyncToLineNo cursor.getScreenRow()
+        @scrollDuration = t
 
   bindEvents: ->
     @bindTagAClickEvent()
+    @bindRunBtnClickEvent()
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
@@ -492,6 +512,105 @@ class MarkdownPreviewEnhancedView extends ScrollView
       href = a.getAttribute('href')
       analyzeHref(href)
 
+  bindRunBtnClickEvent: ()->
+    @codeChunksData = {} # key is codeChunkId, value is outputDiv
+
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    return if !codeChunks.length
+
+    setupCodeChunk = (codeChunk)=>
+      runBtn = codeChunk.getElementsByClassName('run-btn')[0]
+      runBtn.addEventListener 'click', ()=>
+        @runCodeChunk(codeChunk) if !codeChunk.classList.contains('running')
+
+      runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
+      runAllBtn.addEventListener 'click', ()=>
+        for chunk in codeChunks
+          @runCodeChunk(chunk) if !chunk.classList.contains('running')
+
+      dataArgs = codeChunk.getAttribute('data-args')
+      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+      if idMatch and idMatch[1]
+        id = idMatch[1]
+        @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
+
+    for codeChunk in codeChunks
+      setupCodeChunk(codeChunk)
+
+  runCodeChunk: (codeChunk)->
+    codeBlock = codeChunk.getElementsByTagName('PRE')[0]
+    code = codeBlock.innerText
+
+    dataArgs = codeChunk.getAttribute('data-args')
+    cmd = codeChunk.getAttribute('data-cmd')
+
+    options = null
+    try
+      options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+    catch error
+      atom.notifications.addError('Invalid options', detail: dataArgs)
+      return
+
+    codeChunk.classList.add('running')
+
+    codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+      codeChunk.classList.remove('running')
+      if (error)
+        return
+
+      outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
+      if !outputDiv
+        outputDiv = document.createElement 'div'
+        outputDiv.classList.add 'output-div'
+      else
+        outputDiv.innerHTML = ''
+
+      if options.output == 'html'
+        outputDiv.innerHTML = data
+      else if options.output == 'png'
+        imageElement = document.createElement 'img'
+        imageData = Buffer(data).toString('base64')
+        imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
+        outputDiv.appendChild imageElement
+      else if options.output == 'none'
+        outputDiv.remove()
+        outputDiv = null
+      else
+        if data.length
+          preElement = document.createElement 'pre'
+          preElement.innerText = data
+          outputDiv.appendChild preElement
+
+      if outputDiv
+        codeChunk.appendChild outputDiv
+        @scrollMap = null
+
+      # check id and save outputDiv to @codeChunksData
+      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+      if !idMatch
+        id = (new Date().getTime()).toString(36)
+
+        buffer = @editor.buffer
+        return if !buffer
+
+        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+
+        line = buffer.lines[lineNo]
+        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+        codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
+
+        @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+      else
+        id = idMatch[1]
+
+      @codeChunksData[id] = outputDiv
+
+
+
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
     for checkbox in checkboxs
@@ -519,9 +638,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.querySelectorAll('.mermaid:not([data-processed])') #@element.getElementsByClassName('mermaid')
+    els = @element.getElementsByClassName('mermaid')
     if els.length
-      mermaid.init(null, els)
+      @graphData.mermaid_s = Array.prototype.slice.call(els)
+
+      notProcessedEls = @element.querySelectorAll('.mermaid:not([data-processed])')
+
+      if notProcessedEls.length
+        mermaid.init(null, notProcessedEls)
 
       ###
       # the code below doesn't seem to be working
@@ -547,6 +671,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
   renderWavedrom: ()->
     els = @element.getElementsByClassName('wavedrom')
     if els.length
+      @graphData.wavedrom_s = Array.prototype.slice.call(els)
+
       # WaveDrom.RenderWaveForm(0, WaveDrom.eva('a0'), 'a')
       for el in els
         if el.getAttribute('data-processed') != 'true'
@@ -568,6 +694,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderPlantUML: ()->
     els = @element.getElementsByClassName('plantuml')
+
+    if els.length
+      @graphData.plantuml_s = Array.prototype.slice.call(els)
+
     helper = (el, text)->
       plantumlAPI.render text, (outputHTML)=>
         el.innerHTML = outputHTML
@@ -583,6 +713,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     els = element.getElementsByClassName('viz')
 
     if els.length
+      @graphData.viz_s = Array.prototype.slice.call(els)
+
       @Viz ?= require('../dependencies/viz/viz.js')
       for el in els
         if el.getAttribute('data-processed') != 'true'
@@ -1168,7 +1300,7 @@ module.exports = config || {}
       # load the last ul, analyze toc links.
       getStructure = (ul, level)->
         for li in ul.children
-          a = li.children[0].getElementsByTagName('a')[0]
+          a = li.children[0]?.getElementsByTagName('a')?[0]
           continue if not a
           filePath = a.getAttribute('href') # assume markdown file path
           heading = a.innerHTML

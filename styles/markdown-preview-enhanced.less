@@ -520,6 +520,108 @@
     }
   }
 
+  // graphs
+  &[is='space-pen-div'] {
+    .erd {
+      overflow-x: auto;
+    }
+  }
+
+  // code chunk
+  &[is="space-pen-div"] {
+    .code-chunk {
+      position: relative;
+
+      &.hide-chunk {
+        display: block !important;
+        /*
+        pre.editor-colors {
+          opacity: 0.8;
+        }
+        &:hover {
+          pre.editor-colors {
+            opacity: 1;
+          }
+        }
+        */
+      }
+
+      &:hover {
+        .run-all-btn {
+          display: block !important;
+        }
+
+        .btn-group {
+          opacity: 1;
+        }
+      }
+
+      .btn-group {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px;
+        opacity: 0.4;
+
+        .btn {
+          text-align: center;
+          color: #fff;
+          background-color: #93BB7C;
+          background-image: none;
+          float: right;
+          margin-left: 2px;
+          border-radius: 4px;
+          border-style: none;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken(#93BB7C, 10%);
+          }
+
+          &.run-btn {
+            display: block !important;
+          }
+        }
+      }
+
+      &.running {
+        .run-btn {
+          span {
+            display: none;
+          }
+          &:after {
+            content: "ᕕ(╯°□°)ᕗ";
+          }
+          &:hover {
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .output-div {
+        overflow-x: auto;
+        margin-bottom: @margin;
+      }
+
+      pre {
+        cursor: text;
+      }
+    }
+  }
+
+  &:not([is="space-pen-div"]) {
+    // not in preview mode, so hide some elements
+    .code-chunk.hide-chunk {
+      pre.editor-colors, .btn-group {
+        display: none;
+      }
+
+      .output-div {
+        display: block;
+      }
+    }
+  }
+
   // github syntax theme
   // forked and modified from https://github.com/smlombardi/inspired-github
   .github-syntax-theme {

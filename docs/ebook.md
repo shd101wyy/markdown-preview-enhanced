@@ -228,3 +228,4 @@ To export ebook, open the `SUMMARY.md` with the preview opened. Then right click
 * Only **KaTeX** can be used for Math Typesetting.   
   And the generated ebook file doesn't render math expression properly in **iBook**.
 * **PDF** and **Mobi** generation is buggy.
+* **Code Chunk** doesn't work with Ebook generation.

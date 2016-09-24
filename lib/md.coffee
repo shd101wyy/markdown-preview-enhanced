@@ -17,13 +17,14 @@ enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLink
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 
-String.prototype.escape = ()->
-  tagsToReplace = {
+TAGS_TO_REPLACE = {
     '&': '&amp;',
     '<': '&lt;',
-    '>': '&gt;'
-  }
-  this.replace /[&<>]/g, (tag)-> tagsToReplace[tag] || tag
+    '>': '&gt;',
+    '"': '&quot;'
+}
+String.prototype.escape = ()->
+  this.replace /[&<>"]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -329,7 +330,7 @@ md.renderer.rules.paragraph_open = (tokens, idx)->
   lineNo = null
   if tokens[idx].lines # /*&& tokens[idx].level == 0*/)
     lineNo = tokens[idx].lines[0]
-    return '<p class="line" data-line="' + lineNo + '">'
+    return '<p class="sync-line" data-line="' + lineNo + '">'
   return '<p>'
 
 
@@ -354,6 +355,31 @@ md.renderer.rules.list_item_open = (tokens, idx)->
   else
     return '<li>'
 
+# code fences
+# modified to support code chunk
+# check https://github.com/jonschlinkert/remarkable/blob/875554aedb84c9dd190de8d0b86c65d2572eadd5/lib/rules.js
+md.renderer.rules.fence = (tokens, idx, options, env, instance)->
+  token = tokens[idx]
+  langClass = ''
+  langPrefix = options.langPrefix
+  langName = ''
+  lineStr = ''
+
+  if token.params
+    langClass = ' class="' + langPrefix + token.params.escape() + '" ';
+
+  if token.lines
+    lineStr = " data-line=\"#{token.lines[0]}\" "
+
+  # get code content
+  content = token.content.escape()
+
+  # copied from getBreak function.
+  break_ = '\n'
+  if idx < tokens.length && tokens[idx].type == 'list_item_close'
+    break_ = ''
+
+  return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
 
 # Build offsets for each line (lines can be wrapped)
 # That's a bit dirty to process each line everytime, but ok for demo.
@@ -378,7 +404,7 @@ buildScrollMap = (markdownPreview)->
 
   # 把有标记 data-line 的 element 的 offsetTop 记录到 _scrollMap
   # write down the offsetTop of element that has 'data-line' property to _scrollMap
-  lineElements = markdownHtmlView.getElementsByClassName('line')
+  lineElements = markdownHtmlView.getElementsByClassName('sync-line')
 
   for i in [0...lineElements.length]
     el = lineElements[i]
@@ -418,7 +444,7 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
-checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
+checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)->
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
@@ -461,7 +487,7 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset)->
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
-resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
+resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={})->
   {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath
@@ -484,6 +510,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
         src.startsWith('https://') or
         src.startsWith('atom://')  or
         src.startsWith('file://')  or
+        src.startsWith('data:image/') or
         src[0] == '#')) and
       (src.startsWith('./') or
         src.startsWith('../') or
@@ -497,7 +524,7 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
-  renderCodeBlock = (preElement, text, lang)->
+  renderCodeBlock = (preElement, text, lang, lineNo=null)->
     highlighter = new Highlights({registry: atom.grammars})
     html = highlighter.highlightSync
             fileContents: text,
@@ -505,15 +532,57 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+
+    if lineNo != null
+      highlightedBlock.attr({'data-line': lineNo})
+      highlightedBlock.addClass('sync-line')
+
     $(preElement).replaceWith(highlightedBlock)
 
+  # parse eg:
+  # {node args:["-v"], output:"html"}
+  renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData={})->
+    match = parameters.match(/^\{\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)}$/)
+    lang = match[1].trim()
+    parameters = match[2].trim()
+    lang = lang.slice(1, lang.length-1).trim() if lang[0] == '"'
+
+    return if !lang
+
+    highlighter = new Highlights({registry: atom.grammars})
+    html = highlighter.highlightSync
+            fileContents: text,
+            scopeName: scopeForLanguageName(lang)
+
+    highlightedBlock = $(html)
+    highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+
+    if lineNo != null
+      highlightedBlock.attr({'data-line': lineNo})
+      highlightedBlock.addClass('sync-line')
+
+    hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
+    outputDiv = ''
+
+    idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+    if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
+      outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
+
+    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="btn-group"><div class="run-btn btn" style="display: none;"><span>▶︎</span></div>' + "<div class=\"run-all-btn btn\" style=\"display: none;\">all</div></div>" + highlightedBlock + outputDiv + '</div>')
+    $el.attr 'data-args', parameters
+
+    $(preElement).replaceWith $el
+
   $('pre').each (i, preElement)->
+    lineNo = null
     if preElement.children[0]?.name == 'code'
       codeBlock = $(preElement).children().first()
       lang = 'text'
       if codeBlock.attr('class')
         lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
       text = codeBlock.text()
+
+      lineNo = codeBlock.attr('data-line')
     else
       lang = 'text'
       if preElement.children[0]
@@ -536,13 +605,13 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
 
     else if lang in ['wavedrom', '{wavedrom}']
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
-
       wavedromOffset += 1
     else if lang in ['viz', '{viz}']
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
-
+    else if lang[0] == '{' && lang[lang.length-1] == '}'
+      renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
     else
-      renderCodeBlock(preElement, text, lang)
+      renderCodeBlock(preElement, text, lang, lineNo)
 
   return $.html()
 
@@ -626,7 +695,8 @@ option = {
   isForPreview:         bool, optional
   isForEbook:           bool, optional
   hideFrontMatter:      bool, optional
-  markdownPreview:      MarkdownPreviewEnhancedView. optional
+  markdownPreview:      MarkdownPreviewEnhancedView, optional
+
   rootDirectoryPath:    string, required
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
@@ -652,15 +722,12 @@ parseMD = (inputString, option={})->
   # yaml
   yamlConfig = null
 
-  # set graph data
-  # so that we won't render the graph that hasn't changed
+  # we won't render the graph that hasn't changed
   graphData = null
+  codeChunksData = null
   if markdownPreview
-    graphData = {}
-    graphData.plantuml_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('plantuml')
-    graphData.mermaid_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mermaid')
-    graphData.wavedrom_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('wavedrom')
-    graphData.viz_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('viz')
+    graphData = markdownPreview.graphData
+    codeChunksData = markdownPreview.codeChunksData
 
   # set globalMathTypesettingData
   # so that we won't render the math expression that hasn't changed
@@ -694,7 +761,7 @@ parseMD = (inputString, option={})->
     id = if id then "id=#{id}" else ''
     if tokens[idx].lines
       line = tokens[idx].lines[0]
-      return "<h#{tokens[idx].hLevel} class=\"line\" data-line=\"#{line}\" #{id}>"
+      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{line}\" #{id}>"
 
     return "<h#{tokens[idx].hLevel} #{id}>"
 
@@ -742,7 +809,7 @@ parseMD = (inputString, option={})->
       tocNeedUpdate = true
     else
       for i in [0...headings.length]
-        if markdownPreview.headings[i].content != headings[i].content
+        if markdownPreview.headings[i].content != headings[i].content or markdownPreview.headings[i].level != headings[i].level
           tocNeedUpdate = true
           break
 
@@ -779,7 +846,7 @@ parseMD = (inputString, option={})->
 
   markdownPreview?.headings = headings
 
-  html = resolveImagePathAndCodeBlock(html, graphData, option)
+  html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
   return {html: frontMatterTable+html, slideConfigs, yamlConfig}
 
 module.exports = {

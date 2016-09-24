@@ -41,7 +41,8 @@ scopesForLanguageName =
   '{puml}': 'source.plantuml',
   '{wavedrom}': 'source.wavedrom',
   '{viz}': 'source.viz',
-  '{erd}': 'source.erd'
+  'erd': 'source.erd',
+  'node': 'source.js'
 
 module.exports.scopeForLanguageName  = (language)->
   return scopesForLanguageName[language] or ('source.' + language)
