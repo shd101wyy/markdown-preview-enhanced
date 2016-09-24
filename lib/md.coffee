@@ -561,7 +561,9 @@ resolveImagePathAndCodeBlock = (html, graphData={},  option={})->
       highlightedBlock.attr({'data-line': lineNo})
       highlightedBlock.addClass('sync-line')
 
-    $(preElement).replaceWith('<div class="code-chunk" data-cmd=\''+lang+'\' data-args=\''+parameters+'\'><div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" +highlightedBlock+'</div>')
+    hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
+
+    $(preElement).replaceWith("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\" data-args=\"#{parameters}\">" + '<div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" + "<div class=\"toggle-btn\" style=\"display: none;\">#{if hide then 'show' else 'hide'}</div>" + highlightedBlock+'</div>')
 
   $('pre').each (i, preElement)->
     lineNo = null

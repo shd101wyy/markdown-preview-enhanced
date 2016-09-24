@@ -532,6 +532,17 @@
     .code-chunk {
       position: relative;
 
+      &.hide-chunk {
+        pre.editor-colors {
+          opacity: 0.4;
+        }
+        &:hover {
+          pre.editor-colors {
+            opacity: 1;
+          }
+        }
+      }
+
       &:hover {
         .run-btn {
           background-color: #93BB7C;
@@ -545,6 +556,9 @@
         position: absolute;
         top: 4px;
         right: 4px;
+        width: 36px;
+        height: 24px;
+        text-align: center;
 
         display: block !important;
         padding: 0 4px;
@@ -561,12 +575,16 @@
       .run-all-btn {
         position: absolute;
         top: 4px;
-        right: 32px;
+        right: 42px;
+        width: 40px;
+        height: 24px;
+        text-align: center;
 
-        padding: 0 4px;
+        padding: 0.1em 4px;
         background-color: #93BB7C;
         border-radius: 4px;
         color: #fff;
+        font-size: 0.8em;
 
         &:hover {
           cursor: pointer;
