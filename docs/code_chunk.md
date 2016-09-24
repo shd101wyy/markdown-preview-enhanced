@@ -1,3 +1,12 @@
+
+<!-- toc orderedList:0 -->
+
+- [Code Chunk (Beta)](#code-chunk-beta)
+	- [Options](#options)
+	- [Demo](#demo)
+
+<!-- tocstop -->
+
 # Code Chunk (Beta)
 **Markdown Preview Enhanced** allows you to run code on your system.   
 
@@ -58,4 +67,16 @@ eg:
     ```
 
 **id**  
-`id` will be automatically generated to track the running result. Please don't modify it.  
+`id` will be automatically generated to track the running result.  
+Please **Do Not** modify it.  
+
+## Demo
+**bash**  
+![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
+
+**python matplotlib 3d plot with png output**  
+![Screen Shot 2016-09-24 at 1.34.56 AM](http://i.imgur.com/TDFxRNy.png)
+
+**gnuplot with svg output**    
+![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
+

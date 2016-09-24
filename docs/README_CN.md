@@ -7,7 +7,7 @@ Markdown Preview Enhanced
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
-（以下 TOC 由该插件命令 `Markdown Preview Enhanced: Toc Create` 生成）
+（以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
 <!-- toc orderedList:0 -->
 
 - [Markdown Preview Enhanced](#markdown-preview-enhanced)
@@ -74,7 +74,7 @@ Markdown Preview Enhanced
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
   - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
-- <strong>Markdown Preview Enhanced: Toc Create </strong>
+- <strong>Markdown Preview Enhanced: Create Toc </strong>
   - 生成 TOC
 	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>

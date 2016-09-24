@@ -8,6 +8,8 @@
 * [ ] change parseMD function to async function with callback.
 * [ ] pandoc graph include [**may be implemented in next version**]
 * [x] fix scroll sync bug for code block
+* [ ] support Code Chunk
+* [x] change `Markdown Preview Enhanced: Toc Create` to `Markdown Preview Enhanced: Create Toc` 
 
 ## 0.8.5
 * [ ] support `yaml_table` [**not implement**]
