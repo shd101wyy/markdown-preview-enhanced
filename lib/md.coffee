@@ -487,7 +487,7 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
-resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData=[],  option={})->
+resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={})->
   {rootDirectoryPath, projectDirectoryPath} = option
 
   if !rootDirectoryPath
@@ -541,7 +541,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData=[],  option={
 
   # parse eg:
   # {node args:["-v"], output:"html"}
-  renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData=[])->
+  renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData={})->
     lang = parameters.slice(1, parameters.length-1).trim()
     parameters = ''
     indexOfSpace = lang.indexOf(' ')
@@ -564,17 +564,14 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData=[],  option={
     hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
     outputDiv = ''
 
-    if codeChunksData.length
-      codeChunk = codeChunksData.splice(0, 1)[0]
-      console.log(codeChunk)
-      # oldLineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+    idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+    if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
+      outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
 
-      ## if lineNo and Math.abs(oldLineNo - lineNo)<=1
-      outputDiv = '<div class="output-div">' + (codeChunk.getElementsByClassName('output-div')[0]?.innerHTML || '') + '</div>'
-    else
-      null
+    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" + highlightedBlock + outputDiv + '</div>')
+    $el.attr 'data-args', parameters
 
-    $(preElement).replaceWith("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\" data-args=\"#{parameters}\">" + '<div class="run-btn" style="display: none;">▶︎</div>' + "<div class=\"run-all-btn\" style=\"display: none;\">all</div>" + highlightedBlock + outputDiv + '</div>')
+    $(preElement).replaceWith $el
 
   $('pre').each (i, preElement)->
     lineNo = null

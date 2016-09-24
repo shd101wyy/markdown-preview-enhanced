@@ -65,7 +65,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # graph data used to save rendered graphs
     @graphData = null
-    @codeChunksData = []
+    @codeChunksData = null
 
     # when resize the window, clear the editor
     @resizeEvent = ()=>
@@ -502,11 +502,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   bindRunBtnClickEvent: ()->
-    @codeChunks = []
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
-    @codeChunksData = Array.prototype.slice.call(codeChunks) # save to codeChunksData
+    @codeChunksData = {} # key is codeChunkId, value is outputDiv
 
     setupCodeChunk = (codeChunk)=>
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
@@ -518,6 +517,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
         for codeChunk in codeChunks
           @runCodeChunk(codeChunk)
 
+      dataArgs = codeChunk.getAttribute('data-args')
+      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+      if !idMatch
+        id = (new Date().getTime()).toString(36)
+        codeChunk.setAttribute 'data-id', id
+
+        buffer = @editor.buffer
+        return if !buffer
+
+        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+
+        line = buffer.lines[lineNo]
+        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+        @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+      else
+        id = idMatch[1]
+        codeChunk.setAttribute 'data-id', id
+        @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
+
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
 
@@ -527,6 +549,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     dataArgs = codeChunk.getAttribute('data-args')
     cmd = codeChunk.getAttribute('data-cmd')
+    codeChunkId = codeChunk.getAttribute('data-id')
 
     options = null
     try
@@ -561,6 +584,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
           preElement = document.createElement 'pre'
           preElement.innerText = data
           outputDiv.appendChild preElement
+
+      @codeChunksData[codeChunkId] = outputDiv
 
       if outputDiv
         codeChunk.appendChild outputDiv
