@@ -5,6 +5,8 @@ fs = require 'fs'
 # TODO: known extensions. eg: node -> .js
 run = (content, rootDirectoryPath='', cmd, options={}, callback)->
   args = options.args || []
+  if (typeof(args) == 'string')
+    args = [args]
 
   savePath = path.resolve(rootDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk')
 
@@ -15,7 +17,18 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
       callback?(true)
       return
 
-    args.push savePath
+    # check macros
+    findInputFileMacro = false
+    args = args.map (arg)->
+      if arg == '{input_file}'
+        findInputFileMacro = true
+        savePath
+      else
+        arg
+
+    if !findInputFileMacro
+      args.push savePath
+
     task = spawn cmd, args, {cwd: rootDirectoryPath}
     task.stdin.end()
 

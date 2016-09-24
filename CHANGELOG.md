@@ -2,14 +2,15 @@
 * [x] ebook export exception [#136](https://github.com/shd101wyy/markdown-preview-enhanced/issues/136)
 * [x] TOC heading level bug [#134](https://github.com/shd101wyy/markdown-preview-enhanced/issues/134)
 * [ ] extend table notation [#133](https://github.com/shd101wyy/markdown-preview-enhanced/issues/133)
-* [x] ERD [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128)
-* [ ] ebook glossary like gitbook.
+* [x] ERD [#128](https://github.com/shd101wyy/markdown-preview-enhanced/issues/128) [**might be removed in the future**]
+* [ ] <strike>ebook glossary like gitbook</strike>. [**not implemented**]
 * [x] change graph APIs.
 * [ ] change parseMD function to async function with callback.
 * [ ] pandoc graph include [**may be implemented in next version**]
 * [x] fix scroll sync bug for code block
-* [ ] support Code Chunk
-* [x] change `Markdown Preview Enhanced: Toc Create` to `Markdown Preview Enhanced: Create Toc` 
+* [x] support Code Chunk
+* [x] change `Markdown Preview Enhanced: Toc Create` to `Markdown Preview Enhanced: Create Toc`
+* [ ] save `codeChunksData` state for each editor.
 
 ## 0.8.5
 * [ ] support `yaml_table` [**not implement**]
