@@ -549,6 +549,8 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       parameters = lang.slice(indexOfSpace).trim()
       lang = lang.slice(0, indexOfSpace)
 
+    return if !lang
+
     highlighter = new Highlights({registry: atom.grammars})
     html = highlighter.highlightSync
             fileContents: text,

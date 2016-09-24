@@ -502,10 +502,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   bindRunBtnClickEvent: ()->
+    @codeChunksData = {} # key is codeChunkId, value is outputDiv
+
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
-
-    @codeChunksData = {} # key is codeChunkId, value is outputDiv
 
     setupCodeChunk = (codeChunk)=>
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
@@ -519,25 +519,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
-
-      if !idMatch
-        id = (new Date().getTime()).toString(36)
-        codeChunk.setAttribute 'data-id', id
-
-        buffer = @editor.buffer
-        return if !buffer
-
-        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
-
-        line = buffer.lines[lineNo]
-        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
-
-        @parseDelay = Date.now() + 500 # prevent renderMarkdown
-
-        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
-      else
+      if idMatch and idMatch[1]
         id = idMatch[1]
-        codeChunk.setAttribute 'data-id', id
         @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
 
     for codeChunk in codeChunks
@@ -549,7 +532,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     dataArgs = codeChunk.getAttribute('data-args')
     cmd = codeChunk.getAttribute('data-cmd')
-    codeChunkId = codeChunk.getAttribute('data-id')
 
     options = null
     try
@@ -585,12 +567,33 @@ class MarkdownPreviewEnhancedView extends ScrollView
           preElement.innerText = data
           outputDiv.appendChild preElement
 
-      @codeChunksData[codeChunkId] = outputDiv
-
       if outputDiv
         codeChunk.appendChild outputDiv
         @scrollMap = null
-      codeChunk.setAttribute 'data-processed', true
+
+      # check id and save outputDiv to @codeChunksData
+      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+      if !idMatch
+        id = (new Date().getTime()).toString(36)
+
+        buffer = @editor.buffer
+        return if !buffer
+
+        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+
+        line = buffer.lines[lineNo]
+        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+        @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+      else
+        id = idMatch[1]
+
+      @codeChunksData[id] = outputDiv
+
+
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')

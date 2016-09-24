@@ -19,7 +19,7 @@ For example, if you want to run `gnuplot` and embed the graph created in markdow
 where the first argument within `{}` is the path to your program.   
 
 ## Options
-You can define code chunk options in format of `{path/to/program opt1:value1, opt2:value2, ...}`   
+You can define code chunk options in format of `{path/to/program  opt1:value1, opt2:value2, ...}`   
 
 **output**  
 `html`, `text`, `png`, `none`  
@@ -56,3 +56,6 @@ eg:
     ```{python hide:true}
     print('you can see this message, but not this code')
     ```
+
+**id**  
+`id` will be automatically generated to track the running result. Please don't modify it.  
