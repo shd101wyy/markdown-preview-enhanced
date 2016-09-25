@@ -384,8 +384,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @scrollTimeout = setTimeout =>
         if duration <= 0
           if editorElement
+            @editorScrollDelay = Date.now() + 500
             editorElement.setScrollTop scrollTop
           else
+            @previewScrollDelay = Date.now() + 500
             @element.scrollTop = scrollTop
           return
 
