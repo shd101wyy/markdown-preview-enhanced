@@ -252,7 +252,9 @@ pandocConvert = (text, md, config={})->
 
     program = execFile 'pandoc', args, (err)->
       process.chdir(cwd) # change cwd back
-      throw err if err
+      if err
+        atom.notifications.addError 'pandoc error', detail: err
+        return
       atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
     program.stdin.end(text)
 
