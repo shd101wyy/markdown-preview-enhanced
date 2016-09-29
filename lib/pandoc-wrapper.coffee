@@ -3,6 +3,10 @@ fs = require 'fs'
 {execFile} = require 'child_process'
 matter = require 'gray-matter'
 {Directory} = require 'atom'
+async = require 'async'
+Viz = require '../dependencies/viz/viz.js'
+plantumlAPI = require './puml'
+{svgAsPngUri} = require 'save-svg-as-png'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -146,6 +150,131 @@ processConfigPaths = (config, rootDirectoryPath, projectDirectoryPath)->
     if outputConfig['template']
       outputConfig['template'] = helper(outputConfig['template'])
 
+# convert mermaid, wavedrom, viz.js from svg to png
+processGraphs = (text, rootDirectoryPath, callback)->
+  lines = text.split('\n')
+  codes = []
+
+  i = 0
+  while i < lines.length
+    line = lines[i]
+    trimmedLine = line.trim()
+    if trimmedLine.startsWith('```{') and trimmedLine.endsWith('}')
+      numOfSpacesAhead = line.match(/\s*/).length
+
+      j = i + 1
+      content = ''
+      while j < lines.length
+        if lines[j].trim() == '```' and lines[j].match(/\s*/).length == numOfSpacesAhead
+          codes.push({start: i, end: j, content: content.trim()})
+          i = j
+          break
+        content += (lines[j]+'\n')
+        j += 1
+    i += 1
+
+  return processCodes(codes, lines, rootDirectoryPath, callback)
+
+saveSvgAsPng = (svgElement, dest, cb)->
+  cb(null) if !svgElement
+
+  width = parseInt(svgElement.getAttribute('width')) || svgElement.offsetWidth
+  height = parseInt(svgElement.getAttribute('height')) || svgElement.offsetHeight
+
+  svgAsPngUri svgElement, {width, height}, (data)->
+    base64Data = data.replace(/^data:image\/png;base64,/, "")
+    fs.writeFile dest, base64Data, 'base64', (err)->
+      cb(err)
+
+
+
+# {start, end, content}
+processCodes = (codes, lines, rootDirectoryPath, callback)->
+  asyncFunctions = []
+
+  for codeData in codes
+    {start, end, content} = codeData
+    def = lines[start].trim().slice(3)
+
+    match = def.match(/^{(mermaid|wavedrom|viz|plantuml|puml)}$/)
+
+    if match  # builtin graph
+      graphType = match[1]
+
+      if graphType == 'mermaid'
+        helper = (start, end, content)->
+          (cb)->
+            div = document.createElement('div')
+            div.classList.add('mermaid')
+            div.innerText = content
+
+            mermaid.init null, [div], ()->
+              console.log('enter here')
+              dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_mermaid.png')
+
+              saveSvgAsPng div.children[0], dest, (error)->
+                cb(null, {dest, start, end, content})
+
+
+        asyncFunc = helper(start, end, content)
+        asyncFunctions.push asyncFunc
+
+      else if graphType == 'viz'
+        helper = (start, end, content)->
+          (cb)->
+            div = document.createElement('div')
+            div.innerHTML = Viz(content)
+
+            dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_viz.png')
+
+            saveSvgAsPng div.children[0], dest, (error)->
+              cb(null, {dest, start, end, content})
+
+
+        asyncFunc = helper(start, end, content)
+        asyncFunctions.push asyncFunc
+
+      else if graphType == 'wavedrom'
+        # not supported
+
+      else # plantuml
+        helper = (start, end, content)->
+          (cb)->
+            div = document.createElement('div')
+            plantumlAPI.render content, (outputHTML)->
+              div.innerHTML = outputHTML
+
+              dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_puml.png')
+
+              saveSvgAsPng div.children[0], dest, (error)->
+                cb(null, {dest, start, end, content})
+
+        asyncFunc = helper(start, end, content)
+        asyncFunctions.push asyncFunc
+    else # code chunk
+         # TODO: support this in the future
+      null
+
+  async.parallel asyncFunctions, (error, data)->
+    # TODO: deal with error in the future.
+    #
+    imagePaths = []
+
+    for d in data
+      {start, end, dest} = d
+      imgMd = "![](#{path.relative(rootDirectoryPath, dest)})"
+      imagePaths.push dest
+
+      lines[start] = imgMd
+      i = start + 1
+      while i <= end
+        lines[i] = null # filter out later.
+        i += 1
+
+    lines = lines.filter (line)-> line!=null
+              .join('\n')
+    callback lines, imagePaths
+
 processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
   match = null
   offset = 0
@@ -242,20 +371,26 @@ pandocConvert = (text, md, config={})->
   if config['bibliography'] or config['references']
     args.push('--filter', 'pandoc-citeproc')
 
-  # console.log args.join(' ')
-  #
-  # pandoc will cause error if directory doesn't exist,
-  # therefore I will create directory first.
-  directory = new Directory(path.dirname(outputFilePath))
-  directory.create().then (flag)->
-    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+  # mermaid / viz / wavedrom graph
+  processGraphs text, md.rootDirectoryPath, (text, imagePaths=[])->
+    # console.log args.join(' ')
+    #
+    # pandoc will cause error if directory doesn't exist,
+    # therefore I will create directory first.
+    directory = new Directory(path.dirname(outputFilePath))
+    directory.create().then (flag)->
+      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-    program = execFile 'pandoc', args, (err)->
-      process.chdir(cwd) # change cwd back
-      if err
-        atom.notifications.addError 'pandoc error', detail: err
-        return
-      atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
-    program.stdin.end(text)
+      program = execFile 'pandoc', args, (err)->
+        # remove images
+        imagePaths.forEach (p)->
+          fs.unlink(p)
+
+        process.chdir(cwd) # change cwd back
+        if err
+          atom.notifications.addError 'pandoc error', detail: err
+          return
+        atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
+      program.stdin.end(text)
 
 module.exports = pandocConvert
