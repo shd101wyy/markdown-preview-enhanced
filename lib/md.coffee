@@ -200,7 +200,7 @@ md.renderer.rules.math = (tokens, idx)->
         return "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
 
   else if mathRenderingOption == 'MathJax'
-    text = openTag + content + closeTag
+    text = (openTag + content + closeTag).replace(/\n/g, '')
     tag = if displayMode then 'div' else 'span'
 
     # if it's for preview

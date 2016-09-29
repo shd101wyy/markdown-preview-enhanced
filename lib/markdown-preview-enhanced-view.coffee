@@ -54,9 +54,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # this variable will be got from 'viz.js'
     @Viz = null
 
-    # this variable will check if it is the first time to render MathJax for markdown.
-    @firstTimeRenderMathJax = true
-
     # this variable will check if it is the first time to render markdown
     @firstTimeRenderMarkdowon = true
 
@@ -154,7 +151,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
-    @firstTimeRenderMathJax = true
     @firstTimeRenderMarkdowon = true
 
     if @disposables # remove all binded events
@@ -731,28 +727,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
-    if @firstTimeRenderMathJax
-      els = @element.getElementsByClassName('mathjax-exps')
-      for el in els
+    els = @element.getElementsByClassName('mathjax-exps')
+    return if !els.length
+
+    unprocessedElements = []
+    for el in els
+      if !el.hasAttribute('data-processed')
         el.setAttribute 'data-original', el.innerText
+        unprocessedElements.push el
 
-      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=>
-        for el in els
+    callback = ()=>
+      for el in unprocessedElements
+        el.setAttribute 'data-processed', true
+      @scrollMap = null
+
+    if unprocessedElements.length == els.length
+      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], callback
+    else if unprocessedElements.length
+      MathJax.Hub.Typeset unprocessedElements, ()->
+        for el in unprocessedElements
           el.setAttribute 'data-processed', true
-        @firstTimeRenderMathJax = false
-    else
-      els = @element.getElementsByClassName('mathjax-exps')
-
-      helper = (el, text)->
-        MathJax.Hub.Queue  ['Typeset', MathJax.Hub, el], ()->
-          el?.setAttribute 'data-original', text
-          el?.setAttribute 'data-processed', true
-
-      for el in els
-        if el.hasAttribute('data-processed')
-          continue
-        else
-          helper(el, el.innerText)
 
   renderKaTeX: ()->
     return if @mathRenderingOption != 'KaTeX'

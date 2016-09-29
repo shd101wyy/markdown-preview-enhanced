@@ -25,7 +25,7 @@ module.exports =
             displayMath: block,
             processEscapes: true,
             processEnvironments: true,
-            preview: 'none',
+            # preview: 'none',
             # skipTags: ["script","noscript","style","textarea"]
           },
           TeX: {
