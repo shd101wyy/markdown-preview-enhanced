@@ -219,7 +219,7 @@ md.renderer.rules.math = (tokens, idx)->
       ## this doesn't work
       # element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
       # return "<div class=\"mathjax-exps\"> #{element.innerHTML} </div>"
-      return text
+      return text.escape()
 
 # inline [[]] rule
 # [[...]]
