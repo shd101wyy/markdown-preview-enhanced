@@ -744,9 +744,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if unprocessedElements.length == els.length
       MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], callback
     else if unprocessedElements.length
-      MathJax.Hub.Typeset unprocessedElements, ()->
-        for el in unprocessedElements
-          el.setAttribute 'data-processed', true
+      MathJax.Hub.Typeset unprocessedElements, callback
 
   renderKaTeX: ()->
     return if @mathRenderingOption != 'KaTeX'
