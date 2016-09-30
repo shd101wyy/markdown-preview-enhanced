@@ -175,13 +175,14 @@ processGraphs = (text, rootDirectoryPath, callback)->
 
   return processCodes(codes, lines, rootDirectoryPath, callback)
 
-saveSvgAsPng = (svgElement, dest, cb)->
+saveSvgAsPng = (svgElement, dest, option={}, cb)->
   return cb(null) if !svgElement or svgElement.tagName.toLowerCase() != 'svg'
 
-  width = null #svgElement.offsetWidth
-  height = null #svgElement.offsetHeight
+  if typeof(option) == 'function' and !cb
+    cb = option
+    option = {}
 
-  svgAsPngUri svgElement, {}, (data)->
+  svgAsPngUri svgElement, option, (data)->
     base64Data = data.replace(/^data:image\/png;base64,/, "")
     fs.writeFile dest, base64Data, 'base64', (err)->
       cb(err)
@@ -208,20 +209,18 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
               atom.notifications.addError 'mermaid error', detail: err
 
             if mermaidAPI.parse(content)
-              container = document.getElementsByClassName('markdown-preview-enhanced')[0]
               div = document.createElement('div')
               div.classList.add('mermaid')
               div.textContent = content
-              container.appendChild(div)
+              document.body.appendChild(div)
 
               mermaid.init null, div, ()->
                 svgElement = div.getElementsByTagName('svg')[0]
-                return cb(null, null) if not svgElement
 
                 dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_mermaid.png')
 
-                saveSvgAsPng svgElement, dest, (error)->
-                  container.removeChild(div)
+                saveSvgAsPng svgElement, dest, {}, (error)->
+                  document.body.removeChild(div)
                   cb(null, {dest, start, end, content})
             else
               cb(null, null)
@@ -237,7 +236,11 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
 
             dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_viz.png')
 
-            saveSvgAsPng div.children[0], dest, (error)->
+            svgElement = div.children[0]
+            width = svgElement.getBBox().width
+            height = svgElement.getBBox().height
+
+            saveSvgAsPng svgElement, dest, {width, height}, (error)->
               cb(null, {dest, start, end, content})
 
 
@@ -256,7 +259,11 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
 
               dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_puml.png')
 
-              saveSvgAsPng div.children[0], dest, (error)->
+              svgElement = div.children[0]
+              width = svgElement.getBBox().width
+              height = svgElement.getBBox().height
+
+              saveSvgAsPng div.children[0], dest, {width, height}, (error)->
                 cb(null, {dest, start, end, content})
 
         asyncFunc = helper(start, end, content)
