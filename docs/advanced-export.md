@@ -27,5 +27,5 @@ You can also define your own custom document:
 * [Bibliographies and Citations](./pandoc/bibliographies-and-citations.md)
 
 ## Attention
-graphs like `mermaid, wavedrom, viz, plantuml` will not be working with `pandoc document export`.      
-[code chunk](./code-chunk.md) is not yet compatible with `pandoc document export`.    
+`mermaid, wavedrom` will not be working with `pandoc document export`.      
+[code chunk](./code-chunk.md) is partially compatible with `pandoc document export`.    
