@@ -127,4 +127,5 @@ Then we can click the `run` button at the preview to run our code.
 ![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
 
 ## Limitations
-* Doesn't work with `pandoc document export` and `ebook` yet.  
+* Doesn't work with `ebook` yet.  
+* Might be buggy when using`pandoc document export`

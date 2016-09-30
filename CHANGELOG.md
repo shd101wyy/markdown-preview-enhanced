@@ -1,3 +1,10 @@
+## 0.8.7 `minor update`
+* [ ] <strike>reload cached image when necessary. (eg: replace `#cached=false` with `#cached=uid`)</strike>[**doesn't work very well; the image will flicker**]
+* [x] fix one MathJax bug [#147](https://github.com/shd101wyy/markdown-preview-enhanced/issues/147)
+* [ ] mermaid class diagram [#143](https://github.com/shd101wyy/markdown-preview-enhanced/issues/143) [**seem to be mermaid bug**]
+* [ ] pandoc and ebook graph include [**implement in next major release**]
+* [x] better pandoc error notification
+
 ## 0.8.6  
 * [x] ebook export exception [#136](https://github.com/shd101wyy/markdown-preview-enhanced/issues/136)
 * [x] TOC heading level bug [#134](https://github.com/shd101wyy/markdown-preview-enhanced/issues/134)
