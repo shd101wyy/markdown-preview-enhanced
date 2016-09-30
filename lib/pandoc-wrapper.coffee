@@ -6,7 +6,7 @@ matter = require 'gray-matter'
 async = require 'async'
 Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
-{svgAsPngUri} = require 'save-svg-as-png'
+{svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -176,12 +176,12 @@ processGraphs = (text, rootDirectoryPath, callback)->
   return processCodes(codes, lines, rootDirectoryPath, callback)
 
 saveSvgAsPng = (svgElement, dest, cb)->
-  cb(null) if !svgElement
+  return cb(null) if !svgElement or svgElement.tagName.toLowerCase() != 'svg'
 
-  width = parseInt(svgElement.getAttribute('width')) || svgElement.offsetWidth
-  height = parseInt(svgElement.getAttribute('height')) || svgElement.offsetHeight
+  width = null #svgElement.offsetWidth
+  height = null #svgElement.offsetHeight
 
-  svgAsPngUri svgElement, {width, height}, (data)->
+  svgAsPngUri svgElement, {}, (data)->
     base64Data = data.replace(/^data:image\/png;base64,/, "")
     fs.writeFile dest, base64Data, 'base64', (err)->
       cb(err)
@@ -204,17 +204,27 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
       if graphType == 'mermaid'
         helper = (start, end, content)->
           (cb)->
-            div = document.createElement('div')
-            div.classList.add('mermaid')
-            div.innerText = content
+            mermaid.parseError = (err, hash)->
+              atom.notifications.addError 'mermaid error', detail: err
 
-            mermaid.init null, [div], ()->
-              console.log('enter here')
-              dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_mermaid.png')
+            if mermaidAPI.parse(content)
+              container = document.getElementsByClassName('markdown-preview-enhanced')[0]
+              div = document.createElement('div')
+              div.classList.add('mermaid')
+              div.textContent = content
+              container.appendChild(div)
 
-              saveSvgAsPng div.children[0], dest, (error)->
-                cb(null, {dest, start, end, content})
+              mermaid.init null, div, ()->
+                svgElement = div.getElementsByTagName('svg')[0]
+                return cb(null, null) if not svgElement
 
+                dest = path.resolve(rootDirectoryPath, (Math.random().toString(36).substr(2, 9)) + '_mermaid.png')
+
+                saveSvgAsPng svgElement, dest, (error)->
+                  container.removeChild(div)
+                  cb(null, {dest, start, end, content})
+            else
+              cb(null, null)
 
         asyncFunc = helper(start, end, content)
         asyncFunctions.push asyncFunc
@@ -261,6 +271,7 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
     imagePaths = []
 
     for d in data
+      continue if !d
       {start, end, dest} = d
       imgMd = "![](#{path.relative(rootDirectoryPath, dest)})"
       imagePaths.push dest
@@ -371,6 +382,8 @@ pandocConvert = (text, md, config={})->
   if config['bibliography'] or config['references']
     args.push('--filter', 'pandoc-citeproc')
 
+  atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+
   # mermaid / viz / wavedrom graph
   processGraphs text, md.rootDirectoryPath, (text, imagePaths=[])->
     # console.log args.join(' ')
@@ -379,8 +392,6 @@ pandocConvert = (text, md, config={})->
     # therefore I will create directory first.
     directory = new Directory(path.dirname(outputFilePath))
     directory.create().then (flag)->
-      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-
       program = execFile 'pandoc', args, (err)->
         # remove images
         imagePaths.forEach (p)->

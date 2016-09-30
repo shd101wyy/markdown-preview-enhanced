@@ -7,7 +7,8 @@ I managed many libraries by myself instead of through npm to reduce overall file
     "plantuml": "8045",
     "wavedrom": "1.4.1",
     "reveal": "3.3.0",
-    "viz": "1.3.0"
+    "viz": "1.3.0",
+    "save-svg-as-png": "September 23, 2016"
 }
 ```  
 
