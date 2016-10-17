@@ -23,6 +23,7 @@ scopesForLanguageName =
   'less': 'source.less',
   'mustache': 'text.html.mustache',
   'objc': 'source.objc',
+  'objectivec': 'source.objc',
   'objective-c': 'source.objc',
   'php': 'text.html.php',
   'py': 'source.python',
