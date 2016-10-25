@@ -14,6 +14,7 @@
 
   @github-black: #333;
   @github-syntax-background-color: #f7f7f7;
+  @github-blockquote-color: #777;
 
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
@@ -75,7 +76,8 @@
   }
 
   &[data-use-github-style] {
-    h1, h2, h3, h4, h5, h6 { color: @github-black; }
+    h1, h2, h3, h4, h5 { color: @github-black; font-weight: 600; }
+    h6 { color: @github-blockquote-color; }
   }
 
 
@@ -208,7 +210,7 @@
 
   &[data-use-github-style] {
     blockquote {
-      color: #777;
+      color: @github-blockquote-color;
       border-left: 4px solid #ddd;
     }
   }
@@ -458,7 +460,7 @@
       }
 
       blockquote {
-        color: #777;
+        color: @github-blockquote-color;
       }
 
       pre {
