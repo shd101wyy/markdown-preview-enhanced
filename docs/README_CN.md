@@ -41,7 +41,7 @@ Markdown Preview Enhanced
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
 - 自定义 Markdown Preview 样式（css）  
-- [TOC] 自动生成 **(beta)**  
+- [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
 - Task List 任务列表 *(Github Flavored)*  
 - 图片助手
@@ -80,8 +80,8 @@ Markdown Preview Enhanced
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
   - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - 生成 TOC
-	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。
+  - 生成 TOC。[文档在这里](./toc.md)。   
+	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。  
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - 开关编辑和预览的滑动同步.
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>

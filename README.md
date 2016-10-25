@@ -42,7 +42,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - export **PDF**, **PNG**, and **JPEG**   
 - export beautiful **HTML** (mobile device supported)  
 - customize Markdown Preview css  
-- [TOC] generation **(beta)**  
+- [TOC](./docs/toc.md) generation **(beta)**  
 - Flowchart / Sequence diagram
 - Task List *(Github Flavored)*  
 - Image Helper
@@ -81,7 +81,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.  
   - if you didn't see `markdown-preview-enhanced-custom` section in `style.less` file, you may need to run `Markdown Preview Enhanced: Customize CSS` command first.
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - Generate TOC  
+  - Generate TOC. [doc is here](./docs/toc.md).    
 	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - Enable/Disable scroll sync for preview.
