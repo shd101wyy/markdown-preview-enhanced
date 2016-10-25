@@ -21,10 +21,13 @@ TAGS_TO_REPLACE = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
-    '"': '&quot;'
+    '"': '&quot;',
+    '\'': '&#x27;',
+    '\/', '&#x2F;',
+    '\\', '&#x5C;',
 }
 String.prototype.escape = ()->
-  this.replace /[&<>"]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
+  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -338,7 +341,7 @@ md.renderer.rules.paragraph_open = (tokens, idx)->
 md.renderer.rules.list_item_open = (tokens, idx)->
   if tokens[idx + 2]
     children = tokens[idx + 2].children
-    if !children or !children[0].content
+    if !children or !children[0]?.content
       return '<li>'
     line = children[0].content
     if line.startsWith('[ ] ') or line.startsWith('[x] ') or line.startsWith('[X] ')

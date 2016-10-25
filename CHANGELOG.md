@@ -1,6 +1,8 @@
 ## 0.8.8  
 * [ ] ISSUE: MathJax will also update when changing headings.  
-* [ ] update all dependencies.  
+* [x] update all dependencies.  
+  * seems that `mermaid` is still of version `6.0.0` and class diagram doesn't work as expected.  
+* [x] fix bug [#168](https://github.com/shd101wyy/markdown-preview-enhanced/issues/168).
 
 
 ## 0.8.7 `minor update`
