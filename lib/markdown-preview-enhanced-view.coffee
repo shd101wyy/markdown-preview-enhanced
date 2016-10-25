@@ -952,7 +952,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   printPDF: (htmlPath, dest)->
     return if not @editor
 
-    BrowserWindow = require('remote').require('browser-window')
+    {BrowserWindow} = require('electron').remote
     win = new BrowserWindow show: false
     win.loadURL htmlPath
 
