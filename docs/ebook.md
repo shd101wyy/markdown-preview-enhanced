@@ -44,7 +44,7 @@ You can set up a ebook configuration by simply adding `ebook front-matter` into 
 ---
 ebook:
   title: My EBook
-  author: shd101wyy
+  authors: shd101wyy
 ---
 ```
 Next right click at the preview, choose `Export to Disk`, then choose `EBOOK`.

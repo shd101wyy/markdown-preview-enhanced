@@ -1,3 +1,8 @@
+## 0.8.8  
+* [ ] ISSUE: MathJax will also update when changing headings.  
+* [ ] update all dependencies.  
+
+
 ## 0.8.7 `minor update`
 * [ ] <strike>reload cached image when necessary. (eg: replace `#cached=false` with `#cached=uid`)</strike>[**doesn't work very well; the image will flicker**]
 * [x] fix one MathJax bug [#147](https://github.com/shd101wyy/markdown-preview-enhanced/issues/147)
