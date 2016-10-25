@@ -5,7 +5,8 @@
 * [x] fix bug [#168](https://github.com/shd101wyy/markdown-preview-enhanced/issues/168).
 * [x] disable `MathJax` `processEnvironments` [#167](https://github.com/shd101wyy/markdown-preview-enhanced/issues/167).
 * [x] fix issue [#160](https://github.com/shd101wyy/markdown-preview-enhanced/issues/160)
-* [x] fix issue [#150](https://github.com/shd101wyy/markdown-preview-enhanced/issues/150) 
+* [x] fix issue [#150](https://github.com/shd101wyy/markdown-preview-enhanced/issues/150)
+* [x] extend `TOC`. [#171](https://github.com/shd101wyy/markdown-preview-enhanced/issues/171)
 
 ## 0.8.7 `minor update`
 * [ ] <strike>reload cached image when necessary. (eg: replace `#cached=false` with `#cached=uid`)</strike>[**doesn't work very well; the image will flicker**]

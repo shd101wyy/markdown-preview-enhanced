@@ -55,6 +55,9 @@ toc = (tokens, opt={})->
   depthFrom = opt.depthFrom or 1
   depthTo = opt.depthTo or 6
 
+  tokens = tokens.filter (token)->
+    token.level >= depthFrom and token.level <= depthTo
+
   outputArr = []
   tocTable = {}
   smallestLevel = tokens[0].level
@@ -68,11 +71,8 @@ toc = (tokens, opt={})->
     token = tokens[i]
     content = token.content
     level = token.level
-
-    if not (level >= depthFrom and level <= depthTo)
-      continue
-
     slug = uslug(content)
+    
     if tocTable[slug] >= 0
       tocTable[slug] += 1
       slug += '-' + tocTable[slug]

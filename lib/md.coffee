@@ -760,7 +760,7 @@ parseMD = (inputString, option={})->
       else
         tocTable[id] = 0
 
-      if !tocNeedUpdate
+      if !tocNeedUpdate and !(tokens[idx-1]?.subject == 'untoc')
         headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
 
     id = if id then "id=#{id}" else ''
