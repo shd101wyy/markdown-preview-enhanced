@@ -838,6 +838,12 @@ parseMD = (inputString, option={})->
         tocStartLine = -1
         tocEndLine = -1
 
+        # reset globalMathTypesettingData
+        if mathRenderingOption == 'KaTeX'
+          globalMathTypesettingData.katex_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('katex-exps')
+        else if mathRenderingOption == 'MathJax'
+          globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
+
         slideConfigs = []
 
         markdownPreview.parseDelay = Date.now() + 500 # prevent render again
