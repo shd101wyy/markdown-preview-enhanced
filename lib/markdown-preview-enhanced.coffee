@@ -198,7 +198,7 @@ module.exports = MarkdownPreviewEnhanced =
     editor = atom.workspace.getActiveTextEditor()
 
     if editor and @startMDPreview(editor)
-      editor.insertText('\n<!-- toc orderedList:0 -->\n')
+      editor.insertText('\n<!-- toc orderedList:0 depthFrom:1 depthTo:6 -->\n')
 
   toggleScrollSync: ()->
     flag = atom.config.get 'markdown-preview-enhanced.scrollSync'

@@ -718,6 +718,8 @@ parseMD = (inputString, option={})->
   tocStartLine = -1
   tocEndLine = -1
   tocOrdered = false
+  tocDepthFrom = 1 # [1-6] depth
+  tocDepthTo = 6
 
   # slide
   slideConfigs = []
@@ -783,6 +785,8 @@ parseMD = (inputString, option={})->
         if opt.orderedList and opt.orderedList != 0
           tocOrdered = true
 
+        tocDepthFrom = opt.depthFrom || 1
+        tocDepthTo = opt.depthTo || 6
       else
         throw 'Only one toc is supported'
     else if (subject == 'tocstop')
@@ -816,13 +820,15 @@ parseMD = (inputString, option={})->
           tocNeedUpdate = true
           break
 
-    if markdownPreview.tocOrdered != tocOrdered
+    if markdownPreview.tocOrdered != tocOrdered or markdownPreview.tocDepthFrom != tocDepthFrom or markdownPreview.tocDepthTo != tocDepthTo
       markdownPreview.tocOrdered = tocOrdered
+      markdownPreview.tocDepthFrom = tocDepthFrom
+      markdownPreview.tocDepthTo = tocDepthTo
       tocNeedUpdate = true
 
     editor = markdownPreview.editor
     if tocNeedUpdate and editor
-      tocObject = toc(headings, tocOrdered)
+      tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo})
       buffer = editor.buffer
       if buffer
         if tocEndLine == -1
