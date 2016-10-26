@@ -552,27 +552,28 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     return if !lang
 
-    highlighter = new Highlights({registry: atom.grammars})
-    html = highlighter.highlightSync
-            fileContents: text,
-            scopeName: scopeForLanguageName(lang)
+    highlightedBlock = ''
+    if not /\s*hide\s*:\s*true/.test(parameters)
+      highlighter = new Highlights({registry: atom.grammars})
+      html = highlighter.highlightSync
+              fileContents: text,
+              scopeName: scopeForLanguageName(lang)
 
-    highlightedBlock = $(html)
-    highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+      highlightedBlock = $(html)
+      highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    if lineNo != null
-      highlightedBlock.attr({'data-line': lineNo})
-      highlightedBlock.addClass('sync-line')
+      if lineNo != null
+        highlightedBlock.attr({'data-line': lineNo})
+        highlightedBlock.addClass('sync-line')
 
-    hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
     outputDiv = ''
 
     idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
       outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
 
-    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="btn-group"><div class="run-btn btn" style="display: none;"><span>▶︎</span></div>' + "<div class=\"run-all-btn btn\" style=\"display: none;\">all</div></div>" + highlightedBlock + outputDiv + '</div>')
-    $el.attr 'data-args', parameters
+    $el = $("<div class=\"code-chunk\" data-cmd=\"#{lang}\">" + highlightedBlock + outputDiv + '</div>')
+    $el.attr 'data-args': parameters, 'data-line': lineNo, 'data-code': text
 
     $(preElement).replaceWith $el
 

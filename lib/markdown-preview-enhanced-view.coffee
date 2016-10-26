@@ -66,9 +66,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @codeChunksData = null
 
     # when resize the window, clear the editor
-    @resizeEvent = ()=>
-      @scrollMap = null
-    window.addEventListener 'resize', @resizeEvent
+    window.addEventListener 'resize', @resizeEvent.bind(this)
 
     # right click event
     atom.commands.add @element,
@@ -463,7 +461,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEvents: ->
     @bindTagAClickEvent()
-    @bindRunBtnClickEvent()
+    @setupCodeChunks()
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
@@ -510,22 +508,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       href = a.getAttribute('href')
       analyzeHref(href)
 
-  bindRunBtnClickEvent: ()->
+  setupCodeChunks: ()->
     @codeChunksData = {} # key is codeChunkId, value is outputDiv
 
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
     setupCodeChunk = (codeChunk)=>
-      runBtn = codeChunk.getElementsByClassName('run-btn')[0]
-      runBtn.addEventListener 'click', ()=>
-        @runCodeChunk(codeChunk) if !codeChunk.classList.contains('running')
-
-      runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
-      runAllBtn.addEventListener 'click', ()=>
-        for chunk in codeChunks
-          @runCodeChunk(chunk) if !chunk.classList.contains('running')
-
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
       if idMatch and idMatch[1]
@@ -535,10 +524,23 @@ class MarkdownPreviewEnhancedView extends ScrollView
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
 
-  runCodeChunk: (codeChunk)->
-    codeBlock = codeChunk.getElementsByTagName('PRE')[0]
-    code = codeBlock.innerText
+  getNearestCodeChunk: ()->
+    bufferRow = @editor.getCursorBufferPosition().row
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    i = codeChunks.length - 1
+    while i >= 0
+      codeChunk = codeChunks[i]
+      lineNo = parseInt(codeChunk.getAttribute('data-line'))
+      if lineNo <= bufferRow
+        return codeChunk
+      i-=1
+    return null
 
+  runCodeChunk: (codeChunk=null)->
+    codeChunk = @getNearestCodeChunk() if not codeChunk
+    return if not codeChunk
+
+    code = codeChunk.getAttribute('data-code')
     dataArgs = codeChunk.getAttribute('data-args')
     cmd = codeChunk.getAttribute('data-cmd')
 
@@ -607,7 +609,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       @codeChunksData[id] = outputDiv
 
-
+  runAllCodeChunks: ()->
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    for chunk in codeChunks
+      @runCodeChunk(chunk) if !chunk.classList.contains('running')
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
@@ -763,6 +768,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         el.setAttribute('data-processed', 'true')
         el.setAttribute('data-original', dataOriginal)
+
+  resizeEvent: ()->
+    @scrollMap = null
 
   ###
   convert './a.txt' '/a.txt'
