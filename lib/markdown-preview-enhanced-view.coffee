@@ -520,6 +520,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if idMatch and idMatch[1]
         id = idMatch[1]
         @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
+        codeChunk.id = 'code_chunk_' + id
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
@@ -551,12 +552,38 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
 
-    codeChunk.classList.add('running')
+    codeChunk.classList.add('running') # TODO: handle running status in md.coffee as well...
+
+    # check id and save outputDiv to @codeChunksData
+    idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+    if !idMatch
+      id = (new Date().getTime()).toString(36)
+
+      buffer = @editor.buffer
+      return if !buffer
+
+      lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+
+      line = buffer.lines[lineNo]
+      line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+      codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
+      codeChunk.id = 'code_chunk_' + id
+
+      @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+      buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+    else
+      id = idMatch[1]
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
       codeChunk.classList.remove('running')
-      if (error)
-        return
+      return if error
+
+      # get new codeChunk
+      codeChunk = document.getElementById('code_chunk_' + id)
+      return if not codeChunk
 
       outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv
@@ -584,28 +611,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if outputDiv
         codeChunk.appendChild outputDiv
         @scrollMap = null
-
-      # check id and save outputDiv to @codeChunksData
-      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
-
-      if !idMatch
-        id = (new Date().getTime()).toString(36)
-
-        buffer = @editor.buffer
-        return if !buffer
-
-        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
-
-        line = buffer.lines[lineNo]
-        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
-
-        codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
-
-        @parseDelay = Date.now() + 500 # prevent renderMarkdown
-
-        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
-      else
-        id = idMatch[1]
 
       @codeChunksData[id] = outputDiv
 
