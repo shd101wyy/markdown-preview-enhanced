@@ -543,7 +543,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     code = codeChunk.getAttribute('data-code')
     dataArgs = codeChunk.getAttribute('data-args')
-    cmd = codeChunk.getAttribute('data-cmd')
 
     options = null
     try
@@ -551,6 +550,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     catch error
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
+
+    cmd =  options.cmd || codeChunk.getAttribute('data-lang')
 
     codeChunk.classList.add('running') # TODO: handle running status in md.coffee as well...
 

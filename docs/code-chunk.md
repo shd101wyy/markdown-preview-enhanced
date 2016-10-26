@@ -1,8 +1,8 @@
-
 <!-- toc orderedList:0 -->
 
 - [Code Chunk (Beta)](#code-chunk-beta)
 	- [Options](#options)
+	- [Commands & Keyboard Shortcust](#commands-keyboard-shortcust)
 	- [Macro](#macro)
 	- [Demo](#demo)
 	- [Showcases](#showcases)
@@ -14,6 +14,8 @@
 
 # Code Chunk (Beta)  
 **Changes might happen in the future.**  
+To enable code chunk highlighting, install [language-markdown-enhanced](https://atom.io/packages/language-markdown-enhanced) package.    
+
 **Markdown Preview Enhanced** allows you to render code output into documents.     
 
     ```{bash}
@@ -25,10 +27,23 @@
     console.log(date.toString())
     ```
 
-where the first argument within <code>```{...}</code> is the path to your program.   
+where the first argument within <code>\`\`\`{...}</code> is the path to your program.   
 
 ## Options
-You can configure code chunk options in format of `{path/to/program  opt1:value1, opt2:value2, ...}`   
+You can configure code chunk options in format of `{lang  opt1:value1, opt2:value2, ...}`   
+**lang**  
+The grammar that the code block should highlight.
+
+**cmd**    
+The command to run.  
+If `cmd` is not provided, then `lang` will be regarded as command.    
+
+eg:  
+
+		```{python cmd:"/usr/local/bin/python3"}
+		print("This will run python3 program")
+		```
+
 
 **output**  
 `html`, `text`, `png`, `none`  
@@ -63,7 +78,7 @@ args that append to command. eg:
     ```
 
 **hide**  
-`hide` will hide code chunk but only leave the output visible when exporting document. default: `false`  
+`hide` will hide code chunk but only leave the output visible. default: `false`  
 eg:
 
     ```{python hide:true}
@@ -73,6 +88,13 @@ eg:
 **id**  
 `id` will be automatically generated to track the running result.  
 Please **Do Not** modify it.  
+
+## Commands & Keyboard Shortcust
+`run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.    
+* `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift+enter</kbd>      
+execute single code chunk where your cursor is at.    
+* `Markdown Preview Enhanced: Run ` or <kbd>ctrl+shift+enter</kbd>   
+execute all code chunks.    
 
 ## Macro
 * **input_file**  

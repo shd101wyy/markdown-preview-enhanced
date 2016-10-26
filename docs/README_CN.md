@@ -5,10 +5,6 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)  
 
-**0.8.6** 版本以后, markdown-preview-enhanced 将支持 [Code Chunks (beta)](./code-chunk.md) 使你在 markdown 文件中插入各种代码的运行结果。   
-使用 [Code Chunks (beta)](./code-chunk.md), 你可以在 markdown 文件里运行 **gnuplot**, **python**, **nodejs** 等所有你拥有的程序。          
-![code_chunk_intro](http://i.imgur.com/wsJRRzH.gif)
-
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
 （以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
@@ -55,7 +51,8 @@ Markdown Preview Enhanced
   - `$...$` 里的内容将被正常渲染。  
   - `$$...$$` 里的内容将用 displayMode 渲染。   
   - 你可以在 [settings panel](#settings-panel) 中设置你想要的渲染引擎。   
-		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。  
+		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。   
+  - 想要支持数学表达式的高亮，请考虑安装 [language-markdown-enhanced](https://atom.io/packages/language-markdown-enhanced) 插件。
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) 来渲染 flowchart 和 sequence diagram  
 	- 代码块 `{mermaid}` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  

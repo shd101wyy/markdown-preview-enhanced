@@ -572,7 +572,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
       outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
 
-    $el = $("<div class=\"code-chunk\" data-cmd=\"#{lang}\">" + highlightedBlock + outputDiv + '</div>')
+    $el = $("<div class=\"code-chunk\" data-lang=\"#{lang}\">" + highlightedBlock + outputDiv + '</div>')
     $el.attr 'data-args': parameters, 'data-line': lineNo, 'data-code': text
 
     $(preElement).replaceWith $el
