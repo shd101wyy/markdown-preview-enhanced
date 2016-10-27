@@ -183,8 +183,9 @@ database "MySql" {
 ```  
 
 
-> Test WaveDrom
-```wavedrom
+> Test WaveDrom  
+
+```{wavedrom}
 { signal: [
   { name: "cl",  wave: "p......" },
   { name: "bus",  wave: "x.34.5x",   data: "head body tail" },
@@ -206,7 +207,8 @@ database "MySql" {
 ]}
 ```
 
-> Test Viz.js
+> Test Viz.js  
+
 ```{viz}
 digraph g {
 	node [shape=plaintext];
@@ -249,6 +251,7 @@ graph graphname {
 		b -- d [style=dotted];
 }
 ```
+
 **Test opening files through links**  
 [markdown.png](1.pic.jpg)  
 [markdown.png](/test/1.pic.jpg)  
