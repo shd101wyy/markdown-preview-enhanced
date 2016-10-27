@@ -530,13 +530,6 @@
     }
   }
 
-  // graphs
-  &[is='space-pen-div'] {
-    .erd {
-      overflow-x: auto;
-    }
-  }
-
   // code chunk
   &[is="space-pen-div"] {
     .code-chunk {
@@ -566,6 +559,14 @@
         .status {
           display: block;
         }
+      }
+    }
+  }
+
+  &:not([is="space-pen-div"]) {
+    .code-chunk {
+      .status {
+        display: none;
       }
     }
   }

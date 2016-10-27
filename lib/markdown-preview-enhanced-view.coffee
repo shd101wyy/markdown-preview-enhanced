@@ -568,7 +568,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       lineNo = parseInt(codeChunk.getAttribute('data-line'))
 
-      line = buffer.lines[lineNo]
+      line = buffer.lines[lineNo].trimRight()
       line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
 
       codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
