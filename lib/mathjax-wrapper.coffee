@@ -24,7 +24,7 @@ module.exports =
             inlineMath: inline,
             displayMath: block,
             processEscapes: true,
-            processEnvironments: true,
+            # processEnvironments: true,
             # preview: 'none',
             # skipTags: ["script","noscript","style","textarea"]
           },

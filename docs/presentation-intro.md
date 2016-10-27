@@ -29,7 +29,7 @@ const さかもと = 'cool cooler coolest'
 
 <!-- slide -->
 All features of **Markdown Preview Enhanced** are supported.   
-Such as Math typesetting, mermaid graph, etc...  
+Such as Math typesetting, mermaid graph, code chunk etc...  
 <br>
 $$
 f(x) = \int_{-\infty}^\infty
@@ -77,18 +77,18 @@ You can also set **video background** and **iframe background**.
 <!-- slide -->
 For example, the markdown snippet below will generate slide like...  
 ```html
-<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg" -->
-<p align="right">雷姆党头顶青天</p>
-<p align="right">雷姆党头顶青天</p>
-<p align="right">雷姆党头顶青天</p>
+<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/10/27/581167987ec08.jpg" data-transition:"zoom" -->
+<p style="color: #fff;">国漫大法好！</p>
+<p style="color: #fff;">国漫大法好！</p>
+<p style="color: #fff;">国漫大法好！</p>
 ```
 
-<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c625357078.jpg"
+<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/10/27/581167987ec08.jpg"
 data-transition:"zoom"
 -->
-<p align="right">雷姆党头顶青天</p>
-<p align="right">雷姆党头顶青天</p>
-<p align="right">雷姆党头顶青天</p>
+<p style="color: #fff;">国漫大法好！</p>
+<p style="color: #fff;">国漫大法好！</p>
+<p style="color: #fff;">国漫大法好！</p>
 
 <!-- slide -->
 It is also very easy to customize presentation css.  
@@ -101,7 +101,6 @@ then edit section:
   // background-color: #000;
 }
 ```
-
 
 <!-- slide -->
 You can check your presentation in browser by   

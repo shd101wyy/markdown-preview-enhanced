@@ -5,10 +5,6 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)  
 
-**0.8.6** 版本以后, markdown-preview-enhanced 将支持 [Code Chunks (beta)](./code-chunk.md) 使你在 markdown 文件中插入各种代码的运行结果。   
-使用 [Code Chunks (beta)](./code-chunk.md), 你可以在 markdown 文件里运行 **gnuplot**, **python**, **nodejs** 等所有你拥有的程序。          
-![code_chunk_intro](http://i.imgur.com/wsJRRzH.gif)
-
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
 （以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
@@ -41,7 +37,7 @@ Markdown Preview Enhanced
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
 - 自定义 Markdown Preview 样式（css）  
-- [TOC] 自动生成 **(beta)**  
+- [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
 - Task List 任务列表 *(Github Flavored)*  
 - 图片助手
@@ -55,7 +51,8 @@ Markdown Preview Enhanced
   - `$...$` 里的内容将被正常渲染。  
   - `$$...$$` 里的内容将用 displayMode 渲染。   
   - 你可以在 [settings panel](#settings-panel) 中设置你想要的渲染引擎。   
-		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。  
+		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。   
+  - 想要支持数学表达式的高亮，请考虑安装 [language-markdown-enhanced](https://atom.io/packages/language-markdown-enhanced) 插件。
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) 来渲染 flowchart 和 sequence diagram  
 	- 代码块 `{mermaid}` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
@@ -80,8 +77,8 @@ Markdown Preview Enhanced
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
   - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - 生成 TOC
-	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。
+  - 生成 TOC。[文档在这里](./toc.md)。   
+	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。  
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - 开关编辑和预览的滑动同步.
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>

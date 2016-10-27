@@ -21,10 +21,13 @@ TAGS_TO_REPLACE = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
-    '"': '&quot;'
+    '"': '&quot;',
+    '\'': '&#x27;',
+    '\/', '&#x2F;',
+    '\\', '&#x5C;',
 }
 String.prototype.escape = ()->
-  this.replace /[&<>"]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
+  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
 ####################################################
 ## Mermaid
@@ -338,7 +341,7 @@ md.renderer.rules.paragraph_open = (tokens, idx)->
 md.renderer.rules.list_item_open = (tokens, idx)->
   if tokens[idx + 2]
     children = tokens[idx + 2].children
-    if !children or !children[0].content
+    if !children or !children[0]?.content
       return '<li>'
     line = children[0].content
     if line.startsWith('[ ] ') or line.startsWith('[x] ') or line.startsWith('[X] ')
@@ -549,27 +552,29 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     return if !lang
 
-    highlighter = new Highlights({registry: atom.grammars})
-    html = highlighter.highlightSync
-            fileContents: text,
-            scopeName: scopeForLanguageName(lang)
+    highlightedBlock = ''
+    if not /\s*hide\s*:\s*true/.test(parameters)
+      highlighter = new Highlights({registry: atom.grammars})
+      html = highlighter.highlightSync
+              fileContents: text,
+              scopeName: scopeForLanguageName(lang)
 
-    highlightedBlock = $(html)
-    highlightedBlock.removeClass('editor').addClass('lang-' + lang)
+      highlightedBlock = $(html)
+      highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    if lineNo != null
-      highlightedBlock.attr({'data-line': lineNo})
-      highlightedBlock.addClass('sync-line')
+      if lineNo != null
+        highlightedBlock.attr({'data-line': lineNo})
+        highlightedBlock.addClass('sync-line')
 
-    hide = if /\s*hide\s*:\s*true/.test(parameters) then ' hide-chunk ' else ''
     outputDiv = ''
-
     idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
-      outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
+      outputDiv = '<div class="output-div">' + (codeChunksData[idMatch[1]].outputDiv?.innerHTML or '') + '</div>'
 
-    $el = $("<div class=\"code-chunk #{hide}\" data-cmd=\"#{lang}\">" + '<div class="btn-group"><div class="run-btn btn" style="display: none;"><span>▶︎</span></div>' + "<div class=\"run-all-btn btn\" style=\"display: none;\">all</div></div>" + highlightedBlock + outputDiv + '</div>')
-    $el.attr 'data-args', parameters
+    statusDiv = '<div class="status">running...</div>'
+
+    $el = $("<div class=\"code-chunk\">" + highlightedBlock + statusDiv + outputDiv + '</div>')
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text
 
     $(preElement).replaceWith $el
 
@@ -590,8 +595,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    # TODO: remove 'mermaid', only keep {mermaid}
-    if lang in ['mermaid', '{mermaid}']
+    if lang == '{mermaid}'
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -600,13 +604,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang in ['plantuml', 'puml', '{plantuml}', '{puml}']
+    else if lang in ['{plantuml}', '{puml}']
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang in ['wavedrom', '{wavedrom}']
+    else if lang == '{wavedrom}'
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang in ['viz', '{viz}']
+    else if lang == '{viz}'
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
@@ -715,6 +719,8 @@ parseMD = (inputString, option={})->
   tocStartLine = -1
   tocEndLine = -1
   tocOrdered = false
+  tocDepthFrom = 1 # [1-6] depth
+  tocDepthTo = 6
 
   # slide
   slideConfigs = []
@@ -755,7 +761,7 @@ parseMD = (inputString, option={})->
       else
         tocTable[id] = 0
 
-      if !tocNeedUpdate
+      if !tocNeedUpdate and !(tokens[idx-1]?.subject == 'untoc')
         headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
 
     id = if id then "id=#{id}" else ''
@@ -780,6 +786,8 @@ parseMD = (inputString, option={})->
         if opt.orderedList and opt.orderedList != 0
           tocOrdered = true
 
+        tocDepthFrom = opt.depthFrom || 1
+        tocDepthTo = opt.depthTo || 6
       else
         throw 'Only one toc is supported'
     else if (subject == 'tocstop')
@@ -813,13 +821,15 @@ parseMD = (inputString, option={})->
           tocNeedUpdate = true
           break
 
-    if markdownPreview.tocOrdered != tocOrdered
+    if markdownPreview.tocOrdered != tocOrdered or markdownPreview.tocDepthFrom != tocDepthFrom or markdownPreview.tocDepthTo != tocDepthTo
       markdownPreview.tocOrdered = tocOrdered
+      markdownPreview.tocDepthFrom = tocDepthFrom
+      markdownPreview.tocDepthTo = tocDepthTo
       tocNeedUpdate = true
 
     editor = markdownPreview.editor
     if tocNeedUpdate and editor
-      tocObject = toc(headings, tocOrdered)
+      tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo})
       buffer = editor.buffer
       if buffer
         if tocEndLine == -1
@@ -834,6 +844,12 @@ parseMD = (inputString, option={})->
         tocEnabled = false
         tocStartLine = -1
         tocEndLine = -1
+
+        # reset globalMathTypesettingData
+        if mathRenderingOption == 'KaTeX'
+          globalMathTypesettingData.katex_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('katex-exps')
+        else if mathRenderingOption == 'MathJax'
+          globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
 
         slideConfigs = []
 

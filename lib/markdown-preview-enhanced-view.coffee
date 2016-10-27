@@ -63,12 +63,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # graph data used to save rendered graphs
     @graphData = null
-    @codeChunksData = null
+    @codeChunksData = {}
 
     # when resize the window, clear the editor
-    @resizeEvent = ()=>
-      @scrollMap = null
-    window.addEventListener 'resize', @resizeEvent
+    window.addEventListener 'resize', @resizeEvent.bind(this)
 
     # right click event
     atom.commands.add @element,
@@ -463,7 +461,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEvents: ->
     @bindTagAClickEvent()
-    @bindRunBtnClickEvent()
+    @setupCodeChunks()
     @initTaskList()
     @renderMermaid()
     @renderPlantUML()
@@ -510,37 +508,45 @@ class MarkdownPreviewEnhancedView extends ScrollView
       href = a.getAttribute('href')
       analyzeHref(href)
 
-  bindRunBtnClickEvent: ()->
-    @codeChunksData = {} # key is codeChunkId, value is outputDiv
-
+  setupCodeChunks: ()->
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
+    newCodeChunksData = {}
     setupCodeChunk = (codeChunk)=>
-      runBtn = codeChunk.getElementsByClassName('run-btn')[0]
-      runBtn.addEventListener 'click', ()=>
-        @runCodeChunk(codeChunk) if !codeChunk.classList.contains('running')
-
-      runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
-      runAllBtn.addEventListener 'click', ()=>
-        for chunk in codeChunks
-          @runCodeChunk(chunk) if !chunk.classList.contains('running')
-
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
       if idMatch and idMatch[1]
         id = idMatch[1]
-        @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
+        codeChunk.id = 'code_chunk_' + id
+        running = @codeChunksData[id]?.running or false
+        codeChunk.classList.add('running') if running
+        newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
 
-  runCodeChunk: (codeChunk)->
-    codeBlock = codeChunk.getElementsByTagName('PRE')[0]
-    code = codeBlock.innerText
+    @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
 
+  getNearestCodeChunk: ()->
+    bufferRow = @editor.getCursorBufferPosition().row
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    i = codeChunks.length - 1
+    while i >= 0
+      codeChunk = codeChunks[i]
+      lineNo = parseInt(codeChunk.getAttribute('data-line'))
+      if lineNo <= bufferRow
+        return codeChunk
+      i-=1
+    return null
+
+  runCodeChunk: (codeChunk=null)->
+    codeChunk = @getNearestCodeChunk() if not codeChunk
+    return if not codeChunk
+    return if codeChunk.classList.contains('running')
+
+    code = codeChunk.getAttribute('data-code')
     dataArgs = codeChunk.getAttribute('data-args')
-    cmd = codeChunk.getAttribute('data-cmd')
 
     options = null
     try
@@ -549,12 +555,44 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
 
+    cmd =  options.cmd || codeChunk.getAttribute('data-lang')
+
+    # check id and save outputDiv to @codeChunksData
+    idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+    if !idMatch
+      id = (new Date().getTime()).toString(36)
+
+      buffer = @editor.buffer
+      return if !buffer
+
+      lineNo = parseInt(codeChunk.getAttribute('data-line'))
+
+      line = buffer.lines[lineNo].trimRight()
+      line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+      codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
+      codeChunk.id = 'code_chunk_' + id
+
+      @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+      buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+    else
+      id = idMatch[1]
+
     codeChunk.classList.add('running')
+    if @codeChunksData[id]
+      @codeChunksData[id].running = true
+    else
+      @codeChunksData[id] = {running: true}
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+      return if error
+
+      # get new codeChunk
+      codeChunk = document.getElementById('code_chunk_' + id)
+      return if not codeChunk
       codeChunk.classList.remove('running')
-      if (error)
-        return
 
       outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv
@@ -583,31 +621,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.appendChild outputDiv
         @scrollMap = null
 
-      # check id and save outputDiv to @codeChunksData
-      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+      @codeChunksData[id] = {running: false, outputDiv}
 
-      if !idMatch
-        id = (new Date().getTime()).toString(36)
-
-        buffer = @editor.buffer
-        return if !buffer
-
-        lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
-
-        line = buffer.lines[lineNo]
-        line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
-
-        codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
-
-        @parseDelay = Date.now() + 500 # prevent renderMarkdown
-
-        buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
-      else
-        id = idMatch[1]
-
-      @codeChunksData[id] = outputDiv
-
-
+  runAllCodeChunks: ()->
+    codeChunks = @element.getElementsByClassName('code-chunk')
+    for chunk in codeChunks
+      @runCodeChunk(chunk)
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
@@ -733,7 +752,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     unprocessedElements = []
     for el in els
       if !el.hasAttribute('data-processed')
-        el.setAttribute 'data-original', el.innerText
+        el.setAttribute 'data-original', el.textContent
         unprocessedElements.push el
 
     callback = ()=>
@@ -755,14 +774,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
         continue
       else
         displayMode = el.hasAttribute('display-mode')
-        dataOriginal = el.innerText
+        dataOriginal = el.textContent
         try
-          katex.render(el.innerText, el, {displayMode})
+          katex.render(el.textContent, el, {displayMode})
         catch error
           el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
 
         el.setAttribute('data-processed', 'true')
         el.setAttribute('data-original', dataOriginal)
+
+  resizeEvent: ()->
+    @scrollMap = null
 
   ###
   convert './a.txt' '/a.txt'
@@ -952,7 +974,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   printPDF: (htmlPath, dest)->
     return if not @editor
 
-    BrowserWindow = require('remote').require('browser-window')
+    {BrowserWindow} = require('electron').remote
     win = new BrowserWindow show: false
     win.loadURL htmlPath
 

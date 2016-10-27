@@ -287,6 +287,8 @@ processCodes = (codes, lines, rootDirectoryPath, callback)->
             atom.notifications.addError('Invalid options', detail: dataArgs)
             return
 
+          cmd = options.cmd if options.cmd
+
           codeChunkAPI.run content, rootDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
 

@@ -47,9 +47,16 @@ sanitizeContent = (content)->
   output += content.slice(offset, content.length)
   return output
 
-toc = (tokens, ordered)->
+toc = (tokens, opt={})->
   if !tokens or !tokens.length
     return {content: '', array: []}
+
+  ordered = opt.ordered
+  depthFrom = opt.depthFrom or 1
+  depthTo = opt.depthTo or 6
+
+  tokens = tokens.filter (token)->
+    token.level >= depthFrom and token.level <= depthTo
 
   outputArr = []
   tocTable = {}
@@ -65,7 +72,7 @@ toc = (tokens, ordered)->
     content = token.content
     level = token.level
     slug = uslug(content)
-
+    
     if tocTable[slug] >= 0
       tocTable[slug] += 1
       slug += '-' + tocTable[slug]

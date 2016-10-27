@@ -7,6 +7,8 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-'atom-workspace, atom-workspace atom-text-editor':
+'.editor:not(.mini)':
   'ctrl-M': 'markdown-preview-enhanced:toggle'
   'ctrl-I': 'markdown-preview-enhanced:image-helper'
+  'shift-enter': 'markdown-preview-enhanced:run-code-chunk'
+  'ctrl-shift-enter': 'markdown-preview-enhanced:run-all-code-chunks'
