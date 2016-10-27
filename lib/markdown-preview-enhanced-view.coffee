@@ -752,7 +752,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     unprocessedElements = []
     for el in els
       if !el.hasAttribute('data-processed')
-        el.setAttribute 'data-original', el.innerText
+        el.setAttribute 'data-original', el.textContent
         unprocessedElements.push el
 
     callback = ()=>
@@ -774,9 +774,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         continue
       else
         displayMode = el.hasAttribute('display-mode')
-        dataOriginal = el.innerText
+        dataOriginal = el.textContent
         try
-          katex.render(el.innerText, el, {displayMode})
+          katex.render(el.textContent, el, {displayMode})
         catch error
           el.innerHTML = "<span style=\"color: #ee7f49; font-weight: 500;\">#{error}</span>"
 
