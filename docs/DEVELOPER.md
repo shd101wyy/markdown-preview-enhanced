@@ -12,7 +12,7 @@ npm install
 apm link # local installation
 
 cd ../
-apm develop language-markdown-enhanced
+apm develop markdown-preview-enhanced
 ```
 * Open **markdown-preview-enhanced** folder in **Atom Editor** from **View->Developer->Open in Dev Mode...**
 * Then you can modify the code.

@@ -15,7 +15,7 @@
 
 # Code Chunk (Beta)  
 **Changes might happen in the future.**  
-To enable code chunk highlighting, install [language-markdown-enhanced](https://atom.io/packages/language-markdown-enhanced) package and disable the `language-gfm` package.    
+To enable code chunk highlighting, install [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) package and disable the `language-gfm` package.    
 
 **Markdown Preview Enhanced** allows you to render code output into documents.     
 

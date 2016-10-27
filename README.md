@@ -51,7 +51,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - [KaTeX](https://github.com/Khan/KaTeX) or [MathJax](https://github.com/mathjax/MathJax) to render math expressions. ([KaTeX Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
   - expression within `$...$` will be rendered normally.  
   - expression within `$$...$$` will be rendered in displayMode.   
-  - if you want to enable math highlighting, try [language-markdown-enhanced](https://atom.io/packages/language-markdown-enhanced) package.  
+  - if you want to enable math highlighting, try [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) package.  
   - You can choose your math rendering method from [settings panel](#settings-panel).   
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">

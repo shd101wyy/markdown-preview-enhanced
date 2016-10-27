@@ -1,3 +1,6 @@
+## 0.8.9  
+* [ ] `<kbr>` style is not consistent in browser
+
 ## 0.8.8  
 * [x] ISSUE: MathJax will also update when changing headings.  
 * [x] update all dependencies.  
