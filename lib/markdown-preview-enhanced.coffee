@@ -290,11 +290,10 @@ module.exports = MarkdownPreviewEnhanced =
     if @preview?.isOnDom()
       @preview.runCodeChunk()
     else
-      atom.notifications.addInfo('You need to toggle markdown-preview-enhanced first')
+      atom.notifications.addInfo('You need to start markdown-preview-enhanced preview first')
 
   runAllCodeChunks: ()->
     if @preview?.isOnDom()
       @preview.runAllCodeChunks()
     else
-      atom.notifications.addInfo('You need to toggle markdown-preview-enhanced first')
-  
+      atom.notifications.addInfo('You need to start markdown-preview-enhanced preview first')
