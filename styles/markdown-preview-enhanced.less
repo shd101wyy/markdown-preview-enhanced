@@ -550,6 +550,23 @@
       pre {
         cursor: text;
       }
+
+      .status {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 0.85em;
+        color: inherit;
+        padding: 2px 6px;
+        background-color: rgba(0, 0, 0, 0.04);
+        display: none;
+      }
+
+      &.running {
+        .status {
+          display: block;
+        }
+      }
     }
   }
 

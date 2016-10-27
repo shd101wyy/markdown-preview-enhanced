@@ -63,7 +63,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # graph data used to save rendered graphs
     @graphData = null
-    @codeChunksData = null
+    @codeChunksData = {}
 
     # when resize the window, clear the editor
     window.addEventListener 'resize', @resizeEvent.bind(this)
@@ -509,21 +509,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   setupCodeChunks: ()->
-    @codeChunksData = {} # key is codeChunkId, value is outputDiv
-
     codeChunks = @element.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
+    newCodeChunksData = {}
     setupCodeChunk = (codeChunk)=>
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
       if idMatch and idMatch[1]
         id = idMatch[1]
-        @codeChunksData[id] = codeChunk.getElementsByClassName('output-div')[0]
         codeChunk.id = 'code_chunk_' + id
+        running = @codeChunksData[id]?.running or false
+        codeChunk.classList.add('running') if running
+        newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
 
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
+
+    @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
@@ -540,6 +543,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   runCodeChunk: (codeChunk=null)->
     codeChunk = @getNearestCodeChunk() if not codeChunk
     return if not codeChunk
+    return if codeChunk.classList.contains('running')
 
     code = codeChunk.getAttribute('data-code')
     dataArgs = codeChunk.getAttribute('data-args')
@@ -552,8 +556,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
 
     cmd =  options.cmd || codeChunk.getAttribute('data-lang')
-
-    codeChunk.classList.add('running') # TODO: handle running status in md.coffee as well...
 
     # check id and save outputDiv to @codeChunksData
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
@@ -578,13 +580,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       id = idMatch[1]
 
+    codeChunk.classList.add('running')
+    if @codeChunksData[id]
+      @codeChunksData[id].running = true
+    else
+      @codeChunksData[id] = {running}
+
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
-      codeChunk.classList.remove('running')
       return if error
 
       # get new codeChunk
       codeChunk = document.getElementById('code_chunk_' + id)
       return if not codeChunk
+      codeChunk.classList.remove('running')
 
       outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv
@@ -613,12 +621,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.appendChild outputDiv
         @scrollMap = null
 
-      @codeChunksData[id] = outputDiv
+      @codeChunksData[id] = {running: false, outputDiv}
 
   runAllCodeChunks: ()->
     codeChunks = @element.getElementsByClassName('code-chunk')
     for chunk in codeChunks
-      @runCodeChunk(chunk) if !chunk.classList.contains('running')
+      @runCodeChunk(chunk)
 
   initTaskList: ()->
     checkboxs = @element.getElementsByClassName('task-list-item-checkbox')

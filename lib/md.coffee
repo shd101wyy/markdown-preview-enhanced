@@ -567,13 +567,14 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         highlightedBlock.addClass('sync-line')
 
     outputDiv = ''
-
     idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
-      outputDiv = '<div class="output-div">' + codeChunksData[idMatch[1]].innerHTML + '</div>'
+      outputDiv = '<div class="output-div">' + (codeChunksData[idMatch[1]].outputDiv?.innerHTML or '') + '</div>'
 
-    $el = $("<div class=\"code-chunk\" data-lang=\"#{lang}\">" + highlightedBlock + outputDiv + '</div>')
-    $el.attr 'data-args': parameters, 'data-line': lineNo, 'data-code': text
+    statusDiv = '<div class="status">running...</div>'
+
+    $el = $("<div class=\"code-chunk\">" + highlightedBlock + statusDiv + outputDiv + '</div>')
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text
 
     $(preElement).replaceWith $el
 

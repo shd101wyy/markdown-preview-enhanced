@@ -7,6 +7,7 @@
 * [x] fix issue [#160](https://github.com/shd101wyy/markdown-preview-enhanced/issues/160)
 * [x] fix issue [#150](https://github.com/shd101wyy/markdown-preview-enhanced/issues/150)
 * [x] extend `TOC`. [#171](https://github.com/shd101wyy/markdown-preview-enhanced/issues/171)
+* [x] remove `run` and `all` button for code chunk. also updated [code-chunk.md](/docs/code-chunk.md)
 
 ## 0.8.7 `minor update`
 * [ ] <strike>reload cached image when necessary. (eg: replace `#cached=false` with `#cached=uid`)</strike>[**doesn't work very well; the image will flicker**]
