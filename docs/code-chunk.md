@@ -35,7 +35,7 @@ You can configure code chunk options in format of `{lang  opt1:value1, opt2:valu
 The grammar that the code block should highlight.  
 It should be put at the most front.  
 
-## Options 
+## Options
 **cmd**    
 The command to run.  
 If `cmd` is not provided, then `lang` will be regarded as command.    
@@ -95,7 +95,7 @@ Please **Do Not** modify it.
 `run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.    
 * `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>      
 execute single code chunk where your cursor is at.    
-* `Markdown Preview Enhanced: Run ` or <kbd>ctrl-shift-enter</kbd>   
+* `Markdown Preview Enhanced: Run All Code Chunks` or <kbd>ctrl-shift-enter</kbd>   
 execute all code chunks.    
 
 ## Macro
