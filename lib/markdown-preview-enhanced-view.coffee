@@ -566,7 +566,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       buffer = @editor.buffer
       return if !buffer
 
-      lineNo = parseInt(codeChunk.getElementsByTagName('PRE')[0].getAttribute('data-line'))
+      lineNo = parseInt(codeChunk.getAttribute('data-line'))
 
       line = buffer.lines[lineNo]
       line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
@@ -584,7 +584,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if @codeChunksData[id]
       @codeChunksData[id].running = true
     else
-      @codeChunksData[id] = {running}
+      @codeChunksData[id] = {running: true}
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
       return if error

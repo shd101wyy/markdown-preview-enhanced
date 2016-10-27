@@ -595,8 +595,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    # TODO: remove 'mermaid', only keep {mermaid}
-    if lang in ['mermaid', '{mermaid}']
+    if lang == '{mermaid}'
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -605,13 +604,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang in ['plantuml', 'puml', '{plantuml}', '{puml}']
+    else if lang in ['{plantuml}', '{puml}']
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang in ['wavedrom', '{wavedrom}']
+    else if lang == '{wavedrom}'
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang in ['viz', '{viz}']
+    else if lang == '{viz}'
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
