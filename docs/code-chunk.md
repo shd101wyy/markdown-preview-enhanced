@@ -79,6 +79,9 @@ args that append to command. eg:
 		# output svg format and append as html result.
     ```
 
+**stdin**  
+if `stdin` is set to true, then the code will be passed as stdin instead of as file.
+
 **hide**  
 `hide` will hide code chunk but only leave the output visible. default: `false`  
 eg:

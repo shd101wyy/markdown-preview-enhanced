@@ -26,10 +26,12 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
       else
         arg
 
-    if !findInputFileMacro
+    if !findInputFileMacro and !options.stdin
       args.push savePath
 
     task = spawn cmd, args, {cwd: rootDirectoryPath}
+    if options.stdin # pass content as stdin
+      task.stdin.write(content)
     task.stdin.end()
 
     chunks = []
