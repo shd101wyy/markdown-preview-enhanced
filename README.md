@@ -24,7 +24,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 <!-- tocstop -->
 ---
 
-![intro](http://i.imgur.com/HG1jMTK.gif)
+![intro](https://cloud.githubusercontent.com/assets/1908863/19796387/a00df0f6-9ca9-11e6-86e9-1d74e195748f.gif)
 
 ## Features
 - **2-side scroll sync**  
