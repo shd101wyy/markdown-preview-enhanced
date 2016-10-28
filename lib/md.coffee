@@ -553,6 +553,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     return if !lang
 
     highlightedBlock = ''
+    buttonGroup = ''
     if not /\s*hide\s*:\s*true/.test(parameters)
       highlighter = new Highlights({registry: atom.grammars})
       html = highlighter.highlightSync
@@ -566,6 +567,8 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         highlightedBlock.attr({'data-line': lineNo})
         highlightedBlock.addClass('sync-line')
 
+      buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
+
     outputDiv = ''
     idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
     if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
@@ -573,7 +576,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     statusDiv = '<div class="status">running...</div>'
 
-    $el = $("<div class=\"code-chunk\">" + highlightedBlock + statusDiv + outputDiv + '</div>')
+    $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + outputDiv + '</div>')
     $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text
 
     $(preElement).replaceWith $el
@@ -732,7 +735,10 @@ parseMD = (inputString, option={})->
   graphData = null
   codeChunksData = null
   if markdownPreview
-    graphData = markdownPreview.graphData
+    if markdownPreview.graphData
+      graphData = {}
+      for key of markdownPreview.graphData
+        graphData[key] = markdownPreview.graphData[key].slice(0) # fix issue 177... as the array will be `splice` in the future, so need to create new array here
     codeChunksData = markdownPreview.codeChunksData
 
   # set globalMathTypesettingData

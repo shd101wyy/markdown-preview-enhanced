@@ -523,6 +523,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.classList.add('running') if running
         newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
 
+      runBtn = codeChunk.getElementsByClassName('run-btn')[0]
+      runBtn?.addEventListener 'click', ()=>
+        @runCodeChunk(codeChunk) 
+
+      runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
+      runAllBtn?.addEventListener 'click', ()=>
+        @runAllCodeChunks()
+
     for codeChunk in codeChunks
       setupCodeChunk(codeChunk)
 

@@ -79,6 +79,9 @@ args that append to command. eg:
 		# output svg format and append as html result.
     ```
 
+**stdin**  
+if `stdin` is set to true, then the code will be passed as stdin instead of as file.
+
 **hide**  
 `hide` will hide code chunk but only leave the output visible. default: `false`  
 eg:
@@ -92,7 +95,7 @@ eg:
 Please **Do Not** modify it.  
 
 ## Commands & Keyboard Shortcust
-`run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.    
+<strike>`run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.</strike> nvm I put those buttons back.      
 * `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>      
 execute single code chunk where your cursor is at.    
 * `Markdown Preview Enhanced: Run All Code Chunks` or <kbd>ctrl-shift-enter</kbd>   

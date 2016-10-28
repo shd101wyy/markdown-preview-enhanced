@@ -77,14 +77,15 @@
 
   &[data-use-github-style] {
     h1, h2, h3, h4, h5 { color: @github-black; font-weight: 600; }
+    h5 { font-size: 1em; }
     h6 { color: @github-blockquote-color; }
   }
 
 
-  h1 { font-size: 2.4em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
-  h2 { font-size: 1.8em; font-weight: 400; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
+  h1 { font-size: 2.25em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
+  h2 { font-size: 1.75em; font-weight: 400; padding-bottom: 0.3em; border-bottom: 1px solid @border;}
   h3 { font-size: 1.5em; font-weight: 500; }
-  h4 { font-size: 1.2em; font-weight: 600; }
+  h4 { font-size: 1.25em; font-weight: 600; }
   h5 { font-size: 1.1em; font-weight: 600; }
   h6 { font-size: 1.0em; font-weight: 600; }
 
@@ -298,7 +299,7 @@
 
   &[data-use-github-style] {
     code {
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: rgba(0, 0, 0, 0.04) !important; // issue 160. <code>
       color: inherit;
     }
   }
@@ -390,6 +391,7 @@
     color: @fg-strong;
     border: 1px solid @border;
     border-bottom: 2px solid darken(@border, 6%);
+    padding: 2px 4px;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
   }
 
@@ -543,6 +545,35 @@
         cursor: text;
       }
 
+      .btn-group {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+
+        .run-btn, .run-all-btn {
+          float: right;
+          margin-left: 4px;
+          border-radius: 3px;
+          font-size: 0.8em;
+          color: #eee;
+          background-color: #528bff;
+          background-image: none;
+          border: none;
+
+          &:hover {
+            background-color: #4b7fe8;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &:hover {
+        .btn-group {
+          display: block;
+        }
+      }
+
       .status {
         position: absolute;
         right: 0;
@@ -555,6 +586,9 @@
       }
 
       &.running {
+        .btn-group {
+          display: none;
+        }
         .status {
           display: block;
         }
@@ -564,6 +598,9 @@
 
   &:not([is="space-pen-div"]) {
     .code-chunk {
+      .btn-group {
+        display: none;
+      }
       .status {
         display: none;
       }

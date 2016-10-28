@@ -23,7 +23,7 @@ Markdown Preview Enhanced
 <!-- tocstop -->
 ---
 
-![intro](http://i.imgur.com/HG1jMTK.gif)
+![intro](https://cloud.githubusercontent.com/assets/1908863/19796387/a00df0f6-9ca9-11e6-86e9-1d74e195748f.gif)  
 
 ## 支持特性
 - **编辑与预览滑动同步**  
