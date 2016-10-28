@@ -95,7 +95,7 @@ eg:
 Please **Do Not** modify it.  
 
 ## Commands & Keyboard Shortcust
-`run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.    
+<strike>`run` and `all` buttons are removed in version `0.8.8`. So you need to use keyboard instead.</strike> nvm I put those buttons back.      
 * `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>      
 execute single code chunk where your cursor is at.    
 * `Markdown Preview Enhanced: Run All Code Chunks` or <kbd>ctrl-shift-enter</kbd>   

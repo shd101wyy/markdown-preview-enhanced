@@ -544,6 +544,35 @@
         cursor: text;
       }
 
+      .btn-group {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+
+        .run-btn, .run-all-btn {
+          float: right;
+          margin-left: 4px;
+          border-radius: 3px;
+          font-size: 0.8em;
+          color: #eee;
+          background-color: #528bff;
+          background-image: none;
+          border: none;
+
+          &:hover {
+            background-color: #4b7fe8;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &:hover {
+        .btn-group {
+          display: block;
+        }
+      }
+
       .status {
         position: absolute;
         right: 0;
@@ -556,6 +585,9 @@
       }
 
       &.running {
+        .btn-group {
+          display: none;
+        }
         .status {
           display: block;
         }
@@ -565,6 +597,9 @@
 
   &:not([is="space-pen-div"]) {
     .code-chunk {
+      .btn-group {
+        display: none;
+      }
       .status {
         display: none;
       }

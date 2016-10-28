@@ -2,7 +2,7 @@
 * [x] `<kbr>` style is not consistent in browser
 * [x] fix issue [#177](https://github.com/shd101wyy/markdown-preview-enhanced/issues/177)  
 * [x] add `stdin` option to code chunk  
-* [ ] restore `run` and `all` buttons but only shown when hovered.  
+* [x] restore `run` and `all` buttons but only shown when hovered.  
 
 ## 0.8.8  
 * [x] ISSUE: MathJax will also update when changing headings.  
