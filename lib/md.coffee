@@ -732,7 +732,10 @@ parseMD = (inputString, option={})->
   graphData = null
   codeChunksData = null
   if markdownPreview
-    graphData = markdownPreview.graphData
+    if markdownPreview.graphData
+      graphData = {}
+      for key of markdownPreview.graphData
+        graphData[key] = markdownPreview.graphData[key].slice(0) # fix issue 177... as the array will be `splice` in the future, so need to create new array here
     codeChunksData = markdownPreview.codeChunksData
 
   # set globalMathTypesettingData
