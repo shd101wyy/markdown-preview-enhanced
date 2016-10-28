@@ -298,7 +298,7 @@
 
   &[data-use-github-style] {
     code {
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: rgba(0, 0, 0, 0.04) !important; // issue 160. <code>
       color: inherit;
     }
   }
@@ -390,6 +390,7 @@
     color: @fg-strong;
     border: 1px solid @border;
     border-bottom: 2px solid darken(@border, 6%);
+    padding: 2px 4px;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
   }
 
