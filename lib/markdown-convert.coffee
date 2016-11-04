@@ -225,6 +225,24 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
               .join('\n')
     callback lines, imagePaths
 
+processMath = (text)->
+  text = text.replace(/\\\$/g, '#slash_dollarsign#')
+
+  # display
+  text = text.replace /\$\$([\s\S]+?)\$\$/g, ($0, $1)->
+    $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+    $1 = escape($1)
+    "<p align=\"center\"><img src=\"http://api.gmath.guru/cgi-bin/gmath?#{$1.trim()}\"/></p>"
+
+  # inline
+  r = /\$([\s\S]+?)\$/g
+  text = text.replace /\$([\s\S]+?)\$/g, ($0, $1)->
+    $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+    $1 = escape($1)
+    "<img src=\"http://api.gmath.guru/cgi-bin/gmath?#{$1.trim()}\"/>"
+
+  text = text.replace(/\#slash\_dollarsign\#/g, '\\\$')
+  text
 
 # convert relative path to project path
 processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
@@ -274,6 +292,8 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   # change link path to project '/' path
   # this is actually differnet from pandoc-wrapper.coffee
   text = processPaths text, rootDirectoryPath, projectDirectoryPath
+
+  text = processMath text
 
   # TODO: create imageFolder
   if config['image_dir'][0] == '/'
