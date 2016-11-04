@@ -12,6 +12,7 @@ plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 pandocConvert = require './pandoc-wrapper'
+markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
 
 codeChunksDataCache = {} # key is @editor.getFilePath(), value is @codeChunksData
@@ -73,6 +74,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
+      'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
       'core:copy': => @copyToClipboard()
 
   @content: ->
@@ -525,7 +527,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn?.addEventListener 'click', ()=>
-        @runCodeChunk(codeChunk) 
+        @runCodeChunk(codeChunk)
 
       runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
       runAllBtn?.addEventListener 'click', ()=>
@@ -1507,6 +1509,16 @@ module.exports = config || {}
       content = content.slice(end+4)
 
     pandocConvert content, this, data
+
+  saveAsMarkdown: ->
+    {data} = @processFrontMatter(@editor.getText())
+
+    content = @editor.getText().trim()
+    if content.startsWith('---\n')
+      end = content.indexOf('---\n', 4)
+      content = content.slice(end+4)
+
+    markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, data
 
   copyToClipboard: ->
     return false if not @editor
