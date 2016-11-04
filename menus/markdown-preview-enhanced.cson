@@ -20,7 +20,7 @@
       'command': 'markdown-preview-enhanced:pandoc-document-export'
     }
     {
-      'label': 'Save as Markdown (beta)'
+      'label': 'Export Markdown (beta)'
       'command': 'markdown-preview-enhanced:save-as-markdown'
     }
   ]
