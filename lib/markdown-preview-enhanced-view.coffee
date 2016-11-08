@@ -525,7 +525,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn?.addEventListener 'click', ()=>
-        @runCodeChunk(codeChunk) 
+        @runCodeChunk(codeChunk)
 
       runAllBtn = codeChunk.getElementsByClassName('run-all-btn')[0]
       runAllBtn?.addEventListener 'click', ()=>
@@ -913,7 +913,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if slideConfigs.length
       htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
       if offline
-        presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+        presentationScript = "<script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
       else
         presentationScript = "<script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script>"
 
