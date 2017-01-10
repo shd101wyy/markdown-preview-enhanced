@@ -1,3 +1,7 @@
+## 0.9.0
+* [x] fix issue [#187](https://github.com/shd101wyy/markdown-preview-enhanced/issues/187)
+* [x] add cache support [#210](https://github.com/shd101wyy/markdown-preview-enhanced/issues/210)
+
 ## 0.8.9  
 * [x] `<kbr>` style is not consistent in browser
 * [x] fix issue [#177](https://github.com/shd101wyy/markdown-preview-enhanced/issues/177)  

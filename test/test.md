@@ -7,12 +7,12 @@ arr: [1, 2, 3]
 
 <!-- toc orderedList:0 -->
 
-- [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
-	- [Heading 2](#heading-2)
-		- [Heading 3](#heading-3)
-			- [Heading 4](#heading-4)
-				- [Heading 5](#heading-5)
-					- [Heading 6](#heading-6)
+* [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
+	* [Heading 2](#heading-2)
+		* [Heading 3](#heading-3)
+			* [Heading 4](#heading-4)
+				* [Heading 5](#heading-5)
+					* [Heading 6](#heading-6)
 
 <!-- tocstop -->
 # This is Markdown Preview with KaTeX Support
@@ -22,9 +22,9 @@ arr: [1, 2, 3]
     - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
 		- $sin(x) = 1$
 
-## Heading 2   
+## Heading 2
 ### Heading 3
-#### Heading 4  
+#### Heading 4
 ##### Heading 5
 ###### Heading 6
 
@@ -165,7 +165,6 @@ node "Other Groups" {
 cloud {
   [Example 1]
 }
-
 
 database "MySql" {
   folder "This is my folder" {

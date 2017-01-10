@@ -4,12 +4,12 @@ The idea is from [issue #101](https://github.com/shd101wyy/markdown-preview-enha
 
 <!-- toc orderedList:0 -->
 
-- [How to write extensions](#how-to-write-extensions)
-	- [Synchronous](#synchronous)
-		- [::onWillParseMarkdown(callback)](#onwillparsemarkdowncallback)
-		- [::onDidParseMarkdown(callback)](#ondidparsemarkdowncallback)
-	- [Asynchronous](#asynchronous)
-		- [::onDidRenderPreview(callback)](#ondidrenderpreviewcallback)
+* [How to write extensions](#how-to-write-extensions)
+	* [Synchronous](#synchronous)
+		* [::onWillParseMarkdown(callback)](#onwillparsemarkdowncallback)
+		* [::onDidParseMarkdown(callback)](#ondidparsemarkdowncallback)
+	* [Asynchronous](#asynchronous)
+		* [::onDidRenderPreview(callback)](#ondidrenderpreviewcallback)
 
 <!-- tocstop -->
 

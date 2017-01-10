@@ -15,7 +15,17 @@ pandocConvert = require './pandoc-wrapper'
 markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
 
-codeChunksDataCache = {} # key is @editor.getFilePath(), value is @codeChunksData
+###
+CACHE, key is @editor.getFilePath()
+used to store rendered cache.
+
+{
+  html: @element.innerHTML
+  codeChunksData: @codeChunksData
+  graphData: @graphData
+}
+###
+CACHE = {}
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -77,6 +87,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
       'core:copy': => @copyToClipboard()
 
+    # init settings
+    @settingsDisposables = new CompositeDisposable()
+    @initSettingsEvents()
+
   @content: ->
     @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, =>
       @p style: 'font-size: 24px', 'loading preview...'
@@ -129,10 +143,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
             , 0)
 
     else
-      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
+      # save cache
+      CACHE[@editor.getPath()] = {
+        html: @element?.innerHTML or '',
+        codeChunksData: @codeChunksData,
+        graphData: @graphData
+      }
 
-      # save codeChunksDataCache
-      codeChunksDataCache[@editor.getPath()] = @codeChunksData || {}
+      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
 
       setTimeout(()=>
         @initEvents(editor)
@@ -157,13 +175,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @disposables.dispose()
     @disposables = new CompositeDisposable()
 
-    # restore codeChunksData if already in cache
-    if codeChunksDataCache[@editor.getPath()]
-      @codeChunksData = codeChunksDataCache[@editor.getPath()]
-
     @initEditorEvent()
     @initViewEvent()
-    @initSettingsEvents()
+
+    # restore preview
+    d = CACHE[@editor.getPath()]
+    if d
+      @element.innerHTML = d.html
+      @graphData = d.graphData
+      @codeChunksData = d.codeChunksData
+
+      @setInitialScrollPos()
+      # console.log 'restore ' + @editor.getPath()
+    else
+      @renderMarkdown()
 
   initEditorEvent: ->
     editorElement = @editor.getElement()
@@ -278,7 +303,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initSettingsEvents: ->
     # settings changed
     # github style?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
       (useGitHubStyle) =>
         if useGitHubStyle
           @element.setAttribute('data-use-github-style', '')
@@ -286,7 +311,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @element.removeAttribute('data-use-github-style')
 
     # github syntax theme
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
       (useGitHubSyntaxTheme)=>
         if useGitHubSyntaxTheme
           @element.setAttribute('data-use-github-syntax-theme', '')
@@ -294,28 +319,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @element.removeAttribute('data-use-github-syntax-theme')
 
     # break line?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
       (breakOnSingleNewline)=>
         @parseDelay = Date.now() # <- fix 'loading preview' stuck bug
         @renderMarkdown()
 
     # typographer?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
       (enableTypographer)=>
         @renderMarkdown()
 
     # liveUpdate?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
       (flag) => @liveUpdate = flag
 
     # scroll sync?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
       (flag) =>
         @scrollSync = flag
         @scrollMap = null
 
     # scroll duration
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollDuration', (duration)=>
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.scrollDuration', (duration)=>
       duration = parseInt(duration) or 0
       if duration < 0
         @scrollDuration = 120
@@ -323,18 +348,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollDuration = duration
 
     # math?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
       (option) =>
         @mathRenderingOption = option
         @renderMarkdown()
 
     # mermaid theme
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
       (theme) =>
         @element.setAttribute 'data-mermaid-theme', theme
 
     # render front matter as table?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', (theme) =>
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
 
   scrollSyncForPresentation: (bufferLineNo)->
@@ -449,6 +474,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
 
+    @setInitialScrollPos()
+
+  setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
       @firstTimeRenderMarkdowon = false
       cursor = @editor.cursors[0]
@@ -1533,9 +1561,14 @@ module.exports = config || {}
   destroy: ->
     @element.remove()
     @editor = null
+
     if @disposables
       @disposables.dispose()
       @disposables = null
+
+    if @settingsDisposables
+      @settingsDisposables.dispose()
+      @settingsDisposables = null
 
   getElement: ->
     @element
