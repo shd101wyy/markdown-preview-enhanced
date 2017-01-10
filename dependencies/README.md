@@ -6,9 +6,9 @@ I managed many libraries by myself instead of through npm to reduce overall file
     "mermaid": "6.0.0",
     "plantuml": "8048",
     "wavedrom": "1.4.1",
-    "reveal": "3.3.0",
+    "reveal": "3.4.0",
     "viz": "1.3.0",
-    "save-svg-as-png": "September 23, 2016",
+    "save-svg-as-png": "January 5, 2017",
     "MathJax": "v2.7.0"
 }
 ```  

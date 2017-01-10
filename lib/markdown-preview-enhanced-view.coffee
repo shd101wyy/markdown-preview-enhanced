@@ -958,7 +958,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize(#{JSON.stringify(yamlConfig['presentation'])})
+        Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, yamlConfig['presentation']))})
       </script>
       """
     else
