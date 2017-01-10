@@ -835,7 +835,9 @@ parseMD = (inputString, option={})->
 
     editor = markdownPreview.editor
     if tocNeedUpdate and editor
-      tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo})
+      tab = markdownPreview?.editor?.getTabText() or '\t'
+      console.log '@'+markdownPreview?.editor?.getTabText()
+      tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo, tab})
       buffer = editor.buffer
       if buffer
         if tocEndLine == -1

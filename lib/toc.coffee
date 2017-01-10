@@ -47,6 +47,13 @@ sanitizeContent = (content)->
   output += content.slice(offset, content.length)
   return output
 
+###
+opt =
+  ordered: boolean
+  depthFrom: number, default 1
+  depthTo: number, default 6
+  tab: string, default '\t'
+###
 toc = (tokens, opt={})->
   if !tokens or !tokens.length
     return {content: '', array: []}
@@ -54,6 +61,7 @@ toc = (tokens, opt={})->
   ordered = opt.ordered
   depthFrom = opt.depthFrom or 1
   depthTo = opt.depthTo or 6
+  tab = opt.tab or '\t'
 
   tokens = tokens.filter (token)->
     token.level >= depthFrom and token.level <= depthTo
@@ -72,14 +80,14 @@ toc = (tokens, opt={})->
     content = token.content
     level = token.level
     slug = uslug(content)
-    
+
     if tocTable[slug] >= 0
       tocTable[slug] += 1
       slug += '-' + tocTable[slug]
     else
       tocTable[slug] = 0
 
-    listItem = "#{nPrefix('\t', level-smallestLevel)}#{if ordered then '1.' else '-'} [#{sanitizeContent(content)}](##{slug})"
+    listItem = "#{nPrefix(tab, level-smallestLevel)}#{if ordered then "1." else '*'} [#{sanitizeContent(content)}](##{slug})"
     outputArr.push(listItem)
 
   return {
