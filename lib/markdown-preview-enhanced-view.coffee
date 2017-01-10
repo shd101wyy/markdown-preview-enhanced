@@ -154,7 +154,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         slideConfigs: @slideConfigs
       }
 
-      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
+      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
 
       setTimeout(()=>
         @initEvents(editor)
@@ -913,7 +913,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         mathStyle = "<link rel=\"stylesheet\"
               href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
-        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
       inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
       block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
@@ -954,9 +954,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if slideConfigs.length
       htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
       if offline
-        presentationScript = "<script src='#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+        presentationScript = "
+        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/lib/js/head.min.js')}'></script>
+        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
       else
-        presentationScript = "<script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script>"
+        presentationScript = "
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/lib/js/head.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/js/reveal.min.js'></script>"
 
       #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
       presentationStyle = """
@@ -1121,11 +1125,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
         else
           styleString += "background-size: cover;"
 
-        if slideConfig['data-background-size']
-          styleString += "background-size: #{slideConfig['data-background-size']};"
-        else
-          styleString += "background-size: cover;"
-
         if slideConfig['data-background-position']
           styleString += "background-position: #{slideConfig['data-background-position']};"
         else
@@ -1194,6 +1193,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       if slideConfig['data-background-color']
         attrString += " data-background-color='#{slideConfig['data-background-color']}'"
+
+      if slideConfig['data-notes']
+        attrString += " data-notes='#{slideConfig['data-notes']}'"
 
       if slideConfig['data-background-video']
         attrString += " data-background-video='#{@resolveFilePath(slideConfig['data-background-video'], isSavingToHTML)}'"
@@ -1480,7 +1482,7 @@ module.exports = config || {}
         mathStyle = ''
         if outputHTML.indexOf('class="katex"') > 0
           if path.extname(dest) == '.html' and ebookConfig.html?.cdn
-            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
           else
             mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 

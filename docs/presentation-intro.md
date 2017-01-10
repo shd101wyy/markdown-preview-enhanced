@@ -3,6 +3,7 @@ presentation:
   width: 960
   height: 700
   help: true
+  dependencies: [{ src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true }]
 ---
 
 <!-- slide -->
@@ -89,6 +90,16 @@ data-transition:"zoom"
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
+
+<!-- slide data-notes:"This is speaker note"-->
+Speaker notes is also supported.
+```html
+<!-- slide data-notes:"Something important here" -->
+```
+check [Reveal.js Speaker Note](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
+<aside class="notes">
+  I'm your Notes :)
+</aside>
 
 <!-- slide -->
 It is also very easy to customize presentation css.  
