@@ -23,6 +23,8 @@ used to store rendered cache.
   html: @element.innerHTML
   codeChunksData: @codeChunksData
   graphData: @graphData
+  presentationMode: @presentationMode
+  slideConfigs: @slideConfigs
 }
 ###
 CACHE = {}
@@ -147,7 +149,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       CACHE[@editor.getPath()] = {
         html: @element?.innerHTML or '',
         codeChunksData: @codeChunksData,
-        graphData: @graphData
+        graphData: @graphData,
+        presentationMode: @presentationMode,
+        slideConfigs: @slideConfigs
       }
 
       @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
@@ -184,6 +188,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @element.innerHTML = d.html
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
+      @presentationMode = d.presentationMode
+      @slideConfigs = d.slideConfigs
+
+      if @presentationMode
+        @element.setAttribute 'data-presentation-preview-mode', ''
+      else
+        @element.removeAttribute 'data-presentation-preview-mode'
 
       @setInitialScrollPos()
       # console.log 'restore ' + @editor.getPath()
