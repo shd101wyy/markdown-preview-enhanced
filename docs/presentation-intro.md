@@ -3,7 +3,7 @@ presentation:
   width: 960
   height: 700
   help: true
-  dependencies: [{ src: 'notes.js', async: true }]
+  enableSpeakerNotes: true
 ---
 
 <!-- slide data-notes:"Congrats! You just opened speaker notes" -->
@@ -53,10 +53,19 @@ presentation:
 More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-front-matter.md).
 
 <!-- slide data-notes:"This is speaker note"-->  
-Speaker notes is also supported. (might be buggy now)   
+**Speaker notes** is also supported.  
 Press the <kbd>s</kbd> key on your keyboard to open the notes window.  
+
+To enable speaker notes, set front-matter as:  
+```yaml  
+---
+presentation:
+  enableSpeakerNotes: true
+---
+```  
+To add note, simply set `data-notes` property:
 ```html
-<!-- slide data-notes:"Something important here" -->
+<!-- slide data-notes:"Write your note here" -->
 ```
 check [Reveal.js Speaker Note](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
 

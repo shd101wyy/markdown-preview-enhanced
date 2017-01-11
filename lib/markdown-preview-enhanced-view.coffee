@@ -962,6 +962,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
         <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/lib/js/head.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/js/reveal.min.js'></script>"
 
+      presentationConfig = yamlConfig['presentation']
+      dependencies = presentationConfig.dependencies or []
+      if presentationConfig.enableSpeakerNotes
+        if offline
+          dependencies.push {src: path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js'), async: true}
+        else
+          dependencies.push {src: 'revealjs_deps/notes.js', async: true} # TODO: copy notes.js file to corresponding folder
+      presentationConfig.dependencies = dependencies
+
       #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
       presentationStyle = """
 
@@ -973,7 +982,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, yamlConfig['presentation']))})
+        Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, presentationConfig))})
       </script>
       """
     else
