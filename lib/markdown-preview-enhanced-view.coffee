@@ -154,7 +154,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         slideConfigs: @slideConfigs
       }
 
-      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
+      # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
 
       setTimeout(()=>
         @initEvents(editor)
@@ -1174,6 +1174,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         </div>
       """
       offset += 1
+
+    # remove <aside class="notes"> ... </aside>
+    output = output.replace(/(<aside\b[^>]*>)[^<>]*(<\/aside>)/ig, '')
 
     """
     <div class="preview-slides">

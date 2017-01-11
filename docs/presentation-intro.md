@@ -17,6 +17,9 @@ powered by [reveal.js](https://github.com/hakimel/reveal.js)
 <!-- slide -->
 You can easily create beautiful presentation by running command   
 <center> `Markdown Preview Enhanced: Insert New Slide` </center>  
+<aside class="notes">
+    Pretty cool haha ;)
+</aside>
 
 <!-- slide -->
 Just like this  
