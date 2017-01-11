@@ -1,13 +1,13 @@
 <!-- toc orderedList:0 depthFrom: 1 -->
 
-- [Code Chunk (Beta)](#code-chunk-beta)
-	- [Format](#format)
-	- [Options](#options)
-	- [Commands & Keyboard Shortcust](#commands-keyboard-shortcust)
-	- [Macro](#macro)
-	- [Demo](#demo)
-	- [Showcases](#showcases)
-	- [Limitations](#limitations)
+* [Code Chunk (Beta)](#code-chunk-beta)
+	* [Format](#format)
+	* [Options](#options)
+	* [Commands & Keyboard Shortcust](#commands-keyboard-shortcust)
+	* [Macro](#macro)
+	* [Demo](#demo)
+	* [Showcases](#showcases)
+	* [Limitations](#limitations)
 
 <!-- tocstop -->
 

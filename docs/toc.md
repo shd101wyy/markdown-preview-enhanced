@@ -1,9 +1,9 @@
 
 <!-- toc orderedList:0 depthFrom:1 depthTo:6 -->
 
-- [Table of Contents](#table-of-contents)
-	- [Configuration](#configuration)
-	- [Demo](#demo)
+* [Table of Contents](#table-of-contents)
+	* [Configuration](#configuration)
+	* [Demo](#demo)
 
 <!-- tocstop -->
 

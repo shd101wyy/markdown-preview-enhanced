@@ -10,15 +10,15 @@ Markdown Preview Enhanced
 （以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
 <!-- toc orderedList:0 -->
 
-- [Markdown Preview Enhanced](#markdown-preview-enhanced)
-	- [支持特性](#支持特性)
-	- [该插件如何工作](#该插件如何工作)
-	- [使用](#使用)
-	- [预览菜单](#预览菜单)
-	- [额外支持](#额外支持)
-	- [开发者](#开发者)
-	- [感谢](#感谢)
-	- [TODO](#todo)
+* [Markdown Preview Enhanced](#markdown-preview-enhanced)
+	* [支持特性](#支持特性)
+	* [该插件如何工作](#该插件如何工作)
+	* [使用](#使用)
+	* [预览菜单](#预览菜单)
+	* [额外支持](#额外支持)
+	* [开发者](#开发者)
+	* [感谢](#感谢)
+	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
