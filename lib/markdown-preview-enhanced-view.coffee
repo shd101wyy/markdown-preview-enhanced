@@ -39,7 +39,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
 
-    @headings = []
+    @tocConfigs = null
     @scrollMap = null
     @rootDirectoryPath = null
     @projectDirectoryPath = null
@@ -169,7 +169,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
-    @headings = []
+    @tocConfigs = null
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
