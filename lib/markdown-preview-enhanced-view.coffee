@@ -374,6 +374,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
 
+    # show back to top button?
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.showBackToTopButton', (flag)=>
+      @showBackToTopButton = flag
+      if flag
+        @addBackToTopButton()
+      else
+        document.getElementsByClassName('back-to-top-btn')[0]?.remove()
+
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
     while i >= 0
@@ -487,6 +495,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
 
     @setInitialScrollPos()
+    @addBackToTopButton()
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
@@ -500,6 +509,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollDuration = 0
         @scrollSyncToLineNo cursor.getScreenRow()
         @scrollDuration = t
+
+  addBackToTopButton: ->
+    # TODO: check config
+
+    # add back to top button #222
+    if @showBackToTopButton
+      backToTopBtn = document.createElement('div')
+      backToTopBtn.classList.add('back-to-top-btn')
+      backToTopBtn.classList.add('btn')
+      backToTopBtn.innerHTML = '<span>⬆︎</span>'
+      @element.appendChild(backToTopBtn)
+
+      backToTopBtn.onclick = ()=>
+        @scrollToPos 0
+        @editor.getElement().setScrollTop 0
 
   bindEvents: ->
     @bindTagAClickEvent()
