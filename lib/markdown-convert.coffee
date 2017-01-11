@@ -273,10 +273,6 @@ processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
   text
 
 markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
-  if !config['markdown']
-    return atom.notifications.addError('Invalid front-matter')
-  config = config['markdown']
-
   if !config.path
     return atom.notifications.addError('{path} has to be specified')
 

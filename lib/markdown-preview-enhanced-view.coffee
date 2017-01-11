@@ -86,6 +86,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
+      'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -513,7 +514,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # TODO: check config
 
     # add back to top button #222
-    if @showBackToTopButton
+    if @showBackToTopButton and @element.scrollHeight > @element.offsetHeight
       backToTopBtn = document.createElement('div')
       backToTopBtn.classList.add('back-to-top-btn')
       backToTopBtn.classList.add('btn')
@@ -521,8 +522,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @element.appendChild(backToTopBtn)
 
       backToTopBtn.onclick = ()=>
-        @scrollToPos 0
-        @editor.getElement().setScrollTop 0
+        @element.scrollTop = 0
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -1600,15 +1600,31 @@ module.exports = config || {}
 
     pandocConvert content, this, data
 
-  saveAsMarkdown: ->
+  ###
+  resolvePath: (src)->
+    if src.startsWith('/')
+      return path.resolve(@projectDirectoryPath, '.' + src)
+    else
+      return path.resolve(@rootDirectoryPath, src)
+  ###
+
+  saveAsMarkdown: ()->
     {data} = @processFrontMatter(@editor.getText())
+    data = data or {}
 
     content = @editor.getText().trim()
     if content.startsWith('---\n')
       end = content.indexOf('---\n', 4)
       content = content.slice(end+4)
 
-    markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, data
+    config = data.markdown or {}
+    if !config.image_dir
+      config.image_dir = atom.config.get('markdown-preview-enhanced.imageFolderPath')
+
+    if !config.path
+      config.path = path.basename(@editor.getPath()).replace(/\.md$/, '_.md')
+
+    markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, config
 
   copyToClipboard: ->
     return false if not @editor

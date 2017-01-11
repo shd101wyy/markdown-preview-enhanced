@@ -8,7 +8,7 @@ I managed many libraries by myself instead of through npm to reduce overall file
     "wavedrom": "1.4.1",
     "reveal": "3.4.0",
     "viz": "1.4.1",
-    "save-svg-as-png": "January 5, 2017",
+    "save-svg-as-png": "v1.1.0",
     "MathJax": "v2.7.0"
 }
 ```  
