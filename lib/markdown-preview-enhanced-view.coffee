@@ -200,6 +200,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # console.log 'restore ' + @editor.getPath()
     else
       @renderMarkdown()
+    @scrollMap = null
 
   initEditorEvent: ->
     editorElement = @editor.getElement()
