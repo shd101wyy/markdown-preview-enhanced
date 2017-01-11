@@ -2,19 +2,19 @@
 
 <!-- toc orderedList:0 -->
 
-- [PDF Document](#pdf-document)
-	- [Overview](#overview)
-	- [Export Path](#export-path)
-	- [Table of Contents](#table-of-contents)
-	- [Syntax Highlighting](#syntax-highlighting)
-	- [LaTeX Options](#latex-options)
-		- [LaTeX Packages for Citations](#latex-packages-for-citations)
-	- [Advanced Customization](#advanced-customization)
-		- [LaTeX Engine](#latex-engine)
-		- [Include](#include)
-		- [Custom Templates](#custom-templates)
-		- [Pandoc Arguments](#pandoc-arguments)
-	- [Shared Options](#shared-options)
+* [PDF Document](#pdf-document)
+	* [Overview](#overview)
+	* [Export Path](#export-path)
+	* [Table of Contents](#table-of-contents)
+	* [Syntax Highlighting](#syntax-highlighting)
+	* [LaTeX Options](#latex-options)
+		* [LaTeX Packages for Citations](#latex-packages-for-citations)
+	* [Advanced Customization](#advanced-customization)
+		* [LaTeX Engine](#latex-engine)
+		* [Include](#include)
+		* [Custom Templates](#custom-templates)
+		* [Pandoc Arguments](#pandoc-arguments)
+	* [Shared Options](#shared-options)
 
 <!-- tocstop -->
 

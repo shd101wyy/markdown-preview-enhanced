@@ -2,11 +2,11 @@
 
 <!-- toc orderedList:0 -->
 
-- [HTML Document](#html-document)
-	- [Overview](#overview)
-	- [Table of Contents](#table-of-contents)
-		- [Floating TOC](#floating-toc)
-	- [Document Dependencies](#document-dependencies)
+* [HTML Document](#html-document)
+	* [Overview](#overview)
+	* [Table of Contents](#table-of-contents)
+		* [Floating TOC](#floating-toc)
+	* [Document Dependencies](#document-dependencies)
 
 <!-- tocstop -->
 

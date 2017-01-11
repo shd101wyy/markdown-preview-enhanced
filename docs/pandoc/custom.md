@@ -3,10 +3,10 @@
 
 <!-- toc orderedList:0 -->
 
-- [Custom Document](#custom-document)
-	- [Overview](#overview)
-	- [Pandoc Arguments](#pandoc-arguments)
-	- [Shared Options](#shared-options)
+* [Custom Document](#custom-document)
+	* [Overview](#overview)
+	* [Pandoc Arguments](#pandoc-arguments)
+	* [Shared Options](#shared-options)
 
 <!-- tocstop -->
 

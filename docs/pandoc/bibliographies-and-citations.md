@@ -3,16 +3,16 @@
 
 <!-- toc orderedList:0 -->
 
-- [Bibliographies and Citations](#bibliographies-and-citations)
-	- [Bibliographies](#bibliographies)
-		- [Specifying a Bibliography](#specifying-a-bibliography)
-		- [Inline References](#inline-references)
-		- [Bibliography Placement](#bibliography-placement)
-	- [Citations](#citations)
-		- [Citation Syntax](#citation-syntax)
-		- [Unused References (nocite)](#unused-references-nocite)
-		- [Citation Styles](#citation-styles)
-		- [Citations for PDF Output](#citations-for-pdf-output)
+* [Bibliographies and Citations](#bibliographies-and-citations)
+	* [Bibliographies](#bibliographies)
+		* [Specifying a Bibliography](#specifying-a-bibliography)
+		* [Inline References](#inline-references)
+		* [Bibliography Placement](#bibliography-placement)
+	* [Citations](#citations)
+		* [Citation Syntax](#citation-syntax)
+		* [Unused References (nocite)](#unused-references-nocite)
+		* [Citation Styles](#citation-styles)
+		* [Citations for PDF Output](#citations-for-pdf-output)
 
 <!-- tocstop -->
 

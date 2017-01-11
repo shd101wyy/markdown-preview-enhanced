@@ -86,7 +86,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
-      'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -923,7 +922,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
     yamlConfig = res.yamlConfig || {}

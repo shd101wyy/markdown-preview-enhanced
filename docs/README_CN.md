@@ -77,8 +77,7 @@ Markdown Preview Enhanced
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
   - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - 生成 TOC。[文档在这里](./toc.md)。   
-	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。  
+  - 生成 TOC （预览需要被事先开启）[文档在这里](./toc.md)。   
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - 开关编辑和预览的滑动同步.
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
