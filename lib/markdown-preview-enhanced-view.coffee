@@ -1,4 +1,4 @@
-{Emitter, CompositeDisposable, File} = require 'atom'
+{Emitter, CompositeDisposable, File, Directory} = require 'atom'
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
@@ -1091,8 +1091,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
 
-    lastIndexOfSlash = dest.lastIndexOf '/' || 0
-    htmlFileName = dest.slice(lastIndexOfSlash + 1)
+    htmlFileName = path.basename(dest)
+
+    # presentation speaker notes
+    # copy dependency files
+    if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]')
+      depsDirName = path.resolve(path.dirname(dest), 'revealjs_deps')
+      depsDir = new Directory(depsDirName)
+      depsDir.create().then (flag)->
+        true
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
+    ###
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js').pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html').pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
+    ###
 
     destFile = new File(dest)
     destFile.create().then (flag)->
