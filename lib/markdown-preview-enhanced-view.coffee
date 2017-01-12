@@ -796,7 +796,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       for el in els
         if el.getAttribute('data-processed') != 'true'
           try
-            el.innerHTML = @Viz(el.getAttribute('data-original')) # default svg
+            content = el.getAttribute('data-original')
+            options = {}
+
+            # check engine
+            content = content.trim().replace /^engine(\s)*[:=]([^\n]+)/, (a, b, c)->
+              options.engine = c.trim() if c?.trim() in ['circo', 'dot', 'fdp', 'neato', 'osage', 'twopi']
+              return ''
+
+            el.innerHTML = @Viz(content, options) # default svg
             el.setAttribute 'data-processed', true
           catch error
             el.innerHTML = error

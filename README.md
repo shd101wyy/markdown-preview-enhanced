@@ -66,6 +66,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 	- code block within `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
 	- code block within `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
+    - add `engine:[engine_name]` in the first line of code block with `{viz}` to choose different render engine
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
 

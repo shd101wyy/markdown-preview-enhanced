@@ -98,7 +98,14 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
         helper = (start, end, content)->
           (cb)->
             div = document.createElement('div')
-            div.innerHTML = Viz(content)
+            options = {}
+
+            # check engine
+            content = content.trim().replace /^engine(\s)*[:=]([^\n]+)/, (a, b, c)->
+              options.engine = c.trim() if c?.trim() in ['circo', 'dot', 'fdp', 'neato', 'osage', 'twopi']
+              return ''
+
+            div.innerHTML = Viz(content, options)
 
             dest = path.resolve(imageDirectoryPath, imageFilePrefix + imgCount + '.png')
             imgCount += 1

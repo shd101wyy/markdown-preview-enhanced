@@ -65,6 +65,7 @@ Markdown Preview Enhanced
 	- 代码块 `{wavedrom}` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
 - [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) 图形.  
 	- 代码块 `{viz}` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
+    - 在代码块第一行，可以通过`engine:[engine_name]`形式选择渲染引擎。比如:`engine:dot`
 - [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的 presentations.
 	- [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
 
