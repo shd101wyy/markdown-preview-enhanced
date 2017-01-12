@@ -81,6 +81,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
               mermaid.init null, div, ()->
                 svgElement = div.getElementsByTagName('svg')[0]
+                svgElement.classList.add('mermaid')
 
                 dest = path.resolve(imageDirectoryPath, imageFilePrefix + imgCount + '.png')
                 imgCount += 1

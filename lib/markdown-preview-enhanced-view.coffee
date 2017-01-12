@@ -119,6 +119,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
   updateTabTitle: ->
     @setTabTitle(@getTitle())
 
+  setMermaidTheme: (mermaidTheme)->
+    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme), {encoding: 'utf-8'}).toString()
+    mermaidStyle = document.getElementById('mermaid-style')
+
+    if mermaidStyle
+      mermaidStyle.remove()
+
+    mermaidStyle = document.createElement('style')
+    mermaidStyle.id = 'mermaid-style'
+    document.getElementsByTagName('head')[0].appendChild(mermaidStyle)
+
+    mermaidStyle.innerHTML = mermaidThemeStyle
+
+    # render mermaid graphs again
+    # els = @element.getElementsByClassName('mermaid')
+    @graphData?.mermaid_s = []
+    @renderMarkdown()
+
   bindEditor: (editor)->
     if not @editor
       atom.workspace
@@ -355,7 +373,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # mermaid theme
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
       (theme) =>
-        @element.setAttribute 'data-mermaid-theme', theme
+        @setMermaidTheme theme # hack to solve https://github.com/exupero/saveSvgAsPng/issues/128 problem
+        # @element.setAttribute 'data-mermaid-theme', theme
 
     # render front matter as table?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
@@ -965,10 +984,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
-    # mermaid theme
-    mermaidTheme = atom.config.get 'markdown-preview-enhanced.mermaidTheme'
-    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
-
     # presentation
     if slideConfigs.length
       htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
@@ -1031,7 +1046,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       <style>
       #{getMarkdownPreviewCSS()}
-      #{mermaidThemeStyle}
       </style>
 
       #{mathStyle}
