@@ -39,7 +39,7 @@ processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
   output = ''
 
   resolvePath = (src)->
-    if src.startsWith('/')
+    if src.startsWith('/') or src.startsWith('http://') or src.startsWith('https://') or src.startsWith('file://')
       return src
     else # ./test.png or test.png
       return '/' + path.relative(projectDirectoryPath, path.resolve(rootDirectoryPath, src))
