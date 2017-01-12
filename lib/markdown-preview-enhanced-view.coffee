@@ -14,20 +14,7 @@ ebookConvert = require './ebook-convert'
 pandocConvert = require './pandoc-wrapper'
 markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
-
-###
-CACHE, key is @editor.getFilePath()
-used to store rendered cache.
-
-{
-  html: @element.innerHTML
-  codeChunksData: @codeChunksData
-  graphData: @graphData
-  presentationMode: @presentationMode
-  slideConfigs: @slideConfigs
-}
-###
-CACHE = {}
+CACHE = require './cache'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
