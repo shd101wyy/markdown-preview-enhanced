@@ -36,6 +36,7 @@ Markdown Preview Enhanced
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
+- 编译成 **Markdown** 文件
 - 自定义 Markdown Preview 样式（css）  
 - [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
@@ -106,6 +107,8 @@ Markdown Preview Enhanced
 	- 导出 **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** 等文件。
 - **Pandoc Document Export**
 	- [文档](./advanced-export.md)
+- **Save as Markdown**
+	- [文档](./markdown.md)
 
 ## 额外支持
 * **Code Chunks 运行内嵌代码** [文档](./code-chunk.md)。

@@ -37,6 +37,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
 - export beautiful **HTML** (mobile device supported)  
+- compile to **Markdown**
 - customize Markdown Preview css  
 - [TOC](./docs/toc.md) generation **(beta)**  
 - Flowchart / Sequence diagram
@@ -108,6 +109,8 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 	- Export **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** etc files.
 - **Pandoc Document Export**
 	- [doc](./docs/advanced-export.md)
+- **Save as Markdown**
+	- [doc](./docs/markdown.md)
 
 ## Extra
 * **Code Chunks** [doc](./docs/code-chunk.md)

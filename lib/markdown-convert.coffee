@@ -75,6 +75,10 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
 
   delete(CACHE[outputFilePath])
 
+  useAbsoluteImagePath = false
+  if typeof(config.absolute_image_path) == 'undefined'
+    useAbsoluteImagePath = true
+
   # change link path to project '/' path
   # this is actually differnet from pandoc-wrapper.coffee
   text = processPaths text, rootDirectoryPath, projectDirectoryPath
@@ -93,7 +97,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   imageDir.create().then (flag)->
 
     # mermaid / viz / wavedrom graph
-    processGraphs text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: outputFilePath, useAbsoluteImagePath: true}, (text, imagePaths=[])->
+    processGraphs text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: outputFilePath, useAbsoluteImagePath}, (text, imagePaths=[])->
       fs.writeFile outputFilePath, text, (err)->
         return atom.notifications.addError('failed to generate markdown') if err
         atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
