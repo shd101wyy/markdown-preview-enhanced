@@ -1,6 +1,7 @@
 ---
 markdown:
   path: markdown_output.md
+  image_dir: /images
 ---
 # Markdown Preview Enhanced
 markdown compilation test, modified from [remarkable demo](https://jonschlinkert.github.io/remarkable/demo/).

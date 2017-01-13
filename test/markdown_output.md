@@ -27,16 +27,16 @@ is given by the formula
 <p align="center"><img src="http://api.gmath.guru/cgi-bin/gmath?%20%5Cchi%28%5Clambda%29%20%3D%20%5Cleft%7C%20%5Cbegin%7Barray%7D%7Bccc%7D%5Clambda%20-%20a%20%26%20-b%20%26%20-c%20%5C%5C-d%20%26%20%5Clambda%20-%20e%20%26%20-f%20%5C%5C-g%20%26%20-h%20%26%20%5Clambda%20-%20i%20%5Cend%7Barray%7D%20%5Cright%7C"/></p>
 
 ## Graphs
-![](../assets/%2FUsers%2Fwangyiyi%2Fgithub%2Fmarkdown-preview-enhanced%2Ftest%2Fmarkdown_output.md0.png?0.917867465454995)
+![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md0.png?0.6236501879181151)
 
-![](../assets/%2FUsers%2Fwangyiyi%2Fgithub%2Fmarkdown-preview-enhanced%2Ftest%2Fmarkdown_output.md1.png?0.9292024563258481)
+![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md1.png?0.6934458405759134)
 
 ## Code Chunk
 
-![](../assets/%2FUsers%2Fwangyiyi%2Fgithub%2Fmarkdown-preview-enhanced%2Ftest%2Fmarkdown_output.md2.png?0.9162693111685039)
+![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md2.png?0.6109905804763072)
 
 
-![](../assets/%2FUsers%2Fwangyiyi%2Fgithub%2Fmarkdown-preview-enhanced%2Ftest%2Fmarkdown_output.md3.png?0.4625859728229491)
+![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md3.png?0.38701134894599165)
 
 
 
@@ -221,6 +221,7 @@ Term 1
 Term 2
   ~ Definition 2a
   ~ Definition 2b
+
 
 ## Abbreviations
 

@@ -55,6 +55,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
   asyncFunctions = []
 
   imageFilePrefix = (Math.random().toString(36).substr(2, 9) + '_') if !imageFilePrefix
+  imageFilePrefix = imageFilePrefix.replace(/[\/&]/g, '_ss_')
   imageFilePrefix = encodeURIComponent(imageFilePrefix)
   imgCount = 0
 
