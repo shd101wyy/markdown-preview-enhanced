@@ -1,3 +1,5 @@
+## 0.9.2
+* [x] quick fix issue [#223](https://github.com/shd101wyy/markdown-preview-enhanced/issues/223)
 ## 0.9.1
 * [x] quick fix issue [#234](https://github.com/shd101wyy/markdown-preview-enhanced/issues/234)
 
