@@ -33,16 +33,25 @@ processMath = (text)->
   text
 
 # convert relative path to project path
-processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
+processPaths = (text, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath)->
   match = null
   offset = 0
   output = ''
 
   resolvePath = (src)->
-    if src.startsWith('/') or src.startsWith('http://') or src.startsWith('https://') or src.startsWith('file://')
+    if src.startsWith('http://') or src.startsWith('https://') or src.startsWith('file://')
       return src
-    else # ./test.png or test.png
-      return '/' + path.relative(projectDirectoryPath, path.resolve(rootDirectoryPath, src))
+
+    if useAbsoluteImagePath
+      if src.startsWith('/')
+        return src
+      else # ./test.png or test.png
+        return '/' + path.relative(projectDirectoryPath, path.resolve(rootDirectoryPath, src))
+    else
+      if src.startsWith('/')
+        return path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
+      else # ./test.png or test.png
+        return src
 
   # replace path in ![](...) and []()
   r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
@@ -79,7 +88,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
 
   # change link path to project '/' path
   # this is actually differnet from pandoc-wrapper.coffee
-  text = processPaths text, rootDirectoryPath, projectDirectoryPath
+  text = processPaths text, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath
 
   text = processMath text
 
