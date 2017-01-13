@@ -4,6 +4,11 @@ After version `0.9.0`, **Markdown-Preview-Enhanced** supports compilation into m
 ## Usage
 Right click at the preview, then choose `Save as Markdown`.
 
+## Example
+[markdown.md](../test/markdown.md)  
+and its compiled output  
+[markdown_output.md](../test/markdown_output.md)  
+
 ## Configurations
 You can configure the image directory and output path by front-matter
 ```yaml
