@@ -8,7 +8,7 @@ plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 processGraphs = require './process-graphs'
-CACHE = require './CACHE'
+CACHE = require './cache'
 
 # TODO: refactor this file
 # it has common functions as pandoc-wrapper.coffee
