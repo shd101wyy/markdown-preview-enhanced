@@ -49,7 +49,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 
 ## How it works
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html.
-- [KaTeX](https://github.com/Khan/KaTeX) or [MathJax](https://github.com/mathjax/MathJax) to render math expressions. ([KaTeX Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
+- [KaTeX](https://github.com/Khan/KaTeX) or [MathJax](https://github.com/mathjax/MathJax) to render math expressions. ([KaTeX Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX)) (MathJax is incompatible with `preview-inline` package)
   - expression within `$...$` will be rendered normally.  
   - expression within `$$...$$` will be rendered in displayMode.   
   - if you want to enable math highlighting, try [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) package.  
