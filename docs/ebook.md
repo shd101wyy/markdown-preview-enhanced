@@ -2,19 +2,19 @@
 
 <!-- toc orderedList:0 -->
 
-- [EBook generation (beta)](#ebook-generation-beta)
-	- [Installing ebook-convert](#installing-ebook-convert)
-	- [EBook Example](#ebook-example)
-	- [Start writing EBook](#start-writing-ebook)
-		- [Metadata](#metadata)
-		- [Feel and Look](#feel-and-look)
-	- [Output Formats](#output-formats)
-		- [ePub](#epub)
-		- [PDF](#pdf)
-		- [HTML](#html)
-	- [ebook-convert Arguments](#ebook-convert-arguments)
-	- [Demo](#demo)
-	- [Known Issues & Limitations](#known-issues-limitations)
+* [EBook generation (beta)](#ebook-generation-beta)
+	* [Installing ebook-convert](#installing-ebook-convert)
+	* [EBook Example](#ebook-example)
+	* [Start writing EBook](#start-writing-ebook)
+		* [Metadata](#metadata)
+		* [Feel and Look](#feel-and-look)
+	* [Output Formats](#output-formats)
+		* [ePub](#epub)
+		* [PDF](#pdf)
+		* [HTML](#html)
+	* [ebook-convert Arguments](#ebook-convert-arguments)
+	* [Demo](#demo)
+	* [Known Issues & Limitations](#known-issues-limitations)
 
 <!-- tocstop -->
 

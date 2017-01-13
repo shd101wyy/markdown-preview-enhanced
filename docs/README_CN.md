@@ -10,15 +10,15 @@ Markdown Preview Enhanced
 （以下 TOC 由该插件命令 `Markdown Preview Enhanced: Create Toc` 生成）
 <!-- toc orderedList:0 -->
 
-- [Markdown Preview Enhanced](#markdown-preview-enhanced)
-	- [支持特性](#支持特性)
-	- [该插件如何工作](#该插件如何工作)
-	- [使用](#使用)
-	- [预览菜单](#预览菜单)
-	- [额外支持](#额外支持)
-	- [开发者](#开发者)
-	- [感谢](#感谢)
-	- [TODO](#todo)
+* [Markdown Preview Enhanced](#markdown-preview-enhanced)
+	* [支持特性](#支持特性)
+	* [该插件如何工作](#该插件如何工作)
+	* [使用](#使用)
+	* [预览菜单](#预览菜单)
+	* [额外支持](#额外支持)
+	* [开发者](#开发者)
+	* [感谢](#感谢)
+	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
@@ -36,6 +36,7 @@ Markdown Preview Enhanced
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
+- 编译成 **Markdown** 文件
 - 自定义 Markdown Preview 样式（css）  
 - [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
@@ -78,8 +79,7 @@ Markdown Preview Enhanced
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
   - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - 生成 TOC。[文档在这里](./toc.md)。   
-	 或者在编辑器中插入 `<!-- toc -->` （预览需要被事先开启）。  
+  - 生成 TOC （预览需要被事先开启）[文档在这里](./toc.md)。   
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - 开关编辑和预览的滑动同步.
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
@@ -107,6 +107,8 @@ Markdown Preview Enhanced
 	- 导出 **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** 等文件。
 - **Pandoc Document Export**
 	- [文档](./advanced-export.md)
+- **Save as Markdown**
+	- [文档](./markdown.md)
 
 ## 额外支持
 * **Code Chunks 运行内嵌代码** [文档](./code-chunk.md)。

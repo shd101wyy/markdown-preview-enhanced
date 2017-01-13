@@ -1,16 +1,16 @@
 
 <!-- toc orderedList:0 depthFrom:1 depthTo:6 -->
 
-- [Table of Contents](#table-of-contents)
-	- [Configuration](#configuration)
-	- [Demo](#demo)
+* [Table of Contents](#table-of-contents)
+	* [Configuration](#configuration)
+	* [Demo](#demo)
 
 <!-- tocstop -->
 
 # Table of Contents
 **Markdown Preview Enhanced** can create `TOC` for your markdown file.   
 You can press <kbd>cmd+shift+p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
-Or you can simply insert `<!-- toc -->` into your document.     
+Multiple TOCs can be created.  
 To exclude a heading from the `TOC`, insert `<!-- untoc -->` **above** your heading.  
 
 ## Configuration  

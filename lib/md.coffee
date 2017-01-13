@@ -694,6 +694,77 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
   {content: inputString, table: ''}
 
 ###
+update editor toc
+return true if toc is updated
+###
+updateTOC = (markdownPreview, tocConfigs)->
+  return false if !markdownPreview or tocConfigs.tocStartLine_s.length != tocConfigs.tocEndLine_s.length
+
+  equal = (arr1, arr2)->
+    return false if arr1.length != arr2.length
+    i = 0
+    while i < arr1.length
+      if arr1[i] != arr2[i]
+        return false
+      i += 1
+    return true
+
+  tocNeedUpdate = false
+  if !markdownPreview.tocConfigs
+    tocNeedUpdate = true
+  else if !equal(markdownPreview.tocConfigs.tocOrdered_s, tocConfigs.tocOrdered_s) or !equal(markdownPreview.tocConfigs.tocDepthFrom_s, tocConfigs.tocDepthFrom_s) or !equal(markdownPreview.tocConfigs.tocDepthTo_s, tocConfigs.tocDepthTo_s)
+    tocNeedUpdate = true
+  else
+    headings = tocConfigs.headings
+    headings2 = markdownPreview.tocConfigs.headings
+    if headings.length != headings2.length
+      tocNeedUpdate = true
+    else
+      for i in [0...headings.length]
+        if headings[i].content != headings2[i].content or headings[i].level != headings2[i].level
+          tocNeedUpdate = true
+          break
+
+  if tocNeedUpdate
+    editor = markdownPreview.editor
+    buffer = editor.buffer
+    tab = editor.getTabText() or '\t'
+
+    headings = tocConfigs.headings
+    tocOrdered_s = tocConfigs.tocOrdered_s
+    tocDepthFrom_s = tocConfigs.tocDepthFrom_s
+    tocDepthTo_s = tocConfigs.tocDepthTo_s
+    tocStartLine_s = tocConfigs.tocStartLine_s
+    tocEndLine_s = tocConfigs.tocEndLine_s
+
+    if buffer
+      i = 0
+      delta = 0
+      while i < tocOrdered_s.length
+        tocOrdered = tocOrdered_s[i]
+        tocDepthFrom = tocDepthFrom_s[i]
+        tocDepthTo = tocDepthTo_s[i]
+        tocStartLine = tocStartLine_s[i] + delta
+        tocEndLine = tocEndLine_s[i] + delta
+
+        tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo, tab})
+
+        buffer.setTextInRange([[tocStartLine+1, 0], [tocEndLine, 0]], '\n\n\n')
+        buffer.insert([tocStartLine+2, 0], tocObject.content)
+
+        delta += (tocStartLine + tocObject.array.length + 3 - tocEndLine)
+
+        markdownPreview.parseDelay = Date.now() + 500 # prevent render again
+        markdownPreview.editorScrollDelay = Date.now() + 500
+        markdownPreview.previewScrollDelay = Date.now() + 500
+
+        i += 1
+
+  markdownPreview.tocConfigs = tocConfigs
+  return tocNeedUpdate
+
+
+###
 # parse markdown content to html
 
 inputString:         string, required
@@ -713,17 +784,17 @@ option = {
 parseMD = (inputString, option={})->
   {markdownPreview} = option
 
-  headings = []
-
   # toc
-  tocNeedUpdate = false
   tocTable = {} # eliminate repeated slug
   tocEnabled = false
-  tocStartLine = -1
-  tocEndLine = -1
-  tocOrdered = false
-  tocDepthFrom = 1 # [1-6] depth
-  tocDepthTo = 6
+  tocConfigs = {
+    headings: [],
+    tocStartLine_s: [],
+    tocEndLine_s: [],
+    tocOrdered_s: [],
+    tocDepthFrom_s: [],
+    tocDepthTo_s: []
+  }
 
   # slide
   slideConfigs = []
@@ -767,8 +838,8 @@ parseMD = (inputString, option={})->
       else
         tocTable[id] = 0
 
-      if !tocNeedUpdate and !(tokens[idx-1]?.subject == 'untoc')
-        headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
+      if !(tokens[idx-1]?.subject == 'untoc')
+        tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
 
     id = if id then "id=#{id}" else ''
     if tokens[idx].lines
@@ -785,22 +856,20 @@ parseMD = (inputString, option={})->
       return '<div class="pagebreak"> </div>'
     else if subject == 'toc'
       tocEnabled = true
-      if tocStartLine == -1
-        tocStartLine = tokens[idx].line
 
-        opt = tokens[idx].option
-        if opt.orderedList and opt.orderedList != 0
-          tocOrdered = true
+      tocConfigs.tocStartLine_s.push tokens[idx].line
 
-        tocDepthFrom = opt.depthFrom || 1
-        tocDepthTo = opt.depthTo || 6
+      opt = tokens[idx].option
+      if opt.orderedList and opt.orderedList != 0
+        tocConfigs.tocOrdered_s.push true
       else
-        throw 'Only one toc is supported'
+        tocConfigs.tocOrdered_s.push false
+
+      tocConfigs.tocDepthFrom_s.push opt.depthFrom || 1
+      tocConfigs.tocDepthTo_s.push opt.depthTo || 6
+
     else if (subject == 'tocstop')
-      if tocEndLine == -1
-        tocEndLine = tokens[idx].line
-      else
-        throw "Only one toc is supported"
+      tocConfigs.tocEndLine_s.push tokens[idx].line
     else if subject == 'slide'
       opt = tokens[idx].option
       opt.line = tokens[idx].line
@@ -808,65 +877,11 @@ parseMD = (inputString, option={})->
       return '<div class="new-slide"></div>'
     return ''
 
-
+  # parse markdown
   html = md.render(inputString)
 
-  # check toc update
-  if markdownPreview and tocEnabled
-    oldHeadingsLength = markdownPreview.headings.length
-    newHeadingsLength = headings.length
-    if tocStartLine >= 0 and tocEndLine == -1
-      tocNeedUpdate = true
-    else if markdownPreview.headings == headings
-      tocNeedUpdate = false
-    else if oldHeadingsLength != newHeadingsLength
-      tocNeedUpdate = true
-    else
-      for i in [0...headings.length]
-        if markdownPreview.headings[i].content != headings[i].content or markdownPreview.headings[i].level != headings[i].level
-          tocNeedUpdate = true
-          break
-
-    if markdownPreview.tocOrdered != tocOrdered or markdownPreview.tocDepthFrom != tocDepthFrom or markdownPreview.tocDepthTo != tocDepthTo
-      markdownPreview.tocOrdered = tocOrdered
-      markdownPreview.tocDepthFrom = tocDepthFrom
-      markdownPreview.tocDepthTo = tocDepthTo
-      tocNeedUpdate = true
-
-    editor = markdownPreview.editor
-    if tocNeedUpdate and editor
-      tocObject = toc(headings, {ordered: tocOrdered, depthFrom: tocDepthFrom, depthTo: tocDepthTo})
-      buffer = editor.buffer
-      if buffer
-        if tocEndLine == -1
-          tocEndLine = tocStartLine + 1
-          buffer.insert([tocStartLine+1, 0], '<!-- tocstop -->\n')
-
-        buffer.setTextInRange([[tocStartLine+1, 0], [tocEndLine, 0]], '\n\n\n')
-        buffer.insert([tocStartLine+2, 0], tocObject.content)
-
-        # parse markdown content again
-        tocTable = {}
-        tocEnabled = false
-        tocStartLine = -1
-        tocEndLine = -1
-
-        # reset globalMathTypesettingData
-        if mathRenderingOption == 'KaTeX'
-          globalMathTypesettingData.katex_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('katex-exps')
-        else if mathRenderingOption == 'MathJax'
-          globalMathTypesettingData.mathjax_s = Array.prototype.slice.call markdownPreview.getElement().getElementsByClassName('mathjax-exps')
-
-        slideConfigs = []
-
-        markdownPreview.parseDelay = Date.now() + 500 # prevent render again
-        markdownPreview.editorScrollDelay = Date.now() + 500
-        markdownPreview.previewScrollDelay = Date.now() + 500
-
-        {content:inputString} = processFrontMatter(editor.getText(), option.hideFrontMatter)
-        html = md.render(inputString)
-
-  markdownPreview?.headings = headings
+  if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
+    return parseMD(markdownPreview.editor.getText(), option)
 
   html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
   return {html: frontMatterTable+html, slideConfigs, yamlConfig}

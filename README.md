@@ -11,15 +11,15 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 <!-- toc orderedList:0 -->
 
-- [Markdown Preview Enhanced](#markdown-preview-enhanced)
-	- [Features](#features)
-	- [How it works](#how-it-works)
-	- [Usages](#usages)
-	- [Preview Context Menu](#preview-context-menu)
-	- [Extra](#extra)
-	- [For Developer](#for-developer)
-	- [Thanks](#thanks)
-	- [TODO](#todo)
+* [Markdown Preview Enhanced](#markdown-preview-enhanced)
+	* [Features](#features)
+	* [How it works](#how-it-works)
+	* [Usages](#usages)
+	* [Preview Context Menu](#preview-context-menu)
+	* [Extra](#extra)
+	* [For Developer](#for-developer)
+	* [Thanks](#thanks)
+	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
@@ -37,6 +37,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
 - export beautiful **HTML** (mobile device supported)  
+- compile to **Markdown**
 - customize Markdown Preview css  
 - [TOC](./docs/toc.md) generation **(beta)**  
 - Flowchart / Sequence diagram
@@ -79,8 +80,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.  
   - if you didn't see `markdown-preview-enhanced-custom` section in `style.less` file, you may need to run `Markdown Preview Enhanced: Customize CSS` command first.
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
-  - Generate TOC. [doc is here](./docs/toc.md).    
-	 or simply insert ` <!-- toc -->` in editor (need preview toggled).
+  - Generate TOC (need preview toggled). [doc is here](./docs/toc.md).    
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - Enable/Disable scroll sync for preview.
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
@@ -109,6 +109,8 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 	- Export **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** etc files.
 - **Pandoc Document Export**
 	- [doc](./docs/advanced-export.md)
+- **Save as Markdown**
+	- [doc](./docs/markdown.md)
 
 ## Extra
 * **Code Chunks** [doc](./docs/code-chunk.md)

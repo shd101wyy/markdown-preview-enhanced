@@ -2,12 +2,12 @@
 
 <!-- toc orderedList:0 -->
 
-- [RTF Document](#rtf-document)
-	- [Overview](#overview)
-	- [Export Path](#export-path)
-	- [Table of Contents](#table-of-contents)
-	- [Pandoc Arguments](#pandoc-arguments)
-	- [Shared Options](#shared-options)
+* [RTF Document](#rtf-document)
+	* [Overview](#overview)
+	* [Export Path](#export-path)
+	* [Table of Contents](#table-of-contents)
+	* [Pandoc Arguments](#pandoc-arguments)
+	* [Shared Options](#shared-options)
 
 <!-- tocstop -->
 

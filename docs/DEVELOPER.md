@@ -17,3 +17,8 @@ apm develop markdown-preview-enhanced
 * Open **markdown-preview-enhanced** folder in **Atom Editor** from **View->Developer->Open in Dev Mode...**
 * Then you can modify the code.
 Every time after you update the code, you need to `cmd+shift+p` then choose `Window: Reload` to reload the package to see the update.
+
+---
+
+## Write Extension
+How to write extensions can be found [here](./extension.md).

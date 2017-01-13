@@ -19,6 +19,10 @@
       'label': 'Pandoc'
       'command': 'markdown-preview-enhanced:pandoc-document-export'
     }
+    {
+      'label': 'Save as Markdown'
+      'command': 'markdown-preview-enhanced:save-as-markdown'
+    }
   ]
 'menu': [
   {

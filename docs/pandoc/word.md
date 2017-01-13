@@ -2,13 +2,13 @@
 
 <!-- toc orderedList:0 -->
 
-- [Word Document](#word-document)
-	- [Overview](#overview)
-	- [Export Path](#export-path)
-	- [Syntax Highlighting](#syntax-highlighting)
-	- [Style Reference](#style-reference)
-	- [Pandoc Arguments](#pandoc-arguments)
-	- [Shared Options](#shared-options)
+* [Word Document](#word-document)
+	* [Overview](#overview)
+	* [Export Path](#export-path)
+	* [Syntax Highlighting](#syntax-highlighting)
+	* [Style Reference](#style-reference)
+	* [Pandoc Arguments](#pandoc-arguments)
+	* [Shared Options](#shared-options)
 
 <!-- tocstop -->
 

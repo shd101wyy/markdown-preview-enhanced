@@ -3,18 +3,23 @@ presentation:
   width: 960
   height: 700
   help: true
+  enableSpeakerNotes: true
 ---
 
-<!-- slide -->
+<!-- slide data-notes:"Congrats! You just opened speaker notes" -->
 # Presentation Writer (Beta)
 by **Markdown Preview Enhanced**  
 powered by [reveal.js](https://github.com/hakimel/reveal.js)  
 <br>
-<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>
+<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>  
+<p style="font-size: 18px;">press <kbd>s</kbd> key to open note window.</p>
 
 <!-- slide -->
 You can easily create beautiful presentation by running command   
 <center> `Markdown Preview Enhanced: Insert New Slide` </center>  
+<aside class="notes">
+    Pretty cool haha ;)
+</aside>
 
 <!-- slide -->
 Just like this  
@@ -37,10 +42,41 @@ f(x) = \int_{-\infty}^\infty
     \,d\xi
 $$
 
+<!-- slide -->   
+You can set initialization config for your presentation.  
+Just add front-matter to your presentation markdown file.  
+```yaml
+---
+presentation:
+  width: 800
+  height: 600
+  controls: false
+---
+```
+More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-front-matter.md).
+
+<!-- slide data-notes:"This is speaker note"-->  
+**Speaker notes** is also supported.  
+Press the <kbd>s</kbd> key on your keyboard to open the notes window.  
+
+To enable speaker notes, set front-matter as:  
+```yaml  
+---
+presentation:
+  enableSpeakerNotes: true
+---
+```  
+To add notes, simply set `data-notes` property:
+```html
+<!-- slide data-notes:"Write your note here" -->
+```
+check [Reveal.js Speaker Notes](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
+
+
 <!-- slide vertical:true -->
 By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical:true`.  
 For example:  
-```
+```html
 <!-- slide vertical:true -->
 ```  
 
@@ -50,7 +86,7 @@ You just discovered a vertical slide!
 <!-- slide -->
 You can set slide background very easily.   
 For example:
-```
+```html
 <!-- slide data-background-color:"#ff0000" -->
 ```
 
@@ -108,19 +144,6 @@ right clicking at the preview, then choose `Open in Browser` option.
 
 <!-- slide -->
 **Markdown Preview Enhanced** can also generate beautiful **HTML** or **PDF** files for your presentation.
-
-<!-- slide -->   
-You can also set initialization config for your presentation.  
-Just add front-matter to your presentation markdown file.  
-```yaml
----
-presentation:
-  width: 800
-  height: 600
-  controls: false
----
-```
-More information about front-matter settings can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-front-matter.md).
 
 <!-- slide -->  
 #### Star this project if you like it ;)    

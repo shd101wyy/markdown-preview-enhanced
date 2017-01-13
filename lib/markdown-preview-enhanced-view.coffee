@@ -1,4 +1,4 @@
-{Emitter, CompositeDisposable, File} = require 'atom'
+{Emitter, CompositeDisposable, File, Directory} = require 'atom'
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 path = require 'path'
 fs = require 'fs'
@@ -12,9 +12,9 @@ plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 pandocConvert = require './pandoc-wrapper'
+markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
-
-codeChunksDataCache = {} # key is @editor.getFilePath(), value is @codeChunksData
+CACHE = require './cache'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -26,7 +26,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
 
-    @headings = []
+    @tocConfigs = null
     @scrollMap = null
     @rootDirectoryPath = null
     @projectDirectoryPath = null
@@ -73,7 +73,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:open-in-browser': => @openInBrowser()
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
+      'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
       'core:copy': => @copyToClipboard()
+
+    # init settings
+    @settingsDisposables = new CompositeDisposable()
+    @initSettingsEvents()
 
   @content: ->
     @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, =>
@@ -114,6 +119,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
   updateTabTitle: ->
     @setTabTitle(@getTitle())
 
+  setMermaidTheme: (mermaidTheme)->
+    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme), {encoding: 'utf-8'}).toString()
+    mermaidStyle = document.getElementById('mermaid-style')
+
+    if mermaidStyle
+      mermaidStyle.remove()
+
+    mermaidStyle = document.createElement('style')
+    mermaidStyle.id = 'mermaid-style'
+    document.getElementsByTagName('head')[0].appendChild(mermaidStyle)
+
+    mermaidStyle.innerHTML = mermaidThemeStyle
+
+    # render mermaid graphs again
+    # els = @element.getElementsByClassName('mermaid')
+    @graphData?.mermaid_s = []
+    @renderMarkdown()
+
   bindEditor: (editor)->
     if not @editor
       atom.workspace
@@ -127,10 +150,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
             , 0)
 
     else
-      @element.innerHTML = '<p style="font-size: 24px;"> loading preview... </p>'
+      # save cache
+      CACHE[@editor.getPath()] = {
+        html: @element?.innerHTML or '',
+        codeChunksData: @codeChunksData,
+        graphData: @graphData,
+        presentationMode: @presentationMode,
+        slideConfigs: @slideConfigs
+      }
 
-      # save codeChunksDataCache
-      codeChunksDataCache[@editor.getPath()] = @codeChunksData || {}
+      # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
 
       setTimeout(()=>
         @initEvents(editor)
@@ -145,7 +174,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
-    @headings = []
+    @tocConfigs = null
     @scrollMap = null
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
@@ -155,13 +184,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @disposables.dispose()
     @disposables = new CompositeDisposable()
 
-    # restore codeChunksData if already in cache
-    if codeChunksDataCache[@editor.getPath()]
-      @codeChunksData = codeChunksDataCache[@editor.getPath()]
-
     @initEditorEvent()
     @initViewEvent()
-    @initSettingsEvents()
+
+    # restore preview
+    d = CACHE[@editor.getPath()]
+    if d
+      @element.innerHTML = d.html
+      @graphData = d.graphData
+      @codeChunksData = d.codeChunksData
+      @presentationMode = d.presentationMode
+      @slideConfigs = d.slideConfigs
+
+      if @presentationMode
+        @element.setAttribute 'data-presentation-preview-mode', ''
+      else
+        @element.removeAttribute 'data-presentation-preview-mode'
+
+      @setInitialScrollPos()
+      # console.log 'restore ' + @editor.getPath()
+    else
+      @renderMarkdown()
+    @scrollMap = null
 
   initEditorEvent: ->
     editorElement = @editor.getElement()
@@ -276,7 +320,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initSettingsEvents: ->
     # settings changed
     # github style?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
       (useGitHubStyle) =>
         if useGitHubStyle
           @element.setAttribute('data-use-github-style', '')
@@ -284,7 +328,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @element.removeAttribute('data-use-github-style')
 
     # github syntax theme
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
       (useGitHubSyntaxTheme)=>
         if useGitHubSyntaxTheme
           @element.setAttribute('data-use-github-syntax-theme', '')
@@ -292,28 +336,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @element.removeAttribute('data-use-github-syntax-theme')
 
     # break line?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
       (breakOnSingleNewline)=>
         @parseDelay = Date.now() # <- fix 'loading preview' stuck bug
         @renderMarkdown()
 
     # typographer?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.enableTypographer',
       (enableTypographer)=>
         @renderMarkdown()
 
     # liveUpdate?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
       (flag) => @liveUpdate = flag
 
     # scroll sync?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
       (flag) =>
         @scrollSync = flag
         @scrollMap = null
 
     # scroll duration
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.scrollDuration', (duration)=>
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.scrollDuration', (duration)=>
       duration = parseInt(duration) or 0
       if duration < 0
         @scrollDuration = 120
@@ -321,19 +365,28 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollDuration = duration
 
     # math?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mathRenderingOption',
       (option) =>
         @mathRenderingOption = option
         @renderMarkdown()
 
     # mermaid theme
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
       (theme) =>
-        @element.setAttribute 'data-mermaid-theme', theme
+        @setMermaidTheme theme # hack to solve https://github.com/exupero/saveSvgAsPng/issues/128 problem
+        # @element.setAttribute 'data-mermaid-theme', theme
 
     # render front matter as table?
-    @disposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', (theme) =>
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
+
+    # show back to top button?
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.showBackToTopButton', (flag)=>
+      @showBackToTopButton = flag
+      if flag
+        @addBackToTopButton()
+      else
+        document.getElementsByClassName('back-to-top-btn')[0]?.remove()
 
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
@@ -447,6 +500,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
 
+    @setInitialScrollPos()
+    @addBackToTopButton()
+
+  setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
       @firstTimeRenderMarkdowon = false
       cursor = @editor.cursors[0]
@@ -458,6 +515,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollDuration = 0
         @scrollSyncToLineNo cursor.getScreenRow()
         @scrollDuration = t
+
+  addBackToTopButton: ->
+    # TODO: check config
+
+    # add back to top button #222
+    if @showBackToTopButton and @element.scrollHeight > @element.offsetHeight
+      backToTopBtn = document.createElement('div')
+      backToTopBtn.classList.add('back-to-top-btn')
+      backToTopBtn.classList.add('btn')
+      backToTopBtn.innerHTML = '<span>⬆︎</span>'
+      @element.appendChild(backToTopBtn)
+
+      backToTopBtn.onclick = ()=>
+        @element.scrollTop = 0
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -744,17 +815,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       for el in els
         if el.getAttribute('data-processed') != 'true'
           try
-            dotSrc = el.getAttribute('data-original')
+            content = el.getAttribute('data-original')
+            options = {}
 
-            isHasEngine = (dotSrc.indexOf 'engine', 0) >= 0
-            options = {engine: 'dot'}
-            if isHasEngine
-              lineLen = dotSrc.indexOf '\n', 0
-              engineLine = (dotSrc.substr 0, lineLen).trim()
-              dotSrc = dotSrc.substr lineLen
-              options['engine'] = (engineLine.split ":")[1].trim()
+            # check engine
+            content = content.trim().replace /^engine(\s)*[:=]([^\n]+)/, (a, b, c)->
+              options.engine = c.trim() if c?.trim() in ['circo', 'dot', 'fdp', 'neato', 'osage', 'twopi']
+              return ''
 
-            el.innerHTML = @Viz(dotSrc, options) # default svg
+            el.innerHTML = @Viz(content, options) # default svg
             el.setAttribute 'data-processed', true
           catch error
             el.innerHTML = error
@@ -867,7 +936,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this})
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
     yamlConfig = res.yamlConfig || {}
@@ -882,7 +951,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         mathStyle = "<link rel=\"stylesheet\"
               href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
-        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
       inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
       block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
@@ -915,17 +984,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       mathStyle = ''
 
-    # mermaid theme
-    mermaidTheme = atom.config.get 'markdown-preview-enhanced.mermaidTheme'
-    mermaidThemeStyle = fs.readFileSync(path.resolve(__dirname, '../dependencies/mermaid/'+mermaidTheme))
-
     # presentation
     if slideConfigs.length
       htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
       if offline
-        presentationScript = "<script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+        presentationScript = "
+        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/lib/js/head.min.js')}'></script>
+        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
       else
-        presentationScript = "<script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js'></script>"
+        presentationScript = "
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/lib/js/head.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/js/reveal.min.js'></script>"
+
+      presentationConfig = yamlConfig['presentation']
+      dependencies = presentationConfig.dependencies or []
+      if presentationConfig.enableSpeakerNotes
+        if offline
+          dependencies.push {src: path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js'), async: true}
+        else
+          dependencies.push {src: 'revealjs_deps/notes.js', async: true} # TODO: copy notes.js file to corresponding folder
+      presentationConfig.dependencies = dependencies
 
       #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
       presentationStyle = """
@@ -938,7 +1016,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       presentationInitScript = """
       <script>
-        Reveal.initialize(#{JSON.stringify(yamlConfig['presentation'])})
+        Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, presentationConfig))})
       </script>
       """
     else
@@ -968,7 +1046,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       <style>
       #{getMarkdownPreviewCSS()}
-      #{mermaidThemeStyle}
       </style>
 
       #{mathStyle}
@@ -1047,8 +1124,17 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
 
-    lastIndexOfSlash = dest.lastIndexOf '/' || 0
-    htmlFileName = dest.slice(lastIndexOfSlash + 1)
+    htmlFileName = path.basename(dest)
+
+    # presentation speaker notes
+    # copy dependency files
+    if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]')
+      depsDirName = path.resolve(path.dirname(dest), 'revealjs_deps')
+      depsDir = new Directory(depsDirName)
+      depsDir.create().then (flag)->
+        true
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
+        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
 
     destFile = new File(dest)
     destFile.create().then (flag)->
@@ -1084,11 +1170,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       iframeString = ''
       if slideConfig['data-background-image']
         styleString += "background-image: url('#{@resolveFilePath(slideConfig['data-background-image'])}');"
-
-        if slideConfig['data-background-size']
-          styleString += "background-size: #{slideConfig['data-background-size']};"
-        else
-          styleString += "background-size: cover;"
 
         if slideConfig['data-background-size']
           styleString += "background-size: #{slideConfig['data-background-size']};"
@@ -1136,6 +1217,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       """
       offset += 1
 
+    # remove <aside class="notes"> ... </aside>
+    output = output.replace(/(<aside\b[^>]*>)[^<>]*(<\/aside>)/ig, '')
+
     """
     <div class="preview-slides">
       #{output}
@@ -1163,6 +1247,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       if slideConfig['data-background-color']
         attrString += " data-background-color='#{slideConfig['data-background-color']}'"
+
+      if slideConfig['data-notes']
+        attrString += " data-notes='#{slideConfig['data-notes']}'"
 
       if slideConfig['data-background-video']
         attrString += " data-background-video='#{@resolveFilePath(slideConfig['data-background-video'], isSavingToHTML)}'"
@@ -1449,7 +1536,7 @@ module.exports = config || {}
         mathStyle = ''
         if outputHTML.indexOf('class="katex"') > 0
           if path.extname(dest) == '.html' and ebookConfig.html?.cdn
-            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css\">"
+            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
           else
             mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
@@ -1518,6 +1605,32 @@ module.exports = config || {}
 
     pandocConvert content, this, data
 
+  ###
+  resolvePath: (src)->
+    if src.startsWith('/')
+      return path.resolve(@projectDirectoryPath, '.' + src)
+    else
+      return path.resolve(@rootDirectoryPath, src)
+  ###
+
+  saveAsMarkdown: ()->
+    {data} = @processFrontMatter(@editor.getText())
+    data = data or {}
+
+    content = @editor.getText().trim()
+    if content.startsWith('---\n')
+      end = content.indexOf('---\n', 4)
+      content = content.slice(end+4)
+
+    config = data.markdown or {}
+    if !config.image_dir
+      config.image_dir = atom.config.get('markdown-preview-enhanced.imageFolderPath')
+
+    if !config.path
+      config.path = path.basename(@editor.getPath()).replace(/\.md$/, '_.md')
+
+    markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, config
+
   copyToClipboard: ->
     return false if not @editor
 
@@ -1531,9 +1644,14 @@ module.exports = config || {}
   destroy: ->
     @element.remove()
     @editor = null
+
     if @disposables
       @disposables.dispose()
       @disposables = null
+
+    if @settingsDisposables
+      @settingsDisposables.dispose()
+      @settingsDisposables = null
 
   getElement: ->
     @element

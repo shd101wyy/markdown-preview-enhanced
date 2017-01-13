@@ -594,6 +594,24 @@
         }
       }
     }
+
+    .back-to-top-btn {
+      position: fixed;
+      display: none;
+      right: 24px;
+      top: 54px;
+    }
+
+    &:hover {
+      .back-to-top-btn {
+        display: block;
+        opacity: 0.4;
+
+        &:hover {
+          opacity: 1.0;
+        }
+      }
+    }
   }
 
   &:not([is="space-pen-div"]) {
@@ -604,6 +622,10 @@
       .status {
         display: none;
       }
+    }
+
+    .back-to-top-btn {
+      display: none;
     }
   }
 

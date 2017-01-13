@@ -3,16 +3,16 @@
 
 <!-- toc orderedList:0 -->
 
-- [Beamer Document](#beamer-document)
-	- [Overview](#overview)
-	- [Export Path](#export-path)
-	- [Incremental Bullets](#incremental-bullets)
-	- [Themes](#themes)
-	- [Table of Contents](#table-of-contents)
-	- [Slide Level](#slide-level)
-	- [Syntax Highlighting](#syntax-highlighting)
-	- [Pandoc Arguments](#pandoc-arguments)
-	- [Shared Options](#shared-options)
+* [Beamer Document](#beamer-document)
+	* [Overview](#overview)
+	* [Export Path](#export-path)
+	* [Incremental Bullets](#incremental-bullets)
+	* [Themes](#themes)
+	* [Table of Contents](#table-of-contents)
+	* [Slide Level](#slide-level)
+	* [Syntax Highlighting](#syntax-highlighting)
+	* [Pandoc Arguments](#pandoc-arguments)
+	* [Shared Options](#shared-options)
 
 <!-- tocstop -->
 
