@@ -75,9 +75,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
 
   delete(CACHE[outputFilePath])
 
-  useAbsoluteImagePath = false
-  if typeof(config.absolute_image_path) == 'undefined'
-    useAbsoluteImagePath = true
+  useAbsoluteImagePath = config.absolute_image_path
 
   # change link path to project '/' path
   # this is actually differnet from pandoc-wrapper.coffee

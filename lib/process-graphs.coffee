@@ -204,7 +204,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
         if useAbsoluteImagePath
           imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})"
         else
-          imgMd = "![](#{path.relative(rootDirectoryPath, dest)})"
+          imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})"
         imagePaths.push dest
 
         lines[start] = imgMd
@@ -228,7 +228,10 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
         if dest
           imagePaths.push dest
-          imgMd = "![](#{path.relative(rootDirectoryPath, dest)})"
+          if useAbsoluteImagePath
+            imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})"
+          else
+            imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})"
           lines[end] += ('\n' + imgMd)
 
         if data

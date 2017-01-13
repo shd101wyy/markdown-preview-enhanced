@@ -9,17 +9,17 @@ You can configure the image directory and output path by front-matter
 ```yaml
 ---
 markdown:
-  image_dir: /images
+  image_dir: /assets
   path: output.md
   absolute_image_path: true
 ---
 ```
 
-**image_dir** specifies where you want to save generated images. For example, `/images` means all images will be saved into `images` directory under project folder. If **image_dir** is not provided, the `Image save folder path` in package settings will be used.  
+**image_dir** specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image save folder path` in package settings will be used. Default is `/assets`.
 
 **path** specifies where you want to output your markdown file. If **path** is not specified, `filename_.md` will be used as destination.
 
-**absolute_image_path** determines whether to use absolute or relative image path. Default is `true`
+**absolute_image_path** determines whether to use absolute or relative image path. Default is `false`.
 
 ## Limits
 * `WaveDrom` doesn't work yet.
