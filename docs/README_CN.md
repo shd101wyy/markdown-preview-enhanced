@@ -3,7 +3,9 @@ Markdown Preview Enhanced
 测试 Beta 版本    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
-[English Doc](../README.md)  
+[English Doc](../README.md)   
+
+`0.9.0` 版本以后，**Markdown Preview Enhanced** 支持编译 markdown 到 markdown 文件。更多相关信息请查看[文档](markdown.md)。
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
@@ -133,6 +135,7 @@ Markdown Preview Enhanced
 感谢所有支持这个插件的人们！    
 
 ## TODO
+[CHANGELOG](../CHANGELOG.md)
 - [ ] fix bugs
 - [ ] modify css to make preview look nice
 - [x] ePub output

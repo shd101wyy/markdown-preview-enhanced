@@ -3,7 +3,9 @@ Markdown Preview Enhanced
 Still Beta Version!    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 
-[中文文档](./docs/README_CN.md)  
+[中文文档](./docs/README_CN.md)   
+
+After version `0.9.0`, **Markdown Preview Enhanced** supports compiling markdown to markdown file. More information can be found [here](./docs/markdown.md).  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -133,7 +135,8 @@ It is also very easy to write your own extension, more information can be found 
 ## Thanks  
 Thanks for everyone that supports this package!    
 
-## TODO
+## TODO  
+[CHANGELOG](../CHANGELOG.md)  
 - [ ] fix bugs
 - [ ] modify css to make preview look nice
 - [x] ePub output

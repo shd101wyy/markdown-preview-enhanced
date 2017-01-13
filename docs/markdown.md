@@ -1,5 +1,5 @@
 # Save as Markdown
-After version `0.9.0`, **Markdown-Preview-Enhanced** supports compilation into markdown so that the exported markdown file will include all graphs (as png images), code chunks (hide and only include results), math typesettings (show as image) etc and can be published on GitHub.
+After version `0.9.0`, **Markdown Preview Enhanced** supports compilation into markdown so that the exported markdown file will include all graphs (as png images), code chunks (hide and only include results), math typesettings (show as image) etc and can be published on GitHub.
 
 ## Usage
 Right click at the preview, then choose `Save as Markdown`.
