@@ -1135,10 +1135,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
         true
         fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
         fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
-    ###
-        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js').pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
-        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html').pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
-    ###
 
     destFile = new File(dest)
     destFile.create().then (flag)->

@@ -66,11 +66,11 @@ presentation:
   enableSpeakerNotes: true
 ---
 ```  
-To add note, simply set `data-notes` property:
+To add notes, simply set `data-notes` property:
 ```html
 <!-- slide data-notes:"Write your note here" -->
 ```
-check [Reveal.js Speaker Note](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
+check [Reveal.js Speaker Notes](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
 
 
 <!-- slide vertical:true -->
