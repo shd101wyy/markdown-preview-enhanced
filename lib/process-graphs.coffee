@@ -7,8 +7,6 @@ Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
-CACHE = require './CACHE'
-
 
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert

@@ -1,3 +1,6 @@
+## 0.9.1
+* [x] quick fix issue [#234](https://github.com/shd101wyy/markdown-preview-enhanced/issues/234)
+
 ## 0.9.0
 * [x] soft tabs (spaces of tabs) in TOC [#187](https://github.com/shd101wyy/markdown-preview-enhanced/issues/187)
 * [x] add cache support for better performance [#210](https://github.com/shd101wyy/markdown-preview-enhanced/issues/210)
