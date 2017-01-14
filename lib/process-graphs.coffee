@@ -167,6 +167,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
             outputType = options.output || 'text'
 
             if outputType == 'text'
+              # Chinese character will cause problem in pandoc
               cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data: "```\n#{data.trim()}\n```\n", cmd})
             else if outputType == 'none'
               cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, cmd})

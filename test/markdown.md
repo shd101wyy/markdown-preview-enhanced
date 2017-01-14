@@ -62,6 +62,12 @@ sequenceDiagram
     Bob-->John: Jolly good!
 ```
 
+```{puml}
+class A {
+  + init();
+}
+```
+
 ## Code Chunk
 ```{gnuplot output:"html", hide:true, id:"iurp4ovh"}
 set term svg
@@ -83,8 +89,6 @@ plot [-10:10] [-5:3] \
 A --> B
 @enduml
 ```
-
-
 
 ## Typographic replacements
 

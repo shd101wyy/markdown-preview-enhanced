@@ -27,18 +27,18 @@ is given by the formula
 <p align="center"><img src="http://api.gmath.guru/cgi-bin/gmath?%20%5Cchi%28%5Clambda%29%20%3D%20%5Cleft%7C%20%5Cbegin%7Barray%7D%7Bccc%7D%5Clambda%20-%20a%20%26%20-b%20%26%20-c%20%5C%5C-d%20%26%20%5Clambda%20-%20e%20%26%20-f%20%5C%5C-g%20%26%20-h%20%26%20%5Clambda%20-%20i%20%5Cend%7Barray%7D%20%5Cright%7C"/></p>
 
 ## Graphs
-![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md0.png?0.6236501879181151)
+![](../images/14a74c04e7ac28c07c91de04db868473d1dc0daf33c2caa42287902ffe6deed73fcf295164e511abdce713236952cb0b5d149f3cd94fd06ca078d552040db58685100a6ebe4d76ca0.png?0.07428924465078035)
 
-![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md1.png?0.6934458405759134)
+![](../images/14a74c04e7ac28c07c91de04db868473d1dc0daf33c2caa42287902ffe6deed73fcf295164e511abdce713236952cb0b5d149f3cd94fd06ca078d552040db58685100a6ebe4d76ca1.png?0.37329698508835873)
+
+![](../images/14a74c04e7ac28c07c91de04db868473d1dc0daf33c2caa42287902ffe6deed73fcf295164e511abdce713236952cb0b5d149f3cd94fd06ca078d552040db58685100a6ebe4d76ca3.png?0.10402723405587899)
 
 ## Code Chunk
 
-![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md2.png?0.6109905804763072)
+![](../images/14a74c04e7ac28c07c91de04db868473d1dc0daf33c2caa42287902ffe6deed73fcf295164e511abdce713236952cb0b5d149f3cd94fd06ca078d552040db58685100a6ebe4d76ca2.png?0.4477329568728097)
 
 
-![](../images/_ss_Users_ss_wangyiyi_ss_github_ss_markdown-preview-enhanced_ss_test_ss_markdown_output.md3.png?0.38701134894599165)
-
-
+![](../images/14a74c04e7ac28c07c91de04db868473d1dc0daf33c2caa42287902ffe6deed73fcf295164e511abdce713236952cb0b5d149f3cd94fd06ca078d552040db58685100a6ebe4d76ca4.png?0.07815244702461621)
 
 ## Typographic replacements
 
