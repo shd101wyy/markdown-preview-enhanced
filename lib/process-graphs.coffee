@@ -167,7 +167,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
             outputType = options.output || 'text'
 
             if outputType == 'text'
-              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data: "```\n#{data.trim()}\n```\n", cmd})
+              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data: "<pre>#{data.trim()}</pre>", cmd})
             else if outputType == 'none'
               cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, cmd})
             else if outputType == 'html'
