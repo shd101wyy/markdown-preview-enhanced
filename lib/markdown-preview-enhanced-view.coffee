@@ -11,7 +11,7 @@ katex = require 'katex'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
-pandocConvert = require './pandoc-wrapper'
+pandocConvert = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
@@ -634,7 +634,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
 
-    cmd =  options.cmd || codeChunk.getAttribute('data-lang')
+    cmd =  options.cmd or codeChunk.getAttribute('data-lang')
 
     # check id and save outputDiv to @codeChunksData
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
@@ -939,7 +939,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
-    yamlConfig = res.yamlConfig || {}
+    yamlConfig = res.yamlConfig or {}
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
@@ -996,7 +996,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/lib/js/head.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/js/reveal.min.js'></script>"
 
-      presentationConfig = yamlConfig['presentation']
+      presentationConfig = yamlConfig['presentation'] or {}
       dependencies = presentationConfig.dependencies or []
       if presentationConfig.enableSpeakerNotes
         if offline
@@ -1082,7 +1082,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # get orientation
     landscape = atom.config.get('markdown-preview-enhanced.orientation') == 'landscape'
 
-    lastIndexOfSlash = dest.lastIndexOf '/' || 0
+    lastIndexOfSlash = dest.lastIndexOf '/' or 0
     pdfName = dest.slice(lastIndexOfSlash + 1)
 
     win.webContents.on 'did-finish-load', ()=>
@@ -1155,8 +1155,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     if yamlConfig and yamlConfig['presentation']
       presentationConfig = yamlConfig['presentation']
-      width = presentationConfig['width'] || 960
-      height = presentationConfig['height'] || 700
+      width = presentationConfig['width'] or 960
+      height = presentationConfig['height'] or 700
 
     ratio = height / width * 100 + '%'
     zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
@@ -1308,7 +1308,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
     try
       delete require.cache[require.resolve(configPath)] # return uncached
-      return require(configPath) || {}
+      return require(configPath) or {}
     catch error
       configFile = new File(configPath)
       configFile.create().then (flag)->
@@ -1382,7 +1382,7 @@ module.exports = config || {}
           atom.notifications.addError err
         # open pdf
         else
-          lastIndexOfSlash = dest.lastIndexOf '/' || 0
+          lastIndexOfSlash = dest.lastIndexOf '/' or 0
           fileName = dest.slice(lastIndexOfSlash + 1)
 
           atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
@@ -1531,7 +1531,7 @@ module.exports = config || {}
 
         useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
 
-        title = ebookConfig.title || 'no title'
+        title = ebookConfig.title or 'no title'
 
         mathStyle = ''
         if outputHTML.indexOf('class="katex"') > 0

@@ -136,7 +136,7 @@ It is also very easy to write your own extension, more information can be found 
 Thanks for everyone that supports this package!    
 
 ## TODO  
-[CHANGELOG](../CHANGELOG.md)  
+[CHANGELOG](./CHANGELOG.md)  
 - [ ] fix bugs
 - [ ] modify css to make preview look nice
 - [x] ePub output

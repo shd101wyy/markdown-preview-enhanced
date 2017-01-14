@@ -8,10 +8,11 @@ plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 processGraphs = require './process-graphs'
+encrypt = require './encrypt'
 CACHE = require './cache'
 
 # TODO: refactor this file
-# it has common functions as pandoc-wrapper.coffee
+# it has common functions as pandoc-convert.coffee
 
 processMath = (text)->
   text = text.replace(/\\\$/g, '#slash_dollarsign#')
@@ -87,7 +88,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   useAbsoluteImagePath = config.absolute_image_path
 
   # change link path to project '/' path
-  # this is actually differnet from pandoc-wrapper.coffee
+  # this is actually differnet from pandoc-convert.coffee
   text = processPaths text, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath
 
   text = processMath text
@@ -104,7 +105,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   imageDir.create().then (flag)->
 
     # mermaid / viz / wavedrom graph
-    processGraphs text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: outputFilePath, useAbsoluteImagePath}, (text, imagePaths=[])->
+    processGraphs text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: encrypt(outputFilePath), useAbsoluteImagePath}, (text, imagePaths=[])->
       fs.writeFile outputFilePath, text, (err)->
         return atom.notifications.addError('failed to generate markdown') if err
         atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
