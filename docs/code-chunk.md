@@ -23,7 +23,7 @@ To enable code chunk highlighting, install [language-gfm-enhanced](https://atom.
     ls .
     ```
 
-    ```{node}
+    ```{javascript cmd:"node"}
     var date = Date.now()
     console.log(date.toString())
     ```   

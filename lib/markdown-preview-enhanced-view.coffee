@@ -207,6 +207,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # reset back to top button onclick event
       document.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
         @element.scrollTop = 0
+
+      # reset code chunks
+      @setupCodeChunks()
+
+      # render plantuml in case
+      @renderPlantUML()
     else
       @renderMarkdown()
     @scrollMap = null
