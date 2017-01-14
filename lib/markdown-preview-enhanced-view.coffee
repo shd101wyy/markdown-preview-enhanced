@@ -203,6 +203,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       @setInitialScrollPos()
       # console.log 'restore ' + @editor.getPath()
+
+      # reset back to top button onclick event
+      document.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
+        @element.scrollTop = 0
     else
       @renderMarkdown()
     @scrollMap = null
