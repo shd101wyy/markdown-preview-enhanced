@@ -6,6 +6,7 @@ temp = require('temp').track()
 {exec} = require 'child_process'
 pdf = require 'html-pdf'
 katex = require 'katex'
+matter = require('gray-matter')
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -1633,6 +1634,9 @@ module.exports = config || {}
 
     if !config.path
       config.path = path.basename(@editor.getPath()).replace(/\.md$/, '_.md')
+
+    if config.front_matter
+      content = matter.stringify(content, config.front_matter)
 
     markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, config
 

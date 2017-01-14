@@ -1,7 +1,8 @@
 ## 0.9.3
 * [x] fix issue, 中文，日文 file image path error. [#236](https://github.com/shd101wyy/markdown-preview-enhanced/issues/236)
 * [x] fix issue [#237](https://github.com/shd101wyy/markdown-preview-enhanced/issues/237)  
-* [x] fix back to top button and code chunks run btn `onclick` event after restoring CACHE. 
+* [x] fix back to top button and code chunks run btn `onclick` event after restoring CACHE.
+* [x] save as markdown `front_matter` config.
 
 ## 0.9.2
 * [x] quick fix issue [#223](https://github.com/shd101wyy/markdown-preview-enhanced/issues/223)  
