@@ -59,16 +59,16 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram.  
-	- code block within `{mermaid}` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
+	- code block with `{mermaid}` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
 	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
-	- code block within `{puml}` or `{plantuml}` notation will be rendered by [PlantUML](http://plantuml.com/).  
+	- code block with `{puml}` or `{plantuml}` notation will be rendered by [PlantUML](http://plantuml.com/).  
 - [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
-	- code block within `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
+	- code block with `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
-	- code block within `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
+	- code block with `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
     - add `engine:[engine_name]` at the first line of code block to choose different render engine.  
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
