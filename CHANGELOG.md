@@ -1,3 +1,6 @@
+## 0.9.4  
+* [x] fix issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
+
 ## 0.9.3
 * [x] fix issue, 中文，日文 file image path error. [#236](https://github.com/shd101wyy/markdown-preview-enhanced/issues/236)
 * [x] fix issue [#237](https://github.com/shd101wyy/markdown-preview-enhanced/issues/237)  

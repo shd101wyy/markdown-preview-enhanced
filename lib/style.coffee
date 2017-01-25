@@ -22,7 +22,8 @@ getReplacedTextEditorStyles = ()->
     if styles[i].indexOf('atom-text-editor') >= 0
       output.push(styles[i]
                     .replace(/atom-text-editor/g, '.markdown-preview-enhanced pre')
-                    .replace(/:host/g, '.markdown-preview-enhanced .host'))
+                    .replace(/:host/g, '.markdown-preview-enhanced .host')
+                    .replace(/syntax\-\-/g, ''))
 
   return output.join('\n')
 
