@@ -140,13 +140,16 @@ module.exports = MarkdownPreviewEnhanced =
       @katexStyle.href = path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')
       document.getElementsByTagName('head')[0].appendChild(@katexStyle)
 
-      textEditorStyle = document.createElement('style')
-      textEditorStyle.innerHTML = getReplacedTextEditorStyles()
-      textEditorStyle.setAttribute('for', 'markdown-preview-enhanced')
-
-      head = document.getElementsByTagName('head')[0]
-      atomStyles = document.getElementsByTagName('atom-styles')[0]
-      head.insertBefore(textEditorStyle, atomStyles)
+      @subscriptions.add atom.config.observe 'core.themes', ()->
+        textEditorStyle = document.getElementById('markdown-preview-enhanced-syntax-style')
+        if !textEditorStyle
+          textEditorStyle = document.createElement('style')
+          textEditorStyle.id = 'markdown-preview-enhanced-syntax-style'
+          textEditorStyle.setAttribute('for', 'markdown-preview-enhanced')
+          head = document.getElementsByTagName('head')[0]
+          atomStyles = document.getElementsByTagName('atom-styles')[0]
+          head.insertBefore(textEditorStyle, atomStyles)
+        textEditorStyle.innerHTML = getReplacedTextEditorStyles()
 
   customizeCSS: ()->
     atom.workspace

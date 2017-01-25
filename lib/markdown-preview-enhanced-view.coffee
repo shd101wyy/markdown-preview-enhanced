@@ -1287,18 +1287,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if !slideConfig['vertical']
         if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
           output += '</section>'
-        output += "<section #{attrString}>#{slide}</section>"
-        i += 1
-      else # vertical
-        if i > 0
-          if !slideConfigs[i-1]['vertical'] # start of vertical slides
-            output += "<section><section #{attrString}>#{slide}</section>"
-          else
-            output += "<section #{attrString}>#{slide}</section>"
-        else
-          output += "<section><section #{attrString}>#{slide}</section>"
+        if i < slides.length - 1 and slideConfigs[i+1]['vertical'] # start of vertical slides
+          output += "<section>"
 
-        i += 1
+      output += "<section #{attrString}>#{slide}</section>"
+      i += 1
 
     if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
       output += "</section>"

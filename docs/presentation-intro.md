@@ -73,7 +73,7 @@ To add notes, simply set `data-notes` property:
 check [Reveal.js Speaker Notes](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
 
 
-<!-- slide vertical:true -->
+<!-- slide -->
 By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical:true`.  
 For example:  
 ```html
