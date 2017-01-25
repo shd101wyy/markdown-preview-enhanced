@@ -45,6 +45,7 @@ getMarkdownPreviewCSS = ()->
           .join('\n')
           .replace(/atom-text-editor/g, 'pre.editor-colors')
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
+          .replace(/syntax\-\-/g, '')
 
 module.exports = {
   getTextEditorStyles
