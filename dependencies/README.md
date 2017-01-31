@@ -3,7 +3,7 @@ I managed many libraries by myself instead of through npm to reduce overall file
 **Versions**
 ```json
 {
-    "mermaid": "6.0.0",
+    "mermaid": "7.0.0",
     "plantuml": "8048",
     "wavedrom": "1.4.1",
     "reveal": "3.4.0",
