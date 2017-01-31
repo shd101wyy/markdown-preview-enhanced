@@ -1,6 +1,7 @@
 ## 0.9.5  
 * [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  
-* [x] upgrade `reveal.js` to `1.4.1`. 
+* [x] upgrade `reveal.js` to `1.4.1`.
+* [x] upgrade `katex` to `0.7.1`, fix cdn.js issue.
 
 ## 0.9.4  
 * [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
