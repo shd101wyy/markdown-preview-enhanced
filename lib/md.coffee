@@ -602,7 +602,9 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
-      if mermaidAPI.parse(text.trim())
+      element = graphData.mermaid_s?[0]
+      # prevent mermaidAPI.parse if content not changed
+      if (element && element.getAttribute('data-processed') == 'true' && element.getAttribute('data-original') == text) or mermaidAPI.parse(text.trim())
         checkGraph 'mermaid', graphData.mermaid_s, preElement, text, option, $, mermaidOffset
 
         mermaidOffset += 1
