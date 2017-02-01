@@ -5,6 +5,7 @@
 * [x] upgrade `plantuml` to version `8054`.
 * [x] upgrade `viz.js` to version `1.7.0`, could be buggy though.
 * [x] partially fixed issue [#248](https://github.com/shd101wyy/markdown-preview-enhanced/issues/248). But can't navigate to anchor.   
+* [x] better support for zen mdoe. 
 
 ## 0.9.4  
 * [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
