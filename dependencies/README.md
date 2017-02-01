@@ -3,11 +3,11 @@ I managed many libraries by myself instead of through npm to reduce overall file
 **Versions**
 ```json
 {
-    "mermaid": "6.0.0",
-    "plantuml": "8048",
+    "mermaid": "7.0.0",
+    "plantuml": "8054",
     "wavedrom": "1.4.1",
-    "reveal": "3.4.0",
-    "viz": "1.3.0",
+    "reveal": "3.4.1",
+    "viz": "1.7.0",
     "save-svg-as-png": "v1.1.0",
     "MathJax": "v2.7.0"
 }
@@ -24,5 +24,7 @@ I managed many libraries by myself instead of through npm to reduce overall file
 *Attention*: Need to modify `pdf_a4_portrait.js` file to make it work with *MathJax*.
 
 *Attention*: **viz.js 1.4.1** will cause `EvalError: Refused to evaluate a string as JavaScript` error.
+Need to modify `eval` to eliminate `unsafe-eval` issue.  
+Check [#75](https://github.com/mdaines/viz.js/issues/75).  
 
 

@@ -962,7 +962,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         mathStyle = "<link rel=\"stylesheet\"
               href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
       else
-        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
+        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
     else if mathRenderingOption == 'MathJax'
       inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
       block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
@@ -1004,8 +1004,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
       else
         presentationScript = "
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/lib/js/head.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.0/js/reveal.min.js'></script>"
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script>"
 
       presentationConfig = yamlConfig['presentation'] or {}
       dependencies = presentationConfig.dependencies or []
@@ -1540,7 +1540,7 @@ module.exports = config || {}
         mathStyle = ''
         if outputHTML.indexOf('class="katex"') > 0
           if path.extname(dest) == '.html' and ebookConfig.html?.cdn
-            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.0/katex.min.css\">"
+            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
           else
             mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 

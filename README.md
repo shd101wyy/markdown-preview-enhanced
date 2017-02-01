@@ -69,7 +69,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 	- code block with `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
 	- code block with `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
-    - add `engine:[engine_name]` at the first line of code block to choose different render engine.  
+    - add `engine:[engine_name]` at the first line of code block to choose different render engine. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.   
+    - ![viz](https://cloud.githubusercontent.com/assets/1908863/22486898/f3b71a8a-e7d0-11e6-9f69-88e30baa3a9a.gif)
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
 

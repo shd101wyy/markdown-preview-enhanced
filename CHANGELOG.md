@@ -1,3 +1,10 @@
+## 0.9.5  
+* [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  
+* [x] upgrade `reveal.js` to `1.4.1`.
+* [x] upgrade `katex` to `0.7.1`, fix cdn.js issue.
+* [x] upgrade `plantuml` to version `8054`.
+* [x] upgrade `viz.js` to version `1.7.0`, could be buggy though. 
+
 ## 0.9.4  
 * [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
 * [x] fix vertical slides issue [241](https://github.com/shd101wyy/markdown-preview-enhanced/issues/241)  
