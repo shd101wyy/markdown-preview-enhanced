@@ -79,9 +79,11 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 - <strong>Markdown Preview Enhanced: Toggle</strong>
   - Toggle Markdown file preview with KaTeX support.   
 	You can also use the keymap <kbd>ctrl+shift+m</kbd> to toggle preview. (To use keymap, you have to disable the default [markdown preview](https://atom.io/packages/markdown-preview) package, otherwise there would be keymap conflict)
+- <strong>Markdown Preview Enhanced: Toggle Zen Mode </strong>  
+	- Toggle distraction free writing.  
 - <strong>Markdown Preview Enhanced: Customize CSS</strong>
   - Customize preview page css. You can edit styles inside `markdown-preview-enhanced-custom` section in `style.less` file.  
-  - if you didn't see `markdown-preview-enhanced-custom` section in `style.less` file, you may need to run `Markdown Preview Enhanced: Customize CSS` command first.
+  - If you didn't see `markdown-preview-enhanced-custom` section in `style.less` file, you may need to run `Markdown Preview Enhanced: Customize CSS` command first.
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
   - Generate TOC (need preview toggled). [doc is here](./docs/toc.md).    
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
@@ -92,14 +94,14 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
 - <strong>Markdown Preview Enhanced: Insert Page Break </strong>
 - <strong> Markdown Preview Enhanced: Config Mermaid</strong>
-  - edit `mermaid` init configuration.
+  - Edit `mermaid` init configuration.
 - <strong> Markdown Preview Enhanced: Config Header Footer</strong>
   - **PDF** export header and footer configuration.
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
 	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    
 	- Keymap <kbd>ctrl+shift+i</kbd>    
-	-  ![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)  
+	-  ![image_helper](https://cloud.githubusercontent.com/assets/1908863/15414603/c40b6556-1e6e-11e6-956c-090b5996ec87.gif)   
 
 ## Preview Context Menu
 **Right click at preview to see the menu**

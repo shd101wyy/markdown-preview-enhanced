@@ -70,8 +70,15 @@
       "title": "Show back to top button",
       "type": "boolean",
       "default": true,
-      "description": "Show back to top button in preview",
+      "description": "Show back to top button in preview.",
       "order": 12
+    },
+    "enableZenMode": {
+      "title": "Zen mode",
+      "type": "boolean",
+      "default": false,
+      "description": "Distraction free writing.",
+      "order": 13
     },
     "mathRenderingOption": {
       "type": "string",

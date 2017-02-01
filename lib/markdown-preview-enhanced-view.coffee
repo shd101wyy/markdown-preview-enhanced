@@ -209,6 +209,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       document.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
         @element.scrollTop = 0
 
+      # rebind tag a click event
+      @bindTagAClickEvent()
+
       # reset code chunks
       @setupCodeChunks()
 
@@ -582,6 +585,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
             else
               if href.startsWith 'file:///'
                 href = href.slice(8) # remove protocal
+              # fix issue https://github.com/shd101wyy/markdown-preview-enhanced/issues/248
+              # ./link.md#heading
+              href = href.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
               atom.workspace.open href,
                 split: 'left',
                 searchAllPanes: true

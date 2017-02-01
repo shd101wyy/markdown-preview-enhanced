@@ -73,6 +73,29 @@ module.exports = MarkdownPreviewEnhanced =
           editor = event.item
           @startMDPreview(editor)
 
+      # check zen mode
+      if event.uri and event.item and path.extname(event.uri) in @fileExtensions
+        editor = event.item
+        editorElement = editor.getElement()
+        if editor and editor.buffer
+          if atom.config.get('markdown-preview-enhanced.enableZenMode')
+            editorElement.setAttribute('data-markdown-zen', '')
+          else
+            editorElement.removeAttribute('data-markdown-zen')
+
+    # zen mode observation
+    @subscriptions.add atom.config.observe 'markdown-preview-enhanced.enableZenMode', (enableZenMode)=>
+      paneItems = atom.workspace.getPaneItems()
+      for editor in paneItems
+        if editor and editor.getPath and path.extname(editor.getPath()) in @fileExtensions
+          if editor.buffer
+            editorElement = editor.getElement()
+            if enableZenMode
+              editorElement.setAttribute('data-markdown-zen', '')
+            else
+              editorElement.removeAttribute('data-markdown-zen')
+
+
   deactivate: ->
     @subscriptions.dispose()
     @emitter.dispose()
@@ -260,13 +283,12 @@ module.exports = MarkdownPreviewEnhanced =
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
 
   toggleZenMode: ()->
-    editor = atom.workspace.getActiveTextEditor()
-    editorElement = editor.getElement()
-    if editor and editor.buffer
-      if editorElement.hasAttribute('data-markdown-zen')
-        editorElement.removeAttribute('data-markdown-zen')
-      else
-        editorElement.setAttribute('data-markdown-zen', '')
+    enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')
+    atom.config.set('markdown-preview-enhanced.enableZenMode', !enableZenMode)
+    if !enableZenMode
+      atom.notifications.addInfo('zen mode enabled')
+    else
+      atom.notifications.addInfo('zen mode disabled')
 
   insertNewSlide: ()->
     editor = atom.workspace.getActiveTextEditor()
