@@ -87,7 +87,7 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.add atom.config.observe 'markdown-preview-enhanced.enableZenMode', (enableZenMode)=>
       paneItems = atom.workspace.getPaneItems()
       for editor in paneItems
-        if editor and editor.getPath && path.extname(editor.getPath()) in @fileExtensions
+        if editor and editor.getPath and path.extname(editor.getPath()) in @fileExtensions
           if editor.buffer
             editorElement = editor.getElement()
             if enableZenMode
