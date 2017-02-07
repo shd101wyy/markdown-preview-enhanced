@@ -37,11 +37,11 @@ scopesForLanguageName =
   'yml': 'source.yaml',
   # extended
   'yaml_table': 'source.yaml',
-  '{mermaid}': 'source.mermaid',
-  '{plantuml}': 'source.plantuml',
-  '{puml}': 'source.plantuml',
-  '{wavedrom}': 'source.wavedrom',
-  '{viz}': 'source.viz',
+  'mermaid': 'source.mermaid',
+  'plantuml': 'source.plantuml',
+  'puml': 'source.plantuml',
+  'wavedrom': 'source.wavedrom',
+  'viz': 'source.viz',
   'erd': 'source.erd',
   'node': 'source.js'
 

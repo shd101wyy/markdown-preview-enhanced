@@ -223,11 +223,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # rebind tag a click event
       @bindTagAClickEvent()
 
-      # reset code chunks
-      @setupCodeChunks()
-
       # render plantuml in case
       @renderPlantUML()
+
+      # reset code chunks
+      @setupCodeChunks()
     else
       @renderMarkdown()
     @scrollMap = null
@@ -627,6 +627,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     return if !codeChunks.length
 
     newCodeChunksData = {}
+    needToSetupChunksId = false
     setupCodeChunk = (codeChunk)=>
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
@@ -636,6 +637,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
         newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
+      else # id not exist, create new id
+        needToSetupChunksId = true
 
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn?.addEventListener 'click', ()=>
@@ -646,9 +649,49 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @runAllCodeChunks()
 
     for codeChunk in codeChunks
+      break if needToSetupChunksId
       setupCodeChunk(codeChunk)
 
+    if needToSetupChunksId
+      @setupCodeChunksId()
+
     @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
+
+  setupCodeChunksId: ()->
+    buffer = @editor.buffer
+    return if !buffer
+
+    lines = buffer.lines
+    lineNo = 0
+    curScreenPos = @editor.getCursorScreenPosition()
+
+    while lineNo < lines.length
+      line = lines[lineNo]
+      match = line.match(/^\`\`\`\{(.+)\}(\s*)/)
+      if match
+        cmd = match[1]
+        dataArgs = ''
+        i = cmd.indexOf(' ')
+        if i > 0
+          dataArgs = cmd.slice(i + 1, cmd.length).trim()
+          cmd = cmd.slice(0, i)
+
+        idMatch = match[1].match(/\s*id\s*:\s*\"([^\"]*)\"/)
+        if !idMatch
+          id = (new Date().getTime()).toString(36)
+
+          line = line.trimRight()
+          line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+          @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+          buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+
+      lineNo += 1
+      @editor.setCursorScreenPosition(curScreenPos) # restore cursor position.
+
+      @parseDelay = Date.now()
+      @renderMarkdown()
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
@@ -683,22 +726,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
 
     if !idMatch
-      id = (new Date().getTime()).toString(36)
-
-      buffer = @editor.buffer
-      return if !buffer
-
-      lineNo = parseInt(codeChunk.getAttribute('data-line'))
-
-      line = buffer.lines[lineNo].trimRight()
-      line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
-
-      codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
-      codeChunk.id = 'code_chunk_' + id
-
-      @parseDelay = Date.now() + 500 # prevent renderMarkdown
-
-      buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+      atom.notifications.addError('Code chunk error', detail: 'id is not found.')
     else
       id = idMatch[1]
 
@@ -1686,6 +1714,10 @@ module.exports = config || {}
     if @settingsDisposables
       @settingsDisposables.dispose()
       @settingsDisposables = null
+
+    # clear CACHE
+    for key of CACHE
+      delete(CACHE[key])
 
   getElement: ->
     @element

@@ -603,7 +603,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    if lang == '{mermaid}'
+    if lang.startsWith('{mermaid')
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -614,13 +614,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang in ['{plantuml}', '{puml}']
+    else if lang.startsWith('{plantuml') or lang.startsWith('{puml')
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang == '{wavedrom}'
+    else if lang.startsWith('{wavedrom')
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang == '{viz}'
+    else if lang.startsWith('{viz')
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
@@ -832,7 +832,7 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  inputString = docImports(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath}) # x.replace(/(^|\s)import(\s+)\"([^\"]+)\"/g, function(){console.log(arguments); return arguments[1]})
+  inputString = docImports(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>

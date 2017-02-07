@@ -23,7 +23,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output
 
 docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
-  inputString = inputString.replace /(^|\s)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
+  inputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
 
     if filePath.match(/^(http|https|file)\:\/\//)
       absoluteFilePath = filePath
