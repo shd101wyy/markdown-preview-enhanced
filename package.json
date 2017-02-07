@@ -37,6 +37,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "atom-space-pen-views": "^2.2.0",
+    "babyparse": "^0.4.6",
     "cheerio": "^0.15.0",
     "gray-matter": "^2.1.0",
     "html-pdf": "^2.1.0",

@@ -8,9 +8,12 @@ Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_module
 {File} = require 'atom'
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 matter = require('gray-matter')
+Baby = require('babyparse')
+
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
+
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -767,11 +770,33 @@ updateTOC = (markdownPreview, tocConfigs)->
   markdownPreview.tocConfigs = tocConfigs
   return tocNeedUpdate
 
+_2DArrayToMarkdownTable = (_2DArr)->
+  output = "  \n"
+  _2DArr.forEach (arr, offset)->
+    i = 0
+    output += '|'
+    while i < arr.length
+      output += (arr[i] + '|')
+      i += 1
+    output += '  \n'
+    if offset == 0
+      output += '|'
+      i = 0
+      while i < arr.length
+        output += ('---|')
+        i += 1
+      output += '  \n'
+
+  output += '  \n'
+  console.log(output)
+  output
 
 docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath})->
   inputString = inputString.replace /(^|\s)import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
 
-    if filePath.startsWith('/')
+    if filePath.match(/^(http|https|file)\:\/\//)
+      absoluteFilePath = filePath
+    else if filePath.startsWith('/')
       absoluteFilePath = path.resolve(projectDirectoryPath, '.' + filePath)
     else
       absoluteFilePath = path.resolve(rootDirectoryPath, filePath)
@@ -783,14 +808,28 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath}
     output = ''
     if extname in ['.jpeg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
+
+      filesCache?[absoluteFilePath] = output
+
     else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
       output = ''
     else if extname in ['.csv']
-      output = ''
+      try
+        csvContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        console.log(csvContent)
+        parseResult = Baby.parse(csvContent)
+        console.log(parseResult)
+        if parseResult.errors.length
+          output = "<pre>#{parseResult.errors[0]}</pre>"
+        else
+          # format csv to markdown table
+          output = _2DArrayToMarkdownTable(parseResult.data)
+          filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
     else # codeblock
       output = ''
 
-    filesCache?[absoluteFilePath] = output
     return output
 
 ###
