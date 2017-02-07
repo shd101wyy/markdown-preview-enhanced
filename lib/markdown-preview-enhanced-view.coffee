@@ -522,6 +522,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @setInitialScrollPos()
     @addBackToTopButton()
+    @addRefreshButton()
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
@@ -549,6 +550,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       backToTopBtn.onclick = ()=>
         @element.scrollTop = 0
+
+  addRefreshButton: ->
+      refreshBtn = document.createElement('div')
+      refreshBtn.classList.add('refresh-btn')
+      refreshBtn.classList.add('btn')
+      refreshBtn.innerHTML = '<span>⟳</span>'
+      @element.appendChild(refreshBtn)
+
+      refreshBtn.onclick = ()=>
+        # clear cache
+        @filesCache = {}
+
+        # render again
+        @renderMarkdown()
 
   bindEvents: ->
     @bindTagAClickEvent()

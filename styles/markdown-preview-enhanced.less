@@ -595,15 +595,19 @@
       }
     }
 
-    .back-to-top-btn {
+    .back-to-top-btn, .refresh-btn {
       position: fixed;
       display: none;
       right: 24px;
       top: 54px;
     }
 
+    .back-to-top-btn {
+      right: 72px;
+    }
+
     &:hover {
-      .back-to-top-btn {
+      .back-to-top-btn, .refresh-btn {
         display: block;
         opacity: 0.4;
 

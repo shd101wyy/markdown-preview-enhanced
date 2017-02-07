@@ -20,7 +20,6 @@ _2DArrayToMarkdownTable = (_2DArr)->
       output += '  \n'
 
   output += '  \n'
-  console.log(output)
   output
 
 docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
