@@ -24,7 +24,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output
 
 docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
-  inputString = inputString.replace /(^|\s)import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
+  inputString = inputString.replace /(^|\s)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
 
     if filePath.match(/^(http|https|file)\:\/\//)
       absoluteFilePath = filePath
@@ -42,20 +42,23 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       if filePath.match(/^(http|https|file)\:\/\//)
         output = "![](#{filePath + '?' + Math.random()})"
       else if useAbsoluteImagePath
-        output = "![]('/' + #{path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
+        output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
       else
         output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
 
       filesCache?[absoluteFilePath] = output
 
     else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
-      output = ''
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = '  \n' + docImports(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
+        filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
     else if extname in ['.csv']
       try
         csvContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        console.log(csvContent)
         parseResult = Baby.parse(csvContent)
-        console.log(parseResult)
         if parseResult.errors.length
           output = "<pre>#{parseResult.errors[0]}</pre>"
         else
