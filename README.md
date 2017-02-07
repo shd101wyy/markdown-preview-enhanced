@@ -5,7 +5,8 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)   
 
-After version `0.9.0`, **Markdown Preview Enhanced** supports compiling markdown to markdown file. More information can be found [here](./docs/markdown.md).  
+New Feature for version `0.9.6`! Oh yeah!  
+**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc files. This feature is still in testing phase, more information can be found [here](./docs/doc-imports.md).    
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -21,7 +22,6 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [Extra](#extra)
 	* [For Developer](#for-developer)
 	* [Thanks](#thanks)
-	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
@@ -39,7 +39,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
 - export beautiful **HTML** (mobile device supported)  
-- compile to **Markdown**
+- [compile to Markdown](./docs/markdown.md)
 - customize Markdown Preview css  
 - [TOC](./docs/toc.md) generation **(beta)**  
 - Flowchart / Sequence diagram
@@ -137,17 +137,6 @@ It is also very easy to write your own extension, more information can be found 
 
 ## Thanks  
 Thanks for everyone that supports this package!    
-
-## TODO  
-[CHANGELOG](./CHANGELOG.md)  
-- [ ] fix bugs
-- [ ] modify css to make preview look nice
-- [x] ePub output
-- [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
-- [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
-- [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
-- [x] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
-
 Thanks for using and supporting this package ;)
 
 > University of Illinois/NCSA Open Source License

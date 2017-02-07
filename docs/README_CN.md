@@ -5,7 +5,10 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)   
 
-`0.9.0` 版本以后，**Markdown Preview Enhanced** 支持编译 markdown 到 markdown 文件。更多相关信息请查看[文档](markdown.md)。
+版本 `0.9.6` 有新功能啦～    
+**Markdown Preview Enhanced** 现在支持导入 `csv`, `markdown`, `image`, 等格式文件。 该功能仍然在测试阶段，更多相关信息请查看[此文档](doc-imports.md)。  
+
+
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
@@ -20,7 +23,6 @@ Markdown Preview Enhanced
 	* [额外支持](#额外支持)
 	* [开发者](#开发者)
 	* [感谢](#感谢)
-	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
@@ -38,7 +40,7 @@ Markdown Preview Enhanced
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
-- 编译成 **Markdown** 文件
+- [编译成 Markdown 文件](markdown.md)
 - 自定义 Markdown Preview 样式（css）  
 - [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
@@ -135,18 +137,7 @@ Markdown Preview Enhanced
 扩展该插件也十分简单，更多信息请点击 [这里](./extension.md)。
 
 ## 感谢  
-感谢所有支持这个插件的人们！    
-
-## TODO
-[CHANGELOG](../CHANGELOG.md)
-- [ ] fix bugs
-- [ ] modify css to make preview look nice
-- [x] ePub output
-- [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
-- [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
-- [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
-- [x] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
-
+感谢所有支持这个插件的人们！     
 谢谢你使用并支持此插件 ;)
 
 > University of Illinois/NCSA Open Source License

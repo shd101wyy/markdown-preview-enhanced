@@ -212,8 +212,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # console.log 'restore ' + @editor.getPath()
 
       # reset back to top button onclick event
-      document.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
+      @element.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
         @element.scrollTop = 0
+
+      # reset refresh button onclick event
+      @element.getElementsByClassName('refresh-btn')?[0]?.onclick = ()=>
+        @filesCache = {}
+        @renderMarkdown()
 
       # rebind tag a click event
       @bindTagAClickEvent()
@@ -552,18 +557,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @element.scrollTop = 0
 
   addRefreshButton: ->
-      refreshBtn = document.createElement('div')
-      refreshBtn.classList.add('refresh-btn')
-      refreshBtn.classList.add('btn')
-      refreshBtn.innerHTML = '<span>⟳</span>'
-      @element.appendChild(refreshBtn)
+    refreshBtn = document.createElement('div')
+    refreshBtn.classList.add('refresh-btn')
+    refreshBtn.classList.add('btn')
+    refreshBtn.innerHTML = '<span>⟳</span>'
+    @element.appendChild(refreshBtn)
 
-      refreshBtn.onclick = ()=>
-        # clear cache
-        @filesCache = {}
+    refreshBtn.onclick = ()=>
+      # clear cache
+      @filesCache = {}
 
-        # render again
-        @renderMarkdown()
+      # render again
+      @renderMarkdown()
 
   bindEvents: ->
     @bindTagAClickEvent()

@@ -39,7 +39,7 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     output = ''
     if extname in ['.jpeg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(/^(http|https|file)\:\/\//)
-        output = "![](#{filePath + '?' + Math.random()})"
+        output = "![](#{filePath})"
       else if useAbsoluteImagePath
         output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
       else
