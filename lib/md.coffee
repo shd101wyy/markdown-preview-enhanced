@@ -1,6 +1,7 @@
 katex = require 'katex'
 cheerio = require 'cheerio'
 path = require 'path'
+fs = require 'fs'
 remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
@@ -767,6 +768,31 @@ updateTOC = (markdownPreview, tocConfigs)->
   return tocNeedUpdate
 
 
+docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath})->
+  inputString = inputString.replace /(^|\s)import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
+
+    if filePath.startsWith('/')
+      absoluteFilePath = path.resolve(projectDirectoryPath, '.' + filePath)
+    else
+      absoluteFilePath = path.resolve(rootDirectoryPath, filePath)
+
+    if filesCache?[absoluteFilePath] # already in cache
+      return filesCache[absoluteFilePath]
+
+    extname = path.extname(filePath)
+    output = ''
+    if extname in ['.jpeg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
+      output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
+    else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
+      output = ''
+    else if extname in ['.csv']
+      output = ''
+    else # codeblock
+      output = ''
+
+    filesCache?[absoluteFilePath] = output
+    return output
+
 ###
 # parse markdown content to html
 
@@ -827,6 +853,9 @@ parseMD = (inputString, option={})->
 
   # check front-matter
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
+
+  # check document imports
+  inputString = docImports(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath}) # x.replace(/(^|\s)import(\s+)\"([^\"]+)\"/g, function(){console.log(arguments); return arguments[1]})
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>

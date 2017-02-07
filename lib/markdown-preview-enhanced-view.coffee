@@ -66,6 +66,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @graphData = null
     @codeChunksData = {}
 
+    # files cache for document import
+    @filesCache = {}
+
     # when resize the window, clear the editor
     window.addEventListener 'resize', @resizeEvent.bind(this)
 
@@ -157,7 +160,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
-        slideConfigs: @slideConfigs
+        slideConfigs: @slideConfigs,
+        filesCache: @filesCache,
       }
 
       # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
@@ -180,6 +184,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
     @firstTimeRenderMarkdowon = true
+    @filesCache = {}
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -196,6 +201,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
       @slideConfigs = d.slideConfigs
+      @filesCache = d.filesCache
 
       if @presentationMode
         @element.setAttribute 'data-presentation-preview-mode', ''
