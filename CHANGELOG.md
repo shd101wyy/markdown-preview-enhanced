@@ -1,12 +1,12 @@
 ## 0.9.6  
-* [ ] support file import.  
+* [x] support external files import.  
 ```javascript
 import 'test.csv'
 import 'test.jpg'  
 import 'test.txt'  
 import 'test.md'
 ```
-* [ ] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
+* [x] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
 * [x] fix syntax theme issue (now partially fixed, need to wait for atom version `1.14`).  
 
 ## 0.9.5  
@@ -19,8 +19,8 @@ import 'test.md'
 * [x] better support for zen mode.
 
 ## 0.9.4  
-* [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
-* [x] fix vertical slides issue [241](https://github.com/shd101wyy/markdown-preview-enhanced/issues/241)  
+* [x] fix non-github syntax color issue [#243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
+* [x] fix vertical slides issue [#241](https://github.com/shd101wyy/markdown-preview-enhanced/issues/241)  
 
 ## 0.9.3
 * [x] fix issue, 中文，日文 file image path error. [#236](https://github.com/shd101wyy/markdown-preview-enhanced/issues/236)

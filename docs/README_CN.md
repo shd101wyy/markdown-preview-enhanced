@@ -8,7 +8,9 @@ Markdown Preview Enhanced
 版本 `0.9.6` 有新功能啦～    
 **Markdown Preview Enhanced** 现在支持导入 `csv`, `markdown`, `image`, 等格式文件。 该功能仍然在测试阶段，更多相关信息请查看[此文档](doc-imports.md)。  
 
+![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
+---
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
@@ -47,7 +49,8 @@ Markdown Preview Enhanced
 - Task List 任务列表 *(Github Flavored)*  
 - 图片助手
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
-- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)  
+- [导入外部文件](doc-imports.md)
 - 以及更多特性...
 
 ## 该插件如何工作

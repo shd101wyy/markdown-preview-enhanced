@@ -6,7 +6,11 @@ Still Beta Version!
 [中文文档](./docs/README_CN.md)   
 
 New Feature for version `0.9.6`! Oh yeah!  
-**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc files. This feature is still in testing phase, more information can be found [here](./docs/doc-imports.md).    
+**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, more information can be found [here](./docs/doc-imports.md).     
+
+![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
+
+---  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -47,6 +51,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- [Import external files](./docs/doc-imports.md)
 - And many more...
 
 ## How it works
