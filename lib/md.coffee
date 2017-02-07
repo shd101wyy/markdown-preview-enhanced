@@ -26,6 +26,7 @@ TAGS_TO_REPLACE = {
     '\/', '&#x2F;',
     '\\', '&#x5C;',
 }
+highlighter = null
 String.prototype.escape = ()->
   this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
@@ -528,7 +529,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang, lineNo=null)->
-    highlighter = new Highlights({registry: atom.grammars})
+    highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: ''})
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -555,7 +556,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = ''
     buttonGroup = ''
     if not /\s*hide\s*:\s*true/.test(parameters)
-      highlighter = new Highlights({registry: atom.grammars})
+      highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: ''})
       html = highlighter.highlightSync
               fileContents: text,
               scopeName: scopeForLanguageName(lang)

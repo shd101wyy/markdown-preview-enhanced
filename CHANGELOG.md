@@ -1,3 +1,14 @@
+## 0.9.6  
+* [ ] support file import.  
+```javascript
+import 'test.csv'
+import 'test.jpg'  
+import 'test.txt'  
+import 'test.md'
+```
+* [ ] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
+* [ ] fix syntax theme issue.  
+
 ## 0.9.5  
 * [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  
 * [x] upgrade `reveal.js` to `1.4.1`.
@@ -5,7 +16,7 @@
 * [x] upgrade `plantuml` to version `8054`.
 * [x] upgrade `viz.js` to version `1.7.0`, could be buggy though.
 * [x] partially fixed issue [#248](https://github.com/shd101wyy/markdown-preview-enhanced/issues/248). But can't navigate to anchor.   
-* [x] better support for zen mode. 
+* [x] better support for zen mode.
 
 ## 0.9.4  
 * [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
