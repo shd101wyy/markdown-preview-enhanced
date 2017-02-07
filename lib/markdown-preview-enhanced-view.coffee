@@ -688,7 +688,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
           buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
       lineNo += 1
-      @editor.setCursorScreenPosition(curScreenPos) # restore cursor position.
+
+    @editor.setCursorScreenPosition(curScreenPos) # restore cursor position.
 
       # This will cause Maximum size exceeded
       # @parseDelay = Date.now()
@@ -727,7 +728,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
 
     if !idMatch
-      atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')
+      return atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')
     else
       id = idMatch[1]
 
@@ -813,7 +814,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       notProcessedEls = @element.querySelectorAll('.mermaid:not([data-processed])')
 
       if notProcessedEls.length
-        mermaid.init(null, notProcessedEls)
+        mermaid.init null, notProcessedEls
 
       ###
       # the code below doesn't seem to be working
