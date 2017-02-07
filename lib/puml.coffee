@@ -5,11 +5,13 @@ plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar
 
 # Async call
 generateSVG = (content, callback)->
-  content = """
-  @startuml
-  #{content}
-  @enduml
-  """
+  content = content.trim()
+  if !content.startsWith('@start')
+    content = """
+@startuml
+#{content}
+@enduml
+    """
 
   task = spawn 'java', [    '-Djava.awt.headless=true',
                             '-jar', plantumlJarPath,
