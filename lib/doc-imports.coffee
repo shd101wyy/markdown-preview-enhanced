@@ -65,7 +65,16 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       catch e
         output = "<pre>#{e.toString()}</pre>"
     else # codeblock
-      output = ''
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = """
+```#{extname.slice(1, extname.length)}
+#{fileContent}
+```
+"""
+        filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
 
     return output
 
