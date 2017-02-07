@@ -690,8 +690,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       lineNo += 1
       @editor.setCursorScreenPosition(curScreenPos) # restore cursor position.
 
-      @parseDelay = Date.now()
-      @renderMarkdown()
+      # This will cause Maximum size exceeded
+      # @parseDelay = Date.now()
+      # @renderMarkdown()
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
@@ -726,7 +727,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
 
     if !idMatch
-      atom.notifications.addError('Code chunk error', detail: 'id is not found.')
+      atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')
     else
       id = idMatch[1]
 

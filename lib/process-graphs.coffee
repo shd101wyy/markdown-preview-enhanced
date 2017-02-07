@@ -61,7 +61,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
 
-    match = def.match(/^{(mermaid|wavedrom|viz|plantuml|puml)}$/)
+    match = def.match(/^\{(mermaid|wavedrom|viz|plantuml|puml)/)
 
     if match  # builtin graph
       graphType = match[1]
