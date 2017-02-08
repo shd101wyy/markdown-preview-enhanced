@@ -240,7 +240,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
   # add front-matter(yaml) to text
   text = matter.stringify(text, config)
 
-  # doc imports
+  # import external files
   text = fileImport text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}
 
   # change link path to relative path

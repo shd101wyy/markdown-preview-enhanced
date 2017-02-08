@@ -88,7 +88,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
 
   useAbsoluteImagePath = config.absolute_image_path
 
-  # import docs
+  # import external files
   text = fileImport text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}
 
   # change link path to project '/' path
