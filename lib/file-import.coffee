@@ -5,6 +5,8 @@ fs = require 'fs'
 markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
 
 
+# Convert 2D array to markdown table.
+# The first row is headings.  
 _2DArrayToMarkdownTable = (_2DArr)->
   output = "  \n"
   _2DArr.forEach (arr, offset)->
@@ -26,11 +28,18 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output
 
 ###
+@param {String} inputString, required
+@param {Object} filesCache, optional
+@param {String} rootDirectoryPath, required
+@param {String} projectDirectoryPath, required
+@param {Boolean} useAbsoluteImagePath, optional
+@param {Object} editor, optional
 return
 {
   {String} outputString,
-  {Array} heightsDelta : [[start, height], ...]
+  {Array} heightsDelta : [[start, height, acc, realStart], ...]
           start is the buffer row
+          heightsDelta is used to correct scroll sync. please refer to md.coffee
 }
 ###
 fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
@@ -49,14 +58,6 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     acc = acc + height
 
   outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, prefix, spaces, filePath, offset)->
-    #syncLine = ''
-
-    # if editor (atom TextEditor class) is provided
-    # prepend syncLine for scroll sync
-    #if editor
-    #  lineNo = (inputString.slice(0, offset).match(/\n/g)?.length + 1) or 0
-    #  screenRow = editor.screenRowForBufferRow(lineNo)
-    #  syncLine = "<span class='sync-line' data-line='#{screenRow}'></span>  \n"
     start = 0
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
