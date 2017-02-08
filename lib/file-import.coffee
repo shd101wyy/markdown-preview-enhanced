@@ -6,7 +6,7 @@ markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtensio
 
 
 _2DArrayToMarkdownTable = (_2DArr)->
-  output = "\n  \n"
+  output = "  \n"
   _2DArr.forEach (arr, offset)->
     i = 0
     output += '|'
@@ -22,7 +22,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
         i += 1
       output += '  \n'
 
-  output += '  \n'
+  output += '  '
   output
 
 ###
@@ -30,20 +30,36 @@ return
 {
   {String} outputString,
   {Array} heightsDelta : [[start, height], ...]
+          start is the buffer row
 }
 ###
 fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
   heightsDelta = []
+  acc = 0
 
-  outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, start, space, filePath, offset)->
-    syncLine = ''
+  updateHeightsDelta = (str, start)->
+    height = (str.match(/\n/g)?.length + 1) or 1
+    heightsDelta.push({
+      realStart: start,
+      start: start + acc - heightsDelta.length,
+      height: height,
+      acc: acc,
+    })
+
+    acc = acc + height
+
+  outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, prefix, spaces, filePath, offset)->
+    #syncLine = ''
 
     # if editor (atom TextEditor class) is provided
     # prepend syncLine for scroll sync
+    #if editor
+    #  lineNo = (inputString.slice(0, offset).match(/\n/g)?.length + 1) or 0
+    #  screenRow = editor.screenRowForBufferRow(lineNo)
+    #  syncLine = "<span class='sync-line' data-line='#{screenRow}'></span>  \n"
+    start = 0
     if editor
-      lineNo = (inputString.slice(0, offset).match(/\n/g)?.length + 1) or 0
-      screenRow = editor.screenRowForBufferRow(lineNo)
-      syncLine = "<span class='sync-line' data-line='#{screenRow}'></span>  \n"
+      start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
 
     if filePath.match(/^(http|https|file)\:\/\//)
       absoluteFilePath = filePath
@@ -53,17 +69,18 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       absoluteFilePath = path.resolve(rootDirectoryPath, filePath)
 
     if filesCache?[absoluteFilePath] # already in cache
-      return syncLine + filesCache[absoluteFilePath]
+      updateHeightsDelta(filesCache[absoluteFilePath], start) if editor
+      return prefix + filesCache[absoluteFilePath]
 
     extname = path.extname(filePath)
     output = ''
     if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(/^(http|https|file)\:\/\//)
-        output = "\n![](#{filePath})  \n"
+        output = "![](#{filePath})  "
       else if useAbsoluteImagePath
-        output = "\n![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  \n" # TODO: project relative path?
+        output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
       else
-        output = "\n![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})  \n" # TODO: project relative path?
+        output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
 
       filesCache?[absoluteFilePath] = output
     else
@@ -71,10 +88,10 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
 
         if extname in markdownFileExtensions # markdown files
-          output = '\n  \n' + fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  \n'
+          output = fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.html' # html file
-          output = '\n  \n<div>' + fileContent + '</div>  \n'
+          output = '<div>' + fileContent + '</div>  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.csv'  # csv file
           parseResult = Baby.parse(fileContent)
@@ -85,23 +102,25 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
             output = _2DArrayToMarkdownTable(parseResult.data)
             filesCache?[absoluteFilePath] = output
         else if extname in ['.dot'] # graphviz
-          output = "\n```@viz\n#{fileContent}\n```  \n"
+          output = "```@viz\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         else if extname == '.mermaid' # mermaid
-          output = "\n```@mermaid\n#{fileContent}\n```  \n"
+          output = "```@mermaid\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         else if extname in ['.puml', '.plantuml'] # plantuml
-          output = "\n```@puml\n#{fileContent}\n```  \n"
+          output = "```@puml\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         # else if extname in ['.wavedrom'] # wavedrom # not supported yet.
         else # codeblock
-          output = "\n```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  \n"
+          output = "```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
       catch e # failed to load file
-        output = "<pre>#{e.toString()}</pre>"
+        output = "#{prefix}<pre>#{e.toString()}</pre>  "
 
-    return syncLine + output
+    updateHeightsDelta(output, start) if editor
+    return prefix + output
 
+  # console.log(heightsDelta, outputString)
   return {outputString, heightsDelta}
 
 module.exports = fileImport

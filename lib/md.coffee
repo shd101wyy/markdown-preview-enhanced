@@ -117,6 +117,28 @@ md = new remarkable('full', defaults)
 DISABLE_SYNC_LINE = false
 HEIGHTS_DELTA = [] # [[start, height], ...] for import files
 
+# fix data-line after import external files
+getRealDataLine = (lineNo)->
+  return lineNo if !HEIGHTS_DELTA.length
+  i = HEIGHTS_DELTA.length - 1
+  count = 0
+  while i >= 0
+    {realStart, start, height, acc} = HEIGHTS_DELTA[i]
+    if lineNo == start
+      # console.log(lineNo, HEIGHTS_DELTA, realStart)
+      return realStart
+    else if lineNo > start
+      if lineNo < start + height # imported content
+        # console.log(lineNo, HEIGHTS_DELTA, realStart)
+        return realStart
+      else
+        # console.log(lineNo, HEIGHTS_DELTA, lineNo - acc - height + realStart - i)
+        return lineNo - acc - height + realStart - i
+    i -= 1
+    count += 1
+  return lineNo
+
+
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
     md.set({breaks: breakOnSingleNewline})
@@ -322,7 +344,7 @@ md.block.ruler.before 'code', 'custom-comment',
         state.tokens.push
           type: 'custom'
           subject: subject
-          line: state.line
+          line: getRealDataLine(state.line)
           option: option
 
         state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
@@ -341,7 +363,7 @@ md.renderer.rules.paragraph_open = (tokens, idx)->
   lineNo = null
   if tokens[idx].lines and !DISABLE_SYNC_LINE # /*&& tokens[idx].level == 0*/)
     lineNo = tokens[idx].lines[0]
-    return '<p class="sync-line" data-line="' + lineNo + '">'
+    return '<p class="sync-line" data-line="' + getRealDataLine(lineNo) + '">'
   return '<p>'
 
 
@@ -380,7 +402,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
     langClass = ' class="' + langPrefix + token.params.escape() + '" ';
 
   if token.lines
-    lineStr = " data-line=\"#{token.lines[0]}\" "
+    lineStr = " data-line=\"#{getRealDataLine(token.lines[0])}\" "
 
   # get code content
   content = token.content.escape()
@@ -545,7 +567,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
     if lineNo != null and !DISABLE_SYNC_LINE
-      highlightedBlock.attr({'data-line': lineNo})
+      highlightedBlock.attr({'data-line': lineNo}) # no need to call getRealDataLine here
       highlightedBlock.addClass('sync-line')
 
     $(preElement).replaceWith(highlightedBlock)
@@ -840,10 +862,12 @@ parseMD = (inputString, option={})->
   # check document imports
   {outputString:newInputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
+  ###
   if inputString.length == newInputString.length
     DISABLE_SYNC_LINE = false
   else # there is file import
     DISABLE_SYNC_LINE = true
+  ###
 
   inputString = newInputString
 
@@ -866,7 +890,7 @@ parseMD = (inputString, option={})->
     id = if id then "id=#{id}" else ''
     if tokens[idx].lines and !DISABLE_SYNC_LINE
       line = tokens[idx].lines[0]
-      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{line}\" #{id}>"
+      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{getRealDataLine(line)}\" #{id}>"
 
     return "<h#{tokens[idx].hLevel} #{id}>"
 
