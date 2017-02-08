@@ -37,6 +37,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @liveUpdate = true
     @scrollSync = true
     @scrollDuration = null
+    @forceDisableScrollSync = false
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
@@ -254,7 +255,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @updateMarkdown()
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate or !@editor or @presentationMode
+      if !@scrollSync or !@element or !@liveUpdate or !@editor or @presentationMode or @forceDisableScrollSync
         return
       if Date.now() < @editorScrollDelay
         return
@@ -276,7 +277,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or !@liveUpdate
+      if !@scrollSync or !@element or !@liveUpdate or @forceDisableScrollSync
         return
       if Date.now() < @parseDelay
         return
@@ -302,7 +303,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or !@liveUpdate or @presentationMode
+      if !@editor or !@scrollSync or !@liveUpdate or @presentationMode or @forceDisableScrollSync
         return
       if Date.now() < @previewScrollDelay
         return

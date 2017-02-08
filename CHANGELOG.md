@@ -1,5 +1,5 @@
 ## 0.9.6  
-* [x] support external files import.  
+* [x] support external files import. [introduction doc](./docs/doc-imports.md)  
 ```javascript
 import "test.csv"
 import "test.jpg"  

@@ -840,8 +840,9 @@ parseMD = (inputString, option={})->
 
   if inputString.length == newInputString.length
     DISABLE_SYNC_LINE = false
-  else
+  else # there is file import
     DISABLE_SYNC_LINE = true
+  markdownPreview?.editor?.forceDisableScrollSync = DISABLE_SYNC_LINE
 
   inputString = newInputString
 
