@@ -40,7 +40,7 @@ $$ \chi(\lambda) = \left| \begin{array}{ccc}
 $$
 
 ## Graphs
-```{mermaid}
+```@mermaid
 graph TD;
     A-->B;
     A-->C;
@@ -48,7 +48,7 @@ graph TD;
 		D-->A
 ```
 
-```{mermaid}
+```@mermaid
 sequenceDiagram
     participant Alice
     participant Bob
@@ -62,7 +62,7 @@ sequenceDiagram
     Bob-->John: Jolly good!
 ```
 
-```{puml}
+```@puml
 class A {
   + init();
 }
