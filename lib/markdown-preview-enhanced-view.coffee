@@ -807,11 +807,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.getElementsByClassName('mermaid')
+    els = @element.getElementsByClassName('mermaid mpe-graph')
     if els.length
       @graphData.mermaid_s = Array.prototype.slice.call(els)
 
-      notProcessedEls = @element.querySelectorAll('.mermaid:not([data-processed])')
+      notProcessedEls = @element.querySelectorAll('.mermaid.mpe-graph:not([data-processed])')
 
       if notProcessedEls.length
         mermaid.init null, notProcessedEls
@@ -838,7 +838,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewScrollDelay = Date.now() + 500
 
   renderWavedrom: ()->
-    els = @element.getElementsByClassName('wavedrom')
+    els = @element.getElementsByClassName('wavedrom mpe-graph')
     if els.length
       @graphData.wavedrom_s = Array.prototype.slice.call(els)
 
@@ -862,7 +862,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewScrollDelay = Date.now() + 500
 
   renderPlantUML: ()->
-    els = @element.getElementsByClassName('plantuml')
+    els = @element.getElementsByClassName('plantuml mpe-graph')
 
     if els.length
       @graphData.plantuml_s = Array.prototype.slice.call(els)
@@ -879,7 +879,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         el.innerText = 'rendering graph...\n'
 
   renderViz: (element=@element)->
-    els = element.getElementsByClassName('viz')
+    els = element.getElementsByClassName('viz mpe-graph')
 
     if els.length
       @graphData.viz_s = Array.prototype.slice.call(els)

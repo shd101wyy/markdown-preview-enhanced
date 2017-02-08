@@ -17,9 +17,12 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 ![screen shot 2017-02-07 at 5 48 52 pm](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
 ## Supported file types
-* `jpeg(jpg), gif, png, apng, svg, bmp` file will be treated as markdown image.  
-* `csv` file will be converted to markdown table.  
-* `html` file will be embeded directly.  
+* `.jpeg(.jpg), .gif, .png, .apng, .svg, .bmp` file will be treated as markdown image.  
+* `.csv` file will be converted to markdown table.  
+* `.mermaid` file will be rendered by mermaid.  
+* `.dot` file will be rendered by viz.js (graphviz).  
+* `.plantuml(.puml)` file will be rendered by plantuml.  
+* `.html` file will be embeded directly.  
 * `markdown` file will be embeded directly.  
 * All other files will be rendered as code block.    
 

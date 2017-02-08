@@ -41,7 +41,7 @@ scopesForLanguageName =
   'plantuml': 'source.plantuml',
   'puml': 'source.plantuml',
   'wavedrom': 'source.wavedrom',
-  'viz': 'source.viz',
+  'viz': 'source.dot',
   'erd': 'source.erd',
   'node': 'source.js'
 

@@ -47,7 +47,6 @@ saveSvgAsPng = (svgElement, dest, option={}, cb)->
     fs.writeFile dest, base64Data, 'base64', (err)->
       cb(err)
 
-
 # {start, end, content}
 processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
   asyncFunctions = []
@@ -61,7 +60,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
 
-    match = def.match(/^\{(mermaid|wavedrom|viz|plantuml|puml)/)
+    match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
 
     if match  # builtin graph
       graphType = match[1]

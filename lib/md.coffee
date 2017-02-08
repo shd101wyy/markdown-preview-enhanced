@@ -456,19 +456,19 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
-      $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
+      $el = $("<div class=\"#{graphType} mpe-graph\" data-offset=\"#{offset}\">#{text}</div>")
       $el.attr 'data-original', text
 
       $preElement.replaceWith $el
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $el = $("<div class=\"#{graphType}\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
+        $el = $("<div class=\"#{graphType} mpe-graph\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
         $el.attr 'data-original', text
 
         $preElement.replaceWith $el
       else
-        $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
+        $el = $("<div class=\"#{graphType} mpe-graph\" data-offset=\"#{offset}\">#{text}</div>")
         $el.attr('data-original', text)
 
         $preElement.replaceWith $el
@@ -482,14 +482,14 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
     else
       $(preElement).replaceWith "<pre>Graph is not supported in EBook</pre>"
     ###
-    $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
+    $el = $("<div class=\"#{graphType} mpe-graph\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
     $el.attr 'data-original', text
 
     $(preElement).replaceWith $el
   else
     element = graphArray.splice(0, 1)[0]
     if element
-      $(preElement).replaceWith "<div class=\"#{graphType}\">#{element.innerHTML}</div>"
+      $(preElement).replaceWith "<div class=\"#{graphType} mpe-graph\">#{element.innerHTML}</div>"
     else
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
@@ -603,7 +603,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    if lang.startsWith('{mermaid')
+    if lang.match(/^\@mermaid/)
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -614,13 +614,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang.startsWith('{plantuml') or lang.startsWith('{puml')
+    else if lang.match(/^\@(plantuml|puml)/)
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang.startsWith('{wavedrom')
+    else if lang.match(/^\@wavedrom/)
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang.startsWith('{viz')
+    else if lang.match(/^\@(viz|dot)/)
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)

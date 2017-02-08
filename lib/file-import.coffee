@@ -2,6 +2,9 @@ Baby = require('babyparse')
 path = require 'path'
 fs = require 'fs'
 
+markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
+
+
 _2DArrayToMarkdownTable = (_2DArr)->
   output = "\n  \n"
   _2DArr.forEach (arr, offset)->
@@ -47,7 +50,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
 
       filesCache?[absoluteFilePath] = output
 
-    else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
+    else if extname in markdownFileExtensions
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
         output = '\n  \n' + fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
@@ -74,6 +77,28 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
           filesCache?[absoluteFilePath] = output
       catch e
         output = "<pre>#{e.toString()}</pre>"
+    else if extname in ['.dot']  # graph viz
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = "\n```@viz\n#{fileContent}\n```  \n"
+        filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
+    else if extname in ['.mermaid'] # mermaid
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = "\n```@mermaid\n#{fileContent}\n```  \n"
+        filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
+    else if extname in ['.puml', '.plantuml'] # plantuml
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = "\n```@puml\n#{fileContent}\n```  \n"
+        filesCache?[absoluteFilePath] = output
+      catch e
+        output = "<pre>#{e.toString()}</pre>"
+    # else if extname in ['.wavedrom'] # wavedrom # not supported yet.
     else # codeblock
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
