@@ -114,6 +114,8 @@ defaults =
 
 md = new remarkable('full', defaults)
 
+DISABLE_SYNC_LINE = false
+
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
     md.set({breaks: breakOnSingleNewline})
@@ -336,7 +338,7 @@ md.block.ruler.before 'code', 'custom-comment',
 # YIYI : 这里我不仅仅 map 了 level 0
 md.renderer.rules.paragraph_open = (tokens, idx)->
   lineNo = null
-  if tokens[idx].lines # /*&& tokens[idx].level == 0*/)
+  if tokens[idx].lines and !DISABLE_SYNC_LINE # /*&& tokens[idx].level == 0*/)
     lineNo = tokens[idx].lines[0]
     return '<p class="sync-line" data-line="' + lineNo + '">'
   return '<p>'
@@ -541,7 +543,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    if lineNo != null
+    if lineNo != null and !DISABLE_SYNC_LINE
       highlightedBlock.attr({'data-line': lineNo})
       highlightedBlock.addClass('sync-line')
 
@@ -568,7 +570,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock = $(html)
       highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-      if lineNo != null
+      if lineNo != null and !DISABLE_SYNC_LINE
         highlightedBlock.attr({'data-line': lineNo})
         highlightedBlock.addClass('sync-line')
 
@@ -790,6 +792,8 @@ option = {
 parseMD = (inputString, option={})->
   {markdownPreview} = option
 
+  DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
+
   # toc
   tocTable = {} # eliminate repeated slug
   tocEnabled = false
@@ -832,7 +836,14 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  inputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
+  newInputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
+
+  if inputString.length == newInputString.length
+    DISABLE_SYNC_LINE = false
+  else
+    DISABLE_SYNC_LINE = true
+
+  inputString = newInputString
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -851,7 +862,7 @@ parseMD = (inputString, option={})->
         tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
 
     id = if id then "id=#{id}" else ''
-    if tokens[idx].lines
+    if tokens[idx].lines and !DISABLE_SYNC_LINE
       line = tokens[idx].lines[0]
       return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{line}\" #{id}>"
 
