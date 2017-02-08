@@ -121,7 +121,6 @@ HEIGHTS_DELTA = [] # [[start, height], ...] for import files
 getRealDataLine = (lineNo)->
   return lineNo if !HEIGHTS_DELTA.length
   i = HEIGHTS_DELTA.length - 1
-  count = 0
   while i >= 0
     {realStart, start, height, acc} = HEIGHTS_DELTA[i]
     if lineNo == start
@@ -132,10 +131,9 @@ getRealDataLine = (lineNo)->
         # console.log(lineNo, HEIGHTS_DELTA, realStart)
         return realStart
       else
-        # console.log(lineNo, HEIGHTS_DELTA, lineNo - acc - height + realStart - i)
-        return lineNo - acc - height + realStart - i
+        # console.log(lineNo, HEIGHTS_DELTA, lineNo - acc - height + i + 1)
+        return lineNo - acc - height + i + 1
     i -= 1
-    count += 1
   return lineNo
 
 
