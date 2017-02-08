@@ -1,10 +1,12 @@
 ## 0.9.6  
 * [x] support external files import.  
 ```javascript
-import 'test.csv'
-import 'test.jpg'  
-import 'test.txt'  
-import 'test.md'
+import "test.csv"
+import "test.jpg"  
+import "test.txt"  
+import "test.md"
+import "test.html"
+import "test.js"
 ```
 * [x] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
 * [x] fix syntax theme issue (now partially fixed, need to wait for atom version `1.14`).  
