@@ -7,6 +7,7 @@ temp = require('temp').track()
 pdf = require 'html-pdf'
 katex = require 'katex'
 matter = require('gray-matter')
+{allowUnsafeEval} = require 'loophole'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -849,14 +850,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
           el.id = 'wavedrom'+offset
           text = el.getAttribute('data-original').trim()
           continue if not text.length
-          try
-            content = JSON.parse(text.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
-            WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
-            el.setAttribute 'data-processed', 'true'
 
-            @scrollMap = null
-          catch error
-            el.innerText = 'failed to parse JSON'
+          allowUnsafeEval =>
+            try
+              content = eval("(#{text})") # eval function here
+              WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
+              el.setAttribute 'data-processed', 'true'
+
+              @scrollMap = null
+            catch error
+              el.innerText = 'failed to eval WaveDrom code.'
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500

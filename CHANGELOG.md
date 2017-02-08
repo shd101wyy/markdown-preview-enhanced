@@ -10,6 +10,7 @@ import "test.js"
 ```
 * [x] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
 * [x] fix syntax theme issue (now partially fixed, need to wait for atom version `1.14`).  
+* [x] WaveDrom now doesn't require to use strict JSON. javascript code is fine as well.   
 
 ## 0.9.5  
 * [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  

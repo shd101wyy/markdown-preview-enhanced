@@ -43,6 +43,7 @@
     "html-pdf": "^2.1.0",
     "imgur": "^0.1.7",
     "katex": "^0.7.1",
+    "loophole": "^1.1.0",
     "remarkable": "^1.7.1",
     "request": "^2.79.0",
     "temp": "^0.8.3",
