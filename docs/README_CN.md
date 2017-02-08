@@ -10,6 +10,9 @@ Markdown Preview Enhanced
 
 ![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
+
+**注意**, 版本 `0.9.6` 改变了画图的语法。 我们将不再使用 <code>\`\`\`{mermaid}</code> 。 请用 <code>\`\`\`@mermaid</code> 代替。同样的，`@viz`, `@wavedrom`, `@puml` 和 `@plantuml`。  
+
 ---
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。

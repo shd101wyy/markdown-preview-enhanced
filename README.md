@@ -10,6 +10,9 @@ New Feature for version `0.9.6`! Oh yeah!
 
 ![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
+
+**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same as `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
+
 ---  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
