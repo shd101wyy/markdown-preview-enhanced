@@ -836,13 +836,12 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  newInputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
+  newInputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
   if inputString.length == newInputString.length
     DISABLE_SYNC_LINE = false
   else # there is file import
     DISABLE_SYNC_LINE = true
-  markdownPreview?.editor?.forceDisableScrollSync = DISABLE_SYNC_LINE
 
   inputString = newInputString
 

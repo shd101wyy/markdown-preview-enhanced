@@ -25,8 +25,16 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  \n'
   output
 
-fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
+fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
   inputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
+    syncLine = ''
+
+    # if editor (atom TextEditor class) is provided
+    # prepend syncLine for scroll sync
+    if editor
+      lineNo = (inputString.slice(0, offset).match(/\n/g)?.length + 1) or 0
+      screenRow = editor.screenRowForBufferRow(lineNo)
+      syncLine = "<span class='sync-line' data-line='#{screenRow}'></span>  \n"
 
     if filePath.match(/^(http|https|file)\:\/\//)
       absoluteFilePath = filePath
@@ -36,7 +44,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       absoluteFilePath = path.resolve(rootDirectoryPath, filePath)
 
     if filesCache?[absoluteFilePath] # already in cache
-      return filesCache[absoluteFilePath]
+      return syncLine + filesCache[absoluteFilePath]
 
     extname = path.extname(filePath)
     output = ''
@@ -107,7 +115,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       catch e
         output = "<pre>#{e.toString()}</pre>"
 
-    return output
+    return syncLine + output
 
   return inputString
 
