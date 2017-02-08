@@ -3,7 +3,7 @@ path = require 'path'
 fs = require 'fs'
 
 _2DArrayToMarkdownTable = (_2DArr)->
-  output = "  \n"
+  output = "\n  \n"
   _2DArr.forEach (arr, offset)->
     i = 0
     output += '|'
@@ -39,25 +39,25 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     output = ''
     if extname in ['.jpeg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(/^(http|https|file)\:\/\//)
-        output = "![](#{filePath})"
+        output = "\n![](#{filePath})  \n"
       else if useAbsoluteImagePath
-        output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
+        output = "\n![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  \n" # TODO: project relative path?
       else
-        output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})" # TODO: project relative path?
+        output = "\n![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})  \n" # TODO: project relative path?
 
       filesCache?[absoluteFilePath] = output
 
     else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = '  \n' + docImports(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
+        output = '\n  \n' + docImports(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
         filesCache?[absoluteFilePath] = output
       catch e
         output = "<pre>#{e.toString()}</pre>"
     else if extname == '.html'
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = '<div>' + fileContent + '</div>'
+        output = '\n  \n<div>' + fileContent + '</div>  \n'
         filesCache?[absoluteFilePath] = output
       catch error
         output = "<pre>#{e.toString()}</pre>"
@@ -77,15 +77,13 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     else # codeblock
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = """
-```#{extname.slice(1, extname.length)}
-#{fileContent}
-```
-"""
+        output = "\n```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  \n"
         filesCache?[absoluteFilePath] = output
       catch e
         output = "<pre>#{e.toString()}</pre>"
 
     return output
+
+  return inputString
 
 module.exports = docImports
