@@ -6,12 +6,12 @@ Still Beta Version!
 [中文文档](./docs/README_CN.md)   
 
 New Feature for version `0.9.6`! Oh yeah!  
-**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, more information can be found [here](./docs/doc-imports.md).     
+**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, and it is very buggy now. More information can be found [here](./docs/doc-imports.md).     
 
 ![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
 
-**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same as `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
+**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same for `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
 
 ---  
 
@@ -68,18 +68,17 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram.  
-	- code block with `{mermaid}` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
+	- code block with `@mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
-	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
+	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/22724073/622549ac-ed89-11e6-9a3e-6f35dd3f1c81.gif)
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
-	- code block with `{puml}` or `{plantuml}` notation will be rendered by [PlantUML](http://plantuml.com/).  
+	- code block with `@puml` or `@plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
 - [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
-	- code block with `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
+	- code block with `@wavedrom` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
-	- code block with `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
-    - add `engine:[engine_name]` at the first line of code block to choose different render engine. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.   
-    - ![viz](https://cloud.githubusercontent.com/assets/1908863/22486898/f3b71a8a-e7d0-11e6-9f69-88e30baa3a9a.gif)
+	- code block with `@viz` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
+    - add `engine:[engine_name]` at the first line of code block to choose different render engine. For example `engine:dot`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.   
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
 

@@ -29,3 +29,4 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 ## Known issues  
 * importing other docs will break scroll sync functionality.  
 * code chunk might be buggy.  
+* buggy with presentation writer. it breaks scroll sync.  
