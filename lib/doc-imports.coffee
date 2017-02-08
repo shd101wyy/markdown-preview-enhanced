@@ -54,6 +54,14 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         filesCache?[absoluteFilePath] = output
       catch e
         output = "<pre>#{e.toString()}</pre>"
+    else if extname == '.html'
+      try
+        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
+        output = '<div>' + fileContent + '</div>'
+        filesCache?[absoluteFilePath] = output
+      catch error
+        output = "<pre>#{e.toString()}</pre>"
+
     else if extname in ['.csv']
       try
         csvContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
