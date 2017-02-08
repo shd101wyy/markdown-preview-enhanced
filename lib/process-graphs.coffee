@@ -77,7 +77,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
             if mermaidAPI.parse(content)
               div = document.createElement('div')
-              div.style.display = 'none'
+              # div.style.display = 'none' # will cause font issue.
               div.classList.add('mermaid')
               div.textContent = content
               document.body.appendChild(div)
