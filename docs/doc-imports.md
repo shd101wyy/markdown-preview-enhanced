@@ -17,7 +17,7 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 ![screen shot 2017-02-07 at 5 48 52 pm](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
 ## Supported file types
-* `jpeg, gif, png, apng, svg, bmp` file will be treated as markdown image.  
+* `jpeg(jpg), gif, png, apng, svg, bmp` file will be treated as markdown image.  
 * `csv` file will be converted to markdown table.  
 * `html` file will be embeded directly.  
 * `markdown` file will be embeded directly.  

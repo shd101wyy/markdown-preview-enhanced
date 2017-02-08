@@ -37,7 +37,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
 
     extname = path.extname(filePath)
     output = ''
-    if extname in ['.jpeg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
+    if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(/^(http|https|file)\:\/\//)
         output = "\n![](#{filePath})  \n"
       else if useAbsoluteImagePath
