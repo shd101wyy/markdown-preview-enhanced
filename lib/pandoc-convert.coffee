@@ -9,7 +9,7 @@ plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 processGraphs = require './process-graphs'
-docImports = require './doc-imports'
+fileImport = require './file-import'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -241,7 +241,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
   text = matter.stringify(text, config)
 
   # doc imports
-  text = docImports text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}
+  text = fileImport text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}
 
   # change link path to relative path
   text = processPaths text, rootDirectoryPath, projectDirectoryPath

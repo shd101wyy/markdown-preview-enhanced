@@ -22,7 +22,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  \n'
   output
 
-docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
+fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath})->
   inputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
 
     if filePath.match(/^(http|https|file)\:\/\//)
@@ -50,7 +50,7 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     else if extname in ['.md', '.markdown', '.mmark', '.rmd'] # TODO: use config markdown-preview-enhanced.fileExtension
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = '\n  \n' + docImports(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
+        output = '\n  \n' + fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
         filesCache?[absoluteFilePath] = output
       catch e
         output = "<pre>#{e.toString()}</pre>"
@@ -86,4 +86,4 @@ docImports = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
 
   return inputString
 
-module.exports = docImports
+module.exports = fileImport

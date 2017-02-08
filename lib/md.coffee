@@ -12,7 +12,7 @@ matter = require('gray-matter')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
-docImports = require('./doc-imports.coffee')
+fileImport = require('./file-import.coffee')
 
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
@@ -832,7 +832,7 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  inputString = docImports(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
+  inputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath})
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
