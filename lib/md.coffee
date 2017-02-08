@@ -115,6 +115,7 @@ defaults =
 md = new remarkable('full', defaults)
 
 DISABLE_SYNC_LINE = false
+HEIGHTS_DELTA = [] # [[start, height], ...] for import files
 
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
@@ -793,6 +794,7 @@ parseMD = (inputString, option={})->
   {markdownPreview} = option
 
   DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
+  HEIGHTS_DELTA = []
 
   # toc
   tocTable = {} # eliminate repeated slug
@@ -836,7 +838,7 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  newInputString = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+  {outputString:newInputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
   if inputString.length == newInputString.length
     DISABLE_SYNC_LINE = false

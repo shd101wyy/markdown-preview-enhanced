@@ -89,7 +89,7 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   useAbsoluteImagePath = config.absolute_image_path
 
   # import external files
-  text = fileImport text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}
+  text = fileImport(text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}).outputString
 
   # change link path to project '/' path
   # this is actually differnet from pandoc-convert.coffee

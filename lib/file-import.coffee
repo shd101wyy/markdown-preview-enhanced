@@ -25,8 +25,17 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  \n'
   output
 
+###
+return
+{
+  {String} outputString,
+  {Array} heightsDelta : [[start, height], ...]
+}
+###
 fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
-  inputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, _g1, _g2, filePath, offset)->
+  heightsDelta = []
+
+  outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, start, space, filePath, offset)->
     syncLine = ''
 
     # if editor (atom TextEditor class) is provided
@@ -57,66 +66,42 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         output = "\n![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})  \n" # TODO: project relative path?
 
       filesCache?[absoluteFilePath] = output
-
-    else if extname in markdownFileExtensions
+    else
       try
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = '\n  \n' + fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}) + '  \n'
-        filesCache?[absoluteFilePath] = output
-      catch e
-        output = "<pre>#{e.toString()}</pre>"
-    else if extname == '.html'
-      try
-        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = '\n  \n<div>' + fileContent + '</div>  \n'
-        filesCache?[absoluteFilePath] = output
-      catch error
-        output = "<pre>#{e.toString()}</pre>"
 
-    else if extname in ['.csv']
-      try
-        csvContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        parseResult = Baby.parse(csvContent)
-        if parseResult.errors.length
-          output = "<pre>#{parseResult.errors[0]}</pre>"
-        else
-          # format csv to markdown table
-          output = _2DArrayToMarkdownTable(parseResult.data)
+        if extname in markdownFileExtensions # markdown files
+          output = '\n  \n' + fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  \n'
           filesCache?[absoluteFilePath] = output
-      catch e
-        output = "<pre>#{e.toString()}</pre>"
-    else if extname in ['.dot']  # graph viz
-      try
-        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = "\n```@viz\n#{fileContent}\n```  \n"
-        filesCache?[absoluteFilePath] = output
-      catch e
-        output = "<pre>#{e.toString()}</pre>"
-    else if extname in ['.mermaid'] # mermaid
-      try
-        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = "\n```@mermaid\n#{fileContent}\n```  \n"
-        filesCache?[absoluteFilePath] = output
-      catch e
-        output = "<pre>#{e.toString()}</pre>"
-    else if extname in ['.puml', '.plantuml'] # plantuml
-      try
-        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = "\n```@puml\n#{fileContent}\n```  \n"
-        filesCache?[absoluteFilePath] = output
-      catch e
-        output = "<pre>#{e.toString()}</pre>"
-    # else if extname in ['.wavedrom'] # wavedrom # not supported yet.
-    else # codeblock
-      try
-        fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
-        output = "\n```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  \n"
-        filesCache?[absoluteFilePath] = output
-      catch e
+        else if extname == '.html' # html file
+          output = '\n  \n<div>' + fileContent + '</div>  \n'
+          filesCache?[absoluteFilePath] = output
+        else if extname == '.csv'  # csv file
+          parseResult = Baby.parse(fileContent)
+          if parseResult.errors.length
+            output = "<pre>#{parseResult.errors[0]}</pre>"
+          else
+            # format csv to markdown table
+            output = _2DArrayToMarkdownTable(parseResult.data)
+            filesCache?[absoluteFilePath] = output
+        else if extname in ['.dot'] # graphviz
+          output = "\n```@viz\n#{fileContent}\n```  \n"
+          filesCache?[absoluteFilePath] = output
+        else if extname == '.mermaid' # mermaid
+          output = "\n```@mermaid\n#{fileContent}\n```  \n"
+          filesCache?[absoluteFilePath] = output
+        else if extname in ['.puml', '.plantuml'] # plantuml
+          output = "\n```@puml\n#{fileContent}\n```  \n"
+          filesCache?[absoluteFilePath] = output
+        # else if extname in ['.wavedrom'] # wavedrom # not supported yet.
+        else # codeblock
+          output = "\n```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  \n"
+          filesCache?[absoluteFilePath] = output
+      catch e # failed to load file
         output = "<pre>#{e.toString()}</pre>"
 
     return syncLine + output
 
-  return inputString
+  return {outputString, heightsDelta}
 
 module.exports = fileImport

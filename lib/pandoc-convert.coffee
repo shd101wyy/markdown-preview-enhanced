@@ -241,7 +241,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
   text = matter.stringify(text, config)
 
   # import external files
-  text = fileImport text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}
+  text = fileImport(text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
 
   # change link path to relative path
   text = processPaths text, rootDirectoryPath, projectDirectoryPath
