@@ -19,7 +19,7 @@ processGraphs = (text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryP
   while i < lines.length
     line = lines[i]
     trimmedLine = line.trim()
-    if trimmedLine.startsWith('```{') and trimmedLine.endsWith('}')
+    if trimmedLine.match(/^```\{(.+)\}$/) or trimmedLine.match(/^```\@/)
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
