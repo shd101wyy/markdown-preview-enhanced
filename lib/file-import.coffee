@@ -110,7 +110,9 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         else if extname in ['.puml', '.plantuml'] # plantuml
           output = "```@puml\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
-        # else if extname in ['.wavedrom'] # wavedrom # not supported yet.
+        else if extname in ['.wavedrom']
+          output = "```@wavedrom\n#{fileContent}\n```  "
+          filesCache?[absoluteFilePath] = output
         else # codeblock
           output = "```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
