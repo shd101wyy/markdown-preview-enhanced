@@ -13,6 +13,7 @@ import "test.js"
 * [x] fix syntax theme issue.  
 * [x] WaveDrom now doesn't require to use strict JSON. javascript code is fine as well.   
 * [x] fix toggle issue.   
+* [x] shrink output html file size.  
 
 ## 0.9.5  
 * [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  
