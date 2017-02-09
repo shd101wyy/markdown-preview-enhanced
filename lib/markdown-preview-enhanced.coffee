@@ -95,6 +95,11 @@ module.exports = MarkdownPreviewEnhanced =
             else
               editorElement.removeAttribute('data-markdown-zen')
 
+      if enableZenMode
+        document.getElementsByTagName('atom-workspace')?[0]?.setAttribute('data-markdown-zen', '')
+      else
+        document.getElementsByTagName('atom-workspace')?[0]?.removeAttribute('data-markdown-zen')
+
 
   deactivate: ->
     @subscriptions.dispose()
