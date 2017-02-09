@@ -62,7 +62,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
 
-    if filePath.match(/^(http|https|file)\:\/\//)
+    if filePath.match(/^(http|https|file|atom)\:\/\//)
       absoluteFilePath = filePath
     else if filePath.startsWith('/')
       absoluteFilePath = path.resolve(projectDirectoryPath, '.' + filePath)

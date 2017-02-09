@@ -21,5 +21,11 @@ atom-text-editor[data-markdown-zen] {
   width: 80%;
   height: calc(~"100% - 64px");
   margin: 0 auto;
-  background-color: @tool-panel-background-color;
+  background-color: @syntax-background-color;
+}
+
+atom-workspace[data-markdown-zen] {
+  .item-views {
+    background-color: @syntax-background-color !important;
+  }
 }

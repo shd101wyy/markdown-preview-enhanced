@@ -1,3 +1,7 @@
+## 0.9.7  
+* [x] add relative image path option for exporting html. fix issue [#264](https://github.com/shd101wyy/markdown-preview-enhanced/issues/264).  
+* [x] fix zen mode.
+
 ## 0.9.6  
 * [x] support external files import. [introduction doc](./docs/doc-imports.md)  
 ```javascript
