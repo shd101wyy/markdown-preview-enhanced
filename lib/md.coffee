@@ -556,7 +556,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang, lineNo=null)->
-    highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: ''})
+    highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'syntax--'})
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -583,7 +583,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = ''
     buttonGroup = ''
     if not /\s*hide\s*:\s*true/.test(parameters)
-      highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: ''})
+      highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'syntax--'})
       html = highlighter.highlightSync
               fileContents: text,
               scopeName: scopeForLanguageName(lang)
