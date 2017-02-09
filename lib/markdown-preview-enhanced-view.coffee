@@ -1001,10 +1001,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  getHTMLContent: ({isForPrint, offline, isSavingToHTML, phantomjsType})->
+  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType})->
     isForPrint ?= false
     offline ?= false
-    isSavingToHTML ?= false
+    useRelativeImagePath ?= false
     phantomjsType ?= false # pdf | png | jpeg | false
     return if not @editor
 
@@ -1012,7 +1012,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isSavingToHTML, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
     yamlConfig = res.yamlConfig or {}
@@ -1062,7 +1062,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation
     if slideConfigs.length
-      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, isSavingToHTML)
+      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, useRelativeImagePath)
       if offline
         presentationScript = "
         <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/lib/js/head.min.js')}'></script>
@@ -1195,10 +1195,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
           throw err if err
           @printPDF "file://#{info.path}", dest
 
-  saveAsHTML: (dest, offline=true)->
+  saveAsHTML: (dest, offline=true, useRelativeImagePath)->
     return if not @editor
 
-    htmlContent = @getHTMLContent isForPrint: false, offline: offline, isSavingToHTML: true
+    htmlContent = @getHTMLContent isForPrint: false, offline: offline, useRelativeImagePath: useRelativeImagePath
 
     htmlFileName = path.basename(dest)
 
@@ -1302,7 +1302,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     </div>
     """
 
-  parseSlidesForExport: (html, slideConfigs, isSavingToHTML)->
+  parseSlidesForExport: (html, slideConfigs, useRelativeImagePath)->
     slides = html.split '<div class="new-slide"></div>'
     slides = slides.slice(1)
     output = ''
@@ -1310,7 +1310,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     parseAttrString = (slideConfig)=>
       attrString = ''
       if slideConfig['data-background-image']
-        attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], isSavingToHTML)}'"
+        attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], useRelativeImagePath)}'"
 
       if slideConfig['data-background-size']
         attrString += " data-background-size='#{slideConfig['data-background-size']}'"
@@ -1328,7 +1328,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         attrString += " data-notes='#{slideConfig['data-notes']}'"
 
       if slideConfig['data-background-video']
-        attrString += " data-background-video='#{@resolveFilePath(slideConfig['data-background-video'], isSavingToHTML)}'"
+        attrString += " data-background-video='#{@resolveFilePath(slideConfig['data-background-video'], useRelativeImagePath)}'"
 
       if slideConfig['data-background-video-loop']
         attrString += " data-background-video-loop"
@@ -1340,7 +1340,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         attrString += " data-transition='#{slideConfig['data-transition']}'"
 
       if slideConfig['data-background-iframe']
-        attrString += " data-background-iframe='#{@resolveFilePath(slideConfig['data-background-iframe'], isSavingToHTML)}'"
+        attrString += " data-background-iframe='#{@resolveFilePath(slideConfig['data-background-iframe'], useRelativeImagePath)}'"
       attrString
 
     i = 0

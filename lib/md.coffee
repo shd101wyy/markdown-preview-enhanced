@@ -542,15 +542,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         src.startsWith('atom://')  or
         src.startsWith('file://')  or
         src.startsWith('data:image/') or
-        src[0] == '#')) and
-      (src.startsWith('./') or
-        src.startsWith('../') or
-        src[0] != '/')
-      if !option.isSavingToHTML
+        src[0] == '#' or
+        src[0] == '/'))
+      if !option.useRelativeImagePath
         img.attr(srcTag, 'file:///'+path.resolve(rootDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
-      if (option.isSavingToHTML)
+      if option.useRelativeImagePath
         img.attr(srcTag, path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
@@ -798,7 +796,7 @@ updateTOC = (markdownPreview, tocConfigs)->
 
 inputString:         string, required
 option = {
-  isSavingToHTML:       bool, optional
+  useRelativeImagePath:       bool, optional
   isForPreview:         bool, optional
   isForEbook:           bool, optional
   hideFrontMatter:      bool, optional
