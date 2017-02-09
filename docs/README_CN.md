@@ -165,7 +165,6 @@ Markdown Preview Enhanced
 * [atom](https://github.com/atom/atom) - The hackable text editor.
 
 ## 感谢  
-感谢所有支持这个插件的人们！     
-谢谢你使用并支持此插件 ;)
+感谢你使用并支持此插件 ;)
 
 > University of Illinois/NCSA Open Source License

@@ -166,7 +166,6 @@ It is also very easy to write your own extension, more information can be found 
 * [atom](https://github.com/atom/atom) - The hackable text editor.
 
 ## Thanks  
-Thanks for everyone that supports this package!    
 Thanks for using and supporting this package ;)
 
 > University of Illinois/NCSA Open Source License
