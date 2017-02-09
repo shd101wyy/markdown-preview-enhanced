@@ -537,10 +537,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     src = img.attr(srcTag)
 
     if src and
-      (!(src.startsWith('http://') or
-        src.startsWith('https://') or
-        src.startsWith('atom://')  or
-        src.startsWith('file://')  or
+      (!(src.match(/^(http|https|atom|file)\:\/\//) or
         src.startsWith('data:image/') or
         src[0] == '#' or
         src[0] == '/'))
