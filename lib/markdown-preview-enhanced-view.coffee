@@ -1724,5 +1724,7 @@ module.exports = config || {}
     for key of CACHE
       delete(CACHE[key])
 
+    @mainModule.preview = null # unbind
+
   getElement: ->
     @element
