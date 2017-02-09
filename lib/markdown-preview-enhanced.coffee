@@ -132,7 +132,7 @@ module.exports = MarkdownPreviewEnhanced =
 
       if !@documentExporterView
         @documentExporterView = new ExporterView()
-        @preview.documentExporterView = @documentExporterView
+      @preview.documentExporterView = @documentExporterView
       return true
     else
       return false
