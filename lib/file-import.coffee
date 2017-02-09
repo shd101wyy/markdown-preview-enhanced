@@ -6,7 +6,7 @@ markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtensio
 
 
 # Convert 2D array to markdown table.
-# The first row is headings.  
+# The first row is headings.
 _2DArrayToMarkdownTable = (_2DArr)->
   output = "  \n"
   _2DArr.forEach (arr, offset)->
@@ -97,7 +97,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         else if extname == '.csv'  # csv file
           parseResult = Baby.parse(fileContent)
           if parseResult.errors.length
-            output = "<pre>#{parseResult.errors[0]}</pre>"
+            output = "<pre>#{parseResult.errors[0]}</pre>  "
           else
             # format csv to markdown table
             output = _2DArrayToMarkdownTable(parseResult.data)
