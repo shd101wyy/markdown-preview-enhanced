@@ -28,6 +28,5 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * All other files will be rendered as code block.    
 
 ## Known issues  
-* importing other docs will break scroll sync functionality.  
+* importing other docs might break scroll sync functionality.  
 * code chunk might be buggy.  
-* buggy with presentation writer. it breaks scroll sync.  
