@@ -115,7 +115,7 @@ defaults =
 md = new remarkable('full', defaults)
 
 DISABLE_SYNC_LINE = false
-HEIGHTS_DELTA = [] # [[start, height], ...] for import files
+HEIGHTS_DELTA = [] # [[realStart, start, height, acc], ...] for import files
 
 # fix data-line after import external files
 getRealDataLine = (lineNo)->
@@ -858,16 +858,7 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  {outputString:newInputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
-
-  ###
-  if inputString.length == newInputString.length
-    DISABLE_SYNC_LINE = false
-  else # there is file import
-    DISABLE_SYNC_LINE = true
-  ###
-
-  inputString = newInputString
+  {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
