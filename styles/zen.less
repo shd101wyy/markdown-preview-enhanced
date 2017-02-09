@@ -15,13 +15,11 @@ atom-text-editor[data-markdown-zen].editor {
 }
 
 atom-text-editor[data-markdown-zen] {
-    position: relative;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    padding-left: 10%;
-    padding-right: 10%;
-    // width: 80%;
-    // max-width: 874px;
-    // margin: 0 auto;
-    // background-color: @syntax-background-color;
+  top: 32px !important;
+
+  max-width: 874px;
+  width: 80%;
+  height: calc(~"100% - 64px");
+  margin: 0 auto;
+  background-color: @tool-panel-background-color;
 }
