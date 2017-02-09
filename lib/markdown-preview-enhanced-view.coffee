@@ -952,20 +952,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ###
   convert './a.txt' '/a.txt'
   ###
-  resolveFilePath: (filePath, relative=false)->
-    if filePath.startsWith('./') or filePath.startsWith('/')
-      if relative
-        if filePath[0] == '.'
-          return filePath
-        else
-          return path.relative(@rootDirectoryPath, path.resolve(@projectDirectoryPath, '.'+filePath))
-      else
-        if filePath[0] == '.'
-          return 'file:///'+path.resolve(@rootDirectoryPath, filePath)
-        else
-          return 'file:///'+path.resolve(@projectDirectoryPath, '.'+filePath)
-    else
+  resolveFilePath: (filePath='', relative=false)->
+    if filePath.match(/^(http|https|file|atom)\:\/\//)
       return filePath
+    else if filePath.startsWith('/')
+      if relative
+        return path.relative(@rootDirectoryPath, path.resolve(@projectDirectoryPath, '.'+filePath))
+      else
+        return 'file:///'+path.resolve(@projectDirectoryPath, '.'+filePath)
+    else
+      if relative
+        return filePath
+      else
+        return 'file:///'+path.resolve(@rootDirectoryPath, filePath)
 
   ## Utilities
   openInBrowser: (isForPresentationPrint=false)->
