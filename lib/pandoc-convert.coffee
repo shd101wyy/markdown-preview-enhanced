@@ -8,7 +8,8 @@ Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
-processGraphs = require './process-graphs.coffee'
+processGraphs = require './process-graphs'
+fileImport = require './file-import'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -238,6 +239,9 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
 
   # add front-matter(yaml) to text
   text = matter.stringify(text, config)
+
+  # import external files
+  text = fileImport(text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
 
   # change link path to relative path
   text = processPaths text, rootDirectoryPath, projectDirectoryPath

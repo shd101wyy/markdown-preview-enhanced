@@ -1,15 +1,19 @@
 katex = require 'katex'
 cheerio = require 'cheerio'
 path = require 'path'
+fs = require 'fs'
 remarkable = require 'remarkable'
 uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
 {File} = require 'atom'
-{mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 matter = require('gray-matter')
+
+{mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
+fileImport = require('./file-import.coffee')
+
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -26,6 +30,7 @@ TAGS_TO_REPLACE = {
     '\/', '&#x2F;',
     '\\', '&#x5C;',
 }
+highlighter = null
 String.prototype.escape = ()->
   this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
 
@@ -108,6 +113,29 @@ defaults =
   typographer:  true,        # Enable smartypants and other sweet transforms
 
 md = new remarkable('full', defaults)
+
+DISABLE_SYNC_LINE = false
+HEIGHTS_DELTA = [] # [[realStart, start, height, acc], ...] for import files
+
+# fix data-line after import external files
+getRealDataLine = (lineNo)->
+  return lineNo if !HEIGHTS_DELTA.length
+  i = HEIGHTS_DELTA.length - 1
+  while i >= 0
+    {realStart, start, height, acc} = HEIGHTS_DELTA[i]
+    if lineNo == start
+      # console.log(lineNo, HEIGHTS_DELTA, realStart)
+      return realStart
+    else if lineNo > start
+      if lineNo < start + height # imported content
+        # console.log(lineNo, HEIGHTS_DELTA, realStart)
+        return realStart
+      else
+        # console.log(lineNo, HEIGHTS_DELTA, lineNo - acc - height + i + 1)
+        return lineNo - acc - height + i + 1
+    i -= 1
+  return lineNo
+
 
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
@@ -314,7 +342,7 @@ md.block.ruler.before 'code', 'custom-comment',
         state.tokens.push
           type: 'custom'
           subject: subject
-          line: state.line
+          line: getRealDataLine(state.line)
           option: option
 
         state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
@@ -331,9 +359,9 @@ md.block.ruler.before 'code', 'custom-comment',
 # YIYI : 这里我不仅仅 map 了 level 0
 md.renderer.rules.paragraph_open = (tokens, idx)->
   lineNo = null
-  if tokens[idx].lines # /*&& tokens[idx].level == 0*/)
+  if tokens[idx].lines and !DISABLE_SYNC_LINE # /*&& tokens[idx].level == 0*/)
     lineNo = tokens[idx].lines[0]
-    return '<p class="sync-line" data-line="' + lineNo + '">'
+    return '<p class="sync-line" data-line="' + getRealDataLine(lineNo) + '">'
   return '<p>'
 
 
@@ -372,7 +400,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
     langClass = ' class="' + langPrefix + token.params.escape() + '" ';
 
   if token.lines
-    lineStr = " data-line=\"#{token.lines[0]}\" "
+    lineStr = " data-line=\"#{getRealDataLine(token.lines[0])}\" "
 
   # get code content
   content = token.content.escape()
@@ -451,19 +479,19 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
   if option.isForPreview
     $preElement = $(preElement)
     if !graphArray.length
-      $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
+      $el = $("<div class=\"#{graphType} mpe-graph\" data-offset=\"#{offset}\">#{text}</div>")
       $el.attr 'data-original', text
 
       $preElement.replaceWith $el
     else
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
-        $el = $("<div class=\"#{graphType}\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
+        $el = $("<div class=\"#{graphType} mpe-graph\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
         $el.attr 'data-original', text
 
         $preElement.replaceWith $el
       else
-        $el = $("<div class=\"#{graphType}\" data-offset=\"#{offset}\">#{text}</div>")
+        $el = $("<div class=\"#{graphType} mpe-graph\" data-offset=\"#{offset}\">#{text}</div>")
         $el.attr('data-original', text)
 
         $preElement.replaceWith $el
@@ -477,14 +505,14 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
     else
       $(preElement).replaceWith "<pre>Graph is not supported in EBook</pre>"
     ###
-    $el = $("<div class=\"#{graphType}\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
+    $el = $("<div class=\"#{graphType} mpe-graph\" #{if graphType in ['wavedrom', 'mermaid'] then "data-offset=\"#{offset}\"" else ''}>Graph is not supported in EBook</div>")
     $el.attr 'data-original', text
 
     $(preElement).replaceWith $el
   else
     element = graphArray.splice(0, 1)[0]
     if element
-      $(preElement).replaceWith "<div class=\"#{graphType}\">#{element.innerHTML}</div>"
+      $(preElement).replaceWith "<div class=\"#{graphType} mpe-graph\">#{element.innerHTML}</div>"
     else
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
@@ -528,7 +556,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
   renderCodeBlock = (preElement, text, lang, lineNo=null)->
-    highlighter = new Highlights({registry: atom.grammars})
+    highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -536,8 +564,8 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    if lineNo != null
-      highlightedBlock.attr({'data-line': lineNo})
+    if lineNo != null and !DISABLE_SYNC_LINE
+      highlightedBlock.attr({'data-line': lineNo}) # no need to call getRealDataLine here
       highlightedBlock.addClass('sync-line')
 
     $(preElement).replaceWith(highlightedBlock)
@@ -555,7 +583,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = ''
     buttonGroup = ''
     if not /\s*hide\s*:\s*true/.test(parameters)
-      highlighter = new Highlights({registry: atom.grammars})
+      highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
       html = highlighter.highlightSync
               fileContents: text,
               scopeName: scopeForLanguageName(lang)
@@ -563,7 +591,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock = $(html)
       highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-      if lineNo != null
+      if lineNo != null and !DISABLE_SYNC_LINE
         highlightedBlock.attr({'data-line': lineNo})
         highlightedBlock.addClass('sync-line')
 
@@ -598,7 +626,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    if lang == '{mermaid}'
+    if lang.match(/^\@mermaid/)
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -609,13 +637,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang in ['{plantuml}', '{puml}']
+    else if lang.match(/^\@(plantuml|puml)/)
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang == '{wavedrom}'
+    else if lang.match(/^\@wavedrom/)
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang == '{viz}'
+    else if lang.match(/^\@(viz|dot)/)
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
@@ -765,7 +793,6 @@ updateTOC = (markdownPreview, tocConfigs)->
   markdownPreview.tocConfigs = tocConfigs
   return tocNeedUpdate
 
-
 ###
 # parse markdown content to html
 
@@ -785,6 +812,9 @@ option = {
 ###
 parseMD = (inputString, option={})->
   {markdownPreview} = option
+
+  DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
+  HEIGHTS_DELTA = []
 
   # toc
   tocTable = {} # eliminate repeated slug
@@ -827,6 +857,9 @@ parseMD = (inputString, option={})->
   # check front-matter
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
+  # check document imports
+  {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
     line = null
@@ -844,9 +877,9 @@ parseMD = (inputString, option={})->
         tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
 
     id = if id then "id=#{id}" else ''
-    if tokens[idx].lines
+    if tokens[idx].lines and !DISABLE_SYNC_LINE
       line = tokens[idx].lines[0]
-      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{line}\" #{id}>"
+      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{getRealDataLine(line)}\" #{id}>"
 
     return "<h#{tokens[idx].hLevel} #{id}>"
 

@@ -7,6 +7,7 @@ temp = require('temp').track()
 pdf = require 'html-pdf'
 katex = require 'katex'
 matter = require('gray-matter')
+{allowUnsafeEval} = require 'loophole'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -65,6 +66,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # graph data used to save rendered graphs
     @graphData = null
     @codeChunksData = {}
+
+    # files cache for document import
+    @filesCache = {}
 
     # when resize the window, clear the editor
     window.addEventListener 'resize', @resizeEvent.bind(this)
@@ -157,7 +161,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
-        slideConfigs: @slideConfigs
+        slideConfigs: @slideConfigs,
+        filesCache: @filesCache,
       }
 
       # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
@@ -180,6 +185,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @rootDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
     @firstTimeRenderMarkdowon = true
+    @filesCache = {}
 
     if @disposables # remove all binded events
       @disposables.dispose()
@@ -196,6 +202,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
       @slideConfigs = d.slideConfigs
+      @filesCache = d.filesCache
 
       if @presentationMode
         @element.setAttribute 'data-presentation-preview-mode', ''
@@ -206,17 +213,22 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # console.log 'restore ' + @editor.getPath()
 
       # reset back to top button onclick event
-      document.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
+      @element.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
         @element.scrollTop = 0
+
+      # reset refresh button onclick event
+      @element.getElementsByClassName('refresh-btn')?[0]?.onclick = ()=>
+        @filesCache = {}
+        @renderMarkdown()
 
       # rebind tag a click event
       @bindTagAClickEvent()
 
-      # reset code chunks
-      @setupCodeChunks()
-
       # render plantuml in case
       @renderPlantUML()
+
+      # reset code chunks
+      @setupCodeChunks()
     else
       @renderMarkdown()
     @scrollMap = null
@@ -516,6 +528,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @setInitialScrollPos()
     @addBackToTopButton()
+    @addRefreshButton()
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
@@ -543,6 +556,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       backToTopBtn.onclick = ()=>
         @element.scrollTop = 0
+
+  addRefreshButton: ->
+    refreshBtn = document.createElement('div')
+    refreshBtn.classList.add('refresh-btn')
+    refreshBtn.classList.add('btn')
+    refreshBtn.innerHTML = '<span>⟳</span>'
+    @element.appendChild(refreshBtn)
+
+    refreshBtn.onclick = ()=>
+      # clear cache
+      @filesCache = {}
+
+      # render again
+      @renderMarkdown()
 
   bindEvents: ->
     @bindTagAClickEvent()
@@ -601,6 +628,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     return if !codeChunks.length
 
     newCodeChunksData = {}
+    needToSetupChunksId = false
     setupCodeChunk = (codeChunk)=>
       dataArgs = codeChunk.getAttribute('data-args')
       idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
@@ -610,6 +638,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
         newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
+      else # id not exist, create new id
+        needToSetupChunksId = true
 
       runBtn = codeChunk.getElementsByClassName('run-btn')[0]
       runBtn?.addEventListener 'click', ()=>
@@ -620,9 +650,51 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @runAllCodeChunks()
 
     for codeChunk in codeChunks
+      break if needToSetupChunksId
       setupCodeChunk(codeChunk)
 
+    if needToSetupChunksId
+      @setupCodeChunksId()
+
     @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
+
+  setupCodeChunksId: ()->
+    buffer = @editor.buffer
+    return if !buffer
+
+    lines = buffer.lines
+    lineNo = 0
+    curScreenPos = @editor.getCursorScreenPosition()
+
+    while lineNo < lines.length
+      line = lines[lineNo]
+      match = line.match(/^\`\`\`\{(.+)\}(\s*)/)
+      if match
+        cmd = match[1]
+        dataArgs = ''
+        i = cmd.indexOf(' ')
+        if i > 0
+          dataArgs = cmd.slice(i + 1, cmd.length).trim()
+          cmd = cmd.slice(0, i)
+
+        idMatch = match[1].match(/\s*id\s*:\s*\"([^\"]*)\"/)
+        if !idMatch
+          id = (new Date().getTime()).toString(36)
+
+          line = line.trimRight()
+          line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
+
+          @parseDelay = Date.now() + 500 # prevent renderMarkdown
+
+          buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+
+      lineNo += 1
+
+    @editor.setCursorScreenPosition(curScreenPos) # restore cursor position.
+
+      # This will cause Maximum size exceeded
+      # @parseDelay = Date.now()
+      # @renderMarkdown()
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
@@ -657,22 +729,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
 
     if !idMatch
-      id = (new Date().getTime()).toString(36)
-
-      buffer = @editor.buffer
-      return if !buffer
-
-      lineNo = parseInt(codeChunk.getAttribute('data-line'))
-
-      line = buffer.lines[lineNo].trimRight()
-      line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
-
-      codeChunk.setAttribute('data-args', (if !dataArgs then '' else (dataArgs+', ')) + 'id:"' + id + '"')
-      codeChunk.id = 'code_chunk_' + id
-
-      @parseDelay = Date.now() + 500 # prevent renderMarkdown
-
-      buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
+      return atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')
     else
       id = idMatch[1]
 
@@ -751,14 +808,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.getElementsByClassName('mermaid')
+    els = @element.getElementsByClassName('mermaid mpe-graph')
     if els.length
       @graphData.mermaid_s = Array.prototype.slice.call(els)
 
-      notProcessedEls = @element.querySelectorAll('.mermaid:not([data-processed])')
+      notProcessedEls = @element.querySelectorAll('.mermaid.mpe-graph:not([data-processed])')
 
       if notProcessedEls.length
-        mermaid.init(null, notProcessedEls)
+        mermaid.init null, notProcessedEls
 
       ###
       # the code below doesn't seem to be working
@@ -782,7 +839,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewScrollDelay = Date.now() + 500
 
   renderWavedrom: ()->
-    els = @element.getElementsByClassName('wavedrom')
+    els = @element.getElementsByClassName('wavedrom mpe-graph')
     if els.length
       @graphData.wavedrom_s = Array.prototype.slice.call(els)
 
@@ -793,20 +850,22 @@ class MarkdownPreviewEnhancedView extends ScrollView
           el.id = 'wavedrom'+offset
           text = el.getAttribute('data-original').trim()
           continue if not text.length
-          try
-            content = JSON.parse(text.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")) # clean up bad json string.
-            WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
-            el.setAttribute 'data-processed', 'true'
 
-            @scrollMap = null
-          catch error
-            el.innerText = 'failed to parse JSON'
+          allowUnsafeEval =>
+            try
+              content = eval("(#{text})") # eval function here
+              WaveDrom.RenderWaveForm(offset, content, 'wavedrom')
+              el.setAttribute 'data-processed', 'true'
+
+              @scrollMap = null
+            catch error
+              el.innerText = 'failed to eval WaveDrom code.'
 
       # disable @element onscroll
       @previewScrollDelay = Date.now() + 500
 
   renderPlantUML: ()->
-    els = @element.getElementsByClassName('plantuml')
+    els = @element.getElementsByClassName('plantuml mpe-graph')
 
     if els.length
       @graphData.plantuml_s = Array.prototype.slice.call(els)
@@ -823,7 +882,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         el.innerText = 'rendering graph...\n'
 
   renderViz: (element=@element)->
-    els = element.getElementsByClassName('viz')
+    els = element.getElementsByClassName('viz mpe-graph')
 
     if els.length
       @graphData.viz_s = Array.prototype.slice.call(els)
@@ -1660,6 +1719,12 @@ module.exports = config || {}
     if @settingsDisposables
       @settingsDisposables.dispose()
       @settingsDisposables = null
+
+    # clear CACHE
+    for key of CACHE
+      delete(CACHE[key])
+
+    @mainModule.preview = null # unbind
 
   getElement: ->
     @element

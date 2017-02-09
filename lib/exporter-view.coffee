@@ -35,8 +35,8 @@ class ExporterView extends View
       @div class: 'splitter'
 
       @div class: 'html-div', =>
-        @label 'CDN (network required)'
         @input class: 'cdn-checkbox', type: 'checkbox'
+        @label 'CDN (network required. enable this if the html file is for remote use)'
 
       @div class: 'pdf-div', =>
         @label 'Format'

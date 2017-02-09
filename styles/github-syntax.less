@@ -1,0 +1,410 @@
+// github syntax theme
+// forked and modified from https://github.com/primer/github-atom-light-syntax
+
+.github-syntax-theme {
+  // General colors
+  @syntax-text-color: #333;
+  @syntax-cursor-color: #000;
+  @syntax-selection-color: #c8c8fa;
+  @syntax-background-color: #f7f7f7;
+  @syntax-cursor-line: #f5f5f5;
+  @syntax-invisible-color: #c0c0c0;
+
+  // Guide colors
+  @syntax-wrap-guide-color: #c0c0c0;
+  @syntax-indent-guide-color: #c0c0c0;
+  @syntax-invisible-character-color: #c0c0c0;
+
+  // For find and replace markers
+  @syntax-result-marker-color: #ed6a43;
+  @syntax-result-marker-color-selected: #fff;
+
+  // Gutter colors
+  @syntax-gutter-text-color: #333;
+  @syntax-gutter-text-color-selected: #333;
+  @syntax-gutter-background-color: #fff;
+  @syntax-gutter-background-color-selected: #f5f5f5;
+
+  // For git diff info. i.e. in the gutter
+  @syntax-color-renamed: #f2f9fc;
+  @syntax-color-added: #eaffea;
+  @syntax-color-modified: #fff9ea;
+  @syntax-color-removed: #ffecec;
+
+  pre.editor-colors {
+    background-color: @syntax-background-color;
+    color: @syntax-text-color;
+
+    .line.cursor-line {
+      background-color: @syntax-cursor-line;
+    }
+
+    .invisible {
+      color: @syntax-invisible-color;
+    }
+
+    .cursor {
+      border-left: 2px solid @syntax-cursor-color;
+    }
+
+    .selection .region {
+      background-color: @syntax-selection-color;
+    }
+
+    .bracket-matcher .region {
+      border-bottom: 1px solid @syntax-cursor-color;
+      box-sizing: border-box;
+    }
+
+    .invisible-character {
+      color: @syntax-invisible-character-color;
+    }
+
+    .indent-guide {
+      color: @syntax-indent-guide-color;
+    }
+
+    .wrap-guide {
+      background-color: @syntax-wrap-guide-color;
+    }
+
+    .gutter {
+      background-color: @syntax-gutter-background-color;
+      color: @syntax-gutter-text-color;
+
+      .line-number {
+        color: @syntax-gutter-text-color;
+        -webkit-font-smoothing: antialiased;
+
+        &.cursor-line {
+          color: @syntax-gutter-text-color-selected;
+          background-color: @syntax-gutter-background-color-selected;
+        }
+        &.cursor-line-no-selection {
+          background-color: transparent;
+        }
+
+        .icon-right {
+          color: @syntax-text-color;
+        }
+      }
+
+      &:not(.git-diff-icon) .line-number.git-line-removed {
+        &.git-line-removed::before {
+          bottom: -3px;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0px;
+          bottom: 0px;
+          width: 25px;
+          border-bottom: 1px dotted fade(@syntax-color-removed, 50%);
+          pointer-events: none;
+        }
+      }
+    }
+
+    .gutter .line-number.folded,
+    .gutter .line-number:after,
+    .fold-marker:after {
+      color: @syntax-gutter-text-color-selected;
+    }
+  }
+
+  pre.editor-colors .search-results .mpe-syntax--marker .region {
+    background-color: transparent;
+    border: 1px solid @syntax-result-marker-color;
+  }
+
+  pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
+    border: 1px solid @syntax-result-marker-color-selected;
+  }
+
+
+  .mpe-syntax--comment,
+  .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--comment,
+  .mpe-syntax--string.mpe-syntax--comment {
+    color: #969896;
+  }
+
+  .mpe-syntax--constant,
+  .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--constant,
+  .mpe-syntax--variable.mpe-syntax--other.mpe-syntax--constant,
+  .mpe-syntax--variable.mpe-syntax--language {
+    color: #0086b3;
+  }
+
+  .mpe-syntax--keyword.mpe-syntax--operator.mpe-syntax--symbole,
+  .mpe-syntax--keyword.mpe-syntax--other.mpe-syntax--mark {
+  }
+
+  .mpe-syntax--entity,
+  .mpe-syntax--entity.mpe-syntax--name {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #795da3;
+  }
+
+  .mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function {
+    color: #333;
+  }
+
+  .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--tag {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #63a35c;
+  }
+
+  .mpe-syntax--keyword {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #a71d5d;
+  }
+
+  .mpe-syntax--storage,
+  .mpe-syntax--storage.mpe-syntax--type {
+    color: #a71d5d;
+  }
+
+  .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--package,
+  .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--import,
+  .mpe-syntax--storage.mpe-syntax--type.mpe-syntax--java {
+    color: #333;
+  }
+
+  .mpe-syntax--string,
+  .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--string,
+  .mpe-syntax--string .mpe-syntax--punctuation.mpe-syntax--section.mpe-syntax--embedded .mpe-syntax--source {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #183691;
+  }
+
+  .mpe-syntax--string.mpe-syntax--unquoted.mpe-syntax--import.mpe-syntax--ada {
+  }
+
+  .mpe-syntax--support {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #0086b3;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--property-name {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #0086b3;
+  }
+
+  .mpe-syntax--variable {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #ed6a43;
+  }
+
+  .mpe-syntax--variable.mpe-syntax--other {
+    color: #333;
+  }
+
+  .mpe-syntax--invalid.mpe-syntax--broken {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--invalid.mpe-syntax--deprecated {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--invalid.mpe-syntax--illegal {
+    font-style: italic;
+    text-decoration: underline;
+    background-color: #b52a1d;
+    color: #f8f8f8;
+  }
+
+  .mpe-syntax--carriage-return {
+    font-style: italic;
+    text-decoration: underline;
+    background-color: #b52a1d;
+    color: #f8f8f8;
+    undefined: ^M;
+  }
+
+  .mpe-syntax--invalid.mpe-syntax--unimplemented {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--message.mpe-syntax--error {
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--string .mpe-syntax--source {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .mpe-syntax--string .mpe-syntax--variable {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #0086b3;
+  }
+
+  .mpe-syntax--source.mpe-syntax--regexp,
+  .mpe-syntax--string.mpe-syntax--regexp {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #183691;
+  }
+
+  .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--character-class,
+  .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape,
+  .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--source.mpe-syntax--ruby.mpe-syntax--embedded,
+  .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--arbitrary-repitition {
+    color: #183691;
+  }
+
+  .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape {
+    font-weight: bold;
+    color: #63a35c;
+  }
+
+  .mpe-syntax--support.mpe-syntax--constant {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #0086b3;
+  }
+
+  .mpe-syntax--support.mpe-syntax--variable {
+    color: #0086b3;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--module-reference {
+    color: #0086b3;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--list {
+    color: #693a17;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--heading,
+  .mpe-syntax--markup.mpe-syntax--heading .mpe-syntax--entity.mpe-syntax--name {
+    font-weight: bold;
+    color: #1d3e81;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--quote {
+    color: #008080;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--italic {
+    font-style: italic;
+    color: #333;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--bold {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--raw {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #0086b3;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--deleted,
+  .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--from-file,
+  .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--deleted {
+    background-color: #ffecec;
+    color: #bd2c00;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--inserted,
+  .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--to-file,
+  .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--inserted {
+    background-color: #eaffea;
+    color: #55a532;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--changed,
+  .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--changed {
+    background-color: #ffe3b4;
+    color: #ef9700;
+  }
+
+  .mpe-syntax--markup.mpe-syntax--ignored,
+  .mpe-syntax--markup.mpe-syntax--untracked {
+    color: #d8d8d8;
+    background-color: #808080;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--range {
+    color: #795da3;
+    font-weight: bold;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header {
+    color: #0086b3;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--separator {
+    font-weight: bold;
+    color: #1d3e81;
+  }
+
+  .mpe-syntax--meta.mpe-syntax--output {
+    color: #1d3e81;
+  }
+
+  .mpe-syntax--brackethighlighter.mpe-syntax--tag,
+  .mpe-syntax--brackethighlighter.mpe-syntax--curly,
+  .mpe-syntax--brackethighlighter.mpe-syntax--round,
+  .mpe-syntax--brackethighlighter.mpe-syntax--square,
+  .mpe-syntax--brackethighlighter.mpe-syntax--angle,
+  .mpe-syntax--brackethighlighter.mpe-syntax--quote {
+    color: #595e62;
+  }
+
+  .mpe-syntax--brackethighlighter.mpe-syntax--unmatched {
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--error {
+    color: #b52a1d;
+  }
+
+  .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--warning {
+    color: #ed6a43;
+  }
+
+  .mpe-syntax--sublimelinter.mpe-syntax--gutter-mark {
+    color: #c0c0c0;
+  }
+
+  .mpe-syntax--constant.mpe-syntax--other.mpe-syntax--reference.mpe-syntax--link,
+  .mpe-syntax--string.mpe-syntax--other.mpe-syntax--link {
+    color: #183691;
+    text-decoration: underline;
+  }
+}

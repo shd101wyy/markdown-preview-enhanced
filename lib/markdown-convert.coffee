@@ -10,6 +10,7 @@ codeChunkAPI = require './code-chunk'
 processGraphs = require './process-graphs'
 encrypt = require './encrypt'
 CACHE = require './cache'
+fileImport = require './file-import'
 
 # TODO: refactor this file
 # it has common functions as pandoc-convert.coffee
@@ -86,6 +87,9 @@ markdownConvert = (text, {projectDirectoryPath, rootDirectoryPath}, config={})->
   delete(CACHE[outputFilePath])
 
   useAbsoluteImagePath = config.absolute_image_path
+
+  # import external files
+  text = fileImport(text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}).outputString
 
   # change link path to project '/' path
   # this is actually differnet from pandoc-convert.coffee

@@ -5,7 +5,15 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)   
 
-After version `0.9.0`, **Markdown Preview Enhanced** supports compiling markdown to markdown file. More information can be found [here](./docs/markdown.md).  
+New Feature for version `0.9.6`! Oh yeah!  
+**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, and it is very buggy now. More information can be found [here](./docs/doc-imports.md).     
+
+![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
+
+
+**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same for `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
+
+---  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -20,13 +28,13 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [Preview Context Menu](#preview-context-menu)
 	* [Extra](#extra)
 	* [For Developer](#for-developer)
+	* [Credits](#credits)
 	* [Thanks](#thanks)
-	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
 
-![intro](https://cloud.githubusercontent.com/assets/1908863/19796387/a00df0f6-9ca9-11e6-86e9-1d74e195748f.gif)
+![intro](https://cloud.githubusercontent.com/assets/1908863/22763072/32f09e80-ee28-11e6-9d42-c3953f5749a1.gif)
 
 ## Features
 - **2-side scroll sync**  
@@ -39,7 +47,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://github.com/Khan/KaTeX) to render math expressions  
 - export **PDF**, **PNG**, and **JPEG**   
 - export beautiful **HTML** (mobile device supported)  
-- compile to **Markdown**
+- [compile to Markdown](./docs/markdown.md)
 - customize Markdown Preview css  
 - [TOC](./docs/toc.md) generation **(beta)**  
 - Flowchart / Sequence diagram
@@ -47,6 +55,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- [Import external files](./docs/doc-imports.md)
 - And many more...
 
 ## How it works
@@ -59,18 +68,17 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram.  
-	- code block with `{mermaid}` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
+	- code block with `@mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
-	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
+	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/22724073/622549ac-ed89-11e6-9a3e-6f35dd3f1c81.gif)
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
-	- code block with `{puml}` or `{plantuml}` notation will be rendered by [PlantUML](http://plantuml.com/).  
+	- code block with `@puml` or `@plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).  
 - [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
-	- code block with `{wavedrom}` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
+	- code block with `@wavedrom` notation will be rendered by [wavedrom](https://github.com/drom/wavedrom).
 - [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) graph.  
-	- code block with `{viz}` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
-    - add `engine:[engine_name]` at the first line of code block to choose different render engine. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.   
-    - ![viz](https://cloud.githubusercontent.com/assets/1908863/22486898/f3b71a8a-e7d0-11e6-9f69-88e30baa3a9a.gif)
+	- code block with `@viz` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
+    - add `engine:[engine_name]` at the first line of code block to choose different render engine. For example `engine:dot`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.   
 - [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 	- [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
 
@@ -135,19 +143,30 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 Manual installation instruction can be found [here](./docs/DEVELOPER.md).   
 It is also very easy to write your own extension, more information can be found [here](./docs/extension.md).
 
+## Credits  
+* [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  
+* [KaTeX](https://github.com/Khan/KaTeX) - Fast math typesetting for the web.  
+* [MathJax](https://github.com/mathjax/MathJax) - Beautiful math in all browsers.  
+* [mermaid](https://github.com/knsv/mermaid) - Generation of diagram and flowchart from text in a similar manner as markdown.  
+* [viz.js](https://github.com/mdaines/viz.js) - A hack to put Graphviz on the web.
+* [plantuml](https://github.com/plantuml/plantuml) - Generate UML diagram from textual description.
+* [WaveDrom](https://github.com/drom/wavedrom) - Digital timing diagram rendering engine.
+* [reveal.js](https://github.com/hakimel/reveal.js) - The HTML Presentation Framework.
+* [save-svg-as-png](https://github.com/exupero/saveSvgAsPng) - Save SVGs as PNGs from the browser.
+* [pandoc](https://github.com/jgm/pandoc) - Universal markup converter.
+* [async](https://github.com/caolan/async) - Async utilities for node and the browser.
+* [babyparse](https://github.com/mholt/PapaParse) - Fast and powerful CSV (delimited text) parser that gracefully handles large files and malformed input.
+* [cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server.
+* [gray-matter](https://github.com/jonschlinkert/gray-matter) - Smarter yaml front matter parser, used by assemble, metalsmith and many others.
+* [html-pdf](https://github.com/marcbachmann/node-html-pdf) - Html to pdf converter in nodejs. It spawns a phantomjs process and passes the pdf as buffer or as filename.
+* [node-imgur](https://github.com/kaimallea/node-imgur) - Upload images to imgur.com.
+* [request](https://github.com/request/request) - Simplified HTTP request client.
+* [node-temp](https://github.com/bruce/node-temp) - Temporary File, Directory, and Stream support for Node.js.
+* [uslug](https://github.com/jeremys/uslug) - A permissive slug generator that works with unicode.
+* [atom](https://github.com/atom/atom) - The hackable text editor.
+
 ## Thanks  
 Thanks for everyone that supports this package!    
-
-## TODO  
-[CHANGELOG](./CHANGELOG.md)  
-- [ ] fix bugs
-- [ ] modify css to make preview look nice
-- [x] ePub output
-- [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
-- [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
-- [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
-- [x] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
-
 Thanks for using and supporting this package ;)
 
 > University of Illinois/NCSA Open Source License

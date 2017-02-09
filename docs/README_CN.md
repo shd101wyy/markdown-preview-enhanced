@@ -5,7 +5,15 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)   
 
-`0.9.0` 版本以后，**Markdown Preview Enhanced** 支持编译 markdown 到 markdown 文件。更多相关信息请查看[文档](markdown.md)。
+版本 `0.9.6` 有新功能啦～    
+**Markdown Preview Enhanced** 现在支持导入 `csv`, `markdown`, `image`, 等格式文件。 该功能仍然在测试阶段，并且目前问题很多。更多相关信息请查看[此文档](doc-imports.md)。  
+
+![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
+
+
+**注意**, 版本 `0.9.6` 改变了画图的语法。 我们将不再使用 <code>\`\`\`{mermaid}</code> 。 请用 <code>\`\`\`@mermaid</code> 代替。同样的，`@viz`, `@wavedrom`, `@puml` 和 `@plantuml`。  
+
+---
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
@@ -19,13 +27,13 @@ Markdown Preview Enhanced
 	* [预览菜单](#预览菜单)
 	* [额外支持](#额外支持)
 	* [开发者](#开发者)
+	* [鸣谢](#鸣谢)
 	* [感谢](#感谢)
-	* [TODO](#todo)
 
 <!-- tocstop -->
 ---
 
-![intro](https://cloud.githubusercontent.com/assets/1908863/19796387/a00df0f6-9ca9-11e6-86e9-1d74e195748f.gif)  
+![intro](https://cloud.githubusercontent.com/assets/1908863/22763072/32f09e80-ee28-11e6-9d42-c3953f5749a1.gif)
 
 ## 支持特性
 - **编辑与预览滑动同步**  
@@ -38,14 +46,15 @@ Markdown Preview Enhanced
 你可以选择 [MathJax](https://github.com/mathjax/MathJax) 或者 [KaTeX](https://github.com/Khan/KaTeX) 来渲染数学表达式      
 - 导出 **PDF**, **PNG**, and **JPEG** 文件  
 - 导出 **HTML** （完美支持移动端设备）  
-- 编译成 **Markdown** 文件
+- [编译成 Markdown 文件](markdown.md)
 - 自定义 Markdown Preview 样式（css）  
 - [TOC](./toc.md) 自动生成 **(beta)**  
 - Flowchart / Sequence 等各种图
 - Task List 任务列表 *(Github Flavored)*  
 - 图片助手
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
-- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)  
+- [导入外部文件](doc-imports.md)
 - 以及更多特性...
 
 ## 该插件如何工作
@@ -58,18 +67,17 @@ Markdown Preview Enhanced
   - 想要支持数学表达式的高亮，请考虑安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 插件。
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) 来渲染 flowchart 和 sequence diagram  
-	- 代码块 `{mermaid}` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
+	- 代码块 `@mermaid` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
 	- 查看 [mermaid 文档](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) 来了解如何画图。   
-	- ![mermaid](http://i.imgur.com/rwIPIA8.gif)
+	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/22724073/622549ac-ed89-11e6-9a3e-6f35dd3f1c81.gif)
 - [PlantUML](http://plantuml.com/) 来渲染图形。 (**Java** 是必须的依赖)  
 	- 你可以安装 [Graphviz](http://www.graphviz.org/) （非必需） 来生成其他种类的图形。  
-	- 代码块 `{puml}` 或者 `{plantuml}` 里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
+	- 代码块 `@puml` 或者 `@plantuml` 里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
 - [WaveDrom](http://wavedrom.com/) 来渲染 digital timing diagram.  
-	- 代码块 `{wavedrom}` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
+	- 代码块 `@wavedrom` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
 - [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) 图形.  
-	- 代码块 `{viz}` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
+	- 代码块 `@viz` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
     - 在代码块第一行，可以通过`engine:[engine_name]`形式选择渲染引擎。比如:`engine:dot`。支持 `circo`, `dot`, `neato`, `osage`, or `twopi` 引擎。 `dot` 是默认引擎.    
-    - ![viz](https://cloud.githubusercontent.com/assets/1908863/22486898/f3b71a8a-e7d0-11e6-9f69-88e30baa3a9a.gif)
 - [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的 presentations.
 	- [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
 
@@ -134,19 +142,30 @@ Markdown Preview Enhanced
 手动安装指南可以在 [这里](./DEVELOPER.md) 找到。   
 扩展该插件也十分简单，更多信息请点击 [这里](./extension.md)。
 
+## 鸣谢  
+* [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  
+* [KaTeX](https://github.com/Khan/KaTeX) - Fast math typesetting for the web.  
+* [MathJax](https://github.com/mathjax/MathJax) - Beautiful math in all browsers.  
+* [mermaid](https://github.com/knsv/mermaid) - Generation of diagram and flowchart from text in a similar manner as markdown.  
+* [viz.js](https://github.com/mdaines/viz.js) - A hack to put Graphviz on the web.
+* [plantuml](https://github.com/plantuml/plantuml) - Generate UML diagram from textual description.
+* [WaveDrom](https://github.com/drom/wavedrom) - Digital timing diagram rendering engine.
+* [reveal.js](https://github.com/hakimel/reveal.js) - The HTML Presentation Framework.
+* [save-svg-as-png](https://github.com/exupero/saveSvgAsPng) - Save SVGs as PNGs from the browser.
+* [pandoc](https://github.com/jgm/pandoc) - Universal markup converter.
+* [async](https://github.com/caolan/async) - Async utilities for node and the browser.
+* [babyparse](https://github.com/mholt/PapaParse) - Fast and powerful CSV (delimited text) parser that gracefully handles large files and malformed input.
+* [cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server.
+* [gray-matter](https://github.com/jonschlinkert/gray-matter) - Smarter yaml front matter parser, used by assemble, metalsmith and many others.
+* [html-pdf](https://github.com/marcbachmann/node-html-pdf) - Html to pdf converter in nodejs. It spawns a phantomjs process and passes the pdf as buffer or as filename.
+* [node-imgur](https://github.com/kaimallea/node-imgur) - Upload images to imgur.com.
+* [request](https://github.com/request/request) - Simplified HTTP request client.
+* [node-temp](https://github.com/bruce/node-temp) - Temporary File, Directory, and Stream support for Node.js.
+* [uslug](https://github.com/jeremys/uslug) - A permissive slug generator that works with unicode.
+* [atom](https://github.com/atom/atom) - The hackable text editor.
+
 ## 感谢  
-感谢所有支持这个插件的人们！    
-
-## TODO
-[CHANGELOG](../CHANGELOG.md)
-- [ ] fix bugs
-- [ ] modify css to make preview look nice
-- [x] ePub output
-- [x] support more image upload methods other than imgur (as imgur is blocked in some countries)
-- [x] image paste [#30](https://github.com/shd101wyy/markdown-preview-enhanced/issues/30)
-- [ ] pdf book generation [#56](https://github.com/shd101wyy/markdown-preview-enhanced/issues/56)
-- [x] header and footer for pdf [57](https://github.com/shd101wyy/markdown-preview-enhanced/issues/57)
-
+感谢所有支持这个插件的人们！     
 谢谢你使用并支持此插件 ;)
 
 > University of Illinois/NCSA Open Source License

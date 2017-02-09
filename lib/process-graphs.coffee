@@ -3,6 +3,7 @@ fs = require 'fs'
 {Directory} = require 'atom'
 {execFile} = require 'child_process'
 async = require 'async'
+# {allowUnsafeEval} = require 'loophole'
 Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
@@ -19,7 +20,7 @@ processGraphs = (text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryP
   while i < lines.length
     line = lines[i]
     trimmedLine = line.trim()
-    if trimmedLine.startsWith('```{') and trimmedLine.endsWith('}')
+    if trimmedLine.match(/^```\{(.+)\}$/) or trimmedLine.match(/^```\@/)
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
@@ -47,7 +48,6 @@ saveSvgAsPng = (svgElement, dest, option={}, cb)->
     fs.writeFile dest, base64Data, 'base64', (err)->
       cb(err)
 
-
 # {start, end, content}
 processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
   asyncFunctions = []
@@ -57,11 +57,14 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
   imageFilePrefix = encodeURIComponent(imageFilePrefix)
   imgCount = 0
 
+  wavedromIdPrefix = 'wavedrom_' + (Math.random().toString(36).substr(2, 9) + '_')
+  wavedromOffset = 100
+
   for codeData in codes
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
 
-    match = def.match(/^{(mermaid|wavedrom|viz|plantuml|puml)}$/)
+    match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
 
     if match  # builtin graph
       graphType = match[1]
@@ -74,6 +77,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
             if mermaidAPI.parse(content)
               div = document.createElement('div')
+              # div.style.display = 'none' # will cause font issue.
               div.classList.add('mermaid')
               div.textContent = content
               document.body.appendChild(div)
@@ -123,7 +127,44 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
       else if graphType == 'wavedrom'
         # not supported
+        null
+        ###
+        helper = (start, end, content)->
+          (cb)->
+            div = document.createElement('div')
+            div.id = wavedromIdPrefix + wavedromOffset
+            div.style.display = 'none'
 
+            # check engine
+            content = content.trim()
+
+            allowUnsafeEval ->
+              try
+                document.body.appendChild(div)
+                WaveDrom.RenderWaveForm(wavedromOffset, eval("(#{content})"), wavedromIdPrefix)
+                wavedromOffset += 1
+
+                dest = path.resolve(imageDirectoryPath, imageFilePrefix + imgCount + '.png')
+                imgCount += 1
+
+                svgElement = div.children[0]
+                width = svgElement.getBBox().width
+                height = svgElement.getBBox().height
+
+                console.log('rendered WaveDrom')
+                window.svgElement = svgElement
+
+                saveSvgAsPng svgElement, dest, {width, height}, (error)->
+                  document.body.removeChild(div)
+                  cb(null, {dest, start, end, content, type: 'graph'})
+              catch error
+                console.log('failed to render wavedrom')
+                document.body.removeChild(div)
+                cb(null, null)
+
+        asyncFunc = helper(start, end, content)
+        asyncFunctions.push asyncFunc
+        ###
       else # plantuml
         helper = (start, end, content)->
           (cb)->
@@ -202,9 +243,9 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
       if type == 'graph'
         {dest} = d
         if useAbsoluteImagePath
-          imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})"
+          imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})  "
         else
-          imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})"
+          imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})  "
         imagePaths.push dest
 
         lines[start] = imgMd
@@ -229,9 +270,9 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
         if dest
           imagePaths.push dest
           if useAbsoluteImagePath
-            imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})"
+            imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})  "
           else
-            imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})"
+            imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})  "
           lines[end] += ('\n' + imgMd)
 
         if data

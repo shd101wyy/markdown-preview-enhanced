@@ -8,6 +8,7 @@ used to store rendered cache.
   graphData: @graphData
   presentationMode: @presentationMode
   slideConfigs: @slideConfigs
+  filesCache: @filesCache
 }
 ###
 CACHE = {}

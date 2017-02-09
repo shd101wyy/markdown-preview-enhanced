@@ -73,7 +73,7 @@ Test image paths
 ![markdown-icon](../markdown.png)
 
 ---
-```{mermaid}
+```@mermaid
 graph TD;
     A-->B;
     A-->C;
@@ -81,7 +81,7 @@ graph TD;
 		D-->A
 ```
 
-```{mermaid}
+```@mermaid
 sequenceDiagram
     participant Alice
     participant Bob
@@ -95,7 +95,7 @@ sequenceDiagram
     Bob-->John: Jolly good!
 ```
 
-```{mermaid}
+```@mermaid
 gantt
         dateFormat  YYYY-MM-DD
         title Adding GANTT diagram functionality to mermaid
@@ -112,7 +112,7 @@ gantt
         Create tests for renderer           :2d
         Add to mermaid                      :1d
 ```
-```{mermaid}
+```@mermaid
 %% Example code
 graph LR
     id1(Start)-->id2(Stop)
@@ -120,7 +120,7 @@ graph LR
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
 subgraphs
-```{mermaid}
+```@mermaid
 graph LR
   f-->z;
   subgraph haha
@@ -130,13 +130,13 @@ graph LR
 
 > Test PlantUML
 
-```{puml}
+```@puml
 A -> B
 B -> C
 ```
 
 [Graphvizdot](http://www.graphviz.org/)
-```{puml}
+```@puml
 [*] --> State1
 State1 --> [*]
 State1 : this is a string
@@ -146,7 +146,7 @@ State1 -> State2
 State2 --> [*]
 ```
 
-```{puml}
+```@puml
 skinparam component {
   FontSize 12
   FontName D2Coding
@@ -184,14 +184,14 @@ database "MySql" {
 
 > Test WaveDrom  
 
-```{wavedrom}
+```@wavedrom
 { signal: [
   { name: "cl",  wave: "p......" },
   { name: "bus",  wave: "x.34.5x",   data: "head body tail" },
   { name: "wire", wave: "0.1..0." }
 ]}
 ```
-```{wavedrom}
+```@wavedrom
 { signal: [
   { name: "pclk", wave: "p......." },
   { name: "Pclk", wave: "P......." },
@@ -208,7 +208,7 @@ database "MySql" {
 
 > Test Viz.js  
 
-```{viz}
+```@viz
 digraph g {
 	node [shape=plaintext];
 	A1 -> B1;
@@ -225,7 +225,7 @@ digraph g {
 }
 ```
 
-```{viz}
+```@viz
 graph ethane {
 		C_0 -- H_0 [type=s];
 		C_0 -- H_1 [type=s];
@@ -237,7 +237,7 @@ graph ethane {
 }
 ```
 
-```{viz}
+```@viz
 graph graphname {
 		// This attribute applies to the graph itself
 		size="3,3";

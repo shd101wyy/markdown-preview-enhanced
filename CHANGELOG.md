@@ -1,3 +1,21 @@
+## 0.9.6  
+* [x] support external files import. [introduction doc](./docs/doc-imports.md)  
+```javascript
+import "test.csv"
+import "test.jpg"  
+import "test.txt"  
+import "test.md"
+import "test.html"
+import "test.js"
+...
+```
+* [x] use [PapaParse](https://github.com/mholt/PapaParse) to parse `csv` file import.   
+* [x] fix syntax theme issue.  
+* [x] WaveDrom now doesn't require to use strict JSON. javascript code is fine as well.   
+* [x] fix toggle issue.   
+* [x] shrink output html file size.  
+* [ ] zen mode is broken...
+
 ## 0.9.5  
 * [x] upgrade `mermaid` to `7.0.0`, but class diagram still doesn't work.  
 * [x] upgrade `reveal.js` to `1.4.1`.
@@ -5,11 +23,11 @@
 * [x] upgrade `plantuml` to version `8054`.
 * [x] upgrade `viz.js` to version `1.7.0`, could be buggy though.
 * [x] partially fixed issue [#248](https://github.com/shd101wyy/markdown-preview-enhanced/issues/248). But can't navigate to anchor.   
-* [x] better support for zen mode. 
+* [x] better support for zen mode.
 
 ## 0.9.4  
-* [x] fix non-github syntax color issue [243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
-* [x] fix vertical slides issue [241](https://github.com/shd101wyy/markdown-preview-enhanced/issues/241)  
+* [x] fix non-github syntax color issue [#243](https://github.com/shd101wyy/markdown-preview-enhanced/issues/243)  
+* [x] fix vertical slides issue [#241](https://github.com/shd101wyy/markdown-preview-enhanced/issues/241)  
 
 ## 0.9.3
 * [x] fix issue, 中文，日文 file image path error. [#236](https://github.com/shd101wyy/markdown-preview-enhanced/issues/236)
