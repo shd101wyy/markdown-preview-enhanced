@@ -273,7 +273,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewScrollDelay = Date.now() + 500
 
       # @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
-      @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
+      if lineNo of @scrollMap then @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
