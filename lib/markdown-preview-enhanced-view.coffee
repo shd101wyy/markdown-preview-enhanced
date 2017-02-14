@@ -761,6 +761,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         imageData = Buffer(data).toString('base64')
         imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
         outputDiv.appendChild imageElement
+      else if options.output == 'markdown'
+        {html} = @parseMD(data, {@rootDirectoryPath, @projectDirectoryPath})
+        outputDiv.innerHTML = html
       else if options.output == 'none'
         outputDiv.remove()
         outputDiv = null

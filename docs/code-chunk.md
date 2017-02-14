@@ -51,7 +51,8 @@ eg:
 `html`, `text`, `png`, `none`  
 
 defines how to render code output.   
-`html` will append output as html.   
+`html` will append output as html.    
+`markdown` will render parse output as markdown. (MathJax and graphs will not be rendered in this case. KaTeX works)    
 `text` will append output to a `pre` block.    
 `png` will append output as `base64` image.  
 `none` will hide the output.  

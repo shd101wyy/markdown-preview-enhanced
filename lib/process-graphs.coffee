@@ -225,7 +225,10 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
                 saveSvgAsPng svgElement, dest, {width, height}, (error)->
                   cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, dest, cmd})
               else
+                # html will not be working with pandoc though
                 cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
+            else if outputType == 'markdown'
+              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
             else
               cb(null, null)
 

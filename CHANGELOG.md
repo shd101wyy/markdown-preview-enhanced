@@ -1,3 +1,8 @@
+## 0.9.8  
+* [x] fix issue [#273](https://github.com/shd101wyy/markdown-preview-enhanced/issues/273). thanks for pull request from `@cuyl`.  
+* [x] added `markdown` output for code chunk.  
+
+
 ## 0.9.7  
 * [x] add relative image path option for exporting html. fix issue [#264](https://github.com/shd101wyy/markdown-preview-enhanced/issues/264).  
 * [x] fix zen mode.
