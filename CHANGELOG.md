@@ -1,3 +1,12 @@
+## 0.9.9  
+* [ ] python matplotlib `inline` graph, [#280](https://github.com/shd101wyy/markdown-preview-enhanced/issues/280).   
+```
+%matplotlib inline        - use matplotlib inline mode
+%continue                 - continue last code chunk
+```
+* [ ] add `FAQ` section.  
+* [ ] add cnpm url for phantomjs.  
+
 ## 0.9.8  
 * [x] fix issue [#273](https://github.com/shd101wyy/markdown-preview-enhanced/issues/273). thanks for pull request from `@cuyl`.  
 * [x] added `markdown` output for code chunk.  
