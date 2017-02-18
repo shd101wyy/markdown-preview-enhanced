@@ -639,6 +639,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
 
+        # remove output-div and output-element
+        children = codeChunk.children
+        i = children.length - 1
+        while i >= 0
+          child = children[i]
+          if child.classList.contains('output-div') or child.classList.contains('output-element')
+            child.remove()
+          i -= 1
+
         outputDiv = @codeChunksData[id]?.outputDiv
         outputElement = @codeChunksData[id]?.outputElement
 
@@ -735,13 +744,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     cmd =  options.cmd or codeChunk.getAttribute('data-lang')
 
-    # check id and save outputDiv to @codeChunksData
-    idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+    # check id and save outputDiv & outputElement to @codeChunksData
+    id = options.id
 
-    if !idMatch
+    if !id
       return atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')
-    else
-      id = idMatch[1]
 
     codeChunk.classList.add('running')
     if @codeChunksData[id]
@@ -1033,20 +1040,37 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # insert outputDiv and outputElement accordingly
     $ = cheerio.load(htmlContent, {decodeEntities: true})
     codeChunks = $('.code-chunk')
+    jsCode = ''
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
       dataArgs = $codeChunk.attr('data-args')
-      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
 
-      continue if !idMatch or !idMatch[1]
-      id = idMatch[1]
+      options = null
+      try
+        allowUnsafeEval ->
+          options = eval("({#{dataArgs}})")
+      catch e
+        continue
+
+      id = options.id
+      continue if !id
+
+      cmd = options.cmd or $codeChunk.attr('data-lang')
+
       outputDiv = @codeChunksData[id]?.outputDiv
       outputElement = @codeChunksData[id]?.outputElement
 
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
 
-    $.html()
+      if outputElement
+        $codeChunk.append("<div class=\"output-element\">#{outputElement.innerHTML}</div>")
+
+      if cmd == 'javascript'
+        code = $codeChunk.attr('data-code')
+        jsCode += code + '\n'
+
+    $.html() + "<script>#{jsCode}</script>"
 
 
   getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType})->
