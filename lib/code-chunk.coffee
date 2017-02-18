@@ -1,8 +1,11 @@
 path = require 'path'
 fs = require 'fs'
 {spawn} = require 'child_process'
+{allowUnsafeEval} = require 'loophole'
 
-# TODO: known extensions. eg: node -> .js
+#
+#
+#
 run = (content, rootDirectoryPath='', cmd, options={}, callback)->
   args = options.args || []
   if (typeof(args) == 'string')
@@ -11,6 +14,13 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
   savePath = path.resolve(rootDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk')
 
   content = content.replace(/\u00A0/g, ' ');
+
+  if cmd.match /(javascript|js)/ # just javascript, not nodejs
+    return allowUnsafeEval ->
+      try
+        callback?(null, eval(content).toString(), options)
+      catch e
+        callback?(null, e.toString(), options)
 
   fs.writeFile savePath, content, (err)->
     if (err)

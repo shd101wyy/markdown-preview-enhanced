@@ -768,9 +768,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
         outputDiv.remove()
         outputDiv = null
       else
-        if data.length
+        if data?.length
           preElement = document.createElement 'pre'
           preElement.innerText = data
+          preElement.classList.add('editor-colors')
+          preElement.classList.add('lang-text')
           outputDiv.appendChild preElement
 
       if outputDiv
