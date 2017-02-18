@@ -718,7 +718,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     options = null
     try
-      options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+      allowUnsafeEval ->
+        options = eval("({#{dataArgs}})")
+      # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
     catch error
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return
@@ -739,14 +741,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       @codeChunksData[id] = {running: true}
 
+    # check options `element`
+    if options.element
+      outputElement = codeChunk.getElementsByClassName('output-element')?[0]
+      if !outputElement # create and append `output-element` div
+        outputElement = document.createElement 'div'
+        outputElement.classList.add 'output-element'
+        codeChunk.appendChild outputElement
+
+        console.log('append outputElement')
+        window.outputElement = outputElement
+
+      outputElement.innerHTML = options.element
+    else
+      codeChunk.getElementsByClassName('output-element')?[0]?.remove()
+
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
       # get new codeChunk
       codeChunk = document.getElementById('code_chunk_' + id)
       return if not codeChunk
       codeChunk.classList.remove('running')
 
-      return if error or !data 
-      data = data.toString()
+      return if error # or !data
+      data = (data or '').toString()
 
       outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv

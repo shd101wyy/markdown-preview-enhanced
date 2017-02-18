@@ -29,6 +29,20 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
       catch e
         callback?(null, e.toString(), options)
 
+  if cmd.match(/python/) and options.matplotlib
+    content = """
+import matplotlib
+matplotlib.use('Svg') # use Svg backend
+
+""" + content + """
+
+import matplotlib.pyplot as plt
+import sys
+plt.savefig(sys.stdout)
+"""
+    options.output = 'html' # change to html so that svg can be rendered
+
+
   fs.writeFile savePath, content, (err)->
     if (err)
       callback?(true)
