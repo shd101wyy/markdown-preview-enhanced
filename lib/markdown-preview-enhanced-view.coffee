@@ -740,12 +740,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @codeChunksData[id] = {running: true}
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
-      return if error
-
       # get new codeChunk
       codeChunk = document.getElementById('code_chunk_' + id)
       return if not codeChunk
       codeChunk.classList.remove('running')
+
+      return if error or !data 
+      data = data.toString()
 
       outputDiv = codeChunk.getElementsByClassName('output-div')?[0]
       if !outputDiv

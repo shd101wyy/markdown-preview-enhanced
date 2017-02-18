@@ -16,9 +16,16 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
   content = content.replace(/\u00A0/g, ' ');
 
   if cmd.match /(javascript|js)/ # just javascript, not nodejs
+    # replace `require('./file.js')` with `require('absolute_path/file.js')`
+    content = content.replace /require\((\s*)(('([^']+)')|("([^"]+)"))(\s*)\)/g, (whole, g1, g2, g3, g4, g5, g6, g7)->
+      filePath = g4 or g6 or ''
+      if filePath.startsWith('.')
+        filePath = path.resolve(rootDirectoryPath, filePath)
+      return "require('#{filePath}')"
+
     return allowUnsafeEval ->
       try
-        callback?(null, eval(content).toString(), options)
+        callback?(null, eval(content), options)
       catch e
         callback?(null, e.toString(), options)
 

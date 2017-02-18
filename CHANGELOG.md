@@ -1,8 +1,8 @@
 ## 0.9.9  
 * [ ] python matplotlib `inline` graph, [#280](https://github.com/shd101wyy/markdown-preview-enhanced/issues/280).   
-```
-%matplotlib inline        - use matplotlib inline mode
-%continue                 - continue last code chunk
+```sh
+continue: true | id   # continue last code chunk or code chunk with id.  
+element: "<canvas id=\"hi\"></canvas>" # element to append after  
 ```
 * [ ] add `FAQ` section.  
 * [ ] add cnpm url for phantomjs.  
