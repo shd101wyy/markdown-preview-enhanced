@@ -8,6 +8,7 @@ pdf = require 'html-pdf'
 katex = require 'katex'
 matter = require('gray-matter')
 {allowUnsafeEval} = require 'loophole'
+cheerio = require 'cheerio'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -1028,6 +1029,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
+  insertCodeChunksResult: (htmlContent)->
+    # insert outputDiv and outputElement accordingly
+    $ = cheerio.load(htmlContent, {decodeEntities: true})
+    codeChunks = $('.code-chunk')
+    for codeChunk in codeChunks
+      $codeChunk = $(codeChunk)
+      dataArgs = $codeChunk.attr('data-args')
+      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+
+      continue if !idMatch or !idMatch[1]
+      id = idMatch[1]
+      outputDiv = @codeChunksData[id]?.outputDiv
+      outputElement = @codeChunksData[id]?.outputElement
+
+      if outputDiv # append outputDiv result
+        $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
+
+    $.html()
+
+
   getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType})->
     isForPrint ?= false
     offline ?= false
@@ -1043,6 +1064,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
     yamlConfig = res.yamlConfig or {}
+
+
+    # replace code chunks inside htmlContent
+    htmlContent = @insertCodeChunksResult(htmlContent)
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...
