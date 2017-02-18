@@ -1,7 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 {spawn} = require 'child_process'
-{allowUnsafeEval} = require 'loophole'
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 
 #
 #
@@ -17,13 +17,31 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
 
   if cmd.match /(javascript|js)/ # just javascript, not nodejs
     # replace `require('./file.js')` with `require('absolute_path/file.js')`
+
     content = content.replace /require\((\s*)(('([^']+)')|("([^"]+)"))(\s*)\)/g, (whole, g1, g2, g3, g4, g5, g6, g7)->
       filePath = g4 or g6 or ''
       if filePath.startsWith('.')
         filePath = path.resolve(rootDirectoryPath, filePath)
       return "require('#{filePath}')"
+    ###
 
-    return allowUnsafeEval ->
+    if options.require
+      requires = options.require
+      if typeof(requires) == 'string'
+        requires = [requires]
+
+      requiresStr = ""
+      for requirePath in requires
+        if requirePath.startsWith '.'
+          requirePath = path.resolve(rootDirectoryPath, requirePath)
+        # TODO: css
+        requiresStr += """
+delete require.cache[\"#{requirePath}\"]
+require(\"#{requirePath}\")\n"""
+      content = requiresStr + '\n' + content
+    ###
+
+    return allowUnsafeNewFunction -> allowUnsafeEval ->
       try
         callback?(null, eval(content), options)
       catch e

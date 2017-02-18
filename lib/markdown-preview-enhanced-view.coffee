@@ -637,7 +637,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.id = 'code_chunk_' + id
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
-        newCodeChunksData[id] = {running, outputDiv: codeChunk.getElementsByClassName('output-div')[0]}
+
+        outputDiv = @codeChunksData[id]?.outputDiv
+        outputElement = @codeChunksData[id]?.outputElement
+
+        codeChunk.appendChild(outputElement) if outputElement
+        codeChunk.appendChild(outputDiv) if outputDiv
+
+        newCodeChunksData[id] = {running, outputDiv, outputElement}
       else # id not exist, create new id
         needToSetupChunksId = true
 
@@ -749,12 +756,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
         outputElement.classList.add 'output-element'
         codeChunk.appendChild outputElement
 
-        console.log('append outputElement')
-        window.outputElement = outputElement
-
       outputElement.innerHTML = options.element
     else
       codeChunk.getElementsByClassName('output-element')?[0]?.remove()
+      outputElement = null
 
     codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
       # get new codeChunk
@@ -797,7 +802,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.appendChild outputDiv
         @scrollMap = null
 
-      @codeChunksData[id] = {running: false, outputDiv}
+      @codeChunksData[id] = {running: false, outputDiv, outputElement}
 
   runAllCodeChunks: ()->
     codeChunks = @element.getElementsByClassName('code-chunk')
