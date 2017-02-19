@@ -1177,16 +1177,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if typeof(requires) == 'string'
           requires = [requires]
         requiresStr = ""
-        for requirePath in requires
+        for requirePath in requires 
           # TODO: css
-          if requirePath.match(/^(http|https)\:\/\//) and !requireCache[requirePath]
-            requireCache[requirePath] = true
-            scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
+          if requirePath.match(/^(http|https)\:\/\//)
+            if (!requireCache[requirePath])
+              requireCache[requirePath] = true
+              scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
           else
             requirePath = path.resolve(@rootDirectoryPath, requirePath)
-            if requireCache[requirePath] == true
-              null # do nothing
-            else
+            if !requireCache[requirePath]
               requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
               requireCache[requirePath] = true
 
@@ -1407,7 +1406,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation speaker notes
     # copy dependency files
-    if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]')
+    if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]') >= 0
       depsDirName = path.resolve(path.dirname(dest), 'revealjs_deps')
       depsDir = new Directory(depsDirName)
       depsDir.create().then (flag)->
