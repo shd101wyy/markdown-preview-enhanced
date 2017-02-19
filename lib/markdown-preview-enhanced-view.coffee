@@ -1088,9 +1088,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
             scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
           else
             requirePath = path.resolve(@rootDirectoryPath, requirePath)
-            # TODO: css
-            # TODO: http://
-            #
             if requireCache[requirePath] == true
               null # do nothing
             else

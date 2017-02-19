@@ -27,29 +27,42 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
         requires = [requires]
 
       for requirePath in requires
-        # TODO: css
-        # TODO: http://
-        if requirePath.match(/^(http|https)\:\/\//)
-          asyncFunctions.push (cb)->
-            request requirePath, (error, response, body)->
-              return cb(error) if error
-              return cb(null, {file: requirePath, data: body.toString()})
-        else
-          requirePath = path.resolve(rootDirectoryPath, requirePath)
-          asyncFunctions.push (cb)->
-            fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
-              return cb(error) if error
-              return cb(null, {file: requirePath, data: data.toString()})
+        requirePath = requirePath.trim()
+
+        helper = (requirePath)->
+          if requirePath.match(/^(http|https)\:\/\//)
+            asyncFunctions.push (cb)->
+              request requirePath, (error, response, body)->
+                return cb(error) if error
+                return cb(null, {file: requirePath, data: body.toString()})
+          else
+            requirePath = path.resolve(rootDirectoryPath, requirePath)
+            asyncFunctions.push (cb)->
+              fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
+                return cb(error) if error
+                return cb(null, {file: requirePath, data: data.toString()})
+        helper(requirePath)
 
     # require files
     return async.series asyncFunctions, (error, results)->
       if error
         return callback(null, error.toString(), options)
-
       for result in results
         continue if REQUIRE_CACHE[result.file]
         try # TODO: css
           allowUnsafeNewFunction -> allowUnsafeEval ->
+            # .css will cause `Refused to load the stylesheet` security error.
+            ###
+            if result.file.endsWith('.css') and document
+              head = document.getElementsByTagName('head')[0]
+              link = document.createElement 'link'
+              link.setAttribute 'rel', 'stylesheet'
+              link.setAttribute 'type', 'text/css'
+              link.setAttribute 'href', result.file
+              link.id = 'mpe_' + result.file
+              head.appendChild link
+            else
+            ###
             eval(result.data)
             REQUIRE_CACHE[result.file] = result.data # save to cache
         catch error
@@ -115,6 +128,8 @@ plt.savefig(sys.stdout)
 clearCache = ()->
   for key of REQUIRE_CACHE
     REQUIRE_CACHE[key] = false
+    # if key.endsWith('.css') and document
+    #  document.getElementById('mpe_' + key)?.remove()
 
 codeChunkAPI = {run, clearCache}
 module.exports = codeChunkAPI
