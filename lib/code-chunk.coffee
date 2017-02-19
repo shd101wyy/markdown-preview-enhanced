@@ -81,11 +81,11 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
 # modify default matplotlib pyplot show function
 try:
     import matplotlib
-    matplotlib.use('Svg') # use Svg backend
+    matplotlib.use('Agg') # use Agg backend
     import matplotlib.pyplot as plt
     import sys
     def new_plt_show():
-        plt.savefig(sys.stdout)
+        plt.savefig(sys.stdout, format="svg")
     plt.show = new_plt_show # override old one
 except Exception:
     pass
