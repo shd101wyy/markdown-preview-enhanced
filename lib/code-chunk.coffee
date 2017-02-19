@@ -75,17 +75,22 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
         catch e
           callback?(null, e.toString(), options)
 
+
   if cmd.match(/python/) and options.matplotlib
     content = """
-import matplotlib
-matplotlib.use('Svg') # use Svg backend
+# modify default matplotlib pyplot show function
+try:
+  import matplotlib
+  matplotlib.use('Svg') # use Svg backend
+  import matplotlib.pyplot as plt
+  import sys
+  def new_plt_show():
+    plt.savefig(sys.stdout)
+  plt.show = new_plt_show # override old one
+except Exception:
+  pass
 
-""" + content + """
-
-import matplotlib.pyplot as plt
-import sys
-plt.savefig(sys.stdout)
-"""
+""" + content
     options.output = 'html' # change to html so that svg can be rendered
 
 
