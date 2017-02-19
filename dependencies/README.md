@@ -28,4 +28,6 @@ I managed many libraries by myself instead of through npm to reduce overall file
 Need to modify `eval` to eliminate `unsafe-eval` issue.  
 Check [#75](https://github.com/mdaines/viz.js/issues/75).  
 
+*Attention*: **mpld3.v0.3.min.js** min version actually has problem, so use not minified version.  
+
 
