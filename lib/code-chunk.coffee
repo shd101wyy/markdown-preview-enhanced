@@ -2,6 +2,10 @@ path = require 'path'
 fs = require 'fs'
 {spawn} = require 'child_process'
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
+request = require('request')
+async = require('async')
+
+REQUIRE_CACHE = {}
 
 #
 #
@@ -16,27 +20,47 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
   content = content.replace(/\u00A0/g, ' ');
 
   if cmd.match /(javascript|js)/ # just javascript, not nodejs
+    asyncFunctions = []
     if options.require
       requires = options.require
       if typeof(requires) == 'string'
         requires = [requires]
 
-      requiresStr = ""
       for requirePath in requires
-        requirePath = path.resolve(rootDirectoryPath, requirePath)
         # TODO: css
         # TODO: http://
+        if requirePath.match(/^(http|https)\:\/\//)
+          asyncFunctions.push (cb)->
+            request requirePath, (error, response, body)->
+              return cb(error) if error
+              return cb(null, {file: requirePath, data: body.toString()})
+        else
+          requirePath = path.resolve(rootDirectoryPath, requirePath)
+          asyncFunctions.push (cb)->
+            fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
+              return cb(error) if error
+              return cb(null, {file: requirePath, data: data.toString()})
 
-        requiresStr += fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n'
+    # require files
+    return async.series asyncFunctions, (error, results)->
+      if error
+        return callback(null, error.toString(), options)
 
-      content = requiresStr + '\n' + content
+      for result in results
+        continue if REQUIRE_CACHE[result.file]
+        try # TODO: css
+          allowUnsafeNewFunction -> allowUnsafeEval ->
+            eval(result.data)
+            REQUIRE_CACHE[result.file] = result.data # save to cache
+        catch error
+          return callback(null, error.toString(), options)
 
-
-    return allowUnsafeNewFunction -> allowUnsafeEval ->
-      try
-        callback?(null, eval(content), options)
-      catch e
-        callback?(null, e.toString(), options)
+      # run javascript code
+      return allowUnsafeNewFunction -> allowUnsafeEval ->
+        try
+          callback?(null, eval(content), options)
+        catch e
+          callback?(null, e.toString(), options)
 
   if cmd.match(/python/) and options.matplotlib
     content = """
@@ -87,5 +111,10 @@ plt.savefig(sys.stdout)
       data = Buffer.concat(chunks).toString()
       callback?(null, data, options)
 
-codeChunkAPI = {run}
+
+clearCache = ()->
+  for key of REQUIRE_CACHE
+    REQUIRE_CACHE[key] = false
+
+codeChunkAPI = {run, clearCache}
 module.exports = codeChunkAPI

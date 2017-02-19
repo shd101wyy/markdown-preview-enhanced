@@ -220,6 +220,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # reset refresh button onclick event
       @element.getElementsByClassName('refresh-btn')?[0]?.onclick = ()=>
         @filesCache = {}
+        codeChunkAPI.clearCache()
         @renderMarkdown()
 
       # rebind tag a click event
@@ -568,6 +569,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     refreshBtn.onclick = ()=>
       # clear cache
       @filesCache = {}
+      codeChunkAPI.clearCache()
 
       # render again
       @renderMarkdown()
@@ -1044,6 +1046,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     codeChunks = $('.code-chunk')
     jsCode = ''
     requireCache = {} # key is path
+    scriptsStr = ""
+    stylesStr = ""
 
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
@@ -1076,19 +1080,22 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if typeof(requires) == 'string'
           requires = [requires]
 
-        scriptsStr = ""
         requiresStr = ""
-        stylesStr = ""
         for requirePath in requires
-          requirePath = path.resolve(@rootDirectoryPath, requirePath)
           # TODO: css
-          # TODO: http://
-          #
-          if requireCache[requirePath] == true
-            null # do nothing
-          else
-            requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
+          if requirePath.match(/^(http|https)\:\/\//) and !requireCache[requirePath]
             requireCache[requirePath] = true
+            scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
+          else
+            requirePath = path.resolve(@rootDirectoryPath, requirePath)
+            # TODO: css
+            # TODO: http://
+            #
+            if requireCache[requirePath] == true
+              null # do nothing
+            else
+              requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
+              requireCache[requirePath] = true
 
         jsCode += (requiresStr + code + '\n')
 
@@ -1096,7 +1103,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # return callback($.html()) if !jsCode
     return $.html() if !jsCode
-    return $.html() + "<script data-js-code>#{jsCode}</script>"
+    return $.html() + "#{scriptsStr}\n<script data-js-code>#{jsCode}</script>"
 
   ##
   # {Function} callback (htmlContent)
