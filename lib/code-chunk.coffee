@@ -76,23 +76,34 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
           callback?(null, e.toString(), options)
 
 
-  if cmd.match(/python/) and options.matplotlib
+  if cmd.match(/python/) and (options.matplotlib or options.mpl)
     content = """
 # modify default matplotlib pyplot show function
 try:
-  import matplotlib
-  matplotlib.use('Svg') # use Svg backend
-  import matplotlib.pyplot as plt
-  import sys
-  def new_plt_show():
-    plt.savefig(sys.stdout)
-  plt.show = new_plt_show # override old one
+    import matplotlib
+    matplotlib.use('Svg') # use Svg backend
+    import matplotlib.pyplot as plt
+    import sys
+    def new_plt_show():
+        plt.savefig(sys.stdout)
+    plt.show = new_plt_show # override old one
 except Exception:
-  pass
+    pass
+
+# modify default mpld3 behavior
+try:
+    import matplotlib.pyplot as plt, mpld3
+    import sys
+    def new_mpld3_show():
+        fig = plt.gcf() # get current figure
+        sys.stdout.write(mpld3.fig_to_html(fig))
+    mpld3.show = new_mpld3_show # override old one
+    mpld3.display = new_mpld3_show
+except Exception:
+    pass
 
 """ + content
     options.output = 'html' # change to html so that svg can be rendered
-
 
   fs.writeFile savePath, content, (err)->
     if (err)

@@ -848,6 +848,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunk.appendChild outputDiv
         @scrollMap = null
 
+      # check matplotlib | mpl
+      if options.matplotlib or options.mpl
+        scriptElement = outputDiv.getElementsByTagName('script')?[0]
+        if scriptElement # this is mpld3
+          code = scriptElement.innerHTML
+          window.d3 = require('../dependencies/mpld3/d3.v3.min.js')
+          window.mpld3 = require('../dependencies/mpld3/mpld3.v0.3.min.js')
+          allowUnsafeNewFunction -> allowUnsafeEval ->
+            eval(code)
+
       @codeChunksData[id] = {running: false, outputDiv, outputElement}
 
   runAllCodeChunks: ()->
