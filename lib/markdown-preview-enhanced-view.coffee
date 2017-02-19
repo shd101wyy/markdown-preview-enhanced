@@ -1140,6 +1140,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
+        if options.matplotlib or options.mpl
+          g = $('.output-div div', $codeChunk)?[0]
+          $(g).html('') if g
 
       if options.element
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
