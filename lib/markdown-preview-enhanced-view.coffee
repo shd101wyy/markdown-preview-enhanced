@@ -7,7 +7,7 @@ temp = require('temp').track()
 pdf = require 'html-pdf'
 katex = require 'katex'
 matter = require('gray-matter')
-{allowUnsafeEval} = require 'loophole'
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 cheerio = require 'cheerio'
 
 {getMarkdownPreviewCSS} = require './style'
@@ -1036,11 +1036,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     exec "#{cmd} #{filePath}"
 
-  insertCodeChunksResult: (htmlContent)->
+  ##
+  ## {Function} callback (htmlContent)
+  insertCodeChunksResult: (htmlContent, callback)->
     # insert outputDiv and outputElement accordingly
     $ = cheerio.load(htmlContent, {decodeEntities: true})
     codeChunks = $('.code-chunk')
     jsCode = ''
+    requireCache = {} # key is path
+
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
       dataArgs = $codeChunk.attr('data-args')
@@ -1063,17 +1067,40 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
 
-      if outputElement
-        $codeChunk.append("<div class=\"output-element\">#{outputElement.innerHTML}</div>")
+      if options.element
+        $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
 
       if cmd == 'javascript'
         code = $codeChunk.attr('data-code')
-        jsCode += code + '\n'
+        requires = options.require or []
+        if typeof(requires) == 'string'
+          requires = [requires]
 
-    $.html() + "<script>#{jsCode}</script>"
+        scriptsStr = ""
+        requiresStr = ""
+        stylesStr = ""
+        for requirePath in requires
+          requirePath = path.resolve(@rootDirectoryPath, requirePath)
+          # TODO: css
+          # TODO: http://
+          #
+          if requireCache[requirePath] == true
+            null # do nothing
+          else
+            requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
+            requireCache[requirePath] = true
 
+        jsCode += (requiresStr + code + '\n')
 
-  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType})->
+    # console.log jsCode
+
+    # return callback($.html()) if !jsCode
+    return $.html() if !jsCode
+    return $.html() + "<script data-js-code>#{jsCode}</script>"
+
+  ##
+  # {Function} callback (htmlContent)
+  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType}, callback)->
     isForPrint ?= false
     offline ?= false
     useRelativeImagePath ?= false
@@ -1091,7 +1118,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
 
     # replace code chunks inside htmlContent
-    htmlContent = @insertCodeChunksResult(htmlContent)
+    htmlContent = @insertCodeChunksResult htmlContent
 
     # as for example black color background doesn't produce nice pdf
     # therefore, I decide to print only github style...

@@ -595,7 +595,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     statusDiv = '<div class="status">running...</div>'
 
     $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + '</div>')
-    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': rootDirectoryPath
 
     $(preElement).replaceWith $el
 
