@@ -1150,14 +1150,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
               if $g.attr('id')?.match(/fig\_/)
                 $g.html('')
 
+          ss = $('.output-div > script', $codeChunk)
+          if ss
+            # load d3.min.js and mpld3.min.js
+            ###
+            requires = options.require or []
+            requires.push(path.resolve(__dirname, '../dependencies/mpld3/d3.v3.min.js'))
+            requires.push(path.resolve(__dirname, '../dependencies/mpld3/mpld3.v0.3.min.js'))
+            options.require = requires
+            ###
+
+            for s in ss
+              $s = $(s)
+              c = $s.html()
+              $s.remove()
+              jsCode += (c + '\n')
+
       if options.element
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
 
-      if cmd == 'javascript'
+      if options.require # cmd == 'javascript'
         requires = options.require or []
         if typeof(requires) == 'string'
           requires = [requires]
-
         requiresStr = ""
         for requirePath in requires
           # TODO: css
