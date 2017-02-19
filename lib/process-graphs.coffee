@@ -60,6 +60,8 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
   wavedromIdPrefix = 'wavedrom_' + (Math.random().toString(36).substr(2, 9) + '_')
   wavedromOffset = 100
 
+  codeChunksArr = [] # array of {id, options, code}
+
   for codeData in codes
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
@@ -205,6 +207,23 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
             return
 
           cmd = options.cmd if options.cmd
+          id = options.id
+
+          codeChunksArr.push {id, code: content}
+
+          # check continue
+          if options.continue
+            last = null
+            if options.continue == true
+              last = codeChunksArr[codeChunksArr.length - 2]
+            else
+              for c in codeChunksArr
+                if c.id == options.continue
+                  last = c
+                  break
+
+            if last
+              content = last.code + '\n' + content
 
           codeChunkAPI.run content, rootDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'

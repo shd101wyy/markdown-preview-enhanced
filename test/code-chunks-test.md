@@ -16,6 +16,21 @@ plt.plot([1,2,3, 4])
 plt.show()
 ```
 
+```{python matplotlib:true, id:"izc8i56g"}
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from pylab import *
+x = np.linspace(0, 5, 10)
+y = x ** 2
+
+plt.plot(x, y, 'r')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('title')
+plt.show()
+```
+
 ```{python id:"izbqm7em", output:"html"}
 import matplotlib.pyplot as plt, mpld3
 from mpld3 import fig_to_html, plugins

@@ -1085,6 +1085,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     scriptsStr = ""
     stylesStr = ""
 
+    # codeChunksArr = []
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
       dataArgs = $codeChunk.attr('data-args')
@@ -1100,9 +1101,32 @@ class MarkdownPreviewEnhancedView extends ScrollView
       continue if !id
 
       cmd = options.cmd or $codeChunk.attr('data-lang')
+      code = $codeChunk.attr('data-code')
 
       outputDiv = @codeChunksData[id]?.outputDiv
       outputElement = @codeChunksData[id]?.outputElement
+
+      # codeChunksArr.push {id, cmd, options, code} # save to arr
+
+      ###
+      # check continue
+      # actually, no need to check continue for getHTMLContent
+      if options.continue
+        last = null
+        if options.continue == true
+          last = codeChunksArr[codeChunksArr.length - 1]
+        else
+          for c in codeChunksArr
+            if c.id == options.continue
+              last = c
+              break
+
+        if last
+          code = last.code + '\n' + code
+        else
+          atom.notifications.addError('Invalid continue for code chunk ' + (options.id or ''), detail: options.continue.toString())
+          return $.html()
+      ###
 
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
@@ -1111,7 +1135,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
 
       if cmd == 'javascript'
-        code = $codeChunk.attr('data-code')
         requires = options.require or []
         if typeof(requires) == 'string'
           requires = [requires]
