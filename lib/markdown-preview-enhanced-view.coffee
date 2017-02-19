@@ -850,13 +850,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # check matplotlib | mpl
       if options.matplotlib or options.mpl
-        scriptElement = outputDiv.getElementsByTagName('script')?[0]
-        if scriptElement # this is mpld3
-          code = scriptElement.innerHTML
+        scriptElements = outputDiv.getElementsByTagName('script')
+        if scriptElements.length
           window.d3 = require('../dependencies/mpld3/d3.v3.min.js')
           window.mpld3 = require('../dependencies/mpld3/mpld3.v0.3.min.js')
-          allowUnsafeNewFunction -> allowUnsafeEval ->
-            eval(code)
+          for scriptElement in scriptElements
+            code = scriptElement.innerHTML
+            allowUnsafeNewFunction -> allowUnsafeEval ->
+              eval(code)
 
       @codeChunksData[id] = {running: false, outputDiv, outputElement}
 
@@ -1141,8 +1142,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
         if options.matplotlib or options.mpl
-          g = $('.output-div div', $codeChunk)?[0]
-          $(g).html('') if g
+          # remove innerHTML of <div id="fig_..."></div>
+          gs = $('.output-div > div', $codeChunk)
+          if gs
+            for g in gs
+              $g = $(g)
+              if $g.attr('id')?.match(/fig\_/)
+                $g.html('')
 
       if options.element
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
