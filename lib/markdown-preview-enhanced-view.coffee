@@ -746,10 +746,32 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
     catch error
       atom.notifications.addError('Invalid options', detail: dataArgs)
-      return
+      return false
 
     cmd =  options.cmd or codeChunk.getAttribute('data-lang')
     id = options.id
+
+    # check options.continue
+    if options.continue
+      last = null
+      if options.continue == true
+        codeChunks = @element.getElementsByClassName 'code-chunk'
+        i = codeChunks.length - 1
+        while i >= 0
+          if codeChunks[i] == codeChunk
+            last = codeChunks[i - 1]
+            break
+          i--
+      else # id
+        last = document.getElementById('code_chunk_' + options.continue)
+
+      if last
+        lastCode = @parseCodeChunk(last)?.code or ''
+        code = lastCode + '\n' + code
+      else
+        atom.notifications.addError('Invalid continue for code chunk ' + (options.id or ''), detail: options.continue.toString())
+        return false
+
     return {cmd, options, code, id}
 
 
