@@ -766,8 +766,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
         last = document.getElementById('code_chunk_' + options.continue)
 
       if last
-        lastCode = @parseCodeChunk(last)?.code or ''
-        code = lastCode + '\n' + code
+        {code: lastCode, options: lastOptions} = @parseCodeChunk(last) or {}
+        lastOptions = lastOptions or {}
+        code = (lastCode or '') + '\n' + code
+
+        options.matplotlib = true if (lastOptions.matplotlib or lastOptions.mpl) # inherit matplotlib config
       else
         atom.notifications.addError('Invalid continue for code chunk ' + (options.id or ''), detail: options.continue.toString())
         return false
