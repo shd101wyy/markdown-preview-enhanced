@@ -209,21 +209,27 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
           cmd = options.cmd if options.cmd
           id = options.id
 
-          codeChunksArr.push {id, code: content}
+          codeChunksArr.push {id, code: content, options}
 
           # check continue
-          if options.continue
+          offset = codeChunksArr.length - 1
+          currentCodeChunk = codeChunksArr[offset]
+          while currentCodeChunk?.options.continue
             last = null
-            if options.continue == true
-              last = codeChunksArr[codeChunksArr.length - 2]
+            if currentCodeChunk.options.continue == true
+              last = codeChunksArr[offset - 1]
             else
               for c in codeChunksArr
-                if c.id == options.continue
+                if c.id == currentCodeChunk.options.continue
                   last = c
                   break
 
             if last
               content = last.code + '\n' + content
+              options.matplotlib = last.options.matplotlib or last.options.mpl
+
+            offset--
+            currentCodeChunk = codeChunksArr[offset]
 
           codeChunkAPI.run content, rootDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
