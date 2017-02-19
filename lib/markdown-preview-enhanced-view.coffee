@@ -727,11 +727,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       i-=1
     return null
 
-  runCodeChunk: (codeChunk=null)->
-    codeChunk = @getNearestCodeChunk() if not codeChunk
-    return if not codeChunk
-    return if codeChunk.classList.contains('running')
-
+  # return false if meet error
+  # otherwise return
+  # {
+  #   cmd,
+  #   options,
+  #   code,
+  #   id,
+  # }
+  parseCodeChunk: (codeChunk)->
     code = codeChunk.getAttribute('data-code')
     dataArgs = codeChunk.getAttribute('data-args')
 
@@ -745,9 +749,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
 
     cmd =  options.cmd or codeChunk.getAttribute('data-lang')
-
-    # check id and save outputDiv & outputElement to @codeChunksData
     id = options.id
+    return {cmd, options, code, id}
+
+
+
+  runCodeChunk: (codeChunk=null)->
+    codeChunk = @getNearestCodeChunk() if not codeChunk
+    return if not codeChunk
+    return if codeChunk.classList.contains('running')
+
+    parseResult = @parseCodeChunk(codeChunk)
+    return if !parseResult
+    {code, options, cmd, id} = parseResult
 
     if !id
       return atom.notifications.addError('Code chunk error', detail: 'id is not found or just updated.')

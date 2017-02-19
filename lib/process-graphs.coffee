@@ -3,11 +3,11 @@ fs = require 'fs'
 {Directory} = require 'atom'
 {execFile} = require 'child_process'
 async = require 'async'
-# {allowUnsafeEval} = require 'loophole'
 Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert
@@ -197,7 +197,9 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
           options = null
           try
-            options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+            allowUnsafeEval ->
+              options = eval("({#{dataArgs}})")
+            # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
           catch error
             atom.notifications.addError('Invalid options', detail: dataArgs)
             return
@@ -225,7 +227,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
                 saveSvgAsPng svgElement, dest, {width, height}, (error)->
                   cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, dest, cmd})
               else
-                # html will not be working with pandoc.  
+                # html will not be working with pandoc.
                 cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
             else if outputType == 'markdown'
               cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
