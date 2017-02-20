@@ -1,3 +1,6 @@
+## 0.9.10
+* [x] support standard code fencing for graphs. [#286](https://github.com/shd101wyy/markdown-preview-enhanced/issues/286).   
+
 ## 0.9.9  
 * [x] enhance code chunk. Now support `matplotlib` very well.   [#280](https://github.com/shd101wyy/markdown-preview-enhanced/issues/280).   
 ```sh

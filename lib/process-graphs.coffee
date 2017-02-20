@@ -16,11 +16,14 @@ processGraphs = (text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryP
   lines = text.split('\n')
   codes = []
 
+  useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
   i = 0
   while i < lines.length
     line = lines[i]
     trimmedLine = line.trim()
-    if trimmedLine.match(/^```\{(.+)\}$/) or trimmedLine.match(/^```\@/)
+    if trimmedLine.match(/^```\{(.+)\}$/) or
+       trimmedLine.match(/^```\@/) or
+       (useStandardCodeFencingForGraphs and trimmedLine.match(/(mermaid|wavedrom|viz|plantuml|puml|dot)/))
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
@@ -66,7 +69,10 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
 
-    match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
+    if atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
+      match = def.match(/^\@{0,1}(mermaid|wavedrom|viz|plantuml|puml|dot)/)
+    else
+      match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
 
     if match  # builtin graph
       graphType = match[1]

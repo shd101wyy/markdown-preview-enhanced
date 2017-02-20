@@ -126,6 +126,10 @@ eg:
 	plt.show() # show figure
 	```
 
+**element**  
+the element that you want to append after.  
+please check this [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html).
+
 
 **id**  
 `id` will be automatically generated to track the running result.  
