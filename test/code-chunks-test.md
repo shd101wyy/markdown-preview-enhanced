@@ -284,8 +284,8 @@ Plotly.newPlot('tester2', data, layout);
 ```
 
 ### D3.js
-```{javascript element:"<svg id=\"d3-example\"></svg>", require:["https://d3js.org/d3.v4.min.js"], id:"izdmyd6t"}
-// ```{javascript element:"<svg id=\"d3-example\"></svg>", require:["https://d3js.org/d3.v4.min.js"], id:"izdmyd6t"}
+```{javascript element:"<svg id=\"d3-example\"></svg>", id:"izdmyd6t"}
+// ```{javascript element:"<svg id=\"d3-example\"></svg>", id:"izdmyd6t"}
 var width = 960,
     height = 500,
     radius = 80,

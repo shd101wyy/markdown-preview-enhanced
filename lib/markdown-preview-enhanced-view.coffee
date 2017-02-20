@@ -1109,7 +1109,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   insertCodeChunksResult: (htmlContent)->
     # insert outputDiv and outputElement accordingly
     cheerio ?= require 'cheerio'
-    $ = cheerio.load(htmlContent)
+    $ = cheerio.load(htmlContent, {decodeEntities: false})
     codeChunks = $('.code-chunk')
     jsCode = ''
     requireCache = {} # key is path
@@ -1180,7 +1180,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     html = $.html()
     html += "#{scriptsStr}\n" if scriptsStr
     html += "<script data-js-code>#{jsCode}</script>" if jsCode
-    return html 
+    return html
 
   ##
   # {Function} callback (htmlContent)
