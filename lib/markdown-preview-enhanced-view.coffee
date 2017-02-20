@@ -43,6 +43,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
+    @mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
@@ -1009,6 +1010,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
+    if @mathJaxProcessEnvironments
+      return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element]
+
     els = @element.getElementsByClassName('mathjax-exps')
     return if !els.length
 
@@ -1245,6 +1249,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else if mathRenderingOption == 'MathJax'
       inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
       block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
+      mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
       if offline
         mathStyle = "
         <script type=\"text/x-mathjax-config\">
@@ -1252,6 +1257,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             messageStyle: 'none',
             tex2jax: {inlineMath: #{inline},
                       displayMath: #{block},
+                      processEnvironments: #{mathJaxProcessEnvironments},
                       processEscapes: true}
           });
         </script>
@@ -1266,6 +1272,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             messageStyle: 'none',
             tex2jax: {inlineMath: #{inline},
                       displayMath: #{block},
+                      processEnvironments: #{mathJaxProcessEnvironments},
                       processEscapes: true}
           });
         </script>
