@@ -1158,7 +1158,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if options.element
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
 
-      if options.require # cmd == 'javascript'
+      if cmd == 'javascript'
         requires = options.require or []
         if typeof(requires) == 'string'
           requires = [requires]
