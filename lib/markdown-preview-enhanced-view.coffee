@@ -1131,7 +1131,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       continue if !id
 
       cmd = options.cmd or $codeChunk.attr('data-lang')
-      code = $codeChunk.attr('data-code')
+      code = $codeChunk.attr('data-code').unescape()
 
       outputDiv = @codeChunksData[id]?.outputDiv
       outputElement = @codeChunksData[id]?.outputElement
