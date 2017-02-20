@@ -1011,7 +1011,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return loadMathJax document, ()=> @renderMathJax()
 
     if @mathJaxProcessEnvironments
-      return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element]
+      return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=> @scrollMap = null
 
     els = @element.getElementsByClassName('mathjax-exps')
     return if !els.length
