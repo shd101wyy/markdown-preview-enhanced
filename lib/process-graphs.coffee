@@ -227,6 +227,8 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
             if last
               content = last.code + '\n' + content
               options.matplotlib = last.options.matplotlib or last.options.mpl
+            else # error
+              break
 
             offset--
             currentCodeChunk = codeChunksArr[offset]

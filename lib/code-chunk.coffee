@@ -64,7 +64,7 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
             else
             ###
             eval(result.data)
-            REQUIRE_CACHE[result.file] = result.data # save to cache
+            REQUIRE_CACHE[result.file] = true # save to cache
         catch error
           return callback(null, error.toString(), options)
 
