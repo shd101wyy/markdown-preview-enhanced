@@ -7,6 +7,7 @@ element: "<canvas id=\"hi\"></canvas>" # element to append.
 ```
 * [x] add `Markdown Preview Enhanced: Toggle Live Update`. And improve scroll sync when live update is disabled.  
 * [x] add `FAQ` section.  
+* [x] add `mathJaxProcessEnvironments` options that allows `processEnvironments` for MathJax.  
 * [ ] add cnpm url for phantomjs.  
 
 ## 0.9.8  
