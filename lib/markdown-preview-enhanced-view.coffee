@@ -1106,9 +1106,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   ##
   ## {Function} callback (htmlContent)
-  insertCodeChunksResult: (htmlContent, callback)->
+  insertCodeChunksResult: (htmlContent)->
     # insert outputDiv and outputElement accordingly
-    $ = cheerio.load(htmlContent, {decodeEntities: true})
+    $ = cheerio.load(htmlContent)
     codeChunks = $('.code-chunk')
     jsCode = ''
     requireCache = {} # key is path
@@ -1118,7 +1118,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # codeChunksArr = []
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
-      dataArgs = $codeChunk.attr('data-args')
+      dataArgs = $codeChunk.attr('data-args').unescape()
 
       options = null
       try

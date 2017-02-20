@@ -30,9 +30,23 @@ TAGS_TO_REPLACE = {
     '\/', '&#x2F;',
     '\\', '&#x5C;',
 }
+
+TAGS_TO_REPLACE_REVERSE = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#x27;': '\'',
+    '&#x2F;': '\/',
+    '&#x5C;': '\\',
+}
+
 highlighter = null
 String.prototype.escape = ()->
-  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
+  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] or tag
+
+String.prototype.unescape = ()->
+  this.replace /\&(amp|lt|gt|quot|\#x27|\#x2F|\#x5C)\;/g, (whole)-> TAGS_TO_REPLACE_REVERSE[whole] or whole
 
 ####################################################
 ## Mermaid

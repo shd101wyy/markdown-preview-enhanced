@@ -35,13 +35,13 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "^2.1.5",
     "atom-space-pen-views": "^2.2.0",
     "babyparse": "^0.4.6",
-    "cheerio": "^0.15.0",
+    "cheerio": "^0.22.0",
     "gray-matter": "^2.1.0",
     "html-pdf": "^2.1.0",
-    "imgur": "^0.1.7",
+    "imgur": "^0.2.0",
     "katex": "^0.7.1",
     "loophole": "^1.1.0",
     "remarkable": "^1.7.1",
