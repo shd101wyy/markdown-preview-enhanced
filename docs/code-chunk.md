@@ -91,6 +91,34 @@ eg:
     print('you can see this output message, but not this code')
     ```
 
+**continue**  
+If set `continue: true`, then this code chunk will continue from the last code chunk.  
+If set `continue: id`, then this code chunk will continue from the code chunk of id.  
+eg:    
+
+	```{python id:"izdlk700"}
+	x = 1
+	```
+
+	```{python id:"izdlkdim"}
+	x = 2
+	```
+
+	```{python continue:"izdlk700", id:"izdlkhso"}
+	print(x) # will print 1
+	```
+
+**matplotlib**  
+if set `matplotlib: true`, then the python code chunk will be plot graphs inline.    
+eg:    
+
+	```{python matplotlib:true, id:"izbp0zt9"}
+	import matplotlib.pyplot as plt
+	plt.plot([1,2,3, 4])
+	plt.show() # show figure
+	```
+
+
 **id**  
 `id` will be automatically generated to track the running result.  
 Please **Do Not** modify it.  
@@ -147,9 +175,6 @@ Then we can click the `run` button at the preview to run our code.
 ## Showcases
 **bash**  
 ![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
-
-**python matplotlib 3d plot with png output**  
-![Screen Shot 2016-09-24 at 1.34.56 AM](http://i.imgur.com/TDFxRNy.png)
 
 **gnuplot with svg output**    
 ![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
