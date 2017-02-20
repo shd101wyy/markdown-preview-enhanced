@@ -39,6 +39,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @liveUpdate = true
     @scrollSync = true
     @scrollDuration = null
+    @inputChanged = false
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
@@ -249,15 +250,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @element.innerHTML = '<p style="font-size: 24px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
+      # @inputChanged = true # this line has problem.
       if @liveUpdate
         @updateMarkdown()
 
     @disposables.add @editor.onDidSave ()=>
       if not @liveUpdate
+        @inputChanged = true
         @updateMarkdown()
 
+    @disposables.add @editor.onDidChangeModified ()=>
+      @inputChanged = true
+
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or !@liveUpdate or !@editor or @presentationMode
+      if !@scrollSync or !@element or @inputChanged or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -279,7 +285,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or !@liveUpdate
+      if !@scrollSync or !@element or @inputChanged
         return
       if Date.now() < @parseDelay
         return
@@ -305,7 +311,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or !@liveUpdate or @presentationMode
+      if !@editor or !@scrollSync or @inputChanged or @presentationMode
         return
       if Date.now() < @previewScrollDelay
         return
@@ -376,7 +382,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # liveUpdate?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.liveUpdate',
-      (flag) => @liveUpdate = flag
+      (flag) =>
+        @liveUpdate = flag
+        @scrollMap = null
 
     # scroll sync?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.scrollSync',
@@ -506,6 +514,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderMarkdown: ->
     if Date.now() < @parseDelay or !@editor or !@element
+      @inputChanged = false
       return
     @parseDelay = Date.now() + 200
 
@@ -531,6 +540,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @setInitialScrollPos()
     @addBackToTopButton()
     @addRefreshButton()
+
+    @inputChanged = false
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
@@ -1177,7 +1188,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if typeof(requires) == 'string'
           requires = [requires]
         requiresStr = ""
-        for requirePath in requires 
+        for requirePath in requires
           # TODO: css
           if requirePath.match(/^(http|https)\:\/\//)
             if (!requireCache[requirePath])
