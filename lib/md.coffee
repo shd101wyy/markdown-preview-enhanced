@@ -30,9 +30,24 @@ TAGS_TO_REPLACE = {
     '\/', '&#x2F;',
     '\\', '&#x5C;',
 }
+
+TAGS_TO_REPLACE_REVERSE = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': '\'',
+    '&#x27;': '\'',
+    '&#x2F;': '\/',
+    '&#x5C;': '\\',
+}
+
 highlighter = null
 String.prototype.escape = ()->
-  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] || tag
+  this.replace /[&<>"'\/\\]/g, (tag)-> TAGS_TO_REPLACE[tag] or tag
+
+String.prototype.unescape = ()->
+  this.replace /\&(amp|lt|gt|quot|apos|\#x27|\#x2F|\#x5C)\;/g, (whole)-> TAGS_TO_REPLACE_REVERSE[whole] or whole
 
 ####################################################
 ## Mermaid
@@ -592,15 +607,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 
-    outputDiv = ''
-    idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
-    if idMatch and idMatch[1] and codeChunksData[idMatch[1]]
-      outputDiv = '<div class="output-div">' + (codeChunksData[idMatch[1]].outputDiv?.innerHTML or '') + '</div>'
-
     statusDiv = '<div class="status">running...</div>'
 
-    $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + outputDiv + '</div>')
-    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text
+    $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + '</div>')
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': rootDirectoryPath
 
     $(preElement).replaceWith $el
 

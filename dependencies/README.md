@@ -9,7 +9,8 @@ I managed many libraries by myself instead of through npm to reduce overall file
     "reveal": "3.4.1",
     "viz": "1.7.0",
     "save-svg-as-png": "v1.1.0",
-    "MathJax": "v2.7.0"
+    "MathJax": "v2.7.0",
+    "mpld3": "v0.3.0",
 }
 ```  
 
@@ -26,5 +27,7 @@ I managed many libraries by myself instead of through npm to reduce overall file
 *Attention*: **viz.js 1.4.1** will cause `EvalError: Refused to evaluate a string as JavaScript` error.
 Need to modify `eval` to eliminate `unsafe-eval` issue.  
 Check [#75](https://github.com/mdaines/viz.js/issues/75).  
+
+*Attention*: **mpld3.v0.3.min.js** min version actually has problem, so use not minified version.  
 
 

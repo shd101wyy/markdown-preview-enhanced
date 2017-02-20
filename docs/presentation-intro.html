@@ -1433,10 +1433,10 @@ body {
 .markdown-preview-enhanced[data-use-github-style] kbd { color: rgb(51, 51, 51); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; background-color: rgb(252, 252, 252); }
 .markdown-preview-enhanced .pagebreak, .markdown-preview-enhanced .newpage { break-before: page; }
 @media screen and (min-width: 914px) { 
-  .markdown-preview-enhanced { width: 854px; margin: 10px auto; background: rgb(38, 50, 56); }
+  .markdown-preview-enhanced { width: 980px; margin: 10px auto; background: rgb(38, 50, 56); }
 }
 @media screen and (max-width: 400px) { 
-  .markdown-preview-enhanced { font-size: 14px; }
+  .markdown-preview-enhanced { font-size: 14px; margin: 0px auto; padding: 15px; }
 }
 @media screen and (min-width: 914px) { 
   .markdown-preview-enhanced[data-use-github-style] { background: rgb(255, 255, 255); }
@@ -1458,6 +1458,7 @@ body {
 }
 .markdown-preview-enhanced[is="space-pen-div"] .code-chunk { position: relative; }
 .markdown-preview-enhanced[is="space-pen-div"] .code-chunk .output-div { overflow-x: auto; }
+.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .output-div svg { display: block; }
 .markdown-preview-enhanced[is="space-pen-div"] .code-chunk pre { cursor: text; }
 .markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group { position: absolute; right: 0px; top: 0px; display: none; }
 .markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-btn, .markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-all-btn { float: right; margin-left: 4px; border-radius: 3px; font-size: 0.8em; color: rgb(238, 238, 238); border: none; background-image: none; background-color: rgb(82, 139, 255); }
@@ -1619,7 +1620,7 @@ body {
 .markdown-preview-enhanced .mermaid .today { }
 .markdown-preview-enhanced.phantomjs-image { width: 512px !important; zoom: 2 !important; }
 .markdown-preview-enhanced.phantomjs-pdf { zoom: 0.8 !important; }
-.markdown-preview-enhanced .preview-slides .slide, .markdown-preview-enhanced[data-presentation-mode] { } </style> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ messageStyle: 'none', tex2jax: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: true} }); </script> <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced " data-use-github-style data-use-github-syntax-theme data-presentation-mode> <div class="reveal">
+.markdown-preview-enhanced .preview-slides .slide, .markdown-preview-enhanced[data-presentation-mode] { } </style> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ messageStyle: 'none', tex2jax: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEnvironments: false, processEscapes: true} }); </script> <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced " data-use-github-style data-use-github-syntax-theme data-presentation-mode> <div class="reveal">
   <div class="slides">
     <section  data-notes='Congrats! You just opened speaker notes'><h1 id="presentation-writer-beta">Presentation Writer (Beta)</h1>
 <p>by <strong>Markdown Preview Enhanced</strong>  <br>

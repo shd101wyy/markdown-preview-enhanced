@@ -35,13 +35,13 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "^2.1.5",
     "atom-space-pen-views": "^2.2.0",
     "babyparse": "^0.4.6",
-    "cheerio": "^0.15.0",
+    "cheerio": "^0.22.0",
     "gray-matter": "^2.1.0",
     "html-pdf": "^2.1.0",
-    "imgur": "^0.1.7",
+    "imgur": "^0.2.0",
     "katex": "^0.7.1",
     "loophole": "^1.1.0",
     "remarkable": "^1.7.1",
@@ -97,15 +97,22 @@
       "title": "Inline Indicator",
       "type": "string",
       "default": "[[\"$\", \"$\"]]",
-      "description": "Use customized Math expression inline indicator. By default it is '[[\"$\", \"$\"]]', which means content within '**$**' and '**$**' will be rendered in inline mode. You can also define multiple indicators separated by comma. For example, '[[\"$\", \"$\"], [\"\\\\\\\\(\", \"\\\\\\\\)\"]]' will render inline math expression within '**$**' and '**$**', '**\\\\(**' and '**\\\\)**'. **You may need to restart atom after making changes here**",
+      "description": "Use customized Math expression inline indicator. By default it is '[[\"$\", \"$\"]]', which means content within '**$**' and '**$**' will be rendered in inline mode. You can also define multiple indicators separated by comma. For example, '[[\"$\", \"$\"], [\"\\\\\\\\(\", \"\\\\\\\\)\"]]' will render inline math expression within '**$**' and '**$**', '**\\\\(**' and '**\\\\)**'. `(Restart is required to take effect)`",
       "order": 21
     },
     "indicatorForMathRenderingBlock": {
       "title": "Block Indicator",
       "type": "string",
       "default": "[[\"$$\", \"$$\"]]",
-      "description": "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]",
+      "description": "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`",
       "order": 22
+    },
+    "mathJaxProcessEnvironments": {
+      "title": "MathJax processEnvironments",
+      "type": "boolean",
+      "default": false,
+      "description": "Note that, as opposed to true LaTeX, MathJax processes all environments when wrapped inside math delimiters. By defaut, MathJax will also render all environments outside of delimiters; this can be controlled via the processEnvironments option. `Live Update` is recommended to be disabled when this option is enabled. `(Restart is required to take effect)`",
+      "order": 23
     },
     "enableWikiLinkSyntax": {
       "title": "Enable Wiki Link syntax",

@@ -3,11 +3,11 @@ fs = require 'fs'
 {Directory} = require 'atom'
 {execFile} = require 'child_process'
 async = require 'async'
-# {allowUnsafeEval} = require 'loophole'
 Viz = require '../dependencies/viz/viz.js'
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert
@@ -59,6 +59,8 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
   wavedromIdPrefix = 'wavedrom_' + (Math.random().toString(36).substr(2, 9) + '_')
   wavedromOffset = 100
+
+  codeChunksArr = [] # array of {id, options, code}
 
   for codeData in codes
     {start, end, content} = codeData
@@ -197,12 +199,39 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
 
           options = null
           try
-            options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
+            allowUnsafeEval ->
+              options = eval("({#{dataArgs}})")
+            # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
           catch error
             atom.notifications.addError('Invalid options', detail: dataArgs)
             return
 
           cmd = options.cmd if options.cmd
+          id = options.id
+
+          codeChunksArr.push {id, code: content, options}
+
+          # check continue
+          offset = codeChunksArr.length - 1
+          currentCodeChunk = codeChunksArr[offset]
+          while currentCodeChunk?.options.continue
+            last = null
+            if currentCodeChunk.options.continue == true
+              last = codeChunksArr[offset - 1]
+            else
+              for c in codeChunksArr
+                if c.id == currentCodeChunk.options.continue
+                  last = c
+                  break
+
+            if last
+              content = last.code + '\n' + content
+              options.matplotlib = last.options.matplotlib or last.options.mpl
+            else # error
+              break
+
+            offset--
+            currentCodeChunk = codeChunksArr[offset]
 
           codeChunkAPI.run content, rootDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
@@ -225,7 +254,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
                 saveSvgAsPng svgElement, dest, {width, height}, (error)->
                   cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, dest, cmd})
               else
-                # html will not be working with pandoc.  
+                # html will not be working with pandoc.
                 cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
             else if outputType == 'markdown'
               cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})

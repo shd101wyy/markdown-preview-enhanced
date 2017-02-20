@@ -24,7 +24,7 @@ module.exports =
             inlineMath: inline,
             displayMath: block,
             processEscapes: true,
-            # processEnvironments: true,
+            processEnvironments: atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments'),
             # preview: 'none',
             # skipTags: ["script","noscript","style","textarea"]
           },

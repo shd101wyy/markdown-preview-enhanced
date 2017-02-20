@@ -5,15 +5,15 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)   
 
-New Feature for version `0.9.6`! Oh yeah!  
-**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, and it is very buggy now. More information can be found [here](./docs/doc-imports.md).     
-
-![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
-
-
-**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same for `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
+From version `0.9.9`, **markdown-preview-enhanced** supports more **powerful code chunk**.   
+You can now use python `matplotlib` very easily to make plots and even create interactive figures powered by [mpld3](mpld3.github.io).   
+JavaScript code chunk (not node.js but browser javascript) is also supported so that you can use libraries like [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) to draw graphs.  
+A working example can be found [here](), also here is its [raw file]().  
+[Code Chunk (beta) Doc](./docs/code-chunk.md) is also updated.        
 
 ---  
+
+[language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -28,6 +28,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [Preview Context Menu](#preview-context-menu)
 	* [Extra](#extra)
 	* [For Developer](#for-developer)
+	* [FAQ](#faq)
 	* [Credits](#credits)
 	* [Thanks](#thanks)
 
@@ -38,6 +39,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Features
 - **2-side scroll sync**  
+- **[Import external files](./docs/doc-imports.md)**
 - **[Code Chunks (beta)](./docs/code-chunk.md)**
 - **[pandoc](./docs/advanced-export.md)**
 - **[ebook](./docs/ebook.md)**
@@ -55,7 +57,6 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
-- [Import external files](./docs/doc-imports.md)
 - And many more...
 
 ## How it works
@@ -96,6 +97,9 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Generate TOC (need preview toggled). [doc is here](./docs/toc.md).    
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - Enable/Disable scroll sync for preview.
+- <strong>Markdown Preview Enhanced: Toggle Live Update </strong>
+	 - Enable/Disable live update for preview.
+	 - If disabled, preview will only be rendered when the file is saved.  
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
   - Enable/Disable breaking on single newline.
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
@@ -142,6 +146,21 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 ## For Developer
 Manual installation instruction can be found [here](./docs/DEVELOPER.md).   
 It is also very easy to write your own extension, more information can be found [here](./docs/extension.md).
+
+## FAQ
+1. **I am not able to find this package in atom?**  
+Please search for the full name of this package. `markdown-preview-enhanced`  
+2. **I exported a html file, and I want to deploy it on my own remote server. But math typesetting (MathJax or KaTeX) doesn't work, what should I do?**  
+Please make sure you have `Use CDN hosted resources` checked when exporting.  
+3. **I exported a presentation html file, and I want to put it on my Github Page or deploy remotely?**  
+Please check the last question.  
+4. **How do I get dark style preview?**  
+If you want the style of the preview to be consistent with your atom editor, go to settings of this package, then uncheck `Github.com style` and `Use Github.com syntax theme`. [#281](https://github.com/shd101wyy/markdown-preview-enhanced/issues/281).  
+Or you can run `Markdown Preview Enhanced: Customize Css` command, then modify the `style.less` file.  [#68](https://github.com/shd101wyy/markdown-preview-enhanced/issues/68), [#89](https://github.com/shd101wyy/markdown-preview-enhanced/issues/89).
+5. **The preview is super super lagging?**  
+This might happen when your markdown file is too big, or you are using too many math or graphs.  
+Therefore I would like to recommend you to disable `Live Update` functionality.  
+You can run `Markdown Preview Enhanced: Toggle Live Update` to disable it.  
 
 ## Credits  
 * [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  
