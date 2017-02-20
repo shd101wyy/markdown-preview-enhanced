@@ -164,7 +164,11 @@ JavaScript code chunk (不是 node.js，而是浏览器 javascript) 也被支持
 6. **预览特别特别卡，该怎么做？**  
 如果你的预览特别卡，那么可能是你的文件太大了，或者用到的数学式，画的图过多。  
 这里我建议关闭 `Live Update` 的功能。可以运行 `Markdown Preview Enhanced: Toggle Live Update` 来关闭（disable）。然后预览就只会在你保存文件的时候刷新了，这样就不会卡了。  
-
+7. **你需要工作吗？（喂！这和疑难解答有什么关系？）**  
+是的！我正在（准备）找工作 `(*/ω＼*)`。（任何国家（地区）都可以考虑，或者远程工作也行）    
+我是一名正在 伊利诺伊大学厄巴纳-香槟分校 (UIUC) 学习的计算机科学专业的学生。我即将于今年（2017）5 月份毕业拿到我的 BS/MCS 学位。  
+我个人对游戏开发和网络前端很感兴趣。如果你对我感兴趣想给予我工作机会，请通过我的学校邮箱 `ywang189@illinois.edu` 或者我的个人邮箱 `shd101wyy@(sina|gmail)\.com` 联系我。 （如果我没来得及回复，请不要生气，我可能在赶作业 (✿◡‿◡)）。  
+非常感谢 :)  
 
 ## 鸣谢  
 * [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  

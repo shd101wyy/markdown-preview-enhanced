@@ -162,6 +162,11 @@ Or you can run `Markdown Preview Enhanced: Customize Css` command, then modify t
 This might happen when your markdown file is too big, or you are using too many math or graphs.  
 Therefore I would like to recommend you to disable `Live Update` functionality.  
 You can run `Markdown Preview Enhanced: Toggle Live Update` to disable it.  
+6. **Do you need a job? (Huh... is this question really related to FAQ???)**  
+Yes, I DO NEED A JOB. `(*/ω＼*)` (Any country (region) should be fine for me. I can also work remotely.)     
+I am an international student from China currently studying at University of Illinois at Urbana-Champaign. I am a CS major student and I will get my BS/MCS degree this May (2017).  
+I am personally very interested in game development and front-end web development. If you are willing to offer me a job opportunity, please contact me by my school email `ywang189@illinois.edu` or my personal email `shd101wyy@(sina|gmail).com`. (plz don't be mad if you don't get any response from me because I might be busy working on my homework `(✿◡‿◡)).      
+Thank you very mcuh :)  
 
 ## Credits  
 * [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  
