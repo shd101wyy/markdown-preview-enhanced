@@ -1177,7 +1177,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         jsCode += (requiresStr + code + '\n')
 
-    return $.html() + "#{scriptsStr}\n<script data-js-code>#{jsCode}</script>"
+    html = $.html()
+    html += "#{scriptsStr}\n" if scriptsStr
+    html += "<script data-js-code>#{jsCode}</script>" if jsCode
+    return html 
 
   ##
   # {Function} callback (htmlContent)
