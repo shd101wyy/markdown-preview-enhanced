@@ -32,6 +32,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:customize-css': => @customizeCSS()
       'markdown-preview-enhanced:create-toc': => @createTOC()
       'markdown-preview-enhanced:toggle-scroll-sync': => @toggleScrollSync()
+      'markdown-preview-enhanced:toggle-live-update': => @toggleLiveUpdate()
       'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
@@ -252,6 +253,15 @@ module.exports = MarkdownPreviewEnhanced =
       atom.notifications.addInfo('Scroll Sync enabled')
     else
       atom.notifications.addInfo('Scroll Sync disabled')
+
+  toggleLiveUpdate: ()->
+    flag = atom.config.get 'markdown-preview-enhanced.liveUpdate'
+    atom.config.set('markdown-preview-enhanced.liveUpdate', !flag)
+
+    if !flag
+      atom.notifications.addInfo('Live Update enabled')
+    else
+      atom.notifications.addInfo('Live Update disabled')
 
   toggleBreakOnSingleNewline: ()->
     flag = atom.config.get 'markdown-preview-enhanced.breakOnSingleNewline'
