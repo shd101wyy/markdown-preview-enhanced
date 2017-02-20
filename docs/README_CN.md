@@ -27,6 +27,7 @@ Markdown Preview Enhanced
 	* [预览菜单](#预览菜单)
 	* [额外支持](#额外支持)
 	* [开发者](#开发者)
+	* [疑难解答](#疑难解答)
 	* [鸣谢](#鸣谢)
 	* [感谢](#感谢)
 
@@ -144,6 +145,25 @@ Markdown Preview Enhanced
 ## 开发者
 手动安装指南可以在 [这里](./DEVELOPER.md) 找到。   
 扩展该插件也十分简单，更多信息请点击 [这里](./extension.md)。
+
+## 疑难解答
+1. **在国内（中国大陆）安装不了怎么办？**  
+由于该插件的依赖之一 [phantomjs](https://github.com/Medium/phantomjs) 需要翻墙才可以安装。所以我推荐以下两种方式解决此问题：
+	1. 本地提前安装好 phantomjs。 Mac 用户可以直接 terminal 运行 `brew install phantomjs` 安装。然后再尝试安装此插件。
+	2. 安装 `cnpm`。具体请查看 [@Niefee](https://github.com/shd101wyy/markdown-preview-enhanced/issues/231#issuecomment-280912665) 的回答。
+2. **在 atom 的插件市场中找不到这个插件啊？**  
+请搜索全称 `markdown-preview-enhanced`。[#269](https://github.com/shd101wyy/markdown-preview-enhanced/issues/269)。
+3. **我导出了一个 html 文件，想把它放到我的服务器上。但是数学符号等不能正确显示，该怎么办？**  
+请确定导出 html 文件的时候，`Use CDN hosted resources` 这一选项勾上了。  
+4. **我导出了一个 presentation 的 html 文件，想把它放到我的服务器上，但是无法正确显示？**  
+请参考上一个问题。
+5. **我想用黑色的预览主题，该怎么做？**  
+如果你想要你的预览和你的 atom 编辑器风格颜色一致，你可以到该插件的设置中，将 `Use Github.com style` 以及 `Use Github.com syntax theme` 给关闭。 [#281](https://github.com/shd101wyy/markdown-preview-enhanced/issues/281)   
+还有一种方法是运行 `Markdown Preview Enhanced: Customize Css` 命令，然后修改 `style.less` 文件。[#68](https://github.com/shd101wyy/markdown-preview-enhanced/issues/68)，[#89](https://github.com/shd101wyy/markdown-preview-enhanced/issues/89)。
+6. **预览特别特别卡，该怎么做？**  
+如果你的预览特别卡，那么可能是你的文件太大了，或者用到的数学式，画的图过多。  
+这里我建议关闭 `Live Update` 的功能。可以运行 `Markdown Preview Enhanced: Toggle Live Update` 来关闭（disable）。然后预览就只会在你保存文件的时候刷新了，这样就不会卡了。  
+
 
 ## 鸣谢  
 * [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  

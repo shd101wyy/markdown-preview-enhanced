@@ -148,7 +148,7 @@ module.exports = MarkdownPreviewEnhanced =
       atom.notifications.addError('Markdown file should be saved first.')
       return false
 
-    fileName = editor.getFileName().trim()
+    fileName = editor.getFileName()?.trim() or ''
     if !(path.extname(fileName) in @fileExtensions)
       atom.notifications.addError("Invalid Markdown file: #{fileName} with wrong extension #{path.extname(fileName)}.", detail: "only '#{@fileExtensions.join(', ')}' are supported." )
       return false

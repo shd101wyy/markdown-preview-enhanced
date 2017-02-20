@@ -6,7 +6,7 @@ continue: true | id   # continue last code chunk or code chunk with id.
 element: "<canvas id=\"hi\"></canvas>" # element to append.    
 ```
 * [x] add `Markdown Preview Enhanced: Toggle Live Update`. And improve scroll sync when live update is disabled.  
-* [ ] add `FAQ` section.  
+* [x] add `FAQ` section.  
 * [ ] add cnpm url for phantomjs.  
 
 ## 0.9.8  

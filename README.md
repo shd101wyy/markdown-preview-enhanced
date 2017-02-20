@@ -28,6 +28,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [Preview Context Menu](#preview-context-menu)
 	* [Extra](#extra)
 	* [For Developer](#for-developer)
+	* [FAQ](#faq)
 	* [Credits](#credits)
 	* [Thanks](#thanks)
 
@@ -145,6 +146,21 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 ## For Developer
 Manual installation instruction can be found [here](./docs/DEVELOPER.md).   
 It is also very easy to write your own extension, more information can be found [here](./docs/extension.md).
+
+## FAQ
+1. **I am not able to find this package in atom?**  
+Please search for the full name of this package. `markdown-preview-enhanced`  
+2. **I exported a html file, and I want to deploy it on my own remote server. But math typesetting (MathJax or KaTeX) doesn't work, what should I do?**  
+Please make sure you have `Use CDN hosted resources` checked when exporting.  
+3. **I exported a presentation html file, and I want to put it on my Github Page or deploy remotely?**  
+Please check the last question.  
+4. **How do I get dark style preview?**  
+If you want the style of the preview to be consistent with your atom editor, go to settings of this package, then uncheck `Github.com style` and `Use Github.com syntax theme`. [#281](https://github.com/shd101wyy/markdown-preview-enhanced/issues/281).  
+Or you can run `Markdown Preview Enhanced: Customize Css` command, then modify the `style.less` file.  [#68](https://github.com/shd101wyy/markdown-preview-enhanced/issues/68), [#89](https://github.com/shd101wyy/markdown-preview-enhanced/issues/89).
+5. **The preview is super super lagging?**  
+This might happen when your markdown file is too big, or you are using too many math or graphs.  
+Therefore I would like to recommend you to disable `Live Update` functionality.  
+You can run `Markdown Preview Enhanced: Toggle Live Update` to disable it.  
 
 ## Credits  
 * [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  

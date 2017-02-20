@@ -39,7 +39,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @liveUpdate = true
     @scrollSync = true
     @scrollDuration = null
-    @inputChanged = false
+    @textChanged = false
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
@@ -250,20 +250,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @element.innerHTML = '<p style="font-size: 24px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
-      # @inputChanged = true # this line has problem.
+      # @textChanged = true # this line has problem.
       if @liveUpdate
         @updateMarkdown()
 
     @disposables.add @editor.onDidSave ()=>
       if not @liveUpdate
-        @inputChanged = true
+        @textChanged = true
         @updateMarkdown()
 
     @disposables.add @editor.onDidChangeModified ()=>
-      @inputChanged = true
+      if not @liveUpdate
+        @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or @inputChanged or !@editor or @presentationMode
+      if !@scrollSync or !@element or @textChanged or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -285,7 +286,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or @inputChanged
+      if !@scrollSync or !@element or @textChanged
         return
       if Date.now() < @parseDelay
         return
@@ -311,7 +312,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or @inputChanged or @presentationMode
+      if !@editor or !@scrollSync or @textChanged or @presentationMode
         return
       if Date.now() < @previewScrollDelay
         return
@@ -514,7 +515,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderMarkdown: ->
     if Date.now() < @parseDelay or !@editor or !@element
-      @inputChanged = false
+      @textChanged = false
       return
     @parseDelay = Date.now() + 200
 
@@ -541,7 +542,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @addBackToTopButton()
     @addRefreshButton()
 
-    @inputChanged = false
+    @textChanged = false
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
