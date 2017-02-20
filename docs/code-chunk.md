@@ -28,6 +28,8 @@ To enable code chunk highlighting, install [language-gfm-enhanced](https://atom.
     console.log(date.toString())
     ```   
 
+**Here is a  [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html), and its [raw file](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/test/code-chunks-test.md).**  
+
 ## Commands & Keyboard Shortcust
 * `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>      
 execute single code chunk where your cursor is at.    
