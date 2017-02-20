@@ -8,7 +8,7 @@ pdf = require 'html-pdf'
 katex = require 'katex'
 matter = require('gray-matter')
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
-cheerio = require 'cheerio'
+cheerio = null
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -868,8 +868,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if options.matplotlib or options.mpl
         scriptElements = outputDiv.getElementsByTagName('script')
         if scriptElements.length
-          window.d3 = require('../dependencies/mpld3/d3.v3.min.js')
-          window.mpld3 = require('../dependencies/mpld3/mpld3.v0.3.min.js')
+          window.d3 ?= require('../dependencies/mpld3/d3.v3.min.js')
+          window.mpld3 ?= require('../dependencies/mpld3/mpld3.v0.3.min.js')
           for scriptElement in scriptElements
             code = scriptElement.innerHTML
             allowUnsafeNewFunction -> allowUnsafeEval ->
@@ -1108,14 +1108,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ## {Function} callback (htmlContent)
   insertCodeChunksResult: (htmlContent)->
     # insert outputDiv and outputElement accordingly
+    cheerio ?= require 'cheerio'
     $ = cheerio.load(htmlContent)
     codeChunks = $('.code-chunk')
     jsCode = ''
     requireCache = {} # key is path
     scriptsStr = ""
-    stylesStr = ""
 
-    # codeChunksArr = []
     for codeChunk in codeChunks
       $codeChunk = $(codeChunk)
       dataArgs = $codeChunk.attr('data-args').unescape()
@@ -1136,32 +1135,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       outputDiv = @codeChunksData[id]?.outputDiv
       outputElement = @codeChunksData[id]?.outputElement
 
-      # codeChunksArr.push {id, cmd, options, code} # save to arr
-
-      ###
-      # check continue
-      # actually, no need to check continue for getHTMLContent
-      if options.continue
-        last = null
-        if options.continue == true
-          last = codeChunksArr[codeChunksArr.length - 1]
-        else
-          for c in codeChunksArr
-            if c.id == options.continue
-              last = c
-              break
-
-        if last
-          code = last.code + '\n' + code
-        else
-          atom.notifications.addError('Invalid continue for code chunk ' + (options.id or ''), detail: options.continue.toString())
-          return $.html()
-      ###
-
       if outputDiv # append outputDiv result
         $codeChunk.append("<div class=\"output-div\">#{outputDiv.innerHTML}</div>")
         if options.matplotlib or options.mpl
           # remove innerHTML of <div id="fig_..."></div>
+          # this is for fixing mpld3 exporting issue.
           gs = $('.output-div > div', $codeChunk)
           if gs
             for g in gs
@@ -1171,14 +1149,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
           ss = $('.output-div > script', $codeChunk)
           if ss
-            # load d3.min.js and mpld3.min.js
-            ###
-            requires = options.require or []
-            requires.push(path.resolve(__dirname, '../dependencies/mpld3/d3.v3.min.js'))
-            requires.push(path.resolve(__dirname, '../dependencies/mpld3/mpld3.v0.3.min.js'))
-            options.require = requires
-            ###
-
             for s in ss
               $s = $(s)
               c = $s.html()
@@ -1207,10 +1177,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         jsCode += (requiresStr + code + '\n')
 
-    # console.log jsCode
-
-    # return callback($.html()) if !jsCode
-    return $.html() if !jsCode
     return $.html() + "#{scriptsStr}\n<script data-js-code>#{jsCode}</script>"
 
   ##
