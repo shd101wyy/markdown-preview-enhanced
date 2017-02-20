@@ -3,17 +3,17 @@ Markdown Preview Enhanced
 测试 Beta 版本    
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
-[English Doc](../README.md)   
+[English Doc](../README.md)    
 
-版本 `0.9.6` 有新功能啦～    
-**Markdown Preview Enhanced** 现在支持导入 `csv`, `markdown`, `image`, 等格式文件。 该功能仍然在测试阶段，并且目前问题很多。更多相关信息请查看[此文档](doc-imports.md)。  
-
-![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
-
-
-**注意**, 版本 `0.9.6` 改变了画图的语法。 我们将不再使用 <code>\`\`\`{mermaid}</code> 。 请用 <code>\`\`\`@mermaid</code> 代替。同样的，`@viz`, `@wavedrom`, `@puml` 和 `@plantuml`。  
+`0.9.9` 版本以后，**markdown-preview-enhanced** 支持更加强劲的 **code chunk**。  
+你现在可以非常轻松地使用 python `matplotlib` 进行画图，而且可以创建由 [mplde](mpld3.github.io) 生成的交互图像。
+JavaScript code chunk (不是 node.js，而是浏览器 javascript) 也被支持了。你现在可以使用 [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) 等库来进行画图。  
+这里有一个生成的 [例子]()，以及它的 [源文件]()。  
+[Code Chunk (beta) 文档](./docs/code-chunk.md) 已更新。
 
 ---
+
+推荐安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 来更好地与 markdown-preview-enhanced 协同工作.  
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
 
@@ -38,6 +38,7 @@ Markdown Preview Enhanced
 
 ## 支持特性
 - **编辑与预览滑动同步**  
+- **[导入外部文件](doc-imports.md)**
 - **[Code Chunks (beta)](./code-chunk.md)**
 - **[pandoc](./advanced-export.md)**
 - **[ebook](./ebook.md)**  
@@ -55,7 +56,6 @@ Markdown Preview Enhanced
 - 图片助手
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)  
-- [导入外部文件](doc-imports.md)
 - 以及更多特性...
 
 ## 该插件如何工作

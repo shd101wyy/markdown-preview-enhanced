@@ -5,15 +5,15 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)   
 
-New Feature for version `0.9.6`! Oh yeah!  
-**Markdown Preview Enhanced** now supports importing `csv`, `markdown`, `image`, etc external files. This feature is still in testing phase, and it is very buggy now. More information can be found [here](./docs/doc-imports.md).     
-
-![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
-
-
-**Attension**, version `0.9.6` has changed the way of drawing graphs. We do not use <code>\`\`\`{mermaid}</code> anymore. Please write <code>\`\`\`@mermaid</code> instead. Same for `@viz`, `@wavedrom`, `@puml` and `@plantuml`.  
+From version `0.9.9`, **markdown-preview-enhanced** supports more **powerful code chunk**.   
+You can now use python `matplotlib` very easily to make plots and even create interactive figures powered by [mpld3](mpld3.github.io).   
+JavaScript code chunk (not node.js but browser javascript) is also supported so that you can use libraries like [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) to draw graphs.  
+A working example can be found [here](), also here is its [raw file]().  
+[Code Chunk (beta) Doc](./docs/code-chunk.md) is also updated.        
 
 ---  
+
+[language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
@@ -39,6 +39,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Features
 - **2-side scroll sync**  
+- **[Import external files](./docs/doc-imports.md)**
 - **[Code Chunks (beta)](./docs/code-chunk.md)**
 - **[pandoc](./docs/advanced-export.md)**
 - **[ebook](./docs/ebook.md)**
@@ -56,7 +57,6 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  
 - [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
-- [Import external files](./docs/doc-imports.md)
 - And many more...
 
 ## How it works
