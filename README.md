@@ -96,6 +96,9 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
   - Generate TOC (need preview toggled). [doc is here](./docs/toc.md).    
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - Enable/Disable scroll sync for preview.
+- <strong>Markdown Preview Enhanced: Toggle Live Update </strong>
+	 - Enable/Disable live update for preview.
+	 - If disabled, preview will only be rendered when the file is saved.  
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
   - Enable/Disable breaking on single newline.
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  

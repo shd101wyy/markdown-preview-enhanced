@@ -95,6 +95,9 @@ Markdown Preview Enhanced
   - 生成 TOC （预览需要被事先开启）[文档在这里](./toc.md)。   
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
   - 开关编辑和预览的滑动同步.
+- <strong>Markdown Preview Enhanced: Toggle Live Update </strong>
+	- 开关预览实时更新。
+	- 如果关闭了实时更新，那么预览将只会在文件保存的时候更新。
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
 - <strong>Markdown Preview Enhanced: Insert Table </strong>

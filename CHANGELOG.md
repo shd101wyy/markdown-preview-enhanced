@@ -1,9 +1,11 @@
 ## 0.9.9  
-* [ ] python matplotlib `inline` graph, [#280](https://github.com/shd101wyy/markdown-preview-enhanced/issues/280).   
+* [x] enhance code chunk. Now support `matplotlib` very well.   [#280](https://github.com/shd101wyy/markdown-preview-enhanced/issues/280).   
 ```sh
+matplotlib: true      # enable inline matplotlib plot.  
 continue: true | id   # continue last code chunk or code chunk with id.  
-element: "<canvas id=\"hi\"></canvas>" # element to append after  
+element: "<canvas id=\"hi\"></canvas>" # element to append.    
 ```
+* [x] add `Markdown Preview Enhanced: Toggle Live Update`. And improve scroll sync when live update is disabled.  
 * [ ] add `FAQ` section.  
 * [ ] add cnpm url for phantomjs.  
 
