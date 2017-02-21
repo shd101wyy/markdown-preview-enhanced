@@ -622,19 +622,22 @@ class MarkdownPreviewEnhancedView extends ScrollView
               @element.scrollTop = offsetTop
       else
         a.onclick = ()=>
-          # open md and markdown preview
-          if href and not (href.startsWith('https://') or href.startsWith('http://'))
-            if path.extname(href) in ['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'] # issue #97
-              @openFile href
-            else
-              if href.startsWith 'file:///'
-                href = href.slice(8) # remove protocal
-              # fix issue https://github.com/shd101wyy/markdown-preview-enhanced/issues/248
-              # ./link.md#heading
-              href = href.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
-              atom.workspace.open href,
-                split: 'left',
-                searchAllPanes: true
+          return if !href
+
+          fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.replace('.', '\\.').trim())
+          fileExtensionsRegExp = new RegExp("(#{fileExtensions.join('|')})")
+
+          if href.match(fileExtensionsRegExp) # markdown file
+            if href.startsWith 'file:///'
+              href = href.slice(8) # remove protocal
+            # fix issue https://github.com/shd101wyy/markdown-preview-enhanced/issues/248
+            # ./link.md#heading
+            href = href.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
+            atom.workspace.open href,
+              split: 'left',
+              searchAllPanes: true
+          else
+            @openFile href
 
     for a in as
       href = a.getAttribute('href')

@@ -6,7 +6,7 @@ Markdown Preview Enhanced
 [English Doc](../README.md)    
 
 `0.9.9` 版本以后，**markdown-preview-enhanced** 支持更加强劲的 **code chunk**。  
-你现在可以非常轻松地使用 python `matplotlib` 进行画图，而且可以创建由 [mplde](mpld3.github.io) 生成的交互图像。
+你现在可以非常轻松地使用 python `matplotlib` 进行画图，而且可以创建由 [mplde](http://mpld3.github.io) 生成的交互图像。
 JavaScript code chunk (不是 node.js，而是浏览器 javascript) 也被支持了。你现在可以使用 [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) 等库来进行画图。  
 [Code Chunk (beta) 文档](./docs/code-chunk.md) 已更新。
 

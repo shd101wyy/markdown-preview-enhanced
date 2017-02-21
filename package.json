@@ -86,7 +86,8 @@
       "title": "Protocols Whitelist",
       "type": "string",
       "default": "http, https, atom, file",
-      "description": "Accepted protocols followed by `://` for links. `(Restart is required to take effect)`"
+      "description": "Accepted protocols followed by `://` for links. `(Restart is required to take effect)`",
+      "order": 15
     },
     "mathRenderingOption": {
       "type": "string",

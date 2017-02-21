@@ -6,7 +6,7 @@ Still Beta Version!
 [中文文档](./docs/README_CN.md)   
 
 From version `0.9.9`, **markdown-preview-enhanced** supports more **powerful code chunk**.   
-You can now use python `matplotlib` very easily to make plots and even create interactive figures powered by [mpld3](mpld3.github.io).   
+You can now use python `matplotlib` very easily to make plots and even create interactive figures powered by [mpld3](http://mpld3.github.io).   
 JavaScript code chunk (not node.js but browser javascript) is also supported so that you can use libraries like [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) to draw graphs.  
 [Code Chunk (beta) Doc](./docs/code-chunk.md) is also updated.        
 
