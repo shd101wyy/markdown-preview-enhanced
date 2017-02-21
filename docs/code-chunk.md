@@ -181,6 +181,8 @@ Then we can click the `run` button at the preview to run our code.
 ![code_chunk](http://i.imgur.com/a7LkJYD.gif)
 
 ## Showcases
+**Here is a  [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html), and its [raw file](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/test/code-chunks-test.md).**  
+
 **bash**  
 ![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
 
