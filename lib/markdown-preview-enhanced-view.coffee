@@ -623,6 +623,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       else
         a.onclick = ()=>
           return if !href
+          return if href.match(/^(http|https)\:\/\//) # the default behavior will open browser for that url.   
 
           fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.replace('.', '\\.').trim())
           fileExtensionsRegExp = new RegExp("(#{fileExtensions.join('|')})")
