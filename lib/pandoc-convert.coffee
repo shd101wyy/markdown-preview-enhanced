@@ -91,8 +91,8 @@ processOutputConfig = (config, args)->
   if config['template']
     args.push('--template=' + config['template'])
 
-loadOutputYAML = (rootDirectoryPath, config)->
-  yamlPath = path.resolve(rootDirectoryPath, '_output.yaml')
+loadOutputYAML = (fileDirectoryPath, config)->
+  yamlPath = path.resolve(fileDirectoryPath, '_output.yaml')
   try
     yaml = fs.readFileSync yamlPath
   catch error
@@ -113,12 +113,12 @@ loadOutputYAML = (rootDirectoryPath, config)->
 
   Object.assign({}, data, config)
 
-processConfigPaths = (config, rootDirectoryPath, projectDirectoryPath)->
+processConfigPaths = (config, fileDirectoryPath, projectDirectoryPath)->
   # same as the one in processPaths function
   # TODO: refactor in the future
   resolvePath = (src)->
     if src.startsWith('/')
-      return path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
+      return path.relative(fileDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
     else # ./test.png or test.png
       return src
 
@@ -153,14 +153,14 @@ processConfigPaths = (config, rootDirectoryPath, projectDirectoryPath)->
     if outputConfig['template']
       outputConfig['template'] = helper(outputConfig['template'])
 
-processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
+processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
   match = null
   offset = 0
   output = ''
 
   resolvePath = (src)->
     if src.startsWith('/')
-      return path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
+      return path.relative(fileDirectoryPath, path.resolve(projectDirectoryPath, '.'+src))
     else # ./test.png or test.png
       return src
 
@@ -183,13 +183,13 @@ processPaths = (text, rootDirectoryPath, projectDirectoryPath)->
 ###
 @param {String} text: markdown string
 @param {Object} all properties are required!
-  @param {String} rootDirectoryPath
+  @param {String} fileDirectoryPath
   @param {String} projectDirectoryPath
   @param {String} sourceFilePath
 callback(err, outputFilePath)
 ###
-pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}, config={}, callback=null)->
-  config = loadOutputYAML rootDirectoryPath, config
+pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}, config={}, callback=null)->
+  config = loadOutputYAML fileDirectoryPath, config
   args = []
 
   extension = null
@@ -220,7 +220,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
     if outputFilePath.startsWith('/')
       outputFilePath = path.resolve(projectDirectoryPath, '.'+outputFilePath)
     else
-      outputFilePath = path.resolve(rootDirectoryPath, outputFilePath)
+      outputFilePath = path.resolve(fileDirectoryPath, outputFilePath)
 
     if documentFormat != 'custom_document' and path.extname(outputFilePath) != '.' + extension
       return atom.notifications.addError('Invalid extension for ' + documentFormat, detail: 'required .' + extension + ', but ' + path.extname(outputFilePath) + ' was provided.')
@@ -232,7 +232,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
     args.push '-o', outputFilePath
 
   # resolve paths in front-matter(yaml)
-  processConfigPaths config, rootDirectoryPath, projectDirectoryPath
+  processConfigPaths config, fileDirectoryPath, projectDirectoryPath
 
   if outputConfig
     processOutputConfig outputConfig, args
@@ -241,14 +241,14 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
   text = matter.stringify(text, config)
 
   # import external files
-  text = fileImport(text, {rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
+  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
 
   # change link path to relative path
-  text = processPaths text, rootDirectoryPath, projectDirectoryPath
+  text = processPaths text, fileDirectoryPath, projectDirectoryPath
 
   # change working directory
   cwd = process.cwd()
-  process.chdir(rootDirectoryPath)
+  process.chdir(fileDirectoryPath)
 
   # citation
   if config['bibliography'] or config['references']
@@ -257,7 +257,7 @@ pandocConvert = (text, {rootDirectoryPath, projectDirectoryPath, sourceFilePath}
   atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
   # mermaid / viz / wavedrom graph
-  processGraphs text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath: rootDirectoryPath}, (text, imagePaths=[])->
+  processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath}, (text, imagePaths=[])->
     # console.log args.join(' ')
     #
     # pandoc will cause error if directory doesn't exist,

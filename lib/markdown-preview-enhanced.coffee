@@ -88,7 +88,7 @@ module.exports = MarkdownPreviewEnhanced =
     @subscriptions.add atom.config.observe 'markdown-preview-enhanced.enableZenMode', (enableZenMode)=>
       paneItems = atom.workspace.getPaneItems()
       for editor in paneItems
-        if editor and editor.getPath and path.extname(editor.getPath()) in @fileExtensions
+        if editor and editor.getPath and path.extname(editor.getPath() or '') in @fileExtensions
           if editor.buffer
             editorElement = editor.getElement()
             if enableZenMode
@@ -148,7 +148,7 @@ module.exports = MarkdownPreviewEnhanced =
       atom.notifications.addError('Markdown file should be saved first.')
       return false
 
-    fileName = editor.getFileName()?.trim() or ''
+    fileName = editor.getFileName() or ''
     if !(path.extname(fileName) in @fileExtensions)
       atom.notifications.addError("Invalid Markdown file: #{fileName} with wrong extension #{path.extname(fileName)}.", detail: "only '#{@fileExtensions.join(', ')}' are supported." )
       return false

@@ -8,7 +8,7 @@ html:
 ###
 
 ###
-htmlConvert = (text, config={}, projectDirectoryPath, rootDirectoryPath)->
+htmlConvert = (text, config={}, projectDirectoryPath, fileDirectoryPath)->
   if !config.path
     return atom.notifications.addError('html output path not provided')
 
@@ -19,7 +19,7 @@ htmlConvert = (text, config={}, projectDirectoryPath, rootDirectoryPath)->
   if config.path[0] == '/'
     outputFilePath = path.resolve(projectDirectoryPath, '.' + config.path)
   else
-    outputFilePath = path.resolve(rootDirectoryPath, config.path)
+    outputFilePath = path.resolve(fileDirectoryPath, config.path)
 
   useAbsoluteImagePath = config.absolute_image_path
 

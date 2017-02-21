@@ -271,3 +271,5 @@ see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-edi
 - Now support **2-way scroll sync!**
 
 [[wikilink]]
+  
+[Test iTunes Link](itms://itunes.apple.com/us/app/apple-store/id375380948?mt=8)

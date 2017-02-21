@@ -25,7 +25,7 @@ phantomjs:
 ###
 
 ###
-phantomsJSConvert = (text, config={}, projectDirectoryPath, rootDirectoryPath)->
+phantomsJSConvert = (text, config={}, projectDirectoryPath, fileDirectoryPath)->
   if !config.path
     return atom.notifications.addError('phantomjs output path not provided')
 
@@ -33,7 +33,7 @@ phantomsJSConvert = (text, config={}, projectDirectoryPath, rootDirectoryPath)->
   if config.path[0] == '/'
     outputFilePath = path.resolve(projectDirectoryPath, '.' + config.path)
   else
-    outputFilePath = path.resolve(rootDirectoryPath, config.path)
+    outputFilePath = path.resolve(fileDirectoryPath, config.path)
 
   useAbsoluteImagePath = false
 

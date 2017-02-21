@@ -320,7 +320,7 @@ class ExporterView extends View
     if @documentExportPath.startsWith('/')
       @documentExportPath = path.resolve(markdownPreview.projectDirectoryPath, '.'+@documentExportPath)
     else
-      @documentExportPath = path.resolve(markdownPreview.rootDirectoryPath, @documentExportPath)
+      @documentExportPath = path.resolve(markdownPreview.fileDirectoryPath, @documentExportPath)
 
     @fileNameInput.focus()
     $('.selected', @element).click()

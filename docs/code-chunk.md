@@ -58,7 +58,7 @@ eg:
 **output**  
 `html`, `markdown`, `text`, `png`, `none`  
 
-defines how to render code output.   
+Defines how to render code output.   
 `html` will append output as html.    
 `markdown` will parse output as markdown. (MathJax and graphs will not be supported in this case, but KaTeX works)      
 `text` will append output to a `pre` block.    
@@ -89,7 +89,7 @@ args that append to command. eg:
     ```
 
 **stdin**  
-if `stdin` is set to true, then the code will be passed as stdin instead of as file.
+If `stdin` is set to true, then the code will be passed as stdin instead of as file.
 
 **hide**  
 `hide` will hide code chunk but only leave the output visible. default: `false`  
@@ -117,7 +117,7 @@ eg:
 	```
 
 **matplotlib**  
-if set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
+If set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
 eg:    
 
 	```{python matplotlib:true, id:"izbp0zt9"}
@@ -127,9 +127,12 @@ eg:
 	```
 
 **element**  
-the element that you want to append after.  
-please check this [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html).
+The element that you want to append after.  
+Please check this [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html).
 
+**require**  
+The javascript files that you want to require. Works the same as html `<script src="{js_file_path}"></script>`.  
+Please check this [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html).  
 
 **id**  
 `id` will be automatically generated to track the running result.  
@@ -178,6 +181,8 @@ Then we can click the `run` button at the preview to run our code.
 ![code_chunk](http://i.imgur.com/a7LkJYD.gif)
 
 ## Showcases
+**Here is a  [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html), and its [raw file](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/test/code-chunks-test.md).**  
+
 **bash**  
 ![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
 

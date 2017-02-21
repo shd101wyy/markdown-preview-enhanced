@@ -10,12 +10,12 @@ REQUIRE_CACHE = {}
 #
 #
 #
-run = (content, rootDirectoryPath='', cmd, options={}, callback)->
+run = (content, fileDirectoryPath='', cmd, options={}, callback)->
   args = options.args || []
   if (typeof(args) == 'string')
     args = [args]
 
-  savePath = path.resolve(rootDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk')
+  savePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk')
 
   content = content.replace(/\u00A0/g, ' ');
 
@@ -36,7 +36,7 @@ run = (content, rootDirectoryPath='', cmd, options={}, callback)->
                 return cb(error) if error
                 return cb(null, {file: requirePath, data: body.toString()})
           else
-            requirePath = path.resolve(rootDirectoryPath, requirePath)
+            requirePath = path.resolve(fileDirectoryPath, requirePath)
             asyncFunctions.push (cb)->
               fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
                 return cb(error) if error
@@ -122,7 +122,7 @@ except Exception:
     if !findInputFileMacro and !options.stdin
       args.push savePath
 
-    task = spawn cmd, args, {cwd: rootDirectoryPath}
+    task = spawn cmd, args, {cwd: fileDirectoryPath}
     if options.stdin # pass content as stdin
       task.stdin.write(content)
     task.stdin.end()

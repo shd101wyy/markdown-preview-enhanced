@@ -6,13 +6,17 @@ Markdown Preview Enhanced
 [English Doc](../README.md)    
 
 `0.9.9` 版本以后，**markdown-preview-enhanced** 支持更加强劲的 **code chunk**。  
-你现在可以非常轻松地使用 python `matplotlib` 进行画图，而且可以创建由 [mplde](mpld3.github.io) 生成的交互图像。
+你现在可以非常轻松地使用 python `matplotlib` 进行画图，而且可以创建由 [mplde](http://mpld3.github.io) 生成的交互图像。
 JavaScript code chunk (不是 node.js，而是浏览器 javascript) 也被支持了。你现在可以使用 [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) 等库来进行画图。  
 [Code Chunk (beta) 文档](./docs/code-chunk.md) 已更新。
 
 **这里是 [例子](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html)，以及它的 [源文件](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/test/code-chunks-test.md)。**    
 
 ---
+
+`0.9.10` 以后，<code>\`\`\`mermaid</code> 以及 <code>\`\`\`@mermaid</code> 都可以用来画图（应该不会再改了）。 同样的 `plantuml`, `wavedrom`, 以及 `viz` 也是。     
+
+---  
 
 推荐安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 来更好地与 markdown-preview-enhanced 协同工作.  
 
@@ -69,16 +73,16 @@ JavaScript code chunk (不是 node.js，而是浏览器 javascript) 也被支持
   - 想要支持数学表达式的高亮，请考虑安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 插件。
   - <img src="https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif">
 - [mermaid](https://github.com/knsv/mermaid) 来渲染 flowchart 和 sequence diagram  
-	- 代码块 `@mermaid` 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
+	- 代码块 `mermaid` （或者 `@mermaid`） 里的内容将被 [mermaid](https://github.com/knsv/mermaid) 渲染。  
 	- 查看 [mermaid 文档](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) 来了解如何画图。   
 	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/22724073/622549ac-ed89-11e6-9a3e-6f35dd3f1c81.gif)
 - [PlantUML](http://plantuml.com/) 来渲染图形。 (**Java** 是必须的依赖)  
 	- 你可以安装 [Graphviz](http://www.graphviz.org/) （非必需） 来生成其他种类的图形。  
-	- 代码块 `@puml` 或者 `@plantuml` 里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
+	- 代码块 `puml` 或者 `plantuml`（或者 `@puml` 或者 `@plantuml`）里的内容将被 [PlantUML](http://plantuml.com/) 渲染。  
 - [WaveDrom](http://wavedrom.com/) 来渲染 digital timing diagram.  
-	- 代码块 `@wavedrom` 里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
+	- 代码块 `wavedrom` （或者 `@wavedrom`）里的内容将被 [wavedrom](https://github.com/drom/wavedrom) 渲染。
 - [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) 图形.  
-	- 代码块 `@viz` 里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
+	- 代码块 `viz`（或者 `@viz`）里的内容将被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。
     - 在代码块第一行，可以通过`engine:[engine_name]`形式选择渲染引擎。比如:`engine:dot`。支持 `circo`, `dot`, `neato`, `osage`, or `twopi` 引擎。 `dot` 是默认引擎.    
 - [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的 presentations.
 	- [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关介绍。
