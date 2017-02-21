@@ -1,3 +1,8 @@
+## 0.9.12  
+* [x] fix issue [#255](https://github.com/shd101wyy/markdown-preview-enhanced/issues/255) deprecated call.  
+* [ ] add whitelist for protocols [#288](https://github.com/shd101wyy/markdown-preview-enhanced/issues/288)  
+* [ ] update docs.    
+
 ## 0.9.10
 * [x] support standard code fencing for graphs. [#286](https://github.com/shd101wyy/markdown-preview-enhanced/issues/286).   
 
