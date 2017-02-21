@@ -538,9 +538,9 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
 resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={})->
-  {rootDirectoryPath, projectDirectoryPath} = option
+  {fileDirectoryPath, projectDirectoryPath} = option
 
-  if !rootDirectoryPath
+  if !fileDirectoryPath
     return
 
   $ = cheerio.load(html)
@@ -561,11 +561,11 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         src[0] == '#' or
         src[0] == '/'))
       if !option.useRelativeImagePath
-        img.attr(srcTag, 'file:///'+path.resolve(rootDirectoryPath,  src))
+        img.attr(srcTag, 'file:///'+path.resolve(fileDirectoryPath,  src))
 
     else if (src and src[0] == '/')  # absolute path
       if option.useRelativeImagePath
-        img.attr(srcTag, path.relative(rootDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
+        img.attr(srcTag, path.relative(fileDirectoryPath, path.resolve(projectDirectoryPath, '.' + src)))
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
@@ -614,7 +614,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     statusDiv = '<div class="status">running...</div>'
 
     $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + '</div>')
-    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': rootDirectoryPath
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': fileDirectoryPath
 
     $(preElement).replaceWith $el
 
@@ -825,7 +825,7 @@ option = {
   hideFrontMatter:      bool, optional
   markdownPreview:      MarkdownPreviewEnhancedView, optional
 
-  rootDirectoryPath:    string, required
+  fileDirectoryPath:    string, required
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
 }
@@ -879,7 +879,7 @@ parseMD = (inputString, option={})->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
 
   # check document imports
-  {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, rootDirectoryPath: option.rootDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+  {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>

@@ -12,7 +12,7 @@ codeChunkAPI = require './code-chunk'
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert
 # callback: function(text, imagePaths=[]){ ... }
-processGraphs = (text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
+processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
   lines = text.split('\n')
   codes = []
 
@@ -37,7 +37,7 @@ processGraphs = (text, {rootDirectoryPath, projectDirectoryPath, imageDirectoryP
         j += 1
     i += 1
 
-  return processCodes(codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)
+  return processCodes(codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)
 
 saveSvgAsPng = (svgElement, dest, option={}, cb)->
   return cb(null) if !svgElement or svgElement.tagName.toLowerCase() != 'svg'
@@ -52,7 +52,7 @@ saveSvgAsPng = (svgElement, dest, option={}, cb)->
       cb(err)
 
 # {start, end, content}
-processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
+processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
   asyncFunctions = []
 
   imageFilePrefix = (Math.random().toString(36).substr(2, 9) + '_') if !imageFilePrefix
@@ -239,7 +239,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
             offset--
             currentCodeChunk = codeChunksArr[offset]
 
-          codeChunkAPI.run content, rootDirectoryPath, cmd, options, (error, data, options)->
+          codeChunkAPI.run content, fileDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
 
             if outputType == 'text'
@@ -283,7 +283,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
         if useAbsoluteImagePath
           imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})  "
         else
-          imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})  "
+          imgMd = "![](#{path.relative(fileDirectoryPath, dest) + '?' + Math.random()})  "
         imagePaths.push dest
 
         lines[start] = imgMd
@@ -310,7 +310,7 @@ processCodes = (codes, lines, {rootDirectoryPath, projectDirectoryPath, imageDir
           if useAbsoluteImagePath
             imgMd = "![](#{'/' + path.relative(projectDirectoryPath, dest) + '?' + Math.random()})  "
           else
-            imgMd = "![](#{path.relative(rootDirectoryPath, dest) + '?' + Math.random()})  "
+            imgMd = "![](#{path.relative(fileDirectoryPath, dest) + '?' + Math.random()})  "
           lines[end] += ('\n' + imgMd)
 
         if data

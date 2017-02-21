@@ -32,7 +32,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @tocConfigs = null
     @scrollMap = null
-    @rootDirectoryPath = null
+    @fileDirectoryPath = null
     @projectDirectoryPath = null
 
     @disposables = null
@@ -186,7 +186,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @tocConfigs = null
     @scrollMap = null
-    @rootDirectoryPath = @editor.getDirectoryPath()
+    @fileDirectoryPath = @editor.getDirectoryPath()
     @projectDirectoryPath = @getProjectDirectoryPath()
     @firstTimeRenderMarkdowon = true
     @filesCache = {}
@@ -521,7 +521,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @rootDirectoryPath, @projectDirectoryPath})
+    {html, slideConfigs, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @fileDirectoryPath, @projectDirectoryPath})
 
     html = @formatStringAfterParsing(html)
 
@@ -825,7 +825,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       codeChunk.getElementsByClassName('output-element')?[0]?.remove()
       outputElement = null
 
-    codeChunkAPI.run code, @rootDirectoryPath, cmd, options, (error, data, options)=>
+    codeChunkAPI.run code, @fileDirectoryPath, cmd, options, (error, data, options)=>
       # get new codeChunk
       codeChunk = document.getElementById('code_chunk_' + id)
       return if not codeChunk
@@ -849,7 +849,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
         outputDiv.appendChild imageElement
       else if options.output == 'markdown'
-        {html} = @parseMD(data, {@rootDirectoryPath, @projectDirectoryPath})
+        {html} = @parseMD(data, {@fileDirectoryPath, @projectDirectoryPath})
         outputDiv.innerHTML = html
       else if options.output == 'none'
         outputDiv.remove()
@@ -1063,14 +1063,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return filePath
     else if filePath.startsWith('/')
       if relative
-        return path.relative(@rootDirectoryPath, path.resolve(@projectDirectoryPath, '.'+filePath))
+        return path.relative(@fileDirectoryPath, path.resolve(@projectDirectoryPath, '.'+filePath))
       else
         return 'file:///'+path.resolve(@projectDirectoryPath, '.'+filePath)
     else
       if relative
         return filePath
       else
-        return 'file:///'+path.resolve(@rootDirectoryPath, filePath)
+        return 'file:///'+path.resolve(@fileDirectoryPath, filePath)
 
   ## Utilities
   openInBrowser: (isForPresentationPrint=false)->
@@ -1172,7 +1172,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
               requireCache[requirePath] = true
               scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
           else
-            requirePath = path.resolve(@rootDirectoryPath, requirePath)
+            requirePath = path.resolve(@fileDirectoryPath, requirePath)
             if !requireCache[requirePath]
               requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
               requireCache[requirePath] = true
@@ -1197,7 +1197,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @rootDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
+    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @fileDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
     htmlContent = @formatStringAfterParsing(res.html)
     slideConfigs = res.slideConfigs
     yamlConfig = res.yamlConfig or {}
@@ -1652,7 +1652,7 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dest)->
-    {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @rootDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
+    {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @fileDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
     html = @formatStringAfterParsing(html)
 
     ebookConfig = null
@@ -1667,7 +1667,7 @@ module.exports = config || {}
       if ebookConfig.cover # change cover to absolute path if necessary
         cover = ebookConfig.cover
         if cover.startsWith('./') or cover.startsWith('../')
-          cover = path.resolve(@rootDirectoryPath, cover)
+          cover = path.resolve(@fileDirectoryPath, cover)
           ebookConfig.cover = cover
         else if cover.startsWith('/')
           cover = path.resolve(@projectDirectoryPath, '.'+cover)
@@ -1718,7 +1718,7 @@ module.exports = config || {}
 
         try
           text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-          {html} = @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, rootDirectoryPath: path.dirname(filePath)}
+          {html} = @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, fileDirectoryPath: path.dirname(filePath)}
           html = @formatStringAfterParsing(html)
 
           # add to TOC
@@ -1755,7 +1755,7 @@ module.exports = config || {}
         (callback)=>
           httpSrc = img.getAttribute('src')
           savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
-          savePath =  path.resolve(@rootDirectoryPath, savePath)
+          savePath =  path.resolve(@fileDirectoryPath, savePath)
 
           stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
 
@@ -1864,7 +1864,7 @@ module.exports = config || {}
       end = content.indexOf('---\n', 4)
       content = content.slice(end+4)
 
-    pandocConvert content, {@rootDirectoryPath, @projectDirectoryPath, sourceFilePath: @editor.getPath()}, data, (err, outputFilePath)->
+    pandocConvert content, {@fileDirectoryPath, @projectDirectoryPath, sourceFilePath: @editor.getPath()}, data, (err, outputFilePath)->
       if err
         return atom.notifications.addError 'pandoc error', detail: err
       atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
@@ -1888,7 +1888,7 @@ module.exports = config || {}
     if config.front_matter
       content = matter.stringify(content, config.front_matter)
 
-    markdownConvert content, {@projectDirectoryPath, @rootDirectoryPath}, config
+    markdownConvert content, {@projectDirectoryPath, @fileDirectoryPath}, config
 
   copyToClipboard: ->
     return false if not @editor

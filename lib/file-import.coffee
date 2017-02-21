@@ -31,7 +31,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
 ###
 @param {String} inputString, required
 @param {Object} filesCache, optional
-@param {String} rootDirectoryPath, required
+@param {String} fileDirectoryPath, required
 @param {String} projectDirectoryPath, required
 @param {Boolean} useAbsoluteImagePath, optional
 @param {Object} editor, optional
@@ -43,7 +43,7 @@ return
           heightsDelta is used to correct scroll sync. please refer to md.coffee
 }
 ###
-fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
+fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
   heightsDelta = []
   acc = 0
 
@@ -68,7 +68,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     else if filePath.startsWith('/')
       absoluteFilePath = path.resolve(projectDirectoryPath, '.' + filePath)
     else
-      absoluteFilePath = path.resolve(rootDirectoryPath, filePath)
+      absoluteFilePath = path.resolve(fileDirectoryPath, filePath)
 
     if filesCache?[absoluteFilePath] # already in cache
       updateHeightsDelta(filesCache[absoluteFilePath], start) if editor
@@ -82,7 +82,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
       else if useAbsoluteImagePath
         output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
       else
-        output = "![](#{path.relative(rootDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
+        output = "![](#{path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
 
       filesCache?[absoluteFilePath] = output
     else
@@ -90,7 +90,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
 
         if extname in markdownFileExtensions # markdown files
-          output = fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, rootDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  '
+          output = fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, fileDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.html' # html file
           output = '<div>' + fileContent + '</div>  '
