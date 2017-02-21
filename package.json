@@ -82,6 +82,12 @@
       "description": "Distraction free writing.",
       "order": 13
     },
+    "protocolsWhiteList": {
+      "title": "Protocols Whitelist",
+      "type": "string",
+      "default": "http, https, atom, file",
+      "description": "Accepted protocols followed by `://` for links. `(Restart is required to take effect)`"
+    },
     "mathRenderingOption": {
       "type": "string",
       "default": "KaTeX",

@@ -2,8 +2,9 @@ Baby = require('babyparse')
 path = require 'path'
 fs = require 'fs'
 
-markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
+{protocolsWhiteListRegExp} = require('./protocols-whitelist')
 
+markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
 
 # Convert 2D array to markdown table.
 # The first row is headings.
@@ -62,7 +63,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
 
-    if filePath.match(/^(http|https|file|atom)\:\/\//)
+    if filePath.match(protocolsWhiteListRegExp)
       absoluteFilePath = filePath
     else if filePath.startsWith('/')
       absoluteFilePath = path.resolve(projectDirectoryPath, '.' + filePath)
@@ -76,7 +77,7 @@ fileImport = (inputString, {filesCache, rootDirectoryPath, projectDirectoryPath,
     extname = path.extname(filePath)
     output = ''
     if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
-      if filePath.match(/^(http|https|file)\:\/\//)
+      if filePath.match(protocolsWhiteListRegExp)
         output = "![](#{filePath})  "
       else if useAbsoluteImagePath
         output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "

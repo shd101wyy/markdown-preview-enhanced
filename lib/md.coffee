@@ -13,7 +13,7 @@ toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
 fileImport = require('./file-import.coffee')
-
+{protocolsWhiteListRegExp} = require('./protocols-whitelist')
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -556,7 +556,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     src = img.attr(srcTag)
 
     if src and
-      (!(src.match(/^(http|https|atom|file)\:\/\//) or
+      (!(src.match(protocolsWhiteListRegExp) or
         src.startsWith('data:image/') or
         src[0] == '#' or
         src[0] == '/'))

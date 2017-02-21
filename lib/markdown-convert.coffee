@@ -11,6 +11,7 @@ processGraphs = require './process-graphs'
 encrypt = require './encrypt'
 CACHE = require './cache'
 fileImport = require './file-import'
+{protocolsWhiteListRegExp} = require './protocols-whitelist'
 
 # TODO: refactor this file
 # it has common functions as pandoc-convert.coffee
@@ -41,7 +42,7 @@ processPaths = (text, rootDirectoryPath, projectDirectoryPath, useAbsoluteImageP
   output = ''
 
   resolvePath = (src)->
-    if src.startsWith('http://') or src.startsWith('https://') or src.startsWith('file://')
+    if src.match(protocolsWhiteListRegExp)
       return src
 
     if useAbsoluteImagePath

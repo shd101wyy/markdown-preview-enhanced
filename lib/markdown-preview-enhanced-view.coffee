@@ -18,6 +18,7 @@ pandocConvert = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
+{protocolsWhiteListRegExp} = require './protocols-whitelist'
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -1057,7 +1058,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   convert './a.txt' '/a.txt'
   ###
   resolveFilePath: (filePath='', relative=false)->
-    if filePath.match(/^(http|https|file|atom)\:\/\//)
+    if filePath.match(protocolsWhiteListRegExp)
       return filePath
     else if filePath.startsWith('/')
       if relative
