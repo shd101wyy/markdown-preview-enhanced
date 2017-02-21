@@ -627,11 +627,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
           fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.replace('.', '\\.').trim())
           fileExtensionsRegExp = new RegExp("(#{fileExtensions.join('|')})")
 
-          if href.match(fileExtensionsRegExp) # markdown file
-            if href.startsWith 'file:///'
-              href = href.slice(8) # remove protocal
-            # fix issue https://github.com/shd101wyy/markdown-preview-enhanced/issues/248
-            # ./link.md#heading
+          if href.match(fileExtensionsRegExp) and href.match(/^file\:\/\/\//) # markdown file
+            #if href.startsWith 'file:///'
+            href = href.slice(8) # remove protocal
             href = href.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
             atom.workspace.open href,
               split: 'left',
