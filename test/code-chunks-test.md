@@ -53,14 +53,31 @@ plt.show() # show figure
 # ```{python continue:'izdlqdtc', id:"izc8i56g"}
 # `continue:'izdlqdtc'` here means this code chunk will continue from the
 # code chunk of id `izdlqdtc`, which is the last last one.  
-x = np.linspace(0, 5, 10)
-y = x ** 2
+from mpl_toolkits.mplot3d import Axes3D
+def randrange(n, vmin, vmax):
+    '''
+    Helper function to make an array of random numbers having shape (n, )
+    with each number distributed Uniform(vmin, vmax).
+    '''
+    return (vmax - vmin)*np.random.rand(n) + vmin
 
-plt.plot(x, y, 'r')
-plt.plot(y, x, 'b')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('mpe for fun')
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+n = 100
+
+# For each set of style and range settings, plot n random points in the box
+# defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
+for c, m, zlow, zhigh in [('r', 'o', -50, -25), ('b', '^', -30, -5)]:
+    xs = randrange(n, 23, 32)
+    ys = randrange(n, 0, 100)
+    zs = randrange(n, zlow, zhigh)
+    ax.scatter(xs, ys, zs, c=c, marker=m)
+
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
 plt.show()
 ```
 
@@ -209,6 +226,7 @@ mpld3.show()
 From version `0.9.9`, markdown-preview-enhanced adds support of browser javascript code chunk.   
 You can set `element` option to indicate what element to append for your code chunk.  
 You can set `require` option to require external javascript files, both local and remote are supported.    
+*However, browser javascript is unsafe and might cause security issue.*  
 Below are some examples   
 ### Chart.js  
 ```{javascript output:"markdown", element:'<canvas id="myChart" width="400" height="400"></canvas>', id:"izap3ln0", require: ["https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"]}
