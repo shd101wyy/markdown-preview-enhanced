@@ -623,16 +623,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       else
         a.onclick = ()=>
           return if !href
-          return if href.match(/^(http|https)\:\/\//) # the default behavior will open browser for that url.   
+          return if href.match(/^(http|https)\:\/\//) # the default behavior will open browser for that url.
 
-          fileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.replace('.', '\\.').trim())
-          fileExtensionsRegExp = new RegExp("(#{fileExtensions.join('|')})")
-
-          if href.match(fileExtensionsRegExp) and href.match(/^file\:\/\/\//) # markdown file
-            #if href.startsWith 'file:///'
-            href = href.slice(8) # remove protocal
-            href = href.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
-            atom.workspace.open href,
+          if path.extname(href) in ['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'] # issue #97
+            @openFile href
+          else if href.match(/^file\:\/\/\//)
+            # if href.startsWith 'file:///'
+            openFilePath = href.slice(8) # remove protocal
+            openFilePath = openFilePath.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
+            atom.workspace.open openFilePath,
               split: 'left',
               searchAllPanes: true
           else
