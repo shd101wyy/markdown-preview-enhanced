@@ -1,7 +1,8 @@
 ## 0.9.13
 * [ ] `Save as Markdown` code chunk `continue issue`
-* [ ] add <code>\`\`\`math</code>  
-* [ ] add `vhdl` and `vhd`
+* [x] add <code>\`\`\`math</code> [#295](https://github.com/shd101wyy/markdown-preview-enhanced/issues/295)    
+* [x] add `vhdl` and `vhd` for file import [#294](https://github.com/shd101wyy/markdown-preview-enhanced/issues/294)  
+* [ ] fix python3 matplotlib issue.   
 
 ## 0.9.12  
 * [x] fix issue [#255](https://github.com/shd101wyy/markdown-preview-enhanced/issues/255) deprecated call.  

@@ -6,6 +6,12 @@ fs = require 'fs'
 
 markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
 
+
+fileExtensionToLanguageMap = {
+  'vhd': 'vhdl',
+  'erl': 'erlang'
+}
+
 # Convert 2D array to markdown table.
 # The first row is headings.
 _2DArrayToMarkdownTable = (_2DArr)->
@@ -116,7 +122,8 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = "```@wavedrom\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         else # codeblock
-          output = "```#{extname.slice(1, extname.length)}  \n#{fileContent}\n```  "
+          fileExtension = extname.slice(1, extname.length)
+          output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
       catch e # failed to load file
         output = "#{prefix}<pre>#{e.toString()}</pre>  "
