@@ -78,6 +78,7 @@ run = (content, fileDirectoryPath='', cmd, options={}, callback)->
 
   if cmd.match(/python/) and (options.matplotlib or options.mpl)
     content = """
+# -*- coding: utf-8 -*-
 # modify default matplotlib pyplot show function
 try:
     import matplotlib

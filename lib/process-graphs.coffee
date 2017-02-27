@@ -199,8 +199,8 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
           def = lines[start].trim().slice(3)
           match = def.match(/^\{\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)}$/)
 
-          cmd = match[1].trim()
-          cmd = cmd.slice(1, cmd.length-1).trim() if cmd[0] == '"'
+          lang = match[1].trim()
+          lang = lang.slice(1, lang.length-1).trim() if lang[0] == '"'
           dataArgs = match[2].trim()
 
           options = null
@@ -241,17 +241,17 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
 
             currentCodeChunk = last
 
-          cmd = options.cmd if options.cmd
+          cmd = options.cmd or lang
 
           codeChunkAPI.run content, fileDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
-            return cb(null, null) if !data
+            return cb(null, {start, end, content, lang, type: 'code-chunk', hide: options.hide, data: ''}) if !data
 
             if outputType == 'text'
               # Chinese character will cause problem in pandoc
-              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data: "```\n#{data.trim()}\n```\n", cmd})
+              cb(null, {start, end, content, lang, type: 'code_chunk', hide: options.hide, data: "```\n#{data.trim()}\n```\n"})
             else if outputType == 'none'
-              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, cmd})
+              cb(null, {start, end, content, lang, type: 'code_chunk', hide: options.hide})
             else if outputType == 'html'
               div = document.createElement('div')
               div.innerHTML = data
@@ -263,12 +263,12 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
                 width = svgElement.getBBox().width
                 height = svgElement.getBBox().height
                 saveSvgAsPng svgElement, dest, {width, height}, (error)->
-                  cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, dest, cmd})
+                  cb(null, {start, end, content, lang, type: 'code_chunk', hide: options.hide, dest})
               else
                 # html will not be working with pandoc.
-                cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
+                cb(null, {start, end, content, lang, type: 'code_chunk', hide: options.hide, data})
             else if outputType == 'markdown'
-              cb(null, {start, end, content, type: 'code_chunk', hide: options.hide, data, cmd})
+              cb(null, {start, end, content, lang, type: 'code_chunk', hide: options.hide, data})
             else
               cb(null, null)
 
@@ -298,7 +298,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
           lines[i] = null # filter out later.
           i += 1
       else # code chunk
-        {hide, data, dest, cmd} = d
+        {hide, data, dest, lang} = d
         if hide
           i = start
           while i <= end
@@ -308,7 +308,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
         else # replace ```{python} to ```python
           line = lines[start]
           i = line.indexOf('```')
-          lines[start] = line.slice(0, i+3) + cmd
+          lines[start] = line.slice(0, i+3) + lang
 
         if dest
           imagePaths.push dest
