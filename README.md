@@ -5,19 +5,6 @@ Still Beta Version!
 
 [中文文档](./docs/README_CN.md)   
 
-From version `0.9.9`, **markdown-preview-enhanced** supports more **powerful code chunk**.   
-You can now use python `matplotlib` very easily to make plots and even create interactive figures powered by [mpld3](http://mpld3.github.io).   
-JavaScript code chunk (not node.js but browser javascript) is also supported so that you can use libraries like [Char.js](http://www.chartjs.org/), [d3js](https://d3js.org/), [plotly](https://plot.ly/) to draw graphs.  
-[Code Chunk (beta) Doc](./docs/code-chunk.md) is also updated.        
-
-**Here is a  [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html), and its [raw file](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/test/code-chunks-test.md).**  
-
----
-
-From version `0.9.10`, both <code>\`\`\`mermaid</code> and <code>\`\`\`@mermaid</code> can be used to draw graphs. Same for `plantuml`, `wavedrom`, and `viz`.     
-
----  
-
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
@@ -76,7 +63,7 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 - [mermaid](https://github.com/knsv/mermaid) to render flowchart and sequence diagram.  
 	- code block with `mermaid` (or `@mermaid`) notation will be rendered by [mermaid](https://github.com/knsv/mermaid)  
 	- check [mermaid doc](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram   
-	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/22724073/622549ac-ed89-11e6-9a3e-6f35dd3f1c81.gif)
+	- ![mermaid](https://cloud.githubusercontent.com/assets/1908863/23383956/5c8cb37e-fd0e-11e6-8a22-f3946841bbbd.gif)
 - [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required)  
 	- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
 	- code block with `puml` or `plantuml` or (`@puml` or `@plantuml`) notation will be rendered by [PlantUML](http://plantuml.com/).  
