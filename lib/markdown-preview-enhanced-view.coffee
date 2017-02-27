@@ -763,7 +763,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return false
 
-    cmd =  options.cmd or codeChunk.getAttribute('data-lang')
     id = options.id
 
     # check options.continue
@@ -785,11 +784,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         lastOptions = lastOptions or {}
         code = (lastCode or '') + '\n' + code
 
-        options.matplotlib = true if (lastOptions.matplotlib or lastOptions.mpl) # inherit matplotlib config
+        options = Object.assign({}, lastOptions, options)
       else
         atom.notifications.addError('Invalid continue for code chunk ' + (options.id or ''), detail: options.continue.toString())
         return false
 
+    cmd =  options.cmd or codeChunk.getAttribute('data-lang') # need to put here because options might be modified before
     return {cmd, options, code, id}
 
 

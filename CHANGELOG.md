@@ -1,5 +1,5 @@
 ## 0.9.13
-* [ ] `Save as Markdown` code chunk `continue issue`
+* [x] `Save as Markdown` code chunk `continue issue`
 * [x] add <code>\`\`\`math</code> [#295](https://github.com/shd101wyy/markdown-preview-enhanced/issues/295)    
 * [x] add `vhdl` and `vhd` for file import [#294](https://github.com/shd101wyy/markdown-preview-enhanced/issues/294)  
 * [ ] fix python3 matplotlib issue.   

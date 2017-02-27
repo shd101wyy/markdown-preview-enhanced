@@ -212,19 +212,22 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
             atom.notifications.addError('Invalid options', detail: dataArgs)
             return
 
-          cmd = options.cmd if options.cmd
           id = options.id
 
           codeChunksArr.push {id, code: content, options}
 
           # check continue
-          offset = codeChunksArr.length - 1
-          currentCodeChunk = codeChunksArr[offset]
+          currentCodeChunk = codeChunksArr[codeChunksArr.length - 1]
           while currentCodeChunk?.options.continue
             last = null
             if currentCodeChunk.options.continue == true
-              last = codeChunksArr[offset - 1]
-            else
+              offset = 0
+              while offset < codeChunksArr.length - 1
+                if codeChunksArr[offset + 1] == currentCodeChunk
+                  last = codeChunksArr[offset]
+                  break
+                offset += 1
+            else # continue with id
               for c in codeChunksArr
                 if c.id == currentCodeChunk.options.continue
                   last = c
@@ -232,15 +235,17 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
 
             if last
               content = last.code + '\n' + content
-              options.matplotlib = last.options.matplotlib or last.options.mpl
+              options = Object.assign({}, last.options, options)
             else # error
               break
 
-            offset--
-            currentCodeChunk = codeChunksArr[offset]
+            currentCodeChunk = last
+
+          cmd = options.cmd if options.cmd
 
           codeChunkAPI.run content, fileDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
+            return cb(null, null) if !data
 
             if outputType == 'text'
               # Chinese character will cause problem in pandoc
