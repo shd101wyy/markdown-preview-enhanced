@@ -1,3 +1,8 @@
+## 0.9.13
+* [ ] `Save as Markdown` code chunk `continue issue`
+* [ ] add <code>\`\`\`math</code>  
+* [ ] add `vhdl` and `vhd`
+
 ## 0.9.12  
 * [x] fix issue [#255](https://github.com/shd101wyy/markdown-preview-enhanced/issues/255) deprecated call.  
 * [x] add whitelist for protocols [#288](https://github.com/shd101wyy/markdown-preview-enhanced/issues/288).  

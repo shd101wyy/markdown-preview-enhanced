@@ -226,11 +226,8 @@ md.inline.ruler.before 'escape', 'math',
     else
       return false
 
-md.renderer.rules.math = (tokens, idx)->
-  {content, openTag, closeTag, displayMode} = tokens[idx]
-  if !content
-    return
-
+parseMath = ({content, openTag, closeTag, displayMode})->
+  return if !content
   if mathRenderingOption == 'KaTeX'
     if globalMathTypesettingData.isForPreview
       displayModeAttr = if displayMode then 'display-mode' else ''
@@ -270,6 +267,9 @@ md.renderer.rules.math = (tokens, idx)->
       # element = globalMathTypesettingData.mathjax_s.splice(0, 1)[0]
       # return "<div class=\"mathjax-exps\"> #{element.innerHTML} </div>"
       return text.escape()
+
+md.renderer.rules.math = (tokens, idx)->
+  return parseMath(tokens[idx] or {})
 
 # inline [[]] rule
 # [[...]]
@@ -412,11 +412,11 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   token = tokens[idx]
   langClass = ''
   langPrefix = options.langPrefix
-  langName = ''
   lineStr = ''
+  langName = token.params.escape()
 
   if token.params
-    langClass = ' class="' + langPrefix + token.params.escape() + '" ';
+    langClass = ' class="' + langPrefix + langName + '" ';
 
   if token.lines
     lineStr = " data-line=\"#{getRealDataLine(token.lines[0])}\" "
@@ -428,6 +428,12 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   break_ = '\n'
   if idx < tokens.length && tokens[idx].type == 'list_item_close'
     break_ = ''
+
+  if langName == 'math'
+    openTag = mathRenderingIndicator.block[0][0] or '$$'
+    closeTag = mathRenderingIndicator.block[0][1] or '$$'
+    mathHtml = parseMath({openTag, closeTag, content, displayMode: true})
+    return "<p #{lineStr}>#{mathHtml}</p>"
 
   return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
 
