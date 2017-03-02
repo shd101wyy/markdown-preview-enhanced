@@ -2,6 +2,7 @@
 path = require 'path'
 {getReplacedTextEditorStyles} = require './style'
 Hook = require './hook'
+configSchema = require './config-schema'
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -9,6 +10,7 @@ module.exports = MarkdownPreviewEnhanced =
   documentExporterView: null,
   imageHelperView: null,
   fileExtensions: null,
+  config: configSchema,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
