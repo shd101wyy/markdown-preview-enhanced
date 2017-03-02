@@ -1,4 +1,10 @@
-## 0.9.13
+## 0.10.2  
+* [ ] allow user to pick theme when not using `Github.com style theme`. [#297](https://github.com/shd101wyy/markdown-preview-enhanced/issues/297#issuecomment-283619527)  
+* [ ] issue [#298](https://github.com/shd101wyy/markdown-preview-enhanced/issues/298). But this is hard to be supported.   
+* [ ] add blog (jekyll, hexo, etc...) support. But I never used them before, so gonna take a while to figure out how to use them.    
+* [ ] move docs to github wiki.  
+
+## 0.10.1
 * [x] `Save as Markdown` code chunk `continue issue`
 * [x] add <code>\`\`\`math</code> [#295](https://github.com/shd101wyy/markdown-preview-enhanced/issues/295)    
 * [x] add `vhdl` and `vhd` for file import [#294](https://github.com/shd101wyy/markdown-preview-enhanced/issues/294)  
