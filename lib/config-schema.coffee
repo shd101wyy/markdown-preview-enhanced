@@ -1,9 +1,31 @@
+syntaxThemes = atom.themes.getLoadedThemeNames()
+syntaxThemes = syntaxThemes.filter (s)=> s.match(/\-syntax/)
+
 module.exports =
     fileExtension:
       type: "string"
       default: ".md, .mmark, .markdown"
       description: "You may need restart Atom after making changes here."
       order: 0
+    previewTheme:
+      title: "Preview Theme",
+      type: "string",
+      default: syntaxThemes?[0] or 'null',
+      enum: syntaxThemes,
+      description: "Theme for preview. This only works when `Use Github.com style` option is unchecked."
+      order: 1
+    useGitHubStyle:
+      title: "Use GitHub.com style"
+      type: "boolean"
+      default: true
+      description: "Use the similar CSS styles for preview as the ones used on GitHub.com."
+      order: 2
+    useGitHubSyntaxTheme:
+      title: "Use GitHub.com syntax theme"
+      type: "boolean"
+      default: true
+      description: "Use similar GitHub.com code block syntax theme."
+      order: 3
     breakOnSingleNewline:
       type: "boolean"
       default: true
@@ -72,18 +94,6 @@ module.exports =
       default: true
       description: "Use standard code fencing for graphs. For example, code block `mermaid` or `@mermaid` will render mermaid graphs. If this option is disabled, then only `@mermaid` will render mermaid graphs. Works for mermaid, viz, plantuml, and wavedrom."
       order: 31
-    useGitHubStyle:
-      title: "Use GitHub.com style"
-      type: "boolean"
-      default: true
-      description: "Use the similar CSS styles for preview as the ones used on GitHub.com."
-      order: 40
-    useGitHubSyntaxTheme:
-      title: "Use GitHub.com syntax theme"
-      type: "boolean"
-      default: true
-      description: "Use similar GitHub.com code block syntax theme."
-      order: 50
     liveUpdate:
       type: "boolean"
       default: true

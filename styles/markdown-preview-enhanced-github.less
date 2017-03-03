@@ -1,0 +1,89 @@
+.markdown-preview-enhanced[data-use-github-style] {
+  @github-black: #333;
+  @github-syntax-background-color: #f7f7f7;
+  @github-blockquote-color: #777;
+
+  color: @github-black;
+  background-color: #fff;
+
+  &[is="space-pen-div"] {
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 3px rgba(218, 218, 218, 0.6);
+      background-color: #f4f4f4;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #ccc;
+      border-color: transparent; // rgba(204, 204, 204, 0.9);
+    } /* this will style the thumb, ignoring the track */
+  }
+
+  h1, h2, h3, h4, h5 { color: @github-black; font-weight: 600; }
+  h5 { font-size: 1em; }
+  h6 { color: @github-blockquote-color; }
+
+  h1, h2 {
+    border-bottom: 1px solid #e7e7e7;
+  }
+
+  strong { color: @github-black; }
+
+  blockquote {
+    color: @github-blockquote-color;
+    border-left: 4px solid #ddd;
+  }
+
+  hr {
+    background-color: #e7e7e7;
+  }
+
+  th {
+    color: @github-black;
+  }
+  td, th {
+    border: 1px solid #ddd;
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.04) !important; // issue 160. <code>
+    color: inherit;
+  }
+
+  kbd {
+    color: @github-black;
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 #bbb;
+  }
+
+  @media screen and (min-width: 914px) {
+    background: #fff;
+  }
+
+  @media print {
+    background-color: #fff;
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #222;
+    }
+
+    blockquote {
+      color: @github-blockquote-color;
+    }
+
+    pre {
+      border: 2px solid #f6f6f6;
+    }
+  }
+}
+
+.markdown-preview-enhanced {
+  @import "./github-syntax.less";
+
+  &[data-use-github-syntax-theme] {
+    .github-syntax-theme() !important; // this has to be important!!!
+  }
+}
