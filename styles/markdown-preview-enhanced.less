@@ -16,6 +16,307 @@
   @github-syntax-background-color: #f7f7f7;
   @github-blockquote-color: #777;
 
+  // referred from base.less, colors.less, syntax-variables.less in atom-material-syntax package
+  // look the same as Atom material syntax theme, for dark theme only
+  @very-light-gray: #EEFFFF;
+	@light-gray: #B2CCD6;
+	@gray: #373b41;
+	@dark-gray: #282a2e;
+	@very-dark-gray: #263238;
+	@teal: #009688;
+	@light-teal: #73d1c8;
+	@green: #C3E88D;
+	@cyan: #89DDF3;
+	@blue: #82AAFF;
+	@indigo: #7986CB;
+	@purple: #C792EA;
+	@pink: #FF5370;
+	@red: #F07178;
+	@strong-orange: #F78C6A;
+	@orange: #FFCB6B;
+	@light-orange: #FFE082;
+	@syntax-text-color: @very-light-gray;
+	@syntax-cursor-color: @teal;
+	@syntax-selection-color: lighten(@syntax-background-color, 10%);
+	@syntax-comment-color: lighten(@very-dark-gray, 20%);
+	// Guide colors
+	@syntax-wrap-guide-color: @dark-gray;
+	@syntax-indent-guide-color: lighten(@syntax-background-color, 2.5%);
+	@syntax-invisible-character-color: @gray;
+	// For find and replace markers
+	@syntax-result-marker-color: @light-gray;
+	@syntax-result-marker-color-selected: white;
+	// Gutter colors
+	@syntax-gutter-text-color: fade(@syntax-text-color, 20%);
+	@syntax-gutter-text-color-selected: @syntax-gutter-text-color;
+	@syntax-gutter-background-color: @syntax-background-color;
+	@syntax-gutter-background-color-selected: darken(@syntax-background-color, 5%);
+	// For git diff info. i.e. in the gutter
+	@syntax-color-renamed: @blue;
+	@syntax-color-added: @green;
+	@syntax-color-modified: @orange;
+	@syntax-color-removed: @red;
+	// Syntax styles
+	.comment {
+		color: @syntax-comment-color;
+	}
+
+	.keyword {
+		color: @purple;
+
+		&.control {
+			color: @purple;
+
+			&.elements {
+				color: @light-gray;
+			}
+		}
+
+		&.operator {
+			color: @cyan;
+		}
+
+		&.other.special-method {
+			color: @blue;
+		}
+
+		&.other.unit {
+			color: @orange;
+		}
+	}
+
+	.storage {
+		color: @purple;
+	}
+
+	.constant {
+		color: @red;
+
+		&.character.escape {
+			color: @cyan;
+		}
+
+		&.numeric {
+			color: @strong-orange;
+		}
+
+		&.other.color {
+			color: @cyan;
+		}
+
+		&.other.symbol {
+			color: @green;
+		}
+	}
+
+	.variable {
+		color: @very-light-gray;
+
+		&.interpolation {
+			color: darken(@red, 10%);
+		}
+
+		&.parameter.function {
+			color: @strong-orange;
+		}
+
+		&.language {
+			color: @pink;
+		}
+
+		&.variable {
+			&.object {
+				color: @orange;
+			}
+		}
+	}
+
+	.invalid.illegal {
+		background-color: @red;
+		color: @syntax-background-color;
+	}
+
+	.string {
+		color: @green;
+
+		&.regexp {
+			color: @cyan;
+
+			.source.ruby.embedded {
+				color: @orange;
+			}
+		}
+
+		&.other.link {
+			color: @red;
+		}
+	}
+
+	.punctuation {
+		&.definition {
+			&.comment {
+				color: @syntax-comment-color;
+			}
+
+			&.array,
+			&.parameters,
+			&.string,
+			&.variable {
+				color: @syntax-text-color;
+
+				&.begin,
+				&.end {
+					color: @cyan;
+				}
+			}
+
+			&.heading,
+			&.identity {
+				color: @blue;
+			}
+
+			&.bold {
+				color: @light-orange;
+				font-weight: bold;
+			}
+
+			&.italic {
+				color: @purple;
+				font-style: italic;
+			}
+
+			&.entity {
+				color: @cyan;
+			}
+		}
+
+		&.section {
+			&.array {
+				color: @cyan;
+			}
+
+			&.embedded {
+				color: @cyan;
+			}
+		}
+
+		&.separator {
+			&.key-value {
+				color: @cyan;
+			}
+		}
+
+		&.terminator {
+			color: @cyan;
+		}
+	}
+
+	.support {
+		&.class {
+			color: @orange;
+		}
+
+		&.function {
+			color: @blue;
+
+			&.any-method {
+				color: @blue;
+			}
+		}
+
+		&.type {
+			&.property-name {
+				color: @light-gray;
+			}
+		}
+
+		&.variable {
+			&.dom {
+				color: @orange;
+			}
+		}
+	}
+
+	.entity {
+		&.name {
+			&.function {
+				color: @blue;
+			}
+
+			&.type {
+				color: @very-light-gray;
+			}
+		}
+
+		&.other {
+			&.inherited-class {
+				color: @green;
+			}
+
+			&.attribute-name {
+				&.pseudo-element {
+					color: @purple;
+				}
+
+				&.attribute {
+					color: @purple;
+				}
+			}
+		}
+
+		&.name.class,
+		&.name.type.class {
+			color: @orange;
+		}
+
+		&.name.section {
+			color: @blue;
+		}
+
+		&.name.tag {
+			color: @red;
+		}
+
+		&.other.attribute-name {
+			color: @orange;
+		}
+	}
+
+	.meta {
+		&.class {
+			color: @light-orange;
+		}
+
+		&.delimiter {
+			&.period {
+				color: @cyan;
+			}
+		}
+
+		&.link {
+			color: @orange;
+		}
+
+		&.require {
+			color: @blue;
+		}
+
+		&.selector {
+			color: @purple;
+		}
+
+		&.separator {
+			background-color: @gray;
+			color: @syntax-text-color;
+		}
+
+		&.brace {
+			&.round,
+			&.square {
+				color: @cyan;
+			}
+		}
+	}
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   // font-size: 1.2em;
