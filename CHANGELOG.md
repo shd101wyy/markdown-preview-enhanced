@@ -3,7 +3,7 @@
 * [ ] issue [#298](https://github.com/shd101wyy/markdown-preview-enhanced/issues/298). But this is hard to be supported.   
 * [ ] add blog (jekyll, hexo, etc...) support. But I never used them before, so gonna take a while to figure out how to use them.    
 * [ ] move docs to github wiki.  
-* [ ] fix `unsafe eval` issue.  
+* [x] fix `unsafe eval` issue [#303](https://github.com/shd101wyy/markdown-preview-enhanced/issues/303). As this issue is urgent, I will finish the 3 todos above in the future.    
 
 ## 0.10.1
 * [x] `Save as Markdown` code chunk `continue issue`
