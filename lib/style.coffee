@@ -74,11 +74,11 @@ loadPreviewTheme = (previewTheme)->
         head.insertBefore(previewThemeElement, atomStyles)
       previewThemeElement.setAttribute 'data-preview-theme', previewTheme
 
-      # create theme.less
+      # compile less to css
       fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
         return if error
 
-        # replace css to css.less
+        # replace css to css.less; otherwise it will cause error.
         data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
@@ -87,10 +87,9 @@ loadPreviewTheme = (previewTheme)->
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
                     .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-          # fs.writeFile path.resolve(__dirname, '../styles/theme.less'), css
           previewThemeElement.innerHTML = css
 
-      # copy @syntax-text-color and @syntax-background-color to styles/markdown-preview-enhanced.less
+      # import syntax-variables.less to ../styles/config.less
       fs.readFile syntaxVariablesFile, {encoding: 'utf-8'}, (error, data)->
         return if error
         fs.writeFile path.resolve(__dirname, '../styles/config.less'), """
