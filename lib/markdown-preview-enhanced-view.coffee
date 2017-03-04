@@ -362,23 +362,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @editorScrollDelay = Date.now() + 500
 
   initSettingsEvents: ->
-    # settings changed
-    # github style?
-    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubStyle',
-      (useGitHubStyle) =>
-        if useGitHubStyle
-          @element.setAttribute('data-use-github-style', '')
-        else
-          @element.removeAttribute('data-use-github-style')
-
-    # github syntax theme
-    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme',
-      (useGitHubSyntaxTheme)=>
-        if useGitHubSyntaxTheme
-          @element.setAttribute('data-use-github-syntax-theme', '')
-        else
-          @element.removeAttribute('data-use-github-syntax-theme')
-
     # break line?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
       (breakOnSingleNewline)=>
@@ -1200,8 +1183,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     phantomjsType ?= false # pdf | png | jpeg | false
     return if not @editor
 
-    useGitHubStyle = atom.config.get('markdown-preview-enhanced.useGitHubStyle')
-    useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
     res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @fileDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
@@ -1212,11 +1193,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # replace code chunks inside htmlContent
     htmlContent = @insertCodeChunksResult htmlContent
-
-    # as for example black color background doesn't produce nice pdf
-    # therefore, I decide to print only github style...
-    if isForPrint
-      useGitHubStyle = atom.config.get('markdown-preview-enhanced.pdfUseGithub')
 
     if mathRenderingOption == 'KaTeX'
       if offline
@@ -1328,8 +1304,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       #{presentationScript}
     </head>
     <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
-        #{if useGitHubStyle then 'data-use-github-style' else ''}
-        #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}
         #{if @presentationMode then 'data-presentation-mode' else ''}>
 
     #{htmlContent}
@@ -1797,8 +1771,6 @@ module.exports = config || {}
         # retrieve html
         outputHTML = div.innerHTML
 
-        useGitHubSyntaxTheme = atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
-
         title = ebookConfig.title or 'no title'
 
         mathStyle = ''
@@ -1822,11 +1794,8 @@ module.exports = config || {}
 
         #{mathStyle}
       </head>
-      <body class=\"markdown-preview-enhanced\" data-use-github-style
-          #{if useGitHubSyntaxTheme then 'data-use-github-syntax-theme' else ''}>
-
+      <body class=\"markdown-preview-enhanced\">
       #{outputHTML}
-
       </body>
     </html>
         """

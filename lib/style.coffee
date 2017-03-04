@@ -47,7 +47,6 @@ getMarkdownPreviewCSS = ()->
           markdownPreviewRules.push(rule.cssText)
 
   return markdownPreviewRules
-          # .concat(if atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme') then [] else getTextEditorStyles())
           .join('\n')
           .replace(/[^\.]atom-text-editor/g, 'pre.editor-colors')
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF

@@ -65,9 +65,6 @@ class ExporterView extends View
         @label 'Print background'
         @input type: 'checkbox', class: 'print-background-checkbox'
         @br()
-        @label 'Github style'
-        @input type: 'checkbox', class: 'github-style-checkbox'
-        @br()
         @label 'Open PDF after generation'
         @input type: 'checkbox', class: 'pdf-auto-open-checkbox'
         # @div 'splitter'
@@ -190,8 +187,6 @@ class ExporterView extends View
 
       $('.pdf-div .print-background-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.printBackground')
 
-      $('.pdf-div .github-style-checkbox', @element)[0].checked =   atom.config.get('markdown-preview-enhanced.pdfUseGithub')
-
       $('.pdf-div .pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
 
     ## select
@@ -207,9 +202,6 @@ class ExporterView extends View
     ## checkbox
     $('.pdf-div .print-background-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.printBackground', e.target.checked)
-
-    $('.pdf-div .github-style-checkbox', @element).on 'change', (e)->
-      atom.config.set('markdown-preview-enhanced.pdfUseGithub', e.target.checked)
 
     $('.pdf-div .pdf-auto-open-checkbox', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.pdfOpenAutomatically', e.target.checked)
