@@ -1,3 +1,6 @@
+## 0.10.3  
+* [ ] remove `useGitHubStyle` and `useGitHubSyntaxTheme`.
+
 ## 0.10.2  
 * [x] allow user to pick theme when not using `Github.com style theme`. [#297](https://github.com/shd101wyy/markdown-preview-enhanced/issues/297#issuecomment-283619527)  
 * [ ] issue [#298](https://github.com/shd101wyy/markdown-preview-enhanced/issues/298). But this is hard to be supported.   
