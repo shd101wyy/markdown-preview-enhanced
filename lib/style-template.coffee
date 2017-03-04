@@ -1,8 +1,7 @@
+module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
-// this file will be copied to ../styles folder
-//
 
-@import "./config.less";
+@import "styles/syntax-variables.less";
 
 .markdown-preview-enhanced {
   @fg: @syntax-text-color;
@@ -15,11 +14,6 @@
   @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
 
   @margin: 16px;
-
-  @github-black: #333;
-  @github-syntax-background-color: #f7f7f7;
-  @github-blockquote-color: #777;
-
 
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   // font-size: 1.2em;
@@ -63,6 +57,14 @@
   h4 { font-size: 1.25em; font-weight: 600; }
   h5 { font-size: 1.1em; font-weight: 600; }
   h6 { font-size: 1.0em; font-weight: 600; }
+
+  h1, h2, h3, h4, h5 { font-weight: 600; }
+  h5 { font-size: 1em; }
+  h6 { color: @fg-subtle; }
+
+  h1, h2 {
+    border-bottom: 1px solid @border;
+  }
 
   // Emphasis --------------------
 
@@ -235,7 +237,7 @@
 
     &::before, &::after {
       letter-spacing: -0.2em;
-      content: "\00a0";
+      content: "\\00a0";
     }
   }
 
@@ -328,6 +330,8 @@
     border-bottom: 2px solid darken(@border, 6%);
     padding: 2px 4px;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
+    border-radius: 3px;
+    // box-shadow: inset 0 -1px 0 #bbb;
   }
 
   .pagebreak, .newpage {
@@ -486,3 +490,13 @@
     }
   }
 }
+
+[data-presentation-preview-mode] {
+  .preview-slides {
+    .slide {
+      background-color: @syntax-background-color !important;
+    }
+  }
+}
+
+"""

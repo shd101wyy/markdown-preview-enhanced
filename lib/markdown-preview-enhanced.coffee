@@ -171,16 +171,8 @@ module.exports = MarkdownPreviewEnhanced =
       # change theme
       # @subscriptions.add atom.config.observe 'core.themes', ()=>
       @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
-        if not atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
-          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-          loadPreviewTheme(previewTheme)
-
-      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme', (flag)=>
-        if flag
-          document.getElementById('markdown-preview-enhanced-preview-theme')?.remove()
-        else
-          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-          loadPreviewTheme(previewTheme)
+        previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+        loadPreviewTheme(previewTheme)
 
   customizeCSS: ()->
     atom.workspace

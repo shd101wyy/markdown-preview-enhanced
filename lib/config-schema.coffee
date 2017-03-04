@@ -8,24 +8,11 @@ module.exports =
       description: "You may need restart Atom after making changes here."
       order: 0
     previewTheme:
-      title: "Preview Theme",
-      type: "string",
-      default: syntaxThemes?[0] or 'null',
-      enum: syntaxThemes,
-      description: "Theme for preview. This only works when `Use Github.com style` option is unchecked."
+      title: "Preview Theme"
+      type: "string"
+      default: syntaxThemes?[0] or 'null'
+      enum: syntaxThemes
       order: 1
-    useGitHubStyle:
-      title: "Use GitHub.com style"
-      type: "boolean"
-      default: true
-      description: "Use the similar CSS styles for preview as the ones used on GitHub.com."
-      order: 2
-    useGitHubSyntaxTheme:
-      title: "Use GitHub.com syntax theme"
-      type: "boolean"
-      default: true
-      description: "Use similar GitHub.com code block syntax theme."
-      order: 3
     breakOnSingleNewline:
       type: "boolean"
       default: true
@@ -164,12 +151,6 @@ module.exports =
       default: true
       description: "Include background color when generating pdf."
       order: 110
-    pdfUseGithub:
-      title: "Use Github style when generating pdf"
-      type: "boolean"
-      default: true
-      description: "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf."
-      order: 120
     pdfOpenAutomatically:
       title: "Open pdf file immediately after it is generated"
       type: "boolean"

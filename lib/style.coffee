@@ -1,3 +1,5 @@
+styleTemplate = require './style-template'
+
 fs = null
 less = null
 
@@ -45,7 +47,6 @@ getMarkdownPreviewCSS = ()->
           markdownPreviewRules.push(rule.cssText)
 
   return markdownPreviewRules
-          # .concat(if atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme') then [] else getTextEditorStyles())
           .join('\n')
           .replace(/[^\.]atom-text-editor/g, 'pre.editor-colors')
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
@@ -80,6 +81,7 @@ loadPreviewTheme = (previewTheme)->
 
         # replace css to css.less; otherwise it will cause error.
         data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
+        data += styleTemplate
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
           return if error
@@ -89,12 +91,6 @@ loadPreviewTheme = (previewTheme)->
 
           previewThemeElement.innerHTML = css
 
-      # import syntax-variables.less to ../styles/config.less
-      fs.readFile syntaxVariablesFile, {encoding: 'utf-8'}, (error, data)->
-        return if error
-        fs.writeFile path.resolve(__dirname, '../styles/config.less'), """
-@import \"#{syntaxVariablesFile}\";
-"""
       return
 
 module.exports = {

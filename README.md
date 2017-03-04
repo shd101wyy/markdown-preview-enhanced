@@ -8,7 +8,7 @@ Still Beta Version!
 ---
 New Feature Oh Yea! (Hopefully no bugs)  
 Version `0.10.2` supports a more convenient way of choosing preview themes. So now you can pick your preview theme without changing atom theme.   
-Some themes might not be working though.         
+Options `Use Github.com style` and `Use Github.com syntax theme` are removed from package settings. To use `Github.com` theme, install [octocat-syntax](https://atom.io/themes/octocat-syntax).  
 After you installed a new `atom syntax theme`, restart is required to refresh themes list.  
 
 ![theme](https://cloud.githubusercontent.com/assets/1908863/23577709/f466cb46-008b-11e7-8b36-acdc6a165285.gif)

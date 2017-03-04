@@ -1367,223 +1367,78 @@ body {
 
 
 
-</style> <style> .github-syntax-theme pre.editor-colors .search-results .mpe-syntax--marker .region { border: 1px solid rgb(237, 106, 67); background-color: transparent; }
-.github-syntax-theme pre.editor-colors .search-results .mpe-syntax--marker.current-result .region { border: 1px solid rgb(255, 255, 255); }
-.github-syntax-theme .mpe-syntax--comment, .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--comment, .github-syntax-theme .mpe-syntax--string.mpe-syntax--comment { color: rgb(150, 152, 150); }
-.github-syntax-theme .mpe-syntax--constant, .github-syntax-theme .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--constant, .github-syntax-theme .mpe-syntax--variable.mpe-syntax--other.mpe-syntax--constant, .github-syntax-theme .mpe-syntax--variable.mpe-syntax--language { color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--entity, .github-syntax-theme .mpe-syntax--entity.mpe-syntax--name { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(121, 93, 163); }
-.github-syntax-theme .mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function { color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--tag { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(99, 163, 92); }
-.github-syntax-theme .mpe-syntax--keyword { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(167, 29, 93); }
-.github-syntax-theme .mpe-syntax--storage, .github-syntax-theme .mpe-syntax--storage.mpe-syntax--type { color: rgb(167, 29, 93); }
-.github-syntax-theme .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--package, .github-syntax-theme .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--import, .github-syntax-theme .mpe-syntax--storage.mpe-syntax--type.mpe-syntax--java { color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--string, .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--string, .github-syntax-theme .mpe-syntax--string .mpe-syntax--punctuation.mpe-syntax--section.mpe-syntax--embedded .mpe-syntax--source { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(24, 54, 145); }
-.github-syntax-theme .mpe-syntax--support { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--property-name { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--variable { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(237, 106, 67); }
-.github-syntax-theme .mpe-syntax--variable.mpe-syntax--other { color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--invalid.mpe-syntax--broken { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--invalid.mpe-syntax--deprecated { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--invalid.mpe-syntax--illegal { font-style: italic; text-decoration: underline; color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--carriage-return { font-style: italic; text-decoration: underline; color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--invalid.mpe-syntax--unimplemented { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--message.mpe-syntax--error { color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--string .mpe-syntax--source { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--string .mpe-syntax--variable { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--source.mpe-syntax--regexp, .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(24, 54, 145); }
-.github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--character-class, .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape, .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--source.mpe-syntax--ruby.mpe-syntax--embedded, .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--arbitrary-repitition { color: rgb(24, 54, 145); }
-.github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape { font-weight: bold; color: rgb(99, 163, 92); }
-.github-syntax-theme .mpe-syntax--support.mpe-syntax--constant { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--support.mpe-syntax--variable { color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--module-reference { color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--list { color: rgb(105, 58, 23); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--heading, .github-syntax-theme .mpe-syntax--markup.mpe-syntax--heading .mpe-syntax--entity.mpe-syntax--name { font-weight: bold; color: rgb(29, 62, 129); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--quote { color: rgb(0, 128, 128); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--italic { font-style: italic; color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--bold { font-weight: bold; color: rgb(51, 51, 51); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--raw { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--deleted, .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--from-file, .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--deleted { color: rgb(189, 44, 0); background-color: rgb(255, 236, 236); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--inserted, .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--to-file, .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--inserted { color: rgb(85, 165, 50); background-color: rgb(234, 255, 234); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--changed, .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--changed { color: rgb(239, 151, 0); background-color: rgb(255, 227, 180); }
-.github-syntax-theme .mpe-syntax--markup.mpe-syntax--ignored, .github-syntax-theme .mpe-syntax--markup.mpe-syntax--untracked { color: rgb(216, 216, 216); background-color: rgb(128, 128, 128); }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--range { color: rgb(121, 93, 163); font-weight: bold; }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header { color: rgb(0, 134, 179); }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--separator { font-weight: bold; color: rgb(29, 62, 129); }
-.github-syntax-theme .mpe-syntax--meta.mpe-syntax--output { color: rgb(29, 62, 129); }
-.github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--tag, .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--curly, .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--round, .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--square, .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--angle, .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--quote { color: rgb(89, 94, 98); }
-.github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--unmatched { color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--error { color: rgb(181, 42, 29); }
-.github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--warning { color: rgb(237, 106, 67); }
-.github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--gutter-mark { color: rgb(192, 192, 192); }
-.github-syntax-theme .mpe-syntax--constant.mpe-syntax--other.mpe-syntax--reference.mpe-syntax--link, .github-syntax-theme .mpe-syntax--string.mpe-syntax--other.mpe-syntax--link { color: rgb(24, 54, 145); text-decoration: underline; }
-.markdown-preview-enhanced[data-use-github-style] { color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); }
-.markdown-preview-enhanced[data-use-github-style][is="space-pen-div"] { }
-.markdown-preview-enhanced[data-use-github-style][is="space-pen-div"] ::-webkit-scrollbar-track { box-shadow: rgba(218, 218, 218, 0.6) 0px 0px 3px inset; background-color: rgb(244, 244, 244); }
-.markdown-preview-enhanced[data-use-github-style][is="space-pen-div"] ::-webkit-scrollbar-thumb { border-radius: 10px; border-color: transparent; background-color: rgb(204, 204, 204); }
-.markdown-preview-enhanced[data-use-github-style] h1, .markdown-preview-enhanced[data-use-github-style] h2, .markdown-preview-enhanced[data-use-github-style] h3, .markdown-preview-enhanced[data-use-github-style] h4, .markdown-preview-enhanced[data-use-github-style] h5 { color: rgb(51, 51, 51); font-weight: 600; }
-.markdown-preview-enhanced[data-use-github-style] h5 { font-size: 1em; }
-.markdown-preview-enhanced[data-use-github-style] h6 { color: rgb(119, 119, 119); }
-.markdown-preview-enhanced[data-use-github-style] h1, .markdown-preview-enhanced[data-use-github-style] h2 { border-bottom: 1px solid rgb(231, 231, 231); }
-.markdown-preview-enhanced[data-use-github-style] strong { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced[data-use-github-style] blockquote { color: rgb(119, 119, 119); border-left: 4px solid rgb(221, 221, 221); }
-.markdown-preview-enhanced[data-use-github-style] hr { background-color: rgb(231, 231, 231); }
-.markdown-preview-enhanced[data-use-github-style] th { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced[data-use-github-style] td, .markdown-preview-enhanced[data-use-github-style] th { border: 1px solid rgb(221, 221, 221); }
-.markdown-preview-enhanced[data-use-github-style] code { color: inherit; background-color: rgba(0, 0, 0, 0.0392157) !important; }
-.markdown-preview-enhanced[data-use-github-style] kbd { color: rgb(51, 51, 51); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; background-color: rgb(252, 252, 252); }
-@media screen and (min-width: 914px) { 
-  .markdown-preview-enhanced[data-use-github-style] { background: rgb(255, 255, 255); }
-}
-@media print { 
-  .markdown-preview-enhanced[data-use-github-style] { background-color: rgb(255, 255, 255); }
-  .markdown-preview-enhanced[data-use-github-style] h1, .markdown-preview-enhanced[data-use-github-style] h2, .markdown-preview-enhanced[data-use-github-style] h3, .markdown-preview-enhanced[data-use-github-style] h4, .markdown-preview-enhanced[data-use-github-style] h5, .markdown-preview-enhanced[data-use-github-style] h6 { color: rgb(34, 34, 34); }
-  .markdown-preview-enhanced[data-use-github-style] blockquote { color: rgb(119, 119, 119); }
-  .markdown-preview-enhanced[data-use-github-style] pre { border: 2px solid rgb(246, 246, 246); }
-}
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors { color: rgb(51, 51, 51); background-color: rgb(247, 247, 247); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .line.cursor-line { background-color: rgb(245, 245, 245); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .invisible { color: rgb(192, 192, 192); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .cursor { border-left: 2px solid rgb(0, 0, 0); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .selection .region { background-color: rgb(200, 200, 250); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .bracket-matcher .region { border-bottom: 1px solid rgb(0, 0, 0); box-sizing: border-box; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .invisible-character { color: rgb(192, 192, 192); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .indent-guide { color: rgb(192, 192, 192); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .wrap-guide { background-color: rgb(192, 192, 192); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter { color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number { color: rgb(51, 51, 51); -webkit-font-smoothing: antialiased; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number.cursor-line { color: rgb(51, 51, 51); background-color: rgb(245, 245, 245); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number.cursor-line-no-selection { background-color: transparent; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number .icon-right { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before { bottom: -3px; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed::after { content: ""; position: absolute; left: 0px; bottom: 0px; width: 25px; border-bottom: 1px dotted rgba(255, 236, 236, 0.498039); pointer-events: none; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number.folded, .markdown-preview-enhanced .github-syntax-theme pre.editor-colors .gutter .line-number::after, .markdown-preview-enhanced .github-syntax-theme pre.editor-colors .fold-marker::after { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .search-results .mpe-syntax--marker .region { border: 1px solid rgb(237, 106, 67); background-color: transparent; }
-.markdown-preview-enhanced .github-syntax-theme pre.editor-colors .search-results .mpe-syntax--marker.current-result .region { border: 1px solid rgb(255, 255, 255); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--comment, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--comment, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--comment { color: rgb(150, 152, 150); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--constant, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--constant, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--variable.mpe-syntax--other.mpe-syntax--constant, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--variable.mpe-syntax--language { color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--entity, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--entity.mpe-syntax--name { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(121, 93, 163); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--tag { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(99, 163, 92); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--keyword { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(167, 29, 93); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--storage, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--storage.mpe-syntax--type { color: rgb(167, 29, 93); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--package, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--import, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--storage.mpe-syntax--type.mpe-syntax--java { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--string, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string .mpe-syntax--punctuation.mpe-syntax--section.mpe-syntax--embedded .mpe-syntax--source { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(24, 54, 145); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--support { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--property-name { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--variable { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(237, 106, 67); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--variable.mpe-syntax--other { color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--invalid.mpe-syntax--broken { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--invalid.mpe-syntax--deprecated { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--invalid.mpe-syntax--illegal { font-style: italic; text-decoration: underline; color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--carriage-return { font-style: italic; text-decoration: underline; color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--invalid.mpe-syntax--unimplemented { font-weight: bold; font-style: italic; text-decoration: underline; color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--message.mpe-syntax--error { color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string .mpe-syntax--source { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string .mpe-syntax--variable { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--source.mpe-syntax--regexp, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(24, 54, 145); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--character-class, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--source.mpe-syntax--ruby.mpe-syntax--embedded, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--arbitrary-repitition { color: rgb(24, 54, 145); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape { font-weight: bold; color: rgb(99, 163, 92); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--support.mpe-syntax--constant { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--support.mpe-syntax--variable { color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--module-reference { color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--list { color: rgb(105, 58, 23); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--heading, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--heading .mpe-syntax--entity.mpe-syntax--name { font-weight: bold; color: rgb(29, 62, 129); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--quote { color: rgb(0, 128, 128); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--italic { font-style: italic; color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--bold { font-weight: bold; color: rgb(51, 51, 51); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--raw { font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--deleted, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--from-file, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--deleted { color: rgb(189, 44, 0); background-color: rgb(255, 236, 236); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--inserted, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--to-file, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--inserted { color: rgb(85, 165, 50); background-color: rgb(234, 255, 234); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--changed, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--changed { color: rgb(239, 151, 0); background-color: rgb(255, 227, 180); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--ignored, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--markup.mpe-syntax--untracked { color: rgb(216, 216, 216); background-color: rgb(128, 128, 128); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--range { color: rgb(121, 93, 163); font-weight: bold; }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header { color: rgb(0, 134, 179); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--separator { font-weight: bold; color: rgb(29, 62, 129); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--meta.mpe-syntax--output { color: rgb(29, 62, 129); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--tag, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--curly, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--round, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--square, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--angle, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--quote { color: rgb(89, 94, 98); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--brackethighlighter.mpe-syntax--unmatched { color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--error { color: rgb(181, 42, 29); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--warning { color: rgb(237, 106, 67); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--sublimelinter.mpe-syntax--gutter-mark { color: rgb(192, 192, 192); }
-.markdown-preview-enhanced .github-syntax-theme .mpe-syntax--constant.mpe-syntax--other.mpe-syntax--reference.mpe-syntax--link, .markdown-preview-enhanced .github-syntax-theme .mpe-syntax--string.mpe-syntax--other.mpe-syntax--link { color: rgb(24, 54, 145); text-decoration: underline; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors { color: rgb(51, 51, 51) !important; background-color: rgb(247, 247, 247) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .line.cursor-line { background-color: rgb(245, 245, 245) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .invisible { color: rgb(192, 192, 192) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .cursor { border-left: 2px solid rgb(0, 0, 0) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .selection .region { background-color: rgb(200, 200, 250) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .bracket-matcher .region { border-bottom: 1px solid rgb(0, 0, 0) !important; box-sizing: border-box !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .invisible-character { color: rgb(192, 192, 192) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .indent-guide { color: rgb(192, 192, 192) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .wrap-guide { background-color: rgb(192, 192, 192) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter { color: rgb(51, 51, 51) !important; background-color: rgb(255, 255, 255) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number { color: rgb(51, 51, 51) !important; -webkit-font-smoothing: antialiased !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number.cursor-line { color: rgb(51, 51, 51) !important; background-color: rgb(245, 245, 245) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number.cursor-line-no-selection { background-color: transparent !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number .icon-right { color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before { bottom: -3px !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed::after { content: "" !important; position: absolute !important; left: 0px !important; bottom: 0px !important; width: 25px !important; border-bottom: 1px dotted rgba(255, 236, 236, 0.498039) !important; pointer-events: none !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number.folded, .markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .gutter .line-number::after, .markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .fold-marker::after { color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .search-results .mpe-syntax--marker .region { border: 1px solid rgb(237, 106, 67) !important; background-color: transparent !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] pre.editor-colors .search-results .mpe-syntax--marker.current-result .region { border: 1px solid rgb(255, 255, 255) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--comment, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--comment, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--comment { color: rgb(150, 152, 150) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--constant, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--constant, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--variable.mpe-syntax--other.mpe-syntax--constant, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--variable.mpe-syntax--language { color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--entity, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--entity.mpe-syntax--name { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(121, 93, 163) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function { color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--entity.mpe-syntax--name.mpe-syntax--tag { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(99, 163, 92) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--keyword { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(167, 29, 93) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--storage, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--storage.mpe-syntax--type { color: rgb(167, 29, 93) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--package, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--import, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--storage.mpe-syntax--type.mpe-syntax--java { color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--string, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string .mpe-syntax--punctuation.mpe-syntax--section.mpe-syntax--embedded .mpe-syntax--source { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(24, 54, 145) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--support { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--property-name { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--variable { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(237, 106, 67) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--variable.mpe-syntax--other { color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--invalid.mpe-syntax--broken { font-weight: bold !important; font-style: italic !important; text-decoration: underline !important; color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--invalid.mpe-syntax--deprecated { font-weight: bold !important; font-style: italic !important; text-decoration: underline !important; color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--invalid.mpe-syntax--illegal { font-style: italic !important; text-decoration: underline !important; color: rgb(248, 248, 248) !important; background-color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--carriage-return { font-style: italic !important; text-decoration: underline !important; color: rgb(248, 248, 248) !important; background-color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--invalid.mpe-syntax--unimplemented { font-weight: bold !important; font-style: italic !important; text-decoration: underline !important; color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--message.mpe-syntax--error { color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string .mpe-syntax--source { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string .mpe-syntax--variable { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--source.mpe-syntax--regexp, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(24, 54, 145) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--character-class, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--source.mpe-syntax--ruby.mpe-syntax--embedded, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--arbitrary-repitition { color: rgb(24, 54, 145) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape { font-weight: bold !important; color: rgb(99, 163, 92) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--support.mpe-syntax--constant { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--support.mpe-syntax--variable { color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--module-reference { color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--list { color: rgb(105, 58, 23) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--heading, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--heading .mpe-syntax--entity.mpe-syntax--name { font-weight: bold !important; color: rgb(29, 62, 129) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--quote { color: rgb(0, 128, 128) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--italic { font-style: italic !important; color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--bold { font-weight: bold !important; color: rgb(51, 51, 51) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--raw { font-weight: normal !important; font-style: normal !important; text-decoration: none !important; color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--deleted, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--from-file, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--deleted { color: rgb(189, 44, 0) !important; background-color: rgb(255, 236, 236) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--inserted, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--to-file, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--inserted { color: rgb(85, 165, 50) !important; background-color: rgb(234, 255, 234) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--changed, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--punctuation.mpe-syntax--definition.mpe-syntax--changed { color: rgb(239, 151, 0) !important; background-color: rgb(255, 227, 180) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--ignored, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--markup.mpe-syntax--untracked { color: rgb(216, 216, 216) !important; background-color: rgb(128, 128, 128) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--range { color: rgb(121, 93, 163) !important; font-weight: bold !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header { color: rgb(0, 134, 179) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--separator { font-weight: bold !important; color: rgb(29, 62, 129) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--meta.mpe-syntax--output { color: rgb(29, 62, 129) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--tag, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--curly, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--round, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--square, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--angle, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--quote { color: rgb(89, 94, 98) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--brackethighlighter.mpe-syntax--unmatched { color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--error { color: rgb(181, 42, 29) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--sublimelinter.mpe-syntax--mark.mpe-syntax--warning { color: rgb(237, 106, 67) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--sublimelinter.mpe-syntax--gutter-mark { color: rgb(192, 192, 192) !important; }
-.markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--constant.mpe-syntax--other.mpe-syntax--reference.mpe-syntax--link, .markdown-preview-enhanced[data-use-github-syntax-theme] .mpe-syntax--string.mpe-syntax--other.mpe-syntax--link { color: rgb(24, 54, 145) !important; text-decoration: underline !important; }
-.markdown-preview-enhanced { font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif; font-size: 16px; line-height: 1.6; color: rgb(213, 213, 209); overflow: initial; margin: 10px 13px; padding: 2em; box-sizing: border-box; word-wrap: break-word; background-color: rgb(32, 32, 34); }
+</style> <style> .markdown-preview-enhanced pre .wrap-guide { color: rgb(192, 192, 192); }
+.markdown-preview-enhanced pre .indent-guide { color: rgb(192, 192, 192); }
+.markdown-preview-enhanced pre .invisible-character { color: rgb(192, 192, 192); }
+.markdown-preview-enhanced pre .gutter { color: rgb(150, 152, 150); background-color: white; }
+.markdown-preview-enhanced pre .gutter .line-number.cursor-line { color: rgb(51, 51, 51); background-color: rgb(245, 245, 245); }
+.markdown-preview-enhanced pre .gutter .line-number.cursor-line-no-selection { color: rgb(51, 51, 51); }
+.markdown-preview-enhanced pre .gutter .line-number.folded, .markdown-preview-enhanced pre .gutter .line-number::after, .markdown-preview-enhanced pre .fold-marker::after { color: rgb(192, 192, 192); }
+.markdown-preview-enhanced pre .cursor { border-color: rgb(29, 31, 33); }
+.markdown-preview-enhanced pre .search-results .mpe-syntax--marker .region { border: 1px solid rgb(192, 192, 192); background-color: transparent; }
+.markdown-preview-enhanced pre .search-results .mpe-syntax--marker.current-result .region { border: rgb(51, 51, 51); }
+.markdown-preview-enhanced pre .line.cursor-line, .markdown-preview-enhanced pre .line-number.cursor-line-no-selection { background-color: rgb(245, 245, 245); }
+.markdown-preview-enhanced pre .line.highlight-line { background: rgb(245, 245, 245) !important; }
+.markdown-preview-enhanced pre .highlights .highlight-selected .region { border-color: rgb(229, 229, 229); border-radius: 2px; background: transparent; }
+.markdown-preview-enhanced pre .highlights .selection .region { background-color: rgb(176, 214, 255); }
+.markdown-preview-enhanced pre .has-selection .line.highlight-line { background: transparent !important; }
+.markdown-preview-enhanced pre .has-selection .gutter .line-number.cursor-line { background-color: rgb(176, 214, 255); }
+.markdown-preview-enhanced pre .editor-contents--private .highlight.hyperclick > .region { border-color: rgb(0, 134, 179) !important; }
+.mpe-syntax--comment { color: rgb(150, 152, 150); }
+.mpe-syntax--js.mpe-syntax--null, .mpe-syntax--js.mpe-syntax--constant, .mpe-syntax--js.mpe-syntax--language { color: rgb(0, 134, 179); }
+.mpe-syntax--constant, .mpe-syntax--variable.mpe-syntax--readwrite.mpe-syntax--js, .mpe-syntax--variable.mpe-syntax--other.mpe-syntax--constant { color: rgb(0, 134, 179); }
+.mpe-syntax--variable.mpe-syntax--object.mpe-syntax--js, .mpe-syntax--variable.mpe-syntax--other { color: rgb(51, 51, 51); }
+.mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function, .mpe-syntax--variable.mpe-syntax--parameter.mpe-syntax--function.mpe-syntax--js { color: rgb(51, 51, 51); }
+.mpe-syntax--variable.mpe-syntax--this.mpe-syntax--js { color: rgb(237, 106, 67); }
+.mpe-syntax--variable { color: rgb(51, 51, 51); }
+.mpe-syntax--entity, .mpe-syntax--entity.mpe-syntax--name { color: rgb(121, 93, 163); }
+.mpe-syntax--entity.mpe-syntax--name.mpe-syntax--tag { color: rgb(99, 163, 92); }
+.mpe-syntax--entity.mpe-syntax--name.mpe-syntax--function.mpe-syntax--method.mpe-syntax--js { color: rgb(121, 93, 163); }
+.mpe-syntax--keyword { color: rgb(167, 29, 93); }
+.mpe-syntax--keyword.mpe-syntax--accessor.mpe-syntax--js { color: rgb(51, 51, 51); }
+.mpe-syntax--storage, .mpe-syntax--storage.mpe-syntax--type { color: rgb(167, 29, 93); }
+.mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--package, .mpe-syntax--storage.mpe-syntax--modifier.mpe-syntax--import, .mpe-syntax--storage.mpe-syntax--type.mpe-syntax--java { color: rgb(51, 51, 51); }
+.mpe-syntax--string, .mpe-syntax--string.mpe-syntax--punctuation.mpe-syntax--definition, .mpe-syntax--string .mpe-syntax--punctuation.mpe-syntax--section.mpe-syntax--embedded .mpe-syntax--source { color: rgb(24, 54, 145); }
+.mpe-syntax--string .mpe-syntax--source { color: rgb(51, 51, 51); }
+.mpe-syntax--string .mpe-syntax--variable { color: rgb(0, 134, 179); }
+.mpe-syntax--string.mpe-syntax--regexp { color: rgb(24, 54, 145); }
+.mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--character-class, .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape, .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--source.mpe-syntax--ruby.mpe-syntax--embedded, .mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--string.mpe-syntax--regexp.mpe-syntax--arbitrary-repitition { color: rgb(24, 54, 145); }
+.mpe-syntax--string.mpe-syntax--regexp .mpe-syntax--constant.mpe-syntax--character.mpe-syntax--escape { font-weight: bold; color: rgb(99, 163, 92); }
+.mpe-syntax--support, .mpe-syntax--support.mpe-syntax--constant, .mpe-syntax--support.mpe-syntax--variable { color: rgb(0, 134, 179); }
+.mpe-syntax--support.mpe-syntax--constant.mpe-syntax--property-value { color: rgb(51, 51, 51); }
+.mpe-syntax--meta.mpe-syntax--property, .mpe-syntax--meta.mpe-syntax--property-name { color: rgb(0, 134, 179); }
+.mpe-syntax--invalid.mpe-syntax--deprecated { color: rgb(181, 42, 29); }
+.mpe-syntax--invalid.mpe-syntax--illegal { color: rgb(248, 248, 248); background-color: rgb(181, 42, 29); }
+.mpe-syntax--meta.mpe-syntax--module-reference { color: rgb(0, 134, 179); }
+.mpe-syntax--markup.mpe-syntax--list { color: rgb(105, 58, 23); }
+.mpe-syntax--markup.mpe-syntax--quote { color: rgb(0, 128, 128); }
+.mpe-syntax--markup.mpe-syntax--heading, .mpe-syntax--markup.mpe-syntax--heading .mpe-syntax--entity.mpe-syntax--name { font-weight: bold; color: rgb(29, 62, 129); }
+.mpe-syntax--markup.mpe-syntax--italic { font-style: italic; color: rgb(51, 51, 51); }
+.mpe-syntax--markup.mpe-syntax--bold { font-weight: bold; color: rgb(51, 51, 51); }
+.mpe-syntax--markup.mpe-syntax--raw { color: rgb(0, 134, 179); }
+.mpe-syntax--markup.mpe-syntax--deleted, .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--from-file { color: rgb(189, 44, 0); background-color: rgb(255, 236, 236); }
+.mpe-syntax--markup.mpe-syntax--inserted, .mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header.mpe-syntax--to-file { color: rgb(85, 165, 50); background-color: rgb(234, 255, 234); }
+.mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--range { font-weight: bold; color: rgb(121, 93, 163); }
+.mpe-syntax--meta.mpe-syntax--diff.mpe-syntax--header { color: rgb(0, 134, 179); }
+.mpe-syntax--meta.mpe-syntax--separator { font-weight: bold; color: rgb(29, 62, 129); }
+.mpe-syntax--meta.mpe-syntax--output { color: rgb(29, 62, 129); }
+.mpe-syntax--meta.mpe-syntax--parameters .mpe-syntax--variable { color: rgb(0, 134, 179); }
+.markdown-preview-enhanced { font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif; font-size: 16px; line-height: 1.6; color: rgb(51, 51, 51); overflow: initial; margin: 10px 13px; padding: 2em; box-sizing: border-box; word-wrap: break-word; background-color: white; }
 .markdown-preview-enhanced > :first-child { margin-top: 0px; }
 .markdown-preview-enhanced[is="space-pen-div"] { width: 100%; margin: 0px; z-index: 999; overflow: scroll; font-size: 16px; display: block; position: absolute; }
-.markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { line-height: 1.2; margin-top: 1em; margin-bottom: 16px; color: rgb(255, 255, 255); }
-.markdown-preview-enhanced h1 { font-size: 2.25em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid rgb(72, 72, 76); }
-.markdown-preview-enhanced h2 { font-size: 1.75em; font-weight: 400; padding-bottom: 0.3em; border-bottom: 1px solid rgb(72, 72, 76); }
+.markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { line-height: 1.2; margin-top: 1em; margin-bottom: 16px; color: rgb(0, 0, 0); }
+.markdown-preview-enhanced h1 { font-size: 2.25em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 1px solid rgb(214, 214, 214); }
+.markdown-preview-enhanced h2 { font-size: 1.75em; font-weight: 400; padding-bottom: 0.3em; border-bottom: 1px solid rgb(214, 214, 214); }
 .markdown-preview-enhanced h3 { font-size: 1.5em; font-weight: 500; }
 .markdown-preview-enhanced h4 { font-size: 1.25em; font-weight: 600; }
 .markdown-preview-enhanced h5 { font-size: 1.1em; font-weight: 600; }
 .markdown-preview-enhanced h6 { font-size: 1em; font-weight: 600; }
-.markdown-preview-enhanced strong { color: rgb(255, 255, 255); }
-.markdown-preview-enhanced del { color: rgb(174, 174, 166); }
+.markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5 { font-weight: 600; }
+.markdown-preview-enhanced h5 { font-size: 1em; }
+.markdown-preview-enhanced h6 { color: rgb(92, 92, 92); }
+.markdown-preview-enhanced h1, .markdown-preview-enhanced h2 { border-bottom: 1px solid rgb(214, 214, 214); }
+.markdown-preview-enhanced strong { color: rgb(0, 0, 0); }
+.markdown-preview-enhanced del { color: rgb(92, 92, 92); }
 .markdown-preview-enhanced a:not([href]) { color: inherit; text-decoration: none; }
 .markdown-preview-enhanced a { color: rgb(0, 136, 204); text-decoration: none; }
 .markdown-preview-enhanced a:hover { color: rgb(0, 80, 163); text-decoration: none; }
@@ -1598,40 +1453,40 @@ body {
 .markdown-preview-enhanced li > p { margin-top: 0px; margin-bottom: 0px; }
 .markdown-preview-enhanced .task-list-item-checkbox { margin: 0px 0.2em 0.25em -1.6em; vertical-align: middle; }
 .markdown-preview-enhanced .task-list-item-checkbox:hover { cursor: pointer; }
-.markdown-preview-enhanced blockquote { margin: 16px 0px; font-size: inherit; padding: 0px 15px; color: rgb(174, 174, 166); border-left: 4px solid rgb(72, 72, 76); }
+.markdown-preview-enhanced blockquote { margin: 16px 0px; font-size: inherit; padding: 0px 15px; color: rgb(92, 92, 92); border-left: 4px solid rgb(214, 214, 214); }
 .markdown-preview-enhanced blockquote > :first-child { margin-top: 0px; }
 .markdown-preview-enhanced blockquote > :last-child { margin-bottom: 0px; }
-.markdown-preview-enhanced hr { height: 4px; margin: 32px 0px; border: 0px none; background-color: rgb(72, 72, 76); }
+.markdown-preview-enhanced hr { height: 4px; margin: 32px 0px; border: 0px none; background-color: rgb(214, 214, 214); }
 .markdown-preview-enhanced table { margin: 10px 0px 15px; border-collapse: collapse; border-spacing: 0px; display: block; width: 100%; overflow: auto; word-break: keep-all; }
-.markdown-preview-enhanced table th { font-weight: bold; color: rgb(255, 255, 255); }
-.markdown-preview-enhanced table td, .markdown-preview-enhanced table th { border: 1px solid rgb(72, 72, 76); padding: 6px 13px; }
+.markdown-preview-enhanced table th { font-weight: bold; color: rgb(0, 0, 0); }
+.markdown-preview-enhanced table td, .markdown-preview-enhanced table th { border: 1px solid rgb(214, 214, 214); padding: 6px 13px; }
 .markdown-preview-enhanced dl { padding: 0px; }
 .markdown-preview-enhanced dl dt { padding: 0px; margin-top: 16px; font-size: 1em; font-style: italic; font-weight: bold; }
 .markdown-preview-enhanced dl dd { padding: 0px 16px; margin-bottom: 16px; }
-.markdown-preview-enhanced code { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; color: rgb(255, 255, 255); border-radius: 3px; padding: 0.2em 0px; font-size: 0.85em !important; background-color: rgb(52, 52, 55); }
+.markdown-preview-enhanced code { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; color: rgb(0, 0, 0); border-radius: 3px; padding: 0.2em 0px; font-size: 0.85em !important; background-color: rgb(240, 240, 240); }
 .markdown-preview-enhanced code::before, .markdown-preview-enhanced code::after { letter-spacing: -0.2em; content: " "; }
 .markdown-preview-enhanced pre > code { padding: 0px; margin: 0px; word-break: normal; white-space: pre; border: 0px; font-size: 0.85em !important; background: transparent; }
 .markdown-preview-enhanced .highlight { margin-bottom: 16px; }
-.markdown-preview-enhanced .highlight pre, .markdown-preview-enhanced pre { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; padding: 16px; overflow: auto; line-height: 1.45; color: rgb(213, 213, 209); border: rgb(72, 72, 76); border-radius: 3px; font-size: 0.85em !important; background-color: rgb(42, 42, 45) !important; }
+.markdown-preview-enhanced .highlight pre, .markdown-preview-enhanced pre { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; padding: 16px; overflow: auto; line-height: 1.45; color: rgb(51, 51, 51); border: rgb(214, 214, 214); border-radius: 3px; font-size: 0.85em !important; background-color: rgb(240, 240, 240) !important; }
 .markdown-preview-enhanced .highlight pre { margin-bottom: 0px; word-break: normal; }
 .markdown-preview-enhanced pre { word-wrap: break-word; white-space: normal; word-break: break-all; }
 .markdown-preview-enhanced pre .section { opacity: 1; }
 .markdown-preview-enhanced pre code, .markdown-preview-enhanced pre tt { display: inline; max-width: initial; padding: 0px; margin: 0px; overflow: initial; line-height: inherit; word-wrap: normal; border: 0px; background-color: transparent; }
 .markdown-preview-enhanced pre code::before, .markdown-preview-enhanced pre tt::before, .markdown-preview-enhanced pre code::after, .markdown-preview-enhanced pre tt::after { content: normal; }
 .markdown-preview-enhanced p, .markdown-preview-enhanced blockquote, .markdown-preview-enhanced ul, .markdown-preview-enhanced ol, .markdown-preview-enhanced dl, .markdown-preview-enhanced pre { margin-top: 0px; margin-bottom: 16px; }
-.markdown-preview-enhancedpre.editor-colors { margin: 16px 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(42, 42, 45); }
-.markdown-preview-enhanced kbd { color: rgb(255, 255, 255); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(72, 72, 76) rgb(72, 72, 76) rgb(57, 57, 60); padding: 2px 4px; background-color: rgb(52, 52, 55); }
+.markdown-preview-enhanced.markdown-preview-enhanced pre { margin: 16px 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(245, 245, 245); }
+.markdown-preview-enhanced kbd { color: rgb(0, 0, 0); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(214, 214, 214) rgb(214, 214, 214) rgb(199, 199, 199); padding: 2px 4px; border-radius: 3px; background-color: rgb(240, 240, 240); }
 .markdown-preview-enhanced .pagebreak, .markdown-preview-enhanced .newpage { break-before: page; }
 @media screen and (min-width: 914px) { 
-  .markdown-preview-enhanced { width: 980px; margin: 10px auto; background: rgb(32, 32, 34); }
+  .markdown-preview-enhanced { width: 980px; margin: 10px auto; background: white; }
 }
 @media screen and (max-width: 400px) { 
   .markdown-preview-enhanced { font-size: 14px; margin: 0px auto; padding: 15px; }
 }
 @media print { 
-  .markdown-preview-enhanced { background-color: rgb(32, 32, 34); }
-  .markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { color: rgb(255, 255, 255); break-after: avoid; }
-  .markdown-preview-enhanced blockquote { color: rgb(174, 174, 166); }
+  .markdown-preview-enhanced { background-color: white; }
+  .markdown-preview-enhanced h1, .markdown-preview-enhanced h2, .markdown-preview-enhanced h3, .markdown-preview-enhanced h4, .markdown-preview-enhanced h5, .markdown-preview-enhanced h6 { color: rgb(0, 0, 0); break-after: avoid; }
+  .markdown-preview-enhanced blockquote { color: rgb(92, 92, 92); }
   .markdown-preview-enhanced table, .markdown-preview-enhanced pre { break-inside: avoid; }
   .markdown-preview-enhanced table { display: table; }
   .markdown-preview-enhanced img { display: block; max-width: 100%; max-height: 100%; }
@@ -1669,7 +1524,7 @@ body {
 .markdown-preview-enhanced .mermaid .today { }
 .markdown-preview-enhanced.phantomjs-image { width: 512px !important; zoom: 2 !important; }
 .markdown-preview-enhanced.phantomjs-pdf { zoom: 0.8 !important; }
-.markdown-preview-enhanced .preview-slides .slide, .markdown-preview-enhanced[data-presentation-mode] { } </style> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced " data-use-github-style data-use-github-syntax-theme data-presentation-mode> <div class="reveal">
+.markdown-preview-enhanced .preview-slides .slide, .markdown-preview-enhanced[data-presentation-mode] { } </style> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script> <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script> </head> <body class="markdown-preview-enhanced " data-presentation-mode> <div class="reveal">
   <div class="slides">
     <section  data-notes='Congrats! You just opened speaker notes'><h1 id="presentation-writer-beta">Presentation Writer (Beta)</h1>
 <p>by <strong>Markdown Preview Enhanced</strong>  <br>
