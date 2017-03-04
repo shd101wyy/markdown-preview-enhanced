@@ -5,6 +5,16 @@ Markdown Preview Enhanced
 
 [English Doc](../README.md)    
 
+---
+新特性! （但愿没 bug）  
+版本 `0.10.2` 支持更方便的更换 preview 的主题。所以现在你无需靠更改 atom 的主题来更改 preview 的主题了。  
+一些主题可能不能正常工作。  
+当你安装完一个 `atom syntax theme` 后，请重启来更新主题列表。  
+
+![theme](https://cloud.githubusercontent.com/assets/1908863/23577709/f466cb46-008b-11e7-8b36-acdc6a165285.gif)
+
+---
+
 推荐安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 来更好地与 markdown-preview-enhanced 协同工作.  
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
