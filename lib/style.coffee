@@ -1,4 +1,5 @@
 # referred from markdown-preview-view.coffee in the official Markdown Preview
+## this function is not used anymore
 getTextEditorStyles = ()->
   textEditorStyles = document.createElement("atom-styles")
   textEditorStyles.initialize(atom.styles)
@@ -14,6 +15,7 @@ getTextEditorStyles = ()->
   return style
 
 # get array of styles that has 'atom-text-editor' or ':host'
+## this function is not used anymore
 getReplacedTextEditorStyles = ()->
   styles = getTextEditorStyles()
   output = []
@@ -31,7 +33,6 @@ getReplacedTextEditorStyles = ()->
 getMarkdownPreviewCSS = ()->
   markdownPreviewRules = []
   ruleRegExp = /\.(markdown-preview-enhanced|mpe-syntax--)/
-  # cssUrlRefExp = /url\(atom:\/\/markdown-preview-enhanced\/assets\/(.*)\)/
 
   for stylesheet in document.styleSheets
     if stylesheet.rules.length
@@ -47,8 +48,45 @@ getMarkdownPreviewCSS = ()->
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
           .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
+loadPreviewTheme = ()->
+  previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+  fs = require 'fs'
+  less = require 'less'
+  themes = atom.themes.getLoadedThemes()
+
+  for theme in themes
+    if theme.name == previewTheme # found the theme that match previewTheme
+      themePath = theme.path
+      indexLessPath = path.resolve(themePath, './index.less')
+      syntaxVariablesFile = path.resolve(themePath, './styles/syntax-variables.less')
+
+      # create theme.less
+      fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
+        return if error
+
+        # replace css to css.less
+        data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
+
+        less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
+          console.log(error)
+          return if error
+          css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
+                    .replace(/:host/g, '.markdown-preview-enhanced .host')
+                    .replace(/\.syntax\-\-/g, '.mpe-syntax--')
+
+          fs.writeFile path.resolve(__dirname, '../styles/theme.less'), css
+
+      # copy @syntax-text-color and @syntax-background-color to styles/markdown-preview-enhanced.less
+      fs.readFile syntaxVariablesFile, {encoding: 'utf-8'}, (error, data)->
+        return if error
+        fs.writeFile path.resolve(__dirname, '../styles/config.less'), """
+@import \"#{syntaxVariablesFile}\";
+"""
+      return
+
 module.exports = {
   getTextEditorStyles
   getMarkdownPreviewCSS
   getReplacedTextEditorStyles
+  loadPreviewTheme
 }

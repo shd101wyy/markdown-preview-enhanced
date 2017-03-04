@@ -1,8 +1,14 @@
 {CompositeDisposable, Emitter, Directory, File} = require 'atom'
 path = require 'path'
-{getReplacedTextEditorStyles} = require './style'
+fs = require 'fs'
+{loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
+
+# reset styles/config.less file
+fs.writeFile path.resolve(__dirname, '../styles/config.less'), """
+@import "syntax-variables"; // will be replaced when preview theme is changed
+"""
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -162,36 +168,6 @@ module.exports = MarkdownPreviewEnhanced =
 
     return true
 
-  loadPreviewTheme: ()->
-    previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-    fs = require 'fs'
-    less = require 'less'
-    themes = atom.themes.getLoadedThemes()
-
-    for theme in themes
-      if theme.name == previewTheme
-        themePath = theme.path
-        indexLessPath = path.resolve(themePath, './index.less')
-
-        # create theme.less
-        fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
-          return if error
-
-          # replace css to css.less
-          data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
-
-          less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
-            console.log(error)
-            return if error
-            css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
-                      .replace(/:host/g, '.markdown-preview-enhanced .host')
-                      .replace(/\.syntax\-\-/g, '.mpe-syntax--')
-
-            fs.writeFile path.resolve(__dirname, '../styles/theme.less'), css
-
-        return
-
-
   appendGlobalStyle: ()->
     if not @katexStyle
       @katexStyle = document.createElement 'link'
@@ -203,7 +179,7 @@ module.exports = MarkdownPreviewEnhanced =
       # @subscriptions.add atom.config.observe 'core.themes', ()=>
       @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
         if not atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
-          @loadPreviewTheme()
+          loadPreviewTheme()
 
   customizeCSS: ()->
     atom.workspace
