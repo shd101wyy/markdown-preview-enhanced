@@ -1,8 +1,7 @@
+module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
-// this file will be copied to ../styles folder
-//
 
-@import "./config.less";
+@import "styles/syntax-variables.less";
 
 .markdown-preview-enhanced {
   @fg: @syntax-text-color;
@@ -235,7 +234,7 @@
 
     &::before, &::after {
       letter-spacing: -0.2em;
-      content: "\00a0";
+      content: "\\00a0";
     }
   }
 
@@ -486,3 +485,13 @@
     }
   }
 }
+
+[data-presentation-preview-mode] {
+  .preview-slides {
+    .slide {
+      background-color: @syntax-background-color !important;
+    }
+  }
+}
+
+"""

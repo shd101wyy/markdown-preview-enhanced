@@ -1,4 +1,5 @@
 ## 0.10.3  
+* [x] quick fix theme bug
 * [ ] remove `useGitHubStyle` and `useGitHubSyntaxTheme`.
 
 ## 0.10.2  
