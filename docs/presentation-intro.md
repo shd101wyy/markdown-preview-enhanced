@@ -32,6 +32,12 @@ The style of the presentation is consistent with the style of your beloved **Ato
 const さかもと = 'cool cooler coolest'
 ```
 
+<!-- slide -->  
+You can change your presentation theme very easily:   
+
+![presentation-theme](https://cloud.githubusercontent.com/assets/1908863/23577767/951531b2-008d-11e7-95d0-08cd53d277a6.gif)
+
+
 <!-- slide -->
 All features of **Markdown Preview Enhanced** are supported.   
 Such as Math typesetting, mermaid graph, code chunk etc...  
