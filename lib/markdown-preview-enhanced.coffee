@@ -1,7 +1,8 @@
 {CompositeDisposable, Emitter, Directory, File} = require 'atom'
 path = require 'path'
-{getReplacedTextEditorStyles} = require './style'
+{loadPreviewTheme} = require './style'
 Hook = require './hook'
+configSchema = require './config-schema'
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -9,6 +10,7 @@ module.exports = MarkdownPreviewEnhanced =
   documentExporterView: null,
   imageHelperView: null,
   fileExtensions: null,
+  config: configSchema,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
@@ -136,8 +138,7 @@ module.exports = MarkdownPreviewEnhanced =
       @appendGlobalStyle()
       @preview.bindEditor(editor)
 
-      if !@documentExporterView
-        @documentExporterView = new ExporterView()
+      @documentExporterView ?= new ExporterView()
       @preview.documentExporterView = @documentExporterView
       return true
     else
@@ -160,17 +161,6 @@ module.exports = MarkdownPreviewEnhanced =
 
     return true
 
-  appendSyntaxStyle: ()->
-    textEditorStyle = document.getElementById('markdown-preview-enhanced-syntax-style')
-    if !textEditorStyle
-      textEditorStyle = document.createElement('style')
-      textEditorStyle.id = 'markdown-preview-enhanced-syntax-style'
-      textEditorStyle.setAttribute('for', 'markdown-preview-enhanced')
-      head = document.getElementsByTagName('head')[0]
-      atomStyles = document.getElementsByTagName('atom-styles')[0]
-      head.insertBefore(textEditorStyle, atomStyles)
-    textEditorStyle.innerHTML = getReplacedTextEditorStyles()
-
   appendGlobalStyle: ()->
     if not @katexStyle
       @katexStyle = document.createElement 'link'
@@ -179,16 +169,18 @@ module.exports = MarkdownPreviewEnhanced =
       document.getElementsByTagName('head')[0].appendChild(@katexStyle)
 
       # change theme
-      @subscriptions.add atom.config.observe 'core.themes', ()=>
+      # @subscriptions.add atom.config.observe 'core.themes', ()=>
+      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
         if not atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
-          @appendSyntaxStyle()
+          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+          loadPreviewTheme(previewTheme)
 
-      # github syntax theme
-      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme', (useGitHubSyntaxTheme)=>
-        if useGitHubSyntaxTheme
-          document.getElementById('markdown-preview-enhanced-syntax-style')?.remove()
+      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme', (flag)=>
+        if flag
+          document.getElementById('markdown-preview-enhanced-preview-theme')?.remove()
         else
-          @appendSyntaxStyle()
+          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+          loadPreviewTheme(previewTheme)
 
   customizeCSS: ()->
     atom.workspace
