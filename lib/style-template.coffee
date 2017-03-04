@@ -331,7 +331,7 @@ module.exports = """
     padding: 2px 4px;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
     border-radius: 3px;
-    box-shadow: inset 0 -1px 0 #bbb;
+    // box-shadow: inset 0 -1px 0 #bbb;
   }
 
   .pagebreak, .newpage {
