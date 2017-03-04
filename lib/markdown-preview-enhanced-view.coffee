@@ -283,6 +283,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # disable markdownHtmlView onscroll
       @previewScrollDelay = Date.now() + 500
 
+      # scroll preview to most top as editor is at most top.
+      return @scrollToPos(0) if firstVisibleScreenRow == 0
+
       # @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
       if lineNo of @scrollMap then @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
 
@@ -318,6 +321,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
         return
       if Date.now() < @previewScrollDelay
         return
+
+      if @element.scrollTop == 0 # most top
+        @editorScrollDelay = Date.now() + 500
+        return @scrollToPos 0, @editor.getElement()
 
       top = @element.scrollTop + @element.offsetHeight / 2
 
