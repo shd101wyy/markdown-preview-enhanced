@@ -1,4 +1,5 @@
 styleTemplate = require './style-template'
+path = require 'path'
 
 fs = null
 less = null
