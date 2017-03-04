@@ -1,6 +1,5 @@
 {CompositeDisposable, Emitter, Directory, File} = require 'atom'
 path = require 'path'
-fs = require 'fs'
 {loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
@@ -139,8 +138,7 @@ module.exports = MarkdownPreviewEnhanced =
       @appendGlobalStyle()
       @preview.bindEditor(editor)
 
-      if !@documentExporterView
-        @documentExporterView = new ExporterView()
+      @documentExporterView ?= new ExporterView()
       @preview.documentExporterView = @documentExporterView
       return true
     else
@@ -174,7 +172,15 @@ module.exports = MarkdownPreviewEnhanced =
       # @subscriptions.add atom.config.observe 'core.themes', ()=>
       @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
         if not atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme')
-          loadPreviewTheme()
+          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+          loadPreviewTheme(previewTheme)
+
+      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.useGitHubSyntaxTheme', (flag)=>
+        if flag
+          document.getElementById('markdown-preview-enhanced-preview-theme')?.remove()
+        else
+          previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+          loadPreviewTheme(previewTheme)
 
   customizeCSS: ()->
     atom.workspace

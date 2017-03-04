@@ -1,3 +1,6 @@
+fs = null
+less = null
+
 # referred from markdown-preview-view.coffee in the official Markdown Preview
 ## this function is not used anymore
 getTextEditorStyles = ()->
@@ -48,10 +51,9 @@ getMarkdownPreviewCSS = ()->
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
           .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-loadPreviewTheme = ()->
-  previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-  fs = require 'fs'
-  less = require 'less'
+loadPreviewTheme = (previewTheme)->
+  fs ?= require 'fs'
+  less ?= require 'less'
   themes = atom.themes.getLoadedThemes()
 
   for theme in themes
@@ -59,6 +61,18 @@ loadPreviewTheme = ()->
       themePath = theme.path
       indexLessPath = path.resolve(themePath, './index.less')
       syntaxVariablesFile = path.resolve(themePath, './styles/syntax-variables.less')
+
+      previewThemeElement = document.getElementById('markdown-preview-enhanced-preview-theme')
+      return if previewThemeElement?.getAttribute('data-preview-theme') == previewTheme
+
+      if !previewThemeElement
+        previewThemeElement = document.createElement('style')
+        previewThemeElement.id = 'markdown-preview-enhanced-preview-theme'
+        previewThemeElement.setAttribute('for', 'markdown-preview-enhanced')
+        head = document.getElementsByTagName('head')[0]
+        atomStyles = document.getElementsByTagName('atom-styles')[0]
+        head.insertBefore(previewThemeElement, atomStyles)
+      previewThemeElement.setAttribute 'data-preview-theme', previewTheme
 
       # create theme.less
       fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
@@ -73,7 +87,8 @@ loadPreviewTheme = ()->
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
                     .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-          fs.writeFile path.resolve(__dirname, '../styles/theme.less'), css
+          # fs.writeFile path.resolve(__dirname, '../styles/theme.less'), css
+          previewThemeElement.innerHTML = css
 
       # copy @syntax-text-color and @syntax-background-color to styles/markdown-preview-enhanced.less
       fs.readFile syntaxVariablesFile, {encoding: 'utf-8'}, (error, data)->
