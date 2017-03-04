@@ -21,7 +21,7 @@ getReplacedTextEditorStyles = ()->
   for i in [0...styles.length]
     if styles[i].indexOf('atom-text-editor') >= 0
       output.push(styles[i]
-                    .replace(/atom-text-editor/g, '.markdown-preview-enhanced pre')
+                    .replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
                     .replace(/\.syntax\-\-/g, '.mpe-syntax--'))
 
@@ -30,8 +30,8 @@ getReplacedTextEditorStyles = ()->
 
 getMarkdownPreviewCSS = ()->
   markdownPreviewRules = []
-  ruleRegExp = /\.markdown-preview-enhanced/
-  cssUrlRefExp = /url\(atom:\/\/markdown-preview-enhanced\/assets\/(.*)\)/
+  ruleRegExp = /\.(markdown-preview-enhanced|mpe-syntax--)/
+  # cssUrlRefExp = /url\(atom:\/\/markdown-preview-enhanced\/assets\/(.*)\)/
 
   for stylesheet in document.styleSheets
     if stylesheet.rules.length
@@ -41,9 +41,9 @@ getMarkdownPreviewCSS = ()->
           markdownPreviewRules.push(rule.cssText)
 
   return markdownPreviewRules
-          .concat(if atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme') then [] else getTextEditorStyles())
+          # .concat(if atom.config.get('markdown-preview-enhanced.useGitHubSyntaxTheme') then [] else getTextEditorStyles())
           .join('\n')
-          .replace(/atom-text-editor/g, 'pre.editor-colors')
+          .replace(/[^\.]atom-text-editor/g, 'pre.editor-colors')
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
           .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 

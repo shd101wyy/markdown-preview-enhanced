@@ -177,12 +177,11 @@ module.exports = MarkdownPreviewEnhanced =
         fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
           return if error
 
+          # replace css to css.less
           data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
-          data += """
-@import \"#{path.resolve(__dirname, '../styles_template/markdown-preview-enhanced.less')}\"
-"""
 
           less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
+            console.log(error)
             return if error
             css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
                       .replace(/:host/g, '.markdown-preview-enhanced .host')
