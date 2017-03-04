@@ -68,7 +68,6 @@ loadPreviewTheme = ()->
         data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
-          console.log(error)
           return if error
           css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
