@@ -90,7 +90,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initSettingsEvents()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, =>
+    @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
       @p style: 'font-size: 24px', 'loading preview...'
 
   getTitle: ->
@@ -178,6 +178,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEvents: (editor)->
     @editor = editor
     @updateTabTitle()
+    @element.removeAttribute('style')
 
     if not @parseMD
       {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
