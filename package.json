@@ -6,7 +6,7 @@
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "NCSA",
   "engines": {
-    "atom": ">=0.174.0"
+    "atom": ">=1.14.0"
   },
   "keywords": [
     "markdown",

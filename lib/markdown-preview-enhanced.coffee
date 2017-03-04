@@ -5,11 +5,6 @@ fs = require 'fs'
 Hook = require './hook'
 configSchema = require './config-schema'
 
-# reset styles/config.less file
-fs.writeFile path.resolve(__dirname, '../styles/config.less'), """
-@import "syntax-variables"; // will be replaced when preview theme is changed
-"""
-
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
   katexStyle: null,
