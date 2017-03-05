@@ -4,7 +4,8 @@ Markdown Preview Enhanced
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)   
 
 [English Doc](../README.md)    
-[Wiki](https://github.com/shd101wyy/markdown-preview-enhanced/wiki) (尚未完成)
+[Wiki](https://github.com/shd101wyy/markdown-preview-enhanced/wiki) (尚未完成)  
+
 ---
 新特性! （但愿没 bug）  
 版本 `0.10.2` 支持更方便的更换 preview 的主题。所以现在你无需靠更改 atom 的主题来更改 preview 的主题了。  
