@@ -1,5 +1,9 @@
+## 0.10.4 & 0.10.5  
+* [x] quick fix theme bug.
+* [x] added loading gif, same as the official `markdown preview` package. 
+
 ## 0.10.3  
-* [x] quick fix theme bug
+* [x] quick fix theme bug.
 * [x] remove `useGitHubStyle` and `useGitHubSyntaxTheme`.
 
 ## 0.10.2  

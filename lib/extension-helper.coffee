@@ -44,7 +44,9 @@ scopesForLanguageName =
   'viz': 'source.dot',
   'dot': 'source.dot',
   'erd': 'source.erd',
-  'node': 'source.js'
+  'node': 'source.js',
+  'markdown': 'source.gfm',
+  'md': "source.gfm"
 
 module.exports.scopeForLanguageName  = (language)->
   return scopesForLanguageName[language] or ('source.' + language)

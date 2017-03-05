@@ -53,7 +53,11 @@ getMarkdownPreviewCSS = ()->
           .replace(/:host/g, '.host') # Remove shadow-dom :host selector causing problem on FF
           .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-loadPreviewTheme = (previewTheme)->
+# cb() is optional
+loadPreviewTheme = (previewTheme, cb)->
+  previewThemeElement = document.getElementById('markdown-preview-enhanced-preview-theme')
+  return cb?() if previewThemeElement?.getAttribute('data-preview-theme') == previewTheme and previewThemeElement?.innerHTML.length
+
   fs ?= require 'fs'
   less ?= require 'less'
   themes = atom.themes.getLoadedThemes()
@@ -63,9 +67,6 @@ loadPreviewTheme = (previewTheme)->
       themePath = theme.path
       indexLessPath = path.resolve(themePath, './index.less')
       syntaxVariablesFile = path.resolve(themePath, './styles/syntax-variables.less')
-
-      previewThemeElement = document.getElementById('markdown-preview-enhanced-preview-theme')
-      return if previewThemeElement?.getAttribute('data-preview-theme') == previewTheme
 
       if !previewThemeElement
         previewThemeElement = document.createElement('style')
@@ -78,21 +79,23 @@ loadPreviewTheme = (previewTheme)->
 
       # compile less to css
       fs.readFile indexLessPath, {encoding: 'utf-8'}, (error, data)->
-        return if error
+        return cb?() if error
 
         # replace css to css.less; otherwise it will cause error.
         data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
         data += styleTemplate
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
-          return if error
+          return cb?() if error
           css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
                     .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
           previewThemeElement.innerHTML = css
-
+          return cb?()
       return
+
+  return cb?() # error theme not found
 
 module.exports = {
   getTextEditorStyles

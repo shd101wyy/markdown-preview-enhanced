@@ -4,6 +4,7 @@ Still Beta Version!
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 
 [中文文档](./docs/README_CN.md)    
+[Wiki](https://github.com/shd101wyy/markdown-preview-enhanced/wiki) (not done yet)
 
 ---
 New Feature Oh Yea! (Hopefully no bugs)  

@@ -10,7 +10,7 @@ matter = require('gray-matter')
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 cheerio = null
 
-{getMarkdownPreviewCSS} = require './style'
+{getMarkdownPreviewCSS, loadPreviewTheme} = require './style'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
@@ -91,7 +91,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   @content: ->
     @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
-      @p style: 'font-size: 24px', 'loading preview...'
+      # @p style: 'font-size: 24px', 'loading preview...'
+      @div class: "markdown-spinner", 'Loading Markdown\u2026'
 
   getTitle: ->
     @getFileName() + ' preview'
@@ -154,9 +155,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
                 activatePane: false,
                 searchAllPanes: false
           .then (e)=>
-            setTimeout(()=>
+            previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+            loadPreviewTheme previewTheme, ()=>
               @initEvents(editor)
-            , 0)
 
     else
       # save cache
