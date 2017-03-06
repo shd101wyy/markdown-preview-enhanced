@@ -158,7 +158,7 @@ Please make sure you have `Use CDN hosted resources` checked when exporting.
 3. **I exported a presentation html file, and I want to put it on my Github Page or deploy remotely?**  
 Please check the last question.  
 4. **How do I get dark style preview?**  
-If you want the style of the preview to be consistent with your atom editor, go to settings of this package, then uncheck `Github.com style` and `Use Github.com syntax theme`. [#281](https://github.com/shd101wyy/markdown-preview-enhanced/issues/281).  
+If you want the style of the preview to be consistent with your atom editor, go to settings of this package, then change the `Preview Theme`.  
 Or you can run `Markdown Preview Enhanced: Customize Css` command, then modify the `style.less` file.  [#68](https://github.com/shd101wyy/markdown-preview-enhanced/issues/68), [#89](https://github.com/shd101wyy/markdown-preview-enhanced/issues/89).
 5. **The preview is super super lagging?**  
 This might happen when your markdown file is too big, or you are using too many math or graphs.  

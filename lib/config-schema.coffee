@@ -1,4 +1,4 @@
-syntaxThemes = atom.themes.getLoadedThemes()
+syntaxThemes = atom.themes.getLoadedThemes() or []
 syntaxThemes = syntaxThemes.filter (s)-> s.metadata.theme == 'syntax'
 syntaxThemes = syntaxThemes.map (s)-> s.name
 if !syntaxThemes.length
