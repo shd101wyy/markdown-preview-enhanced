@@ -1,6 +1,10 @@
+## 0.10.6  
+* [x] fix zen mode style issue.  
+* [x] fix preview theme list empty issue.   
+
 ## 0.10.4 & 0.10.5  
 * [x] quick fix theme bug.
-* [x] added loading gif, same as the official `markdown preview` package. 
+* [x] added loading gif, same as the official `markdown preview` package.
 
 ## 0.10.3  
 * [x] quick fix theme bug.

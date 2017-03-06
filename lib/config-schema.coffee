@@ -1,5 +1,8 @@
-syntaxThemes = atom.themes.getLoadedThemeNames()
-syntaxThemes = syntaxThemes.filter (s)=> s.match(/\-syntax/)
+syntaxThemes = atom.themes.getLoadedThemes()
+syntaxThemes = syntaxThemes.filter (s)-> s.metadata.theme == 'syntax'
+syntaxThemes = syntaxThemes.map (s)-> s.name
+if !syntaxThemes.length
+  syntaxThemes = ['atom-dark-syntax', 'atom-light-syntax', 'one-dark-syntax', 'one-light-syntax', 'solarized-dark-syntax', 'solarized-light-syntax', 'base16-tomorrow-dark-theme', 'base16-tomorrow-light-theme']
 
 module.exports =
     fileExtension:
@@ -10,7 +13,7 @@ module.exports =
     previewTheme:
       title: "Preview Theme"
       type: "string"
-      default: syntaxThemes?[0] or 'null'
+      default: syntaxThemes[0]
       enum: syntaxThemes
       order: 1
     breakOnSingleNewline:
