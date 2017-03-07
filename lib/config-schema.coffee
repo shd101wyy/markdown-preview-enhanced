@@ -1,8 +1,10 @@
-syntaxThemes = atom.themes.getLoadedThemes() or []
-syntaxThemes = syntaxThemes.filter (s)-> s.metadata.theme == 'syntax'
+syntaxThemes = atom.packages.getAvailablePackageMetadata() or []
+syntaxThemes = syntaxThemes.filter (s)-> s.theme == 'syntax'
 syntaxThemes = syntaxThemes.map (s)-> s.name
 if !syntaxThemes.length
   syntaxThemes = ['atom-dark-syntax', 'atom-light-syntax', 'one-dark-syntax', 'one-light-syntax', 'solarized-dark-syntax', 'solarized-light-syntax', 'base16-tomorrow-dark-theme', 'base16-tomorrow-light-theme']
+
+syntaxThemes.push('mpe-github-syntax')
 
 module.exports =
     fileExtension:
@@ -154,6 +156,12 @@ module.exports =
       default: true
       description: "Include background color when generating pdf."
       order: 110
+    pdfUseGithub:
+      title: "Use Github style when generating pdf"
+      type: "boolean"
+      default: true
+      description: "If you enabled this option, then the pdf will be generated using Github Style. I add this option because if the markdown preview has black color background, then the generated pdf may also have black color background (if you enabled Print Background), which may affect the appearance of the generated pdf."
+      order: 120
     pdfOpenAutomatically:
       title: "Open pdf file immediately after it is generated"
       type: "boolean"

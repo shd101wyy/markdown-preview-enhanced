@@ -10,7 +10,7 @@ matter = require('gray-matter')
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 cheerio = null
 
-{getMarkdownPreviewCSS, loadPreviewTheme} = require './style'
+{loadPreviewTheme} = require './style'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
@@ -156,7 +156,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                 searchAllPanes: false
           .then (e)=>
             previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-            loadPreviewTheme previewTheme, ()=>
+            loadPreviewTheme previewTheme, true, ()=>
               @initEvents(editor)
 
     else
@@ -1068,21 +1068,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
   openInBrowser: (isForPresentationPrint=false)->
     return if not @editor
 
-    htmlContent = @getHTMLContent offline: true, isForPrint: isForPresentationPrint
-
-    temp.open
-      prefix: 'markdown-preview-enhanced',
-      suffix: '.html', (err, info)=>
-        throw err if err
-
-        fs.write info.fd, htmlContent, (err)=>
+    @getHTMLContent offline: true, isForPrint: isForPresentationPrint, (htmlContent)=>
+      temp.open
+        prefix: 'markdown-preview-enhanced',
+        suffix: '.html', (err, info)=>
           throw err if err
-          if isForPresentationPrint
-            url = 'file:///' + info.path + '?print-pdf'
-            atom.notifications.addInfo('Please copy and open the link below in Chrome.\nThen Right Click -> Print -> Save as Pdf.', dismissable: true, detail: url)
-          else
-            ## open in browser
-            @openFile info.path
+
+          fs.write info.fd, htmlContent, (err)=>
+            throw err if err
+            if isForPresentationPrint
+              url = 'file:///' + info.path + '?print-pdf'
+              atom.notifications.addInfo('Please copy and open the link below in Chrome.\nThen Right Click -> Print -> Save as Pdf.', dismissable: true, detail: url)
+            else
+              ## open in browser
+              @openFile info.path
 
   exportToDisk: ()->
     @documentExporterView.display(this)
@@ -1183,7 +1182,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     offline ?= false
     useRelativeImagePath ?= false
     phantomjsType ?= false # pdf | png | jpeg | false
-    return if not @editor
+    return callback() if not @editor
 
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
@@ -1287,7 +1286,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     title = @getFileName()
     title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
-    htmlContent = "
+
+    previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+    if isForPrint and atom.config.get('markdown-preview-enhanced.pdfUseGithub')
+      previewTheme = 'mpe-github-syntax'
+
+    loadPreviewTheme previewTheme, false, (error, css)=>
+      return callback() if error
+      return callback """
   <!DOCTYPE html>
   <html>
     <head>
@@ -1298,7 +1304,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       #{presentationStyle}
 
       <style>
-      #{getMarkdownPreviewCSS()}
+      #{css}
       </style>
 
       #{mathStyle}
@@ -1313,7 +1319,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     </body>
     #{presentationInitScript}
   </html>
-    "
+    """
 
   # api doc [printToPDF] function
   # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
@@ -1361,36 +1367,36 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @openInBrowser(true)
       return
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true
-    temp.open
-      prefix: 'markdown-preview-enhanced',
-      suffix: '.html', (err, info)=>
-        throw err if err
-        fs.write info.fd, htmlContent, (err)=>
+    @getHTMLContent isForPrint: true, offline: true, (htmlContent)=>
+      temp.open
+        prefix: 'markdown-preview-enhanced',
+        suffix: '.html', (err, info)=>
           throw err if err
-          @printPDF "file://#{info.path}", dest
+          fs.write info.fd, htmlContent, (err)=>
+            throw err if err
+            @printPDF "file://#{info.path}", dest
 
   saveAsHTML: (dest, offline=true, useRelativeImagePath)->
     return if not @editor
 
-    htmlContent = @getHTMLContent isForPrint: false, offline: offline, useRelativeImagePath: useRelativeImagePath
+    @getHTMLContent isForPrint: false, offline: offline, useRelativeImagePath: useRelativeImagePath, (htmlContent)=>
 
-    htmlFileName = path.basename(dest)
+      htmlFileName = path.basename(dest)
 
-    # presentation speaker notes
-    # copy dependency files
-    if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]') >= 0
-      depsDirName = path.resolve(path.dirname(dest), 'revealjs_deps')
-      depsDir = new Directory(depsDirName)
-      depsDir.create().then (flag)->
-        true
-        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
-        fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
+      # presentation speaker notes
+      # copy dependency files
+      if !offline and htmlContent.indexOf('[{"src":"revealjs_deps/notes.js","async":true}]') >= 0
+        depsDirName = path.resolve(path.dirname(dest), 'revealjs_deps')
+        depsDir = new Directory(depsDirName)
+        depsDir.create().then (flag)->
+          true
+          fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.js')))
+          fs.createReadStream(path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.html')).pipe(fs.createWriteStream(path.resolve(depsDirName, 'notes.html')))
 
-    destFile = new File(dest)
-    destFile.create().then (flag)->
-      destFile.write htmlContent
-      atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dest}")
+      destFile = new File(dest)
+      destFile.create().then (flag)->
+        destFile.write htmlContent
+        atom.notifications.addInfo("File #{htmlFileName} was created", detail: "path: #{dest}")
 
   ####################################################
   ## Presentation
@@ -1596,42 +1602,42 @@ module.exports = config || {}
       @openInBrowser(true)
       return
 
-    htmlContent = @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dest)
+    @getHTMLContent isForPrint: true, offline: true, phantomjsType: path.extname(dest), (htmlContent)=>
 
-    fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
-    format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
-    orientation = atom.config.get('markdown-preview-enhanced.orientation')
-    margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
+      fileType = atom.config.get('markdown-preview-enhanced.phantomJSExportFileType')
+      format = atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
+      orientation = atom.config.get('markdown-preview-enhanced.orientation')
+      margin = atom.config.get('markdown-preview-enhanced.phantomJSMargin').trim()
 
-    if !margin.length
-      margin = '1cm'
-    else
-      margin = margin.split(',').map (m)->m.trim()
-      if margin.length == 1
-        margin = margin[0]
-      else if margin.length == 2
-        margin = {'top': margin[0], 'bottom': margin[0], 'left': margin[1], 'right': margin[1]}
-      else if margin.length == 4
-        margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
-      else
+      if !margin.length
         margin = '1cm'
-
-    # get header and footer
-    config = @loadPhantomJSHeaderFooterConfig()
-
-    pdf
-      .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
-      .toFile dest, (err, res)=>
-        if err
-          atom.notifications.addError err
-        # open pdf
+      else
+        margin = margin.split(',').map (m)->m.trim()
+        if margin.length == 1
+          margin = margin[0]
+        else if margin.length == 2
+          margin = {'top': margin[0], 'bottom': margin[0], 'left': margin[1], 'right': margin[1]}
+        else if margin.length == 4
+          margin = {'top': margin[0], 'right': margin[1], 'bottom': margin[2], 'left': margin[3]}
         else
-          lastIndexOfSlash = dest.lastIndexOf '/' or 0
-          fileName = dest.slice(lastIndexOfSlash + 1)
+          margin = '1cm'
 
-          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
-          if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-            @openFile dest
+      # get header and footer
+      config = @loadPhantomJSHeaderFooterConfig()
+
+      pdf
+        .create htmlContent, Object.assign({type: fileType, format: format, orientation: orientation, border: margin, quality: '75', timeout: 60000, script: path.join(__dirname, '../dependencies/phantomjs/pdf_a4_portrait.js')}, config)
+        .toFile dest, (err, res)=>
+          if err
+            atom.notifications.addError err
+          # open pdf
+          else
+            lastIndexOfSlash = dest.lastIndexOf '/' or 0
+            fileName = dest.slice(lastIndexOfSlash + 1)
+
+            atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
+            if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+              @openFile dest
 
   ## EBOOK
   generateEbook: (dest)->

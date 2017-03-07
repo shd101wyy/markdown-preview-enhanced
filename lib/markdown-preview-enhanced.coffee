@@ -172,7 +172,7 @@ module.exports = MarkdownPreviewEnhanced =
       # @subscriptions.add atom.config.observe 'core.themes', ()=>
       @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
         previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-        loadPreviewTheme(previewTheme)
+        loadPreviewTheme previewTheme, true
 
   customizeCSS: ()->
     atom.workspace

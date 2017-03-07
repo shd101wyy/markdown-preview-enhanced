@@ -491,11 +491,108 @@ module.exports = """
   }
 }
 
+/*
+ * Reveal.js styles
+ */
 [data-presentation-preview-mode] {
+  background-color: #f4f4f4;
+
+  &[data-use-github-style] {
+    background-color: #f4f4f4;
+  }
+
   .preview-slides {
+    width: 100%;
+
     .slide {
+      position: relative;
       background-color: @syntax-background-color !important;
+
+      //width: 100%; # need to be set later
+      //height: 100%;
+
+      padding: 2em !important;
+      margin-bottom: 12px;
+      text-align: left !important;
+      display: flex;
+      align-items:center;
+
+      border: 1px solid #e6e6e6;
+
+      box-shadow: 0px 0px 16px 4px #eeeeee;
+
+      font-size: 24px;
+
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+      }
+
+      .background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .background-iframe, .background-iframe-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border: none;
+        z-index: 1;
+      }
+
+      .background-iframe-overlay {
+        z-index: 2;
+      }
     }
+  }
+
+  &[data-use-github-style] {
+    .slide {
+      background-color: #fff !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+    }
+  }
+
+  section {
+    display: block;
+    width: 100%;
+    transform-style: preserve-3d;
+    font-size: 100%;
+    font: inherit;
+    z-index: 100;
+  }
+}
+
+.markdown-preview-enhanced[data-presentation-mode] {
+  font-size: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+  }
+  strong {
+    font-weight: bold; // without this line, the output <strong> doesn't have wrong effect.
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.markdown-preview-enhanced {
+  .slides {
+    text-align: left !important;
   }
 }
 

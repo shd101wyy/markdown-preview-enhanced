@@ -70,7 +70,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
     def = lines[start].trim().slice(3)
 
     if atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
-      match = def.match(/^\@{0,1}(mermaid|wavedrom|viz|plantuml|puml|dot)/)
+      match = def.match(/^\@?(mermaid|wavedrom|viz|plantuml|puml|dot)/)
     else
       match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
 
@@ -193,11 +193,11 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
         asyncFunc = helper(start, end, content)
         asyncFunctions.push asyncFunc
     else # code chunk
-         # TODO: support this in the future
       helper = (start, end, content)->
         (cb)->
           def = lines[start].trim().slice(3)
           match = def.match(/^\{\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)}$/)
+          return cb(null, null) if !match
 
           lang = match[1].trim()
           lang = lang.slice(1, lang.length-1).trim() if lang[0] == '"'
@@ -210,7 +210,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
             # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
           catch error
             atom.notifications.addError('Invalid options', detail: dataArgs)
-            return
+            return cb(null, null)
 
           id = options.id
 

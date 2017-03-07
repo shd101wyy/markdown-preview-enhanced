@@ -642,10 +642,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         text = ''
 
     if useStandardCodeFencingForGraphs
-      mermaidRegExp = /^\@{0,1}mermaid/
-      plantumlRegExp = /^\@{0,1}(plantuml|puml)/
-      wavedromRegExp = /^\@{0,1}wavedrom/
-      vizRegExp = /^\@{0,1}(viz|dot)/
+      mermaidRegExp = /^\@?mermaid/
+      plantumlRegExp = /^\@?(plantuml|puml)/
+      wavedromRegExp = /^\@?wavedrom/
+      vizRegExp = /^\@?(viz|dot)/
     else # only works with @ appended at front
       mermaidRegExp = /^\@mermaid/
       plantumlRegExp = /^\@(plantuml|puml)/

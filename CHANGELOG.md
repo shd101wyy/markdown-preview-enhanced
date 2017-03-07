@@ -1,3 +1,7 @@
+## 0.10.7  
+* [x] restore `pdfUseGithub` option.
+* [x] add `mpe-github-syntax` for Github.com style.
+
 ## 0.10.6  
 * [x] fix zen mode style issue.  
 * [x] fix preview theme list empty issue.   
