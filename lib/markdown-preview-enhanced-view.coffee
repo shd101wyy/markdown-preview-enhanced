@@ -513,30 +513,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return
     @parseDelay = Date.now() + 200
 
-    {html, slideConfigs, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @fileDirectoryPath, @projectDirectoryPath})
+    @parseMD @formatStringBeforeParsing(@editor.getText()), {isForPreview: true, markdownPreview: this, @fileDirectoryPath, @projectDirectoryPath}, ({html, slideConfigs, yamlConfig})=>
+      html = @formatStringAfterParsing(html)
 
-    html = @formatStringAfterParsing(html)
+      if slideConfigs.length
+        html = @parseSlides(html, slideConfigs, yamlConfig)
+        @element.setAttribute 'data-presentation-preview-mode', ''
+        @presentationMode = true
+        @slideConfigs = slideConfigs
+      else
+        @element.removeAttribute 'data-presentation-preview-mode'
+        @presentationMode = false
 
-    if slideConfigs.length
-      html = @parseSlides(html, slideConfigs, yamlConfig)
-      @element.setAttribute 'data-presentation-preview-mode', ''
-      @presentationMode = true
-      @slideConfigs = slideConfigs
-    else
-      @element.removeAttribute 'data-presentation-preview-mode'
-      @presentationMode = false
+      @element.innerHTML = html
+      @graphData = {}
+      @bindEvents()
 
-    @element.innerHTML = html
-    @graphData = {}
-    @bindEvents()
+      @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
 
-    @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
+      @setInitialScrollPos()
+      @addBackToTopButton()
+      @addRefreshButton()
 
-    @setInitialScrollPos()
-    @addBackToTopButton()
-    @addRefreshButton()
-
-    @textChanged = false
+      @textChanged = false
 
   setInitialScrollPos: ->
     if @firstTimeRenderMarkdowon
@@ -841,8 +840,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         imageElement.setAttribute 'src',  "data:image/png;charset=utf-8;base64,#{imageData}"
         outputDiv.appendChild imageElement
       else if options.output == 'markdown'
-        {html} = @parseMD(data, {@fileDirectoryPath, @projectDirectoryPath})
-        outputDiv.innerHTML = html
+        @parseMD data, {@fileDirectoryPath, @projectDirectoryPath}, ({html})=>
+          outputDiv.innerHTML = html
+          @scrollMap = null
       else if options.output == 'none'
         outputDiv.remove()
         outputDiv = null
@@ -1186,140 +1186,139 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 
-    res = @parseMD(@formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @fileDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true})
-    htmlContent = @formatStringAfterParsing(res.html)
-    slideConfigs = res.slideConfigs
-    yamlConfig = res.yamlConfig or {}
+    res = @parseMD @formatStringBeforeParsing(@editor.getText()), {useRelativeImagePath, @fileDirectoryPath, @projectDirectoryPath, markdownPreview: this, hideFrontMatter: true}, ({html, yamlConfig, slideConfigs})=>
+      htmlContent = @formatStringAfterParsing(html)
+      yamlConfig = yamlConfig or {}
 
 
-    # replace code chunks inside htmlContent
-    htmlContent = @insertCodeChunksResult htmlContent
+      # replace code chunks inside htmlContent
+      htmlContent = @insertCodeChunksResult htmlContent
 
-    if mathRenderingOption == 'KaTeX'
-      if offline
-        mathStyle = "<link rel=\"stylesheet\"
-              href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
-      else
-        mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
-    else if mathRenderingOption == 'MathJax'
-      inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
-      block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
-      mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
-      if offline
-        mathStyle = "
-        <script type=\"text/x-mathjax-config\">
-          MathJax.Hub.Config({
-            messageStyle: 'none',
-            tex2jax: {inlineMath: #{inline},
-                      displayMath: #{block},
-                      processEnvironments: #{mathJaxProcessEnvironments},
-                      processEscapes: true}
-          });
-        </script>
-        <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
-        "
-      else
-        # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
-        mathStyle = "
-        <script type=\"text/x-mathjax-config\">
-          MathJax.Hub.Config({
-            messageStyle: 'none',
-            tex2jax: {inlineMath: #{inline},
-                      displayMath: #{block},
-                      processEnvironments: #{mathJaxProcessEnvironments},
-                      processEscapes: true}
-          });
-        </script>
-        <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
-        "
-    else
-      mathStyle = ''
-
-    # presentation
-    if slideConfigs.length
-      htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, useRelativeImagePath)
-      if offline
-        presentationScript = "
-        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/lib/js/head.min.js')}'></script>
-        <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
-      else
-        presentationScript = "
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script>"
-
-      presentationConfig = yamlConfig['presentation'] or {}
-      dependencies = presentationConfig.dependencies or []
-      if presentationConfig.enableSpeakerNotes
+      if mathRenderingOption == 'KaTeX'
         if offline
-          dependencies.push {src: path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js'), async: true}
+          mathStyle = "<link rel=\"stylesheet\"
+                href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
         else
-          dependencies.push {src: 'revealjs_deps/notes.js', async: true} # TODO: copy notes.js file to corresponding folder
-      presentationConfig.dependencies = dependencies
+          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
+      else if mathRenderingOption == 'MathJax'
+        inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
+        block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
+        mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
+        if offline
+          mathStyle = "
+          <script type=\"text/x-mathjax-config\">
+            MathJax.Hub.Config({
+              messageStyle: 'none',
+              tex2jax: {inlineMath: #{inline},
+                        displayMath: #{block},
+                        processEnvironments: #{mathJaxProcessEnvironments},
+                        processEscapes: true}
+            });
+          </script>
+          <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?config=TeX-AMS_CHTML')}\"></script>
+          "
+        else
+          # inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+          mathStyle = "
+          <script type=\"text/x-mathjax-config\">
+            MathJax.Hub.Config({
+              messageStyle: 'none',
+              tex2jax: {inlineMath: #{inline},
+                        displayMath: #{block},
+                        processEnvironments: #{mathJaxProcessEnvironments},
+                        processEscapes: true}
+            });
+          </script>
+          <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
+          "
+      else
+        mathStyle = ''
 
-      #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
-      presentationStyle = """
+      # presentation
+      if slideConfigs.length
+        htmlContent = @parseSlidesForExport(htmlContent, slideConfigs, useRelativeImagePath)
+        if offline
+          presentationScript = "
+          <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/lib/js/head.min.js')}'></script>
+          <script src='file:///#{path.resolve(__dirname, '../dependencies/reveal/js/reveal.js')}'></script>"
+        else
+          presentationScript = "
+          <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js'></script>
+          <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js'></script>"
 
-      <style>
-      #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
+        presentationConfig = yamlConfig['presentation'] or {}
+        dependencies = presentationConfig.dependencies or []
+        if presentationConfig.enableSpeakerNotes
+          if offline
+            dependencies.push {src: path.resolve(__dirname, '../dependencies/reveal/plugin/notes/notes.js'), async: true}
+          else
+            dependencies.push {src: 'revealjs_deps/notes.js', async: true} # TODO: copy notes.js file to corresponding folder
+        presentationConfig.dependencies = dependencies
 
-      #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
-      </style>
+        #       <link rel=\"stylesheet\" href='file:///#{path.resolve(__dirname, '../dependencies/reveal/reveal.css')}'>
+        presentationStyle = """
+
+        <style>
+        #{fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/reveal.css'))}
+
+        #{if isForPrint then fs.readFileSync(path.resolve(__dirname, '../dependencies/reveal/pdf.css')) else ''}
+        </style>
+        """
+        presentationInitScript = """
+        <script>
+          Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, presentationConfig))})
+        </script>
+        """
+      else
+        presentationScript = ''
+        presentationStyle = ''
+        presentationInitScript = ''
+
+      # phantomjs
+      phantomjsClass = ""
+      if phantomjsType
+        if phantomjsType == '.pdf'
+          phantomjsClass = 'phantomjs-pdf'
+        else if phantomjsType == '.png' or phantomjsType == '.jpeg'
+          phantomjsClass = 'phantomjs-image'
+
+      title = @getFileName()
+      title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
+
+      previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+      if isForPrint and atom.config.get('markdown-preview-enhanced.pdfUseGithub')
+        previewTheme = 'mpe-github-syntax'
+
+      loadPreviewTheme previewTheme, false, (error, css)=>
+        return callback() if error
+        return callback """
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>#{title}</title>
+        <meta charset=\"utf-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+        #{presentationStyle}
+
+        <style>
+        #{css}
+        </style>
+
+        #{mathStyle}
+
+        #{presentationScript}
+      </head>
+      <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
+          #{if @presentationMode then 'data-presentation-mode' else ''}>
+
+      #{htmlContent}
+
+      </body>
+      #{presentationInitScript}
+    </html>
       """
-      presentationInitScript = """
-      <script>
-        Reveal.initialize(#{JSON.stringify(Object.assign({margin: 0.1}, presentationConfig))})
-      </script>
-      """
-    else
-      presentationScript = ''
-      presentationStyle = ''
-      presentationInitScript = ''
-
-    # phantomjs
-    phantomjsClass = ""
-    if phantomjsType
-      if phantomjsType == '.pdf'
-        phantomjsClass = 'phantomjs-pdf'
-      else if phantomjsType == '.png' or phantomjsType == '.jpeg'
-        phantomjsClass = 'phantomjs-image'
-
-    title = @getFileName()
-    title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
-
-    previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-    if isForPrint and atom.config.get('markdown-preview-enhanced.pdfUseGithub')
-      previewTheme = 'mpe-github-syntax'
-
-    loadPreviewTheme previewTheme, false, (error, css)=>
-      return callback() if error
-      return callback """
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>#{title}</title>
-      <meta charset=\"utf-8\">
-      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-
-      #{presentationStyle}
-
-      <style>
-      #{css}
-      </style>
-
-      #{mathStyle}
-
-      #{presentationScript}
-    </head>
-    <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
-        #{if @presentationMode then 'data-presentation-mode' else ''}>
-
-    #{htmlContent}
-
-    </body>
-    #{presentationInitScript}
-  </html>
-    """
 
   # api doc [printToPDF] function
   # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
@@ -1641,204 +1640,204 @@ module.exports = config || {}
 
   ## EBOOK
   generateEbook: (dest)->
-    {html, yamlConfig} = @parseMD(@formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @fileDirectoryPath, @projectDirectoryPath, hideFrontMatter:true})
-    html = @formatStringAfterParsing(html)
+    @parseMD @formatStringBeforeParsing(@editor.getText()), {isForEbook: true, @fileDirectoryPath, @projectDirectoryPath, hideFrontMatter:true}, ({html, yamlConfig})=>
+      html = @formatStringAfterParsing(html)
 
-    ebookConfig = null
-    if yamlConfig
-      ebookConfig = yamlConfig['ebook']
+      ebookConfig = null
+      if yamlConfig
+        ebookConfig = yamlConfig['ebook']
 
-    if !ebookConfig
-      return atom.notifications.addError('ebook config not found', detail: 'please insert ebook front-matter to your markdown file')
-    else
-      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+      if !ebookConfig
+        return atom.notifications.addError('ebook config not found', detail: 'please insert ebook front-matter to your markdown file')
+      else
+        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-      if ebookConfig.cover # change cover to absolute path if necessary
-        cover = ebookConfig.cover
-        if cover.startsWith('./') or cover.startsWith('../')
-          cover = path.resolve(@fileDirectoryPath, cover)
-          ebookConfig.cover = cover
-        else if cover.startsWith('/')
-          cover = path.resolve(@projectDirectoryPath, '.'+cover)
-          ebookConfig.cover = cover
+        if ebookConfig.cover # change cover to absolute path if necessary
+          cover = ebookConfig.cover
+          if cover.startsWith('./') or cover.startsWith('../')
+            cover = path.resolve(@fileDirectoryPath, cover)
+            ebookConfig.cover = cover
+          else if cover.startsWith('/')
+            cover = path.resolve(@projectDirectoryPath, '.'+cover)
+            ebookConfig.cover = cover
 
-      div = document.createElement('div')
-      div.innerHTML = html
+        div = document.createElement('div')
+        div.innerHTML = html
 
-      structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
-      headingOffset = 0
+        structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
+        headingOffset = 0
 
-      # load the last ul, analyze toc links.
-      getStructure = (ul, level)->
-        for li in ul.children
-          a = li.children[0]?.getElementsByTagName('a')?[0]
-          continue if not a
-          filePath = a.getAttribute('href') # assume markdown file path
-          heading = a.innerHTML
-          id = 'ebook-heading-id-'+headingOffset
+        # load the last ul, analyze toc links.
+        getStructure = (ul, level)->
+          for li in ul.children
+            a = li.children[0]?.getElementsByTagName('a')?[0]
+            continue if not a
+            filePath = a.getAttribute('href') # assume markdown file path
+            heading = a.innerHTML
+            id = 'ebook-heading-id-'+headingOffset
 
-          structure.push {level: level, filePath: filePath, heading: heading, id: id}
-          headingOffset += 1
+            structure.push {level: level, filePath: filePath, heading: heading, id: id}
+            headingOffset += 1
 
-          a.href = '#'+id # change id
+            a.href = '#'+id # change id
 
-          if li.childElementCount > 1
-            getStructure(li.children[1], level+1)
+            if li.childElementCount > 1
+              getStructure(li.children[1], level+1)
 
-      children = div.children
-      i = children.length - 1
-      while i >= 0
-        if children[i].tagName == 'UL' # find table of contents
-          getStructure(children[i], 0)
-          break
-        i -= 1
+        children = div.children
+        i = children.length - 1
+        while i >= 0
+          if children[i].tagName == 'UL' # find table of contents
+            getStructure(children[i], 0)
+            break
+          i -= 1
 
-      outputHTML = div.innerHTML
-
-      # append files according to structure
-      for obj in structure
-        heading = obj.heading
-        id = obj.id
-        level = obj.level
-        filePath = obj.filePath
-
-        if filePath.startsWith('file:///')
-          filePath = filePath.slice(8)
-
-        try
-          text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-          {html} = @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, fileDirectoryPath: path.dirname(filePath)}
-          html = @formatStringAfterParsing(html)
-
-          # add to TOC
-          div.innerHTML = html
-          if div.childElementCount
-            div.children[0].id = id
-            div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
-            div.children[0].setAttribute('heading', heading)
-
-          outputHTML += div.innerHTML
-        catch error
-          atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
-          return
-
-      # render viz
-      div.innerHTML = outputHTML
-      @renderViz(div)
-
-      # download images for .epub and .mobi
-      imagesToDownload = []
-      if path.extname(dest) in ['.epub', '.mobi']
-        for img in div.getElementsByTagName('img')
-          src = img.getAttribute('src')
-          if src.startsWith('http://') or src.startsWith('https://')
-            imagesToDownload.push(img)
-
-      request = require('request')
-      async = require('async')
-
-      if imagesToDownload.length
-        atom.notifications.addInfo('downloading images...')
-
-      asyncFunctions = imagesToDownload.map (img)=>
-        (callback)=>
-          httpSrc = img.getAttribute('src')
-          savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
-          savePath =  path.resolve(@fileDirectoryPath, savePath)
-
-          stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
-
-          stream.on 'finish', ()->
-            img.setAttribute 'src', 'file:///'+savePath
-            callback(null, savePath)
-
-
-      async.parallel asyncFunctions, (error, downloadedImagePaths=[])=>
-        # convert image to base64 if output html
-        if path.extname(dest) == '.html'
-          # check cover
-          if ebookConfig.cover
-            cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
-            coverImg = document.createElement('img')
-            coverImg.setAttribute('src', cover)
-            div.insertBefore(coverImg, div.firstChild)
-
-          imageElements = div.getElementsByTagName('img')
-          for img in imageElements
-            src = img.getAttribute('src')
-            if src.startsWith('file:///')
-              src = src.slice(8)
-              imageType = path.extname(src).slice(1)
-              try
-                base64 = new Buffer(fs.readFileSync(src)).toString('base64')
-
-                img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
-              catch error
-                throw 'Image file not found: ' + src
-
-        # retrieve html
         outputHTML = div.innerHTML
 
-        title = ebookConfig.title or 'no title'
+        # append files according to structure
+        for obj in structure
+          heading = obj.heading
+          id = obj.id
+          level = obj.level
+          filePath = obj.filePath
 
-        mathStyle = ''
-        if outputHTML.indexOf('class="katex"') > 0
-          if path.extname(dest) == '.html' and ebookConfig.html?.cdn
-            mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
-          else
-            mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+          if filePath.startsWith('file:///')
+            filePath = filePath.slice(8)
 
-        outputHTML = """
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>#{title}</title>
-        <meta charset=\"utf-8\">
-        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+          try
+            text = fs.readFileSync(filePath, {encoding: 'utf-8'})
+            @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, fileDirectoryPath: path.dirname(filePath)}, ({html})=>
+              html = @formatStringAfterParsing(html)
 
-        <style>
-        #{getMarkdownPreviewCSS()}
-        </style>
+              # add to TOC
+              div.innerHTML = html
+              if div.childElementCount
+                div.children[0].id = id
+                div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
+                div.children[0].setAttribute('heading', heading)
 
-        #{mathStyle}
-      </head>
-      <body class=\"markdown-preview-enhanced\">
-      #{outputHTML}
-      </body>
-    </html>
-        """
+              outputHTML += div.innerHTML
+          catch error
+            atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
+            return
 
-        fileName = path.basename(dest)
+        # render viz
+        div.innerHTML = outputHTML
+        @renderViz(div)
 
-        # save as html
-        if path.extname(dest) == '.html'
-          fs.writeFile dest, outputHTML, (err)=>
-            throw err if err
-            atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
-          return
+        # download images for .epub and .mobi
+        imagesToDownload = []
+        if path.extname(dest) in ['.epub', '.mobi']
+          for img in div.getElementsByTagName('img')
+            src = img.getAttribute('src')
+            if src.startsWith('http://') or src.startsWith('https://')
+              imagesToDownload.push(img)
 
-        # this func will be called later
-        deleteDownloadedImages = ()->
-          downloadedImagePaths.forEach (imagePath)->
-            fs.unlink(imagePath)
+        request = require('request')
+        async = require('async')
 
-        # use ebook-convert to generate ePub, mobi, PDF.
-        temp.open
-          prefix: 'markdown-preview-enhanced',
-          suffix: '.html', (err, info)=>
-            if err
-              deleteDownloadedImages()
-              throw err
+        if imagesToDownload.length
+          atom.notifications.addInfo('downloading images...')
 
-            fs.write info.fd, outputHTML, (err)=>
+        asyncFunctions = imagesToDownload.map (img)=>
+          (callback)=>
+            httpSrc = img.getAttribute('src')
+            savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
+            savePath =  path.resolve(@fileDirectoryPath, savePath)
+
+            stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
+
+            stream.on 'finish', ()->
+              img.setAttribute 'src', 'file:///'+savePath
+              callback(null, savePath)
+
+
+        async.parallel asyncFunctions, (error, downloadedImagePaths=[])=>
+          # convert image to base64 if output html
+          if path.extname(dest) == '.html'
+            # check cover
+            if ebookConfig.cover
+              cover = if ebookConfig.cover[0] == '/' then 'file:///' + ebookConfig.cover else ebookConfig.cover
+              coverImg = document.createElement('img')
+              coverImg.setAttribute('src', cover)
+              div.insertBefore(coverImg, div.firstChild)
+
+            imageElements = div.getElementsByTagName('img')
+            for img in imageElements
+              src = img.getAttribute('src')
+              if src.startsWith('file:///')
+                src = src.slice(8)
+                imageType = path.extname(src).slice(1)
+                try
+                  base64 = new Buffer(fs.readFileSync(src)).toString('base64')
+
+                  img.setAttribute('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
+                catch error
+                  throw 'Image file not found: ' + src
+
+          # retrieve html
+          outputHTML = div.innerHTML
+
+          title = ebookConfig.title or 'no title'
+
+          mathStyle = ''
+          if outputHTML.indexOf('class="katex"') > 0
+            if path.extname(dest) == '.html' and ebookConfig.html?.cdn
+              mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
+            else
+              mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+
+          outputHTML = """
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>#{title}</title>
+          <meta charset=\"utf-8\">
+          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+          <style>
+          #{getMarkdownPreviewCSS()}
+          </style>
+
+          #{mathStyle}
+        </head>
+        <body class=\"markdown-preview-enhanced\">
+        #{outputHTML}
+        </body>
+      </html>
+          """
+
+          fileName = path.basename(dest)
+
+          # save as html
+          if path.extname(dest) == '.html'
+            fs.writeFile dest, outputHTML, (err)=>
+              throw err if err
+              atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
+            return
+
+          # this func will be called later
+          deleteDownloadedImages = ()->
+            downloadedImagePaths.forEach (imagePath)->
+              fs.unlink(imagePath)
+
+          # use ebook-convert to generate ePub, mobi, PDF.
+          temp.open
+            prefix: 'markdown-preview-enhanced',
+            suffix: '.html', (err, info)=>
               if err
                 deleteDownloadedImages()
                 throw err
 
-              ebookConvert info.path, dest, ebookConfig, (err)=>
-                deleteDownloadedImages()
-                throw err if err
-                atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
+              fs.write info.fd, outputHTML, (err)=>
+                if err
+                  deleteDownloadedImages()
+                  throw err
+
+                ebookConvert info.path, dest, ebookConfig, (err)=>
+                  deleteDownloadedImages()
+                  throw err if err
+                  atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
 
   pandocDocumentExport: ->
     {data} = @processFrontMatter(@editor.getText())

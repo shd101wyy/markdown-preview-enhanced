@@ -835,9 +835,9 @@ option = {
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
 }
-
+callback(data) 
 ###
-parseMD = (inputString, option={})->
+parseMD = (inputString, option={}, callback)->
   {markdownPreview} = option
 
   DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
@@ -943,10 +943,10 @@ parseMD = (inputString, option={})->
   html = md.render(inputString)
 
   if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
-    return parseMD(markdownPreview.editor.getText(), option)
+    return parseMD(markdownPreview.editor.getText(), option, callback)
 
   html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
-  return {html: frontMatterTable+html, slideConfigs, yamlConfig}
+  return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
 module.exports = {
   parseMD,
