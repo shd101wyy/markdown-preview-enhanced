@@ -14,6 +14,7 @@ toc = require('./toc')
 customSubjects = require './custom-comment'
 fileImport = require('./file-import.coffee')
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
+{pandocRender} = require('./pandoc-convert')
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -835,7 +836,7 @@ option = {
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
 }
-callback(data) 
+callback(data)
 ###
 parseMD = (inputString, option={}, callback)->
   {markdownPreview} = option
@@ -939,14 +940,52 @@ parseMD = (inputString, option={}, callback)->
       return '<div class="new-slide"></div>'
     return ''
 
-  # parse markdown
-  html = md.render(inputString)
+  # check whether to use pandoc parser
+  if markdownPreview
+    if not markdownPreview.usePandocParser and yamlConfig?.pandoc
+      console.log('enable pandoc parser')
+      markdownPreview.usePandocParser = true
+    else if markdownPreview.usePandocParser and not yamlConfig?.pandoc
+      console.log('disable pandoc parser')
+      markdownPreview.usePandocParser = false
 
-  if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
-    return parseMD(markdownPreview.editor.getText(), option, callback)
+  finalize = (html)->
+    if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
+      return parseMD(markdownPreview.editor.getText(), option, callback)
 
-  html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
-  return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
+    html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
+    return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
+
+  if markdownPreview?.usePandocParser # pandoc parser
+    args = yamlConfig.pandoc
+    args = [] if not (args instanceof Array)
+    if mathRenderingOption == 'KaTeX' or mathRenderingOption == 'MathJax'
+      args.push('--mathjax')
+    if yamlConfig.bibliography or yamlConfig.references
+      args.push('--filter', 'pandoc-citeproc')
+
+    inputString = inputString.replace(/(^|\n)\`\`\`yaml\s*([\w\W]+?)\n\`\`\`\s*/, '---\n$2\n---\n')
+    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
+      html = "<pre>#{error}</pre>" if error
+      # format blocks
+      $ = cheerio.load(html)
+      $('pre').each (i, preElement)->
+        # code block
+        if preElement.children[0]?.name == 'code'
+          $preElement = $(preElement)
+          codeBlock = $(preElement).children().first()
+          classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
+          lang = classes[0]
+          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
+            lang = $preElement.attr('class')
+          codeBlock.attr('class', 'language-' + lang)
+
+
+      return finalize($.html())
+  else # remarkable parser
+    # parse markdown
+    html = md.render(inputString)
+    return finalize(html)
 
 module.exports = {
   parseMD,

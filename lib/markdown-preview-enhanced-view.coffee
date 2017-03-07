@@ -14,7 +14,7 @@ cheerio = null
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
-pandocConvert = require './pandoc-convert'
+{pandocConvert} = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
@@ -41,6 +41,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollSync = true
     @scrollDuration = null
     @textChanged = false
+    @usePandocParser = false
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption

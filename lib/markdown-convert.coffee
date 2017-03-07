@@ -1,12 +1,6 @@
 path = require 'path'
 fs = require 'fs'
 {Directory} = require 'atom'
-{execFile} = require 'child_process'
-async = require 'async'
-Viz = require '../dependencies/viz/viz.js'
-plantumlAPI = require './puml'
-codeChunkAPI = require './code-chunk'
-{svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 processGraphs = require './process-graphs'
 encrypt = require './encrypt'
 CACHE = require './cache'
@@ -72,12 +66,15 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImageP
 
   text
 
-markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={})->
+# callback(error, markdown)
+markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={}, callback)->
   if !config.path
-    return atom.notifications.addError('{path} has to be specified')
+    atom.notifications.addError('{path} has to be specified')
+    return callback(true)
 
   if !config.image_dir
-    return atom.notifications.addError('{image_dir} has to be specified')
+    atom.notifications.addError('{image_dir} has to be specified')
+    return callback(true)
 
   # dest
   if config.path[0] == '/'
@@ -112,8 +109,12 @@ markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={})->
     # mermaid / viz / wavedrom graph
     processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: encrypt(outputFilePath), useAbsoluteImagePath}, (text, imagePaths=[])->
       fs.writeFile outputFilePath, text, (err)->
-        return atom.notifications.addError('failed to generate markdown') if err
+        if error
+          atom.notifications.addError('failed to generate markdown')
+          return callback(true)
+
         atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
+        return callback(false)
 
 
 module.exports = markdownConvert

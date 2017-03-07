@@ -180,6 +180,20 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 
   text
 
+# callback(error, html)
+pandocRender = (text, {args, projectDirectoryPath, fileDirectoryPath}, callback)->
+  args = args or []
+  args = ['-t', 'html'].concat(args)
+
+  # change working directory
+  cwd = process.cwd()
+  process.chdir(fileDirectoryPath)
+
+  program = execFile 'pandoc', args, (error, stdout, stderr)->
+    process.chdir(cwd)
+    return callback(error or stderr, stdout)
+  program.stdin.end(text)
+
 ###
 @param {String} text: markdown string
 @param {Object} all properties are required!
@@ -188,7 +202,8 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
   @param {String} sourceFilePath
 callback(err, outputFilePath)
 ###
-pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}, config={}, callback=null)->
+pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath, deleteImages}, config={}, callback=null)->
+  deleteImages = deleteImages or true
   config = loadOutputYAML fileDirectoryPath, config
   args = []
 
@@ -241,7 +256,7 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}
   text = matter.stringify(text, config)
 
   # import external files
-  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
+  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: false}).outputString
 
   # change link path to relative path
   text = processPaths text, fileDirectoryPath, projectDirectoryPath
@@ -265,12 +280,16 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}
     directory = new Directory(path.dirname(outputFilePath))
     directory.create().then (flag)->
       program = execFile 'pandoc', args, (err)->
-        # remove images
-        imagePaths.forEach (p)->
-          fs.unlink(p)
+        if deleteImages
+          # remove images
+          imagePaths.forEach (p)->
+            fs.unlink(p)
 
         process.chdir(cwd) # change cwd back
         return callback(err, outputFilePath) if callback
       program.stdin.end(text)
 
-module.exports = pandocConvert
+module.exports = {
+  pandocConvert,
+  pandocRender
+}

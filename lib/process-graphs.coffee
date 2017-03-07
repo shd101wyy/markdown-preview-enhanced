@@ -3,7 +3,7 @@ fs = require 'fs'
 {Directory} = require 'atom'
 {execFile} = require 'child_process'
 async = require 'async'
-Viz = require '../dependencies/viz/viz.js'
+Viz = null
 plantumlAPI = require './puml'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
@@ -117,6 +117,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
               options.engine = c.trim() if c?.trim() in ['circo', 'dot', 'fdp', 'neato', 'osage', 'twopi']
               return ''
 
+            Viz ?= require '../dependencies/viz/viz.js'
             div.innerHTML = Viz(content, options)
 
             dest = path.resolve(imageDirectoryPath, imageFilePrefix + imgCount + '.png')
