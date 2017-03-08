@@ -68,11 +68,13 @@ int main() {
 <img src="./1.pic.jpg" height=400>
 
 ---
+
 Test image paths   
 ![markdown-icon](/markdown.png)  
 ![markdown-icon](../markdown.png)
 
 ---
+
 ```@mermaid
 graph TD;
     A-->B;
@@ -271,5 +273,5 @@ see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-edi
 - Now support **2-way scroll sync!**
 
 [[wikilink]]
-  
+
 [Test iTunes Link](itms://itunes.apple.com/us/app/apple-store/id375380948?mt=8)

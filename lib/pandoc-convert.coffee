@@ -180,6 +180,49 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 
   text
 
+# callback(error, html)
+pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
+  args = args or []
+  args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
+
+  ###
+  convert code chunk
+  ```{python id:"haha"}
+  to
+  ```{.python data-args="{id: haha}"}
+  ###
+
+  outputString = ""
+  lines = text.split('\n')
+  i = 0
+  while i < lines.length
+    line = lines[i]
+
+    codeChunkMatch = line.match /^\`\`\`\{(\w+)\s*(.*)\}\s*/
+    if codeChunkMatch # code chunk
+      lang = codeChunkMatch[1].trim()
+      dataArgs = codeChunkMatch[2].trim().replace(/('|")/g, '\\$1') # escape
+      dataCodeChunk = "{#{lang} #{dataArgs}}"
+
+      outputString += "```{.#{lang} data-code-chunk=\"#{dataCodeChunk}\"}\n"
+      i += 1
+      continue
+
+    outputString += line + '\n'
+    i += 1
+
+  # console.log(outputString)
+
+  # change working directory
+  cwd = process.cwd()
+  process.chdir(fileDirectoryPath)
+
+  pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
+  program = execFile pandocPath, args, (error, stdout, stderr)->
+    process.chdir(cwd)
+    return callback(error or stderr, stdout)
+  program.stdin.end(outputString)
+
 ###
 @param {String} text: markdown string
 @param {Object} all properties are required!
@@ -188,7 +231,8 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
   @param {String} sourceFilePath
 callback(err, outputFilePath)
 ###
-pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}, config={}, callback=null)->
+pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath, deleteImages}, config={}, callback=null)->
+  deleteImages = deleteImages or true
   config = loadOutputYAML fileDirectoryPath, config
   args = []
 
@@ -241,7 +285,7 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}
   text = matter.stringify(text, config)
 
   # import external files
-  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: true}).outputString
+  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: false}).outputString
 
   # change link path to relative path
   text = processPaths text, fileDirectoryPath, projectDirectoryPath
@@ -264,13 +308,18 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath}
     # therefore I will create directory first.
     directory = new Directory(path.dirname(outputFilePath))
     directory.create().then (flag)->
-      program = execFile 'pandoc', args, (err)->
-        # remove images
-        imagePaths.forEach (p)->
-          fs.unlink(p)
+      pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
+      program = execFile pandocPath, args, (err)->
+        if deleteImages
+          # remove images
+          imagePaths.forEach (p)->
+            fs.unlink(p)
 
         process.chdir(cwd) # change cwd back
         return callback(err, outputFilePath) if callback
       program.stdin.end(text)
 
-module.exports = pandocConvert
+module.exports = {
+  pandocConvert,
+  pandocRender
+}

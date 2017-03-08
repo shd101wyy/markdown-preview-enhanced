@@ -7,12 +7,8 @@ Markdown Preview Enhanced
 [Wiki](https://github.com/shd101wyy/markdown-preview-enhanced/wiki) (尚未完成)  
 
 ---
-新特性! （但愿没 bug）  
-版本 `0.10.2` 支持更方便的更换 preview 的主题。所以现在你无需靠更改 atom 的主题来更改 preview 的主题了。  
-设置 `Use Github.com style` 以及 `Use Github.com syntax theme` 已经被移除。如果你想要使用 `Github.com` 主题，请在主题列表中选择 `mpe-github-syntax`。  
-当你安装完一个 `atom syntax theme` 后，请重启来更新主题列表。  
 
-![theme](https://cloud.githubusercontent.com/assets/1908863/23577709/f466cb46-008b-11e7-8b36-acdc6a165285.gif)
+版本 `0.10.8` 支持 `pandoc parser` 了，请查看 [这个文档](./advanced-export.md)。
 
 ---
 

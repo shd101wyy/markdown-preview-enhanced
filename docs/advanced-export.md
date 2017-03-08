@@ -1,10 +1,34 @@
-# Pandoc document export (beta)
+# Pandoc (beta)
 After version `0.8.4`, **Markdown Preview Enhanced** supports `pandoc document export` feature that works similarly to `RStudio Markdown`.   
 To use this feature, you need to have [pandoc](http://pandoc.org/) installed.   
 Installation instruction of pandoc can be found [here](http://pandoc.org/installing.html).  
 You can use `pandoc document export` by right clicking at the preview, then you will see it on the context menu.  
 
 ---
+
+## Pandoc Parser
+By default **Markdown Preview Enhanced** uses [remarkable](https://github.com/jonschlinkert/remarkable) to parse markdown.  
+You can also set it to `pandoc` parser from package settings.    
+
+![Screen Shot 2017-03-07 at 10.05.25 PM](http://i.imgur.com/NdCJBgR.png)  
+
+You can also set pandoc arguments for individual files by writing front-matter   
+```markdown
+---
+pandoc_args: ['--toc', '--toc-depth=2']
+---
+```
+
+Please note that `--filter=pandoc-citeproc` will be automatically added if there is `references` or `bibliography` in your front-matter.    
+
+**Attention**: This feature is still experimental. Feel free to post issues or suggestions.    
+**Known Issues & Limitations**:  
+1. `Live Update` will be disabled if `Use Pandoc Parser` is checked. The preview will only be updated when you save the file.  
+2. `Presentation` will not be working with `pandoc parser`.  
+3. `Scroll sync` is less accurate and has bugs sometimes.  
+4. `ebook` export has problem.  
+5. `Code Chunk` is sometimes buggy.  
+
 ## Front-Matter   
 `pandoc document export` requires writing `front-matter`.  
 more information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).

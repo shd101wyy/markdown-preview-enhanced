@@ -14,6 +14,7 @@ toc = require('./toc')
 customSubjects = require './custom-comment'
 fileImport = require('./file-import.coffee')
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
+{pandocRender} = require('./pandoc-convert')
 
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
@@ -21,6 +22,7 @@ enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLink
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
+usePandocParser = atom.config.get('markdown-preview-enhanced.usePandocParser')
 
 TAGS_TO_REPLACE = {
     '&': '&amp;',
@@ -118,6 +120,9 @@ atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
 
 atom.config.observe 'markdown-preview-enhanced.useStandardCodeFencingForGraphs', (flag)->
   useStandardCodeFencingForGraphs = flag
+
+atom.config.observe 'markdown-preview-enhanced.usePandocParser', (flag)->
+  usePandocParser = flag
 
 #################################################
 ## Remarkable
@@ -721,16 +726,15 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
   match = r.exec(inputString)
 
   if match
-    if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
-      yamlStr = match[0]
-      data = matter(yamlStr).data
+    yamlStr = match[0]
+    data = matter(yamlStr).data
 
+    if usePandocParser # use pandoc parser, so don't change inputString
+      return {content: inputString, table: '', data}
+    else if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
       content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
       return {content, table: '', data}
     else if frontMatterRenderingOption[0] == 't' # table
-      yamlStr = match[0]
-      data = matter(yamlStr).data
-
       content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
 
       # to table
@@ -741,9 +745,6 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
 
       return {content, table, data}
     else # if frontMatterRenderingOption[0] == 'c' # code block
-      yamlStr = match[0]
-      data = matter(yamlStr).data
-
       content = '```yaml\n' + match[1] + '\n```\n' + inputString.slice(yamlStr.length)
 
       return {content, table: '', data}
@@ -820,6 +821,46 @@ updateTOC = (markdownPreview, tocConfigs)->
   markdownPreview.tocConfigs = tocConfigs
   return tocNeedUpdate
 
+# Insert anchors for scroll sync.
+# this function should only be called when usePandocParser.
+insertAnchors = (text)->
+  # anchor looks like this <p data-line="23" class="sync-line" style="margin:0;"></p>
+  createAnchor = (lineNo)->
+    "<p data-line=\"#{lineNo}\" class=\"sync-line\" style=\"margin:0;\"></p>\n"
+
+  outputString = ""
+  lines = text.split('\n')
+  i = 0
+  while i < lines.length
+    line = lines[i]
+
+    ###
+    add anchors when it is
+    1. heading
+    2. image
+    3. code block | chunk
+    4. @import
+    5. comment
+    ###
+    if line.match /^(\#|\!\[|```(\w|{)|@import|\<!--)/
+      outputString += createAnchor(i)
+
+    if line.match /^```(\w|{)/ # begin of code block
+      outputString += line + '\n'
+      i += 1
+      while i < lines.length
+        line = lines[i]
+        if line.match /^```\s*/ # end of code block
+          break
+        else
+          outputString += line + '\n'
+          i += 1
+
+    outputString += line + '\n'
+    i += 1
+    
+  outputString
+
 ###
 # parse markdown content to html
 
@@ -835,9 +876,9 @@ option = {
                         the directory path of the markdown file.
   projectDirectoryPath: string, required
 }
-
+callback(data)
 ###
-parseMD = (inputString, option={})->
+parseMD = (inputString, option={}, callback)->
   {markdownPreview} = option
 
   DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
@@ -883,6 +924,11 @@ parseMD = (inputString, option={})->
 
   # check front-matter
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
+  yamlConfig = yamlConfig or {}
+
+  # insert anchors
+  if usePandocParser and option.isForPreview
+    inputString = insertAnchors(inputString)
 
   # check document imports
   {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
@@ -939,14 +985,50 @@ parseMD = (inputString, option={})->
       return '<div class="new-slide"></div>'
     return ''
 
-  # parse markdown
-  html = md.render(inputString)
+  finalize = (html)->
+    if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
+      return parseMD(markdownPreview.editor.getText(), option, callback)
 
-  if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
-    return parseMD(markdownPreview.editor.getText(), option)
+    html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
+    return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
-  html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
-  return {html: frontMatterTable+html, slideConfigs, yamlConfig}
+  if usePandocParser # pandoc parser
+    args = yamlConfig.pandoc_args or []
+    args = [] if not (args instanceof Array)
+    if yamlConfig.bibliography or yamlConfig.references
+      args.push('--filter', 'pandoc-citeproc')
+
+    args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
+
+    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
+      html = "<pre>#{error}</pre>" if error
+      # console.log(html)
+      # format blocks
+      $ = cheerio.load(html)
+      $('pre').each (i, preElement)->
+        # code block
+        if preElement.children[0]?.name == 'code'
+          $preElement = $(preElement)
+          codeBlock = $(preElement).children().first()
+          classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
+          lang = classes[0]
+
+          # graphs
+          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
+            lang = $preElement.attr('class')
+          codeBlock.attr('class', 'language-' + lang)
+
+          # check code chunk
+          dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
+          if dataCodeChunk
+            codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
+
+      return finalize($.html())
+  else # remarkable parser
+    # parse markdown
+    html = md.render(inputString)
+    # console.log(html)
+    return finalize(html)
 
 module.exports = {
   parseMD,
