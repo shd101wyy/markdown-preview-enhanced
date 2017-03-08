@@ -52,12 +52,18 @@ module.exports =
       default: false,
       description: "Enable this option will render markdown by pandoc instead of remarkable.js. Scroll sync and live update will be disabled automatically if this option is enabled."
       order: 16
+    pandocPath:
+      title: "Pandoc Options: Path"
+      type: "string"
+      default: "pandoc"
+      description: "Please specify the correct path to your pandoc executable"
+      order: 17
     pandocArguments:
-      title: "Pandoc Commandline Arguments"
+      title: "Pandoc Options: Commandline Arguments"
       type: "string",
       default: "",
       description: "Comma separated pandoc arguments e.g. `--smart, --filter=/bin/exe`. Please use long argument names."
-      order: 17
+      order: 18
     mathRenderingOption:
       type: "string"
       default: "KaTeX"

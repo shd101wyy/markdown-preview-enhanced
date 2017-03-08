@@ -821,6 +821,33 @@ updateTOC = (markdownPreview, tocConfigs)->
   markdownPreview.tocConfigs = tocConfigs
   return tocNeedUpdate
 
+# Insert anchors for scroll sync.
+# this function should only be called when usePandocParser.
+insertAnchors = (text)->
+  # anchor looks like this <p data-line="23" class="sync-line" style="margin:0;"></p>
+  createAnchor = (lineNo)->
+    "<p data-line=\"#{lineNo}\" class=\"sync-line\" style=\"margin:0;\"></p>\n"
+
+  outputString = ""
+  lines = text.split('\n')
+  i = 0
+  while i < lines.length
+    line = lines[i]
+
+    ###
+    add anchors when it is
+    1. heading
+    2. image
+    3. code block | chunk
+    4. @import
+    ###
+    if line.match /^(\#|\!\[|```(\w|{)|@import)/
+      outputString += createAnchor(i)
+
+    outputString += line + '\n'
+    i += 1
+  outputString
+
 ###
 # parse markdown content to html
 
@@ -885,6 +912,10 @@ parseMD = (inputString, option={}, callback)->
   # check front-matter
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
   yamlConfig = yamlConfig or {}
+
+  # insert anchors
+  if usePandocParser and option.isForPreview
+    inputString = insertAnchors(inputString)
 
   # check document imports
   {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
@@ -956,7 +987,7 @@ parseMD = (inputString, option={}, callback)->
 
     args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
 
-    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath, insertAnchors: option.isForPreview}, (error, html)->
+    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
       html = "<pre>#{error}</pre>" if error
       # console.log(html)
       # format blocks

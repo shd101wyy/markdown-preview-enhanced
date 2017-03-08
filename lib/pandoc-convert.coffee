@@ -181,11 +181,10 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
   text
 
 # callback(error, html)
-pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath, insertAnchors}, callback)->
+pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
   args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
 
-  # anchor looks like this <p data-line="23" class="sync-line" style="margin:0;"></p>
   ###
   convert code chunk
   ```{python id:"haha"}
@@ -218,7 +217,8 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath, insertA
   cwd = process.cwd()
   process.chdir(fileDirectoryPath)
 
-  program = execFile 'pandoc', args, (error, stdout, stderr)->
+  pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
+  program = execFile pandocPath, args, (error, stdout, stderr)->
     process.chdir(cwd)
     return callback(error or stderr, stdout)
   program.stdin.end(outputString)
@@ -308,7 +308,8 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath,
     # therefore I will create directory first.
     directory = new Directory(path.dirname(outputFilePath))
     directory.create().then (flag)->
-      program = execFile 'pandoc', args, (err)->
+      pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
+      program = execFile pandocPath, args, (err)->
         if deleteImages
           # remove images
           imagePaths.forEach (p)->
