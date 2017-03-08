@@ -845,8 +845,20 @@ insertAnchors = (text)->
     if line.match /^(\#|\!\[|```(\w|{)|@import|\<!--)/
       outputString += createAnchor(i)
 
+    if line.match /^```(\w|{)/ # begin of code block
+      outputString += line + '\n'
+      i += 1
+      while i < lines.length
+        line = lines[i]
+        if line.match /^```\s*/ # end of code block
+          break
+        else
+          outputString += line + '\n'
+          i += 1
+
     outputString += line + '\n'
     i += 1
+    
   outputString
 
 ###
