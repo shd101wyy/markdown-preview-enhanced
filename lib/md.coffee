@@ -22,6 +22,7 @@ enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLink
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
+usePandocParser = atom.config.get('markdown-preview-enhanced.usePandocParser')
 
 TAGS_TO_REPLACE = {
     '&': '&amp;',
@@ -119,6 +120,9 @@ atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
 
 atom.config.observe 'markdown-preview-enhanced.useStandardCodeFencingForGraphs', (flag)->
   useStandardCodeFencingForGraphs = flag
+
+atom.config.observe 'markdown-preview-enhanced.usePandocParser', (flag)->
+  usePandocParser = flag
 
 #################################################
 ## Remarkable
@@ -725,7 +729,7 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
     yamlStr = match[0]
     data = matter(yamlStr).data
 
-    if data.pandoc # use pandoc parser, so don't change inputString
+    if usePandocParser # use pandoc parser, so don't change inputString
       return {content: inputString, table: '', data}
     else if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
       content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
@@ -936,15 +940,6 @@ parseMD = (inputString, option={}, callback)->
       return '<div class="new-slide"></div>'
     return ''
 
-  # check whether to use pandoc parser
-  if markdownPreview
-    if not markdownPreview.usePandocParser and yamlConfig?.pandoc
-      console.log('enable pandoc parser')
-      markdownPreview.usePandocParser = true
-    else if markdownPreview.usePandocParser and not yamlConfig?.pandoc
-      console.log('disable pandoc parser')
-      markdownPreview.usePandocParser = false
-
   finalize = (html)->
     if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
       return parseMD(markdownPreview.editor.getText(), option, callback)
@@ -952,11 +947,14 @@ parseMD = (inputString, option={}, callback)->
     html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
-  if markdownPreview?.usePandocParser # pandoc parser
+  if usePandocParser # pandoc parser
+    markdownPreview?.usePandocParser = true
     args = yamlConfig.pandoc
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
       args.push('--filter', 'pandoc-citeproc')
+
+    args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
 
     return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
       html = "<pre>#{error}</pre>" if error
@@ -976,6 +974,7 @@ parseMD = (inputString, option={}, callback)->
 
       return finalize($.html())
   else # remarkable parser
+    markdownPreview?.usePandocParser = false
     # parse markdown
     html = md.render(inputString)
     # console.log(html)

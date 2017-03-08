@@ -256,16 +256,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
-      if @liveUpdate
+      if @liveUpdate and !@usePandocParser
         @updateMarkdown()
 
     @disposables.add @editor.onDidSave ()=>
-      if not @liveUpdate
+      if not @liveUpdate or @usePandocParser
         @textChanged = true
         @updateMarkdown()
 
     @disposables.add @editor.onDidChangeModified ()=>
-      if not @liveUpdate
+      if not @liveUpdate or @usePandocParser
         @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>

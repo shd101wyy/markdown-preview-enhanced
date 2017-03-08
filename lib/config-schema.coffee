@@ -46,6 +46,18 @@ module.exports =
       default: "http, https, atom, file"
       description: "Accepted protocols followed by `://` for links. `(Restart is required to take effect)`"
       order: 15
+    usePandocParser:
+      title: "Use Pandoc Parser"
+      type: "boolean"
+      default: false,
+      description: "Enable this option will render markdown by pandoc instead of remarkable.js. Scroll sync and live update will be disabled automatically if this option is enabled."
+      order: 16
+    pandocArguments:
+      title: "Pandoc Commandline Arguments"
+      type: "string",
+      default: "",
+      description: "Comma separated pandoc arguments e.g. `--smart, --filter=/bin/exe`. Please use long argument names."
+      order: 17
     mathRenderingOption:
       type: "string"
       default: "KaTeX"

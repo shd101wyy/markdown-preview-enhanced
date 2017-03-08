@@ -183,7 +183,7 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 # callback(error, html)
 pandocRender = (text, {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
-  args = ['-t', 'html'].concat(args)
+  args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
 
   # change working directory
   cwd = process.cwd()
