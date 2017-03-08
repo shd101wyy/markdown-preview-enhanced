@@ -26,8 +26,8 @@ Please note that `--filter=pandoc-citeproc` will be automatically added if there
 1. `Live Update` will be disabled if `Use Pandoc Parser` is checked. The preview will only be updated when you save the file.  
 2. `Presentation` will not be working with `pandoc parser`.  
 3. `Scroll sync` is less accurate and has bugs sometimes.  
-4. `ebook` export has problem.
-5. `Code Chunk` could be buggy.  
+4. `ebook` export has problem.  
+5. `Code Chunk` is sometimes buggy.  
 
 ## Front-Matter   
 `pandoc document export` requires writing `front-matter`.  
