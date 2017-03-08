@@ -960,6 +960,7 @@ parseMD = (inputString, option={}, callback)->
 
     return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
       html = "<pre>#{error}</pre>" if error
+      # console.log(html)
       # format blocks
       $ = cheerio.load(html)
       $('pre').each (i, preElement)->
@@ -969,7 +970,7 @@ parseMD = (inputString, option={}, callback)->
           codeBlock = $(preElement).children().first()
           classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
           lang = classes[0]
-          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
+          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom|\{(.+)\})/)
             lang = $preElement.attr('class')
           codeBlock.attr('class', 'language-' + lang)
 
@@ -977,6 +978,7 @@ parseMD = (inputString, option={}, callback)->
   else # remarkable parser
     # parse markdown
     html = md.render(inputString)
+    # console.log(html)
     return finalize(html)
 
 module.exports = {
