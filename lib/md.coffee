@@ -722,16 +722,15 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
   match = r.exec(inputString)
 
   if match
-    if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
-      yamlStr = match[0]
-      data = matter(yamlStr).data
+    yamlStr = match[0]
+    data = matter(yamlStr).data
 
+    if data.pandoc # use pandoc parser, so don't change inputString
+      return {content: inputString, table: '', data}
+    else if hideFrontMatter or frontMatterRenderingOption[0] == 'n' # hide
       content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
       return {content, table: '', data}
     else if frontMatterRenderingOption[0] == 't' # table
-      yamlStr = match[0]
-      data = matter(yamlStr).data
-
       content = '\n'.repeat(yamlStr.match(/\n/g)?.length or 0) + inputString.slice(yamlStr.length)
 
       # to table
@@ -742,9 +741,6 @@ processFrontMatter = (inputString, hideFrontMatter=false)->
 
       return {content, table, data}
     else # if frontMatterRenderingOption[0] == 'c' # code block
-      yamlStr = match[0]
-      data = matter(yamlStr).data
-
       content = '```yaml\n' + match[1] + '\n```\n' + inputString.slice(yamlStr.length)
 
       return {content, table: '', data}
@@ -959,12 +955,9 @@ parseMD = (inputString, option={}, callback)->
   if markdownPreview?.usePandocParser # pandoc parser
     args = yamlConfig.pandoc
     args = [] if not (args instanceof Array)
-    if mathRenderingOption == 'KaTeX' or mathRenderingOption == 'MathJax'
-      args.push('--mathjax')
     if yamlConfig.bibliography or yamlConfig.references
       args.push('--filter', 'pandoc-citeproc')
 
-    inputString = inputString.replace(/(^|\n)\`\`\`yaml\s*([\w\W]+?)\n\`\`\`\s*/, '---\n$2\n---\n')
     return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
       html = "<pre>#{error}</pre>" if error
       # format blocks
@@ -979,7 +972,6 @@ parseMD = (inputString, option={}, callback)->
           if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
             lang = $preElement.attr('class')
           codeBlock.attr('class', 'language-' + lang)
-
 
       return finalize($.html())
   else # remarkable parser

@@ -1001,11 +1001,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
             el.innerHTML = error
 
   renderMathJax: ()->
-    return if @mathRenderingOption != 'MathJax'
+    return if @mathRenderingOption != 'MathJax' and !@usePandocParser
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
-    if @mathJaxProcessEnvironments
+    if @mathJaxProcessEnvironments or @usePandocParser
       return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=> @scrollMap = null
 
     els = @element.getElementsByClassName('mathjax-exps')
