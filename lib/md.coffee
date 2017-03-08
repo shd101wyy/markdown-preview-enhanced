@@ -948,7 +948,6 @@ parseMD = (inputString, option={}, callback)->
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
-    markdownPreview?.usePandocParser = true
     args = yamlConfig.pandoc
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
@@ -974,7 +973,6 @@ parseMD = (inputString, option={}, callback)->
 
       return finalize($.html())
   else # remarkable parser
-    markdownPreview?.usePandocParser = false
     # parse markdown
     html = md.render(inputString)
     # console.log(html)
