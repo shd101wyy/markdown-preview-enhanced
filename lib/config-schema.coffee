@@ -50,7 +50,7 @@ module.exports =
       title: "Use Pandoc Parser"
       type: "boolean"
       default: false,
-      description: "Enable this option will render markdown by pandoc instead of remarkable.js. Scroll sync and live update will be disabled automatically if this option is enabled."
+      description: "Enable this option will render markdown by pandoc instead of remarkable. Live update will be disabled automatically if this option is enabled."
       order: 16
     pandocPath:
       title: "Pandoc Options: Path"

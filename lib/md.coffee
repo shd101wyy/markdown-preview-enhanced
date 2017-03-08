@@ -840,8 +840,9 @@ insertAnchors = (text)->
     2. image
     3. code block | chunk
     4. @import
+    5. comment
     ###
-    if line.match /^(\#|\!\[|```(\w|{)|@import)/
+    if line.match /^(\#|\!\[|```(\w|{)|@import|\<!--)/
       outputString += createAnchor(i)
 
     outputString += line + '\n'
@@ -980,7 +981,7 @@ parseMD = (inputString, option={}, callback)->
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
-    args = yamlConfig.pandoc or []
+    args = yamlConfig.pandoc_args or []
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
       args.push('--filter', 'pandoc-citeproc')
