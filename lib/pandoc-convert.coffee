@@ -181,9 +181,38 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
   text
 
 # callback(error, html)
-pandocRender = (text, {args, projectDirectoryPath, fileDirectoryPath}, callback)->
+pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath, insertAnchors}, callback)->
   args = args or []
   args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
+
+  # anchor looks like this <p data-line="23" class="sync-line" style="margin:0;"></p>
+  ###
+  convert code chunk
+  ```{python id:"haha"}
+  to
+  ```{.python data-args="{id: haha}"}
+  ###
+
+  outputString = ""
+  lines = text.split('\n')
+  i = 0
+  while i < lines.length
+    line = lines[i]
+
+    codeChunkMatch = line.match /^\`\`\`\{(\w+)\s*(.*)\}\s*/
+    if codeChunkMatch # code chunk
+      lang = codeChunkMatch[1].trim()
+      dataArgs = codeChunkMatch[2].trim().replace(/('|")/g, '\\$1') # escape
+      dataCodeChunk = "{#{lang} #{dataArgs}}"
+
+      outputString += "```{.#{lang} data-code-chunk=\"#{dataCodeChunk}\"}\n"
+      i += 1
+      continue
+
+    outputString += line + '\n'
+    i += 1
+
+  # console.log(outputString)
 
   # change working directory
   cwd = process.cwd()
@@ -192,7 +221,7 @@ pandocRender = (text, {args, projectDirectoryPath, fileDirectoryPath}, callback)
   program = execFile 'pandoc', args, (error, stdout, stderr)->
     process.chdir(cwd)
     return callback(error or stderr, stdout)
-  program.stdin.end(text)
+  program.stdin.end(outputString)
 
 ###
 @param {String} text: markdown string

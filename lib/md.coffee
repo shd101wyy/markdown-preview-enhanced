@@ -884,6 +884,7 @@ parseMD = (inputString, option={}, callback)->
 
   # check front-matter
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
+  yamlConfig = yamlConfig or {}
 
   # check document imports
   {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
@@ -948,14 +949,14 @@ parseMD = (inputString, option={}, callback)->
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
-    args = yamlConfig.pandoc
+    args = yamlConfig.pandoc or []
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
       args.push('--filter', 'pandoc-citeproc')
 
     args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
 
-    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
+    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath, insertAnchors: option.isForPreview}, (error, html)->
       html = "<pre>#{error}</pre>" if error
       # console.log(html)
       # format blocks
@@ -967,9 +968,16 @@ parseMD = (inputString, option={}, callback)->
           codeBlock = $(preElement).children().first()
           classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
           lang = classes[0]
-          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom|\{(.+)\})/)
+
+          # graphs
+          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
             lang = $preElement.attr('class')
           codeBlock.attr('class', 'language-' + lang)
+
+          # check code chunk
+          dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
+          if dataCodeChunk
+            codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
 
       return finalize($.html())
   else # remarkable parser

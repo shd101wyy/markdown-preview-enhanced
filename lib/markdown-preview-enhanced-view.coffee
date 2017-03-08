@@ -269,7 +269,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or @textChanged or !@editor or @presentationMode or @usePandocParser
+      if !@scrollSync or !@element or @textChanged or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -294,7 +294,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or @textChanged or @usePandocParser
+      if !@scrollSync or !@element or @textChanged
         return
       if Date.now() < @parseDelay
         return
@@ -320,7 +320,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or @textChanged or @presentationMode or @usePandocParser
+      if !@editor or !@scrollSync or @textChanged or @presentationMode
         return
       if Date.now() < @previewScrollDelay
         return
