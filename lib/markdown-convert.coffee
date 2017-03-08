@@ -66,15 +66,12 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImageP
 
   text
 
-# callback(error, markdown)
-markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={}, callback)->
+markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={})->
   if !config.path
-    atom.notifications.addError('{path} has to be specified')
-    return callback(true)
+    return atom.notifications.addError('{path} has to be specified')
 
   if !config.image_dir
-    atom.notifications.addError('{image_dir} has to be specified')
-    return callback(true)
+    return atom.notifications.addError('{image_dir} has to be specified')
 
   # dest
   if config.path[0] == '/'
@@ -109,12 +106,8 @@ markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={}, c
     # mermaid / viz / wavedrom graph
     processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: encrypt(outputFilePath), useAbsoluteImagePath}, (text, imagePaths=[])->
       fs.writeFile outputFilePath, text, (err)->
-        if error
-          atom.notifications.addError('failed to generate markdown')
-          return callback(true)
-
+        return atom.notifications.addError('failed to generate markdown') if err
         atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
-        return callback(false)
 
 
 module.exports = markdownConvert
