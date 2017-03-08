@@ -1,3 +1,7 @@
+## 0.10.8
+* [x] add `pandoc parser` support [#315](https://github.com/shd101wyy/markdown-preview-enhanced/issues/315).
+* [x] fix `ebook` export theme issue.    
+
 ## 0.10.7  
 * [x] restore `pdfUseGithub` option.
 * [x] add `mpe-github-syntax` for Github.com style.

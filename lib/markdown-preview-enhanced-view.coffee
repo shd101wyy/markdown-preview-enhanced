@@ -1793,57 +1793,60 @@ module.exports = config || {}
             else
               mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
-          outputHTML = """
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>#{title}</title>
-          <meta charset=\"utf-8\">
-          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+          # only use github style for ebook
+          loadPreviewTheme 'mpe-github-syntax', false, (error, css)=>
+            css = '' if error
+            outputHTML = """
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>#{title}</title>
+            <meta charset=\"utf-8\">
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 
-          <style>
-          #{getMarkdownPreviewCSS()}
-          </style>
+            <style>
+            #{css}
+            </style>
 
-          #{mathStyle}
-        </head>
-        <body class=\"markdown-preview-enhanced\">
-        #{outputHTML}
-        </body>
-      </html>
-          """
+            #{mathStyle}
+          </head>
+          <body class=\"markdown-preview-enhanced\">
+          #{outputHTML}
+          </body>
+        </html>
+            """
 
-          fileName = path.basename(dest)
+            fileName = path.basename(dest)
 
-          # save as html
-          if path.extname(dest) == '.html'
-            fs.writeFile dest, outputHTML, (err)=>
-              throw err if err
-              atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
-            return
+            # save as html
+            if path.extname(dest) == '.html'
+              fs.writeFile dest, outputHTML, (err)=>
+                throw err if err
+                atom.notifications.addInfo("File #{fileName} was created", detail: "path: #{dest}")
+              return
 
-          # this func will be called later
-          deleteDownloadedImages = ()->
-            downloadedImagePaths.forEach (imagePath)->
-              fs.unlink(imagePath)
+            # this func will be called later
+            deleteDownloadedImages = ()->
+              downloadedImagePaths.forEach (imagePath)->
+                fs.unlink(imagePath)
 
-          # use ebook-convert to generate ePub, mobi, PDF.
-          temp.open
-            prefix: 'markdown-preview-enhanced',
-            suffix: '.html', (err, info)=>
-              if err
-                deleteDownloadedImages()
-                throw err
-
-              fs.write info.fd, outputHTML, (err)=>
+            # use ebook-convert to generate ePub, mobi, PDF.
+            temp.open
+              prefix: 'markdown-preview-enhanced',
+              suffix: '.html', (err, info)=>
                 if err
                   deleteDownloadedImages()
                   throw err
 
-                ebookConvert info.path, dest, ebookConfig, (err)=>
-                  deleteDownloadedImages()
-                  throw err if err
-                  atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
+                fs.write info.fd, outputHTML, (err)=>
+                  if err
+                    deleteDownloadedImages()
+                    throw err
+
+                  ebookConvert info.path, dest, ebookConfig, (err)=>
+                    deleteDownloadedImages()
+                    throw err if err
+                    atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
 
   pandocDocumentExport: ->
     {data} = @processFrontMatter(@editor.getText())
