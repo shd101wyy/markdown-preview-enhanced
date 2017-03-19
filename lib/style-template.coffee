@@ -1,8 +1,5 @@
 module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
-
-@import "styles/syntax-variables.less";
-
 .markdown-preview-enhanced {
   @fg: @syntax-text-color;
   @bg: @syntax-background-color;

@@ -15,7 +15,7 @@ module.exports =
     previewTheme:
       title: "Preview Theme"
       type: "string"
-      default: syntaxThemes[0]
+      default: 'mpe-github-syntax'
       enum: syntaxThemes
       order: 1
     breakOnSingleNewline:
