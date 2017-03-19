@@ -8,7 +8,8 @@ Still Beta Version!
 
 ---
 
-Version `0.10.8` supports `pandoc parser` now, check [this doc](./docs/advanced-export.md).
+Version `0.10.9` supports [prince](https://www.princexml.com) pdf export.  
+More information can be found [at this doc](./docs/prince.md).
 
 ---
 
@@ -41,6 +42,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **[Import external files](./docs/doc-imports.md)**
 - **[Code Chunks (beta)](./docs/code-chunk.md)**
 - **[pandoc](./docs/advanced-export.md)**
+- **[prince](./docs/prince.md)**  
 - **[ebook](./docs/ebook.md)**
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[Extensible](#for-developer)**

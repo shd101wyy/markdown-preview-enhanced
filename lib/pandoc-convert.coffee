@@ -189,7 +189,7 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
   convert code chunk
   ```{python id:"haha"}
   to
-  ```{.python data-args="{id: haha}"}
+  ```{.python data-code-chunk"{id: haha}"}
   ###
 
   outputString = ""
@@ -204,7 +204,7 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
       dataArgs = codeChunkMatch[2].trim().replace(/('|")/g, '\\$1') # escape
       dataCodeChunk = "{#{lang} #{dataArgs}}"
 
-      outputString += "```{.#{lang} data-code-chunk=\"#{dataCodeChunk}\"}\n"
+      outputString += "```{.r data-code-chunk=\"#{dataCodeChunk}\"}\n"
       i += 1
       continue
 

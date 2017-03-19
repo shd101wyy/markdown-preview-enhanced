@@ -8,7 +8,8 @@ Markdown Preview Enhanced
 
 ---
 
-版本 `0.10.8` 支持 `pandoc parser` 了，请查看 [这个文档](./advanced-export.md)。
+`0.10.9` 支持 [prince](https://www.princexml.com) pdf 文件导出。  
+具体信息请参考[该文档](./prince.md)。  
 
 ---
 
@@ -40,6 +41,7 @@ Markdown Preview Enhanced
 - **[导入外部文件](doc-imports.md)**
 - **[Code Chunks (beta)](./code-chunk.md)**
 - **[pandoc](./advanced-export.md)**
+- **[prince](./prince.md)**  
 - **[ebook](./ebook.md)**  
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[支持扩展](#开发者)**

@@ -635,7 +635,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       codeBlock = $(preElement).children().first()
       lang = 'text'
       if codeBlock.attr('class')
-        lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
+        lang = codeBlock.attr('class').replace(/^language-/, '').toLowerCase() or 'text'
       text = codeBlock.text()
 
       lineNo = codeBlock.attr('data-line')
@@ -858,7 +858,7 @@ insertAnchors = (text)->
 
     outputString += line + '\n'
     i += 1
-    
+
   outputString
 
 ###

@@ -23,7 +23,7 @@ processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryP
     trimmedLine = line.trim()
     if trimmedLine.match(/^```\{(.+)\}$/) or
        trimmedLine.match(/^```\@/) or
-       (useStandardCodeFencingForGraphs and trimmedLine.match(/(mermaid|wavedrom|viz|plantuml|puml|dot)/))
+       (useStandardCodeFencingForGraphs and trimmedLine.match(/^```(mermaid|wavedrom|viz|plantuml|puml|dot)/))
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
