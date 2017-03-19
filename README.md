@@ -8,6 +8,11 @@ Still Beta Version!
 
 ---
 
+Version `0.10.9` supports [prince](https://www.princexml.com) pdf export.  
+More information can be found [at this doc](./docs/prince.md).
+
+---
+
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
@@ -37,6 +42,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **[Import external files](./docs/doc-imports.md)**
 - **[Code Chunks (beta)](./docs/code-chunk.md)**
 - **[pandoc](./docs/advanced-export.md)**
+- **[prince](./docs/prince.md)**  
 - **[ebook](./docs/ebook.md)**
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[Extensible](#for-developer)**

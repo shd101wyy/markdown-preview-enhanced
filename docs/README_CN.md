@@ -8,6 +8,11 @@ Markdown Preview Enhanced
 
 ---
 
+`0.10.9` 支持 [prince](https://www.princexml.com) pdf 文件导出。  
+具体信息请参考[该文档](./prince.md)。  
+
+---
+
 推荐安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 来更好地与 markdown-preview-enhanced 协同工作.  
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
@@ -36,6 +41,7 @@ Markdown Preview Enhanced
 - **[导入外部文件](doc-imports.md)**
 - **[Code Chunks (beta)](./code-chunk.md)**
 - **[pandoc](./advanced-export.md)**
+- **[prince](./prince.md)**  
 - **[ebook](./ebook.md)**  
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
 - **[支持扩展](#开发者)**
