@@ -16,6 +16,7 @@ ebookConvert = require './ebook-convert'
 {loadMathJax} = require './mathjax-wrapper'
 {pandocConvert} = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
+princeConvert = require './prince-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
 {protocolsWhiteListRegExp} = require './protocols-whitelist'
@@ -1643,6 +1644,32 @@ module.exports = config || {}
             atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dest}"
             if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
               @openFile dest
+
+  ## prince
+  princeExport: (dest)->
+    return if not @editor
+    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+    @getHTMLContent offline: true, isForPrint: true, (htmlContent)=>
+      temp.open
+        prefix: 'markdown-preview-enhanced'
+        suffix: '.html', (err, info)=>
+          throw err if err
+
+          fs.write info.fd, htmlContent, (err)=>
+            throw err if err
+            if @presentationMode
+              url = 'file:///' + info.path + '?print-pdf'
+              atom.notifications.addInfo('Please copy and open the link below in Chrome.\nThen Right Click -> Print -> Save as Pdf.', dismissable: true, detail: url)
+            else
+              princeConvert info.path, dest, (err)=>
+                throw err if err
+
+                atom.notifications.addInfo "File #{path.basename(dest)} was created", detail: "path: #{dest}"
+
+                # open pdf
+                @openFile dest if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+
+
 
   ## EBOOK
   generateEbook: (dest)->

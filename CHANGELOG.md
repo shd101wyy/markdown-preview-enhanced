@@ -1,6 +1,7 @@
 ## 0.10.9
 * [x] fix issue [#325](https://github.com/shd101wyy/markdown-preview-enhanced/issues/325). Code block indicatoris now case insensitive.  
 * [x] fix some pandoc parser code chunk issues.   
+* [x] added `prince` support. 
 
 
 ## 0.10.8
