@@ -2,6 +2,7 @@
 * [x] fix issue [#325](https://github.com/shd101wyy/markdown-preview-enhanced/issues/325). Code block indicator is now case insensitive.  
 * [x] fix some pandoc parser code chunk issues.   
 * [x] added `prince` support. [doc](./docs/prince.md).    
+* [x] fix export file style issue. changed `Customize Css` command.   
 * [x] fix issue [#313](https://github.com/shd101wyy/markdown-preview-enhanced/issues/313).   
 
 
