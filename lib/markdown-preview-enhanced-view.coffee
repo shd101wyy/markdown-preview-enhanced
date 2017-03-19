@@ -1184,11 +1184,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   ##
   # {Function} callback (htmlContent)
-  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType}, callback)->
+  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType, isForPrince}, callback)->
     isForPrint ?= false
     offline ?= false
     useRelativeImagePath ?= false
     phantomjsType ?= false # pdf | png | jpeg | false
+    isForPrince ?= false
     return callback() if not @editor
 
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
@@ -1283,12 +1284,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
         presentationInitScript = ''
 
       # phantomjs
-      phantomjsClass = ""
+      phantomjsClass = ''
       if phantomjsType
         if phantomjsType == '.pdf'
           phantomjsClass = 'phantomjs-pdf'
         else if phantomjsType == '.png' or phantomjsType == '.jpeg'
           phantomjsClass = 'phantomjs-image'
+
+      princeClass = ''
+      princeClass = 'prince' if isForPrince
 
       title = @getFileName()
       title = title.slice(0, title.length - path.extname(title).length) # remove '.md'
@@ -1296,6 +1300,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
       previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
       if isForPrint and atom.config.get('markdown-preview-enhanced.pdfUseGithub')
         previewTheme = 'mpe-github-syntax'
+
+      # get style.less
+      styleLess = ''
+      userStyleSheetPath = atom.styles.getUserStyleSheetPath()
+      styleElements = atom.styles.getStyleElements()
+      i = styleElements.length - 1
+      while i >= 0
+        styleElem = styleElements[i]
+        if styleElem.getAttribute('source-path') == userStyleSheetPath
+          styleLess = styleElem.innerHTML
+          break
+        i -= 1
 
       loadPreviewTheme previewTheme, false, (error, css)=>
         return callback() if error
@@ -1311,14 +1327,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         <style>
         #{css}
+        #{styleLess}
         </style>
 
         #{mathStyle}
 
         #{presentationScript}
       </head>
-      <body class=\"markdown-preview-enhanced #{phantomjsClass}\"
-          #{if @presentationMode then 'data-presentation-mode' else ''}>
+      <body class=\"markdown-preview-enhanced #{phantomjsClass} #{princeClass}\" #{if @presentationMode then 'data-presentation-mode' else ''}>
 
       #{htmlContent}
 
@@ -1649,7 +1665,8 @@ module.exports = config || {}
   princeExport: (dest)->
     return if not @editor
     atom.notifications.addInfo('Your document is being prepared', detail: ':)')
-    @getHTMLContent offline: true, isForPrint: true, (htmlContent)=>
+    @getHTMLContent offline: true, isForPrint: true, isForPrince: true, (htmlContent)=>
+
       temp.open
         prefix: 'markdown-preview-enhanced'
         suffix: '.html', (err, info)=>

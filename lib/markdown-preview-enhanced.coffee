@@ -182,7 +182,7 @@ module.exports = MarkdownPreviewEnhanced =
 /*
  * markdown-preview-enhanced custom style
  */
-.markdown-preview-enhanced-custom {
+.markdown-preview-enhanced.markdown-preview-enhanced {
   // please write your custom style here
   // eg:
   //  color: blue;          // change font color
@@ -191,6 +191,11 @@ module.exports = MarkdownPreviewEnhanced =
 
   // custom pdf output style
   @media print {
+
+  }
+
+  // custom prince pdf export style
+  &.prince {
 
   }
 
@@ -211,14 +216,9 @@ module.exports = MarkdownPreviewEnhanced =
     // background-color: #000;
   }
 }
-
-// please don't modify the .markdown-preview-enhanced section below
-.markdown-preview-enhanced {
-  .markdown-preview-enhanced-custom() !important;
-}
 """
         text = editor.getText()
-        if text.indexOf('.markdown-preview-enhanced-custom {') < 0 or text.indexOf('.markdown-preview-enhanced {') < 0
+        if text.indexOf('.markdown-preview-enhanced.markdown-preview-enhanced {') < 0 
           editor.setText(text + customCssTemplate)
 
   # insert toc table
