@@ -1,4 +1,4 @@
-# Prince Pdf Export
+# Prince PDF Export
 **Markdown Preview Enhanced** supports [prince](https://www.princexml.com/) pdf export.  
 
 ## Installation  
