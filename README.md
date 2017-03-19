@@ -8,10 +8,6 @@ Still Beta Version!
 
 ---
 
-Version `0.10.8` supports `pandoc parser` now, check [this doc](./docs/advanced-export.md).
-
----
-
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)

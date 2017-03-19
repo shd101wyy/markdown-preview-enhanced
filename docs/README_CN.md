@@ -8,10 +8,6 @@ Markdown Preview Enhanced
 
 ---
 
-版本 `0.10.8` 支持 `pandoc parser` 了，请查看 [这个文档](./advanced-export.md)。
-
----
-
 推荐安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 来更好地与 markdown-preview-enhanced 协同工作.  
 
 如果你发现了 bug，遇到问题，或者想要开发者添加新的功能，请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
