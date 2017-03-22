@@ -18,6 +18,7 @@ To exclude a heading from the `TOC`, insert `<!-- untoc -->` **above** your head
 You can also create `TOC` by inserting `[TOC]` to your markdown file.  
 For example:  
 ```markdown  
+
 [TOC]  
 
 # Heading 1

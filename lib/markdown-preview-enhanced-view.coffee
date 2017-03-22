@@ -67,6 +67,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation mode
     @presentationMode = false
+    @presentationZoom = 1
     @slideConfigs = null
 
     # graph data used to save rendered graphs
@@ -321,7 +322,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or @textChanged or @presentationMode
+      if !@editor or !@scrollSync or @textChanged
         return
       if Date.now() < @previewScrollDelay
         return
@@ -331,6 +332,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         return @scrollToPos 0, @editor.getElement()
 
       top = @element.scrollTop + @element.offsetHeight / 2
+
+      if @presentationMode
+        top = top / @presentationZoom
 
       # try to find corresponding screen buffer row
       @scrollMap ?= @buildScrollMap(this)
@@ -528,6 +532,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @element.setAttribute 'data-presentation-preview-mode', ''
         @presentationMode = true
         @slideConfigs = slideConfigs
+        @scrollMap = null
       else
         @element.removeAttribute 'data-presentation-preview-mode'
         @presentationMode = false
@@ -1437,8 +1442,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       width = presentationConfig['width'] or 960
       height = presentationConfig['height'] or 700
 
-    ratio = height / width * 100 + '%'
+    # ratio = height / width * 100 + '%'
     zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
+    @presentationZoom = zoom
 
     for slide in slides
       # slide = slide.trim()
