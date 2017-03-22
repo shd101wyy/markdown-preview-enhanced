@@ -2,7 +2,7 @@
 * [ ] speaker note Windows issue [#199](https://github.com/shd101wyy/markdown-preview-enhanced/issues/199).
 * [x] support `[TOC]`.  
 * [x] add `whiteBackground` option.  
-* [ ] presentation scroll sync.  
+* [x] presentation scroll sync (partially done).  
 
 ## 0.10.9
 * [x] fix issue [#325](https://github.com/shd101wyy/markdown-preview-enhanced/issues/325). Code block indicator is now case insensitive.  

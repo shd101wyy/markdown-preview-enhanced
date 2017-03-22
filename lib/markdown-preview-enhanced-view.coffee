@@ -271,7 +271,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or @textChanged or !@editor or @presentationMode
+      if !@scrollSync or !@element or @textChanged or !@editor
         return
       if Date.now() < @editorScrollDelay
         return
@@ -291,8 +291,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # scroll preview to most top as editor is at most top.
       return @scrollToPos(0) if firstVisibleScreenRow == 0
 
-      # @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
-      if lineNo of @scrollMap then @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
+      targetPos = @scrollMap[lineNo]-editorHeight / 2
+      if @presentationMode
+        targetPos = targetPos * @presentationZoom
+
+      if lineNo of @scrollMap then @scrollToPos(targetPos)
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
