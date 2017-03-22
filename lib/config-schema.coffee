@@ -18,6 +18,12 @@ module.exports =
       default: 'mpe-github-syntax'
       enum: syntaxThemes
       order: 1
+    whiteBackground:
+      title: "White background"
+      type: "boolean"
+      default: false
+      description: "Use white background color for preview."
+      order: 2
     breakOnSingleNewline:
       type: "boolean"
       default: true

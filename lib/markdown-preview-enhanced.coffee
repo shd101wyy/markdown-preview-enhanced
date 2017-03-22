@@ -170,9 +170,16 @@ module.exports = MarkdownPreviewEnhanced =
 
       # change theme
       # @subscriptions.add atom.config.observe 'core.themes', ()=>
-      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', ()=>
+      @initPreviewTheme()
+
+  initPreviewTheme: ()->
+    previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
+    loadPreviewTheme previewTheme, {changeStyleElement: true}, ()=>
+      changeTheme = ()->
         previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-        loadPreviewTheme previewTheme, true
+        loadPreviewTheme previewTheme, {changeStyleElement: true}
+      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.previewTheme', changeTheme
+      @subscriptions.add atom.config.observe 'markdown-preview-enhanced.whiteBackground', changeTheme
 
   customizeCSS: ()->
     atom.workspace
@@ -218,7 +225,7 @@ module.exports = MarkdownPreviewEnhanced =
 }
 """
         text = editor.getText()
-        if text.indexOf('.markdown-preview-enhanced.markdown-preview-enhanced {') < 0 
+        if text.indexOf('.markdown-preview-enhanced.markdown-preview-enhanced {') < 0
           editor.setText(text + customCssTemplate)
 
   # insert toc table

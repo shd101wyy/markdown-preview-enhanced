@@ -158,7 +158,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                 searchAllPanes: false
           .then (e)=>
             previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-            loadPreviewTheme previewTheme, true, ()=>
+            loadPreviewTheme previewTheme, {changeStyleElement: true}, ()=>
               @initEvents(editor)
 
     else
@@ -1313,7 +1313,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           break
         i -= 1
 
-      loadPreviewTheme previewTheme, false, (error, css)=>
+      loadPreviewTheme previewTheme, {changeStyleElement: false}, (error, css)=>
         return callback() if error
         return callback """
     <!DOCTYPE html>
@@ -1838,7 +1838,7 @@ module.exports = config || {}
               mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
           # only use github style for ebook
-          loadPreviewTheme 'mpe-github-syntax', false, (error, css)=>
+          loadPreviewTheme 'mpe-github-syntax', {changeStyleElement: false}, (error, css)=>
             css = '' if error
             outputHTML = """
         <!DOCTYPE html>
