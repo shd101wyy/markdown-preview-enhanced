@@ -1009,6 +1009,7 @@ parseMD = (inputString, option={}, callback)->
 
     if tocBracketEnabled # [TOC]
       tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})
+      DISABLE_SYNC_LINE = true # otherwise tocHtml will break scroll sync.
       tocHtml = md.render(tocObject.content)
       html = html.replace /^\s*\[MPETOC\]\s*/gm, tocHtml
 
