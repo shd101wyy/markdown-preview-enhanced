@@ -10,4 +10,5 @@ module.exports = subjects =
   tocstop: 4
   slide: 5,
   ebook: 6,
-  untoc: 7
+  untoc: 7,
+  'toc-bracket': 8
