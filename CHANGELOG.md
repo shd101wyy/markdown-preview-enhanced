@@ -1,3 +1,9 @@
+## 0.10.10
+* [ ] speaker note Windows issue [#199](https://github.com/shd101wyy/markdown-preview-enhanced/issues/199).
+* [x] support `[TOC]`.  
+* [x] add `whiteBackground` option.  
+* [x] presentation scroll sync (partially done).  
+
 ## 0.10.9
 * [x] fix issue [#325](https://github.com/shd101wyy/markdown-preview-enhanced/issues/325). Code block indicator is now case insensitive.  
 * [x] fix some pandoc parser code chunk issues.   

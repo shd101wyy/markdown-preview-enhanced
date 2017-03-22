@@ -67,6 +67,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # presentation mode
     @presentationMode = false
+    @presentationZoom = 1
     @slideConfigs = null
 
     # graph data used to save rendered graphs
@@ -158,7 +159,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                 searchAllPanes: false
           .then (e)=>
             previewTheme = atom.config.get('markdown-preview-enhanced.previewTheme')
-            loadPreviewTheme previewTheme, true, ()=>
+            loadPreviewTheme previewTheme, {changeStyleElement: true}, ()=>
               @initEvents(editor)
 
     else
@@ -290,8 +291,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # scroll preview to most top as editor is at most top.
       return @scrollToPos(0) if firstVisibleScreenRow == 0
 
-      # @element.scrollTop = @scrollMap[lineNo] - editorHeight / 2
-      if lineNo of @scrollMap then @scrollToPos(@scrollMap[lineNo]-editorHeight / 2)
+      targetPos = @scrollMap[lineNo]-editorHeight / 2
+      ###
+      # Doesn't work very well
+      if @presentationMode
+        targetPos = targetPos * @presentationZoom
+      ###
+
+      if lineNo of @scrollMap then @scrollToPos(targetPos)
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
@@ -321,7 +328,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   initViewEvent: ->
     @element.onscroll = ()=>
-      if !@editor or !@scrollSync or @textChanged or @presentationMode
+      if !@editor or !@scrollSync or @textChanged
         return
       if Date.now() < @previewScrollDelay
         return
@@ -331,6 +338,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         return @scrollToPos 0, @editor.getElement()
 
       top = @element.scrollTop + @element.offsetHeight / 2
+
+      if @presentationMode
+        top = top / @presentationZoom
 
       # try to find corresponding screen buffer row
       @scrollMap ?= @buildScrollMap(this)
@@ -528,6 +538,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @element.setAttribute 'data-presentation-preview-mode', ''
         @presentationMode = true
         @slideConfigs = slideConfigs
+        @scrollMap = null
       else
         @element.removeAttribute 'data-presentation-preview-mode'
         @presentationMode = false
@@ -1313,8 +1324,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
           break
         i -= 1
 
-      loadPreviewTheme previewTheme, false, (error, css)=>
-        return callback() if error
+      loadPreviewTheme previewTheme, {changeStyleElement: false}, (error, css)=>
+        return callback("<pre>#{error}</pre>") if error
         return callback """
     <!DOCTYPE html>
     <html>
@@ -1437,8 +1448,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       width = presentationConfig['width'] or 960
       height = presentationConfig['height'] or 700
 
-    ratio = height / width * 100 + '%'
+    # ratio = height / width * 100 + '%'
     zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
+    @presentationZoom = zoom
 
     for slide in slides
       # slide = slide.trim()
@@ -1838,7 +1850,7 @@ module.exports = config || {}
               mathStyle = "<link rel=\"stylesheet\" href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
 
           # only use github style for ebook
-          loadPreviewTheme 'mpe-github-syntax', false, (error, css)=>
+          loadPreviewTheme 'mpe-github-syntax', {changeStyleElement: false}, (error, css)=>
             css = '' if error
             outputHTML = """
         <!DOCTYPE html>

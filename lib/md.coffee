@@ -325,12 +325,14 @@ md.block.ruler.before 'code', 'custom-comment',
   (state, start, end, silent)->
     pos = state.bMarks[start] + state.tShift[start]
     max = state.eMarks[start]
+    src = state.src
+
     if pos >= max
        return false
-    if state.src.startsWith('<!--', pos)
-      end = state.src.indexOf('-->', pos + 4)
+    if src.startsWith('<!--', pos)
+      end = src.indexOf('-->', pos + 4)
       if (end >= 0)
-        content = state.src.slice(pos + 4, end).trim()
+        content = src.slice(pos + 4, end).trim()
 
         match = content.match(/(\s|\n)/) # find ' ' or '\n'
         if !match
@@ -342,7 +344,7 @@ md.block.ruler.before 'code', 'custom-comment',
 
         if !customSubjects[subject] # check if it is a valid subject
           # it's not a valid subject, therefore escape it
-          state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
+          state.line = start + 1 + (src.slice(pos + 4, end).match(/\n/g)||[]).length
           return true
 
         rest = content.slice(firstIndexOfSpace+1).trim()
@@ -369,10 +371,20 @@ md.block.ruler.before 'code', 'custom-comment',
           line: getRealDataLine(state.line)
           option: option
 
-        state.line = start + 1 + (state.src.slice(pos + 4, end).match(/\n/g)||[]).length
+        state.line = start + 1 + (src.slice(pos + 4, end).match(/\n/g)||[]).length
         return true
       else
         return false
+    else if src[pos] == '[' and src.slice(pos, max).match(/^\[toc\]\s*$/i) # [TOC]
+      state.tokens.push
+        type: 'custom'
+        subject: 'toc-bracket'
+        line: getRealDataLine(state.line)
+        option: {}
+      state.line = start + 1
+      return true
+    else
+      return false
 
 #
 # Inject line numbers for sync scroll. Notes:
@@ -887,6 +899,7 @@ parseMD = (inputString, option={}, callback)->
   # toc
   tocTable = {} # eliminate repeated slug
   tocEnabled = false
+  tocBracketEnabled = false
   tocConfigs = {
     headings: [],
     tocStartLine_s: [],
@@ -978,6 +991,11 @@ parseMD = (inputString, option={}, callback)->
 
     else if (subject == 'tocstop')
       tocConfigs.tocEndLine_s.push tokens[idx].line
+
+    else if (subject == 'toc-bracket') # [toc]
+      tocBracketEnabled = true
+      return '\n[MPETOC]\n'
+
     else if subject == 'slide'
       opt = tokens[idx].option
       opt.line = tokens[idx].line
@@ -988,6 +1006,13 @@ parseMD = (inputString, option={}, callback)->
   finalize = (html)->
     if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
       return parseMD(markdownPreview.editor.getText(), option, callback)
+
+    if tocBracketEnabled # [TOC]
+      tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})
+      DISABLE_SYNC_LINE = true # otherwise tocHtml will break scroll sync.
+      tocHtml = md.render(tocObject.content)
+      html = html.replace /^\s*\[MPETOC\]\s*/gm, tocHtml
+
 
     html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})

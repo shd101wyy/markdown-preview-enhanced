@@ -6,9 +6,12 @@ less = null
 mpeGithubSyntax = null
 
 # cb(error, css) is optional
-loadPreviewTheme = (previewTheme, changePreview=false, cb)->
+loadPreviewTheme = (previewTheme, {changeStyleElement}, cb)->
+  changeStyleElement ?= false
+  whiteBackground = atom.config.get 'markdown-preview-enhanced.whiteBackground'
+
   previewThemeElement = document.getElementById('markdown-preview-enhanced-preview-theme')
-  return cb?(false, previewThemeElement.innerHTML) if previewThemeElement?.getAttribute('data-preview-theme') == previewTheme and previewThemeElement?.innerHTML.length # same preview theme, no need to change.
+  return cb?(false, previewThemeElement.innerHTML) if previewThemeElement?.getAttribute('data-preview-theme') == previewTheme and previewThemeElement?.innerHTML.length and previewThemeElement?.getAttribute('data-white-background') == whiteBackground.toString() # same preview theme, no need to change.
 
   if !previewThemeElement
     previewThemeElement = document.createElement('style')
@@ -17,7 +20,8 @@ loadPreviewTheme = (previewTheme, changePreview=false, cb)->
     head = document.getElementsByTagName('head')[0]
     atomStyles = document.getElementsByTagName('atom-styles')[0]
     head.insertBefore(previewThemeElement, atomStyles)
-  previewThemeElement.setAttribute 'data-preview-theme', previewTheme if changePreview
+  previewThemeElement.setAttribute 'data-preview-theme', previewTheme if changeStyleElement
+  previewThemeElement.setAttribute 'data-white-background', whiteBackground.toString() if changeStyleElement
 
   fs ?= require 'fs'
   less ?= require 'less'
@@ -25,14 +29,17 @@ loadPreviewTheme = (previewTheme, changePreview=false, cb)->
 
   if previewTheme == 'mpe-github-syntax'
     mpeGithubSyntax ?= require './mpe-github-syntax-template.coffee'
-    data = mpeGithubSyntax + styleTemplate
+    data = mpeGithubSyntax + """
+      @fg: #333;
+      @bg: #fff;
+    """ + styleTemplate
     return less.render data, {}, (error, output)->
       return cb?(error) if error
       css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
                 .replace(/:host/g, '.markdown-preview-enhanced .host')
                 .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-      previewThemeElement.innerHTML = css if changePreview
+      previewThemeElement.innerHTML = css if changeStyleElement
       return cb?(false, css)
 
   # traverse all themes
@@ -48,7 +55,18 @@ loadPreviewTheme = (previewTheme, changePreview=false, cb)->
 
         # replace css to css.less; otherwise it will cause error.
         data = (data or '').replace(/\/css("|')\;/g, '\/css.less$1;')
-        data += "@import \"styles/syntax-variables.less\";\n" + styleTemplate
+        if whiteBackground
+          data += """
+          @import \"styles/syntax-variables.less\";\n
+          @fg: #333;
+          @bg: #fff;
+          """ + styleTemplate
+        else
+          data += """
+          @import \"styles/syntax-variables.less\";
+          @fg: @syntax-text-color;
+          @bg: @syntax-background-color;
+          """ + styleTemplate
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
           return cb?(error) if error
@@ -56,7 +74,7 @@ loadPreviewTheme = (previewTheme, changePreview=false, cb)->
                     .replace(/:host/g, '.markdown-preview-enhanced .host')
                     .replace(/\.syntax\-\-/g, '.mpe-syntax--')
 
-          previewThemeElement.innerHTML = css if changePreview
+          previewThemeElement.innerHTML = css if changeStyleElement
           return cb?(false, css)
       return
 

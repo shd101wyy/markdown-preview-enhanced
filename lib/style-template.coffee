@@ -1,9 +1,6 @@
 module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
 .markdown-preview-enhanced {
-  @fg: @syntax-text-color;
-  @bg: @syntax-background-color;
-
   @fg-accent: @syntax-cursor-color;
   @fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
   @fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
@@ -227,7 +224,7 @@ module.exports = """
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
     font-size: 0.85em !important;
     color: @fg-strong;
-    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
+    background-color: contrast(@bg, lighten(@bg, 8%), darken(@bg, 6%));
 
     border-radius: 3px;
     padding: 0.2em 0;
@@ -262,7 +259,7 @@ module.exports = """
     font-size: 0.85em !important;
     line-height: 1.45;
 
-    color: @fg;
+    color: @syntax-text-color;
     background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 6%)) !important;
 
     border: @border;
@@ -311,22 +308,13 @@ module.exports = """
     // word-wrap: break-word;
   }
 
-  atom-text-editor {
-    margin: @margin 0;
-    padding: 1em;
-    font-size: .92em;
-    border-radius: 3px;
-    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 4%));
-  }
-
-
   // KBD --------------------
   kbd {
     color: @fg-strong;
     border: 1px solid @border;
     border-bottom: 2px solid darken(@border, 6%);
     padding: 2px 4px;
-    background-color: contrast(@syntax-background-color, lighten(@syntax-background-color, 8%), darken(@syntax-background-color, 6%));
+    background-color: contrast(@bg, lighten(@bg, 8%), darken(@bg, 6%));
     border-radius: 3px;
     // box-shadow: inset 0 -1px 0 #bbb;
   }
@@ -362,7 +350,7 @@ module.exports = """
       color: @fg-subtle;
     }
 
-    table, pre {
+    /*table,*/ pre {
        page-break-inside: avoid;
     }
 
@@ -494,16 +482,12 @@ module.exports = """
 [data-presentation-preview-mode] {
   background-color: #f4f4f4;
 
-  &[data-use-github-style] {
-    background-color: #f4f4f4;
-  }
-
   .preview-slides {
     width: 100%;
 
     .slide {
       position: relative;
-      background-color: @syntax-background-color !important;
+      background-color: @bg !important;
 
       //width: 100%; # need to be set later
       //height: 100%;
@@ -545,16 +529,6 @@ module.exports = """
       .background-iframe-overlay {
         z-index: 2;
       }
-    }
-  }
-
-  &[data-use-github-style] {
-    .slide {
-      background-color: #fff !important;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 0;
     }
   }
 
