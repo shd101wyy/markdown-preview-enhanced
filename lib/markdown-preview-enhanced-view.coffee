@@ -1325,7 +1325,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         i -= 1
 
       loadPreviewTheme previewTheme, {changeStyleElement: false}, (error, css)=>
-        return callback() if error
+        return callback("<pre>#{error}</pre>") if error
         return callback """
     <!DOCTYPE html>
     <html>

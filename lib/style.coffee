@@ -29,7 +29,10 @@ loadPreviewTheme = (previewTheme, {changeStyleElement}, cb)->
 
   if previewTheme == 'mpe-github-syntax'
     mpeGithubSyntax ?= require './mpe-github-syntax-template.coffee'
-    data = mpeGithubSyntax + styleTemplate
+    data = mpeGithubSyntax + """
+      @fg: #333;
+      @bg: #fff;
+    """ + styleTemplate
     return less.render data, {}, (error, output)->
       return cb?(error) if error
       css = output.css.replace(/[^\.]atom-text-editor/g, '.markdown-preview-enhanced pre')
@@ -62,7 +65,8 @@ loadPreviewTheme = (previewTheme, {changeStyleElement}, cb)->
           data += """
           @import \"styles/syntax-variables.less\";
           @fg: @syntax-text-color;
-          @bg: @syntax-background-color; """ + styleTemplate
+          @bg: @syntax-background-color;
+          """ + styleTemplate
 
         less.render data, {paths: [themePath, path.resolve(themePath, 'styles')]}, (error, output)->
           return cb?(error) if error
