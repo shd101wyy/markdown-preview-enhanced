@@ -320,7 +320,7 @@ md.renderer.rules.wikilink = (tokens, idx)->
 
   splits = content.split('|')
   linkText = splits[0].trim()
-  wikiLink = if splits.length == 2 then "#{splits[1].trim()}#{wikiLinkFileExtension}" else "#{linkText}#{wikiLinkFileExtension}"
+  wikiLink = if splits.length == 2 then "#{splits[1].trim()}#{wikiLinkFileExtension}" else "#{linkText.replace(/\s/g, '')}#{wikiLinkFileExtension}"
 
   return "<a href=\"#{wikiLink}\">#{linkText}</a>"
 
