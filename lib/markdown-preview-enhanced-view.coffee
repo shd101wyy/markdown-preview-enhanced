@@ -984,7 +984,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @graphData.plantuml_s = Array.prototype.slice.call(els)
 
     helper = (el, text)=>
-      plantumlAPI.render text, (outputHTML)=>
+      plantumlAPI.render text, @fileDirectoryPath, (outputHTML)=>
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
         @scrollMap = null

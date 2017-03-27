@@ -4,7 +4,7 @@ path = require 'path'
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
 # Async call
-generateSVG = (content, callback)->
+generateSVG = (content, fileDirectoryPath='', callback)->
   content = content.trim()
   if !content.startsWith('@start')
     content = """
@@ -14,6 +14,7 @@ generateSVG = (content, callback)->
     """
 
   task = spawn 'java', [    '-Djava.awt.headless=true',
+                            '-Dplantuml.include.path='+fileDirectoryPath
                             '-jar', plantumlJarPath,
                             # '-graphvizdot', 'exe'
                             '-pipe',
