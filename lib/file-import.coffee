@@ -116,7 +116,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = "```@mermaid\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         else if extname in ['.puml', '.plantuml'] # plantuml
-          output = "```@puml\n#{fileContent}\n```  "
+          output = "```@puml\n' @mpe_file_directory_path:#{path.dirname(absoluteFilePath)}\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
         else if extname in ['.wavedrom']
           output = "```@wavedrom\n#{fileContent}\n```  "
