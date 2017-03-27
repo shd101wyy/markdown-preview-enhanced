@@ -41,6 +41,9 @@ class ExporterView extends View
         @br()
         @input class: 'relative-image-path-checkbox', type: 'checkbox'
         @label 'Use relative image path'
+        @br()
+        @input class: 'embed-local-images-checkbox', type: 'checkbox'
+        @label 'Embed local images'
 
       @div class: 'pdf-div', =>
         @label 'Format'
@@ -148,7 +151,8 @@ class ExporterView extends View
       else if $('.document-html', @element).hasClass('selected') # html
         isCDN = $('.cdn-checkbox', @element)[0].checked
         relativeImagePath = $('.relative-image-path-checkbox', @element)[0].checked
-        @markdownPreview.saveAsHTML dest, !isCDN, relativeImagePath
+        embedLocalImages = $('.embed-local-images-checkbox', @element)[0].checked
+        @markdownPreview.saveAsHTML dest, !isCDN, relativeImagePath, embedLocalImages
       else if $('.document-phantomjs', @element).hasClass('selected') # phantomjs
         atom.notifications.addInfo('Your document is being prepared', detail: ':)')
         @markdownPreview.phantomJSExport dest
