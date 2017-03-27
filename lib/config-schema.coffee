@@ -104,12 +104,18 @@ module.exports =
       default: true
       description: "Enable Wiki Link syntax support. More information can be found at https://help.github.com/articles/adding-links-to-wikis/"
       order: 30
+    wikiLinkFileExtension:
+      title: "Wiki Link file extension"
+      type: "string"
+      default: ".md"
+      description: "By default, [[test]] will direct to file path `test.md`."
+      order: 31
     useStandardCodeFencingForGraphs:
       title: "Use standard code fencing for graphs"
       type: "boolean"
       default: true
       description: "Use standard code fencing for graphs. For example, code block `mermaid` or `@mermaid` will render mermaid graphs. If this option is disabled, then only `@mermaid` will render mermaid graphs. Works for mermaid, viz, plantuml, and wavedrom."
-      order: 31
+      order: 35
     liveUpdate:
       type: "boolean"
       default: true
