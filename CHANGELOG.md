@@ -1,3 +1,8 @@
+## 0.10.11
+* [x] fix plantuml `@import` issue. [#342](https://github.com/shd101wyy/markdown-preview-enhanced/issues/342).      
+* [x] add `embed image` for html export. [#345](https://github.com/shd101wyy/markdown-preview-enhanced/issues/345).  
+* [x] wikilink file extension option [#346](https://github.com/shd101wyy/markdown-preview-enhanced/issues/346).  
+
 ## 0.10.10
 * [ ] speaker note Windows issue [#199](https://github.com/shd101wyy/markdown-preview-enhanced/issues/199).
 * [x] support `[TOC]`.  

@@ -178,7 +178,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
         helper = (start, end, content)->
           (cb)->
             div = document.createElement('div')
-            plantumlAPI.render content, (outputHTML)->
+            plantumlAPI.render content, fileDirectoryPath, (outputHTML)->
               div.innerHTML = outputHTML
 
               dest = path.resolve(imageDirectoryPath, imageFilePrefix + imgCount + '.png')

@@ -9,6 +9,8 @@ katex = require 'katex'
 matter = require('gray-matter')
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 cheerio = null
+async = null
+request = null
 
 {loadPreviewTheme} = require './style'
 plantumlAPI = require './puml'
@@ -984,7 +986,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @graphData.plantuml_s = Array.prototype.slice.call(els)
 
     helper = (el, text)=>
-      plantumlAPI.render text, (outputHTML)=>
+      plantumlAPI.render text, @fileDirectoryPath, (outputHTML)=>
         el.innerHTML = outputHTML
         el.setAttribute 'data-processed', true
         @scrollMap = null
@@ -1195,12 +1197,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   ##
   # {Function} callback (htmlContent)
-  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType, isForPrince}, callback)->
+  getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType, isForPrince, embedLocalImages}, callback)->
     isForPrint ?= false
     offline ?= false
     useRelativeImagePath ?= false
     phantomjsType ?= false # pdf | png | jpeg | false
     isForPrince ?= false
+    embedLocalImages ?= false
     return callback() if not @editor
 
     mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
@@ -1326,7 +1329,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       loadPreviewTheme previewTheme, {changeStyleElement: false}, (error, css)=>
         return callback("<pre>#{error}</pre>") if error
-        return callback """
+        html = """
     <!DOCTYPE html>
     <html>
       <head>
@@ -1353,6 +1356,30 @@ class MarkdownPreviewEnhancedView extends ScrollView
       #{presentationInitScript}
     </html>
       """
+      if embedLocalImages # embed local images as Data URI
+        cheerio ?= require 'cheerio'
+        async ?= require 'async'
+
+        asyncFunctions = []
+        $ = cheerio.load(html)
+        $('img').each (i, img)->
+          $img = $(img)
+          src = $img.attr('src')
+          if src.startsWith('file:///')
+            src = src.slice(8)
+            src = src.replace(/\?(\.|\d)+$/, '') # remove cache
+            imageType = path.extname(src).slice(1)
+            asyncFunctions.push (cb)->
+              fs.readFile src, (error, data)->
+                return cb() if error
+                base64 = new Buffer(data).toString('base64')
+                $img.attr('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
+                return cb()
+
+        async.parallel asyncFunctions, ()->
+          return callback $.html()
+      else
+        return callback(html)
 
   # api doc [printToPDF] function
   # https://github.com/atom/electron/blob/master/docs/api/web-contents.md
@@ -1409,10 +1436,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
             throw err if err
             @printPDF "file://#{info.path}", dest
 
-  saveAsHTML: (dest, offline=true, useRelativeImagePath)->
+  saveAsHTML: (dest, offline=true, useRelativeImagePath, embedLocalImages)->
     return if not @editor
 
-    @getHTMLContent isForPrint: false, offline: offline, useRelativeImagePath: useRelativeImagePath, (htmlContent)=>
+    @getHTMLContent isForPrint: false, offline: offline, useRelativeImagePath: useRelativeImagePath, embedLocalImages: embedLocalImages, (htmlContent)=>
 
       htmlFileName = path.basename(dest)
 
@@ -1795,8 +1822,8 @@ module.exports = config || {}
             if src.startsWith('http://') or src.startsWith('https://')
               imagesToDownload.push(img)
 
-        request = require('request')
-        async = require('async')
+        request ?= require('request')
+        async ?= require('async')
 
         if imagesToDownload.length
           atom.notifications.addInfo('downloading images...')
@@ -1829,6 +1856,7 @@ module.exports = config || {}
               src = img.getAttribute('src')
               if src.startsWith('file:///')
                 src = src.slice(8)
+                src = src.replace(/\?(\.|\d)+$/, '') # remove cache
                 imageType = path.extname(src).slice(1)
                 try
                   base64 = new Buffer(fs.readFileSync(src)).toString('base64')

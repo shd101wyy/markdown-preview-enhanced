@@ -19,6 +19,7 @@ fileImport = require('./file-import.coffee')
 mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
 mathRenderingIndicator = inline: [['$', '$']], block: [['$$', '$$']]
 enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
+wikiLinkFileExtension = atom.config.get('markdown-preview-enhanced.wikiLinkFileExtension')
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
 useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
@@ -113,6 +114,9 @@ atom.config.observe 'markdown-preview-enhanced.indicatorForMathRenderingBlock',
 atom.config.observe 'markdown-preview-enhanced.enableWikiLinkSyntax',
   (flag)->
     enableWikiLinkSyntax = flag
+
+atom.config.observe 'markdown-preview-enhanced.wikiLinkFileExtension', (extension)->
+  wikiLinkFileExtension = extension
 
 atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
   (flag)->
@@ -316,7 +320,7 @@ md.renderer.rules.wikilink = (tokens, idx)->
 
   splits = content.split('|')
   linkText = splits[0].trim()
-  wikiLink = if splits.length == 2 then "#{splits[1].trim()}.md" else "#{linkText}.md" # only support .md file extension
+  wikiLink = if splits.length == 2 then "#{splits[1].trim()}#{wikiLinkFileExtension}" else "#{linkText.replace(/\s/g, '')}#{wikiLinkFileExtension}"
 
   return "<a href=\"#{wikiLink}\">#{linkText}</a>"
 
