@@ -69,6 +69,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
 
+    filePath = filePath.trim()
     if filePath.match(protocolsWhiteListRegExp)
       absoluteFilePath = filePath
     else if filePath.startsWith('/')
@@ -84,12 +85,12 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
     output = ''
     if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(protocolsWhiteListRegExp)
-        output = "![](#{filePath})  "
+        imageSrc = filePath
       else if useAbsoluteImagePath
-        output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
+        imageSrc = '/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()
       else
-        output = "![](#{path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
-
+        imageSrc = path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()
+      output = "![](#{encodeURI(imageSrc)})  "
       filesCache?[absoluteFilePath] = output
     else
       try
@@ -102,7 +103,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = '<div>' + fileContent + '</div>  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.csv'  # csv file
-          parseResult = Baby.parse(fileContent)
+          parseResult = Baby.parse(fileContent.trim())
           if parseResult.errors.length
             output = "<pre>#{parseResult.errors[0]}</pre>  "
           else

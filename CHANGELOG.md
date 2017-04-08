@@ -1,3 +1,8 @@
+## 0.10.12
+* [x] `file import` now can import image whose path has spaces.  
+* [x] fix issue [#345](https://github.com/shd101wyy/markdown-preview-enhanced/issues/345).
+* [x] fix issue [#352](https://github.com/shd101wyy/markdown-preview-enhanced/issues/352). 
+
 ## 0.10.11
 * [x] fix plantuml `@import` issue. [#342](https://github.com/shd101wyy/markdown-preview-enhanced/issues/342).      
 * [x] add `embed image` for html export. [#345](https://github.com/shd101wyy/markdown-preview-enhanced/issues/345).  

@@ -1370,7 +1370,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             src = src.replace(/\?(\.|\d)+$/, '') # remove cache
             imageType = path.extname(src).slice(1)
             asyncFunctions.push (cb)->
-              fs.readFile src, (error, data)->
+              fs.readFile decodeURI(src), (error, data)->
                 return cb() if error
                 base64 = new Buffer(data).toString('base64')
                 $img.attr('src', "data:image/#{imageType};charset=utf-8;base64,#{base64}")
