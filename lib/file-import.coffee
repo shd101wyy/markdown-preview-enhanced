@@ -64,7 +64,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
     acc = acc + height
 
-  outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, prefix, spaces, filePath, offset)->
+  outputString = inputString.replace /^\@import(\s+)\"([^\"]+)\";*/gm, (whole, spaces, filePath, offset)->
     start = 0
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
@@ -79,7 +79,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
     if filesCache?[absoluteFilePath] # already in cache
       updateHeightsDelta(filesCache[absoluteFilePath], start) if editor
-      return prefix + filesCache[absoluteFilePath]
+      return filesCache[absoluteFilePath]
 
     extname = path.extname(filePath)
     output = ''
@@ -127,10 +127,10 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
       catch e # failed to load file
-        output = "#{prefix}<pre>#{e.toString()}</pre>  "
+        output = "<pre>#{e.toString()}</pre>  "
 
     updateHeightsDelta(output, start) if editor
-    return prefix + output
+    return output
 
   # console.log(heightsDelta, outputString)
   return {outputString, heightsDelta}

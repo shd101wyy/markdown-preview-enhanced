@@ -63,6 +63,9 @@ toc = (tokens, opt={})->
   depthTo = opt.depthTo or 6
   tab = opt.tab or '\t'
 
+  if ordered
+    tab = '    '
+
   tokens = tokens.filter (token)->
     token.level >= depthFrom and token.level <= depthTo
 
