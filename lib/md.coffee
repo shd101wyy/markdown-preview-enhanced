@@ -878,6 +878,33 @@ insertAnchors = (text)->
   outputString
 
 ###
+[TOC] for pandoc parser
+###
+createTOC = ($, tab)->
+  $ = cheerio.load($) if (typeof($) == 'string')
+  tocHTML = null
+
+  getTOCHtml = ()->
+    headings = $('h1, h2, h3, h4, h5, h6')
+    tokens = []
+    headings.each (i, elem)->
+      $heading = $(this)
+      if $heading.attr('id')
+        tokens.push({content: $heading.html(), id: $heading.attr('id'), level: parseInt($heading[0].name.slice(1))})
+    tocObject = toc(tokens, {ordered: false, depthFrom: 1, depthTo: 6, tab: tab or '\t'})
+    return md.render(tocObject.content)
+
+  $('p').each (i, elem)->
+    $p = $(this)
+    if $p.text() == '[MPETOC]'
+      tocHTML ?= getTOCHtml()
+      $p.replaceWith(tocHTML)
+
+  return $
+
+
+
+###
 # parse markdown content to html
 
 inputString:         string, required
@@ -1051,6 +1078,8 @@ parseMD = (inputString, option={}, callback)->
           dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
           if dataCodeChunk
             codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
+
+      $ = createTOC($, markdownPreview?.editor?.getTabText())
 
       return finalize($.html())
   else # remarkable parser

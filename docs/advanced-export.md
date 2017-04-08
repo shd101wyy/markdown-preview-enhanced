@@ -28,6 +28,7 @@ Please note that `--filter=pandoc-citeproc` will be automatically added if there
 3. `Scroll sync` is less accurate and has bugs sometimes.  
 4. `ebook` export has problem.  
 5. `Code Chunk` is sometimes buggy.  
+6. `Create TOC` command doesn't work, but `[TOC]` works.  
 
 ## Front-Matter   
 `pandoc document export` requires writing `front-matter`.  

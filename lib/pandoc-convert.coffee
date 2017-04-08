@@ -194,6 +194,7 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
   outputString = ""
   lines = text.split('\n')
   i = 0
+  inCodeBlock = false
   while i < lines.length
     line = lines[i]
 
@@ -206,6 +207,12 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
       outputString += "```{.r data-code-chunk=\"#{dataCodeChunk}\"}\n"
       i += 1
       continue
+
+    if line.startsWith '```'
+      inCodeBlock = not inCodeBlock
+
+    if line.match(/^\[toc\]/i) and !inCodeBlock
+      line = '[MPETOC]'
 
     outputString += line + '\n'
     i += 1

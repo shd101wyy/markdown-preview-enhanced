@@ -3,6 +3,7 @@
 * [x] fix issue [#345](https://github.com/shd101wyy/markdown-preview-enhanced/issues/345).
 * [x] fix issue [#352](https://github.com/shd101wyy/markdown-preview-enhanced/issues/352).
 * [x] fix TOC numbered list tab issue [#355](https://github.com/shd101wyy/markdown-preview-enhanced/issues/355).   
+* [x] pandoc parser now supports `[TOC]`.  
 
 ## 0.10.11
 * [x] fix plantuml `@import` issue. [#342](https://github.com/shd101wyy/markdown-preview-enhanced/issues/342).      

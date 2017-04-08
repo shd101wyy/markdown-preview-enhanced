@@ -53,6 +53,7 @@ opt =
   depthFrom: number, default 1
   depthTo: number, default 6
   tab: string, default '\t'
+tokens = [{content:String, level:Number, id:Optional|String }]
 ###
 toc = (tokens, opt={})->
   if !tokens or !tokens.length
@@ -82,7 +83,7 @@ toc = (tokens, opt={})->
     token = tokens[i]
     content = token.content
     level = token.level
-    slug = uslug(content)
+    slug = token.id or uslug(content)
 
     if tocTable[slug] >= 0
       tocTable[slug] += 1
