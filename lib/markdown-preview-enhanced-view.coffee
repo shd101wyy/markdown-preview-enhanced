@@ -1030,7 +1030,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # fix pandoc math issue
     if @usePandocParser and typeof(MathJax) != 'undefined'
       # @element.getElementsByClassName 'math' doesn't work properly
-      mathElements = @element.querySelectorAll('math.inline, math.display')
+      mathElements = @element.querySelectorAll('.math.inline, .math.display')
       for mathElement in mathElements
         displayMode = mathElement.classList.contains('display')
         tagStart = null
@@ -1219,7 +1219,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   fixPandocMathExpression: (htmlContent)->
     return htmlContent if !@usePandocParser
     $ = cheerio.load htmlContent
-    $('.math').each (index, elem)=>
+    $('.math.inline, .math.display').each (index, elem)=>
       $math = $(elem)
       displayMode = $math.hasClass('display')
       if displayMode
