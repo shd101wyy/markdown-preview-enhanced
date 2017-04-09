@@ -41,7 +41,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **2-side scroll sync**  
 - **[Import external files](./docs/doc-imports.md)**
 - **[Code Chunks (beta)](./docs/code-chunk.md)**
-- **[pandoc](./docs/advanced-export.md)**
+- **[pandoc](./docs/pandoc.md)**
 - **[prince](./docs/prince.md)**  
 - **[ebook](./docs/ebook.md)**
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
@@ -126,7 +126,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 - **Export to Disk**
 	- Export **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** etc files.
 - **Pandoc Document Export**
-	- [doc](./docs/advanced-export.md)
+	- [doc](./docs/pandoc.md)
 - **Save as Markdown**
 	- [doc](./docs/markdown.md)
 
