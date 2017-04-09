@@ -182,7 +182,9 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 # callback(error, html)
 pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
-  args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor'), # -tex_math_dollars doesn't work properly
+          '-t', 'html']
+          .concat(args).filter((arg)->arg.length)
 
   ###
   convert code chunk
@@ -194,6 +196,7 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
   outputString = ""
   lines = text.split('\n')
   i = 0
+  inCodeBlock = false
   while i < lines.length
     line = lines[i]
 
@@ -206,6 +209,12 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
       outputString += "```{.r data-code-chunk=\"#{dataCodeChunk}\"}\n"
       i += 1
       continue
+
+    if line.startsWith '```'
+      inCodeBlock = not inCodeBlock
+
+    if line.match(/^\[toc\]/i) and !inCodeBlock
+      line = '[MPETOC]'
 
     outputString += line + '\n'
     i += 1
@@ -233,7 +242,7 @@ callback(err, outputFilePath)
 pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath, deleteImages}, config={}, callback=null)->
   deleteImages = deleteImages or true
   config = loadOutputYAML fileDirectoryPath, config
-  args = []
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor')]
 
   extension = null
   outputConfig = null

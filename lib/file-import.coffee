@@ -64,11 +64,12 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
     acc = acc + height
 
-  outputString = inputString.replace /(^|\n)\@import(\s+)\"([^\"]+)\"/g, (whole, prefix, spaces, filePath, offset)->
+  outputString = inputString.replace /^\@import(\s+)\"([^\"]+)\";*/gm, (whole, spaces, filePath, offset)->
     start = 0
     if editor
       start = (inputString.slice(0, offset + 1).match(/\n/g)?.length) or 0
 
+    filePath = filePath.trim()
     if filePath.match(protocolsWhiteListRegExp)
       absoluteFilePath = filePath
     else if filePath.startsWith('/')
@@ -78,18 +79,18 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
     if filesCache?[absoluteFilePath] # already in cache
       updateHeightsDelta(filesCache[absoluteFilePath], start) if editor
-      return prefix + filesCache[absoluteFilePath]
+      return filesCache[absoluteFilePath]
 
     extname = path.extname(filePath)
     output = ''
     if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
       if filePath.match(protocolsWhiteListRegExp)
-        output = "![](#{filePath})  "
+        imageSrc = filePath
       else if useAbsoluteImagePath
-        output = "![](#{'/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
+        imageSrc = '/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()
       else
-        output = "![](#{path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()})  "
-
+        imageSrc = path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()
+      output = "![](#{encodeURI(imageSrc)})  "
       filesCache?[absoluteFilePath] = output
     else
       try
@@ -102,7 +103,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = '<div>' + fileContent + '</div>  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.csv'  # csv file
-          parseResult = Baby.parse(fileContent)
+          parseResult = Baby.parse(fileContent.trim())
           if parseResult.errors.length
             output = "<pre>#{parseResult.errors[0]}</pre>  "
           else
@@ -126,10 +127,10 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
       catch e # failed to load file
-        output = "#{prefix}<pre>#{e.toString()}</pre>  "
+        output = "<pre>#{e.toString()}</pre>  "
 
     updateHeightsDelta(output, start) if editor
-    return prefix + output
+    return output
 
   # console.log(heightsDelta, outputString)
   return {outputString, heightsDelta}

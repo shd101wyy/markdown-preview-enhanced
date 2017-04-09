@@ -878,6 +878,75 @@ insertAnchors = (text)->
   outputString
 
 ###
+[TOC] for pandoc parser
+###
+createTOC = ($, tab)->
+  $ = cheerio.load($) if (typeof($) == 'string')
+  tocHTML = null
+
+  getTOCHtml = ()->
+    headings = $('h1, h2, h3, h4, h5, h6')
+    tokens = []
+    headings.each (i, elem)->
+      $heading = $(this)
+      if $heading.attr('id')
+        tokens.push({content: $heading.html(), id: $heading.attr('id'), level: parseInt($heading[0].name.slice(1))})
+    tocObject = toc(tokens, {ordered: false, depthFrom: 1, depthTo: 6, tab: tab or '\t'})
+    return md.render(tocObject.content)
+
+  $('p').each (i, elem)->
+    $p = $(this)
+    if $p.text() == '[MPETOC]'
+      tocHTML ?= getTOCHtml()
+      $p.replaceWith(tocHTML)
+
+  return $
+
+###
+analyze slideConfigs for pandoc
+###
+analyzeSlideConfigs = (text)->
+  slideConfigs = []
+  outputString = text.replace /(^|\n)\<\!\-\-\s+slide\s+([\w\W]*?)\-\-\>/g, (whole, prefix, args, offset)->
+    match = args.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
+
+    # skip <!-- slide --> within code block
+    # eg:
+    # ```html
+    # <!-- slide -->
+    # ```
+    str = text.slice(0, offset)
+    n = str.match(/^\`\`\`/gm)?.length or 0
+    return whole if n % 2 != 0
+
+    if match and match.length % 2 == 0
+      option = {}
+      i = 0
+      while i < match.length
+        key = match[i]
+        value = match[i+1]
+        try
+          option[key] = JSON.parse(value)
+        catch e
+          null # do nothing
+        i += 2
+    else
+      option = {}
+
+    if prefix == '\n'
+      line = str.match(/^/gm).length
+    else
+      line = 0
+
+    option.line = getRealDataLine(line)
+    slideConfigs.push option
+    return '<span class="new-slide"></span>  \n'
+
+  return {slideConfigs, outputString}
+
+
+
+###
 # parse markdown content to html
 
 inputString:         string, required
@@ -944,11 +1013,15 @@ parseMD = (inputString, option={}, callback)->
   yamlConfig = yamlConfig or {}
 
   # insert anchors
-  if usePandocParser and option.isForPreview
+  if usePandocParser and option.isForPreview and !inputString.match(/^<!--\s+slide/gm)
     inputString = insertAnchors(inputString)
 
   # check document imports
   {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+
+  # check slideConfigs
+  if usePandocParser
+    {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -1004,7 +1077,7 @@ parseMD = (inputString, option={}, callback)->
       opt = tokens[idx].option
       opt.line = tokens[idx].line
       slideConfigs.push(opt)
-      return '<div class="new-slide"></div>'
+      return '<span class="new-slide"></span>'
     return ''
 
   finalize = (html)->
@@ -1051,6 +1124,8 @@ parseMD = (inputString, option={}, callback)->
           dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
           if dataCodeChunk
             codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
+
+      $ = createTOC($, markdownPreview?.editor?.getTabText())
 
       return finalize($.html())
   else # remarkable parser

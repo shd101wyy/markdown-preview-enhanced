@@ -70,6 +70,12 @@ module.exports =
       default: "",
       description: "Comma separated pandoc arguments e.g. `--smart, --filter=/bin/exe`. Please use long argument names."
       order: 18
+    pandocMarkdownFlavor:
+      type: 'string'
+      default: 'markdown-raw_tex+tex_math_single_backslash' # 'markdown-raw_tex+tex_math_dollars'
+      title: 'Pandoc Options: Markdown Flavor'
+      description: 'Enter the pandoc markdown flavor you want'
+      order: 19
     mathRenderingOption:
       type: "string"
       default: "KaTeX"

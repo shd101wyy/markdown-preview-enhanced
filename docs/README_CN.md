@@ -40,7 +40,7 @@ Markdown Preview Enhanced
 - **编辑与预览滑动同步**  
 - **[导入外部文件](doc-imports.md)**
 - **[Code Chunks (beta)](./code-chunk.md)**
-- **[pandoc](./advanced-export.md)**
+- **[pandoc](./pandoc.md)**
 - **[prince](./prince.md)**  
 - **[ebook](./ebook.md)**  
 - **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
@@ -124,7 +124,7 @@ Markdown Preview Enhanced
 - **Export to Disk**
 	- 导出 **HTML**, **PDF**, **PNG**, **JPEG**, **ePub** 等文件。
 - **Pandoc Document Export**
-	- [文档](./advanced-export.md)
+	- [文档](./pandoc.md)
 - **Save as Markdown**
 	- [文档](./markdown.md)
 
