@@ -182,7 +182,9 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 # callback(error, html)
 pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
-  args = ['-t', 'html'].concat(args).filter((arg)->arg.length)
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor'),
+          '-t', 'html']
+          .concat(args).filter((arg)->arg.length)
 
   ###
   convert code chunk
@@ -240,7 +242,7 @@ callback(err, outputFilePath)
 pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath, deleteImages}, config={}, callback=null)->
   deleteImages = deleteImages or true
   config = loadOutputYAML fileDirectoryPath, config
-  args = []
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor')]
 
   extension = null
   outputConfig = null

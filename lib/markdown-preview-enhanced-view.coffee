@@ -49,6 +49,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
     @mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
+    @mathInlineDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline'))
+    @mathBlockDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock'))
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
@@ -1021,6 +1023,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax' and !@usePandocParser
+
+    # fix pandoc math issue
+    if @usePandocParser and typeof(MathJax) != 'undefined'
+      mathElements = @element.getElementsByClassName 'math'
+      for mathElement in mathElements
+        displayMode = mathElement.classList.contains('display')
+        tagStart = null
+        tagEnd = null
+        if displayMode
+          tagStart = @mathBlockDelimiters[0][0]
+          tagEnd = @mathBlockDelimiters[0][1]
+        else
+          tagStart = @mathInlineDelimiters[0][0]
+          tagEnd = @mathInlineDelimiters[0][1]
+        mathElement.innerHTML = tagStart + mathElement.innerText.trim() + tagEnd
+        if displayMode and mathElement.nextElementSibling?.tagName == 'BR'
+          mathElement.nextElementSibling.remove()
+
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
