@@ -907,7 +907,7 @@ analyze slideConfigs for pandoc
 ###
 analyzeSlideConfigs = (text)->
   slideConfigs = []
-  outputString = text.replace /(^|\n)\<\!\-\-\s+slide\s+([\w\W]*?)\-\-\>/g, (whole, prefix, args)->
+  outputString = text.replace /(^|\n)\<\!\-\-\s+slide\s+([\w\W]*?)\-\-\>/g, (whole, prefix, args, offset)->
     match = args.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
 
     if match and match.length % 2 == 0
@@ -923,8 +923,15 @@ analyzeSlideConfigs = (text)->
         i += 2
     else
       option = {}
+
+    if prefix == '\n'
+      line = text.slice(0, offset).match(/^/gm).length
+    else
+      line = 0
+
+    option.line = getRealDataLine(line)
     slideConfigs.push option
-    return '<span class="new-slide"></span>'
+    return '<span class="new-slide"></span>  \n'
 
   return {slideConfigs, outputString}
 
@@ -997,11 +1004,15 @@ parseMD = (inputString, option={}, callback)->
   yamlConfig = yamlConfig or {}
 
   # insert anchors
-  if usePandocParser and option.isForPreview
+  if usePandocParser and option.isForPreview and !inputString.match(/^<!--\s+slide/gm)
     inputString = insertAnchors(inputString)
 
   # check document imports
   {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+
+  # check slideConfigs
+  if usePandocParser
+    {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
 
   # overwrite remark heading parse function
   md.renderer.rules.heading_open = (tokens, idx)=>
@@ -1075,8 +1086,6 @@ parseMD = (inputString, option={}, callback)->
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
-    {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
-
     args = yamlConfig.pandoc_args or []
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
