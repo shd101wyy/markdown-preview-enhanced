@@ -1024,6 +1024,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
   renderMathJax: ()->
     return if @mathRenderingOption != 'MathJax' and !@usePandocParser
 
+    if typeof(MathJax) == 'undefined'
+      return loadMathJax document, ()=> @renderMathJax()
+
     # fix pandoc math issue
     if @usePandocParser and typeof(MathJax) != 'undefined'
       mathElements = @element.getElementsByClassName 'math'
@@ -1040,9 +1043,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
         mathElement.innerHTML = tagStart + mathElement.innerText.trim() + tagEnd
         if displayMode and mathElement.nextElementSibling?.tagName == 'BR'
           mathElement.nextElementSibling.remove()
-
-    if typeof(MathJax) == 'undefined'
-      return loadMathJax document, ()=> @renderMathJax()
 
     if @mathJaxProcessEnvironments or @usePandocParser
       return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=> @scrollMap = null
@@ -1218,7 +1218,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
   fixPandocMathExpression: (htmlContent)->
     return htmlContent if !@usePandocParser
     $ = cheerio.load htmlContent
-    window.ch = $
     $('.math').each (index, elem)=>
       $math = $(elem)
       displayMode = $math.hasClass('display')
@@ -1503,7 +1502,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ## Presentation
   ##################################################
   parseSlides: (html, slideConfigs, yamlConfig)->
-    slides = html.split '<div class="new-slide"></div>'
+    slides = html.split '<span class="new-slide"></span>'
     slides = slides.slice(1)
     output = ''
 
@@ -1586,7 +1585,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     """
 
   parseSlidesForExport: (html, slideConfigs, useRelativeImagePath)->
-    slides = html.split '<div class="new-slide"></div>'
+    slides = html.split '<span class="new-slide"></span>'
     slides = slides.slice(1)
     output = ''
 

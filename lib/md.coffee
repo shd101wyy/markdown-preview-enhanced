@@ -902,6 +902,32 @@ createTOC = ($, tab)->
 
   return $
 
+###
+analyze slideConfigs for pandoc
+###
+analyzeSlideConfigs = (text)->
+  slideConfigs = []
+  outputString = text.replace /(^|\n)\<\!\-\-\s+slide\s+([\w\W]*?)\-\-\>/g, (whole, prefix, args)->
+    match = args.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
+
+    if match and match.length % 2 == 0
+      option = {}
+      i = 0
+      while i < match.length
+        key = match[i]
+        value = match[i+1]
+        try
+          option[key] = JSON.parse(value)
+        catch e
+          null # do nothing
+        i += 2
+    else
+      option = {}
+    slideConfigs.push option
+    return '<span class="new-slide"></span>'
+
+  return {slideConfigs, outputString}
+
 
 
 ###
@@ -1031,7 +1057,7 @@ parseMD = (inputString, option={}, callback)->
       opt = tokens[idx].option
       opt.line = tokens[idx].line
       slideConfigs.push(opt)
-      return '<div class="new-slide"></div>'
+      return '<span class="new-slide"></span>'
     return ''
 
   finalize = (html)->
@@ -1049,6 +1075,8 @@ parseMD = (inputString, option={}, callback)->
     return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
+    {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
+
     args = yamlConfig.pandoc_args or []
     args = [] if not (args instanceof Array)
     if yamlConfig.bibliography or yamlConfig.references
