@@ -910,6 +910,15 @@ analyzeSlideConfigs = (text)->
   outputString = text.replace /(^|\n)\<\!\-\-\s+slide\s+([\w\W]*?)\-\-\>/g, (whole, prefix, args, offset)->
     match = args.match(/(?:[^\s\n:"']+|"[^"]*"|'[^']*')+/g) # split by space and \newline and : (not in single and double quotezz)
 
+    # skip <!-- slide --> within code block
+    # eg:
+    # ```html
+    # <!-- slide -->
+    # ```
+    str = text.slice(0, offset)
+    n = str.match(/^\`\`\`/gm)?.length or 0
+    return whole if n % 2 != 0
+
     if match and match.length % 2 == 0
       option = {}
       i = 0
@@ -925,7 +934,7 @@ analyzeSlideConfigs = (text)->
       option = {}
 
     if prefix == '\n'
-      line = text.slice(0, offset).match(/^/gm).length
+      line = str.match(/^/gm).length
     else
       line = 0
 
