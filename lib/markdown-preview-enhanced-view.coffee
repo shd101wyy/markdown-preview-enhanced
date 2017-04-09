@@ -1029,7 +1029,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # fix pandoc math issue
     if @usePandocParser and typeof(MathJax) != 'undefined'
-      mathElements = @element.getElementsByClassName 'math'
+      # @element.getElementsByClassName 'math' doesn't work properly
+      mathElements = @element.querySelectorAll('math.inline, math.display')
       for mathElement in mathElements
         displayMode = mathElement.classList.contains('display')
         tagStart = null
