@@ -182,7 +182,7 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 # callback(error, html)
 pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
-  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor') + ('-tex_math_dollars'),
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor'), # -tex_math_dollars doesn't work properly
           '-t', 'html']
           .concat(args).filter((arg)->arg.length)
 
