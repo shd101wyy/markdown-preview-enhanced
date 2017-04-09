@@ -1041,7 +1041,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         else
           tagStart = @mathInlineDelimiters[0][0]
           tagEnd = @mathInlineDelimiters[0][1]
-        mathElement.innerHTML = tagStart + mathElement.innerText.trim() + tagEnd
+        mathElement.innerHTML = tagStart + mathElement.innerText.trim().replace(/^\$\$/, '').replace(/\$\$$/, '') + tagEnd
         if displayMode and mathElement.nextElementSibling?.tagName == 'BR'
           mathElement.nextElementSibling.remove()
 
@@ -1228,7 +1228,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       else
         tagStart = @mathInlineDelimiters[0][0]
         tagEnd = @mathInlineDelimiters[0][1]
-      $math.html(tagStart + $math.text().trim() + tagEnd)
+      $math.html(tagStart + $math.text().trim().replace(/^\$\$/, '').replace(/\$\$$/, '') + tagEnd)
 
       if displayMode and $math.next()?[0]?.name == 'br'
         $math.next().remove()
