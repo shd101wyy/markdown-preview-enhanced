@@ -1215,6 +1215,26 @@ class MarkdownPreviewEnhancedView extends ScrollView
     html += "<script data-js-code>#{jsCode}</script>" if jsCode
     return html
 
+  fixPandocMathExpression: (htmlContent)->
+    return htmlContent if !@usePandocParser
+    $ = cheerio.load htmlContent
+    window.ch = $
+    $('.math').each (index, elem)=>
+      $math = $(elem)
+      displayMode = $math.hasClass('display')
+      if displayMode
+        tagStart = @mathBlockDelimiters[0][0]
+        tagEnd = @mathBlockDelimiters[0][1]
+      else
+        tagStart = @mathInlineDelimiters[0][0]
+        tagEnd = @mathInlineDelimiters[0][1]
+      $math.html(tagStart + $math.text().trim() + tagEnd)
+
+      if displayMode and $math.next()?[0]?.name == 'br'
+        $math.next().remove()
+
+    return $.html()
+
   ##
   # {Function} callback (htmlContent)
   getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType, isForPrince, embedLocalImages}, callback)->
@@ -1235,14 +1255,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # replace code chunks inside htmlContent
       htmlContent = @insertCodeChunksResult htmlContent
+      htmlContent = @fixPandocMathExpression htmlContent
 
-      if mathRenderingOption == 'KaTeX'
-        if offline
-          mathStyle = "<link rel=\"stylesheet\"
-                href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
-        else
-          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
-      else if mathRenderingOption == 'MathJax'
+      if mathRenderingOption == 'MathJax' or @usePandocParser
         inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
         block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
         mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
@@ -1274,6 +1289,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
           </script>
           <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
           "
+      else if mathRenderingOption == 'KaTeX'
+        if offline
+          mathStyle = "<link rel=\"stylesheet\"
+                href=\"file:///#{path.resolve(__dirname, '../node_modules/katex/dist/katex.min.css')}\">"
+        else
+          mathStyle = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css\">"
       else
         mathStyle = ''
 
