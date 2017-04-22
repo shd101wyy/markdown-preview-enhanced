@@ -1,5 +1,5 @@
 ## 0.11.1
-* [ ] add `class` and `id` field to `slide` of presentation.  
+* [ ] add `class` and `id` field to `slide` of presentation & update presentation-intro.md.  
 * [x] fix issue [#368](https://github.com/shd101wyy/markdown-preview-enhanced/issues/368), open file whose path has space.  
 * [x] upgrade MathJax cdn [#361](https://github.com/shd101wyy/markdown-preview-enhanced/issues/361).  
 * [x] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).

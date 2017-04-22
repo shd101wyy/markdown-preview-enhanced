@@ -1110,7 +1110,7 @@ parseMD = (inputString, option={}, callback)->
               return cb(null, css)
       async.parallel asyncFunctions, (error, results)->
         css = results.join('')
-        html = "<style>#{css}</style>" + html
+        html = html + "<style>#{css}</style>"
         return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
     else
       return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})

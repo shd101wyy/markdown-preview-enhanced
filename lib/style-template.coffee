@@ -487,7 +487,7 @@ module.exports = """
 
     .slide {
       position: relative;
-      background-color: @bg !important;
+      background-color: @bg;
 
       //width: 100%; # need to be set later
       //height: 100%;

@@ -1543,6 +1543,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       styleString = ''
       videoString = ''
       iframeString = ''
+      classString = slideConfig.class or ''
+      idString = if slideConfig.id then "id=\"#{slideConfig.id}\"" else ''
       if slideConfig['data-background-image']
         styleString += "background-image: url('#{@resolveFilePath(slideConfig['data-background-image'])}');"
 
@@ -1584,7 +1586,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         """
 
       output += """
-        <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
+        <div class='slide #{classString}' #{idString} data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
           #{videoString}
           #{iframeString}
           <section>#{slide}</section>
@@ -1608,6 +1610,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     parseAttrString = (slideConfig)=>
       attrString = ''
+
       if slideConfig['data-background-image']
         attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], useRelativeImagePath)}'"
 
@@ -1647,6 +1650,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       slide = slides[i]
       slideConfig = slideConfigs[i]
       attrString = parseAttrString(slideConfig)
+      classString = slideConfig.class or ''
+      idString = if slideConfig.id then "id=\"#{slideConfig.id}\"" else ''
 
       if !slideConfig['vertical']
         if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
@@ -1654,7 +1659,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if i < slides.length - 1 and slideConfigs[i+1]['vertical'] # start of vertical slides
           output += "<section>"
 
-      output += "<section #{attrString}>#{slide}</section>"
+      output += "<section #{attrString} #{idString} class=\"#{classString}\">#{slide}</section>"
       i += 1
 
     if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
