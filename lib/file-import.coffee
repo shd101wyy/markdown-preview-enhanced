@@ -1,4 +1,4 @@
-Baby = require('babyparse')
+Baby = null
 path = require 'path'
 fs = require 'fs'
 
@@ -103,6 +103,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = '<div>' + fileContent + '</div>  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.csv'  # csv file
+          Baby ?= require('babyparse')
           parseResult = Baby.parse(fileContent.trim())
           if parseResult.errors.length
             output = "<pre>#{parseResult.errors[0]}</pre>  "

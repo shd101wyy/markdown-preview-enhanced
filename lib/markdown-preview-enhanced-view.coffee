@@ -556,6 +556,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @setInitialScrollPos()
       @addBackToTopButton()
       @addRefreshButton()
+      @processYAMLConfig(yamlConfig)
 
       @textChanged = false
 
@@ -600,6 +601,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # render again
       @renderMarkdown()
+
+  processYAMLConfig: (yamlConfig={})->
+    if yamlConfig.id
+      @element.id = yamlConfig.id
+    if yamlConfig.class
+      cls = yamlConfig.class
+      cls = [cls] if typeof(cls) == 'string'
+      cls.forEach (c)=>
+        @element.classList.add c
 
   bindEvents: ->
     @bindTagAClickEvent()

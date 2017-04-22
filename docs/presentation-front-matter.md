@@ -131,5 +131,8 @@ presentation:
   # - Set to 0 to disable movement along an axis
   parallaxBackgroundHorizontal: 200
   parallaxBackgroundVertical: 50
+
+  # Enable Speake Notes
+  enableSpeakerNotes: false
 ---
 ```

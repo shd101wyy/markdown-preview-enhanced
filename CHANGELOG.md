@@ -4,6 +4,8 @@
 * [x] upgrade MathJax cdn [#361](https://github.com/shd101wyy/markdown-preview-enhanced/issues/361).  
 * [ ] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).
 * [ ] add doc for customizing css.
+* [ ] `@import` double quotes and single quotes.
+* [x] add `id` and `class` front-matter config.
 
 ## 0.10.12
 * [x] `file import` now can import image whose path has spaces, eg: `@import "test copy.png"`.  
