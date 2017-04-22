@@ -1263,6 +1263,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       htmlContent = @formatStringAfterParsing(html)
       yamlConfig = yamlConfig or {}
 
+      elementId = yamlConfig.id or ''
+      elementClass = yamlConfig.class or []
+      elementClass = [elementClass] if typeof(elementClass) == 'string'
+      elementClass = elementClass.join(' ')
+
 
       # replace code chunks inside htmlContent
       htmlContent = @insertCodeChunksResult htmlContent
@@ -1400,7 +1405,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         #{presentationScript}
       </head>
-      <body class=\"markdown-preview-enhanced #{phantomjsClass} #{princeClass}\" #{if @presentationMode then 'data-presentation-mode' else ''}>
+      <body class=\"markdown-preview-enhanced #{phantomjsClass} #{princeClass} #{elementClass}\" #{if @presentationMode then 'data-presentation-mode' else ''} #{if elementId then "id=\"#{elementId}\"" else ''}>
 
       #{htmlContent}
 

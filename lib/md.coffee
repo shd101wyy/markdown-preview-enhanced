@@ -1102,6 +1102,7 @@ parseMD = (inputString, option={}, callback)->
         (cb)->
           less.render fileContent, {paths: [path.dirname(absoluteFilePath)]}, (error, output)->
             if error
+              atom.notifications.addError('Failed to compile less file: ' + absoluteFilePath, detail: error.toString())
               return cb(null, '')
             else
               css = output.css or ''
