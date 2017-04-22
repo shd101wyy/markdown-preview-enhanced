@@ -2,7 +2,7 @@
 * [ ] add `class` and `id` field to `slide` of presentation.  
 * [x] fix issue [#368](https://github.com/shd101wyy/markdown-preview-enhanced/issues/368), open file whose path has space.  
 * [x] upgrade MathJax cdn [#361](https://github.com/shd101wyy/markdown-preview-enhanced/issues/361).  
-* [ ] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).
+* [x] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).
 * [ ] add doc for customizing css.
 * [ ] `@import` double quotes and single quotes.
 * [x] add `id` and `class` front-matter config.

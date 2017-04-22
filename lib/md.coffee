@@ -7,6 +7,8 @@ uslug = require 'uslug'
 Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_modules/highlights/lib/highlights.js'))
 {File} = require 'atom'
 matter = require('gray-matter')
+async = null
+less = null
 
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 toc = require('./toc')
@@ -1017,7 +1019,7 @@ parseMD = (inputString, option={}, callback)->
     inputString = insertAnchors(inputString)
 
   # check document imports
-  {outputString:inputString, heightsDelta: HEIGHTS_DELTA} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+  {outputString:inputString, heightsDelta: HEIGHTS_DELTA, lessFilesData} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
 
   # check slideConfigs
   if usePandocParser
@@ -1092,7 +1094,25 @@ parseMD = (inputString, option={}, callback)->
 
 
     html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
-    return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
+
+    if lessFilesData.length # compile less files
+      async ?= require 'async'
+      less ?= require 'less'
+      asyncFunctions = lessFilesData.map ({absoluteFilePath, fileContent})->
+        (cb)->
+          less.render fileContent, {paths: [path.dirname(absoluteFilePath)]}, (error, output)->
+            if error
+              return cb(null, '')
+            else
+              css = output.css or ''
+              markdownPreview?.filesCache[absoluteFilePath] = "<style>#{css}</style>"
+              return cb(null, css)
+      async.parallel asyncFunctions, (error, results)->
+        css = results.join('')
+        html = "<style>#{css}</style>" + html
+        return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
+    else
+      return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
   if usePandocParser # pandoc parser
     args = yamlConfig.pandoc_args or []
