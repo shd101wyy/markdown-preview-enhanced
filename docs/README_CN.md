@@ -90,9 +90,9 @@ Markdown Preview Enhanced
 	你也可以用快捷键 <kbd>ctrl+shift+m</kbd> 来开关预览.（为了防止快捷键冲突，请禁用默认的 [markdown preview](https://atom.io/packages/markdown-preview) 插件）
 - <strong>Markdown Preview Enhanced: Toggle Zen Mode </strong>  
 	- 开关清净式写作模式。  
-- <strong>Markdown Preview Enhanced: Customize CSS</strong>
+- <strong>Markdown Preview Enhanced: Customize Css</strong>
   - 编辑预览的样式。 你可以在 `style.less` 文件中的 `markdown-preview-enhanced-custom` 部分编辑样式。  
-  - 如果你在 `style.less` 文件中没有看到 `markdown-preview-enhanced-custom` 部分，请先运行 `Markdown Preview Enhanced: Customize CSS` 指令。
+  - [教程文章](https://github.com/shd101wyy/markdown-preview-enhanced/wiki/Customize-CSS)。
 - <strong>Markdown Preview Enhanced: Create Toc </strong>
   - 生成 TOC （预览需要被事先开启）[文档在这里](./toc.md)。   
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>
