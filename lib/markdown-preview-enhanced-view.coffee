@@ -608,8 +608,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if yamlConfig.class
       cls = yamlConfig.class
       cls = [cls] if typeof(cls) == 'string'
-      cls.forEach (c)=>
-        @element.classList.add c
+      cls = cls.join(' ') or ''
+      @element.setAttribute 'class', "markdown-preview-enhanced native-key-bindings #{cls}"
 
   bindEvents: ->
     @bindTagAClickEvent()
