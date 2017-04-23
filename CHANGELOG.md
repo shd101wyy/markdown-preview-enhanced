@@ -3,7 +3,7 @@
 * [x] fix issue [#368](https://github.com/shd101wyy/markdown-preview-enhanced/issues/368), open file whose path has space.  
 * [x] upgrade MathJax cdn [#361](https://github.com/shd101wyy/markdown-preview-enhanced/issues/361).  
 * [x] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).
-* [ ] add doc for customizing css.
+* [x] add doc for customizing css.
 * [ ] <strike>`@import` double quotes and single quotes.</strike> doesn't work well.
 * [x] add `id` and `class` front-matter config.
 
