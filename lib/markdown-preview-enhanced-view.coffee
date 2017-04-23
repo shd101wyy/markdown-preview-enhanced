@@ -556,6 +556,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @setInitialScrollPos()
       @addBackToTopButton()
       @addRefreshButton()
+      @processYAMLConfig(yamlConfig)
 
       @textChanged = false
 
@@ -601,6 +602,15 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # render again
       @renderMarkdown()
 
+  processYAMLConfig: (yamlConfig={})->
+    if yamlConfig.id
+      @element.id = yamlConfig.id
+    if yamlConfig.class
+      cls = yamlConfig.class
+      cls = [cls] if typeof(cls) == 'string'
+      cls = cls.join(' ') or ''
+      @element.setAttribute 'class', "markdown-preview-enhanced native-key-bindings #{cls}"
+
   bindEvents: ->
     @bindTagAClickEvent()
     @setupCodeChunks()
@@ -644,6 +654,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             # if href.startsWith 'file:///'
             openFilePath = href.slice(8) # remove protocal
             openFilePath = openFilePath.replace(/\.md(\s*)\#(.+)$/, '.md') # remove #anchor
+            openFilePath = decodeURI(openFilePath)
             atom.workspace.open openFilePath,
               split: 'left',
               searchAllPanes: true
@@ -1252,6 +1263,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       htmlContent = @formatStringAfterParsing(html)
       yamlConfig = yamlConfig or {}
 
+      elementId = yamlConfig.id or ''
+      elementClass = yamlConfig.class or []
+      elementClass = [elementClass] if typeof(elementClass) == 'string'
+      elementClass = elementClass.join(' ')
+
 
       # replace code chunks inside htmlContent
       htmlContent = @insertCodeChunksResult htmlContent
@@ -1287,7 +1303,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
                         processEscapes: true}
             });
           </script>
-          <script type=\"text/javascript\" async src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
+          <script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML\"></script>
           "
       else if mathRenderingOption == 'KaTeX'
         if offline
@@ -1389,7 +1405,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         #{presentationScript}
       </head>
-      <body class=\"markdown-preview-enhanced #{phantomjsClass} #{princeClass}\" #{if @presentationMode then 'data-presentation-mode' else ''}>
+      <body class=\"markdown-preview-enhanced #{phantomjsClass} #{princeClass} #{elementClass}\" #{if @presentationMode then 'data-presentation-mode' else ''} #{if elementId then "id=\"#{elementId}\"" else ''}>
 
       #{htmlContent}
 
@@ -1527,6 +1543,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       styleString = ''
       videoString = ''
       iframeString = ''
+      classString = slideConfig.class or ''
+      idString = if slideConfig.id then "id=\"#{slideConfig.id}\"" else ''
       if slideConfig['data-background-image']
         styleString += "background-image: url('#{@resolveFilePath(slideConfig['data-background-image'])}');"
 
@@ -1568,7 +1586,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         """
 
       output += """
-        <div class='slide' data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
+        <div class='slide #{classString}' #{idString} data-offset='#{offset}' style="width: #{width}px; height: #{height}px; zoom: #{zoom}; #{styleString}">
           #{videoString}
           #{iframeString}
           <section>#{slide}</section>
@@ -1592,6 +1610,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     parseAttrString = (slideConfig)=>
       attrString = ''
+
       if slideConfig['data-background-image']
         attrString += " data-background-image='#{@resolveFilePath(slideConfig['data-background-image'], useRelativeImagePath)}'"
 
@@ -1631,6 +1650,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       slide = slides[i]
       slideConfig = slideConfigs[i]
       attrString = parseAttrString(slideConfig)
+      classString = slideConfig.class or ''
+      idString = if slideConfig.id then "id=\"#{slideConfig.id}\"" else ''
 
       if !slideConfig['vertical']
         if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides
@@ -1638,7 +1659,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if i < slides.length - 1 and slideConfigs[i+1]['vertical'] # start of vertical slides
           output += "<section>"
 
-      output += "<section #{attrString}>#{slide}</section>"
+      output += "<section #{attrString} #{idString} class=\"#{classString}\">#{slide}</section>"
       i += 1
 
     if i > 0 and slideConfigs[i-1]['vertical'] # end of vertical slides

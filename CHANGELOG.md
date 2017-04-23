@@ -1,3 +1,12 @@
+## 0.11.1
+* [x] add `class` and `id` field to `slide` of presentation & update presentation-intro.md.  
+* [x] fix issue [#368](https://github.com/shd101wyy/markdown-preview-enhanced/issues/368), open file whose path has space.  
+* [x] upgrade MathJax cdn [#361](https://github.com/shd101wyy/markdown-preview-enhanced/issues/361).  
+* [x] support local style [#351](https://github.com/shd101wyy/markdown-preview-enhanced/issues/351).
+* [x] add doc for customizing css.
+* [ ] <strike>`@import` double quotes and single quotes.</strike> doesn't work well.
+* [x] add `id` and `class` front-matter config.
+
 ## 0.10.12
 * [x] `file import` now can import image whose path has spaces, eg: `@import "test copy.png"`.  
 * [x] fix issue [#345](https://github.com/shd101wyy/markdown-preview-enhanced/issues/345).

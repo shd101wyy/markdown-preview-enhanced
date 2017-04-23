@@ -90,6 +90,12 @@ For example:
 You just discovered a vertical slide!
 
 <!-- slide -->
+You can set `id` and `class` for your slide like this:  
+```html
+<!-- slide id:"my-id" class:"my-class1 my-class2" -->
+```
+
+<!-- slide -->
 You can set slide background very easily.   
 For example:
 ```html

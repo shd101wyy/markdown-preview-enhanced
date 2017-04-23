@@ -1,4 +1,4 @@
-Baby = require('babyparse')
+Baby = null
 path = require 'path'
 fs = require 'fs'
 
@@ -47,11 +47,13 @@ return
   {Array} heightsDelta : [[start, height, acc, realStart], ...]
           start is the buffer row
           heightsDelta is used to correct scroll sync. please refer to md.coffee
+  {Array} lessFilesData: [ {absoluteFilePath, fileContent}, ... ]
 }
 ###
 fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
   heightsDelta = []
   acc = 0
+  lessFilesData = []
 
   updateHeightsDelta = (str, start)->
     height = (str.match(/\n/g)?.length + 1) or 1
@@ -97,12 +99,15 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         fileContent = fs.readFileSync(absoluteFilePath, {encoding: 'utf-8'})
 
         if extname in markdownFileExtensions # markdown files
-          output = fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, fileDirectoryPath: path.dirname(absoluteFilePath)}).outputString + '  '
+          o = fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, fileDirectoryPath: path.dirname(absoluteFilePath)})
+          output = o.outputString + '  '
+          lessFilesData = lessFilesData.concat(o.lessFilesData)
           filesCache?[absoluteFilePath] = output
         else if extname == '.html' # html file
           output = '<div>' + fileContent + '</div>  '
           filesCache?[absoluteFilePath] = output
         else if extname == '.csv'  # csv file
+          Baby ?= require('babyparse')
           parseResult = Baby.parse(fileContent.trim())
           if parseResult.errors.length
             output = "<pre>#{parseResult.errors[0]}</pre>  "
@@ -110,6 +115,13 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             # format csv to markdown table
             output = _2DArrayToMarkdownTable(parseResult.data)
             filesCache?[absoluteFilePath] = output
+        else if extname == '.css' # css file
+          output = "<style>#{fileContent}</style>"
+          filesCache?[absoluteFilePath] = output
+        else if extname == '.less' # less file
+          lessFilesData.push({absoluteFilePath, fileContent})
+          output = ' '
+          filesCache?[absoluteFilePath] = output
         else if extname in ['.dot'] # graphviz
           output = "```@viz\n#{fileContent}\n```  "
           filesCache?[absoluteFilePath] = output
@@ -133,6 +145,6 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
     return output
 
   # console.log(heightsDelta, outputString)
-  return {outputString, heightsDelta}
+  return {outputString, heightsDelta, lessFilesData}
 
 module.exports = fileImport
