@@ -183,7 +183,8 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
 pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
   args = args or []
   args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor'), # -tex_math_dollars doesn't work properly
-          '-t', 'html']
+          '-t', 'html',
+          '--mathjax']
           .concat(args).filter((arg)->arg.length)
 
   ###
@@ -242,7 +243,7 @@ callback(err, outputFilePath)
 pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath, deleteImages}, config={}, callback=null)->
   deleteImages = deleteImages or true
   config = loadOutputYAML fileDirectoryPath, config
-  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor')]
+  args = ['-f', atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor').replace(/\-raw\_tex/, '')]
 
   extension = null
   outputConfig = null

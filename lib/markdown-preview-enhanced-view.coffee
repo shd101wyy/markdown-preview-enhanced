@@ -262,16 +262,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
-      if @liveUpdate and !@usePandocParser
+      if @liveUpdate
         @updateMarkdown()
 
     @disposables.add @editor.onDidSave ()=>
-      if not @liveUpdate or @usePandocParser
+      if not @liveUpdate
         @textChanged = true
         @updateMarkdown()
 
     @disposables.add @editor.onDidChangeModified ()=>
-      if not @liveUpdate or @usePandocParser
+      if not @liveUpdate
         @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
@@ -1038,24 +1038,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if typeof(MathJax) == 'undefined'
       return loadMathJax document, ()=> @renderMathJax()
 
-    # fix pandoc math issue
-    if @usePandocParser and typeof(MathJax) != 'undefined'
-      # @element.getElementsByClassName 'math' doesn't work properly
-      mathElements = @element.querySelectorAll('.math.inline, .math.display')
-      for mathElement in mathElements
-        displayMode = mathElement.classList.contains('display')
-        tagStart = null
-        tagEnd = null
-        if displayMode
-          tagStart = @mathBlockDelimiters[0][0]
-          tagEnd = @mathBlockDelimiters[0][1]
-        else
-          tagStart = @mathInlineDelimiters[0][0]
-          tagEnd = @mathInlineDelimiters[0][1]
-        mathElement.innerHTML = tagStart + mathElement.innerText.trim().replace(/^\$\$/, '').replace(/\$\$$/, '') + tagEnd
-        if displayMode and mathElement.nextElementSibling?.tagName == 'BR'
-          mathElement.nextElementSibling.remove()
-
     if @mathJaxProcessEnvironments or @usePandocParser
       return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=> @scrollMap = null
 
@@ -1227,25 +1209,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     html += "<script data-js-code>#{jsCode}</script>" if jsCode
     return html
 
-  fixPandocMathExpression: (htmlContent)->
-    return htmlContent if !@usePandocParser
-    $ = cheerio.load htmlContent
-    $('.math.inline, .math.display').each (index, elem)=>
-      $math = $(elem)
-      displayMode = $math.hasClass('display')
-      if displayMode
-        tagStart = @mathBlockDelimiters[0][0]
-        tagEnd = @mathBlockDelimiters[0][1]
-      else
-        tagStart = @mathInlineDelimiters[0][0]
-        tagEnd = @mathInlineDelimiters[0][1]
-      $math.html(tagStart + $math.text().trim().replace(/^\$\$/, '').replace(/\$\$$/, '') + tagEnd)
-
-      if displayMode and $math.next()?[0]?.name == 'br'
-        $math.next().remove()
-
-    return $.html()
-
   ##
   # {Function} callback (htmlContent)
   getHTMLContent: ({isForPrint, offline, useRelativeImagePath, phantomjsType, isForPrince, embedLocalImages}, callback)->
@@ -1271,7 +1234,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # replace code chunks inside htmlContent
       htmlContent = @insertCodeChunksResult htmlContent
-      htmlContent = @fixPandocMathExpression htmlContent
 
       if mathRenderingOption == 'MathJax' or @usePandocParser
         inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
