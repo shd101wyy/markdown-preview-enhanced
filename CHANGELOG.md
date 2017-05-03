@@ -1,4 +1,4 @@
-## ?
+## 0.12.1
 * [x] fix issue [#387](https://github.com/shd101wyy/markdown-preview-enhanced/issues/387) `Pagebreak command ignored`.
 * [x] fix issue [#388](https://github.com/shd101wyy/markdown-preview-enhanced/issues/388).  
 * [x] upgrade `plantuml` to version `1.2017.12` [#382](https://github.com/shd101wyy/markdown-preview-enhanced/issues/382).     
