@@ -7,13 +7,17 @@ path = require 'path'
 smAPI = {}
 smAPI.uploadFile = (filePath, callback)->
   request.post  url:'https://sm.ms/api/upload/', formData: {smfile: fs.createReadStream(filePath)}, (err, httpResponse, body)->
-    body = JSON.parse body
-    if err
-      callback 'Failed to upload image'
-    else if body.code == 'error'
-      callback body.msg, null
-    else
-      callback null, body.data.url
+    try
+      body = JSON.parse body
+      if err
+        callback 'Failed to upload image'
+      else if body.code == 'error'
+        callback body.msg, null
+      else
+        callback null, body.data.url
+    catch error
+      callback 'Failed to connect to sm.ms host', null
+
 
 ###
 # example of how to use this API
