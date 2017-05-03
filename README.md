@@ -63,8 +63,8 @@ You can choose [MathJax](https://github.com/mathjax/MathJax) or [KaTeX](https://
 ## How it works
 - [remarkable](https://github.com/jonschlinkert/remarkable) to convert markdown to html.
 - [KaTeX](https://github.com/Khan/KaTeX) or [MathJax](https://github.com/mathjax/MathJax) to render math expressions. ([KaTeX Supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX)) (MathJax is incompatible with `preview-inline` package)
-  - expression within `$...$` will be rendered normally.  
-  - expression within `$$...$$` and code block <code>\`\`\`math</code> will be rendered in displayMode.   
+  - expression within `$...$` or `\(...\)` will be rendered normally.  
+  - expression within `$$...$$` or `\[...\]` and code block <code>\`\`\`math</code> will be rendered in displayMode.   
   - if you want to enable math highlighting, try [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) package.  
   - You can choose your math rendering method from [settings panel](#settings-panel).   
 		**MathJax** supports more symbols, but it has slower rendering speed compared to **KaTeX**.

@@ -62,8 +62,8 @@ Markdown Preview Enhanced
 ## 该插件如何工作
 - [remarkable](https://github.com/jonschlinkert/remarkable) 转换 markdown 到 html
 - [KaTeX](https://github.com/Khan/KaTeX) 或者 [MathJax](https://github.com/mathjax/MathJax) 来渲染数学表达式。 ([KaTeX 支持的 functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX))
-  - `$...$` 里的内容将被正常渲染。  
-  - `$$...$$` 和 代码块<code>\`\`\`math</code> 里的内容将用 displayMode 渲染。   
+  - `$...$` 或者 `\(...\)` 里的内容将被正常渲染。  
+  - `$$...$$` 或者 `\[...\]` 和 代码块<code>\`\`\`math</code> 里的内容将用 displayMode 渲染。   
   - 你可以在 [settings panel](#settings-panel) 中设置你想要的渲染引擎。   
 		**MathJax** 支持更多的符号，但是比 **KaTeX** 渲染速度更慢。   
   - 想要支持数学表达式的高亮，请考虑安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 插件。

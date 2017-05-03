@@ -89,13 +89,13 @@ module.exports =
     indicatorForMathRenderingInline:
       title: "Inline Indicator"
       type: "string"
-      default: "[[\"$\", \"$\"]]"
+      default: "[[\"$\", \"$\"], [\"\\\\(\", \"\\\\)\"]]"
       description: "Use customized Math expression inline indicator. By default it is '[[\"$\", \"$\"]]', which means content within '**$**' and '**$**' will be rendered in inline mode. You can also define multiple indicators separated by comma. For example, '[[\"$\", \"$\"], [\"\\\\\\\\(\", \"\\\\\\\\)\"]]' will render inline math expression within '**$**' and '**$**', '**\\\\(**' and '**\\\\)**'. `(Restart is required to take effect)`"
       order: 21
     indicatorForMathRenderingBlock:
       title: "Block Indicator"
       type: "string"
-      default: "[[\"$$\", \"$$\"]]"
+      default: "[[\"$$\", \"$$\"], [\"\\\\[\", \"\\\\]\"]]"
       description: "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`"
       order: 22
     mathJaxProcessEnvironments:
