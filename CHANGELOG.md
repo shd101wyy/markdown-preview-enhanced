@@ -1,7 +1,7 @@
-## 0.12.2  
+## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  
 * [x] add `xypic` support for MathJax [#393](https://github.com/shd101wyy/markdown-preview-enhanced/pull/393).   
-* [x] upgrade `MathJax` to version `2.7.1`
+* [x] upgrade `MathJax` to version `2.7.1`.
 * [x] fix <code>```math</code> content escape issue.   
 
 ## 0.12.1
