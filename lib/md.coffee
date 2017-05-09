@@ -456,7 +456,8 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
     openTag = mathRenderingIndicator.block[0][0] or '$$'
     closeTag = mathRenderingIndicator.block[0][1] or '$$'
     mathHtml = parseMath({openTag, closeTag, content, displayMode: true})
-    return "<p #{lineStr}>#{mathHtml}</p>"
+    console.log mathHtml
+    return "<p #{lineStr}>#{mathHtml.unescape()}</p>"
 
   return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
 
