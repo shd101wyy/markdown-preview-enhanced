@@ -5,10 +5,21 @@ plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar
 
 addJob = (content, fileDirectoryPath='', callback) ->
   @jobs.push({content, fileDirectoryPath, callback})
+  @executeJob()
 
 executeJob = () ->
-  for d, i in @jobs
-    generateSVG(d[0], d[1], d[2])
+  if @inProgress
+    return
+
+  @inProgress = true
+  try
+    job = @jobs.shift()
+    while job
+      @generateSVG(job.content, job.fileDirectoryPath, job.callback)
+      job = @jobs.shift()
+  finally
+    @inProgress = false
+
 
 # Async call
 generateSVG = (content, fileDirectoryPath='', callback)->
@@ -49,8 +60,12 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 
 # generateSVG('A -> B')
 plantumlAPI = {
+
   task: null
+  inProgress : false
   jobs : []
+  executeJob: executeJob
+  generateSVG: generateSVG
   render: addJob
 }
 
