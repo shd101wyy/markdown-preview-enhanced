@@ -1252,7 +1252,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
                         processEscapes: true},
               TeX: {
                 extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', \"file://#{path.resolve(__dirname, '../dependencies/mathjax/extensions/TeX/xypic.js')}\"]
-              }
+              },
+              'HTML-CSS': { availableFonts: ['TeX'] }
             });
           </script>
           <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js')}\"></script>
@@ -1272,7 +1273,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
                         processEscapes: true},
               TeX: {
                 extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'http://sonoisa.github.io/xyjax_ext/xypic.js']
-              }
+              },
+              'HTML-CSS': { availableFonts: ['TeX'] }
             });
           </script>
           <script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js\"></script>
@@ -1447,7 +1449,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
               # open pdf
               if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
                 @openFile dest
-      , 500)
+      , 2000)
 
   saveAsPDF: (dest)->
     return if not @editor

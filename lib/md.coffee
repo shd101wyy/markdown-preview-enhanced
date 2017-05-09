@@ -455,9 +455,8 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   if langName == 'math'
     openTag = mathRenderingIndicator.block[0][0] or '$$'
     closeTag = mathRenderingIndicator.block[0][1] or '$$'
-    mathHtml = parseMath({openTag, closeTag, content, displayMode: true})
-    console.log mathHtml
-    return "<p #{lineStr}>#{mathHtml.unescape()}</p>"
+    mathHtml = parseMath({openTag, closeTag, content: content.unescape(), displayMode: true})
+    return "<p #{lineStr}>#{mathHtml}</p>"
 
   return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
 
