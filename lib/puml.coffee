@@ -11,7 +11,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
-  if !content.startsWith('@start')
+  if !(content.match(/^\@start/m))
     content = """
 @startuml
 #{content}

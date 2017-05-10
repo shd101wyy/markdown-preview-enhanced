@@ -24,7 +24,8 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.plantuml(.puml)` file will be rendered by plantuml.  
 * `.wavedrom` file will be rendered by wavedrom.  
 * `.html` file will be embeded directly.  
-* `markdown` file will be parsed and embeded directly.  
+* `.less` and `.css` file will be included as style. 
+* `markdown` file will be parsed and embeded directly.     
 * All other files will be rendered as code block.    
 
 ## Known issues  

@@ -29,7 +29,7 @@ module.exports =
             # skipTags: ["script","noscript","style","textarea"]
           },
           TeX: {
-            extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js']
+            extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'xypic.js']
           },
           'HTML-CSS': { availableFonts: ['TeX'] },
           skipStartupTypeset: true
