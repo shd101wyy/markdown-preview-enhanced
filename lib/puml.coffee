@@ -50,7 +50,6 @@ generateSVG = (content, fileDirectoryPath='', callback)->
                             '-charset', 'UTF-8']
 
   @task.stdin.write(content)
-  # console.log("write content:" + content)
   data = ""
   @task.stdout.on 'data', (chunk)->
     data = data + chunk.toString()
@@ -63,7 +62,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 
         diag = diag + "--></g></svg>"
         #same diagram svg data will be trigger times while the diagram initialize
-        #use hash to prevent callbacks error
+        #use hash to prevent callbacks error, but it still not work very well
         hash = md5(diag)
         if plantumlAPI.oldHash != hash
           plantumlAPI.oldHash = hash
