@@ -42,9 +42,10 @@ generateSVG = (content, fileDirectoryPath='', callback)->
                             '-tsvg',
                             '-charset', 'UTF-8']
 
-    data = ""
+    chunks = []
     @task.stdout.on 'data', (chunk)->
-      data = data + chunk.toString()
+      chunks.push(chunk);
+      data = Buffer.concat(chunks).toString();
       if data.endsWith("--></g></svg>")
         #data may contains many diagrams, lets split it
         diagrams = data.split("--></g></svg>")
