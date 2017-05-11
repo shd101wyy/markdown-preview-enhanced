@@ -9,7 +9,7 @@ I managed many libraries by myself instead of through npm to reduce overall file
     "reveal": "3.4.1",
     "viz": "1.7.0",
     "save-svg-as-png": "v1.1.0",
-    "MathJax": "v2.7.0",
+    "MathJax": "v2.7.1",
     "mpld3": "v0.3.0",
 }
 ```  

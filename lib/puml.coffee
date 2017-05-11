@@ -10,6 +10,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
   content = content.trim()
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
+  #the string have to put this way for make md5 hash right
   if !content.startsWith('@start')
     content = """@startuml
 #{content}
