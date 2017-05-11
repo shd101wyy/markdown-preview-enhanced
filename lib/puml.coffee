@@ -56,7 +56,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
           #same diagram svg data will be trigger times while the diagram initialize
           #use hash to prevent callbacks error, but it still not work very well
           data = ""
-          uml = diag.match(/@startuml(.|\n|\r)*@enduml/);
+          uml = diag.match(/^@startuml$(.|\n|\r)*^@enduml/m);
           if(uml != null)
             #walk around of plantuml bug sometimes "-->" will become "- ->"
             hash = md5(uml[0].replace(/\r/g, "").replace(/- -/g, "--"))
