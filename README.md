@@ -194,11 +194,3 @@ Thank you very much :)
 Thanks for using and supporting this package ;)
 
 > University of Illinois/NCSA Open Source License
-
-```plantuml
-alice -> bob
-```
-
-```plantuml
-bob->(alice)
-```
