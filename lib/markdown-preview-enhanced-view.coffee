@@ -179,6 +179,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         presentationMode: @presentationMode,
         slideConfigs: @slideConfigs,
         filesCache: @filesCache,
+        zoomLevel: @zoomLevel
       }
 
       # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
@@ -215,6 +216,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     d = CACHE[@editor.getPath()]
     if d
       @element.innerHTML = d.html
+      @element.style.zoom = d.zoomLevel
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
