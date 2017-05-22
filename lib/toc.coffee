@@ -56,7 +56,7 @@ opt =
 tokens = [{content:String, level:Number, id:Optional|String }]
 ###
 toc = (tokens, opt={})->
-  if !tokens or !tokens.length
+  if !tokens
     return {content: '', array: []}
 
   ordered = opt.ordered
@@ -69,6 +69,9 @@ toc = (tokens, opt={})->
 
   tokens = tokens.filter (token)->
     token.level >= depthFrom and token.level <= depthTo
+
+  if !(tokens.length)
+    return {content: '', array: []}
 
   outputArr = []
   tocTable = {}
