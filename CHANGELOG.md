@@ -3,6 +3,7 @@
 * [x] upgrade `viz` to `v1.8.0`
 * [x] upgrade `plantuml` to `1.2017.13`
 * [x] upgrade `reveal.js` to `3.5.0`
+* [x] faster `plantuml` rendering thanks to [@river0825](https://github.com/river0825). 
 
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  

@@ -3,6 +3,8 @@ path = require 'path'
 
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
+CALLBACKS = []
+CHUNKS = []
 # Async call
 generateSVG = (content, fileDirectoryPath='', callback)->
   content = content.trim()
@@ -18,28 +20,38 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 @enduml
     """
 
-  task = spawn 'java', [    '-Djava.awt.headless=true',
-                            '-Dplantuml.include.path='+fileDirectoryPath
-                            '-jar', plantumlJarPath,
-                            # '-graphvizdot', 'exe'
-                            '-pipe',
-                            '-tsvg',
-                            '-charset', 'UTF-8']
+  if !@task # init `plantuml.jar` task
+    @task = spawn 'java', [  '-Djava.awt.headless=true',
+                              '-Dplantuml.include.path='+fileDirectoryPath
+                              '-jar', plantumlJarPath,
+                              # '-graphvizdot', 'exe'
+                              '-pipe',
+                              '-tsvg',
+                              '-charset', 'UTF-8']
 
-  task.stdin.write(content)
-  task.stdin.end()
+    # only `on 'data'` once
+    @task.stdout.on 'data', (chunk)->
+      CHUNKS.push(chunk)
+      data = Buffer.concat(CHUNKS).toString()
+      if data.endsWith('--></g></svg>')
+        CHUNKS = [] # clear CHUNKS
+        CALLBACKS.shift()?(data)
 
-  chunks = []
-  task.stdout.on 'data', (chunk)->
-    chunks.push(chunk)
-
-  task.stdout.on 'end', ()->
+  ###
+  @task.stdout.on 'end', ()->
     data = Buffer.concat(chunks).toString()
     callback?(data)
+  ###
+
+  CALLBACKS.push(callback) # save callback to CALLBACKS queue
+  @task.stdin.write(content + "\n")
+  # @task.stdin.end()
+
 
 # generateSVG('A -> B')
 plantumlAPI = {
-  render: generateSVG
+  render: generateSVG,
+  task: null
 }
 
 module.exports = plantumlAPI
