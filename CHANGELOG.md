@@ -1,3 +1,7 @@
+## 0.12.4  
+* [ ] add `zoom` keyboard shortcut support.  
+* [ ] upgrade `viz` to `v1.8.0`
+
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  
 * [x] add `xypic` support for MathJax [#393](https://github.com/shd101wyy/markdown-preview-enhanced/pull/393).   
