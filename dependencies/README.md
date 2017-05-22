@@ -4,10 +4,10 @@ I managed many libraries by myself instead of through npm to reduce overall file
 ```json
 {
     "mermaid": "7.0.0",
-    "plantuml": "1.2017.12",
+    "plantuml": "1.2017.13",
     "wavedrom": "1.4.1",
-    "reveal": "3.4.1",
-    "viz": "1.7.0",
+    "reveal": "3.5.0",
+    "viz": "v1.8.0",
     "save-svg-as-png": "v1.1.0",
     "MathJax": "v2.7.1",
     "mpld3": "v0.3.0",
@@ -25,10 +25,6 @@ I managed many libraries by myself instead of through npm to reduce overall file
 *Attention*: Need to append `.mermaid ` to all selectors in `mermaid.css`, `mermaid.dark.css`, and `mermaid.forest.css`. Otherwise it will pollute `viz` graph.
 
 *Attention*: Need to modify `pdf_a4_portrait.js` file to make it work with *MathJax*.
-
-*Attention*: **viz.js 1.4.1** will cause `EvalError: Refused to evaluate a string as JavaScript` error.
-Need to modify `eval` to eliminate `unsafe-eval` issue.  
-Check [#75](https://github.com/mdaines/viz.js/issues/75).  
 
 *Attention*: **mpld3.v0.3.min.js** min version actually has problem, so use not minified version.  
 

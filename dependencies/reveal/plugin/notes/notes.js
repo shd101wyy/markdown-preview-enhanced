@@ -21,6 +21,9 @@ var RevealNotes = (function() {
 
 		var notesPopup = window.open( notesFilePath, 'reveal.js - Notes', 'width=1100,height=700' );
 
+		// Allow popup window access to Reveal API
+		notesPopup.Reveal = this.Reveal;
+
 		/**
 		 * Connect to the notes window through a postmessage handshake.
 		 * Using postmessage enables us to work in situations where the
@@ -50,10 +53,11 @@ var RevealNotes = (function() {
 		/**
 		 * Posts the current slide data to the notes window
 		 */
-		function post() {
+		function post( event ) {
 
 			var slideElement = Reveal.getCurrentSlide(),
-				notesElement = slideElement.querySelector( 'aside.notes' );
+				notesElement = slideElement.querySelector( 'aside.notes' ),
+				fragmentElement = slideElement.querySelector( '.current-fragment' );
 
 			var messageData = {
 				namespace: 'reveal-notes',
@@ -68,6 +72,21 @@ var RevealNotes = (function() {
 			if( slideElement.hasAttribute( 'data-notes' ) ) {
 				messageData.notes = slideElement.getAttribute( 'data-notes' );
 				messageData.whitespace = 'pre-wrap';
+			}
+
+			// Look for notes defined in a fragment
+			if( fragmentElement ) {
+				var fragmentNotes = fragmentElement.querySelector( 'aside.notes' );
+				if( fragmentNotes ) {
+					notesElement = fragmentNotes;
+				}
+				else if( fragmentElement.hasAttribute( 'data-notes' ) ) {
+					messageData.notes = fragmentElement.getAttribute( 'data-notes' );
+					messageData.whitespace = 'pre-wrap';
+
+					// In case there are slide notes
+					notesElement = null;
+				}
 			}
 
 			// Look for notes defined in an aside element
