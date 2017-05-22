@@ -55,6 +55,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
     @previewScrollDelay = Date.now()
+    @zoomLevel = 1.0
 
     @documentExporterView = null # binded in markdown-preview-enhanced.coffee startMD function
 
@@ -90,6 +91,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
       'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
+      'markdown-preview-enhanced:zoom-in': => @zoomIn()
+      'markdown-preview-enhanced:zoom-out': => @zoomOut()
+      'markdown-preview-enhanced:reset-zoom': => @resetZoom()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -1079,6 +1083,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
         el.setAttribute('data-original', dataOriginal)
 
   resizeEvent: ()->
+    @scrollMap = null
+
+  zoomIn: ()->
+    @zoomLevel = parseFloat(getComputedStyle(@element).zoom) + 0.1
+    @element.style.zoom = @zoomLevel
+    @scrollMap = null
+
+  zoomOut: ()->
+    @zoomLevel = parseFloat(getComputedStyle(@element).zoom) - 0.1
+    @element.style.zoom = @zoomLevel
+    @scrollMap = null
+
+  resetZoom: ()->
+    @zoomLevel = 1.0
+    @element.style.zoom = @zoomLevel
     @scrollMap = null
 
   ###

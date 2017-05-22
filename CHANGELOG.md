@@ -1,8 +1,8 @@
 ## 0.12.4  
-* [ ] add `zoom` keyboard shortcut support.  
-* [ ] upgrade `viz` to `v1.8.0`
-* [ ] upgrade `plantuml` to `1.2017.13`
-* [ ] upgrade `reveal.js` to `3.5.0`
+* [x] support preview `zoom`.  
+* [x] upgrade `viz` to `v1.8.0`
+* [x] upgrade `plantuml` to `1.2017.13`
+* [x] upgrade `reveal.js` to `3.5.0`
 
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  
