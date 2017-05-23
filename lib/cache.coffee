@@ -3,7 +3,8 @@ CACHE, key is @editor.getFilePath()
 used to store rendered cache.
 
 {
-  html: @element.innerHTML
+  html: @previewElement.innerHTML
+  tocHTML: @sidebarTOC.innerHTML
   codeChunksData: @codeChunksData
   graphData: @graphData
   presentationMode: @presentationMode

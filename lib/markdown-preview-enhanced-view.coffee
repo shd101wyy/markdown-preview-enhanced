@@ -22,6 +22,7 @@ princeConvert = require './prince-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
 {protocolsWhiteListRegExp} = require './protocols-whitelist'
+toc = require('./toc')
 
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
@@ -33,6 +34,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
     @previewElement = null
+
+    @sidebarTOC = null
+    @headingElements = null # TODO: highlight sidebar toc for sync.
 
     @tocConfigs = null
     @scrollMap = null
@@ -175,6 +179,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # save cache
       CACHE[@editor.getPath()] = {
         html: @previewElement?.innerHTML or '',
+        tocHTML: @sidebarTOC?.innerHTML or '',
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
@@ -193,7 +198,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.removeAttribute('style')
 
     if not @parseMD
-      {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
+      {@parseMD, @buildScrollMap, @processFrontMatter, @md} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
@@ -214,6 +219,19 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.innerHTML = ''
     @element.appendChild @previewElement
 
+    @sidebarTOC = document.createElement('div') # create new sidebar toc
+    @sidebarTOC.classList.add('mpe-sidebar-toc')
+    @element.appendChild @sidebarTOC
+
+    window.sidebarTOC = @sidebarTOC
+    @sidebarTOC.innerHTML = """<ul>
+<li><p class="sync-line" data-line="7"><a href="#haha">haha</a>
+</p><ul>
+<li><p class="sync-line" data-line="8"><a href="#yoo">Yoo</a></p></li>
+</ul><p></p></li>
+</ul>"""
+
+
     @initEditorEvent()
     @initViewEvent()
 
@@ -222,6 +240,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if d
       # @previewElement = d.previewElement
       @previewElement.innerHTML = d.html
+      @sidebarTOC?.innerHTML = d.tocHTML
       @previewElement.style.zoom = d.zoomLevel
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
@@ -624,6 +643,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewElement.setAttribute 'class', "#{cls}"
 
   bindEvents: ->
+    @renderSidebarTOC()
     @bindTagAClickEvent()
     @setupCodeChunks()
     @initTaskList()
@@ -635,9 +655,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderMathJax()
     @scrollMap = null
 
+  renderSidebarTOC: ->
+    return if !@sidebarTOC or !@tocConfigs
+    tocObject = toc(@tocConfigs.headings, {ordered: false})
+    @sidebarTOC.innerHTML = @md.render(tocObject.content)
+
   # <a href="" > ... </a> click event
   bindTagAClickEvent: ()->
-    as = @previewElement.getElementsByTagName('a')
+    as = @element.getElementsByTagName('a') # TODO: this might be wrong
 
     analyzeHref = (href)=>
       if href and href[0] == '#'
@@ -1094,7 +1119,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
 
   zoomIn: ()->
-    console.log 'zoom-in'
     @zoomLevel = parseFloat(getComputedStyle(@previewElement).zoom) + 0.1
     @previewElement.style.zoom = @zoomLevel
     @scrollMap = null

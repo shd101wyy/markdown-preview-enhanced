@@ -1094,6 +1094,7 @@ parseMD = (inputString, option={}, callback)->
     return ''
 
   finalize = (html)->
+    markdownPreview?.tocConfigs = tocConfigs
     if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
       return parseMD(markdownPreview.editor.getText(), option, callback)
 
@@ -1169,5 +1170,6 @@ parseMD = (inputString, option={}, callback)->
 module.exports = {
   parseMD,
   buildScrollMap,
-  processFrontMatter
+  processFrontMatter,
+  md
 }

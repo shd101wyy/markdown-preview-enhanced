@@ -1,6 +1,6 @@
 module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
-.markdown-preview-enhanced {
+.markdown-preview-enhanced, .mpe-sidebar-toc {
   @fg-accent: @syntax-cursor-color;
   @fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
   @fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
