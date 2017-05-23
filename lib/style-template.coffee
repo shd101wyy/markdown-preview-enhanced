@@ -25,9 +25,9 @@ module.exports = """
     margin-top: 0;
   }
 
-  &[is="space-pen-div"] {
+  &[for="preview"] {
     width: 100%;
-    // height: 100%;
+    height: 100%;
     margin: 0;
     z-index: 999;
     overflow: scroll;
@@ -382,7 +382,7 @@ module.exports = """
   }
 
   // code chunk
-  &[is="space-pen-div"] {
+  &[for="preview"] {
     .code-chunk {
       position: relative;
 
@@ -471,7 +471,7 @@ module.exports = """
     }
   }
 
-  &:not([is="space-pen-div"]) {
+  &:not([for="preview"]) {
     .code-chunk {
       .btn-group {
         display: none;
