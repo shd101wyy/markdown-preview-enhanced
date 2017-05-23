@@ -598,8 +598,11 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
-  renderCodeBlock = (preElement, text, lang, lineNo=null)->
+  renderCodeBlock = (preElement, text, parameters, lineNo=null)->
     highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
+    match = parameters.match(/^\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)$/)
+    lang = match[1]
+    parameters = match[2].trim()
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -612,6 +615,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock.addClass('sync-line')
 
     $(preElement).replaceWith(highlightedBlock)
+
+    classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
+    if classMatch and classMatch[1]
+      highlightedBlock.addClass(classMatch[1])
 
   # parse eg:
   # {node args:["-v"], output:"html"}
@@ -637,6 +644,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       if lineNo != null and !DISABLE_SYNC_LINE
         highlightedBlock.attr({'data-line': lineNo})
         highlightedBlock.addClass('sync-line')
+
+      classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
+      if classMatch and classMatch[1]
+        highlightedBlock.addClass(classMatch[1])
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 

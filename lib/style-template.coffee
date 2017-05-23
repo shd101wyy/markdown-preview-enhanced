@@ -308,6 +308,17 @@ module.exports = """
     // word-wrap: break-word;
   }
 
+  // add line number support
+  pre.editor-colors.lineno {
+    counter-reset: lineNo;
+    .line {
+      &::before {
+        counter-increment: lineNo;
+        content: counter(lineNo) ' \\00a0';
+      }
+    }
+  }
+
   // KBD --------------------
   kbd {
     color: @fg-strong;
