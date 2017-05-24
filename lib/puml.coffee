@@ -1,77 +1,56 @@
 path = require 'path'
 {spawn} = require 'child_process'
-md5 = require('md5');
 
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
+CALLBACKS = []
+CHUNKS = []
 # Async call
 generateSVG = (content, fileDirectoryPath='', callback)->
-
   content = content.trim()
+  # ' @mpe_file_directory_path:/fileDirectoryPath
+  # fileDirectoryPath
+
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
-  #the string have to put this way for make md5 hash right
-  if !content.startsWith('@start')
-    content = """@startuml
+  if !(content.match(/^\@start/m))
+    content = """
+@startuml
 #{content}
-@enduml"""
+@enduml
+    """
 
-  content = content.replace(/\r/g, "")
+  if !@task # init `plantuml.jar` task
+    @task = spawn 'java', [  '-Djava.awt.headless=true',
+                              '-Dplantuml.include.path='+fileDirectoryPath
+                              '-jar', plantumlJarPath,
+                              # '-graphvizdot', 'exe'
+                              '-pipe',
+                              '-tsvg',
+                              '-charset', 'UTF-8']
 
-  hash = md5(content)
-
-  # the cache not work , still dont know why
-  # if plantumlAPI.callbacks[hash]?
-  #   console.log("content cached!!")
-  #   callback?(plantumlAPI.callbacks[hash].result)
-  #   return
-
-  plantumlAPI.callbacks[hash] = {cb:callback, content: content, result: null}
-
-  #keep call size tiny
-  if Object.keys(plantumlAPI.callbacks).length > 20
-    # console.log("callbacks too large, shifting:" + plantumlAPI.callbacks.length + " hash:" + Object.keys(plantumlAPI.callbacks)[0]);
-    delete plantumlAPI.callbacks[Object.keys(plantumlAPI.callbacks)[0]]
-
-  if @task == null
-    @task = spawn 'java', [    '-Djava.awt.headless=true',
-                            '-Dplantuml.include.path='+fileDirectoryPath
-                            '-jar', plantumlJarPath,
-                            # '-graphvizdot', 'exe'
-                            '-pipe',
-                            '-tsvg',
-                            '-charset', 'UTF-8']
-
-    chunks = []
+    # only `on 'data'` once
     @task.stdout.on 'data', (chunk)->
-      chunks.push(chunk);
-      data = Buffer.concat(chunks).toString();
-      if data.endsWith("--></g></svg>")
-        #data may contains many diagrams, lets split it
-        diagrams = data.split("--></g></svg>")
-        for key, diag of diagrams
-          if diag.trim() == ""
-            continue
+      CHUNKS.push(chunk)
+      data = Buffer.concat(CHUNKS).toString()
+      if data.endsWith('--></g></svg>')
+        CHUNKS = [] # clear CHUNKS
+        CALLBACKS.shift()?(data)
 
-          diag = diag + "--></g></svg>"
-          #same diagram svg data will be trigger times while the diagram initialize
-          #use hash to prevent callbacks error, but it still not work very well
-          data = ""
-          uml = diag.match(/^@startuml$(.|\n|\r)*^@enduml/m);
-          if(uml != null)
-            #walk around of plantuml bug sometimes "-->" will become "- ->"
-            hash = md5(uml[0].replace(/\r/g, "").replace(/- -/g, "--"))
-            plantumlAPI.callbacks[hash]?.result = diag
-            plantumlAPI.callbacks[hash]?.cb(diag)
+  ###
+  @task.stdout.on 'end', ()->
+    data = Buffer.concat(chunks).toString()
+    callback?(data)
+  ###
 
+  CALLBACKS.push(callback) # save callback to CALLBACKS queue
+  @task.stdin.write(content + "\n")
+  # @task.stdin.end()
 
-  @task.stdin.write(content)
-  @task.stdin.write("\n")
 
 # generateSVG('A -> B')
 plantumlAPI = {
-  callbacks : []
-  render: generateSVG
+  render: generateSVG,
   task: null
 }
 
