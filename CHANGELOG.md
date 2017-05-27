@@ -1,6 +1,7 @@
 ## 0.12.5 `Future Plan`
 * [ ] highlight sidebar toc when scroll sync.  
 * [ ] support `pandoc` as filter.
+* [ ] multiple preview panes.  
 
 ## 0.12.4 `Current Version`
 * [x] support preview `zoom`.  
