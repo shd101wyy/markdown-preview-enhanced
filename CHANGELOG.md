@@ -3,15 +3,15 @@
 * [ ] support `pandoc` as filter.
 
 ## 0.12.4 `Current Version`
-* [ ] support preview `zoom`.  
-* [x] upgrade `viz` to `v1.8.0`
-* [x] upgrade `plantuml` to `1.2017.13`
-* [x] upgrade `reveal.js` to `3.5.0`
+* [x] support preview `zoom`.  
+* [x] upgrade `viz` to `v1.8.0`.
+* [x] upgrade `plantuml` to `1.2017.13`.
+* [x] upgrade `reveal.js` to `3.5.0`.
 * [x] faster `plantuml` rendering thanks to the contribution by [@river0825](https://github.com/river0825).
 * [x] fix one toc bug [#406](https://github.com/shd101wyy/markdown-preview-enhanced/issues/406).
 * [x] add `class` support for code block and code chunk. Support `lineNo` class for showing line number for code block and code chunk.
-* [ ] support `sidebar` toc.
-* [ ] fix pandoc bibliography absolute file path issue [#]()
+* [x] support `sidebar` toc.
+* [ ] fix pandoc bibliography absolute file path issue [#409](https://github.com/shd101wyy/markdown-preview-enhanced/issues/409).
 * [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).
 * [x] remove `showBackToTopButton` config.   
 

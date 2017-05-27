@@ -673,8 +673,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
 
   renderSidebarTOC: ->
-    return if !@enableSidebarTOC or !@tocConfigs
-    tocObject = toc(@tocConfigs.headings, {ordered: false})
+    return if !@enableSidebarTOC
+    if @usePandocParser
+      headings = @previewElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      tokens = []
+      headings?.forEach (elem, i)->
+        if elem.id
+          tokens.push({content: elem.innerHTML, id: elem.id, level: parseInt(elem.tagName.slice(1))})
+      tocObject = toc(tokens, {ordered: false})
+    else
+      return if !@tocConfigs
+      tocObject = toc(@tocConfigs.headings, {ordered: false})
+
     @sidebarTOC.innerHTML = @md.render(tocObject.content)
     @bindTagAClickEvent(@sidebarTOC)
 
