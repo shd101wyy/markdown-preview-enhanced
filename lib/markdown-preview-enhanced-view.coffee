@@ -286,7 +286,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @editor = null
       @previewElement.onscroll = null
 
-      @element.innerHTML = '<p style="font-size: 24px;"> Open a markdown file to start preview </p>'
+      @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
@@ -1071,9 +1071,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     for el in els
       if el.getAttribute('data-processed') != 'true'
-        helper(el, el.getAttribute('data-original'))
-        if !el.classList.contains 'update'
+        if !el.classList.contains 'initialized'
           el.innerText = 'rendering plantuml graph...\n'
+
+        helper(el, el.getAttribute('data-original'))
+
 
   renderViz: (element=@previewElement)->
     els = element.getElementsByClassName('viz mpe-graph')

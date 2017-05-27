@@ -32,10 +32,15 @@ generateSVG = (content, fileDirectoryPath='', callback)->
     # only `on 'data'` once
     @task.stdout.on 'data', (chunk)->
       CHUNKS.push(chunk)
-      data = Buffer.concat(CHUNKS).toString()
-      if data.endsWith('--></g></svg>')
+      data = Buffer.concat(CHUNKS).toString().trim() # `trim()` here is necessary.
+      if data.endsWith('</svg>')
         CHUNKS = [] # clear CHUNKS
-        CALLBACKS.shift()?(data)
+
+        diagrams = data.split('</svg>')
+        diagrams.forEach (diagram, i)->
+          if diagram.length
+            CALLBACKS.shift()?(diagram + '</svg>')
+
 
   ###
   @task.stdout.on 'end', ()->
