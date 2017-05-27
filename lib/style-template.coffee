@@ -1,14 +1,66 @@
 module.exports = """
 // check markdown-preview-enhanced.coffee loadPreviewTheme function.
-.markdown-preview-enhanced, .mpe-sidebar-toc {
-  @fg-accent: @syntax-cursor-color;
-  @fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
-  @fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
 
-  @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
+@fg-accent: @syntax-cursor-color;
+@fg-strong: contrast(@bg, darken(@fg, 32%), lighten(@fg, 32%));
+@fg-subtle: contrast(@fg, lighten(@fg, 16%), darken(@fg, 16%));
+@border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
+@margin: 16px;
 
-  @margin: 16px;
+.markdown-preview-enhanced-container {
+  .mpe-toolbar {
+    position: fixed;
+    top: 64px;
+    right: 24px;
 
+    .back-to-top-btn, .refresh-btn, .sidebar-toc-btn {
+      float: right;
+      display: none;
+      width: 32px;
+    }
+  }
+
+  &:hover {
+    .back-to-top-btn, .refresh-btn, .sidebar-toc-btn {
+      display: block;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1.0;
+      }
+    }
+  }
+
+  &.show-sidebar-toc {
+    .mpe-sidebar-toc {
+      font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 268px;
+      height: 100%;
+      padding: 48px 0 12px 0;
+      overflow: scroll;
+      background-color: @bg;
+      font-size: 1em;
+      color: @fg;
+
+      ul {
+        list-style-type: none;
+      }
+    }
+
+    .mpe-toolbar {
+      right: 300px;
+    }
+
+    .markdown-preview-enhanced {
+      width: calc(~"100% - 268px");
+    }
+  }
+}
+
+.markdown-preview-enhanced {
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   // font-size: 1.2em;
   font-size: 16px;
@@ -29,7 +81,7 @@ module.exports = """
     width: 100%;
     height: 100%;
     margin: 0;
-    z-index: 999;
+    // z-index: 999;
     overflow: scroll;
     font-size: 16px;
     display: block;
@@ -319,7 +371,7 @@ module.exports = """
         text-align: right;
         padding: 0;
         margin-left: -1em;
-        margin-right: 1em;
+        margin-right: 1.5em;
       }
     }
 
@@ -476,28 +528,6 @@ module.exports = """
         }
       }
     }
-
-    .back-to-top-btn, .refresh-btn {
-      position: fixed;
-      display: none;
-      right: 24px;
-      top: 54px;
-    }
-
-    .back-to-top-btn {
-      right: 72px;
-    }
-
-    &:hover {
-      .back-to-top-btn, .refresh-btn {
-        display: block;
-        opacity: 0.4;
-
-        &:hover {
-          opacity: 1.0;
-        }
-      }
-    }
   }
 
   &:not([for="preview"]) {
@@ -508,10 +538,6 @@ module.exports = """
       .status {
         display: none;
       }
-    }
-
-    .back-to-top-btn {
-      display: none;
     }
   }
 }
@@ -578,7 +604,7 @@ module.exports = """
     transform-style: preserve-3d;
     font-size: 100%;
     font: inherit;
-    z-index: 100;
+    // z-index: 100;
   }
 }
 

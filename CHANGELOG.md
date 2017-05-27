@@ -11,8 +11,9 @@
 * [x] fix one toc bug [#406](https://github.com/shd101wyy/markdown-preview-enhanced/issues/406).
 * [x] add `class` support for code block and code chunk. Support `lineNo` class for showing line number for code block and code chunk.
 * [ ] support `sidebar` toc.
-* [ ] fix pandoc bibliography absolute file path issue [#]
+* [ ] fix pandoc bibliography absolute file path issue [#]()
 * [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).
+* [x] remove `showBackToTopButton` config.   
 
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  

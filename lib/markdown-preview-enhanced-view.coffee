@@ -24,6 +24,18 @@ CACHE = require './cache'
 {protocolsWhiteListRegExp} = require './protocols-whitelist'
 toc = require('./toc')
 
+###
+.markdown-preview-enhanced-container {
+  .markdown-preview-enhanced
+  .mpe-sidebar-toc
+  .mpe-toolbar {
+    .refresh-btn
+    .back-to-top-btn
+    .sidebar-toc-btn
+  }
+}
+
+###
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
   constructor: (uri, mainModule)->
@@ -35,6 +47,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @editor = null
     @previewElement = null
 
+    @enableSidebarTOC = false
     @sidebarTOC = null
     @headingElements = null # TODO: highlight sidebar toc for sync.
 
@@ -219,18 +232,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.innerHTML = ''
     @element.appendChild @previewElement
 
-    @sidebarTOC = document.createElement('div') # create new sidebar toc
-    @sidebarTOC.classList.add('mpe-sidebar-toc')
-    @element.appendChild @sidebarTOC
-
-    window.sidebarTOC = @sidebarTOC
-    @sidebarTOC.innerHTML = """<ul>
-<li><p class="sync-line" data-line="7"><a href="#haha">haha</a>
-</p><ul>
-<li><p class="sync-line" data-line="8"><a href="#yoo">Yoo</a></p></li>
-</ul><p></p></li>
-</ul>"""
-
+    @addToolBar()
+    @addBackToTopButton()
+    @addRefreshButton()
+    @addSidebarTOCButton()
 
     @initEditorEvent()
     @initViewEvent()
@@ -463,14 +468,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
 
-    # show back to top button?
-    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.showBackToTopButton', (flag)=>
-      @showBackToTopButton = flag
-      if flag
-        @addBackToTopButton()
-      else
-        document.getElementsByClassName('back-to-top-btn')[0]?.remove()
-
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
     while i >= 0
@@ -585,8 +582,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @previewElement}
 
       @setInitialScrollPos()
-      @addBackToTopButton()
-      @addRefreshButton()
       @processYAMLConfig(yamlConfig)
 
       @textChanged = false
@@ -604,26 +599,29 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollSyncToLineNo cursor.getScreenRow()
         @scrollDuration = t
 
+  addToolBar: ->
+    @toolbar = document.createElement('div')
+    @toolbar.classList.add('mpe-toolbar')
+    @element.appendChild(@toolbar)
+
   addBackToTopButton: ->
-    # TODO: check config
-
     # add back to top button #222
-    if @showBackToTopButton and @previewElement and @previewElement.scrollHeight > @previewElement.offsetHeight
-      backToTopBtn = document.createElement('div')
-      backToTopBtn.classList.add('back-to-top-btn')
-      backToTopBtn.classList.add('btn')
-      backToTopBtn.innerHTML = '<span>⬆︎</span>'
-      @previewElement.appendChild(backToTopBtn)
+    # if @previewElement and @previewElement.scrollHeight > @previewElement.offsetHeight
+    backToTopBtn = document.createElement('div')
+    backToTopBtn.classList.add('back-to-top-btn')
+    backToTopBtn.classList.add('btn')
+    backToTopBtn.innerHTML = '<span>⬆︎</span>'
+    @toolbar.appendChild(backToTopBtn)
 
-      backToTopBtn.onclick = ()=>
-        @previewElement.scrollTop = 0
+    backToTopBtn.onclick = ()=>
+      @previewElement.scrollTop = 0
 
   addRefreshButton: ->
     refreshBtn = document.createElement('div')
     refreshBtn.classList.add('refresh-btn')
     refreshBtn.classList.add('btn')
     refreshBtn.innerHTML = '<span>⟳</span>'
-    @previewElement.appendChild(refreshBtn)
+    @toolbar.appendChild(refreshBtn)
 
     refreshBtn.onclick = ()=>
       # clear cache
@@ -632,6 +630,31 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # render again
       @renderMarkdown()
+
+  addSidebarTOCButton: ->
+    sidebarTOCBtn = document.createElement('div')
+    sidebarTOCBtn.classList.add('sidebar-toc-btn')
+    sidebarTOCBtn.classList.add('btn')
+    sidebarTOCBtn.innerHTML = '<span>≡</span>'
+    @toolbar.appendChild(sidebarTOCBtn)
+
+    helper = ()=>
+      if @enableSidebarTOC
+        @sidebarTOC = document.createElement('div') # create new sidebar toc
+        @sidebarTOC.classList.add('mpe-sidebar-toc')
+        @element.appendChild @sidebarTOC
+        @element.classList.add 'show-sidebar-toc'
+        @renderSidebarTOC()
+      else
+        @sidebarTOC?.remove()
+        @sidebarTOC = null
+        @element.classList.remove 'show-sidebar-toc'
+
+    helper()
+
+    sidebarTOCBtn.onclick = ()=>
+      @enableSidebarTOC = !@enableSidebarTOC
+      helper()
 
   processYAMLConfig: (yamlConfig={})->
     if yamlConfig.id
@@ -656,7 +679,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @scrollMap = null
 
   renderSidebarTOC: ->
-    return if !@sidebarTOC or !@tocConfigs
+    return if !@enableSidebarTOC or !@tocConfigs
     tocObject = toc(@tocConfigs.headings, {ordered: false})
     @sidebarTOC.innerHTML = @md.render(tocObject.content)
 
