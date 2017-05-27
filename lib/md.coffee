@@ -522,6 +522,19 @@ buildScrollMap = (markdownPreview)->
 
   return _scrollMap  # scrollMap's length == screenLineCount
 
+# Add lineno-#num class to set width of line number
+checkLineNumber = (highlightedBlock)->
+  if highlightedBlock.hasClass('lineno')
+      totoalLineNo = highlightedBlock[0].children.length #.children().length()
+      if totoalLineNo < 100
+        highlightedBlock.addClass('lineno-100')
+      else if totoalLineNo < 1000
+        highlightedBlock.addClass('lineno-1000')
+      else if totoalLineNo < 10000
+        highlightedBlock.addClass('lineno-10000')
+      else
+        highlightedBlock.addClass('lineno-100000')
+
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
 checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)->
   if option.isForPreview
@@ -619,6 +632,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
     if classMatch and classMatch[1]
       highlightedBlock.addClass(classMatch[1])
+      checkLineNumber(highlightedBlock)
 
   # parse eg:
   # {node args:["-v"], output:"html"}
@@ -648,6 +662,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
       if classMatch and classMatch[1]
         highlightedBlock.addClass(classMatch[1])
+        checkLineNumber(highlightedBlock)
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 

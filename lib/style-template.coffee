@@ -313,8 +313,37 @@ module.exports = """
     counter-reset: lineNo;
     .line {
       &::before {
+        display: inline-block;
         counter-increment: lineNo;
-        content: counter(lineNo) ' \\00a0';
+        content: counter(lineNo);
+        text-align: right;
+        padding: 0;
+        margin-left: -1em;
+        margin-right: 1em;
+      }
+    }
+
+    &.lineno-100 {
+      .line::before {
+          width: 2em;
+      }
+    }
+
+    &.lineno-1000 {
+      .line::before {
+          width: 2.5em;
+      }
+    }
+
+    &.lineno-10000 {
+      .line::before {
+          width: 3em;
+      }
+    }
+
+    &.lineno-100000 {
+      .line::before {
+          width: 3.5em;
       }
     }
   }
