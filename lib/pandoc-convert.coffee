@@ -284,8 +284,10 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath,
     outputFilePath = outputFilePath.slice(0, outputFilePath.length - path.extname(outputFilePath).length) + '.' + extension
     args.push '-o', outputFilePath
 
+  # NOTE: 0.12.4 No need to resolve paths.
+  # #409: https://github.com/shd101wyy/markdown-preview-enhanced/issues/409
   # resolve paths in front-matter(yaml)
-  processConfigPaths config, fileDirectoryPath, projectDirectoryPath
+  # processConfigPaths config, fileDirectoryPath, projectDirectoryPath
 
   if outputConfig
     processOutputConfig outputConfig, args
