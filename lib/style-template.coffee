@@ -42,8 +42,15 @@ module.exports = """
       padding: 48px 0 12px 0;
       overflow: scroll;
       background-color: @bg;
-      font-size: 1em;
       color: @fg;
+      font-size: 1em;
+
+      ul {
+        padding: 0 1.6em;
+      }
+      p {
+        margin-bottom: 0.8em;
+      }
 
       ul {
         list-style-type: none;

@@ -196,6 +196,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
+        tocConfigs: @tocConfigs,
         slideConfigs: @slideConfigs,
         filesCache: @filesCache,
         zoomLevel: @zoomLevel
@@ -243,12 +244,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # restore preview
     d = CACHE[@editor.getPath()]
     if d
-      # @previewElement = d.previewElement
       @previewElement.innerHTML = d.html
       @sidebarTOC?.innerHTML = d.tocHTML
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
+      @tocConfigs = d.tocConfigs
       @slideConfigs = d.slideConfigs
       @filesCache = d.filesCache
 
@@ -261,17 +262,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @previewElement.removeAttribute 'data-presentation-preview-mode'
 
       @setInitialScrollPos()
-      # console.log 'restore ' + @editor.getPath()
-
-      # reset back to top button onclick event
-      @previewElement.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
-        @previewElement.scrollTop = 0
-
-      # reset refresh button onclick event
-      @previewElement.getElementsByClassName('refresh-btn')?[0]?.onclick = ()=>
-        @filesCache = {}
-        codeChunkAPI.clearCache()
-        @renderMarkdown()
 
       # rebind tag a click event
       @bindTagAClickEvent()
@@ -647,10 +637,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @element.appendChild @sidebarTOC
         @element.classList.add 'show-sidebar-toc'
         @renderSidebarTOC()
+        @setZoomLevel()
       else
         @sidebarTOC?.remove()
         @sidebarTOC = null
         @element.classList.remove 'show-sidebar-toc'
+        @previewElement.style.width = "100%"
 
     helper()
 
@@ -669,7 +661,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEvents: ->
     @renderSidebarTOC()
-    @bindTagAClickEvent()
+    @bindTagAClickEvent(@previewElement)
     @setupCodeChunks()
     @initTaskList()
     @renderMermaid()
@@ -684,10 +676,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     return if !@enableSidebarTOC or !@tocConfigs
     tocObject = toc(@tocConfigs.headings, {ordered: false})
     @sidebarTOC.innerHTML = @md.render(tocObject.content)
+    @bindTagAClickEvent(@sidebarTOC)
 
   # <a href="" > ... </a> click event
-  bindTagAClickEvent: ()->
-    as = @element.getElementsByTagName('a') # TODO: this might be wrong
+  bindTagAClickEvent: (element=@element)->
+    as = element.getElementsByTagName('a') # TODO: this might be wrong
 
     analyzeHref = (href)=>
       if href and href[0] == '#'

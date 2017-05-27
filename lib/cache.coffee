@@ -8,6 +8,7 @@ used to store rendered cache.
   codeChunksData: @codeChunksData
   graphData: @graphData
   presentationMode: @presentationMode
+  tocConfigs: @tocConfigs
   slideConfigs: @slideConfigs
   filesCache: @filesCache
 }
