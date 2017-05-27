@@ -202,9 +202,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         zoomLevel: @zoomLevel
       }
 
-      setTimeout(()=>
-        @initEvents(editor)
-      , 0)
+      # setTimeout(()=>
+      @initEvents(editor)
+      # , 0)
 
   initEvents: (editor)->
     @editor = editor
