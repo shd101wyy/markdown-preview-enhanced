@@ -246,12 +246,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # @previewElement = d.previewElement
       @previewElement.innerHTML = d.html
       @sidebarTOC?.innerHTML = d.tocHTML
-      @previewElement.style.zoom = d.zoomLevel
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
       @slideConfigs = d.slideConfigs
       @filesCache = d.filesCache
+
+      @zoomLevel = d.zoomLevel
+      @setZoomLevel()
 
       if @presentationMode
         @previewElement.setAttribute 'data-presentation-preview-mode', ''
@@ -1141,20 +1143,23 @@ class MarkdownPreviewEnhancedView extends ScrollView
   resizeEvent: ()->
     @scrollMap = null
 
+  setZoomLevel: ()->
+    @previewElement.style.zoom = @zoomLevel
+    if @enableSidebarTOC
+      @previewElement.style.width = "calc(100% - #{268 / @zoomLevel}px)"
+    @scrollMap = null
+
   zoomIn: ()->
     @zoomLevel = parseFloat(getComputedStyle(@previewElement).zoom) + 0.1
-    @previewElement.style.zoom = @zoomLevel
-    @scrollMap = null
+    @setZoomLevel()
 
   zoomOut: ()->
     @zoomLevel = parseFloat(getComputedStyle(@previewElement).zoom) - 0.1
-    @previewElement.style.zoom = @zoomLevel
-    @scrollMap = null
+    @setZoomLevel()
 
   resetZoom: ()->
     @zoomLevel = 1.0
-    @previewElement.style.zoom = @zoomLevel
-    @scrollMap = null
+    @setZoomLevel()
 
   ###
   convert './a.txt' '/a.txt'
