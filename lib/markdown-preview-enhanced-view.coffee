@@ -1072,7 +1072,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     for el in els
       if el.getAttribute('data-processed') != 'true'
         helper(el, el.getAttribute('data-original'))
-        el.innerText = 'rendering graph...\n'
+        if !el.classList.contains 'update'
+          el.innerText = 'rendering plantuml graph...\n'
 
   renderViz: (element=@previewElement)->
     els = element.getElementsByClassName('viz mpe-graph')

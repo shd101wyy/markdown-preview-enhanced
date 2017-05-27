@@ -551,6 +551,11 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
         $el.attr 'data-original', text
 
         $preElement.replaceWith $el
+      else if graphType == 'plantuml' # prevent plantuml flickering
+        $el = $("<div class=\"plantuml mpe-graph update\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
+        $el.attr 'data-original', text
+
+        $preElement.replaceWith $el
       else
         $el = $("<div class=\"#{graphType} mpe-graph\" data-offset=\"#{offset}\">#{text}</div>")
         $el.attr('data-original', text)
