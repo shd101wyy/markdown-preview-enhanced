@@ -190,6 +190,9 @@ Thank you very much :)
 * [uslug](https://github.com/jeremys/uslug) - A permissive slug generator that works with unicode.
 * [atom](https://github.com/atom/atom) - The hackable text editor.
 
+## Changelog  
+Changelog can be found [here](./CHANGELOG.md).  
+
 ## Thanks  
 Thanks for using and supporting this package ;)
 

@@ -1,8 +1,21 @@
-## 0.12.4  
-* [ ] add `zoom` keyboard shortcut support.  
-* [ ] upgrade `viz` to `v1.8.0`
-* [ ] upgrade `plantuml` to `1.2017.13`
-* [ ] upgrade `reveal.js` to `3.5.0`
+## 0.12.5 `Future Plan`
+* [ ] highlight sidebar toc when scroll sync.  
+* [ ] support `pandoc` as filter.
+* [ ] multiple preview panes.  
+
+## 0.12.4 `Current Version`
+* [x] support preview `zoom`.  
+* [x] upgrade `viz` to `v1.8.0`.
+* [x] upgrade `plantuml` to `1.2017.13`.
+* [x] upgrade `reveal.js` to `3.5.0`.
+* [x] faster `plantuml` rendering thanks to the contribution by [@river0825](https://github.com/river0825).
+* [x] fix one toc bug [#406](https://github.com/shd101wyy/markdown-preview-enhanced/issues/406).
+* [x] add `class` support for code block and code chunk. Support `lineNo` class for showing line number for code block and code chunk.
+* [x] support `sidebar` toc.
+* [x] fix pandoc bibliography absolute file path issue [#409](https://github.com/shd101wyy/markdown-preview-enhanced/issues/409).
+* [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).
+* [x] remove `showBackToTopButton` config.   
+* [x] different preview theme will now have different scrollbar style.
 
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  

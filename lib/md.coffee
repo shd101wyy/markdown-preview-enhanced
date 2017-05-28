@@ -522,6 +522,19 @@ buildScrollMap = (markdownPreview)->
 
   return _scrollMap  # scrollMap's length == screenLineCount
 
+# Add lineno-#num class to set width of line number
+checkLineNumber = (highlightedBlock)->
+  if highlightedBlock.hasClass('lineno')
+      totoalLineNo = highlightedBlock[0].children.length #.children().length()
+      if totoalLineNo < 100
+        highlightedBlock.addClass('lineno-100')
+      else if totoalLineNo < 1000
+        highlightedBlock.addClass('lineno-1000')
+      else if totoalLineNo < 10000
+        highlightedBlock.addClass('lineno-10000')
+      else
+        highlightedBlock.addClass('lineno-100000')
+
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
 checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)->
   if option.isForPreview
@@ -535,6 +548,11 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
       element = graphArray.splice(0, 1)[0] # get the first element
       if element.getAttribute('data-original') == text and element.getAttribute('data-processed') == 'true' # graph not changed
         $el = $("<div class=\"#{graphType} mpe-graph\" data-processed=\"true\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
+        $el.attr 'data-original', text
+
+        $preElement.replaceWith $el
+      else if graphType == 'plantuml' # prevent plantuml flickering
+        $el = $("<div class=\"plantuml mpe-graph initialized\" data-offset=\"#{offset}\">#{element.innerHTML}</div>")
         $el.attr 'data-original', text
 
         $preElement.replaceWith $el
@@ -598,8 +616,11 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
-  renderCodeBlock = (preElement, text, lang, lineNo=null)->
+  renderCodeBlock = (preElement, text, parameters, lineNo=null)->
     highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
+    match = parameters.match(/^\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)$/)
+    lang = match[1]
+    parameters = match[2].trim()
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -612,6 +633,11 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock.addClass('sync-line')
 
     $(preElement).replaceWith(highlightedBlock)
+
+    classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
+    if classMatch and classMatch[1]
+      highlightedBlock.addClass(classMatch[1])
+      checkLineNumber(highlightedBlock)
 
   # parse eg:
   # {node args:["-v"], output:"html"}
@@ -637,6 +663,11 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       if lineNo != null and !DISABLE_SYNC_LINE
         highlightedBlock.attr({'data-line': lineNo})
         highlightedBlock.addClass('sync-line')
+
+      classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
+      if classMatch and classMatch[1]
+        highlightedBlock.addClass(classMatch[1])
+        checkLineNumber(highlightedBlock)
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 
@@ -1083,6 +1114,7 @@ parseMD = (inputString, option={}, callback)->
     return ''
 
   finalize = (html)->
+    markdownPreview?.tocConfigs = tocConfigs
     if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
       return parseMD(markdownPreview.editor.getText(), option, callback)
 
@@ -1158,5 +1190,6 @@ parseMD = (inputString, option={}, callback)->
 module.exports = {
   parseMD,
   buildScrollMap,
-  processFrontMatter
+  processFrontMatter,
+  md
 }

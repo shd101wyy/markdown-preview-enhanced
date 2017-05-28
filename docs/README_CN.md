@@ -192,6 +192,9 @@ Markdown Preview Enhanced
 * [uslug](https://github.com/jeremys/uslug) - A permissive slug generator that works with unicode.
 * [atom](https://github.com/atom/atom) - The hackable text editor.
 
+## Changelog  
+有关 Changelog 请查看 [这里](../CHANGELOG.md).  
+
 ## 感谢  
 感谢你使用并支持此插件 ;)
 

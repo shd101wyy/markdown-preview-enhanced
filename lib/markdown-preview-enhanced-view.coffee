@@ -22,7 +22,20 @@ princeConvert = require './prince-convert'
 codeChunkAPI = require './code-chunk'
 CACHE = require './cache'
 {protocolsWhiteListRegExp} = require './protocols-whitelist'
+toc = require('./toc')
 
+###
+.markdown-preview-enhanced-container {
+  .markdown-preview-enhanced
+  .mpe-sidebar-toc
+  .mpe-toolbar {
+    .refresh-btn
+    .back-to-top-btn
+    .sidebar-toc-btn
+  }
+}
+
+###
 module.exports =
 class MarkdownPreviewEnhancedView extends ScrollView
   constructor: (uri, mainModule)->
@@ -32,6 +45,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @mainModule = mainModule
     @protocal = 'markdown-preview-enhanced://'
     @editor = null
+    @previewElement = null
+
+    @enableSidebarTOC = false
+    @sidebarTOC = null
+    @headingElements = null # TODO: highlight sidebar toc for sync.
 
     @tocConfigs = null
     @scrollMap = null
@@ -55,6 +73,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
     @previewScrollDelay = Date.now()
+    @zoomLevel = 1.0
 
     @documentExporterView = null # binded in markdown-preview-enhanced.coffee startMD function
 
@@ -90,6 +109,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:export-to-disk': => @exportToDisk()
       'markdown-preview-enhanced:pandoc-document-export': => @pandocDocumentExport()
       'markdown-preview-enhanced:save-as-markdown': => @saveAsMarkdown()
+      'markdown-preview-enhanced:zoom-in': => @zoomIn()
+      'markdown-preview-enhanced:zoom-out': => @zoomOut()
+      'markdown-preview-enhanced:reset-zoom': => @resetZoom()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -97,7 +119,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initSettingsEvents()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
+    @div class: 'markdown-preview-enhanced-container native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
       # @p style: 'font-size: 24px', 'loading preview...'
       @div class: "markdown-spinner", 'Loading Markdown\u2026'
 
@@ -169,19 +191,20 @@ class MarkdownPreviewEnhancedView extends ScrollView
     else
       # save cache
       CACHE[@editor.getPath()] = {
-        html: @element?.innerHTML or '',
+        html: @previewElement?.innerHTML or '',
+        tocHTML: @sidebarTOC?.innerHTML or '',
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
+        tocConfigs: @tocConfigs,
         slideConfigs: @slideConfigs,
         filesCache: @filesCache,
+        zoomLevel: @zoomLevel
       }
 
-      # @element.innerHTML = '<p style="font-size: 24px;"> loading preview... <br>type something if preview doesn\'t render :( </p>'
-
-      setTimeout(()=>
-        @initEvents(editor)
-      , 0)
+      # setTimeout(()=>
+      @initEvents(editor)
+      # , 0)
 
   initEvents: (editor)->
     @editor = editor
@@ -189,7 +212,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @element.removeAttribute('style')
 
     if not @parseMD
-      {@parseMD, @buildScrollMap, @processFrontMatter} = require './md'
+      {@parseMD, @buildScrollMap, @processFrontMatter, @md} = require './md'
       require '../dependencies/wavedrom/default.js'
       require '../dependencies/wavedrom/wavedrom.min.js'
 
@@ -204,36 +227,41 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @disposables.dispose()
     @disposables = new CompositeDisposable()
 
+    @previewElement = document.createElement('div') # create new preview element
+    @previewElement.classList.add('markdown-preview-enhanced')
+    @previewElement.setAttribute('for', 'preview')
+    @element.innerHTML = ''
+    @element.appendChild @previewElement
+
+    @addToolBar()
+    @addBackToTopButton()
+    @addRefreshButton()
+    @addSidebarTOCButton()
+
     @initEditorEvent()
     @initViewEvent()
 
     # restore preview
     d = CACHE[@editor.getPath()]
     if d
-      @element.innerHTML = d.html
+      @previewElement.innerHTML = d.html
+      @sidebarTOC?.innerHTML = d.tocHTML
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
+      @tocConfigs = d.tocConfigs
       @slideConfigs = d.slideConfigs
       @filesCache = d.filesCache
 
+      @zoomLevel = d.zoomLevel
+      @setZoomLevel()
+
       if @presentationMode
-        @element.setAttribute 'data-presentation-preview-mode', ''
+        @previewElement.setAttribute 'data-presentation-preview-mode', ''
       else
-        @element.removeAttribute 'data-presentation-preview-mode'
+        @previewElement.removeAttribute 'data-presentation-preview-mode'
 
       @setInitialScrollPos()
-      # console.log 'restore ' + @editor.getPath()
-
-      # reset back to top button onclick event
-      @element.getElementsByClassName('back-to-top-btn')?[0]?.onclick = ()=>
-        @element.scrollTop = 0
-
-      # reset refresh button onclick event
-      @element.getElementsByClassName('refresh-btn')?[0]?.onclick = ()=>
-        @filesCache = {}
-        codeChunkAPI.clearCache()
-        @renderMarkdown()
 
       # rebind tag a click event
       @bindTagAClickEvent()
@@ -256,9 +284,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @disposables.dispose()
         @disposables = null
       @editor = null
-      @element.onscroll = null
+      @previewElement.onscroll = null
 
-      @element.innerHTML = '<p style="font-size: 24px;"> Open a markdown file to start preview </p>'
+      @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
@@ -275,7 +303,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @textChanged = true
 
     @disposables.add editorElement.onDidChangeScrollTop ()=>
-      if !@scrollSync or !@element or @textChanged or !@editor or @presentationMode
+      if !@scrollSync or !@previewElement or @textChanged or !@editor or @presentationMode
         return
       if Date.now() < @editorScrollDelay
         return
@@ -306,7 +334,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # match markdown preview to cursor position
     @disposables.add @editor.onDidChangeCursorPosition (event)=>
-      if !@scrollSync or !@element or @textChanged
+      if !@scrollSync or !@previewElement or @textChanged
         return
       if Date.now() < @parseDelay
         return
@@ -325,29 +353,30 @@ class MarkdownPreviewEnhancedView extends ScrollView
           @scrollToPos(0)
           return
         else if lineNo >= @editor.getScreenLineCount() - 2 # last 2nd rows
-          @scrollToPos(@element.scrollHeight - 16)
+          @scrollToPos(@previewElement.scrollHeight - 16)
           return
 
         @scrollSyncToLineNo(lineNo)
 
   initViewEvent: ->
-    @element.onscroll = ()=>
+    @previewElement.onscroll = ()=>
       if !@editor or !@scrollSync or @textChanged
         return
       if Date.now() < @previewScrollDelay
         return
 
-      if @element.scrollTop == 0 # most top
+      if @previewElement.scrollTop == 0 # most top
         @editorScrollDelay = Date.now() + 500
         return @scrollToPos 0, @editor.getElement()
 
-      top = @element.scrollTop + @element.offsetHeight / 2
+      top = @previewElement.scrollTop + @previewElement.offsetHeight / 2
 
       if @presentationMode
         top = top / @presentationZoom
 
       # try to find corresponding screen buffer row
       @scrollMap ?= @buildScrollMap(this)
+      window.scrollMap = @scrollMap
 
       i = 0
       j = @scrollMap.length - 1
@@ -373,7 +402,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if screenRow == -1
         screenRow = mid
 
-      @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @element.offsetHeight / 2, @editor.getElement())
+      @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @previewElement.offsetHeight / 2, @editor.getElement())
       # @editor.getElement().setScrollTop
 
       # track currnet time to disable onDidChangeScrollTop
@@ -426,19 +455,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.mermaidTheme',
       (theme) =>
         @setMermaidTheme theme # hack to solve https://github.com/exupero/saveSvgAsPng/issues/128 problem
-        # @element.setAttribute 'data-mermaid-theme', theme
 
     # render front matter as table?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
-
-    # show back to top button?
-    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.showBackToTopButton', (flag)=>
-      @showBackToTopButton = flag
-      if flag
-        @addBackToTopButton()
-      else
-        document.getElementsByClassName('back-to-top-btn')[0]?.remove()
 
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
@@ -446,12 +466,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if bufferLineNo >= @slideConfigs[i].line
         break
       i-=1
-    slideElement = @element.querySelector(".slide[data-offset=\"#{i}\"]")
+    slideElement = @previewElement.querySelector(".slide[data-offset=\"#{i}\"]")
 
     return if not slideElement
 
     # set slide to middle of preview
-    @element.scrollTop = -@element.offsetHeight/2 + (slideElement.offsetTop + slideElement.offsetHeight/2)*parseFloat(slideElement.style.zoom)
+    @previewElement.scrollTop = -@previewElement.offsetHeight/2 + (slideElement.offsetTop + slideElement.offsetHeight/2)*parseFloat(slideElement.style.zoom)
 
   # lineNo here is screen buffer row.
   scrollSyncToLineNo: (lineNo)->
@@ -467,7 +487,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @scrollToPos scrollTop
 
-  # smooth scroll @element to scrollTop
+  # smooth scroll @previewElement to scrollTop
   # if editorElement is provided, then editorElement.setScrollTop(scrollTop)
   scrollToPos: (scrollTop, editorElement=null)->
     if @scrollTimeout
@@ -487,13 +507,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
             editorElement.setScrollTop scrollTop
           else
             @previewScrollDelay = Date.now() + 500
-            @element.scrollTop = scrollTop
+            @previewElement.scrollTop = scrollTop
           return
 
         if editorElement
           difference = scrollTop - editorElement.getScrollTop()
         else
-          difference = scrollTop - @element.scrollTop
+          difference = scrollTop - @previewElement.scrollTop
 
         perTick = difference / duration * delay
 
@@ -508,8 +528,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
           # disable preview onscroll
           @previewScrollDelay = Date.now() + 500
 
-          @element.scrollTop += perTick
-          return if @element.scrollTop == scrollTop
+          @previewElement.scrollTop += perTick
+          return if @previewElement.scrollTop == scrollTop
 
         helper duration-delay
       , delay
@@ -529,7 +549,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderMarkdown()
 
   renderMarkdown: ->
-    if Date.now() < @parseDelay or !@editor or !@element
+    if Date.now() < @parseDelay or !@editor or !@previewElement
       @textChanged = false
       return
     @parseDelay = Date.now() + 200
@@ -539,23 +559,21 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       if slideConfigs.length
         html = @parseSlides(html, slideConfigs, yamlConfig)
-        @element.setAttribute 'data-presentation-preview-mode', ''
+        @previewElement.setAttribute 'data-presentation-preview-mode', ''
         @presentationMode = true
         @slideConfigs = slideConfigs
         @scrollMap = null
       else
-        @element.removeAttribute 'data-presentation-preview-mode'
+        @previewElement.removeAttribute 'data-presentation-preview-mode'
         @presentationMode = false
 
-      @element.innerHTML = html
+      @previewElement.innerHTML = html
       @graphData = {}
       @bindEvents()
 
-      @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @element}
+      @mainModule.emitter.emit 'on-did-render-preview', {htmlString: html, previewElement: @previewElement}
 
       @setInitialScrollPos()
-      @addBackToTopButton()
-      @addRefreshButton()
       @processYAMLConfig(yamlConfig)
 
       @textChanged = false
@@ -573,26 +591,36 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollSyncToLineNo cursor.getScreenRow()
         @scrollDuration = t
 
+  addToolBar: ->
+    @toolbar = document.createElement('div')
+    @toolbar.classList.add('mpe-toolbar')
+    @element.appendChild(@toolbar)
+
+    showToolbar = ()=> @toolbar.style.opacity = "1"
+    @previewElement.onmouseenter = showToolbar
+    @toolbar.onmouseenter = showToolbar
+
+    @previewElement.onmouseleave = ()=>
+      @toolbar.style.opacity = "0"
+
   addBackToTopButton: ->
-    # TODO: check config
-
     # add back to top button #222
-    if @showBackToTopButton and @element.scrollHeight > @element.offsetHeight
-      backToTopBtn = document.createElement('div')
-      backToTopBtn.classList.add('back-to-top-btn')
-      backToTopBtn.classList.add('btn')
-      backToTopBtn.innerHTML = '<span>⬆︎</span>'
-      @element.appendChild(backToTopBtn)
+    # if @previewElement and @previewElement.scrollHeight > @previewElement.offsetHeight
+    backToTopBtn = document.createElement('div')
+    backToTopBtn.classList.add('back-to-top-btn')
+    backToTopBtn.classList.add('btn')
+    backToTopBtn.innerHTML = '<span>⬆︎</span>'
+    @toolbar.appendChild(backToTopBtn)
 
-      backToTopBtn.onclick = ()=>
-        @element.scrollTop = 0
+    backToTopBtn.onclick = ()=>
+      @previewElement.scrollTop = 0
 
   addRefreshButton: ->
     refreshBtn = document.createElement('div')
     refreshBtn.classList.add('refresh-btn')
     refreshBtn.classList.add('btn')
     refreshBtn.innerHTML = '<span>⟳</span>'
-    @element.appendChild(refreshBtn)
+    @toolbar.appendChild(refreshBtn)
 
     refreshBtn.onclick = ()=>
       # clear cache
@@ -602,17 +630,47 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # render again
       @renderMarkdown()
 
+  addSidebarTOCButton: ->
+    sidebarTOCBtn = document.createElement('div')
+    sidebarTOCBtn.classList.add('sidebar-toc-btn')
+    sidebarTOCBtn.classList.add('btn')
+    sidebarTOCBtn.innerHTML = '<span>≡</span>'
+    @toolbar.appendChild(sidebarTOCBtn)
+
+    helper = ()=>
+      if @enableSidebarTOC
+        @sidebarTOC = document.createElement('div') # create new sidebar toc
+        @sidebarTOC.classList.add('mpe-sidebar-toc')
+        @element.appendChild @sidebarTOC
+        @element.classList.add 'show-sidebar-toc'
+        @renderSidebarTOC()
+        @setZoomLevel()
+      else
+        @sidebarTOC?.remove()
+        @sidebarTOC = null
+        @element.classList.remove 'show-sidebar-toc'
+        @previewElement.style.width = "100%"
+
+      @scrollMap = null
+
+    helper()
+
+    sidebarTOCBtn.onclick = ()=>
+      @enableSidebarTOC = !@enableSidebarTOC
+      helper()
+
   processYAMLConfig: (yamlConfig={})->
     if yamlConfig.id
-      @element.id = yamlConfig.id
+      @previewElement.id = yamlConfig.id
     if yamlConfig.class
       cls = yamlConfig.class
       cls = [cls] if typeof(cls) == 'string'
       cls = cls.join(' ') or ''
-      @element.setAttribute 'class', "markdown-preview-enhanced native-key-bindings #{cls}"
+      @previewElement.setAttribute 'class', "#{cls}"
 
   bindEvents: ->
-    @bindTagAClickEvent()
+    @renderSidebarTOC()
+    @bindTagAClickEvent(@previewElement)
     @setupCodeChunks()
     @initTaskList()
     @renderMermaid()
@@ -623,26 +681,45 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderMathJax()
     @scrollMap = null
 
+  renderSidebarTOC: ->
+    return if !@enableSidebarTOC
+    if @usePandocParser
+      headings = @previewElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      tokens = []
+      headings?.forEach (elem, i)->
+        if elem.id
+          tokens.push({content: elem.innerHTML, id: elem.id, level: parseInt(elem.tagName.slice(1))})
+      tocObject = toc(tokens, {ordered: false})
+    else
+      return if !@tocConfigs
+      tocObject = toc(@tocConfigs.headings, {ordered: false})
+
+    if tocObject.content.length
+      @sidebarTOC.innerHTML = @md.render(tocObject.content)
+      @bindTagAClickEvent(@sidebarTOC)
+    else
+      @sidebarTOC.innerHTML = "<p style=\"text-align:center;font-style: italic;\">Outline (empty)</p>"
+
   # <a href="" > ... </a> click event
-  bindTagAClickEvent: ()->
-    as = @element.getElementsByTagName('a')
+  bindTagAClickEvent: (element=@element)->
+    as = element.getElementsByTagName('a') # TODO: this might be wrong
 
     analyzeHref = (href)=>
       if href and href[0] == '#'
-        targetElement = @element.querySelector("[id=\"#{href.slice(1)}\"]") # fix number id bug
+        targetElement = @previewElement.querySelector("[id=\"#{href.slice(1)}\"]") # fix number id bug
         if targetElement
           a.onclick = ()=>
             # jump to tag position
             offsetTop = 0
             el = targetElement
-            while el and el != @element
+            while el and el != @previewElement
               offsetTop += el.offsetTop
               el = el.offsetParent
 
-            if @element.scrollTop > offsetTop
-              @element.scrollTop = offsetTop - 32 - targetElement.offsetHeight
+            if @previewElement.scrollTop > offsetTop
+              @previewElement.scrollTop = offsetTop - 32 - targetElement.offsetHeight
             else
-              @element.scrollTop = offsetTop
+              @previewElement.scrollTop = offsetTop
       else
         a.onclick = ()=>
           return if !href
@@ -666,7 +743,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   setupCodeChunks: ()->
-    codeChunks = @element.getElementsByClassName('code-chunk')
+    codeChunks = @previewElement.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
     newCodeChunksData = {}
@@ -756,7 +833,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
-    codeChunks = @element.getElementsByClassName('code-chunk')
+    codeChunks = @previewElement.getElementsByClassName('code-chunk')
     i = codeChunks.length - 1
     while i >= 0
       codeChunk = codeChunks[i]
@@ -793,7 +870,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if options.continue
       last = null
       if options.continue == true
-        codeChunks = @element.getElementsByClassName 'code-chunk'
+        codeChunks = @previewElement.getElementsByClassName 'code-chunk'
         i = codeChunks.length - 1
         while i >= 0
           if codeChunks[i] == codeChunk
@@ -905,12 +982,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @codeChunksData[id] = {running: false, outputDiv, outputElement}
 
   runAllCodeChunks: ()->
-    codeChunks = @element.getElementsByClassName('code-chunk')
+    codeChunks = @previewElement.getElementsByClassName('code-chunk')
     for chunk in codeChunks
       @runCodeChunk(chunk)
 
   initTaskList: ()->
-    checkboxs = @element.getElementsByClassName('task-list-item-checkbox')
+    checkboxs = @previewElement.getElementsByClassName('task-list-item-checkbox')
     for checkbox in checkboxs
       this_ = this
       checkbox.onclick = ()->
@@ -936,11 +1013,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
         buffer.setTextInRange([[lineNo, 0], [lineNo+1, 0]], line + '\n')
 
   renderMermaid: ()->
-    els = @element.getElementsByClassName('mermaid mpe-graph')
+    els = @previewElement.getElementsByClassName('mermaid mpe-graph')
     if els.length
       @graphData.mermaid_s = Array.prototype.slice.call(els)
 
-      notProcessedEls = @element.querySelectorAll('.mermaid.mpe-graph:not([data-processed])')
+      notProcessedEls = @previewElement.querySelectorAll('.mermaid.mpe-graph:not([data-processed])')
 
       if notProcessedEls.length
         mermaid.init null, notProcessedEls
@@ -963,11 +1040,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
         mermaidAPI.render el.id, el.getAttribute('data-original'), cb(el)
       ###
 
-      # disable @element onscroll
+      # disable @previewElement onscroll
       @previewScrollDelay = Date.now() + 500
 
   renderWavedrom: ()->
-    els = @element.getElementsByClassName('wavedrom mpe-graph')
+    els = @previewElement.getElementsByClassName('wavedrom mpe-graph')
     if els.length
       @graphData.wavedrom_s = Array.prototype.slice.call(els)
 
@@ -989,11 +1066,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
             catch error
               el.innerText = 'failed to eval WaveDrom code.'
 
-      # disable @element onscroll
+      # disable @previewElement onscroll
       @previewScrollDelay = Date.now() + 500
 
   renderPlantUML: ()->
-    els = @element.getElementsByClassName('plantuml mpe-graph')
+    els = @previewElement.getElementsByClassName('plantuml mpe-graph')
 
     if els.length
       @graphData.plantuml_s = Array.prototype.slice.call(els)
@@ -1006,10 +1083,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     for el in els
       if el.getAttribute('data-processed') != 'true'
-        helper(el, el.getAttribute('data-original'))
-        el.innerText = 'rendering graph...\n'
+        if !el.classList.contains 'initialized'
+          el.innerText = 'rendering plantuml graph...\n'
 
-  renderViz: (element=@element)->
+        helper(el, el.getAttribute('data-original'))
+
+
+  renderViz: (element=@previewElement)->
     els = element.getElementsByClassName('viz mpe-graph')
 
     if els.length
@@ -1039,9 +1119,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return loadMathJax document, ()=> @renderMathJax()
 
     if @mathJaxProcessEnvironments or @usePandocParser
-      return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], ()=> @scrollMap = null
+      return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @previewElement], ()=> @scrollMap = null
 
-    els = @element.getElementsByClassName('mathjax-exps')
+    els = @previewElement.getElementsByClassName('mathjax-exps')
     return if !els.length
 
     unprocessedElements = []
@@ -1056,13 +1136,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @scrollMap = null
 
     if unprocessedElements.length == els.length
-      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @element], callback
+      MathJax.Hub.Queue ['Typeset', MathJax.Hub, @previewElement], callback
     else if unprocessedElements.length
       MathJax.Hub.Typeset unprocessedElements, callback
 
   renderKaTeX: ()->
     return if @mathRenderingOption != 'KaTeX'
-    els = @element.getElementsByClassName('katex-exps')
+    els = @previewElement.getElementsByClassName('katex-exps')
 
     for el in els
       if el.hasAttribute('data-processed')
@@ -1080,6 +1160,24 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   resizeEvent: ()->
     @scrollMap = null
+
+  setZoomLevel: ()->
+    @previewElement.style.zoom = @zoomLevel
+    if @enableSidebarTOC
+      @previewElement.style.width = "calc(100% - #{268 / @zoomLevel}px)"
+    @scrollMap = null
+
+  zoomIn: ()->
+    @zoomLevel = parseFloat(getComputedStyle(@previewElement).zoom) + 0.1
+    @setZoomLevel()
+
+  zoomOut: ()->
+    @zoomLevel = parseFloat(getComputedStyle(@previewElement).zoom) - 0.1
+    @setZoomLevel()
+
+  resetZoom: ()->
+    @zoomLevel = 1.0
+    @setZoomLevel()
 
   ###
   convert './a.txt' '/a.txt'
@@ -1507,7 +1605,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       height = presentationConfig['height'] or 700
 
     # ratio = height / width * 100 + '%'
-    zoom = (@element.offsetWidth - 128)/width ## 64 is 2*padding
+    zoom = (@previewElement.offsetWidth - 128)/width ## 64 is 2*padding
     @presentationZoom = zoom
 
     for slide in slides
@@ -2031,4 +2129,5 @@ module.exports = config || {}
     @mainModule.preview = null # unbind
 
   getElement: ->
-    @element
+    # @element
+    @previewElement

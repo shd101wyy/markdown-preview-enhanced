@@ -34,12 +34,6 @@ module.exports =
       default: false
       description: "Enable smartypants and other sweet transforms."
       order: 11
-    showBackToTopButton:
-      title: "Show back to top button"
-      type: "boolean"
-      default: true
-      description: "Show back to top button in preview."
-      order: 12
     enableZenMode:
       title: "Zen mode"
       type: "boolean"

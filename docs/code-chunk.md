@@ -126,6 +126,10 @@ eg:
 	plt.show() # show figure
 	```
 
+**class**  
+If set `class:"class1 class2"`, then `class1 class2` will be add to the code chunk.  
+* `lineNo` class will show line numbers to code chunk.
+
 **element**  
 The element that you want to append after.  
 Please check this [demo](https://cdn.rawgit.com/shd101wyy/markdown-preview-enhanced/f83acb43/test/code-chunks-test.html).
