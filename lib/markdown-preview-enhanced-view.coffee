@@ -596,6 +596,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @toolbar.classList.add('mpe-toolbar')
     @element.appendChild(@toolbar)
 
+    showToolbar = ()=> @toolbar.style.opacity = "1"
+    @previewElement.onmouseenter = showToolbar
+    @toolbar.onmouseenter = showToolbar
+
+    @previewElement.onmouseleave = ()=>
+      @toolbar.style.opacity = "0"
+
   addBackToTopButton: ->
     # add back to top button #222
     # if @previewElement and @previewElement.scrollHeight > @previewElement.offsetHeight

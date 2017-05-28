@@ -32,23 +32,24 @@ module.exports = """
     position: fixed;
     top: 64px;
     right: 24px;
+    opacity: 0;
+    display: block;
 
     .back-to-top-btn, .refresh-btn, .sidebar-toc-btn {
       float: right;
-      display: none;
       width: 32px;
       margin-right: 4px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1.0;
+      }
     }
   }
 
   &:hover {
     .back-to-top-btn, .refresh-btn, .sidebar-toc-btn {
       display: block;
-      opacity: 0.4;
-
-      &:hover {
-        opacity: 1.0;
-      }
     }
   }
 
@@ -60,7 +61,7 @@ module.exports = """
       right: 0;
       width: 268px;
       height: 100%;
-      padding: 48px 0 12px 0;
+      padding: 32px 0 12px 0;
       overflow: auto;
       background-color: @bg;
       color: @fg;
