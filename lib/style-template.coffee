@@ -7,6 +7,26 @@ module.exports = """
 @border: contrast(@bg, lighten(@bg, 16%), darken(@bg, 16%));
 @margin: 16px;
 
+.scrollbar-style {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: @bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: rgba(150, 150, 150, .66);
+    border: 4px solid rgba(150, 150, 150, .66);
+    background-clip: content-box;
+  }
+}
+
 .markdown-preview-enhanced-container {
   .mpe-toolbar {
     position: fixed;
@@ -41,10 +61,14 @@ module.exports = """
       width: 268px;
       height: 100%;
       padding: 48px 0 12px 0;
-      overflow: scroll;
+      overflow: auto;
       background-color: @bg;
       color: @fg;
-      font-size: 1em;
+      font-size: 14px;
+
+      a {
+        color: @fg;
+      }
 
       ul {
         padding: 0 1.6em;
@@ -65,6 +89,10 @@ module.exports = """
     .markdown-preview-enhanced {
       width: calc(~"100% - 268px");
     }
+  }
+
+  .mpe-sidebar-toc, .markdown-preview-enhanced {
+    .scrollbar-style();
   }
 }
 
@@ -90,7 +118,7 @@ module.exports = """
     height: 100%;
     margin: 0;
     // z-index: 999;
-    overflow: scroll;
+    overflow: auto;
     font-size: 16px;
     display: block;
     position: absolute;

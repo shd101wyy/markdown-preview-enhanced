@@ -15,6 +15,7 @@
 * [x] fix pandoc bibliography absolute file path issue [#409](https://github.com/shd101wyy/markdown-preview-enhanced/issues/409).
 * [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).
 * [x] remove `showBackToTopButton` config.   
+* [x] different preview theme will now have different scrollbar style.
 
 ## 0.12.2 & 0.12.3
 * [x] quick fix plantuml file import issue [#398](https://github.com/shd101wyy/markdown-preview-enhanced/issues/398).  

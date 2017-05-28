@@ -643,6 +643,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @sidebarTOC = null
         @element.classList.remove 'show-sidebar-toc'
         @previewElement.style.width = "100%"
+        
+      @scrollMap = null
 
     helper()
 
