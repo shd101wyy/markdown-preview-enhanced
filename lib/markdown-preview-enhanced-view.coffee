@@ -376,7 +376,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       # try to find corresponding screen buffer row
       @scrollMap ?= @buildScrollMap(this)
-      window.scrollMap = @scrollMap
 
       i = 0
       j = @scrollMap.length - 1
