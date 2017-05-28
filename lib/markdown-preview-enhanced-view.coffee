@@ -643,7 +643,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @sidebarTOC = null
         @element.classList.remove 'show-sidebar-toc'
         @previewElement.style.width = "100%"
-        
+
       @scrollMap = null
 
     helper()
@@ -687,8 +687,11 @@ class MarkdownPreviewEnhancedView extends ScrollView
       return if !@tocConfigs
       tocObject = toc(@tocConfigs.headings, {ordered: false})
 
-    @sidebarTOC.innerHTML = @md.render(tocObject.content)
-    @bindTagAClickEvent(@sidebarTOC)
+    if tocObject.content.length
+      @sidebarTOC.innerHTML = @md.render(tocObject.content)
+      @bindTagAClickEvent(@sidebarTOC)
+    else
+      @sidebarTOC.innerHTML = "<p style=\"text-align:center;font-style: italic;\">Outline (empty)</p>"
 
   # <a href="" > ... </a> click event
   bindTagAClickEvent: (element=@element)->
