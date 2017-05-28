@@ -17,6 +17,7 @@ module.exports = """
       float: right;
       display: none;
       width: 32px;
+      margin-right: 4px;
     }
   }
 

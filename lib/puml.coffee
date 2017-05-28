@@ -5,6 +5,7 @@ plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar
 
 CALLBACKS = []
 CHUNKS = []
+TASKS = {} # key is fileDirectoryPath
 # Async call
 generateSVG = (content, fileDirectoryPath='', callback)->
   content = content.trim()
@@ -13,6 +14,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
+
   if !(content.match(/^\@start/m))
     content = """
 @startuml
@@ -20,8 +22,8 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 @enduml
     """
 
-  if !@task # init `plantuml.jar` task
-    @task = spawn 'java', [  '-Djava.awt.headless=true',
+  if !TASKS[fileDirectoryPath] # init `plantuml.jar` task
+    TASKS[fileDirectoryPath] = spawn 'java', [  '-Djava.awt.headless=true',
                               '-Dplantuml.include.path='+fileDirectoryPath
                               '-jar', plantumlJarPath,
                               # '-graphvizdot', 'exe'
@@ -30,7 +32,7 @@ generateSVG = (content, fileDirectoryPath='', callback)->
                               '-charset', 'UTF-8']
 
     # only `on 'data'` once
-    @task.stdout.on 'data', (chunk)->
+    TASKS[fileDirectoryPath].stdout.on 'data', (chunk)->
       CHUNKS.push(chunk)
       data = Buffer.concat(CHUNKS).toString().trim() # `trim()` here is necessary.
       if data.endsWith('</svg>')
@@ -41,22 +43,20 @@ generateSVG = (content, fileDirectoryPath='', callback)->
           if diagram.length
             CALLBACKS.shift()?(diagram + '</svg>')
 
-
-  ###
-  @task.stdout.on 'end', ()->
-    data = Buffer.concat(chunks).toString()
-    callback?(data)
-  ###
+    ###
+    TASKS[fileDirectoryPath].stdout.on 'end', ()->
+      data = Buffer.concat(chunks).toString()
+      callback?(data)
+    ###
 
   CALLBACKS.push(callback) # save callback to CALLBACKS queue
-  @task.stdin.write(content + "\n")
-  # @task.stdin.end()
+  TASKS[fileDirectoryPath].stdin.write(content + "\n")
+  # TASKS[fileDirectoryPath].stdin.end()
 
 
 # generateSVG('A -> B')
 plantumlAPI = {
   render: generateSVG,
-  task: null
 }
 
 module.exports = plantumlAPI
