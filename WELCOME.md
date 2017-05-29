@@ -4,10 +4,5 @@
 
 
 #### v0.12.6  
-
-**Issue Fixed**  
-
-**Updates**  
-* support `mathjaxExtensions` config.  
-* keep the preview open after the markdown editor is closed.  
-* [#418](haha)
+* [x] add `WELCOME.md` page.  
+* [x] support `mathJaxExtensions` config [#419](https://github.com/shd101wyy/markdown-preview-enhanced/issues/419).    
