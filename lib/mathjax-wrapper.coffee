@@ -28,8 +28,8 @@ module.exports = function(inlineMath, displayMath) {
       tex2jax: {
         inlineMath: inlineMath,
         displayMath: displayMath,
-        processEscapes: processEnvironments,
-        processEnvironments: false,
+        processEscapes: true,
+        processEnvironments: processEnvironments
       },
       TeX: {
         extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'xypic.js']
@@ -46,7 +46,8 @@ module.exports = function(inlineMath, displayMath) {
         inlineMath: inlineMath,
         displayMath: displayMath,
         processEnvironments: processEnvironments,
-        processEscapes: true},
+        processEscapes: true
+      },
       TeX: {
         extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'xypic.js']
       },
@@ -92,7 +93,7 @@ loadMathJax = (document, callback)->
       MathJax.Hub.Config(MathJaxConfig.forPreview)
 
       MathJax.Hub.Configured()
-      callback?()
+      callback?(MathJaxConfig.forPreview)
 
     script.type = 'text/javascript'
     script.src = path.resolve(__dirname, '../dependencies/mathjax/MathJax.js?delayStartupUntil=configured')
@@ -100,7 +101,7 @@ loadMathJax = (document, callback)->
     document.getElementsByTagName('head')[0].appendChild(script)
 
   else
-    callback?()
+    callback?(MathJaxConfig.forPreview)
 
 
 module.exports = {

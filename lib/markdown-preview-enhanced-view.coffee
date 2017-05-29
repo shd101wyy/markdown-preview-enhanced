@@ -66,9 +66,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
-    @mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
-    @mathInlineDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline'))
-    @mathBlockDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock'))
+    @mathJaxProcessEnvironments = false
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
@@ -1119,7 +1117,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     return if @mathRenderingOption != 'MathJax' and !@usePandocParser
 
     if typeof(MathJax) == 'undefined'
-      return loadMathJax document, ()=> @renderMathJax()
+      return loadMathJax document, (config)=>
+        @mathJaxProcessEnvironments = config.tex2jax?.processEnvironments
+        @renderMathJax()
 
     if @mathJaxProcessEnvironments or @usePandocParser
       return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @previewElement], ()=> @scrollMap = null
@@ -1339,7 +1339,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if mathRenderingOption == 'MathJax' or @usePandocParser
         inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
         block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
-        mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
         if offline
           mathStyle = "
           <script type=\"text/x-mathjax-config\">

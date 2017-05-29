@@ -6,3 +6,4 @@
 #### v0.12.6  
 * [x] add `WELCOME.md` page.  
 * [ ] add `mathjax_config.js` file and `Markdown Preview Enhanced: Open MathJax Config` command.  
+      remove `mathJaxProcessEnvironments` from config schema.

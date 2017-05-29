@@ -92,12 +92,6 @@ module.exports =
       default: "[[\"$$\", \"$$\"], [\"\\\\[\", \"\\\\]\"]]"
       description: "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`"
       order: 22
-    mathJaxProcessEnvironments:
-      title: "MathJax processEnvironments"
-      type: "boolean"
-      default: false
-      description: "Note that, as opposed to true LaTeX, MathJax processes all environments when wrapped inside math delimiters. By defaut, MathJax will also render all environments outside of delimiters; this can be controlled via the processEnvironments option. `Live Update` is recommended to be disabled when this option is enabled. `(Restart is required to take effect)`"
-      order: 23
     enableWikiLinkSyntax:
       title: "Enable Wiki Link syntax"
       type: "boolean"
