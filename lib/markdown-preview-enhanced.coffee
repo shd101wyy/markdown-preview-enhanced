@@ -3,6 +3,14 @@ path = require 'path'
 {loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
+PACKAGE = require '../package.json'
+
+class MPEVersion
+  atom.deserializers.add(this)
+
+  @deserialize: ({version}) -> new MPEVersion(version)
+  constructor: (version) -> @version = version
+  serialize: -> { deserializer: 'MPEVersion', version: @version }
 
 module.exports = MarkdownPreviewEnhanced =
   preview: null,
@@ -11,9 +19,16 @@ module.exports = MarkdownPreviewEnhanced =
   imageHelperView: null,
   fileExtensions: null,
   config: configSchema,
+  mpeVersion: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
+    @mpeVersion =
+      if state?.deserializer
+        atom.deserializers.deserialize(state)
+      else
+        new MPEVersion(0)
+
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
@@ -103,6 +118,15 @@ module.exports = MarkdownPreviewEnhanced =
       else
         document.getElementsByTagName('atom-workspace')?[0]?.removeAttribute('data-markdown-zen')
 
+    @openWelcomePage()
+
+  openWelcomePage: ->
+    if PACKAGE.version != @mpeVersion.version
+      @mpeVersion.version = PACKAGE.version
+      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+
+  serialize: ->
+    @mpeVersion.serialize()
 
   deactivate: ->
     @subscriptions.dispose()

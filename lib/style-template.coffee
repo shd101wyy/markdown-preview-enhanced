@@ -66,6 +66,7 @@ module.exports = """
       background-color: @bg;
       color: @fg;
       font-size: 14px;
+      box-shadow: -4px 0px 12px rgba(150, 150, 150, .33);
 
       a {
         color: @fg;

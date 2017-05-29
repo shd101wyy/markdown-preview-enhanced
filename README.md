@@ -30,9 +30,11 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [For Developer](#for-developer)
 	* [FAQ](#faq)
 	* [Credits](#credits)
+	* [Changelog](#changelog)
 	* [Thanks](#thanks)
 
 <!-- tocstop -->
+
 ---
 
 ![intro](https://cloud.githubusercontent.com/assets/1908863/22763072/32f09e80-ee28-11e6-9d42-c3953f5749a1.gif)
