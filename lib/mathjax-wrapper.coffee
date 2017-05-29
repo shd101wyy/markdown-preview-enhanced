@@ -32,7 +32,7 @@ module.exports = function(inlineMath, displayMath) {
         processEnvironments: processEnvironments
       },
       TeX: {
-        extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'xypic.js']
+        extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js']
       },
       'HTML-CSS': { availableFonts: ['TeX'] },
       skipStartupTypeset: true
@@ -49,7 +49,7 @@ module.exports = function(inlineMath, displayMath) {
         processEscapes: true
       },
       TeX: {
-        extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'xypic.js']
+        extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js']
       },
       'HTML-CSS': { availableFonts: ['TeX'] }
     }

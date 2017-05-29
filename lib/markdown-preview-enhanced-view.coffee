@@ -1353,7 +1353,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           <script type=\"text/x-mathjax-config\">
             MathJax.Hub.Config(#{JSON.stringify(getMathJaxConfigForExport(true))});
           </script>
-          <script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js\"></script>
+          <script type=\"text/javascript\" async src=\"https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js\"></script>
           "
       else if mathRenderingOption == 'KaTeX'
         if offline
