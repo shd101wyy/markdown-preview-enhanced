@@ -15,7 +15,7 @@ request = null
 {loadPreviewTheme} = require './style'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
-{loadMathJax} = require './mathjax-wrapper'
+{loadMathJax, getMathJaxConfigForExport} = require './mathjax-wrapper'
 {pandocConvert} = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
 princeConvert = require './prince-convert'
@@ -1343,19 +1343,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         if offline
           mathStyle = "
           <script type=\"text/x-mathjax-config\">
-            MathJax.Hub.Config({
-              extensions: ['tex2jax.js'],
-              jax: ['input/TeX','output/HTML-CSS'],
-              messageStyle: 'none',
-              tex2jax: {inlineMath: #{inline},
-                        displayMath: #{block},
-                        processEnvironments: #{mathJaxProcessEnvironments},
-                        processEscapes: true},
-              TeX: {
-                extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', \"file://#{path.resolve(__dirname, '../dependencies/mathjax/extensions/TeX/xypic.js')}\"]
-              },
-              'HTML-CSS': { availableFonts: ['TeX'] }
-            });
+            MathJax.Hub.Config(#{JSON.stringify(getMathJaxConfigForExport(false))});
           </script>
           <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js')}\"></script>
           "
@@ -1364,19 +1352,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
           mathStyle = "
           <script type=\"text/x-mathjax-config\">
-            MathJax.Hub.Config({
-              extensions: ['tex2jax.js'],
-              jax: ['input/TeX','output/HTML-CSS'],
-              messageStyle: 'none',
-              tex2jax: {inlineMath: #{inline},
-                        displayMath: #{block},
-                        processEnvironments: #{mathJaxProcessEnvironments},
-                        processEscapes: true},
-              TeX: {
-                extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'http://sonoisa.github.io/xyjax_ext/xypic.js']
-              },
-              'HTML-CSS': { availableFonts: ['TeX'] }
-            });
+            MathJax.Hub.Config(#{JSON.stringify(getMathJaxConfigForExport(true))});
           </script>
           <script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js\"></script>
           "
@@ -1752,7 +1728,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ## PhantomJS
   ##################################################
   loadPhantomJSHeaderFooterConfig: ()->
-    # mermaid_config.js
+    # phantomjs_header_footer_config.js
     configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
     try
       delete require.cache[require.resolve(configPath)] # return uncached

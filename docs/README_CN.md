@@ -29,6 +29,7 @@ Markdown Preview Enhanced
 	* [开发者](#开发者)
 	* [疑难解答](#疑难解答)
 	* [鸣谢](#鸣谢)
+	* [Changelog](#changelog)
 	* [感谢](#感谢)
 
 <!-- tocstop -->
