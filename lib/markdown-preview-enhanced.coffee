@@ -53,8 +53,9 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
-      'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
-      'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:open-mermaid-config': => @openMermaidConfig()
+      'markdown-preview-enhanced:open-header-footer-config': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:open-mathjax-config': => @openMathJaxConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:insert-page-break': => @insertPageBreak()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
@@ -321,6 +322,10 @@ module.exports = MarkdownPreviewEnhanced =
 
   openHeaderFooterConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
+
+  openMathJaxConfig: ()->
+    require('./mathjax-wrapper').loadMathJaxConfig()
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mathjax_config.js'))
 
   toggleZenMode: ()->
     enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')

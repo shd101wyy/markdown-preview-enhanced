@@ -105,6 +105,7 @@ loadMathJax = (document, callback)->
 
 
 module.exports = {
+  loadMathJaxConfig,
   loadMathJax,
   getMathJaxConfigForExport
 }
