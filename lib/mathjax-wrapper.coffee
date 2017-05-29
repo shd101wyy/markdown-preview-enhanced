@@ -17,7 +17,7 @@ loadMathJaxConfig = ()->
   Restarting ATOM is required to take effect after you modify this file.
  */
 module.exports = function(inlineMath, displayMath) {
-  const processEnvironments = true
+  const processEnvironments = false
 
   return {
     forPreview: {
