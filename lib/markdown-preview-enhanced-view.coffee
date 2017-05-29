@@ -192,7 +192,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # save cache
       CACHE[@editor.getPath()] = {
         html: @previewElement?.innerHTML or '',
-        tocHTML: @sidebarTOC?.innerHTML or '',
         codeChunksData: @codeChunksData,
         graphData: @graphData,
         presentationMode: @presentationMode,
@@ -245,7 +244,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     d = CACHE[@editor.getPath()]
     if d
       @previewElement.innerHTML = d.html
-      @sidebarTOC?.innerHTML = d.tocHTML
       @graphData = d.graphData
       @codeChunksData = d.codeChunksData
       @presentationMode = d.presentationMode
@@ -263,8 +261,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
       @setInitialScrollPos()
 
+      @renderSidebarTOC()
+
       # rebind tag a click event
-      @bindTagAClickEvent()
+      @bindTagAClickEvent(@previewElement)
 
       # render plantuml in case
       @renderPlantUML()
@@ -272,6 +272,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # reset code chunks
       @setupCodeChunks()
     else
+      @codeChunksData = {}
+      @graphData = {}
+      @tocConfigs = null
+
       @renderMarkdown()
     @scrollMap = null
 
@@ -1083,7 +1087,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     for el in els
       if el.getAttribute('data-processed') != 'true'
         if !el.classList.contains 'initialized'
-          el.innerText = 'rendering plantuml graph...\n'
+          el.innerText = 'rendering PlantUML graph...\n'
 
         helper(el, el.getAttribute('data-original'))
 

@@ -1114,9 +1114,10 @@ parseMD = (inputString, option={}, callback)->
     return ''
 
   finalize = (html)->
-    markdownPreview?.tocConfigs = tocConfigs
     if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
       return parseMD(markdownPreview.editor.getText(), option, callback)
+    else
+      markdownPreview?.tocConfigs = tocConfigs
 
     if tocBracketEnabled # [TOC]
       tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})

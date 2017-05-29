@@ -4,7 +4,6 @@ used to store rendered cache.
 
 {
   html: @previewElement.innerHTML
-  tocHTML: @sidebarTOC.innerHTML
   codeChunksData: @codeChunksData
   graphData: @graphData
   presentationMode: @presentationMode

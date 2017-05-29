@@ -3,11 +3,44 @@ path = require 'path'
 
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
 
-CALLBACKS = []
-CHUNKS = []
-TASKS = {} # key is fileDirectoryPath
+class PlantUMLTask
+  constructor: (fileDirectoryPath)->
+    @fileDirectoryPath = fileDirectoryPath
+    @chunks = ''
+    @callbacks = []
+    @task = null
+
+    @startTask()
+
+  startTask: ->
+    @task = spawn 'java', [  '-Djava.awt.headless=true',
+                              '-Dplantuml.include.path='+@fileDirectoryPath
+                              '-jar', plantumlJarPath,
+                              # '-graphvizdot', 'exe'
+                              '-pipe',
+                              '-tsvg',
+                              '-charset', 'UTF-8']
+
+    @task.stdout.on 'data', (chunk)=>
+      data = chunk.toString().trimRight() # `trimRight()` here is necessary.
+      if data.endsWith('</svg>')
+        data = @chunks + data
+        @chunks = '' # clear CHUNKS
+
+        diagrams = data.split('</svg>')
+        diagrams.forEach (diagram, i)=>
+          if diagram.length
+            @callbacks.shift()?(diagram + '</svg>')
+      else
+        @chunks += data
+
+  generateSVG: (content, cb)->
+    @callbacks.push cb
+    @task.stdin.write(content + '\n')
+
+TASKS = {} # key is fileDirectoryPath, value is PlantUMLTask
 # Async call
-generateSVG = (content, fileDirectoryPath='', callback)->
+render = (content, fileDirectoryPath='', callback)->
   content = content.trim()
   # ' @mpe_file_directory_path:/fileDirectoryPath
   # fileDirectoryPath
@@ -16,47 +49,19 @@ generateSVG = (content, fileDirectoryPath='', callback)->
 
 
   if !(content.match(/^\@start/m))
-    content = """
-@startuml
+    content = """@startuml
 #{content}
-@enduml
-    """
+@enduml"""
 
   if !TASKS[fileDirectoryPath] # init `plantuml.jar` task
-    TASKS[fileDirectoryPath] = spawn 'java', [  '-Djava.awt.headless=true',
-                              '-Dplantuml.include.path='+fileDirectoryPath
-                              '-jar', plantumlJarPath,
-                              # '-graphvizdot', 'exe'
-                              '-pipe',
-                              '-tsvg',
-                              '-charset', 'UTF-8']
+    TASKS[fileDirectoryPath] = new PlantUMLTask(fileDirectoryPath)
 
-    # only `on 'data'` once
-    TASKS[fileDirectoryPath].stdout.on 'data', (chunk)->
-      CHUNKS.push(chunk)
-      data = Buffer.concat(CHUNKS).toString().trim() # `trim()` here is necessary.
-      if data.endsWith('</svg>')
-        CHUNKS = [] # clear CHUNKS
-
-        diagrams = data.split('</svg>')
-        diagrams.forEach (diagram, i)->
-          if diagram.length
-            CALLBACKS.shift()?(diagram + '</svg>')
-
-    ###
-    TASKS[fileDirectoryPath].stdout.on 'end', ()->
-      data = Buffer.concat(chunks).toString()
-      callback?(data)
-    ###
-
-  CALLBACKS.push(callback) # save callback to CALLBACKS queue
-  TASKS[fileDirectoryPath].stdin.write(content + "\n")
-  # TASKS[fileDirectoryPath].stdin.end()
+  TASKS[fileDirectoryPath].generateSVG content, callback
 
 
-# generateSVG('A -> B')
+
 plantumlAPI = {
-  render: generateSVG,
+  render,
 }
 
 module.exports = plantumlAPI
