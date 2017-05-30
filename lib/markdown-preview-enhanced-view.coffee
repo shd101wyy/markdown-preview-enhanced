@@ -149,7 +149,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     return ''
 
+  # only works if singlePreview
   setTabTitle: (title)->
+    return if !@mainModule.singlePreview
     tabTitle = $('[data-type="MarkdownPreviewEnhancedView"] div.title')
     if tabTitle.length
       tabTitle[0].innerText = title
@@ -177,6 +179,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEditor: (editor)->
     if not @editor
+      @editor = editor # this line is necessary here to make tab title correct.  
       atom.workspace
           .open @uri,
                 split: 'right',
@@ -282,14 +285,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
     editorElement = @editor.getElement()
 
     @disposables.add @editor.onDidDestroy ()=>
-      @setTabTitle('unknown preview')
+      # @setTabTitle('unknown preview')
       if @disposables
         @disposables.dispose()
         @disposables = null
       @editor = null
       @previewElement.onscroll = null
 
-      @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
+      # @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
@@ -2107,7 +2110,8 @@ module.exports = config || {}
     for key of CACHE
       delete(CACHE[key])
 
-    @mainModule.preview = null # unbind
+    # @mainModule.preview = null # unbind
+    @mainModule.removePreviewFromMap this
 
   getElement: ->
     # @element
