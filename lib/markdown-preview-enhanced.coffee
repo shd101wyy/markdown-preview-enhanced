@@ -164,12 +164,13 @@ module.exports = MarkdownPreviewEnhanced =
     # console.log 'deactivate markdown-preview-enhanced'
 
   toggle: ->
-    editor = atom.workspace.getActiveTextEditor()
+    editor = atom.workspace.getActivePaneItem()
     preview = @getPreviewForEditor(editor)
+
     if preview?.isOnDom()
       pane = atom.workspace.paneForItem(preview)
       pane.destroyItem(preview) # this will trigger preview.destroy()
-      delete @previewsMap[editor.getPath()]
+      @removePreviewFromMap preview
     else
       ## check if it is valid markdown file
       @startMDPreview(editor)
@@ -202,6 +203,8 @@ module.exports = MarkdownPreviewEnhanced =
   getPreviewForEditor: (editor)->
     if @singlePreview
       return @getSinglePreview()
+    else if editor.getURI?().startsWith('markdown-preview-enhanced://')
+      return editor
     else
       return @previewsMap[editor?.getPath?()]
 
@@ -401,7 +404,7 @@ module.exports = MarkdownPreviewEnhanced =
 
 
   runCodeChunk: ()->
-    editor = atom.workspace.getActiveTextEditor()
+    editor = atom.workspace.getActivePaneItem()
     preview = @getPreviewForEditor(editor)
     if preview?.isOnDom()
       preview.runCodeChunk()
@@ -409,7 +412,7 @@ module.exports = MarkdownPreviewEnhanced =
       atom.notifications.addInfo('You need to start markdown-preview-enhanced preview first')
 
   runAllCodeChunks: ()->
-    editor = atom.workspace.getActiveTextEditor()
+    editor = atom.workspace.getActivePaneItem()
     preview = @getPreviewForEditor(editor)
     if preview?.isOnDom()
       preview.runAllCodeChunks()
