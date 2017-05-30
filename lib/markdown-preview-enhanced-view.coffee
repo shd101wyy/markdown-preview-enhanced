@@ -110,6 +110,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:zoom-in': => @zoomIn()
       'markdown-preview-enhanced:zoom-out': => @zoomOut()
       'markdown-preview-enhanced:reset-zoom': => @resetZoom()
+      'markdown-preview-enhanced:refresh-preview': => @refreshPreview()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -623,13 +624,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     refreshBtn.innerHTML = '<span>⟳</span>'
     @toolbar.appendChild(refreshBtn)
 
-    refreshBtn.onclick = ()=>
-      # clear cache
-      @filesCache = {}
-      codeChunkAPI.clearCache()
-
-      # render again
-      @renderMarkdown()
+    refreshBtn.onclick = => @refreshPreview()
 
   addSidebarTOCButton: ->
     sidebarTOCBtn = document.createElement('div')
@@ -1181,6 +1176,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
   resetZoom: ()->
     @zoomLevel = 1.0
     @setZoomLevel()
+
+  refreshPreview: ()->
+    # clear cache
+    @filesCache = {}
+    codeChunkAPI.clearCache()
+
+    # render again
+    @renderMarkdown()
 
   ###
   convert './a.txt' '/a.txt'

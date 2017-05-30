@@ -24,6 +24,11 @@ module.exports =
       default: false
       description: "Use white background color for preview."
       order: 2
+    singlePreview:
+      title: "Open only one preview"
+      type: "boolean"
+      default: true,
+      order: 3
     breakOnSingleNewline:
       type: "boolean"
       default: true

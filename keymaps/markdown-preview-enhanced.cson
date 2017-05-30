@@ -19,6 +19,7 @@
   'cmd--': 'markdown-preview-enhanced:zoom-out'
   'cmd-_': 'markdown-preview-enhanced:zoom-out'
   'cmd-0': 'markdown-preview-enhanced:reset-zoom'
+  'cmd-r': 'markdown-preview-enhanced:refresh-preview'
 
 '.platform-win32 .markdown-preview-enhanced-container, .platform-linux .markdown-preview-enhanced-container':
   'ctrl-+': 'markdown-preview-enhanced:zoom-in'
@@ -26,3 +27,4 @@
   'ctrl--': 'markdown-preview-enhanced:zoom-out'
   'ctrl-_': 'markdown-preview-enhanced:zoom-out'
   'ctrl-0': 'markdown-preview-enhanced:reset-zoom'
+  'ctrl-r': 'markdown-preview-enhanced:refresh-preview'
