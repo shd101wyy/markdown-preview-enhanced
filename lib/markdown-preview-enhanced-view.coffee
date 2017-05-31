@@ -179,7 +179,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEditor: (editor)->
     if not @editor
-      @editor = editor # this line is necessary here to make tab title correct.  
+      @editor = editor # this line is necessary here to make tab title correct.
       atom.workspace
           .open @uri,
                 split: 'right',
@@ -468,7 +468,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
     while i >= 0
-      if bufferLineNo >= @slideConfigs[i].line
+      if bufferLineNo >= @slideConfigs[i].lineNo
         break
       i-=1
     slideElement = @previewElement.querySelector(".slide[data-offset=\"#{i}\"]")
