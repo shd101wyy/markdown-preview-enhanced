@@ -29,8 +29,8 @@ module.exports = """
 
 .markdown-preview-enhanced-container {
   .mpe-toolbar {
-    position: fixed;
-    top: 64px;
+    position: absolute;
+    top: 32px;
     right: 24px;
     opacity: 0;
     display: block;
