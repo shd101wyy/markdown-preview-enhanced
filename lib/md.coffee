@@ -538,6 +538,21 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
     else
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
+# eg '.class1 .class2 #id1'
+# return { classes: ['class1', 'class2'], id: 'id1' }
+formatClassesAndId = (opt)->
+  if classMatch = opt.match(/\.[^\s]+/g)
+    classes = classMatch.map (cl)-> cl.slice(1)
+  else
+    classes = []
+
+  if idMatch = opt.match(/\#[^\s]+/g)
+    id = idMatch[idMatch.length - 1].slice(1)
+  else
+    id = ''
+
+  return {classes, id}
+
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
 resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={})->
@@ -574,9 +589,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
   renderCodeBlock = (preElement, text, parameters, lineNo=null)->
     highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
-    match = parameters.match(/^\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)$/)
-    lang = match[1]
-    parameters = match[2].trim()
+    if match = parameters.match(/\s*([^\s]+)\s+\{(.+?)\}/)
+      lang = match[1]
+      parameters = match[2]
+    else
+      lang = parameters
+      parameters = ''
+
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)
@@ -586,9 +605,10 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     $(preElement).replaceWith(highlightedBlock)
 
-    classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
-    if classMatch and classMatch[1]
-      highlightedBlock.addClass(classMatch[1])
+    if parameters
+      {classes, id} = formatClassesAndId(parameters)
+      highlightedBlock.addClass(classes.join(' ')) if classes
+      highlightedBlock.attr('id', id) if id
       checkLineNumber(highlightedBlock)
 
   # parse eg:
