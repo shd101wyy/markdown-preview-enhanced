@@ -3,6 +3,7 @@ path = require 'path'
 fs = require 'fs'
 request = null
 less = null
+subjects = require './custom-comment.coffee'
 
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
 
@@ -67,46 +68,49 @@ loadFile = (filePath)->
         else
           resolve(data.toString())
 
+createAnchor = (lineNo)->
+  "\n\n<p data-line=\"#{lineNo}\" class=\"sync-line\" style=\"margin:0;\"></p>\n\n"
+
 ###
 @param {String} inputString, required
 @param {Object} filesCache, optional
 @param {String} fileDirectoryPath, required
 @param {String} projectDirectoryPath, required
 @param {Boolean} useAbsoluteImagePath, optional
-@param {Object} editor, optional
+@param {Boolean} insertAnchors, optional
 return
 {
   {String} outputString,
-  {Array} heightsDelta : [[start, height, acc, realStart], ...]
-          start is the buffer row
-          heightsDelta is used to correct scroll sync. please refer to md.coffee
 }
 ###
-fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, editor})->
+fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, insertAnchors})->
   new Promise (resolve, reject)->
-    heightsDelta = []
-    acc = 0
-
-    updateHeightsDelta = (str, start)->
-      height = (str.match(/\n/g)?.length + 1) or 1
-      heightsDelta.push({
-        realStart: start,
-        start: start + acc - heightsDelta.length,
-        height: height,
-        acc: acc,
-      })
-
-      acc = acc + height
+    inblock = false
 
     helper = (i, lineNo=0, outputString="")->
       if i >= inputString.length
-        return resolve({outputString, heightsDelta})
+        # console.log outputString
+        return resolve({outputString})
       if inputString[i] == '\n'
         return helper i+1, lineNo+1, outputString+'\n'
 
       end = inputString.indexOf '\n', i
       end = inputString.length if end < 0
       line = inputString.substring i, end
+
+      if insertAnchors
+        if inblock
+          if line.match(inblock)
+            inblock = false
+        else if line.match /^(\#|\!\[|```(\w|{)|@import)/
+          outputString += createAnchor(lineNo)
+          if line.match(/^```/)
+            inblock = /^```\s*$/
+        else if subjectMatch = line.match /^\<!--\s+([^\s]+)/
+          subject = subjectMatch[1]
+          if subjects[subject]
+            line = line.replace(subject, "#{subject} lineNo:#{lineNo} ")
+            outputString += createAnchor(lineNo)
 
       if importMatch = line.match /^\@import(\s+)\"([^\"]+)\";?/
         whole = importMatch[0]
@@ -121,7 +125,6 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           absoluteFilePath = path.resolve(fileDirectoryPath, filePath)
 
         if filesCache?[absoluteFilePath] # already in cache
-          updateHeightsDelta(filesCache[absoluteFilePath], start) if editor
           return helper(end+1, lineNo+1, outputString+filesCache[absoluteFilePath]+'\n')
 
         extname = path.extname(filePath)
@@ -136,7 +139,6 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
           output = "![](#{encodeURI(imageSrc)})  "
           filesCache?[absoluteFilePath] = output
 
-          updateHeightsDelta(output, start) if editor
           return helper(end+1, lineNo+1, outputString+output+'\n')
         else
           loadFile(absoluteFilePath).then (fileContent)->
@@ -145,7 +147,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               return fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, fileDirectoryPath: path.dirname(absoluteFilePath)}).then ({outputString:output})->
                 output = '\n' + output + '  '
                 filesCache?[absoluteFilePath] = output
-                updateHeightsDelta(output, start) if editor
+
                 return helper(end+1, lineNo+1, outputString+output+'\n')
             else if extname == '.html' # html file
               output = '<div>' + fileContent + '</div>  '
@@ -179,13 +181,11 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
               filesCache?[absoluteFilePath] = output
 
-            updateHeightsDelta(output, start) if editor
             return helper(end+1, lineNo+1, outputString+output+'\n')
 
           .catch (e)-> # failed to load file
             output = "<pre>#{e.toString()}</pre>  "
 
-            updateHeightsDelta(output, start) if editor
             return helper(end+1, lineNo+1, outputString+output+'\n')
       else
         return helper(end+1, lineNo+1, outputString+line+'\n')

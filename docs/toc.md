@@ -4,7 +4,6 @@
 * [Table of Contents](#table-of-contents)
 	* [[TOC]](#toc)
 	* [Configuration](#configuration)
-	* [Demo](#demo)
 
 <!-- tocstop -->
 
@@ -12,7 +11,7 @@
 **Markdown Preview Enhanced** can create `TOC` for your markdown file.   
 You can press <kbd>cmd+shift+p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
 Multiple TOCs can be created.  
-To exclude a heading from the `TOC`, insert `<!-- untoc -->` **above** your heading.  
+To exclude a heading from the `TOC`, append `{.ignore}` **after** your heading.  
 
 ## [TOC]  
 You can also create `TOC` by inserting `[TOC]` to your markdown file.  
@@ -22,6 +21,8 @@ For example:
 [TOC]  
 
 # Heading 1
+## Heading 2 {.ignore}
+Heading 2 will be ignored from TOC.  
 ```
 However, this way will only display TOC in preview, while leaving editor content unchanged.  
 
@@ -31,5 +32,3 @@ Use orderedList or not.
 * **depthFrom**, **depthTo**  
 `[1~6]` inclusive.   
 
-## Demo  
-![toc](http://i.imgur.com/z1to5jy.gif)

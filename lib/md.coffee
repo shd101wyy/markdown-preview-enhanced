@@ -143,29 +143,6 @@ defaults =
 
 md = new remarkable('full', defaults)
 
-DISABLE_SYNC_LINE = false
-HEIGHTS_DELTA = [] # [[realStart, start, height, acc], ...] for import files
-
-# fix data-line after import external files
-getRealDataLine = (lineNo)->
-  return lineNo if !HEIGHTS_DELTA.length
-  i = HEIGHTS_DELTA.length - 1
-  while i >= 0
-    {realStart, start, height, acc} = HEIGHTS_DELTA[i]
-    if lineNo == start
-      # console.log(lineNo, HEIGHTS_DELTA, realStart)
-      return realStart
-    else if lineNo > start
-      if lineNo < start + height # imported content
-        # console.log(lineNo, HEIGHTS_DELTA, realStart)
-        return realStart
-      else
-        # console.log(lineNo, HEIGHTS_DELTA, lineNo - acc - height + i + 1)
-        return lineNo - acc - height + i + 1
-    i -= 1
-  return lineNo
-
-
 atom.config.observe 'markdown-preview-enhanced.breakOnSingleNewline',
   (breakOnSingleNewline)->
     md.set({breaks: breakOnSingleNewline})
@@ -373,7 +350,6 @@ md.block.ruler.before 'code', 'custom-comment',
         state.tokens.push
           type: 'custom'
           subject: subject
-          line: getRealDataLine(state.line)
           option: option
 
         state.line = start + 1 + (src.slice(pos + 4, end).match(/\n/g)||[]).length
@@ -384,27 +360,11 @@ md.block.ruler.before 'code', 'custom-comment',
       state.tokens.push
         type: 'custom'
         subject: 'toc-bracket'
-        line: getRealDataLine(state.line)
         option: {}
       state.line = start + 1
       return true
     else
       return false
-
-#
-# Inject line numbers for sync scroll. Notes:
-#
-# - We track only headings and paragraphs on first level. That's enougth.
-# - Footnotes content causes jumps. Level limit filter it automatically.
-#
-# YIYI : 这里我不仅仅 map 了 level 0
-md.renderer.rules.paragraph_open = (tokens, idx)->
-  lineNo = null
-  if tokens[idx].lines and !DISABLE_SYNC_LINE # /*&& tokens[idx].level == 0*/)
-    lineNo = tokens[idx].lines[0]
-    return '<p class="sync-line" data-line="' + getRealDataLine(lineNo) + '">'
-  return '<p>'
-
 
 # task list
 md.renderer.rules.list_item_open = (tokens, idx)->
@@ -439,9 +399,6 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
 
   if token.params
     langClass = ' class="' + langPrefix + langName + '" ';
-
-  if token.lines
-    lineStr = " data-line=\"#{getRealDataLine(token.lines[0])}\" "
 
   # get code content
   content = token.content.escape()
@@ -627,10 +584,6 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    if lineNo != null and !DISABLE_SYNC_LINE
-      highlightedBlock.attr({'data-line': lineNo}) # no need to call getRealDataLine here
-      highlightedBlock.addClass('sync-line')
-
     $(preElement).replaceWith(highlightedBlock)
 
     classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
@@ -658,10 +611,6 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
       highlightedBlock = $(html)
       highlightedBlock.removeClass('editor').addClass('lang-' + lang)
-
-      if lineNo != null and !DISABLE_SYNC_LINE
-        highlightedBlock.attr({'data-line': lineNo})
-        highlightedBlock.addClass('sync-line')
 
       classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
       if classMatch and classMatch[1]
@@ -869,46 +818,6 @@ updateTOC = (markdownPreview, tocConfigs)->
   markdownPreview.tocConfigs = tocConfigs
   return tocNeedUpdate
 
-# Insert anchors for scroll sync.
-# this function should only be called when usePandocParser.
-insertAnchors = (text)->
-  # anchor looks like this <p data-line="23" class="sync-line" style="margin:0;"></p>
-  createAnchor = (lineNo)->
-    "<p data-line=\"#{lineNo}\" class=\"sync-line\" style=\"margin:0;\"></p>\n"
-
-  outputString = ""
-  lines = text.split('\n')
-  i = 0
-  while i < lines.length
-    line = lines[i]
-
-    ###
-    add anchors when it is
-    1. heading
-    2. image
-    3. code block | chunk
-    4. @import
-    5. comment
-    ###
-    if line.match /^(\#|\!\[|```(\w|{)|@import|\<!--)/
-      outputString += createAnchor(i)
-
-    if line.match /^```(\w|{)/ # begin of code block
-      outputString += line + '\n'
-      i += 1
-      while i < lines.length
-        line = lines[i]
-        if line.match /^```\s*/ # end of code block
-          break
-        else
-          outputString += line + '\n'
-          i += 1
-
-    outputString += line + '\n'
-    i += 1
-
-  outputString
-
 ###
 [TOC] for pandoc parser
 ###
@@ -970,7 +879,6 @@ analyzeSlideConfigs = (text)->
     else
       line = 0
 
-    option.line = getRealDataLine(line)
     slideConfigs.push option
     return '<span class="new-slide"></span>  \n'
 
@@ -997,9 +905,6 @@ callback(data)
 ###
 parseMD = (inputString, option={}, callback)->
   {markdownPreview} = option
-
-  DISABLE_SYNC_LINE = !(option.isForPreview) # set global variable
-  HEIGHTS_DELTA = []
 
   # toc
   tocTable = {} # eliminate repeated slug
@@ -1044,12 +949,8 @@ parseMD = (inputString, option={}, callback)->
   {table:frontMatterTable, content:inputString, data:yamlConfig} = processFrontMatter(inputString, option.hideFrontMatter)
   yamlConfig = yamlConfig or {}
 
-  # insert anchors
-  if usePandocParser and option.isForPreview and !inputString.match(/^<!--\s+slide/gm)
-    inputString = insertAnchors(inputString)
-
   # check document imports
-  fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor}).then ({outputString:inputString, heightsDelta: HEIGHTS_DELTA})->
+  fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, insertAnchors: option.isForPreview}).then ({outputString:inputString})->
     # check slideConfigs
     if usePandocParser
       {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
@@ -1060,22 +961,41 @@ parseMD = (inputString, option={}, callback)->
       id = null
 
       if tokens[idx + 1] and tokens[idx + 1].content
-        id = uslug(tokens[idx + 1].content)
+        id = ""
+        classes = ""
+        ignore = false
+        heading = tokens[idx + 1].content
+
+        # check {.class1 .class2 #id1}
+        if optMatch = heading.match(/\{(.+?)\}/)
+          heading = heading.replace(optMatch[0], '')
+          tokens[idx + 1].content = heading
+          tokens[idx + 1].children[0].content = heading
+
+          opt = optMatch[1]
+          if classMatch = opt.match(/\.[^\s]+/g)
+            classes = classMatch.map (cl)->
+              if cl == '.ignore'
+                ignore = true
+              cl.slice(1)
+            classes = classes.join(' ')
+
+          if idMatch = opt.match(/\#[^\s]+/g)
+            id = idMatch[idMatch.length - 1].slice(1)
+
+        id = uslug(heading) if !id
         if (tocTable[id] >= 0)
           tocTable[id] += 1
           id = id + '-' + tocTable[id]
         else
           tocTable[id] = 0
 
-        if !(tokens[idx-1]?.subject == 'untoc')
-          tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
+        if !ignore
+          tocConfigs.headings.push({content: heading, level: tokens[idx].hLevel})
 
-      id = if id then "id=#{id}" else ''
-      if tokens[idx].lines and !DISABLE_SYNC_LINE
-        line = tokens[idx].lines[0]
-        return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{getRealDataLine(line)}\" #{id}>"
-
-      return "<h#{tokens[idx].hLevel} #{id}>"
+      id = "id=#{id}" if id
+      classes = "class=#{classes}" if classes
+      return "<h#{tokens[idx].hLevel} #{id} #{classes}>"
 
     # <!-- subject options... -->
     md.renderer.rules.custom = (tokens, idx)=>
@@ -1086,9 +1006,8 @@ parseMD = (inputString, option={}, callback)->
       else if subject == 'toc'
         tocEnabled = true
 
-        tocConfigs.tocStartLine_s.push tokens[idx].line
-
         opt = tokens[idx].option
+        tocConfigs.tocStartLine_s.push opt.lineNo
         if opt.orderedList and opt.orderedList != 0
           tocConfigs.tocOrdered_s.push true
         else
@@ -1098,7 +1017,7 @@ parseMD = (inputString, option={}, callback)->
         tocConfigs.tocDepthTo_s.push opt.depthTo || 6
 
       else if (subject == 'tocstop')
-        tocConfigs.tocEndLine_s.push tokens[idx].line
+        tocConfigs.tocEndLine_s.push tokens[idx].option.lineNo
 
       else if (subject == 'toc-bracket') # [toc]
         tocBracketEnabled = true
@@ -1106,7 +1025,6 @@ parseMD = (inputString, option={}, callback)->
 
       else if subject == 'slide'
         opt = tokens[idx].option
-        opt.line = tokens[idx].line
         slideConfigs.push(opt)
         return '<span class="new-slide"></span>'
       return ''
@@ -1119,7 +1037,6 @@ parseMD = (inputString, option={}, callback)->
 
       if tocBracketEnabled # [TOC]
         tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})
-        DISABLE_SYNC_LINE = true # otherwise tocHtml will break scroll sync.
         tocHtml = md.render(tocObject.content)
         html = html.replace /^\s*\[MPETOC\]\s*/gm, tocHtml
 
