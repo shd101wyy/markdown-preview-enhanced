@@ -8,13 +8,12 @@ Highlights = require(path.join(atom.getLoadSettings().resourcePath, 'node_module
 {File} = require 'atom'
 matter = require('gray-matter')
 async = null
-less = null
 
 {mermaidAPI} = require('../dependencies/mermaid/mermaid.min.js')
 toc = require('./toc')
 {scopeForLanguageName} = require './extension-helper'
 customSubjects = require './custom-comment'
-fileImport = require('./file-import.coffee')
+{fileImport} = require('./file-import.coffee')
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
 {pandocRender} = require('./pandoc-convert')
 
@@ -1050,143 +1049,122 @@ parseMD = (inputString, option={}, callback)->
     inputString = insertAnchors(inputString)
 
   # check document imports
-  {outputString:inputString, heightsDelta: HEIGHTS_DELTA, lessFilesData} = fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor})
+  fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, editor: markdownPreview?.editor}).then ({outputString:inputString, heightsDelta: HEIGHTS_DELTA})->
+    # check slideConfigs
+    if usePandocParser
+      {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
 
-  # check slideConfigs
-  if usePandocParser
-    {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
+    # overwrite remark heading parse function
+    md.renderer.rules.heading_open = (tokens, idx)=>
+      line = null
+      id = null
 
-  # overwrite remark heading parse function
-  md.renderer.rules.heading_open = (tokens, idx)=>
-    line = null
-    id = null
+      if tokens[idx + 1] and tokens[idx + 1].content
+        id = uslug(tokens[idx + 1].content)
+        if (tocTable[id] >= 0)
+          tocTable[id] += 1
+          id = id + '-' + tocTable[id]
+        else
+          tocTable[id] = 0
 
-    if tokens[idx + 1] and tokens[idx + 1].content
-      id = uslug(tokens[idx + 1].content)
-      if (tocTable[id] >= 0)
-        tocTable[id] += 1
-        id = id + '-' + tocTable[id]
+        if !(tokens[idx-1]?.subject == 'untoc')
+          tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
+
+      id = if id then "id=#{id}" else ''
+      if tokens[idx].lines and !DISABLE_SYNC_LINE
+        line = tokens[idx].lines[0]
+        return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{getRealDataLine(line)}\" #{id}>"
+
+      return "<h#{tokens[idx].hLevel} #{id}>"
+
+    # <!-- subject options... -->
+    md.renderer.rules.custom = (tokens, idx)=>
+      subject = tokens[idx].subject
+
+      if subject == 'pagebreak' or subject == 'newpage'
+        return '<div class="pagebreak"> </div>'
+      else if subject == 'toc'
+        tocEnabled = true
+
+        tocConfigs.tocStartLine_s.push tokens[idx].line
+
+        opt = tokens[idx].option
+        if opt.orderedList and opt.orderedList != 0
+          tocConfigs.tocOrdered_s.push true
+        else
+          tocConfigs.tocOrdered_s.push false
+
+        tocConfigs.tocDepthFrom_s.push opt.depthFrom || 1
+        tocConfigs.tocDepthTo_s.push opt.depthTo || 6
+
+      else if (subject == 'tocstop')
+        tocConfigs.tocEndLine_s.push tokens[idx].line
+
+      else if (subject == 'toc-bracket') # [toc]
+        tocBracketEnabled = true
+        return '\n[MPETOC]\n'
+
+      else if subject == 'slide'
+        opt = tokens[idx].option
+        opt.line = tokens[idx].line
+        slideConfigs.push(opt)
+        return '<span class="new-slide"></span>'
+      return ''
+
+    finalize = (html)->
+      if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
+        return parseMD(markdownPreview.editor.getText(), option, callback)
       else
-        tocTable[id] = 0
+        markdownPreview?.tocConfigs = tocConfigs
 
-      if !(tokens[idx-1]?.subject == 'untoc')
-        tocConfigs.headings.push({content: tokens[idx + 1].content, level: tokens[idx].hLevel})
+      if tocBracketEnabled # [TOC]
+        tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})
+        DISABLE_SYNC_LINE = true # otherwise tocHtml will break scroll sync.
+        tocHtml = md.render(tocObject.content)
+        html = html.replace /^\s*\[MPETOC\]\s*/gm, tocHtml
 
-    id = if id then "id=#{id}" else ''
-    if tokens[idx].lines and !DISABLE_SYNC_LINE
-      line = tokens[idx].lines[0]
-      return "<h#{tokens[idx].hLevel} class=\"sync-line\" data-line=\"#{getRealDataLine(line)}\" #{id}>"
-
-    return "<h#{tokens[idx].hLevel} #{id}>"
-
-  # <!-- subject options... -->
-  md.renderer.rules.custom = (tokens, idx)=>
-    subject = tokens[idx].subject
-
-    if subject == 'pagebreak' or subject == 'newpage'
-      return '<div class="pagebreak"> </div>'
-    else if subject == 'toc'
-      tocEnabled = true
-
-      tocConfigs.tocStartLine_s.push tokens[idx].line
-
-      opt = tokens[idx].option
-      if opt.orderedList and opt.orderedList != 0
-        tocConfigs.tocOrdered_s.push true
-      else
-        tocConfigs.tocOrdered_s.push false
-
-      tocConfigs.tocDepthFrom_s.push opt.depthFrom || 1
-      tocConfigs.tocDepthTo_s.push opt.depthTo || 6
-
-    else if (subject == 'tocstop')
-      tocConfigs.tocEndLine_s.push tokens[idx].line
-
-    else if (subject == 'toc-bracket') # [toc]
-      tocBracketEnabled = true
-      return '\n[MPETOC]\n'
-
-    else if subject == 'slide'
-      opt = tokens[idx].option
-      opt.line = tokens[idx].line
-      slideConfigs.push(opt)
-      return '<span class="new-slide"></span>'
-    return ''
-
-  finalize = (html)->
-    if markdownPreview and tocEnabled and updateTOC(markdownPreview, tocConfigs)
-      return parseMD(markdownPreview.editor.getText(), option, callback)
-    else
-      markdownPreview?.tocConfigs = tocConfigs
-
-    if tocBracketEnabled # [TOC]
-      tocObject = toc(tocConfigs.headings, {ordered: false, depthFrom: 1, depthTo: 6, tab: markdownPreview?.editor?.getTabText() or '\t'})
-      DISABLE_SYNC_LINE = true # otherwise tocHtml will break scroll sync.
-      tocHtml = md.render(tocObject.content)
-      html = html.replace /^\s*\[MPETOC\]\s*/gm, tocHtml
-
-
-    html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
-
-    if lessFilesData.length # compile less files
-      async ?= require 'async'
-      less ?= require 'less'
-      asyncFunctions = lessFilesData.map ({absoluteFilePath, fileContent})->
-        (cb)->
-          less.render fileContent, {paths: [path.dirname(absoluteFilePath)]}, (error, output)->
-            if error
-              atom.notifications.addError('Failed to compile less file: ' + absoluteFilePath, detail: error.toString())
-              return cb(null, '')
-            else
-              css = output.css or ''
-              markdownPreview?.filesCache[absoluteFilePath] = "<style>#{css}</style>"
-              return cb(null, css)
-      async.parallel asyncFunctions, (error, results)->
-        css = results.join('')
-        html = html + "<style>#{css}</style>"
-        return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
-    else
+      html = resolveImagePathAndCodeBlock(html, graphData, codeChunksData, option)
       return callback({html: frontMatterTable+html, slideConfigs, yamlConfig})
 
-  if usePandocParser # pandoc parser
-    args = yamlConfig.pandoc_args or []
-    args = [] if not (args instanceof Array)
-    if yamlConfig.bibliography or yamlConfig.references
-      args.push('--filter', 'pandoc-citeproc')
+    if usePandocParser # pandoc parser
+      args = yamlConfig.pandoc_args or []
+      args = [] if not (args instanceof Array)
+      if yamlConfig.bibliography or yamlConfig.references
+        args.push('--filter', 'pandoc-citeproc')
 
-    args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
+      args = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)-> x.trim()).concat(args)
 
-    return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
-      html = "<pre>#{error}</pre>" if error
+      return pandocRender inputString, {args, projectDirectoryPath: option.projectDirectoryPath, fileDirectoryPath: option.fileDirectoryPath}, (error, html)->
+        html = "<pre>#{error}</pre>" if error
+        # console.log(html)
+        # format blocks
+        $ = cheerio.load(html)
+        $('pre').each (i, preElement)->
+          # code block
+          if preElement.children[0]?.name == 'code'
+            $preElement = $(preElement)
+            codeBlock = $(preElement).children().first()
+            classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
+            lang = classes[0]
+
+            # graphs
+            if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
+              lang = $preElement.attr('class')
+            codeBlock.attr('class', 'language-' + lang)
+
+            # check code chunk
+            dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
+            if dataCodeChunk
+              codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
+
+        $ = createTOC($, markdownPreview?.editor?.getTabText())
+
+        return finalize($.html())
+    else # remarkable parser
+      # parse markdown
+      html = md.render(inputString)
       # console.log(html)
-      # format blocks
-      $ = cheerio.load(html)
-      $('pre').each (i, preElement)->
-        # code block
-        if preElement.children[0]?.name == 'code'
-          $preElement = $(preElement)
-          codeBlock = $(preElement).children().first()
-          classes = (codeBlock.attr('class')?.split(' ') or []).filter (x)-> x != 'sourceCode'
-          lang = classes[0]
-
-          # graphs
-          if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
-            lang = $preElement.attr('class')
-          codeBlock.attr('class', 'language-' + lang)
-
-          # check code chunk
-          dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
-          if dataCodeChunk
-            codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
-
-      $ = createTOC($, markdownPreview?.editor?.getTabText())
-
-      return finalize($.html())
-  else # remarkable parser
-    # parse markdown
-    html = md.render(inputString)
-    # console.log(html)
-    return finalize(html)
+      return finalize(html)
 
 module.exports = {
   parseMD,

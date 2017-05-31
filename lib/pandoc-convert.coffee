@@ -8,7 +8,7 @@ Viz = require '../dependencies/viz/viz.js'
 codeChunkAPI = require './code-chunk'
 {svgAsPngUri} = require '../dependencies/save-svg-as-png/save-svg-as-png.js'
 processGraphs = require './process-graphs'
-fileImport = require './file-import'
+{fileImport} = require './file-import'
 
 getFileExtension = (documentType)->
   if documentType == 'pdf_document' or documentType == 'beamer_presentation'
@@ -296,39 +296,38 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath,
   text = matter.stringify(text, config)
 
   # import external files
-  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: false}).outputString
+  fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath: false}).then ({outputString: text})->
+    # change link path to relative path
+    text = processPaths text, fileDirectoryPath, projectDirectoryPath
 
-  # change link path to relative path
-  text = processPaths text, fileDirectoryPath, projectDirectoryPath
+    # change working directory
+    cwd = process.cwd()
+    process.chdir(fileDirectoryPath)
 
-  # change working directory
-  cwd = process.cwd()
-  process.chdir(fileDirectoryPath)
+    # citation
+    if config['bibliography'] or config['references']
+      args.push('--filter', 'pandoc-citeproc')
 
-  # citation
-  if config['bibliography'] or config['references']
-    args.push('--filter', 'pandoc-citeproc')
+    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-  atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+    # mermaid / viz / wavedrom graph
+    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath}, (text, imagePaths=[])->
+      # console.log args.join(' ')
+      #
+      # pandoc will cause error if directory doesn't exist,
+      # therefore I will create directory first.
+      directory = new Directory(path.dirname(outputFilePath))
+      directory.create().then (flag)->
+        pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
+        program = execFile pandocPath, args, (err)->
+          if deleteImages
+            # remove images
+            imagePaths.forEach (p)->
+              fs.unlink(p)
 
-  # mermaid / viz / wavedrom graph
-  processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath}, (text, imagePaths=[])->
-    # console.log args.join(' ')
-    #
-    # pandoc will cause error if directory doesn't exist,
-    # therefore I will create directory first.
-    directory = new Directory(path.dirname(outputFilePath))
-    directory.create().then (flag)->
-      pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
-      program = execFile pandocPath, args, (err)->
-        if deleteImages
-          # remove images
-          imagePaths.forEach (p)->
-            fs.unlink(p)
-
-        process.chdir(cwd) # change cwd back
-        return callback(err, outputFilePath) if callback
-      program.stdin.end(text)
+          process.chdir(cwd) # change cwd back
+          return callback(err, outputFilePath) if callback
+        program.stdin.end(text)
 
 module.exports = {
   pandocConvert,

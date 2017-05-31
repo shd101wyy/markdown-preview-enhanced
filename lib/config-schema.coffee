@@ -19,13 +19,13 @@ module.exports =
       enum: syntaxThemes
       order: 1
     whiteBackground:
-      title: "White background"
+      title: "White Background"
       type: "boolean"
       default: false
       description: "Use white background color for preview."
       order: 2
     singlePreview:
-      title: "Open only one preview"
+      title: "Open Only One Preview"
       type: "boolean"
       default: true,
       order: 3
@@ -40,7 +40,7 @@ module.exports =
       description: "Enable smartypants and other sweet transforms."
       order: 11
     enableZenMode:
-      title: "Zen mode"
+      title: "Zen Mode"
       type: "boolean"
       default: false
       description: "Distraction free writing."
@@ -142,7 +142,7 @@ module.exports =
       description: "Scroll duration is defined in milliseconds. Lower value indicates faster scrolling speed. Default is 120ms"
       order: 76
     documentExportPath:
-      title: "document export folder path"
+      title: "Document Export Folder Path"
       description: "When exporting document to disk, by default the document will be generated at the root path './'"
       type: "string"
       default: "./"
