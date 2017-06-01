@@ -75,7 +75,8 @@ module.exports = """
       ul {
         padding: 0 1.6em;
       }
-      p {
+
+      li {
         margin-bottom: 0.8em;
       }
 

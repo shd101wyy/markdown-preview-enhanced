@@ -742,19 +742,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   setupCodeChunks: ()->
-    return
-
     codeChunks = @previewElement.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
     newCodeChunksData = {}
     needToSetupChunksId = false
     setupCodeChunk = (codeChunk)=>
-      dataArgs = codeChunk.getAttribute('data-args')
-      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
-      if idMatch and idMatch[1]
-        id = idMatch[1]
-        codeChunk.id = 'code_chunk_' + id
+      if id = codeChunk.id
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
 
@@ -795,8 +789,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
 
   setupCodeChunksId: ()->
-    return
-    
     buffer = @editor.buffer
     return if !buffer
 
@@ -813,11 +805,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
         i = cmd.indexOf(' ')
         if i > 0
           dataArgs = cmd.slice(i + 1, cmd.length).trim()
-          cmd = cmd.slice(0, i)
 
         idMatch = match[1].match(/\s*id\s*:\s*\"([^\"]*)\"/)
         if !idMatch
-          id = (new Date().getTime()).toString(36)
+          id = 'ch'+(new Date().getTime()).toString(36)
 
           line = line.trimRight()
           line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
@@ -836,14 +827,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
-    codeChunks = @previewElement.getElementsByClassName('code-chunk')
-    i = codeChunks.length - 1
-    while i >= 0
-      codeChunk = codeChunks[i]
-      lineNo = parseInt(codeChunk.getAttribute('data-line'))
-      if lineNo <= bufferRow
-        return codeChunk
-      i-=1
+    buffer = @editor.buffer
+    lines = buffer.lines
+    lineNo = bufferRow
+    while lineNo >= 0
+      line = lines[lineNo]
+      if match = line.match(/^\`\`\`\{(.+)\}(\s*)/)
+        if idMatch = match[1].match(/\sid\s*\:\s*(\"([^\"]+)\"|\'([^\']+)\')/)
+          id = idMatch[2] or idMatch[3]
+          codeChunk = document.getElementById(id)
+          return codeChunk
+
+      lineNo--
     return null
 
   # return false if meet error
@@ -862,7 +857,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     try
       allowUnsafeEval ->
         options = eval("({#{dataArgs}})")
-      # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
     catch error
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return false
@@ -881,7 +875,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             break
           i--
       else # id
-        last = document.getElementById('code_chunk_' + options.continue)
+        last = document.getElementById(options.continue)
 
       if last
         {code: lastCode, options: lastOptions} = @parseCodeChunk(last) or {}
@@ -931,7 +925,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     codeChunkAPI.run code, @fileDirectoryPath, cmd, options, (error, data, options)=>
       # get new codeChunk
-      codeChunk = document.getElementById('code_chunk_' + id)
+      codeChunk = document.getElementById(id)
       return if not codeChunk
       codeChunk.classList.remove('running')
 

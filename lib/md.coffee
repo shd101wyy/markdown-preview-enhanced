@@ -538,8 +538,8 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
 
 # eg '#gege .class1 haha="yoo"' given a element <div></div>
 # return <div id="gege" class="class1" haha="yoo"></div>
-addClassesAndId = ($el, parameters)->
-  if match = (parameters + ' ').match(/([\#.](\S+?)\s)|((\S+?)\s*=\s*(\"(.+?)\"|\'(.+?)\'|(\S+)))/g)
+addClassesAndIdAndAttrs = ($el, parameters)->
+  if match = (parameters + ' ').match(/([\#.](\S+?)\s)|((\S+?)\s*=\s*(\"(.+?)\"|\'(.+?)\'|\[[^\]]*\]|\{[\}]*\}|(\S+)))/g)
     match.forEach (param)->
       param = param.trim()
       if param[0] == '#'
@@ -556,6 +556,17 @@ addClassesAndId = ($el, parameters)->
           $el.addClass(val)
         else
           $el.attr(id, val)
+
+# eg '#gege .class1' given a element <div></div>
+# return <div id="gege" class="class1" haha="yoo"></div>
+addClassesAndId = ($el, parameters)->
+  if match = (parameters + ' ').match(/([\#.](\S+?)\s)/g)
+    match.forEach (param)->
+      param = param.trim()
+      if param[0] == '#'
+        $el.attr('id', param.slice(1))
+      else if param[0] == '.'
+        $el.addClass(param.slice(1))
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
@@ -591,7 +602,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         img.attr(srcTag, 'file:///'+path.resolve(projectDirectoryPath, '.' + src))
 
-  renderCodeBlock = (preElement, text, parameters, lineNo=null)->
+  renderCodeBlock = (preElement, text, parameters)->
     highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
     if match = parameters.match(/\s*([^\s]+)\s+\{(.+?)\}/)
       lang = match[1]
@@ -616,7 +627,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
   # parse eg:
   # {node args:["-v"], output:"html"}
-  renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData={})->
+  renderCodeChunk = (preElement, text, parameters, codeChunksData={})->
     if match = parameters.match(/^\{([^\s]+)\s+(.+?)\}$/)
       lang = match[1]
       parameters = match[2]
@@ -631,10 +642,15 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     statusDiv = '<div class="status">running...</div>'
 
     $el = $("<div class=\"code-chunk\"></div>")
-    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': fileDirectoryPath
-    addClassesAndId($el, parameters)
+    $el.attr 'data-lang': lang, 'data-code': text, 'data-args': parameters, 'data-root-directory-path': fileDirectoryPath
 
-    if $el.attr('hide') != 'true'
+    # addClassesAndIdAndAttrs($el, parameters)
+    if classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/)
+      $el.addClass classMatch[1]
+    if idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+      $el.attr 'id', idMatch[1]
+
+    if not /\s*hide\s*:\s*true/.test(parameters)
       highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
       html = highlighter.highlightSync
               fileContents: text,
@@ -654,7 +670,6 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     $(preElement).replaceWith $el
 
   $('pre').each (i, preElement)->
-    lineNo = null
     if preElement.children[0]?.name == 'code'
       codeBlock = $(preElement).children().first()
       lang = 'text'
@@ -662,7 +677,6 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
         lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
       text = codeBlock.text()
 
-      lineNo = codeBlock.attr('data-line')
     else
       lang = 'text'
       if preElement.children[0]
@@ -702,9 +716,9 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     else if lang.match vizRegExp
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
-      renderCodeChunk(preElement, text, lang, lineNo, codeChunksData)
+      renderCodeChunk(preElement, text, lang, codeChunksData)
     else
-      renderCodeBlock(preElement, text, lang, lineNo)
+      renderCodeBlock(preElement, text, lang)
 
   return $.html()
 

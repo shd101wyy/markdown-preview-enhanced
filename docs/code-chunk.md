@@ -1,4 +1,4 @@
-=[<!-- toc orderedList:0 depthFrom: 1 -->
+<!-- toc orderedList:0 depthFrom: 1 -->
 
 * [Code Chunk (Beta)](#code-chunk-beta)
 	* [Commands & Keyboard Shortcust](#commands-keyboard-shortcust)
@@ -23,7 +23,7 @@ To enable code chunk highlighting, install [language-gfm-enhanced](https://atom.
     ls .
     ```
 
-    ```{javascript cmd="node"}
+    ```{javascript cmd:"node"}
     var date = Date.now()
     console.log(date.toString())
     ```   
@@ -50,7 +50,7 @@ If `cmd` is not provided, then `lang` will be regarded as command.
 
 eg:  
 
-		```{python cmd="/usr/local/bin/python3"}
+		```{python cmd:"/usr/local/bin/python3"}
 		print("This will run python3 program")
 		```
 
@@ -67,7 +67,7 @@ Defines how to render code output.
 
 eg:     
 
-    ```{gnuplot output="html"}
+    ```{gnuplot output:"html"}
     set terminal svg
     set title "Simple Plots" font ",20"
     set key left box
@@ -80,11 +80,11 @@ eg:
 **args**  
 args that append to command. eg:    
 
-    ```{python args=["-v"]}
+    ```{python args:["-v"]}
     print("Verbose will be printed first")
     ```
 
-    ```{erd args=["-f", "svg", "-i"] output="html"}
+    ```{erd args:["-f", "svg", "-i"], output:"html"}
 		# output svg format and append as html result.
     ```
 
@@ -104,15 +104,15 @@ If set `continue: true`, then this code chunk will continue from the last code c
 If set `continue: id`, then this code chunk will continue from the code chunk of id.  
 eg:    
 
-	```{python id="izdlk700"}
+	```{python id:"izdlk700"}
 	x = 1
 	```
 
-	```{python id="izdlkdim"}
+	```{python id:"izdlkdim"}
 	x = 2
 	```
 
-	```{python continue="izdlk700", id="izdlkhso"}
+	```{python continue:"izdlk700", id:"izdlkhso"}
 	print(x) # will print 1
 	```
 
@@ -120,14 +120,14 @@ eg:
 If set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
 eg:    
 
-	```{python matplotlib:true, id="izbp0zt9"}
+	```{python matplotlib:true, id:"izbp0zt9"}
 	import matplotlib.pyplot as plt
 	plt.plot([1,2,3, 4])
 	plt.show() # show figure
 	```
 
 **class**  
-If set `class="class1 class2"`, then `class1 class2` will be add to the code chunk.  
+If set `class:"class1 class2"`, then `class1 class2` will be add to the code chunk.  
 * `lineNo` class will show line numbers to code chunk.
 
 **element**  
@@ -149,7 +149,7 @@ By default, it is appended at the very end of program arguments.
 However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
 
 <pre>
-```{program args=["-i", "{input_file}", "-o", "./output.png"]}
+```{program args:["-i", "{input_file}", "-o", "./output.png"]}
 ...your code here
 ```
 </pre>
@@ -157,7 +157,7 @@ However, you can set the position of `input_file` in your `args` option by `{inp
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
-    ```{erd output="html args=["-i", "{input_file}", "-f", "svg"] id="ithhv4z4"}
+    ```{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}
 
     [Person]
     *name
@@ -174,9 +174,9 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
     Person *--1 Location
     ```
 
-`{erd output="html", args=["-i", "{input_file}", "-f", "svg"] id="ithhv4z4"}`  
+`{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}`  
 * `erd` the program that we are using. (*you need to have the program installed first*)  
-* `output="html"` we will append the running result as `html`.  
+* `output:"html"` we will append the running result as `html`.  
 * `args` field shows the arguments that we will use.  
 * `id` is a unique identifier automatically generated, you don't need to care about it.  
 
