@@ -3,6 +3,7 @@ path = require 'path'
 fs = require 'fs'
 request = null
 less = null
+loophole = null
 subjects = require './custom-comment.coffee'
 
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
@@ -37,8 +38,11 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  '
   output
 
-loadFile = (filePath)->
+loadFile = (filePath, filesCache={})->
   new Promise (resolve, reject)->
+    if filesCache[filePath]
+      return resolve(filesCache[filePath])
+
     if filePath.endsWith('.less') # less file
       less ?= require('less')
       fs.readFile filePath, {encoding: 'utf-8'}, (error, data)->
@@ -102,7 +106,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         if inblock
           if line.match(inblock)
             inblock = false
-        else if line.match /^(\#|\!\[|```(\w|{|\s|$)|@import)/
+        else if line.match /^(\#|\!\[|```[^`]|@import)/
           outputString += createAnchor(lineNo)
           if line.match(/^```/)
             inblock = /^```\s*$/
@@ -116,6 +120,18 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         whole = importMatch[0]
         filePath = importMatch[2].trim()
 
+        leftParen = line.indexOf('{')
+        config = null
+        if leftParen > 0
+          rightParen = line.lastIndexOf('}')
+          if rightParen > 0
+            try
+              loophole ?= require 'loophole'
+              loophole.allowUnsafeEval ->
+                config = eval("({#{line.substring(leftParen+1, rightParen)}})")
+            catch error
+              null
+
         start = lineNo
         if filePath.match(protocolsWhiteListRegExp)
           absoluteFilePath = filePath
@@ -124,34 +140,57 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         else
           absoluteFilePath = path.resolve(fileDirectoryPath, filePath)
 
-        if filesCache?[absoluteFilePath] # already in cache
-          return helper(end+1, lineNo+1, outputString+filesCache[absoluteFilePath]+'\n')
+        # if filesCache?[absoluteFilePath] # already in cache
+        #  return helper(end+1, lineNo+1, outputString+filesCache[absoluteFilePath]+'\n')
 
         extname = path.extname(filePath)
         output = ''
         if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
-          if filePath.match(protocolsWhiteListRegExp)
-            imageSrc = filePath
-          else if useAbsoluteImagePath
-            imageSrc = '/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()
+          imageSrc = filesCache?[filePath]
+
+          if !imageSrc
+            if filePath.match(protocolsWhiteListRegExp)
+              imageSrc = filePath
+            else if useAbsoluteImagePath
+              imageSrc = '/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()
+            else
+              imageSrc = path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()
+            filesCache?[filePath] = encodeURI(imageSrc)
+
+          if config
+            if config.width or config.height
+              output = "<img src=\"#{imageSrc}\" "
+              for key of config
+                output += " #{key}=\"#{config[key]}\" "
+              output += ">"
+            else
+              output = "!["
+              output += config.alt if config.alt
+              output += "](#{imageSrc}"
+              output += " \"#{config.title}\"" if config.title
+              output += ")  "
           else
-            imageSrc = path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()
-          output = "![](#{encodeURI(imageSrc)})  "
-          filesCache?[absoluteFilePath] = output
+            output = "![](#{imageSrc})  "
+          # filesCache?[absoluteFilePath] = output
 
           return helper(end+1, lineNo+1, outputString+output+'\n')
         else
-          loadFile(absoluteFilePath).then (fileContent)->
-            if extname in markdownFileExtensions # markdown files
+          loadFile(absoluteFilePath, filesCache).then (fileContent)->
+            filesCache?[absoluteFilePath] = fileContent
+            if config?.eval == false
+              fileExtension = extname.slice(1, extname.length)
+              output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
+              # filesCache?[absoluteFilePath] = output
+            else if extname in markdownFileExtensions # markdown files
               # this return here is necessary
               return fileImport(fileContent, {filesCache, projectDirectoryPath, useAbsoluteImagePath: true, fileDirectoryPath: path.dirname(absoluteFilePath)}).then ({outputString:output})->
                 output = '\n' + output + '  '
-                filesCache?[absoluteFilePath] = output
+                # filesCache?[absoluteFilePath] = output
 
                 return helper(end+1, lineNo+1, outputString+output+'\n')
             else if extname == '.html' # html file
               output = '<div>' + fileContent + '</div>  '
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else if extname == '.csv'  # csv file
               Baby ?= require('babyparse')
               parseResult = Baby.parse(fileContent.trim())
@@ -160,26 +199,26 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               else
                 # format csv to markdown table
                 output = _2DArrayToMarkdownTable(parseResult.data)
-                filesCache?[absoluteFilePath] = output
+                # filesCache?[absoluteFilePath] = output
             else if extname in ['.css', '.less'] # css or less file
               output = "<style>#{fileContent}</style>"
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else if extname in ['.dot'] # graphviz
               output = "```@viz\n#{fileContent}\n```  "
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else if extname == '.mermaid' # mermaid
               output = "```@mermaid\n#{fileContent}\n```  "
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else if extname in ['.puml', '.plantuml'] # plantuml
               output = "```@puml\n' @mpe_file_directory_path:#{path.dirname(absoluteFilePath)}\n#{fileContent}\n```  "
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else if extname in ['.wavedrom']
               output = "```@wavedrom\n#{fileContent}\n```  "
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
             else # codeblock
               fileExtension = extname.slice(1, extname.length)
               output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
-              filesCache?[absoluteFilePath] = output
+              # filesCache?[absoluteFilePath] = output
 
             return helper(end+1, lineNo+1, outputString+output+'\n')
 
