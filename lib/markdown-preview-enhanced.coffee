@@ -3,17 +3,35 @@ path = require 'path'
 {loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
+PACKAGE = require '../package.json'
+MarkdownPreviewEnhancedView = null
+ExporterView = null
+
+class MPEVersion
+  atom.deserializers.add(this)
+
+  @deserialize: ({version}) -> new MPEVersion(version)
+  constructor: (version) -> @version = version
+  serialize: -> { deserializer: 'MPEVersion', version: @version }
 
 module.exports = MarkdownPreviewEnhanced =
-  preview: null,
+  previewsMap: {}, # key is filePath, value is MarkdownPreviewEnhancedView object.
+  singlePreview: true,
   katexStyle: null,
   documentExporterView: null,
   imageHelperView: null,
   fileExtensions: null,
   config: configSchema,
+  mpeVersion: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
+    @mpeVersion =
+      if state?.deserializer
+        atom.deserializers.deserialize(state)
+      else
+        new MPEVersion(0)
+
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
@@ -26,7 +44,10 @@ module.exports = MarkdownPreviewEnhanced =
     # set opener
     @subscriptions.add atom.workspace.addOpener (uri)=>
       if (uri.startsWith('markdown-preview-enhanced://'))
-        return @preview
+        if @singlePreview
+          return @getSinglePreview()
+        else
+          return @previewsMap[uri.slice(28)]
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace',
@@ -38,33 +59,37 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-break-on-single-newline': => @toggleBreakOnSingleNewline()
       'markdown-preview-enhanced:insert-table': => @insertTable()
       'markdown-preview-enhanced:image-helper': => @startImageHelper()
-      'markdown-preview-enhanced:config-mermaid': => @openMermaidConfig()
-      'markdown-preview-enhanced:config-header-footer': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:open-mermaid-config': => @openMermaidConfig()
+      'markdown-preview-enhanced:open-header-footer-config': => @openHeaderFooterConfig()
+      'markdown-preview-enhanced:open-mathjax-config': => @openMathJaxConfig()
       'markdown-preview-enhanced:insert-new-slide': => @insertNewSlide()
       'markdown-preview-enhanced:insert-page-break': => @insertPageBreak()
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
       'markdown-preview-enhanced:run-code-chunk': => @runCodeChunk()
       'markdown-preview-enhanced:run-all-code-chunks': => @runAllCodeChunks()
+      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
 
-
-    # when the preview is displayed
-    # preview will display the content of pane that is activated
-    atom.workspace.onDidChangeActivePaneItem (editor)=>
-    	if editor and
-        	editor.buffer and
-        	editor.getGrammar and
-        	editor.getGrammar().scopeName == 'source.gfm' and
-        	@preview?.isOnDom()
-        if @preview.editor != editor
-          @preview.bindEditor(editor)
+    # When the preview is displayed
+    # preview will display the content of editor (pane item) that is activated
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor)=>
+        return if !@singlePreview
+        preview = @getSinglePreview()
+        if editor and
+            editor.buffer and
+          	editor.getGrammar and
+          	editor.getGrammar().scopeName == 'source.gfm' and
+          	preview?.isOnDom()
+          if preview.editor != editor
+            preview.bindEditor(editor)
 
     # automatically open preview when activate a markdown file
     # if 'openPreviewPaneAutomatically' option is enable
-    atom.workspace.onDidOpen (event)=>
+    @subscriptions.add atom.workspace.onDidOpen (event)=>
       if atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
         if event.uri and
             event.item and
-            path.extname(event.uri) in @fileExtensions
+            path.extname(event.uri) in @fileExtensions and
+            !event.uri.startsWith('markdown-preview-enhanced://')
           pane = event.pane
           panes = atom.workspace.getPanes()
 
@@ -103,6 +128,25 @@ module.exports = MarkdownPreviewEnhanced =
       else
         document.getElementsByTagName('atom-workspace')?[0]?.removeAttribute('data-markdown-zen')
 
+    # use single preview
+    @subscriptions.add atom.config.observe 'markdown-preview-enhanced.singlePreview', (singlePreview)=>
+      @singlePreview = singlePreview
+      for key of @previewsMap
+        preview = @previewsMap[key]
+        continue if !preview
+        pane = atom.workspace.paneForItem(preview)
+        pane.destroyItem(preview) # this will trigger preview.destroy()
+      @previewsMap = {}
+
+    @openWelcomePage()
+
+  openWelcomePage: ->
+    if PACKAGE.version != @mpeVersion.version
+      @mpeVersion.version = PACKAGE.version
+      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+
+  serialize: ->
+    @mpeVersion.serialize()
 
   deactivate: ->
     @subscriptions.dispose()
@@ -113,36 +157,65 @@ module.exports = MarkdownPreviewEnhanced =
     @imageHelperView = null
     @documentExporterView?.destroy()
     @documentExporterView = null
-    @preview?.destroy()
-    @preview = null
+
+    for key of @previewsMap
+      @previewsMap[key]?.destroy()
+    @previewsMap = {}
 
     # console.log 'deactivate markdown-preview-enhanced'
 
   toggle: ->
-    if @preview?.isOnDom()
-      pane = atom.workspace.paneForItem(@preview)
-      pane.destroyItem(@preview) # this will trigger @preview.destroy()
+    editor = atom.workspace.getActivePaneItem()
+    preview = @getPreviewForEditor(editor)
+
+    if preview?.isOnDom()
+      pane = atom.workspace.paneForItem(preview)
+      pane.destroyItem(preview) # this will trigger preview.destroy()
+      @removePreviewFromMap preview
     else
       ## check if it is valid markdown file
-      editor = atom.workspace.getActiveTextEditor()
       @startMDPreview(editor)
 
   startMDPreview: (editor)->
-    MarkdownPreviewEnhancedView = require './markdown-preview-enhanced-view'
-    ExporterView = require './exporter-view'
+    MarkdownPreviewEnhancedView ?= require './markdown-preview-enhanced-view'
+    ExporterView ?= require './exporter-view'
 
-    @preview ?= new MarkdownPreviewEnhancedView('markdown-preview-enhanced://preview', this)
-    if @preview.editor == editor
+    preview = @getPreviewForEditor(editor)
+    if !preview
+      if @singlePreview
+        preview = new MarkdownPreviewEnhancedView('markdown-preview-enhanced://single_preview', this)
+        @previewsMap['single_preview'] = preview
+      else
+        preview = new MarkdownPreviewEnhancedView('markdown-preview-enhanced://' + editor.getPath(), this)
+        @previewsMap[editor.getPath()] = preview
+
+    if preview.editor == editor
       return true
     else if @checkValidMarkdownFile(editor)
       @appendGlobalStyle()
-      @preview.bindEditor(editor)
+      preview.bindEditor(editor)
 
       @documentExporterView ?= new ExporterView()
-      @preview.documentExporterView = @documentExporterView
+      preview.documentExporterView = @documentExporterView
       return true
     else
       return false
+
+  getPreviewForEditor: (editor)->
+    if @singlePreview
+      return @getSinglePreview()
+    else if editor.getURI?().startsWith('markdown-preview-enhanced://')
+      return editor
+    else
+      return @previewsMap[editor?.getPath?()]
+
+  getSinglePreview: ->
+    return @previewsMap[Object.keys(@previewsMap)[0]]
+
+  removePreviewFromMap: (preview)->
+    for key of @previewsMap
+      if (@previewsMap[key] == preview)
+        delete @previewsMap[key]
 
   checkValidMarkdownFile: (editor)->
     if !editor or !editor.getFileName()
@@ -298,6 +371,10 @@ module.exports = MarkdownPreviewEnhanced =
   openHeaderFooterConfig: ()->
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js'))
 
+  openMathJaxConfig: ()->
+    require('./mathjax-wrapper').loadMathJaxConfig()
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mathjax_config.js'))
+
   toggleZenMode: ()->
     enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')
     atom.config.set('markdown-preview-enhanced.enableZenMode', !enableZenMode)
@@ -328,13 +405,17 @@ module.exports = MarkdownPreviewEnhanced =
 
 
   runCodeChunk: ()->
-    if @preview?.isOnDom()
-      @preview.runCodeChunk()
+    editor = atom.workspace.getActivePaneItem()
+    preview = @getPreviewForEditor(editor)
+    if preview?.isOnDom()
+      preview.runCodeChunk()
     else
       atom.notifications.addInfo('You need to start markdown-preview-enhanced preview first')
 
   runAllCodeChunks: ()->
-    if @preview?.isOnDom()
-      @preview.runAllCodeChunks()
+    editor = atom.workspace.getActivePaneItem()
+    preview = @getPreviewForEditor(editor)
+    if preview?.isOnDom()
+      preview.runAllCodeChunks()
     else
       atom.notifications.addInfo('You need to start markdown-preview-enhanced preview first')

@@ -6,6 +6,11 @@
       'command': 'markdown-preview-enhanced:toggle'
     }
   ],
+  'atom-workspace atom-text-editor[data-grammar*="gfm"]': [
+    {
+      'label': 'Markdown Sync Preview',
+      'command': 'markdown-preview-enhanced:sync-preview'}
+  ]
   '.markdown-preview-enhanced': [
     {
       'label': 'Open in Browser'
@@ -22,6 +27,10 @@
     {
       'label': 'Save as Markdown'
       'command': 'markdown-preview-enhanced:save-as-markdown'
+    }
+    {
+      'label': 'Sync Source'
+      'command': 'markdown-preview-enhanced:sync-source'
     }
   ]
 'menu': [

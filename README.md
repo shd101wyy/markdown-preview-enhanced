@@ -30,9 +30,11 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 	* [For Developer](#for-developer)
 	* [FAQ](#faq)
 	* [Credits](#credits)
+	* [Changelog](#changelog)
 	* [Thanks](#thanks)
 
 <!-- tocstop -->
+
 ---
 
 ![intro](https://cloud.githubusercontent.com/assets/1908863/22763072/32f09e80-ee28-11e6-9d42-c3953f5749a1.gif)
@@ -106,10 +108,12 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
 - <strong>Markdown Preview Enhanced: Insert Table </strong>
 - <strong>Markdown Preview Enhanced: Insert Page Break </strong>
-- <strong> Markdown Preview Enhanced: Config Mermaid</strong>
+- <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>
   - Edit `mermaid` init configuration.
-- <strong> Markdown Preview Enhanced: Config Header Footer</strong>
+- <strong> Markdown Preview Enhanced: Open Header Footer Config</strong>
   - **PDF** export header and footer configuration.
+- <strong> Markdown Preview Enhanced: Open Mathjax Config </strong>
+	- Edit `MathJax` init configuration.  
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
 	- Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).       
 	(if **imgur** is blocked by **the Great Firewall**, then you can choose **sm.ms** instead).    

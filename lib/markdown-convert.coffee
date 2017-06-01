@@ -4,7 +4,7 @@ fs = require 'fs'
 processGraphs = require './process-graphs'
 encrypt = require './encrypt'
 CACHE = require './cache'
-fileImport = require './file-import'
+{fileImport} = require './file-import'
 {protocolsWhiteListRegExp} = require './protocols-whitelist'
 
 # TODO: refactor this file
@@ -84,30 +84,29 @@ markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={})->
   useAbsoluteImagePath = config.absolute_image_path
 
   # import external files
-  text = fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}).outputString
+  fileImport(text, {fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath}).then ({outputString:text})->
+    # change link path to project '/' path
+    # this is actually differnet from pandoc-convert.coffee
+    text = processPaths text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath
 
-  # change link path to project '/' path
-  # this is actually differnet from pandoc-convert.coffee
-  text = processPaths text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath
+    text = processMath text
 
-  text = processMath text
+    # TODO: create imageFolder
+    if config['image_dir'][0] == '/'
+      imageDirectoryPath = path.resolve(projectDirectoryPath, '.' + config['image_dir'])
+    else
+      imageDirectoryPath = path.resolve(fileDirectoryPath, config['image_dir'])
 
-  # TODO: create imageFolder
-  if config['image_dir'][0] == '/'
-    imageDirectoryPath = path.resolve(projectDirectoryPath, '.' + config['image_dir'])
-  else
-    imageDirectoryPath = path.resolve(fileDirectoryPath, config['image_dir'])
+    atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-  atom.notifications.addInfo('Your document is being prepared', detail: ':)')
+    imageDir = new Directory(imageDirectoryPath)
+    imageDir.create().then (flag)->
 
-  imageDir = new Directory(imageDirectoryPath)
-  imageDir.create().then (flag)->
-
-    # mermaid / viz / wavedrom graph
-    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: encrypt(outputFilePath), useAbsoluteImagePath}, (text, imagePaths=[])->
-      fs.writeFile outputFilePath, text, (err)->
-        return atom.notifications.addError('failed to generate markdown') if err
-        atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
+      # mermaid / viz / wavedrom graph
+      processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix: encrypt(outputFilePath), useAbsoluteImagePath}, (text, imagePaths=[])->
+        fs.writeFile outputFilePath, text, (err)->
+          return atom.notifications.addError('failed to generate markdown') if err
+          atom.notifications.addInfo("File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}")
 
 
 module.exports = markdownConvert

@@ -29,8 +29,8 @@ module.exports = """
 
 .markdown-preview-enhanced-container {
   .mpe-toolbar {
-    position: fixed;
-    top: 64px;
+    position: absolute;
+    top: 32px;
     right: 24px;
     opacity: 0;
     display: block;
@@ -66,6 +66,7 @@ module.exports = """
       background-color: @bg;
       color: @fg;
       font-size: 14px;
+      box-shadow: -4px 0px 12px rgba(150, 150, 150, .33);
 
       a {
         color: @fg;
@@ -74,7 +75,8 @@ module.exports = """
       ul {
         padding: 0 1.6em;
       }
-      p {
+
+      li {
         margin-bottom: 0.8em;
       }
 
@@ -398,7 +400,7 @@ module.exports = """
   }
 
   // add line number support
-  pre.editor-colors.lineno {
+  pre.editor-colors.lineNo {
     counter-reset: lineNo;
     .line {
       &::before {

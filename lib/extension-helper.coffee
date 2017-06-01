@@ -50,4 +50,5 @@ scopesForLanguageName =
   'diff': 'source.diff'
 
 module.exports.scopeForLanguageName  = (language)->
+  language = language.toLowerCase()
   return scopesForLanguageName[language] or ('source.' + language)

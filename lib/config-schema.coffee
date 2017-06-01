@@ -19,11 +19,16 @@ module.exports =
       enum: syntaxThemes
       order: 1
     whiteBackground:
-      title: "White background"
+      title: "White Background"
       type: "boolean"
       default: false
       description: "Use white background color for preview."
       order: 2
+    singlePreview:
+      title: "Open Only One Preview"
+      type: "boolean"
+      default: true,
+      order: 3
     breakOnSingleNewline:
       type: "boolean"
       default: true
@@ -35,7 +40,7 @@ module.exports =
       description: "Enable smartypants and other sweet transforms."
       order: 11
     enableZenMode:
-      title: "Zen mode"
+      title: "Zen Mode"
       type: "boolean"
       default: false
       description: "Distraction free writing."
@@ -92,12 +97,6 @@ module.exports =
       default: "[[\"$$\", \"$$\"], [\"\\\\[\", \"\\\\]\"]]"
       description: "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`"
       order: 22
-    mathJaxProcessEnvironments:
-      title: "MathJax processEnvironments"
-      type: "boolean"
-      default: false
-      description: "Note that, as opposed to true LaTeX, MathJax processes all environments when wrapped inside math delimiters. By defaut, MathJax will also render all environments outside of delimiters; this can be controlled via the processEnvironments option. `Live Update` is recommended to be disabled when this option is enabled. `(Restart is required to take effect)`"
-      order: 23
     enableWikiLinkSyntax:
       title: "Enable Wiki Link syntax"
       type: "boolean"
@@ -143,7 +142,7 @@ module.exports =
       description: "Scroll duration is defined in milliseconds. Lower value indicates faster scrolling speed. Default is 120ms"
       order: 76
     documentExportPath:
-      title: "document export folder path"
+      title: "Document Export Folder Path"
       description: "When exporting document to disk, by default the document will be generated at the root path './'"
       type: "string"
       default: "./"

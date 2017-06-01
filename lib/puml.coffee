@@ -2,12 +2,15 @@ path = require 'path'
 {spawn} = require 'child_process'
 
 plantumlJarPath = path.resolve(__dirname, '../dependencies/plantuml/plantuml.jar')
+TASKS = {} # key is fileDirectoryPath, value is PlantUMLTask
+CHUNKS = {} # key is fileDirectoryPath, value is String
+CALLBACKS = {} # key is fileDirectoryPath, value is Array
 
 class PlantUMLTask
   constructor: (fileDirectoryPath)->
     @fileDirectoryPath = fileDirectoryPath
-    @chunks = ''
-    @callbacks = []
+    @chunks = CHUNKS[@fileDirectoryPath] or ''
+    @callbacks = CALLBACKS[@fileDirectoryPath] or []
     @task = null
 
     @startTask()
@@ -34,11 +37,18 @@ class PlantUMLTask
       else
         @chunks += data
 
+    @task.on 'error', => @closeSelf
+    @task.on 'exit', => @closeSelf
+
   generateSVG: (content, cb)->
     @callbacks.push cb
     @task.stdin.write(content + '\n')
 
-TASKS = {} # key is fileDirectoryPath, value is PlantUMLTask
+  closeSelf: ->
+    TASKS[@fileDirectoryPath] = null
+    CHUNKS[@fileDirectoryPath] = @chunks
+    CALLBACKS[@fileDirectoryPath] = @callbacks
+
 # Async call
 render = (content, fileDirectoryPath='', callback)->
   content = content.trim()
@@ -48,7 +58,12 @@ render = (content, fileDirectoryPath='', callback)->
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
 
-  if !(content.match(/^\@start/m))
+  if (content.match(/^\@start/m))
+    if (content.match(/^\@end/m))
+      null # do nothing
+    else
+      content = "@startuml\n@enduml" # error
+  else
     content = """@startuml
 #{content}
 @enduml"""

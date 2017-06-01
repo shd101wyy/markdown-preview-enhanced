@@ -15,7 +15,7 @@ request = null
 {loadPreviewTheme} = require './style'
 plantumlAPI = require './puml'
 ebookConvert = require './ebook-convert'
-{loadMathJax} = require './mathjax-wrapper'
+{loadMathJax, getMathJaxConfigForExport} = require './mathjax-wrapper'
 {pandocConvert} = require './pandoc-convert'
 markdownConvert = require './markdown-convert'
 princeConvert = require './prince-convert'
@@ -66,9 +66,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     @mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption')
     @mathRenderingOption = if @mathRenderingOption == 'None' then null else @mathRenderingOption
-    @mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
-    @mathInlineDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline'))
-    @mathBlockDelimiters = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock'))
+    @mathJaxProcessEnvironments = false
 
     @parseDelay = Date.now()
     @editorScrollDelay = Date.now()
@@ -112,6 +110,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:zoom-in': => @zoomIn()
       'markdown-preview-enhanced:zoom-out': => @zoomOut()
       'markdown-preview-enhanced:reset-zoom': => @resetZoom()
+      'markdown-preview-enhanced:refresh-preview': => @refreshPreview()
+      'markdown-preview-enhanced:sync-source': => @syncSource()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -119,9 +119,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initSettingsEvents()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced-container native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
-      # @p style: 'font-size: 24px', 'loading preview...'
-      @div class: "markdown-spinner", 'Loading Markdown\u2026'
+    @div class: 'markdown-preview-enhanced-container native-key-bindings', tabindex: -1, =>
+      @div class: "markdown-spinner", 'Initializing Package\u2026'
 
   getTitle: ->
     @getFileName() + ' preview'
@@ -150,7 +149,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     return ''
 
+  # only works if singlePreview
   setTabTitle: (title)->
+    return if !@mainModule.singlePreview
     tabTitle = $('[data-type="MarkdownPreviewEnhancedView"] div.title')
     if tabTitle.length
       tabTitle[0].innerText = title
@@ -178,6 +179,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   bindEditor: (editor)->
     if not @editor
+      @editor = editor # this line is necessary here to make tab title correct.
       atom.workspace
           .open @uri,
                 split: 'right',
@@ -208,7 +210,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEvents: (editor)->
     @editor = editor
     @updateTabTitle()
-    @element.removeAttribute('style')
+
+    @previewElement = document.createElement('div') # create new preview element
+    @previewElement.classList.add('markdown-preview-enhanced')
+    @previewElement.setAttribute('for', 'preview')
+    @previewElement.innerHTML = "<div class=\"markdown-spinner\"> Loading Markdown\u2026 </div>"
+    @element.innerHTML = ''
+    @element.appendChild @previewElement
 
     if not @parseMD
       {@parseMD, @buildScrollMap, @processFrontMatter, @md} = require './md'
@@ -225,12 +233,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if @disposables # remove all binded events
       @disposables.dispose()
     @disposables = new CompositeDisposable()
-
-    @previewElement = document.createElement('div') # create new preview element
-    @previewElement.classList.add('markdown-preview-enhanced')
-    @previewElement.setAttribute('for', 'preview')
-    @element.innerHTML = ''
-    @element.appendChild @previewElement
 
     @addToolBar()
     @addBackToTopButton()
@@ -282,15 +284,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEditorEvent: ->
     editorElement = @editor.getElement()
 
+    @disposables.add atom.commands.add editorElement,
+      'markdown-preview-enhanced:sync-preview': => @syncPreview()
+
     @disposables.add @editor.onDidDestroy ()=>
-      @setTabTitle('unknown preview')
+      # @setTabTitle('unknown preview')
       if @disposables
         @disposables.dispose()
         @disposables = null
       @editor = null
       @previewElement.onscroll = null
 
-      @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
+      # @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
@@ -362,54 +367,56 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         @scrollSyncToLineNo(lineNo)
 
+  previewSyncSource: ->
+    if @previewElement.scrollTop == 0 # most top
+      @editorScrollDelay = Date.now() + 500
+      return @scrollToPos 0, @editor.getElement()
+
+    top = @previewElement.scrollTop + @previewElement.offsetHeight / 2
+
+    if @presentationMode
+      top = top / @presentationZoom
+
+    # try to find corresponding screen buffer row
+    @scrollMap ?= @buildScrollMap(this)
+
+    i = 0
+    j = @scrollMap.length - 1
+    count = 0
+    screenRow = -1
+
+    while count < 20
+      if Math.abs(top - @scrollMap[i]) < 20
+        screenRow = i
+        break
+      else if Math.abs(top - @scrollMap[j]) < 20
+        screenRow = j
+        break
+      else
+        mid = Math.floor((i + j) / 2)
+        if top > @scrollMap[mid]
+          i = mid
+        else
+          j = mid
+
+      count++
+
+    if screenRow == -1
+      screenRow = mid
+
+    @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @previewElement.offsetHeight / 2, @editor.getElement())
+    # @editor.getElement().setScrollTop
+
+    # track currnet time to disable onDidChangeScrollTop
+    @editorScrollDelay = Date.now() + 500
+
   initViewEvent: ->
     @previewElement.onscroll = ()=>
       if !@editor or !@scrollSync or @textChanged
         return
       if Date.now() < @previewScrollDelay
         return
-
-      if @previewElement.scrollTop == 0 # most top
-        @editorScrollDelay = Date.now() + 500
-        return @scrollToPos 0, @editor.getElement()
-
-      top = @previewElement.scrollTop + @previewElement.offsetHeight / 2
-
-      if @presentationMode
-        top = top / @presentationZoom
-
-      # try to find corresponding screen buffer row
-      @scrollMap ?= @buildScrollMap(this)
-
-      i = 0
-      j = @scrollMap.length - 1
-      count = 0
-      screenRow = -1
-
-      while count < 20
-        if Math.abs(top - @scrollMap[i]) < 20
-          screenRow = i
-          break
-        else if Math.abs(top - @scrollMap[j]) < 20
-          screenRow = j
-          break
-        else
-          mid = Math.floor((i + j) / 2)
-          if top > @scrollMap[mid]
-            i = mid
-          else
-            j = mid
-
-        count++
-
-      if screenRow == -1
-        screenRow = mid
-
-      @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @previewElement.offsetHeight / 2, @editor.getElement())
-      # @editor.getElement().setScrollTop
-
-      # track currnet time to disable onDidChangeScrollTop
-      @editorScrollDelay = Date.now() + 500
+      @previewSyncSource()
 
   initSettingsEvents: ->
     # break line?
@@ -466,7 +473,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1
     while i >= 0
-      if bufferLineNo >= @slideConfigs[i].line
+      if bufferLineNo >= @slideConfigs[i].lineNo
         break
       i-=1
     slideElement = @previewElement.querySelector(".slide[data-offset=\"#{i}\"]")
@@ -625,13 +632,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     refreshBtn.innerHTML = '<span>⟳</span>'
     @toolbar.appendChild(refreshBtn)
 
-    refreshBtn.onclick = ()=>
-      # clear cache
-      @filesCache = {}
-      codeChunkAPI.clearCache()
-
-      # render again
-      @renderMarkdown()
+    refreshBtn.onclick = => @refreshPreview()
 
   addSidebarTOCButton: ->
     sidebarTOCBtn = document.createElement('div')
@@ -675,7 +676,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderSidebarTOC()
     @bindTagAClickEvent(@previewElement)
     @setupCodeChunks()
-    @initTaskList()
+    # @initTaskList() # this function is deprecated as `data-line` is no longer stored
     @renderMermaid()
     @renderPlantUML()
     @renderWavedrom()
@@ -752,11 +753,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     newCodeChunksData = {}
     needToSetupChunksId = false
     setupCodeChunk = (codeChunk)=>
-      dataArgs = codeChunk.getAttribute('data-args')
-      idMatch = dataArgs.match(/\s*id\s*:\s*\"([^\"]*)\"/)
-      if idMatch and idMatch[1]
-        id = idMatch[1]
-        codeChunk.id = 'code_chunk_' + id
+      if id = codeChunk.id
         running = @codeChunksData[id]?.running or false
         codeChunk.classList.add('running') if running
 
@@ -813,11 +810,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
         i = cmd.indexOf(' ')
         if i > 0
           dataArgs = cmd.slice(i + 1, cmd.length).trim()
-          cmd = cmd.slice(0, i)
 
         idMatch = match[1].match(/\s*id\s*:\s*\"([^\"]*)\"/)
         if !idMatch
-          id = (new Date().getTime()).toString(36)
+          id = 'ch'+(new Date().getTime()).toString(36)
 
           line = line.trimRight()
           line = line.replace(/}$/, (if !dataArgs then '' else ',') + ' id:"' + id + '"}')
@@ -836,14 +832,18 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
   getNearestCodeChunk: ()->
     bufferRow = @editor.getCursorBufferPosition().row
-    codeChunks = @previewElement.getElementsByClassName('code-chunk')
-    i = codeChunks.length - 1
-    while i >= 0
-      codeChunk = codeChunks[i]
-      lineNo = parseInt(codeChunk.getAttribute('data-line'))
-      if lineNo <= bufferRow
-        return codeChunk
-      i-=1
+    buffer = @editor.buffer
+    lines = buffer.lines
+    lineNo = bufferRow
+    while lineNo >= 0
+      line = lines[lineNo]
+      if match = line.match(/^\`\`\`\{(.+)\}(\s*)/)
+        if idMatch = match[1].match(/\sid\s*\:\s*(\"([^\"]+)\"|\'([^\']+)\')/)
+          id = idMatch[2] or idMatch[3]
+          codeChunk = document.getElementById(id)
+          return codeChunk
+
+      lineNo--
     return null
 
   # return false if meet error
@@ -862,7 +862,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     try
       allowUnsafeEval ->
         options = eval("({#{dataArgs}})")
-      # options = JSON.parse '{'+dataArgs.replace((/([(\w)|(\-)]+)(:)/g), "\"$1\"$2").replace((/'/g), "\"")+'}'
     catch error
       atom.notifications.addError('Invalid options', detail: dataArgs)
       return false
@@ -881,7 +880,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
             break
           i--
       else # id
-        last = document.getElementById('code_chunk_' + options.continue)
+        last = document.getElementById(options.continue)
 
       if last
         {code: lastCode, options: lastOptions} = @parseCodeChunk(last) or {}
@@ -931,7 +930,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     codeChunkAPI.run code, @fileDirectoryPath, cmd, options, (error, data, options)=>
       # get new codeChunk
-      codeChunk = document.getElementById('code_chunk_' + id)
+      codeChunk = document.getElementById(id)
       return if not codeChunk
       codeChunk.classList.remove('running')
 
@@ -1119,7 +1118,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
     return if @mathRenderingOption != 'MathJax' and !@usePandocParser
 
     if typeof(MathJax) == 'undefined'
-      return loadMathJax document, ()=> @renderMathJax()
+      return loadMathJax document, (config)=>
+        @mathJaxProcessEnvironments = config.tex2jax?.processEnvironments
+        @renderMathJax()
 
     if @mathJaxProcessEnvironments or @usePandocParser
       return MathJax.Hub.Queue ['Typeset', MathJax.Hub, @previewElement], ()=> @scrollMap = null
@@ -1181,6 +1182,22 @@ class MarkdownPreviewEnhancedView extends ScrollView
   resetZoom: ()->
     @zoomLevel = 1.0
     @setZoomLevel()
+
+  refreshPreview: ()->
+    # clear cache
+    @filesCache = {}
+    codeChunkAPI.clearCache()
+
+    # render again
+    @renderMarkdown()
+
+  syncPreview: ()->
+    screenRow = @editor?.getCursorBufferPosition?().row
+    return if !screenRow
+    @scrollSyncToLineNo screenRow
+
+  syncSource: ()->
+    @previewSyncSource()
 
   ###
   convert './a.txt' '/a.txt'
@@ -1339,23 +1356,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       if mathRenderingOption == 'MathJax' or @usePandocParser
         inline = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline')
         block = atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock')
-        mathJaxProcessEnvironments = atom.config.get('markdown-preview-enhanced.mathJaxProcessEnvironments')
         if offline
           mathStyle = "
           <script type=\"text/x-mathjax-config\">
-            MathJax.Hub.Config({
-              extensions: ['tex2jax.js'],
-              jax: ['input/TeX','output/HTML-CSS'],
-              messageStyle: 'none',
-              tex2jax: {inlineMath: #{inline},
-                        displayMath: #{block},
-                        processEnvironments: #{mathJaxProcessEnvironments},
-                        processEscapes: true},
-              TeX: {
-                extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', \"file://#{path.resolve(__dirname, '../dependencies/mathjax/extensions/TeX/xypic.js')}\"]
-              },
-              'HTML-CSS': { availableFonts: ['TeX'] }
-            });
+            MathJax.Hub.Config(#{JSON.stringify(getMathJaxConfigForExport(false))});
           </script>
           <script type=\"text/javascript\" async src=\"file://#{path.resolve(__dirname, '../dependencies/mathjax/MathJax.js')}\"></script>
           "
@@ -1364,21 +1368,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
           # displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
           mathStyle = "
           <script type=\"text/x-mathjax-config\">
-            MathJax.Hub.Config({
-              extensions: ['tex2jax.js'],
-              jax: ['input/TeX','output/HTML-CSS'],
-              messageStyle: 'none',
-              tex2jax: {inlineMath: #{inline},
-                        displayMath: #{block},
-                        processEnvironments: #{mathJaxProcessEnvironments},
-                        processEscapes: true},
-              TeX: {
-                extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js', 'http://sonoisa.github.io/xyjax_ext/xypic.js']
-              },
-              'HTML-CSS': { availableFonts: ['TeX'] }
-            });
+            MathJax.Hub.Config(#{JSON.stringify(getMathJaxConfigForExport(true))});
           </script>
-          <script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js\"></script>
+          <script type=\"text/javascript\" async src=\"https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js\"></script>
           "
       else if mathRenderingOption == 'KaTeX'
         if offline
@@ -1752,7 +1744,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
   ## PhantomJS
   ##################################################
   loadPhantomJSHeaderFooterConfig: ()->
-    # mermaid_config.js
+    # phantomjs_header_footer_config.js
     configPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/phantomjs_header_footer_config.js')
     try
       delete require.cache[require.resolve(configPath)] # return uncached
@@ -2129,7 +2121,8 @@ module.exports = config || {}
     for key of CACHE
       delete(CACHE[key])
 
-    @mainModule.preview = null # unbind
+    # @mainModule.preview = null # unbind
+    @mainModule.removePreviewFromMap this
 
   getElement: ->
     # @element
