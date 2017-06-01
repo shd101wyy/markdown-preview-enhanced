@@ -28,5 +28,29 @@
 **Heading 2** will be ignored
 ```
 
+* [x] Support showing line numbers for Code Block and Code Chunk by adding `lineNo` class.  
+
+      ```javascript {.lineNo}
+      function add(x, y) {
+        return x + y
+      }
+      ```
+
+      ```{python class:"lineNo", id:"chj3etqcm9"}
+      def add(x, y):
+          return x + y;
+      ```
+
+```javascript {.lineNo}
+function add(x, y) {
+  return x + y
+}
+```
+
+```{python class:"lineNo", id:"chj3etqcm9"}
+def add(x, y):
+    return x + y;
+```
+
 * [x] Modifed scroll sync logic (Might cause issue).
 * [x] Fix image `@import` issue on Windows [#414](https://github.com/shd101wyy/markdown-preview-enhanced/issues/414).  

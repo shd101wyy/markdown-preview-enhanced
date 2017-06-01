@@ -169,7 +169,11 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               imageSrc = '/' + path.relative(projectDirectoryPath, absoluteFilePath) + '?' + Math.random()
             else
               imageSrc = path.relative(fileDirectoryPath, absoluteFilePath) + '?' + Math.random()
-            filesCache?[filePath] = encodeURI(imageSrc)
+
+            # enchodeURI(imageSrc) is wrong. It will cause issue on Windows
+            # #414: https://github.com/shd101wyy/markdown-preview-enhanced/issues/414
+            imageSrc = imageSrc.replace(/ /g, '%20')
+            filesCache?[filePath] = imageSrc
 
           if config
             if config.width or config.height or config.class or config.id
