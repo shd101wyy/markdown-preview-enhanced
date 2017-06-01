@@ -67,6 +67,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
       'markdown-preview-enhanced:run-code-chunk': => @runCodeChunk()
       'markdown-preview-enhanced:run-all-code-chunks': => @runAllCodeChunks()
+      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
 
     # When the preview is displayed
     # preview will display the content of editor (pane item) that is activated
