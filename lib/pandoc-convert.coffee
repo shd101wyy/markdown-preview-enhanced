@@ -201,13 +201,23 @@ pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callba
   while i < lines.length
     line = lines[i]
 
-    codeChunkMatch = line.match /^\`\`\`\{(\w+)\s*(.*)\}\s*/
-    if codeChunkMatch # code chunk
+    if codeChunkMatch = line.match /^\`\`\`\{(\w+)\s*(.*)\}\s*/ # code chunk
       lang = codeChunkMatch[1].trim()
       dataArgs = codeChunkMatch[2].trim().replace(/('|")/g, '\\$1') # escape
       dataCodeChunk = "{#{lang} #{dataArgs}}"
 
       outputString += "```{.r data-code-chunk=\"#{dataCodeChunk}\"}\n"
+      inCodeBlock = true
+      i += 1
+      continue
+
+    if codeBlockMatch = line.match(/^\`\`\`([^\s]+)\s+\{(.+?)\}/)
+      lang = codeBlockMatch[1]
+      dataArgs = codeBlockMatch[2].trim().replace(/('|")/g, '\\$1') # escape
+      dataCodeBlock = "#{lang} \{#{dataArgs}\}"
+
+      outputString += "```{.r data-code-block=\"#{dataCodeBlock}\"}\n"
+      inCodeBlock = true
       i += 1
       continue
 

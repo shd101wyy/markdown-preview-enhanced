@@ -1111,9 +1111,11 @@ parseMD = (inputString, option={}, callback)->
             codeBlock.attr('class', 'language-' + lang)
 
             # check code chunk
-            dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
-            if dataCodeChunk
+            if dataCodeChunk = $preElement.parent()?.attr('data-code-chunk')
               codeBlock.attr('class', 'language-' + dataCodeChunk.unescape())
+            # check code block
+            if dataCodeBlock = $preElement.parent()?.attr('data-code-block')
+              codeBlock.attr('class', 'language-' + dataCodeBlock.unescape())
 
         $ = createTOC($, markdownPreview?.editor?.getTabText())
 
