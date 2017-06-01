@@ -118,9 +118,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @initSettingsEvents()
 
   @content: ->
-    @div class: 'markdown-preview-enhanced-container native-key-bindings', tabindex: -1, style: "background-color: #fff; padding: 32px; color: #222;", =>
-      # @p style: 'font-size: 24px', 'loading preview...'
-      @div class: "markdown-spinner", 'Loading Markdown\u2026'
+    @div class: 'markdown-preview-enhanced-container native-key-bindings', tabindex: -1, =>
+      @div class: "markdown-spinner", 'Initializing Package\u2026'
 
   getTitle: ->
     @getFileName() + ' preview'
@@ -210,7 +209,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEvents: (editor)->
     @editor = editor
     @updateTabTitle()
-    @element.removeAttribute('style')
 
     @previewElement = document.createElement('div') # create new preview element
     @previewElement.classList.add('markdown-preview-enhanced')
