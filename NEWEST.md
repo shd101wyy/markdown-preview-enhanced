@@ -5,3 +5,12 @@
 * [x] `cmd-r` keyboard shortcut to refresh the preview.
 * [x] More powerful `@import`, now support importing online files.  
       For exampe: `@import "https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/LICENSE.md"`.  
+* [x] Support TOC ignore headings by appending `{.ignore}` after the heading:  
+```markdown
+[TOC]
+# Heading 1
+## Heading 2 {.ignore}
+**Heading 2** will be ignored
+```
+
+* [x] Modifed scroll sync logic (Might cause issue).

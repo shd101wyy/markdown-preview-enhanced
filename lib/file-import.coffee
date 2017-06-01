@@ -102,7 +102,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         if inblock
           if line.match(inblock)
             inblock = false
-        else if line.match /^(\#|\!\[|```(\w|{)|@import)/
+        else if line.match /^(\#|\!\[|```(\w|{|\s|$)|@import)/
           outputString += createAnchor(lineNo)
           if line.match(/^```/)
             inblock = /^```\s*$/
