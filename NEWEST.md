@@ -29,3 +29,4 @@
 ```
 
 * [x] Modifed scroll sync logic (Might cause issue).
+* [x] Fix image `@import` issue on Windows [#414](https://github.com/shd101wyy/markdown-preview-enhanced/issues/414).  
