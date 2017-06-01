@@ -231,6 +231,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @previewElement = document.createElement('div') # create new preview element
     @previewElement.classList.add('markdown-preview-enhanced')
     @previewElement.setAttribute('for', 'preview')
+    @previewElement.innerHTML = "<div class=\"markdown-spinner\"> Loading Markdown\u2026 </div>"
     @element.innerHTML = ''
     @element.appendChild @previewElement
 
