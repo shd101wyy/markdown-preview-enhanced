@@ -172,7 +172,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             filesCache?[filePath] = encodeURI(imageSrc)
 
           if config
-            if config.width or config.height
+            if config.width or config.height or config.class or config.id
               output = "<img src=\"#{imageSrc}\" "
               for key of config
                 output += " #{key}=\"#{config[key]}\" "

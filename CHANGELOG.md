@@ -1,4 +1,4 @@
-## 0.12.5 `Current Version`
+## 0.12.5
 * [x] fix issue [#418](https://github.com/shd101wyy/markdown-preview-enhanced/issues/418).  
 * [x] fix issue [#417](https://github.com/shd101wyy/markdown-preview-enhanced/issues/417)
 
