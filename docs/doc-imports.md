@@ -4,9 +4,9 @@
 
 ## How to use?  
 just  
-
-    @import "your_file"  
-
+  ```markdown
+  @import "your_file"  
+  ```
 easy, right :)
 
 ## Refresh button  
@@ -24,9 +24,31 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.plantuml(.puml)` file will be rendered by plantuml.  
 * `.wavedrom` file will be rendered by wavedrom.  
 * `.html` file will be embeded directly.  
-* `.less` and `.css` file will be included as style. 
+* `.less` and `.css` file will be included as style.
 * `markdown` file will be parsed and embeded directly.     
 * All other files will be rendered as code block.    
+
+## Configure images  
+  ```markdown  
+  @import "test.png" {width:"300px", height:"200px", title:"my title", alt:"my alt"}
+  ```
+
+## Import online files
+For example:  
+  ```markdown
+  @import "https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/LICENSE.md"
+  ```
+
+## Force to render Code Block  
+  ```markdown
+  @import "test.puml" {code_block:true, class:"lineNo"}
+  @import "test.py" {class:"lineNo"}
+  ```
+
+## Import file as Code Chunk  
+  ```markdown
+  @import "test.py" {code_chunk:true, cmd: "python3", id: "you_have_to_declare_id_here"}
+  ```
 
 ## Known issues  
 * importing other docs might break scroll sync functionality.  
