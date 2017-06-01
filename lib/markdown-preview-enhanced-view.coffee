@@ -672,7 +672,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @renderSidebarTOC()
     @bindTagAClickEvent(@previewElement)
     @setupCodeChunks()
-    @initTaskList()
+    # @initTaskList() # this function is deprecated as `data-line` is no longer stored
     @renderMermaid()
     @renderPlantUML()
     @renderWavedrom()
