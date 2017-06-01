@@ -81,7 +81,7 @@ formatClassesAndId = (config)->
   classes = config.class
   return '' if !id and !classes
   output = '{'
-  output += (id + ' ') if id
+  output += ('#' + id + ' ') if id
   output += ('.' + classes.replace(/\s+/g, ' .')  + ' ') if classes
   output += '}'
   output
