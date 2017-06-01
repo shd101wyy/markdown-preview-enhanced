@@ -55,6 +55,9 @@ def add(x, y):
 * [x] Modifed scroll sync logic (Might cause issue).
 * [x] Fix image `@import` issue on Windows [#414](https://github.com/shd101wyy/markdown-preview-enhanced/issues/414).  
 * [x] Support `Markdown Preview Enhanced: Sync Preview` and `Markdown Preview Enhanced: Sync Source` [#424](https://github.com/shd101wyy/markdown-preview-enhanced/issues/424).  
-      Keyboard shortcut <kbd>ctrl-shift-s</kbd>.  
-      However, this works differently from the one in [markdown-preview-plus](https://github.com/atom-community/markdown-preview-plus) and misses the `flash` behavior in **mpp**.    
+      Keyboard shortcut <kbd>ctrl-shift-s</kbd>. Please message me if you have any other good options for keyboard shortcut.         
+      However, this works differently from the one in [markdown-preview-plus](https://github.com/atom-community/markdown-preview-plus) and misses the `flash` behavior in **mpp**.     
 
+---  
+
+I will start building a website for the documentation of this package, thanks :)  
