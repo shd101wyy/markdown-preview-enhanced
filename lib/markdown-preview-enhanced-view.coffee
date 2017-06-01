@@ -742,6 +742,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
       analyzeHref(href)
 
   setupCodeChunks: ()->
+    return
+
     codeChunks = @previewElement.getElementsByClassName('code-chunk')
     return if !codeChunks.length
 
@@ -793,6 +795,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @codeChunksData = newCodeChunksData # key is codeChunkId, value is {running, outputDiv}
 
   setupCodeChunksId: ()->
+    return
+    
     buffer = @editor.buffer
     return if !buffer
 

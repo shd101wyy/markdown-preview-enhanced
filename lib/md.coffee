@@ -538,20 +538,26 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
     else
       $(preElement).replaceWith "<pre>please wait till preview finishes rendering graph </pre>"
 
-# eg '.class1 .class2 #id1'
-# return { classes: ['class1', 'class2'], id: 'id1' }
-formatClassesAndId = (opt)->
-  if classMatch = opt.match(/\.[^\s]+/g)
-    classes = classMatch.map (cl)-> cl.slice(1)
-  else
-    classes = []
-
-  if idMatch = opt.match(/\#[^\s]+/g)
-    id = idMatch[idMatch.length - 1].slice(1)
-  else
-    id = ''
-
-  return {classes, id}
+# eg '#gege .class1 haha="yoo"' given a element <div></div>
+# return <div id="gege" class="class1" haha="yoo"></div>
+addClassesAndId = ($el, parameters)->
+  if match = (parameters + ' ').match(/([\#.](\S+?)\s)|((\S+?)\s*=\s*\"(.+?)\")|((\S+?)\s*=\s*\'(.+?)\')/g)
+    match.forEach (param)->
+      param = param.trim()
+      if param[0] == '#'
+        $el.attr('id', param.slice(1))
+      else if param[0] == '.'
+        $el.addClass(param.slice(1))
+      else
+        offset = param.indexOf('=')
+        id = param.substring(0, offset).trim()
+        val = param.substring(offset+1).trim()
+        if val[0] in ['"', "'"]
+          val = val.substring(1, val.length - 1)
+        if id == 'class'
+          $el.addClass(val)
+        else
+          $el.attr(id, val)
 
 # resolve image path and pre code block...
 # check parseMD function, 'option' is the same as the option in paseMD.
@@ -603,27 +609,33 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     highlightedBlock = $(html)
     highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-    $(preElement).replaceWith(highlightedBlock)
-
     if parameters
-      {classes, id} = formatClassesAndId(parameters)
-      highlightedBlock.addClass(classes.join(' ')) if classes
-      highlightedBlock.attr('id', id) if id
+      addClassesAndId(highlightedBlock, parameters)
       checkLineNumber(highlightedBlock)
+
+    $(preElement).replaceWith(highlightedBlock)
 
   # parse eg:
   # {node args:["-v"], output:"html"}
   renderCodeChunk = (preElement, text, parameters, lineNo=null, codeChunksData={})->
-    match = parameters.match(/^\{\s*(\"[^\"]*\"|[^\s]*|[^}]*)(.*)}$/)
-    lang = match[1].trim()
-    parameters = match[2].trim()
-    lang = lang.slice(1, lang.length-1).trim() if lang[0] == '"'
+    if match = parameters.match(/^\{([^\s]+)\s+(.+?)\}$/)
+      lang = match[1]
+      parameters = match[2]
+    else
+      lang = parameters.substring(0, parameters.length).trim()
+      parameters = ''
 
     return if !lang
 
     highlightedBlock = ''
     buttonGroup = ''
-    if not /\s*hide\s*:\s*true/.test(parameters)
+    statusDiv = '<div class="status">running...</div>'
+
+    $el = $("<div class=\"code-chunk\"></div>")
+    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': fileDirectoryPath
+    addClassesAndId($el, parameters)
+
+    if $el.attr('hide') != 'true'
       highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
       html = highlighter.highlightSync
               fileContents: text,
@@ -632,18 +644,15 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock = $(html)
       highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-      classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/) # check class
-      if classMatch and classMatch[1]
-        highlightedBlock.addClass(classMatch[1])
+      if $el.hasClass('lineno')
+        highlightedBlock.addClass('lineno')
         checkLineNumber(highlightedBlock)
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 
-    statusDiv = '<div class="status">running...</div>'
-
-    $el = $("<div class=\"code-chunk\">" + highlightedBlock + buttonGroup + statusDiv + '</div>')
-    $el.attr 'data-lang': lang, 'data-args': parameters, 'data-line': lineNo, 'data-code': text, 'data-root-directory-path': fileDirectoryPath
-
+    $el.append(highlightedBlock)
+    $el.append(buttonGroup)
+    $el.append(statusDiv)
     $(preElement).replaceWith $el
 
   $('pre').each (i, preElement)->
@@ -987,7 +996,7 @@ parseMD = (inputString, option={}, callback)->
         heading = tokens[idx + 1].content
 
         # check {.class1 .class2 #id1}
-        if optMatch = heading.match(/\{(.+?)\}/)
+        if optMatch = heading.match(/[^\\]\{(.+?)\}/)
           heading = heading.replace(optMatch[0], '')
           tokens[idx + 1].content = heading
           tokens[idx + 1].children[0].content = heading
