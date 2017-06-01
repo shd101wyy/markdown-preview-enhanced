@@ -399,7 +399,7 @@ module.exports = """
   }
 
   // add line number support
-  pre.editor-colors.lineno {
+  pre.editor-colors.lineNo {
     counter-reset: lineNo;
     .line {
       &::before {

@@ -394,7 +394,6 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
   token = tokens[idx]
   langClass = ''
   langPrefix = options.langPrefix
-  lineStr = ''
   langName = token.params.escape()
 
   if token.params
@@ -412,9 +411,9 @@ md.renderer.rules.fence = (tokens, idx, options, env, instance)->
     openTag = mathRenderingIndicator.block[0][0] or '$$'
     closeTag = mathRenderingIndicator.block[0][1] or '$$'
     mathHtml = parseMath({openTag, closeTag, content: content.unescape(), displayMode: true})
-    return "<p #{lineStr}>#{mathHtml}</p>"
+    return "<p>#{mathHtml}</p>"
 
-  return '<pre><code' + langClass + lineStr + '>' + content + '</code></pre>' + break_
+  return '<pre><code' + langClass + '>' + content + '</code></pre>' + break_
 
 # Build offsets for each line (lines can be wrapped)
 # That's a bit dirty to process each line everytime, but ok for demo.
@@ -479,17 +478,16 @@ buildScrollMap = (markdownPreview)->
   return _scrollMap  # scrollMap's length == screenLineCount
 
 # Add lineno-#num class to set width of line number
-checkLineNumber = (highlightedBlock)->
-  if highlightedBlock.hasClass('lineno')
-      totoalLineNo = highlightedBlock[0].children.length #.children().length()
-      if totoalLineNo < 100
-        highlightedBlock.addClass('lineno-100')
-      else if totoalLineNo < 1000
-        highlightedBlock.addClass('lineno-1000')
-      else if totoalLineNo < 10000
-        highlightedBlock.addClass('lineno-10000')
-      else
-        highlightedBlock.addClass('lineno-100000')
+addLineNumber = (highlightedBlock)->
+  totoalLineNo = highlightedBlock[0].children.length #.children().length()
+  if totoalLineNo < 100
+    highlightedBlock.addClass('lineNo lineno-100')
+  else if totoalLineNo < 1000
+    highlightedBlock.addClass('lineNo lineno-1000')
+  else if totoalLineNo < 10000
+    highlightedBlock.addClass('lineNo lineno-10000')
+  else
+    highlightedBlock.addClass('lineNo lineno-100000')
 
 # graphType = 'mermaid' | 'plantuml' | 'wavedrom'
 checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)->
@@ -541,7 +539,7 @@ checkGraph = (graphType, graphArray=[], preElement, text, option, $, offset=-1)-
 # eg '#gege .class1 haha="yoo"' given a element <div></div>
 # return <div id="gege" class="class1" haha="yoo"></div>
 addClassesAndId = ($el, parameters)->
-  if match = (parameters + ' ').match(/([\#.](\S+?)\s)|((\S+?)\s*=\s*\"(.+?)\")|((\S+?)\s*=\s*\'(.+?)\')/g)
+  if match = (parameters + ' ').match(/([\#.](\S+?)\s)|((\S+?)\s*=\s*(\"(.+?)\"|\'(.+?)\'|(\S+)))/g)
     match.forEach (param)->
       param = param.trim()
       if param[0] == '#'
@@ -550,7 +548,7 @@ addClassesAndId = ($el, parameters)->
         $el.addClass(param.slice(1))
       else
         offset = param.indexOf('=')
-        id = param.substring(0, offset).trim()
+        id = param.substring(0, offset).trim().toLowerCase()
         val = param.substring(offset+1).trim()
         if val[0] in ['"', "'"]
           val = val.substring(1, val.length - 1)
@@ -611,7 +609,8 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
     if parameters
       addClassesAndId(highlightedBlock, parameters)
-      checkLineNumber(highlightedBlock)
+      if highlightedBlock.hasClass('lineNo')
+        addLineNumber(highlightedBlock)
 
     $(preElement).replaceWith(highlightedBlock)
 
@@ -644,9 +643,8 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       highlightedBlock = $(html)
       highlightedBlock.removeClass('editor').addClass('lang-' + lang)
 
-      if $el.hasClass('lineno')
-        highlightedBlock.addClass('lineno')
-        checkLineNumber(highlightedBlock)
+      if $el.hasClass('lineNo')
+        addLineNumber(highlightedBlock)
 
       buttonGroup = '<div class="btn-group"><div class="run-btn btn"><span>▶︎</span></div><div class=\"run-all-btn btn\">all</div></div>'
 
@@ -661,7 +659,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       codeBlock = $(preElement).children().first()
       lang = 'text'
       if codeBlock.attr('class')
-        lang = codeBlock.attr('class').replace(/^language-/, '').toLowerCase() or 'text'
+        lang = codeBlock.attr('class').replace(/^language-/, '') or 'text'
       text = codeBlock.text()
 
       lineNo = codeBlock.attr('data-line')
