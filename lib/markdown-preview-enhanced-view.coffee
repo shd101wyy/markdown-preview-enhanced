@@ -111,6 +111,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       'markdown-preview-enhanced:zoom-out': => @zoomOut()
       'markdown-preview-enhanced:reset-zoom': => @resetZoom()
       'markdown-preview-enhanced:refresh-preview': => @refreshPreview()
+      'markdown-preview-enhanced:sync-source': => @syncSource()
       'core:copy': => @copyToClipboard()
 
     # init settings
@@ -283,6 +284,9 @@ class MarkdownPreviewEnhancedView extends ScrollView
   initEditorEvent: ->
     editorElement = @editor.getElement()
 
+    @disposables.add atom.commands.add editorElement,
+      'markdown-preview-enhanced:sync-preview': => @syncPreview()
+
     @disposables.add @editor.onDidDestroy ()=>
       # @setTabTitle('unknown preview')
       if @disposables
@@ -363,54 +367,56 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
         @scrollSyncToLineNo(lineNo)
 
+  previewSyncSource: ->
+    if @previewElement.scrollTop == 0 # most top
+      @editorScrollDelay = Date.now() + 500
+      return @scrollToPos 0, @editor.getElement()
+
+    top = @previewElement.scrollTop + @previewElement.offsetHeight / 2
+
+    if @presentationMode
+      top = top / @presentationZoom
+
+    # try to find corresponding screen buffer row
+    @scrollMap ?= @buildScrollMap(this)
+
+    i = 0
+    j = @scrollMap.length - 1
+    count = 0
+    screenRow = -1
+
+    while count < 20
+      if Math.abs(top - @scrollMap[i]) < 20
+        screenRow = i
+        break
+      else if Math.abs(top - @scrollMap[j]) < 20
+        screenRow = j
+        break
+      else
+        mid = Math.floor((i + j) / 2)
+        if top > @scrollMap[mid]
+          i = mid
+        else
+          j = mid
+
+      count++
+
+    if screenRow == -1
+      screenRow = mid
+
+    @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @previewElement.offsetHeight / 2, @editor.getElement())
+    # @editor.getElement().setScrollTop
+
+    # track currnet time to disable onDidChangeScrollTop
+    @editorScrollDelay = Date.now() + 500
+
   initViewEvent: ->
     @previewElement.onscroll = ()=>
       if !@editor or !@scrollSync or @textChanged
         return
       if Date.now() < @previewScrollDelay
         return
-
-      if @previewElement.scrollTop == 0 # most top
-        @editorScrollDelay = Date.now() + 500
-        return @scrollToPos 0, @editor.getElement()
-
-      top = @previewElement.scrollTop + @previewElement.offsetHeight / 2
-
-      if @presentationMode
-        top = top / @presentationZoom
-
-      # try to find corresponding screen buffer row
-      @scrollMap ?= @buildScrollMap(this)
-
-      i = 0
-      j = @scrollMap.length - 1
-      count = 0
-      screenRow = -1
-
-      while count < 20
-        if Math.abs(top - @scrollMap[i]) < 20
-          screenRow = i
-          break
-        else if Math.abs(top - @scrollMap[j]) < 20
-          screenRow = j
-          break
-        else
-          mid = Math.floor((i + j) / 2)
-          if top > @scrollMap[mid]
-            i = mid
-          else
-            j = mid
-
-        count++
-
-      if screenRow == -1
-        screenRow = mid
-
-      @scrollToPos(screenRow * @editor.getLineHeightInPixels() - @previewElement.offsetHeight / 2, @editor.getElement())
-      # @editor.getElement().setScrollTop
-
-      # track currnet time to disable onDidChangeScrollTop
-      @editorScrollDelay = Date.now() + 500
+      @previewSyncSource()
 
   initSettingsEvents: ->
     # break line?
@@ -1184,6 +1190,14 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
     # render again
     @renderMarkdown()
+
+  syncPreview: ()->
+    screenRow = @editor?.getCursorBufferPosition?().row
+    return if !screenRow
+    @scrollSyncToLineNo screenRow
+
+  syncSource: ()->
+    @previewSyncSource()
 
   ###
   convert './a.txt' '/a.txt'
