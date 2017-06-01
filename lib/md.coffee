@@ -611,6 +611,9 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       lang = parameters
       parameters = ''
 
+    if lang[0] == '.'
+      lang = lang.substring(1)
+
     html = highlighter.highlightSync
             fileContents: text,
             scopeName: scopeForLanguageName(lang)

@@ -182,8 +182,8 @@ module.exports = MarkdownPreviewEnhanced =
     preview = @getPreviewForEditor(editor)
     if !preview
       if @singlePreview
-        preview = new MarkdownPreviewEnhancedView('markdown-preview-enhanced://preview', this)
-        @previewsMap['single-preview'] = preview
+        preview = new MarkdownPreviewEnhancedView('markdown-preview-enhanced://single_preview', this)
+        @previewsMap['single_preview'] = preview
       else
         preview = new MarkdownPreviewEnhancedView('markdown-preview-enhanced://' + editor.getPath(), this)
         @previewsMap[editor.getPath()] = preview

@@ -212,6 +212,13 @@ class MarkdownPreviewEnhancedView extends ScrollView
     @updateTabTitle()
     @element.removeAttribute('style')
 
+    @previewElement = document.createElement('div') # create new preview element
+    @previewElement.classList.add('markdown-preview-enhanced')
+    @previewElement.setAttribute('for', 'preview')
+    @previewElement.innerHTML = "<div class=\"markdown-spinner\"> Loading Markdown\u2026 </div>"
+    @element.innerHTML = ''
+    @element.appendChild @previewElement
+
     if not @parseMD
       {@parseMD, @buildScrollMap, @processFrontMatter, @md} = require './md'
       require '../dependencies/wavedrom/default.js'
@@ -227,13 +234,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
     if @disposables # remove all binded events
       @disposables.dispose()
     @disposables = new CompositeDisposable()
-
-    @previewElement = document.createElement('div') # create new preview element
-    @previewElement.classList.add('markdown-preview-enhanced')
-    @previewElement.setAttribute('for', 'preview')
-    @previewElement.innerHTML = "<div class=\"markdown-spinner\"> Loading Markdown\u2026 </div>"
-    @element.innerHTML = ''
-    @element.appendChild @previewElement
 
     @addToolBar()
     @addBackToTopButton()

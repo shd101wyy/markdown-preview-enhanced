@@ -10,6 +10,15 @@
   ```markdown
   @import "test.png" {width:"300px", height:"200px", title: "my title", alt: "my alt"}
   ```
+  3. Force to render Code Block  
+  ```markdown
+  @import "test.puml" {code_block:true, class:"lineNo"}
+  @import "test.py" {class:"lineNo"}
+  ```
+  4. Code Chunk
+  ```markdown
+  @import "test.py" {code_chunk:true, cmd: "python3", id: "you_have_to_declare_id_here"}
+  ```
 
 * [x] Support TOC ignore headings by appending `{.ignore}` after the heading:  
 ```markdown

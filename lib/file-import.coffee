@@ -75,6 +75,18 @@ loadFile = (filePath, filesCache={})->
 createAnchor = (lineNo)->
   "\n\n<p data-line=\"#{lineNo}\" class=\"sync-line\" style=\"margin:0;\"></p>\n\n"
 
+formatClassesAndId = (config)->
+  return '' if !config
+  id = config.id
+  classes = config.class
+  return '' if !id and !classes
+  output = '{'
+  output += (id + ' ') if id
+  output += ('.' + classes.replace(/\s+/g, ' .')  + ' ') if classes
+  output += '}'
+  output
+
+
 ###
 @param {String} inputString, required
 @param {Object} filesCache, optional
@@ -122,13 +134,15 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
         leftParen = line.indexOf('{')
         config = null
+        configStr = ''
         if leftParen > 0
           rightParen = line.lastIndexOf('}')
           if rightParen > 0
+            configStr = line.substring(leftParen+1, rightParen)
             try
               loophole ?= require 'loophole'
               loophole.allowUnsafeEval ->
-                config = eval("({#{line.substring(leftParen+1, rightParen)}})")
+                config = eval("({#{configStr}})")
             catch error
               null
 
@@ -177,9 +191,12 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         else
           loadFile(absoluteFilePath, filesCache).then (fileContent)->
             filesCache?[absoluteFilePath] = fileContent
-            if config?.eval == false
+            if config?.code_block
               fileExtension = extname.slice(1, extname.length)
-              output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
+              output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
+            else if config?.code_chunk
+              fileExtension = extname.slice(1, extname.length)
+              output = "```{#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{configStr}}  \n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname in markdownFileExtensions # markdown files
               # this return here is necessary
@@ -217,7 +234,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               # filesCache?[absoluteFilePath] = output
             else # codeblock
               fileExtension = extname.slice(1, extname.length)
-              output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension}  \n#{fileContent}\n```  "
+              output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
 
             return helper(end+1, lineNo+1, outputString+output+'\n')
