@@ -1,5 +1,6 @@
 {CompositeDisposable, Emitter, Directory, File} = require 'atom'
 path = require 'path'
+fs = require 'fs'
 {loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
