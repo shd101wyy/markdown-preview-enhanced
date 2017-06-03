@@ -3,16 +3,9 @@ path = require 'path'
 {loadPreviewTheme} = require './style'
 Hook = require './hook'
 configSchema = require './config-schema'
-PACKAGE = require '../package.json'
 MarkdownPreviewEnhancedView = null
 ExporterView = null
-
-class MPEVersion
-  atom.deserializers.add(this)
-
-  @deserialize: ({version}) -> new MPEVersion(version)
-  constructor: (version) -> @version = version
-  serialize: -> { deserializer: 'MPEVersion', version: @version }
+PACKAGE = null
 
 module.exports = MarkdownPreviewEnhanced =
   previewsMap: {}, # key is filePath, value is MarkdownPreviewEnhancedView object.
@@ -22,16 +15,9 @@ module.exports = MarkdownPreviewEnhanced =
   imageHelperView: null,
   fileExtensions: null,
   config: configSchema,
-  mpeVersion: null,
 
   activate: (state) ->
     # console.log 'actvate markdown-preview-enhanced', state
-    @mpeVersion =
-      if state?.deserializer
-        atom.deserializers.deserialize(state)
-      else
-        new MPEVersion(0)
-
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
@@ -141,12 +127,19 @@ module.exports = MarkdownPreviewEnhanced =
     @openWelcomePage()
 
   openWelcomePage: ->
-    if PACKAGE.version != @mpeVersion.version
-      @mpeVersion.version = PACKAGE.version
-      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+    PACKAGE ?= require('../package.json')
+    packageJSONPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/package.json')
 
-  serialize: ->
-    @mpeVersion.serialize()
+    helper = ()->
+      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+      fs.writeFile packageJSONPath, JSON.stringify({version: PACKAGE.version})
+
+    try
+      packageJSON = require(packageJSONPath)
+      if packageJSON.version != PACKAGE.version
+        helper()
+    catch error
+      helper()
 
   deactivate: ->
     @subscriptions.dispose()

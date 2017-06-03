@@ -1,6 +1,9 @@
-#### v0.12.6  
-
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 400, style: "position:relative; left: 50%; transform: translateX(-50%);"}
+
+#### v0.12.7  
+* [x] Quick fix Welcome page issue. So the Welcome page will only open when this package is updated [#428](https://github.com/shd101wyy/markdown-preview-enhanced/issues/428).    
+
+#### v0.12.6  
 
 * [x] Add `WELCOME.md` page and `Markdown Preview Enhanced: Open Welcome Page` command. The `WELCOME.md` will display the changes and updates of this package.   
 * [x] Add `mathjax_config.js` file and `Markdown Preview Enhanced: Open MathJax Config` command. Remove `mathJaxProcessEnvironments` from config schema. However, some `MathJax` extensions don't work well.  
