@@ -1,6 +1,16 @@
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 400, style: "position:relative; left: 50%; transform: translateX(-50%);"}
 
-#### v0.12.7  & v0.12.8 
+#### v0.12.8
+[get latex](https://www.latex-project.org/get/)  
+[pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
+* [ ] Support `latex` code chunk.
+```{latex id:"chj3hrft7p"}
+// code here
+```
+
+* [ ] Support `@import` pdf file. For example: `@import "test.pdf"`  
+
+#### v0.12.7  & v0.12.8
 * [x] Quick fix Welcome page issue. So the Welcome page will only open when this package is updated [#428](https://github.com/shd101wyy/markdown-preview-enhanced/issues/428).    
 
 #### v0.12.6  

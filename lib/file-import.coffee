@@ -7,6 +7,7 @@ loophole = null
 subjects = require './custom-comment.coffee'
 
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
+PDF = null
 
 markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
 
@@ -54,6 +55,13 @@ loadFile = (filePath, filesCache={})->
               reject(error)
             else
               resolve(output.css or '')
+    else if filePath.endsWith('.pdf') # pdf file
+      PDF ?= require('./pdf')
+      PDF.toSVG filePath, path.dirname(filePath), (error, svg)->
+        if error
+          reject error
+        else
+          resolve(svg.trim())
     else if filePath.match(/https?\:\/\//) # online file
       # github
       if filePath.startsWith 'https://github.com/'
@@ -224,6 +232,8 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             else if extname in ['.css', '.less'] # css or less file
               output = "<style>#{fileContent}</style>"
               # filesCache?[absoluteFilePath] = output
+            else if extname == '.pdf'
+              output = fileContent
             else if extname in ['.dot'] # graphviz
               output = "```@viz\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
