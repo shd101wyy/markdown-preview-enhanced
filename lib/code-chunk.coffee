@@ -8,18 +8,52 @@ LaTeX = require './latex'
 
 REQUIRE_CACHE = {}
 
+# Only 'tikz' is supported for now
+formatLaTeXGraph = (content, latexGraph)->
+  return content if !latexGraph
+
+  content = content.trim()
+  if latexGraph == 'tikz'
+    if content.startsWith('\\begin{tikzpicture}') and content.endsWith('\\end{tikzpicture}')
+      null # do nothing
+    else
+      content = """
+\\begin{tikzpicture}
+#{content}
+\\end{tikzpicture}
+      """
+
+    return """
+\\documentclass{standalone}
+\\usepackage[utf8]{inputenc}
+
+\\usepackage{tikz}
+\\usetikzlibrary{positioning}
+
+\\begin{document}
+
+#{content}
+
+\\end{document}
+    """
+  else
+    return content
+
+
 compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
   latexEngine = options.latex_engine or atom.config.get('markdown-preview-enhanced.latexEngine')
-  latexGraph = options.latex_graph
+  latexGraph = options.latex_graph # param latexGraph: Only 'tikz' is supported.
   latexSVGDir = options.latex_svg_dir # if not provided, the svg files will be stored in temp folder and will be deleted automatically
 
   texFilePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk.tex')
+
+  content = formatLaTeXGraph(content, latexGraph)
 
   fs.writeFile texFilePath, content, (err)->
     if (err)
       return callback?(true)
 
-    LaTeX.toSVGMarkdown texFilePath, {latexEngine, latexGraph, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir}, (error, svgMarkdown)->
+    LaTeX.toSVGMarkdown texFilePath, {latexEngine, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir}, (error, svgMarkdown)->
       fs.unlink(texFilePath)
       if error
         return callback(null, error, options)

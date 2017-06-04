@@ -17,7 +17,7 @@ cleanUpFiles = (directoryPath, filePrefix)->
 # @param markdownDirectoryPath: where your markdown file is located.
 # callback (error, svgMarkdown)
 ###
-toSVGMarkdown = (texFilePath, {latexEngine, latexGraph, svgDirectoryPath, markdownDirectoryPath}, callback)->
+toSVGMarkdown = (texFilePath, {latexEngine, svgDirectoryPath, markdownDirectoryPath}, callback)->
   latexEngine ?= 'pdflatex'
 
   task = spawn latexEngine, [texFilePath], {cwd: path.dirname(texFilePath)}

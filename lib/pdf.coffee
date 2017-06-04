@@ -79,7 +79,10 @@ toSVGMarkdown = (pdfFilePath, {svgDirectoryPath, markdownDirectoryPath}, callbac
   task.stderr.on 'data', (chunk)->
     errorChunks.push(chunk)
 
-  task.on 'close', (chunk)->
+  task.on 'error', (error)->
+    errorChunks.push(Buffer.from(error.toString(), 'utf-8'))
+
+  task.on 'close', ()->
     if errorChunks.length
       return callback(Buffer.concat(errorChunks).toString(), null)
     else
