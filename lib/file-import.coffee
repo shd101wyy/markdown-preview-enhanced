@@ -5,6 +5,9 @@ request = null
 less = null
 loophole = null
 subjects = require './custom-comment.coffee'
+temp = null
+DOWNLOADS_TEMP_FOLDER = null
+md5 = null
 
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
 PDF = null
@@ -39,6 +42,27 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  '
   output
 
+downloadFileIfNecessary = (filePath)->
+  new Promise (resolve, reject)->
+    if !filePath.match(/^https?\:\/\//)
+      return resolve(filePath)
+
+    request ?= require 'request'
+    temp ?= require('temp').track()
+    md5 ?= require('md5')
+
+    DOWNLOADS_TEMP_FOLDER = temp.mkdirSync('mpe_downloads')
+    request.get {url: filePath, encoding: 'binary'}, (error, response, body)->
+      if error
+        return reject(error)
+      else
+        localFilePath = path.resolve(DOWNLOADS_TEMP_FOLDER, md5(filePath)) + path.extname(filePath)
+        fs.writeFile localFilePath, body, 'binary', (error)->
+          if error
+            return reject error
+          else
+            return resolve localFilePath
+
 loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
   new Promise (resolve, reject)->
     if filesCache[filePath]
@@ -56,13 +80,17 @@ loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
             else
               resolve(output.css or '')
     else if filePath.endsWith('.pdf') # pdf file
-      PDF ?= require('./pdf')
-      PDF.toSVGMarkdown filePath, {svgDirectoryPath: imageDirectoryPath, markdownDirectoryPath: fileDirectoryPath}, (error, svgMarkdown)->
-        if error
-          reject error
-        else
-          resolve(svgMarkdown)
-    else if filePath.match(/https?\:\/\//) # online file
+      downloadFileIfNecessary(filePath)
+      .then (localFilePath)->
+        PDF ?= require('./pdf')
+        PDF.toSVGMarkdown localFilePath, {svgDirectoryPath: imageDirectoryPath, markdownDirectoryPath: fileDirectoryPath}, (error, svgMarkdown)->
+          if error
+            return reject error
+          else
+            return resolve(svgMarkdown)
+      # .catch (error)->
+      #  return reject(error)
+    else if filePath.match(/^https?\:\/\//) # online file
       # github
       if filePath.startsWith 'https://github.com/'
         filePath = filePath.replace('https://github.com/', 'https://raw.githubusercontent.com/').replace('/blob/', '/')
