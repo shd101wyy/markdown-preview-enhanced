@@ -281,6 +281,9 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             else if extname in ['.wavedrom']
               output = "```@wavedrom\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
+            else if extname.match(/\.(la)?tex/)
+              md5 ?= require 'md5'
+              output = "```{latex id:\"#{md5(absoluteFilePath)}\"}\n#{fileContent}\n```  "
             else # codeblock
               fileExtension = extname.slice(1, extname.length)
               output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "

@@ -35,18 +35,21 @@ toSVGMarkdown = (texFilePath, {latexEngine, svgDirectoryPath, markdownDirectoryP
 
   task.on 'close', ()->
     if errorChunks.length
+      cleanUpFiles path.dirname(texFilePath), path.basename(texFilePath).replace(/\.(la)?tex$/, '')
+
       return callback(Buffer.concat(errorChunks).toString(), null)
     else
       output = Buffer.concat(chunks).toString()
       if output.indexOf('LaTeX Error') >= 0 # meet error
+        cleanUpFiles path.dirname(texFilePath), path.basename(texFilePath).replace(/\.(la)?tex$/, '')
+
         return callback(output, null)
 
       pdfFilePath = texFilePath.replace(/\.(la)?tex$/, '.pdf')
 
       PDF ?= require('./pdf')
       PDF.toSVGMarkdown pdfFilePath, {svgDirectoryPath, markdownDirectoryPath}, (error, svgMarkdown)->
-        if !error
-          cleanUpFiles path.dirname(pdfFilePath), path.basename(pdfFilePath).replace(/\.pdf$/, '')
+        cleanUpFiles path.dirname(pdfFilePath), path.basename(pdfFilePath).replace(/\.pdf$/, '')
 
         return callback(error, svgMarkdown)
 
