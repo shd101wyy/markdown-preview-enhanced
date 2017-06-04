@@ -57,11 +57,11 @@ loadFile = (filePath, filesCache={})->
               resolve(output.css or '')
     else if filePath.endsWith('.pdf') # pdf file
       PDF ?= require('./pdf')
-      PDF.toSVG filePath, path.dirname(filePath), (error, svg)->
+      PDF.toSVGMarkdown filePath, path.dirname(filePath), (error, svgMarkdown)->
         if error
           reject error
         else
-          resolve(svg.trim())
+          resolve(svgMarkdown)
     else if filePath.match(/https?\:\/\//) # online file
       # github
       if filePath.startsWith 'https://github.com/'

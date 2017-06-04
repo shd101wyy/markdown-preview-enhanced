@@ -97,6 +97,12 @@ module.exports =
       default: "[[\"$$\", \"$$\"], [\"\\\\[\", \"\\\\]\"]]"
       description: "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`"
       order: 22
+    latexEngine:
+      title: "LaTeX Engine"
+      type: "string"
+      default: "pdflatex" # TODO: different default latex engine for different OS
+      description: "The LaTeX engine you want to you to run latex code chunk."
+      order: 25
     enableWikiLinkSyntax:
       title: "Enable Wiki Link syntax"
       type: "boolean"

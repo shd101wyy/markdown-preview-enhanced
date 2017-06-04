@@ -5,6 +5,9 @@ path = require 'path'
 fs = require 'fs'
 {spawn} = require 'child_process'
 async_ = null
+temp = null
+SVG_DIRECTORY_PATH = null
+md5 = null
 
 
 # callback(error, cb)
@@ -24,7 +27,7 @@ helper = (pdfFilePath, fileDirectoryPath, callback)->
 
   task.on 'close', (chunk)->
     if errorChunks.length
-      return callback(Buffer.concat(chunks).toString(), null)
+      return callback(Buffer.concat(errorChunks).toString(), null)
     else
       fs.readdir fileDirectoryPath, (error, items)->
         if error
@@ -56,6 +59,44 @@ helper = (pdfFilePath, fileDirectoryPath, callback)->
             svgFiles.push(filePath)
           return callback(null, {svg, svgFiles})
 
+# callback(error, svgMarkdown)
+toSVGMarkdown = (pdfFilePath, svgDirectoryPath=null, callback)->
+  if !svgDirectoryPath
+    temp ?= require('temp').track()
+    SVG_DIRECTORY_PATH ?= temp.mkdirSync('mpe_pdf')
+    svgDirectoryPath = SVG_DIRECTORY_PATH
+
+  md5 ?= require 'md5'
+  svgFilePrefix = md5(pdfFilePath)+'_'
+
+  task = spawn 'pdf2svg', [pdfFilePath, path.resolve(svgDirectoryPath, svgFilePrefix+'%d.svg'), 'all']
+
+  chunks = []
+  task.stdout.on 'data', (chunk)->
+    chunks.push(chunk)
+
+  errorChunks = []
+  task.stderr.on 'data', (chunk)->
+    errorChunks.push(chunk)
+
+  task.on 'close', (chunk)->
+    if errorChunks.length
+      return callback(Buffer.concat(errorChunks).toString(), null)
+    else
+      fs.readdir svgDirectoryPath, (error, items)->
+        if error
+          return callback(error, null)
+
+        svgMarkdown = ''
+        r = Math.random()
+        items.forEach (fileName)->
+          if match = fileName.match(new RegExp("^#{svgFilePrefix}(\\d+)\.svg"))
+            # offset = parseInt(match[1]) - 1
+            filePath = path.resolve(svgDirectoryPath, fileName)
+            svgMarkdown += "![](#{filePath}?#{r})\n"
+
+        return callback(null, svgMarkdown)
+
 # callback(error, svg)
 toSVG = (pdfFilePath, fileDirectoryPath="", callback)->
   helper pdfFilePath, fileDirectoryPath, (error, data)->
@@ -71,7 +112,7 @@ toSVG = (pdfFilePath, fileDirectoryPath="", callback)->
 toSVGFiles = ()->
   helper pdfFilePath, fileDirectoryPath, (error, data)->
     return callback(error, '') if error
-    {svgFiles} = data 
+    {svgFiles} = data
     return callback(null, svgFiles)
 
-module.exports = PDF = {toSVG, toSVGFiles}
+module.exports = PDF = {toSVG, toSVGFiles, toSVGMarkdown}
