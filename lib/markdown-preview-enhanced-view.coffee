@@ -2075,6 +2075,7 @@ module.exports = config || {}
       atom.notifications.addInfo "File #{path.basename(outputFilePath)} was created", detail: "path: #{outputFilePath}"
 
   saveAsMarkdown: ()->
+    return if !@editor
     {data} = @processFrontMatter(@editor.getText())
     data = data or {}
 

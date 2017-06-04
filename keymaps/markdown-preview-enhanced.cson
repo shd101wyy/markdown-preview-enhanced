@@ -7,7 +7,7 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-'atom-workspace atom-text-editor[data-grammar*="gfm"]':
+'.editor:not(.mini)':
   'ctrl-M': 'markdown-preview-enhanced:toggle'
   'ctrl-I': 'markdown-preview-enhanced:image-helper'
   'shift-enter': 'markdown-preview-enhanced:run-code-chunk'

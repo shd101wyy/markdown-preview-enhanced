@@ -39,7 +39,7 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  '
   output
 
-loadFile = (filePath, filesCache={})->
+loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
   new Promise (resolve, reject)->
     if filesCache[filePath]
       return resolve(filesCache[filePath])
@@ -57,7 +57,7 @@ loadFile = (filePath, filesCache={})->
               resolve(output.css or '')
     else if filePath.endsWith('.pdf') # pdf file
       PDF ?= require('./pdf')
-      PDF.toSVGMarkdown filePath, path.dirname(filePath), (error, svgMarkdown)->
+      PDF.toSVGMarkdown filePath, {svgDirectoryPath: imageDirectoryPath, markdownDirectoryPath: fileDirectoryPath}, (error, svgMarkdown)->
         if error
           reject error
         else
@@ -107,7 +107,7 @@ return
   {String} outputString,
 }
 ###
-fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, insertAnchors})->
+fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, imageDirectoryPath, insertAnchors})->
   new Promise (resolve, reject)->
     inblock = false
 
@@ -201,7 +201,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
           return helper(end+1, lineNo+1, outputString+output+'\n')
         else
-          loadFile(absoluteFilePath, filesCache).then (fileContent)->
+          loadFile(absoluteFilePath, {imageDirectoryPath, fileDirectoryPath}, filesCache).then (fileContent)->
             filesCache?[absoluteFilePath] = fileContent
             if config?.code_block
               fileExtension = extname.slice(1, extname.length)

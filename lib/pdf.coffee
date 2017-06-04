@@ -60,7 +60,7 @@ helper = (pdfFilePath, fileDirectoryPath, callback)->
           return callback(null, {svg, svgFiles})
 
 # callback(error, svgMarkdown)
-toSVGMarkdown = (pdfFilePath, svgDirectoryPath=null, callback)->
+toSVGMarkdown = (pdfFilePath, {svgDirectoryPath, markdownDirectoryPath}, callback)->
   if !svgDirectoryPath
     temp ?= require('temp').track()
     SVG_DIRECTORY_PATH ?= temp.mkdirSync('mpe_pdf')
@@ -92,7 +92,7 @@ toSVGMarkdown = (pdfFilePath, svgDirectoryPath=null, callback)->
         items.forEach (fileName)->
           if match = fileName.match(new RegExp("^#{svgFilePrefix}(\\d+)\.svg"))
             # offset = parseInt(match[1]) - 1
-            filePath = path.resolve(svgDirectoryPath, fileName)
+            filePath = path.relative(markdownDirectoryPath, path.resolve(svgDirectoryPath, fileName))
             svgMarkdown += "![](#{filePath}?#{r})\n"
 
         return callback(null, svgMarkdown)
