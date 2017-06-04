@@ -3,10 +3,14 @@ request = require 'request'
 fs = require 'fs'
 path = require 'path'
 
-# '/Users/wangyiyi/Desktop/test.png'
 smAPI = {}
 smAPI.uploadFile = (filePath, callback)->
-  request.post  url:'https://sm.ms/api/upload/', formData: {smfile: fs.createReadStream(filePath)}, (err, httpResponse, body)->
+  headers = {
+    authority: 'sm.ms',
+    'user-agent': 'markdown-preview-enhanced'
+
+  }
+  request.post url:'https://sm.ms/api/upload', formData: {smfile: fs.createReadStream(filePath)}, headers:headers, (err, httpResponse, body)->
     try
       body = JSON.parse body
       if err

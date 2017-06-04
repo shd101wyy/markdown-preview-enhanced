@@ -30,6 +30,9 @@ toSVGMarkdown = (texFilePath, {latexEngine, latexGraph, svgDirectoryPath, markdo
   task.stderr.on 'data', (chunk)->
     errorChunks.push(chunk)
 
+  task.on 'error', (error)->
+    errorChunks.push(Buffer.from(error.toString(), 'utf-8'))
+
   task.on 'close', ()->
     if errorChunks.length
       return callback(Buffer.concat(errorChunks).toString(), null)

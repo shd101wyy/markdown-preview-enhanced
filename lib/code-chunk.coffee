@@ -11,6 +11,7 @@ REQUIRE_CACHE = {}
 compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
   latexEngine = options.latex_engine or atom.config.get('markdown-preview-enhanced.latexEngine')
   latexGraph = options.latex_graph
+  latexSVGDir = options.latex_svg_dir # if not provided, the svg files will be stored in temp folder and will be deleted automatically
 
   texFilePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk.tex')
 
@@ -18,9 +19,8 @@ compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
     if (err)
       return callback?(true)
 
-    LaTeX.toSVGMarkdown texFilePath, {latexEngine, latexGraph, markdownDirectoryPath: fileDirectoryPath}, (error, svgMarkdown)->
+    LaTeX.toSVGMarkdown texFilePath, {latexEngine, latexGraph, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir}, (error, svgMarkdown)->
       fs.unlink(texFilePath)
-
       if error
         return callback(null, error, options)
 
@@ -155,6 +155,9 @@ except Exception:
 
     task.stderr.on 'data', (chunk)->
       chunks.push(chunk)
+
+    task.on 'error', (error)->
+      chunks.push(Buffer.from(error.toString(), 'utf-8'))
 
     task.on 'close', ()->
       fs.unlink(savePath)
