@@ -4,12 +4,12 @@ fs = require 'fs'
 request = null
 less = null
 loophole = null
-subjects = require './custom-comment.coffee'
 temp = null
 DOWNLOADS_TEMP_FOLDER = null
 md5 = null
 
 {protocolsWhiteListRegExp} = require('./protocols-whitelist')
+subjects = require './custom-comment.coffee'
 PDF = null
 
 markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)->x.trim()) or ['.md', '.mmark', '.markdown']
@@ -42,6 +42,13 @@ _2DArrayToMarkdownTable = (_2DArr)->
   output += '  '
   output
 
+###
+downloadFileIfNecessary(url)
+.then (localFilePath)->
+  ...
+.catch (error)->
+  ...
+###
 downloadFileIfNecessary = (filePath)->
   new Promise (resolve, reject)->
     if !filePath.match(/^https?\:\/\//)

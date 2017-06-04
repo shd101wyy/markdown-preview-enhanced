@@ -4,12 +4,30 @@ fs = require 'fs'
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 request = require('request')
 async = require('async')
+LaTeX = require './latex'
 
 REQUIRE_CACHE = {}
 
-#
-#
-#
+compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
+  latexEngine = options.latex_engine or atom.config.get('markdown-preview-enhanced.latexEngine')
+  latexGraph = options.latex_graph
+
+  texFilePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk.tex')
+
+  fs.writeFile texFilePath, content, (err)->
+    if (err)
+      return callback?(true)
+
+    LaTeX.toSVGMarkdown texFilePath, {latexEngine, latexGraph, markdownDirectoryPath: fileDirectoryPath}, (error, svgMarkdown)->
+      fs.unlink(texFilePath)
+
+      if error
+        return callback(null, error, options)
+
+      options.output = 'markdown'
+      return callback(null, svgMarkdown, options)
+
+# callback(error, data, options)
 run = (content, fileDirectoryPath='', cmd, options={}, callback)->
   args = options.args || []
   if (typeof(args) == 'string')
@@ -18,6 +36,9 @@ run = (content, fileDirectoryPath='', cmd, options={}, callback)->
   savePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk')
 
   content = content.replace(/\u00A0/g, ' ');
+
+  if cmd.match /(la)?tex/
+    return compileLaTeX content, fileDirectoryPath, options, callback
 
   if cmd.match /(javascript|js)/ # just javascript, not nodejs
     asyncFunctions = []
