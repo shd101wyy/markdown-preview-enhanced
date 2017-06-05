@@ -11,33 +11,47 @@ CACHE = require './cache'
 # it has common functions as pandoc-convert.coffee
 
 processMath = (text)->
-  lines = text.split('\n')
-  inBlock = false
+  line = text.replace(/\\\$/g, '#slash_dollarsign#')
 
-  lines = lines.map (line)->
-    if line.match(/^\s*```/)
-      inBlock = !inBlock
-      line
-    else if inBlock
-      line
-    else
-      line = line.replace(/\\\$/g, '#slash_dollarsign#')
+  inline = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingInline'))
+  block = JSON.parse(atom.config.get('markdown-preview-enhanced.indicatorForMathRenderingBlock'))
 
-      # display
-      line = line.replace /\$\$([\s\S]+?)\$\$/g, ($0, $1)->
-        $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
-        $1 = escape($1)
-        "<p align=\"center\"><img src=\"https://latex.codecogs.com/gif.latex?#{$1.trim()}\"/></p>"
+  inlineBegin = '(?:' + inline.map (x)-> x[0]
+                      .join('|')
+                      .replace(/\\/g, '\\\\')
+                      .replace(/([\(\)\[\]\$])/g, '\\$1') + ')'
+  inlineEnd = '(?:' + inline.map (x)-> x[1]
+                      .join('|')
+                      .replace(/\\/g, '\\\\')
+                      .replace(/([\(\)\[\]\$])/g, '\\$1') + ')'
+  blockBegin = '(?:' + block.map (x)-> x[0]
+                      .join('|')
+                      .replace(/\\/g, '\\\\')
+                      .replace(/([\(\)\[\]\$])/g, '\\$1') + ')'
+  blockEnd = '(?:' + block.map (x)-> x[1]
+                      .join('|')
+                      .replace(/\\/g, '\\\\')
+                      .replace(/([\(\)\[\]\$])/g, '\\$1') + ')'
 
-      # inline
-      r = /\$([\s\S]+?)\$/g
-      line = line.replace /\$([\s\S]+?)\$/g, ($0, $1)->
-        $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
-        $1 = escape($1)
-        "<img src=\"https://latex.codecogs.com/gif.latex?#{$1.trim()}\"/>"
+  # display
+  line = line.replace new RegExp("(```(?:[\\s\\S]+?)```\\s*(?:\\n|$))|(?:#{blockBegin}([\\s\\S]+?)#{blockEnd})", 'g'), ($0, $1, $2)->
+    return $1 if $1
+    math = $2
+    math = math.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+    math = escape(math)
+    "<p align=\"center\"><img src=\"https://latex.codecogs.com/gif.latex?#{math.trim()}\"/></p>"
 
-      line = line.replace(/\#slash\_dollarsign\#/g, '\\\$')
-  lines.join('\n')
+  # inline
+  console.log "(```(?:[\\s\\S]+?)```\\s*(?:\\n|$))|(?:#{inlineBegin}([\\s\\S]+?)#{inlineEnd})"
+  line = line.replace new RegExp("(```(?:[\\s\\S]+?)```\\s*(?:\\n|$))|(?:#{inlineBegin}([\\s\\S]+?)#{inlineEnd})", 'g'), ($0, $1, $2)->
+    return $1 if $1
+    math = $2
+    math = math.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+    math = escape(math)
+    "<img src=\"https://latex.codecogs.com/gif.latex?#{math.trim()}\"/>"
+
+  line = line.replace(/\#slash\_dollarsign\#/g, '\\\$')
+  return line
 
 # convert relative path to project path
 processPaths = (text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath)->
