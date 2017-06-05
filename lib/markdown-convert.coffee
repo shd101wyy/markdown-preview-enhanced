@@ -42,7 +42,6 @@ processMath = (text)->
     "<p align=\"center\"><img src=\"https://latex.codecogs.com/gif.latex?#{math.trim()}\"/></p>"
 
   # inline
-  console.log "(```(?:[\\s\\S]+?)```\\s*(?:\\n|$))|(?:#{inlineBegin}([\\s\\S]+?)#{inlineEnd})"
   line = line.replace new RegExp("(```(?:[\\s\\S]+?)```\\s*(?:\\n|$))|(?:#{inlineBegin}([\\s\\S]+?)#{inlineEnd})", 'g'), ($0, $1, $2)->
     return $1 if $1
     math = $2
