@@ -159,6 +159,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
       if line.match(/^\s*```/)
         inBlock = !inBlock
+        return helper(end+1, lineNo+1, outputString+line+'\n')
 
       if inBlock
         return helper(end+1, lineNo+1, outputString+line+'\n')
