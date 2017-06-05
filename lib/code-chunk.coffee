@@ -46,6 +46,8 @@ compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
   # latexGraph = options.latex_graph # param latexGraph: Only 'tikz' is supported.
   latexSVGDir = options.latex_svg_dir # if not provided, the svg files will be stored in temp folder and will be deleted automatically
   latexZoom = options.latex_zoom;
+  latexWidth = options.latex_width;
+  latexHeight = options.latex_height;
 
   texFilePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk.tex')
 
@@ -55,7 +57,7 @@ compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
     if (err)
       return callback?(true)
 
-    LaTeX.toSVGMarkdown texFilePath, {latexEngine, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir, svgZoom: latexZoom}, (error, svgMarkdown)->
+    LaTeX.toSVGMarkdown texFilePath, {latexEngine, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir, svgZoom: latexZoom, svgWidth: latexWidth, svgHeight: latexHeight}, (error, svgMarkdown)->
       fs.unlink(texFilePath)
       if error
         return callback(null, error, options)

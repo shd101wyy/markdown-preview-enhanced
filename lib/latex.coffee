@@ -17,7 +17,7 @@ cleanUpFiles = (directoryPath, filePrefix)->
 # @param markdownDirectoryPath: where your markdown file is located.
 # callback (error, svgMarkdown)
 ###
-toSVGMarkdown = (texFilePath, {latexEngine, svgDirectoryPath, markdownDirectoryPath, svgZoom}, callback)->
+toSVGMarkdown = (texFilePath, {latexEngine, svgDirectoryPath, markdownDirectoryPath, svgZoom, svgWidth, svgHeight}, callback)->
   latexEngine ?= 'pdflatex'
 
   task = spawn latexEngine, [texFilePath], {cwd: path.dirname(texFilePath)}
@@ -48,7 +48,7 @@ toSVGMarkdown = (texFilePath, {latexEngine, svgDirectoryPath, markdownDirectoryP
       pdfFilePath = texFilePath.replace(/\.(la)?tex$/, '.pdf')
 
       PDF ?= require('./pdf')
-      PDF.toSVGMarkdown pdfFilePath, {svgDirectoryPath, markdownDirectoryPath, svgZoom}, (error, svgMarkdown)->
+      PDF.toSVGMarkdown pdfFilePath, {svgDirectoryPath, markdownDirectoryPath, svgZoom, svgWidth, svgHeight}, (error, svgMarkdown)->
         cleanUpFiles path.dirname(pdfFilePath), path.basename(pdfFilePath).replace(/\.pdf$/, '')
 
         return callback(error, svgMarkdown)

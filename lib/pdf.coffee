@@ -60,7 +60,7 @@ helper = (pdfFilePath, fileDirectoryPath, callback)->
           return callback(null, {svg, svgFiles})
 
 # callback(error, svgMarkdown)
-toSVGMarkdown = (pdfFilePath, {svgDirectoryPath, markdownDirectoryPath, svgZoom}, callback)->
+toSVGMarkdown = (pdfFilePath, {svgDirectoryPath, markdownDirectoryPath, svgZoom, svgWidth, svgHeight}, callback)->
   if !svgDirectoryPath
     temp ?= require('temp').track()
     SVG_DIRECTORY_PATH ?= temp.mkdirSync('mpe_pdf')
@@ -94,11 +94,10 @@ toSVGMarkdown = (pdfFilePath, {svgDirectoryPath, markdownDirectoryPath, svgZoom}
         r = Math.random()
         items.forEach (fileName)->
           if match = fileName.match(new RegExp("^#{svgFilePrefix}(\\d+)\.svg"))
-            # offset = parseInt(match[1]) - 1
             filePath = path.relative(markdownDirectoryPath, path.resolve(svgDirectoryPath, fileName))
 
-            if svgZoom
-              svgMarkdown += "<img src=#{filePath} style=\"zoom:#{svgZoom};\">"
+            if svgZoom or svgWidth or svgHeight
+              svgMarkdown += "<img src=#{filePath} #{if svgWidth then "width=\"#{svgWidth}\"" else ""} #{if svgHeight then "height=\"#{svgHeight}\"" else ""} #{if svgZoom then "style=\"zoom:#{svgZoom};\"" else ""}>"
             else
               svgMarkdown += "![](#{filePath}?#{r})\n"
 
