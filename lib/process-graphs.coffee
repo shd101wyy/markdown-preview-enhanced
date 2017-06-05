@@ -244,6 +244,9 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
 
           cmd = options.cmd or lang
 
+          if cmd.match(/(la)tex/)
+            options.latex_svg_dir = imageDirectoryPath
+
           codeChunkAPI.run content, fileDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'
             return cb(null, {start, end, content, lang, type: 'code-chunk', hide: options.hide, data: ''}) if !data

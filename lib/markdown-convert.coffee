@@ -11,23 +11,33 @@ CACHE = require './cache'
 # it has common functions as pandoc-convert.coffee
 
 processMath = (text)->
-  text = text.replace(/\\\$/g, '#slash_dollarsign#')
+  lines = text.split('\n')
+  inBlock = false
 
-  # display
-  text = text.replace /\$\$([\s\S]+?)\$\$/g, ($0, $1)->
-    $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
-    $1 = escape($1)
-    "<p align=\"center\"><img src=\"http://api.gmath.guru/cgi-bin/gmath?#{$1.trim()}\"/></p>"
+  lines = lines.map (line)->
+    if line.match(/^\s*```/)
+      inBlock = !inBlock
+      line
+    else if inBlock
+      line
+    else
+      line = line.replace(/\\\$/g, '#slash_dollarsign#')
 
-  # inline
-  r = /\$([\s\S]+?)\$/g
-  text = text.replace /\$([\s\S]+?)\$/g, ($0, $1)->
-    $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
-    $1 = escape($1)
-    "<img src=\"http://api.gmath.guru/cgi-bin/gmath?#{$1.trim()}\"/>"
+      # display
+      line = line.replace /\$\$([\s\S]+?)\$\$/g, ($0, $1)->
+        $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+        $1 = escape($1)
+        "<p align=\"center\"><img src=\"https://latex.codecogs.com/gif.latex?#{$1.trim()}\"/></p>"
 
-  text = text.replace(/\#slash\_dollarsign\#/g, '\\\$')
-  text
+      # inline
+      r = /\$([\s\S]+?)\$/g
+      line = line.replace /\$([\s\S]+?)\$/g, ($0, $1)->
+        $1 = $1.replace(/\n/g, '').replace(/\#slash\_dollarsign\#/g, '\\\$')
+        $1 = escape($1)
+        "<img src=\"https://latex.codecogs.com/gif.latex?#{$1.trim()}\"/>"
+
+      line = line.replace(/\#slash\_dollarsign\#/g, '\\\$')
+  lines.join('\n')
 
 # convert relative path to project path
 processPaths = (text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath)->
@@ -50,21 +60,31 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath, useAbsoluteImageP
       else # ./test.png or test.png
         return src
 
-  # replace path in ![](...) and []()
-  r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
-  text = text.replace r, (whole, a, b, c)->
-    if b[0] == '<'
-      b = b.slice(1, b.length-1)
-      a + '<' + resolvePath(b.trim()) + '> ' + c
+  inBlock = false
+  lines = text.split('\n')
+  lines = lines.map (line)->
+    if line.match(/^\s*```/)
+      inBlock = !inBlock
+      line
+    else if inBlock
+      line
     else
-      a + resolvePath(b.trim()) + ' ' + c
+      # replace path in ![](...) and []()
+      r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
+      line = line.replace r, (whole, a, b, c)->
+        if b[0] == '<'
+          b = b.slice(1, b.length-1)
+          a + '<' + resolvePath(b.trim()) + '> ' + c
+        else
+          a + resolvePath(b.trim()) + ' ' + c
 
-  # replace path in tag
-  r = /(<[img|a|iframe].*?[src|href]=['"])(.+?)(['"].*?>)/gi
-  text = text.replace r, (whole, a, b, c)->
-    a + resolvePath(b) + c
+      # replace path in tag
+      r = /(<[img|a|iframe].*?[src|href]=['"])(.+?)(['"].*?>)/gi
+      line = line.replace r, (whole, a, b, c)->
+        a + resolvePath(b) + c
+      line
 
-  text
+  lines.join('\n')
 
 markdownConvert = (text, {projectDirectoryPath, fileDirectoryPath}, config={})->
   if !config.path
