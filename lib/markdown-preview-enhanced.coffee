@@ -54,6 +54,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
       'markdown-preview-enhanced:run-code-chunk': => @runCodeChunk()
       'markdown-preview-enhanced:run-all-code-chunks': => @runAllCodeChunks()
+      'markdown-preview-enhanced:show-uploaded-images': => @showUploadedImages()
       'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
 
     # When the preview is displayed
@@ -368,6 +369,9 @@ module.exports = MarkdownPreviewEnhanced =
   openMathJaxConfig: ()->
     require('./mathjax-wrapper').loadMathJaxConfig()
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mathjax_config.js'))
+
+  showUploadedImages: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/image_history.md'))
 
   toggleZenMode: ()->
     enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')

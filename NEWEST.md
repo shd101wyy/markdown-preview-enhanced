@@ -1,13 +1,13 @@
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 400, style: "position:relative; left: 50%; transform: translateX(-50%);"}
 
-#### v0.12.8
+#### v0.13.0
 [get latex](https://www.latex-project.org/get/)  
 [pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
 * [ ] Support `latex` code chunk.
 ```{latex id:"chj3hrft7p"}
 // code here
 ```
-
+* [ ] `Markdown Preview Enhanced: Show Uploaded Images`  
 * [ ] Support `@import` pdf file. For example: `@import "test.pdf"`  
 
 #### v0.12.7  & v0.12.8
