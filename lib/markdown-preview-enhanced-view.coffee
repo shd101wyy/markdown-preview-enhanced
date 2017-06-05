@@ -601,6 +601,12 @@ class MarkdownPreviewEnhancedView extends ScrollView
         @scrollSyncToLineNo cursor.getScreenRow()
         @scrollDuration = t
 
+        # clear @scrollMap after 2 seconds because sometimes
+        # loading images will change scrollHeight.
+        setTimeout ()=>
+        	@scrollMap = null
+        , 2000
+
   addToolBar: ->
     @toolbar = document.createElement('div')
     @toolbar.classList.add('mpe-toolbar')
