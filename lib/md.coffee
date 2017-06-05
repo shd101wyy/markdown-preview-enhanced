@@ -648,9 +648,9 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     $el.attr 'data-lang': lang, 'data-code': text, 'data-args': parameters, 'data-root-directory-path': fileDirectoryPath
 
     # addClassesAndIdAndAttrs($el, parameters)
-    if classMatch = parameters.match(/\s*class\s*:\s*\"([^\"]*)\"/)
+    if classMatch = parameters.match(/\s*['"]?class['"]?\s*:\s*\"([^\"]*)\"/)
       $el.addClass classMatch[1]
-    if idMatch = parameters.match(/\s*id\s*:\s*\"([^\"]*)\"/)
+    if idMatch = parameters.match(/\s*['"]?id['"]?\s*:\s*\"([^\"]*)\"/)
       $el.attr 'id', idMatch[1]
 
     if not /\s*hide\s*:\s*true/.test(parameters)
