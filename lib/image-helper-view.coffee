@@ -221,7 +221,7 @@ class ImageHelperView extends View
            .then (json)=>
              @setUploadedImageURL fileName, json.data.link, editor, hint, curPos
            .catch (err)=>
-              atom.notifications.addError(err.message)
+              atom.notifications.addError(err.message.message)
     else # sm.ms
       smAPI.uploadFile file.path,
         (err, url)=>
