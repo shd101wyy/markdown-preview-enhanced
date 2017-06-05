@@ -9,6 +9,7 @@ LaTeX = require './latex'
 REQUIRE_CACHE = {}
 
 # Only 'tikz' is supported for now
+###
 formatLaTeXGraph = (content, latexGraph)->
   return content if !latexGraph
 
@@ -38,22 +39,23 @@ formatLaTeXGraph = (content, latexGraph)->
     """
   else
     return content
-
+###
 
 compileLaTeX = (content, fileDirectoryPath, options={}, callback)->
   latexEngine = options.latex_engine or atom.config.get('markdown-preview-enhanced.latexEngine')
-  latexGraph = options.latex_graph # param latexGraph: Only 'tikz' is supported.
+  # latexGraph = options.latex_graph # param latexGraph: Only 'tikz' is supported.
   latexSVGDir = options.latex_svg_dir # if not provided, the svg files will be stored in temp folder and will be deleted automatically
+  latexZoom = options.latex_zoom;
 
   texFilePath = path.resolve(fileDirectoryPath, Math.random().toString(36).substr(2, 9) + '_code_chunk.tex')
 
-  content = formatLaTeXGraph(content, latexGraph)
+  # content = formatLaTeXGraph(content, latexGraph)
 
   fs.writeFile texFilePath, content, (err)->
     if (err)
       return callback?(true)
 
-    LaTeX.toSVGMarkdown texFilePath, {latexEngine, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir}, (error, svgMarkdown)->
+    LaTeX.toSVGMarkdown texFilePath, {latexEngine, markdownDirectoryPath: fileDirectoryPath, svgDirectoryPath: latexSVGDir, svgZoom: latexZoom}, (error, svgMarkdown)->
       fs.unlink(texFilePath)
       if error
         return callback(null, error, options)
