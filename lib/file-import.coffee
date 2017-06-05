@@ -144,7 +144,7 @@ return
 ###
 fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, imageDirectoryPath, insertAnchors})->
   new Promise (resolve, reject)->
-    inblock = false
+    inBlock = false # inside code block
 
     helper = (i, lineNo=0, outputString="")->
       if i >= inputString.length
@@ -157,23 +157,24 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
       end = inputString.length if end < 0
       line = inputString.substring i, end
 
+      if line.match(/^\s*```/)
+        inBlock = !inBlock
+
+      if inBlock
+        return helper(end+1, lineNo+1, outputString+line+'\n')
+
       if insertAnchors
-        if inblock
-          if line.match(inblock)
-            inblock = false
-        else if line.match /^(\#|\!\[|```[^`]|@import)/
+        if line.match /^(\#|\!\[|```[^`]|@import)/
           outputString += createAnchor(lineNo)
-          if line.match(/^```/)
-            inblock = /^```\s*$/
         else if subjectMatch = line.match /^\<!--\s+([^\s]+)/
           subject = subjectMatch[1]
           if subjects[subject]
             line = line.replace(subject, "#{subject} lineNo:#{lineNo} ")
             outputString += createAnchor(lineNo)
 
-      if importMatch = line.match /^\@import(\s+)\"([^\"]+)\";?/
-        whole = importMatch[0]
-        filePath = importMatch[2].trim()
+      if importMatch = line.match /^(\s*)\@import(\s+)\"([^\"]+)\";?/
+        outputString += importMatch[1]
+        filePath = importMatch[3].trim()
 
         leftParen = line.indexOf('{')
         config = null
