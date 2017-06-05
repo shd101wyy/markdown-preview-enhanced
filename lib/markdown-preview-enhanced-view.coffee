@@ -676,7 +676,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       cls = yamlConfig.class
       cls = [cls] if typeof(cls) == 'string'
       cls = cls.join(' ') or ''
-      @previewElement.setAttribute 'class', "#{cls}"
+      @previewElement.setAttribute 'class', "markdown-preview-enhanced #{cls}"
 
   bindEvents: ->
     @renderSidebarTOC()

@@ -17,7 +17,9 @@ markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtensio
 
 fileExtensionToLanguageMap = {
   'vhd': 'vhdl',
-  'erl': 'erlang'
+  'erl': 'erlang',
+  'dot': 'viz',
+  'gv': 'viz',
 }
 
 # Convert 2D array to markdown table.
@@ -276,7 +278,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               # filesCache?[absoluteFilePath] = output
             else if extname == '.pdf'
               output = fileContent
-            else if extname in ['.dot'] # graphviz
+            else if extname in ['.dot', '.gv', '.viz'] # graphviz
               output = "```@viz\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname == '.mermaid' # mermaid

@@ -60,15 +60,19 @@ module.exports = MarkdownPreviewEnhanced =
     # When the preview is displayed
     # preview will display the content of editor (pane item) that is activated
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor)=>
-        return if !@singlePreview
-        preview = @getSinglePreview()
         if editor and
             editor.buffer and
-          	editor.getGrammar and
-          	editor.getGrammar().scopeName == 'source.gfm' and
-          	preview?.isOnDom()
-          if preview.editor != editor
+          	editor.getGrammar?().scopeName == 'source.gfm'
+          preview = @getPreviewForEditor editor
+          return if !(preview?.isOnDom())
+
+          if @singlePreview and preview.editor != editor
             preview.bindEditor(editor)
+
+          pane = atom.workspace.paneForItem(preview)
+          if pane? and pane isnt atom.workspace.getActivePane()
+            pane.activateItem(preview)
+
 
     # automatically open preview when activate a markdown file
     # if 'openPreviewPaneAutomatically' option is enable
