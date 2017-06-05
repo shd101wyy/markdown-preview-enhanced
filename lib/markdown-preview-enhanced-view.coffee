@@ -301,6 +301,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
       # @textChanged = true # this line has problem.
       if @liveUpdate
         @updateMarkdown()
+        @activatePreviewIfNecessary()
 
     @disposables.add @editor.onDidSave ()=>
       if not @liveUpdate
@@ -469,6 +470,16 @@ class MarkdownPreviewEnhancedView extends ScrollView
     # render front matter as table?
     @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption', () =>
       @renderMarkdown()
+
+    @settingsDisposables.add atom.config.observe 'markdown-preview-enhanced.activateCorrespondingPreviewWhileEditingSource', (flag)=>
+      @activateCorrespondingPreviewWhileEditingSource = flag
+
+  activatePreviewIfNecessary: ->
+    return if !@activateCorrespondingPreviewWhileEditingSource
+
+    pane = atom.workspace.paneForItem(this)
+    if pane? and pane isnt atom.workspace.getActivePane()
+      pane.activateItem(this)
 
   scrollSyncForPresentation: (bufferLineNo)->
     i = @slideConfigs.length - 1

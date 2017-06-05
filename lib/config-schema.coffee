@@ -29,6 +29,16 @@ module.exports =
       type: "boolean"
       default: true,
       order: 3
+    activateCorrespondingPreviewWhileEditingSource:
+      title: "Activate corresponding preview while editing the markdown source"
+      type: "boolean"
+      default: true,
+      order: 4
+    openPreviewPaneAutomatically:
+      title: "Open preview automatically when opening a markdown file"
+      type: "boolean"
+      default: true
+      order: 5
     breakOnSingleNewline:
       type: "boolean"
       default: true
@@ -219,11 +229,6 @@ module.exports =
       type: "string"
       default: "1cm"
       order: 132
-    openPreviewPaneAutomatically:
-      title: "Open preview pane automatically when opening a markdown file"
-      type: "boolean"
-      default: true
-      order: 140
     imageFolderPath:
       title: "Image save folder path"
       description: "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'"
