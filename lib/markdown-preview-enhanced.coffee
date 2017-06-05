@@ -69,9 +69,10 @@ module.exports = MarkdownPreviewEnhanced =
           if @singlePreview and preview.editor != editor
             preview.bindEditor(editor)
 
-          pane = atom.workspace.paneForItem(preview)
-          if pane? and pane isnt atom.workspace.getActivePane()
-            pane.activateItem(preview)
+          if atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited')
+            pane = atom.workspace.paneForItem(preview)
+            if pane? and pane isnt atom.workspace.getActivePane()
+              pane.activateItem(preview)
 
 
     # automatically open preview when activate a markdown file

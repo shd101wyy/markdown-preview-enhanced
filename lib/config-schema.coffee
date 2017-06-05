@@ -34,6 +34,11 @@ module.exports =
       type: "boolean"
       default: true
       order: 4
+    automaticallyShowPreviewOfMarkdownBeingEdited:
+      title: "Automatically show preview of markdown being edited"
+      type: "boolean"
+      default: true,
+      order: 5
     breakOnSingleNewline:
       type: "boolean"
       default: true
