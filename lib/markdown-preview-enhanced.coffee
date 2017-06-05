@@ -130,10 +130,15 @@ module.exports = MarkdownPreviewEnhanced =
 
   openWelcomePage: ->
     PACKAGE ?= require('../package.json')
-    packageJSONPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/package.json')
+    configDir = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced')
+    packageJSONPath = path.resolve(configDir, './package.json')
 
     helper = ()->
       atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+
+      if !fs.existsSync(configDir)
+        fs.mkdirSync(configDir)
+
       fs.writeFile packageJSONPath, JSON.stringify({version: PACKAGE.version})
 
     try
