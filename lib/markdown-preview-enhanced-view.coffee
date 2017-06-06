@@ -296,6 +296,10 @@ class MarkdownPreviewEnhancedView extends ScrollView
       @previewElement.onscroll = null
 
       # @element.innerHTML = '<p style="font-size: 24px; width: 100%; text-align: center; margin-top: 64px;"> Open a markdown file to start preview </p>'
+      if !atom.config.get('markdown-preview-enhanced.singlePreview') and atom.config.get('markdown-preview-enhanced.closePreviewAutomatically')
+        pane = atom.workspace.paneForItem(this)
+        pane.destroyItem(this) # this will trigger @destroy()
+
 
     @disposables.add @editor.onDidStopChanging ()=>
       # @textChanged = true # this line has problem.
