@@ -1,7 +1,7 @@
 # Graphs  
 
 **Markdown Preview Enhanced** supports rendering `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz` graphs.    
-You can also render `TikZ`, `Python Matplotlib` and all sorts of other graphs by using [Code Chunk](code-chunk.md).  
+You can also render `TikZ`, `Python Matplotlib`, `Plotly` and all sorts of other graphs by using [Code Chunk](code-chunk.md).  
 
 ## Mermaid
 
