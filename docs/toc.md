@@ -9,7 +9,7 @@
 
 # Table of Contents
 **Markdown Preview Enhanced** can create `TOC` for your markdown file.   
-You can press <kbd>cmd+shift+p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
+You can press <kbd>cmd-shift-p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
 Multiple TOCs can be created.  
 To exclude a heading from the `TOC`, append `{.ignore}` **after** your heading.  
 

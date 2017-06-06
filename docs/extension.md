@@ -15,7 +15,7 @@ The idea is from [issue #101](https://github.com/shd101wyy/markdown-preview-enha
 
 ---
 
-First of all, you need to open your **Atom** `init.coffee` file by <kbd>cmd+shift+p</kbd> then choose `Application: Open Your Init Script`.
+First of all, you need to open your **Atom** `init.coffee` file by <kbd>cmd-shift-p</kbd> then choose `Application: Open Your Init Script`.
 
 Then you can add the following code:  
 
