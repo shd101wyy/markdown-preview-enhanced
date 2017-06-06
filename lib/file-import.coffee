@@ -19,8 +19,9 @@ markdownFileExtensions = atom.config.get('markdown-preview-enhanced.fileExtensio
 fileExtensionToLanguageMap = {
   'vhd': 'vhdl',
   'erl': 'erlang',
-  'dot': 'viz',
-  'gv': 'viz',
+  'dot': 'dot',
+  'gv': 'dot',
+  'viz': 'dot',
 }
 
 # Convert 2D array to markdown table.
@@ -147,8 +148,7 @@ createAnchor = (lineNo)->
 formatClassesAndId = (config)->
   return '' if !config
   id = config.id
-  classes = config.class
-  return '' if !id and !classes
+  classes = config.class or 'code-block'
   output = '{'
   output += ('#' + id + ' ') if id
   output += ('.' + classes.replace(/\s+/g, ' .')  + ' ') if classes
@@ -270,7 +270,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               output = ''
             else if config?.code_block
               fileExtension = extname.slice(1, extname.length)
-              output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
+              output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
             else if config?.code_chunk
               if !config.id
                 md5 ?= require 'md5'
@@ -305,16 +305,16 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             else if extname == '.pdf'
               output = fileContent
             else if extname in ['.dot', '.gv', '.viz'] # graphviz
-              output = "```@viz\n#{fileContent}\n```  "
+              output = "```dot\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname == '.mermaid' # mermaid
-              output = "```@mermaid\n#{fileContent}\n```  "
+              output = "```mermaid\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname in ['.puml', '.plantuml'] # plantuml
-              output = "```@puml\n' @mpe_file_directory_path:#{path.dirname(absoluteFilePath)}\n#{fileContent}\n```  "
+              output = "```puml\n' @mpe_file_directory_path:#{path.dirname(absoluteFilePath)}\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname in ['.wavedrom']
-              output = "```@wavedrom\n#{fileContent}\n```  "
+              output = "```wavedrom\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
             else if extname == '.js'
               if forPreview
@@ -326,7 +326,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
                   output = "<script>#{fileContent}</script>"
             else # codeblock
               fileExtension = extname.slice(1, extname.length)
-              output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
+              output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
 
             return helper(end+1, lineNo+1, outputString+output+'\n')

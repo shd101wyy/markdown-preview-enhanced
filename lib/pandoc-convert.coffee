@@ -332,7 +332,7 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath,
     atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
     # mermaid / viz / wavedrom graph
-    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath}, (text, imagePaths=[])->
+    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath, forPandoc:true}, (text, imagePaths=[])->
       # console.log args.join(' ')
       #
       # pandoc will cause error if directory doesn't exist,

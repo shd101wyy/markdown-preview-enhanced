@@ -683,7 +683,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    if lang.match /^mermaid/
+    if lang.match /^mermaid$/
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -694,13 +694,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang.match /^(plantuml|puml)/
+    else if lang.match /^(plantuml|puml)$/
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang.match /^wavedrom/
+    else if lang.match /^wavedrom$/
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang.match /^(viz|dot)/
+    else if lang.match /^(viz|dot)$/
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, codeChunksData)
@@ -1093,8 +1093,8 @@ parseMD = (inputString, option={}, callback)->
             lang = classes[0]
 
             # graphs
-            if $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
-              lang = $preElement.attr('class')
+            if graphMatch = $preElement.attr('class')?.match(/(mermaid|viz|dot|puml|plantuml|wavedrom)/)
+              lang = graphMatch[1]
             codeBlock.attr('class', 'language-' + lang)
 
             # check code chunk

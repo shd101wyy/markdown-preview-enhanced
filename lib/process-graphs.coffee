@@ -12,7 +12,7 @@ codeChunkAPI = require './code-chunk'
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert
 # callback: function(text, imagePaths=[]){ ... }
-processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
+processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath, forPandoc}, callback)->
   lines = text.split('\n')
   codes = []
 
@@ -21,7 +21,7 @@ processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryP
     line = lines[i]
     trimmedLine = line.trim()
     if trimmedLine.match(/^```\{(.+)\}$/) or
-       trimmedLine.match(/^```(mermaid|wavedrom|viz|plantuml|puml|dot)/)
+       trimmedLine.match(/^```(mermaid|wavedrom|viz|plantuml|puml|dot)$/)
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
@@ -33,6 +33,9 @@ processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryP
           break
         content += (lines[j]+'\n')
         j += 1
+    else if forPandoc and match = trimmedLine.match(/^```(.+?)\{(.+?)\}$/) # remove {...} after lang
+      lines[i] = line.replace(match[0], "```#{match[1]}")
+
     i += 1
 
   return processCodes(codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)
