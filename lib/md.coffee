@@ -23,7 +23,6 @@ enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLink
 wikiLinkFileExtension = atom.config.get('markdown-preview-enhanced.wikiLinkFileExtension')
 frontMatterRenderingOption = atom.config.get('markdown-preview-enhanced.frontMatterRenderingOption')
 globalMathTypesettingData = {}
-useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
 usePandocParser = atom.config.get('markdown-preview-enhanced.usePandocParser')
 
 TAGS_TO_REPLACE = {
@@ -122,9 +121,6 @@ atom.config.observe 'markdown-preview-enhanced.wikiLinkFileExtension', (extensio
 atom.config.observe 'markdown-preview-enhanced.frontMatterRenderingOption',
   (flag)->
     frontMatterRenderingOption = flag
-
-atom.config.observe 'markdown-preview-enhanced.useStandardCodeFencingForGraphs', (flag)->
-  useStandardCodeFencingForGraphs = flag
 
 atom.config.observe 'markdown-preview-enhanced.usePandocParser', (flag)->
   usePandocParser = flag
@@ -687,19 +683,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
       else
         text = ''
 
-    if useStandardCodeFencingForGraphs
-      mermaidRegExp = /^\@?mermaid/
-      plantumlRegExp = /^\@?(plantuml|puml)/
-      wavedromRegExp = /^\@?wavedrom/
-      vizRegExp = /^\@?(viz|dot)/
-    else # only works with @ appended at front
-      mermaidRegExp = /^\@mermaid/
-      plantumlRegExp = /^\@(plantuml|puml)/
-      wavedromRegExp = /^\@wavedrom/
-      vizRegExp = /^\@(viz|dot)/
-
-
-    if lang.match mermaidRegExp
+    if lang.match /^mermaid/
       mermaid.parseError = (err, hash)->
         renderCodeBlock(preElement, err, 'text')
 
@@ -710,13 +694,13 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
 
         mermaidOffset += 1
 
-    else if lang.match plantumlRegExp
+    else if lang.match /^(plantuml|puml)/
       checkGraph 'plantuml', graphData.plantuml_s, preElement, text, option, $
 
-    else if lang.match wavedromRegExp
+    else if lang.match /^wavedrom/
       checkGraph 'wavedrom', graphData.wavedrom_s, preElement, text, option, $, wavedromOffset
       wavedromOffset += 1
-    else if lang.match vizRegExp
+    else if lang.match /^(viz|dot)/
       checkGraph 'viz', graphData.viz_s, preElement, text, option, $
     else if lang[0] == '{' && lang[lang.length-1] == '}'
       renderCodeChunk(preElement, text, lang, codeChunksData)
