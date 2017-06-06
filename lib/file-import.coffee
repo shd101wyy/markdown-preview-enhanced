@@ -1,7 +1,8 @@
 Baby = null
 path = require 'path'
 fs = require 'fs'
-request = null
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
+request = require 'request'
 less = null
 loophole = null
 temp = null
@@ -56,7 +57,6 @@ downloadFileIfNecessary = (filePath)->
     if !filePath.match(/^https?\:\/\//)
       return resolve(filePath)
 
-    request ?= require 'request'
     temp ?= require('temp').track()
     md5 ?= require('md5')
 
@@ -72,7 +72,27 @@ downloadFileIfNecessary = (filePath)->
           else
             return resolve localFilePath
 
-loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
+
+###
+eval JavaScript code in window (not node.js)
+###
+requiresJavaScriptFiles = (requirePath, forPreview)->
+  new Promise (resolve, reject)->
+    evalScript = (jsCode)->
+      return allowUnsafeNewFunction -> allowUnsafeEval ->
+        eval(jsCode) if forPreview
+        return resolve(jsCode)
+
+    if requirePath.match(/^(http|https)\:\/\//)
+      request requirePath, (error, response, body)->
+        return reject(error.toString()) if error
+        return evalScript(body.toString())
+    else
+      fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
+        return reject(error.toString()) if error
+        return evalScript(data.toString())
+
+loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath, forPreview}, filesCache={})->
   new Promise (resolve, reject)->
     if filesCache[filePath]
       return resolve(filesCache[filePath])
@@ -97,6 +117,11 @@ loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
             return reject error
           else
             return resolve(svgMarkdown)
+    else if filePath.endsWith('.js') # javascript file
+      requiresJavaScriptFiles(filePath, forPreview).then (jsCode)->
+        return resolve(jsCode)
+      .catch (e)->
+        return resolve(e)
       # .catch (error)->
       #  return reject(error)
     else if filePath.match(/^https?\:\/\//) # online file
@@ -104,7 +129,6 @@ loadFile = (filePath, {imageDirectoryPath, fileDirectoryPath}, filesCache={})->
       if filePath.startsWith 'https://github.com/'
         filePath = filePath.replace('https://github.com/', 'https://raw.githubusercontent.com/').replace('/blob/', '/')
 
-      request ?= require 'request'
       request filePath, (error, response, body)->
         if error
           reject(error)
@@ -138,13 +162,13 @@ formatClassesAndId = (config)->
 @param {String} fileDirectoryPath, required
 @param {String} projectDirectoryPath, required
 @param {Boolean} useAbsoluteImagePath, optional
-@param {Boolean} insertAnchors, optional
+@param {Boolean} forPreview, optional
 return
 {
   {String} outputString,
 }
 ###
-fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, imageDirectoryPath, insertAnchors})->
+fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath, useAbsoluteImagePath, imageDirectoryPath, forPreview})->
   new Promise (resolve, reject)->
     inBlock = false # inside code block
 
@@ -166,7 +190,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
       if inBlock
         return helper(end+1, lineNo+1, outputString+line+'\n')
 
-      if insertAnchors
+      if forPreview # insert anchors for scroll sync
         if line.match /^(\#|\!\[|```[^`]|@import)/
           outputString += createAnchor(lineNo)
         else if subjectMatch = line.match /^\<!--\s+([^\s]+)/
@@ -240,9 +264,11 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
 
           return helper(end+1, lineNo+1, outputString+output+'\n')
         else
-          loadFile(absoluteFilePath, {imageDirectoryPath, fileDirectoryPath}, filesCache).then (fileContent)->
+          loadFile(absoluteFilePath, {imageDirectoryPath, fileDirectoryPath, forPreview}, filesCache).then (fileContent)->
             filesCache?[absoluteFilePath] = fileContent
-            if config?.code_block
+            if fileContent == true # true means we use empty string.
+              output = ''
+            else if config?.code_block
               fileExtension = extname.slice(1, extname.length)
               output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
             else if config?.code_chunk
@@ -290,6 +316,14 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
             else if extname in ['.wavedrom']
               output = "```@wavedrom\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output
+            else if extname == '.js'
+              if forPreview
+                output = '' # js code is evaluated and there is no need to display the code.
+              else
+                if filePath.match(/^https?\:\/\//)
+                  output = "<script src=\"#{filePath}\"></script>"
+                else
+                  output = "<script>#{fileContent}</script>"
             else # codeblock
               fileExtension = extname.slice(1, extname.length)
               output = "```.#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "

@@ -6,8 +6,6 @@ request = require('request')
 async = require('async')
 LaTeX = require './latex'
 
-REQUIRE_CACHE = {}
-
 # Only 'tikz' is supported for now
 ###
 formatLaTeXGraph = (content, latexGraph)->
@@ -79,61 +77,12 @@ run = (content, fileDirectoryPath='', cmd, options={}, callback)->
     return compileLaTeX content, fileDirectoryPath, options, callback
 
   if cmd.match /(javascript|js)/ # just javascript, not nodejs
-    asyncFunctions = []
-    if options.require
-      requires = options.require
-      if typeof(requires) == 'string'
-        requires = [requires]
-
-      for requirePath in requires
-        requirePath = requirePath.trim()
-
-        helper = (requirePath)->
-          if requirePath.match(/^(http|https)\:\/\//)
-            asyncFunctions.push (cb)->
-              request requirePath, (error, response, body)->
-                return cb(error) if error
-                return cb(null, {file: requirePath, data: body.toString()})
-          else
-            requirePath = path.resolve(fileDirectoryPath, requirePath)
-            asyncFunctions.push (cb)->
-              fs.readFile requirePath, {encoding: 'utf-8'}, (error, data)->
-                return cb(error) if error
-                return cb(null, {file: requirePath, data: data.toString()})
-        helper(requirePath)
-
-    # require files
-    return async.series asyncFunctions, (error, results)->
-      if error
-        return callback(null, error.toString(), options)
-      for result in results
-        continue if REQUIRE_CACHE[result.file]
-        try # TODO: css
-          allowUnsafeNewFunction -> allowUnsafeEval ->
-            # .css will cause `Refused to load the stylesheet` security error.
-            ###
-            if result.file.endsWith('.css') and document
-              head = document.getElementsByTagName('head')[0]
-              link = document.createElement 'link'
-              link.setAttribute 'rel', 'stylesheet'
-              link.setAttribute 'type', 'text/css'
-              link.setAttribute 'href', result.file
-              link.id = 'mpe_' + result.file
-              head.appendChild link
-            else
-            ###
-            eval(result.data)
-            REQUIRE_CACHE[result.file] = true # save to cache
-        catch error
-          return callback(null, error.toString(), options)
-
       # run javascript code
       return allowUnsafeNewFunction -> allowUnsafeEval ->
         try
           callback?(null, eval(content), options)
         catch e
           callback?(null, e.toString(), options)
-
 
   if cmd.match(/python/) and (options.matplotlib or options.mpl)
     content = """
@@ -203,12 +152,5 @@ except Exception:
       data = Buffer.concat(chunks).toString()
       callback?(null, data, options)
 
-
-clearCache = ()->
-  for key of REQUIRE_CACHE
-    REQUIRE_CACHE[key] = false
-    # if key.endsWith('.css') and document
-    #  document.getElementById('mpe_' + key)?.remove()
-
-codeChunkAPI = {run, clearCache}
+codeChunkAPI = {run}
 module.exports = codeChunkAPI

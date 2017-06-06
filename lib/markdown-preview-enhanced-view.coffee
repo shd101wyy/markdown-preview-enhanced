@@ -1196,7 +1196,6 @@ class MarkdownPreviewEnhancedView extends ScrollView
   refreshPreview: ()->
     # clear cache
     @filesCache = {}
-    codeChunkAPI.clearCache()
 
     # render again
     @renderMarkdown()
@@ -1314,23 +1313,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
         $codeChunk.append("<div class=\"output-element\">#{options.element}</div>")
 
       if cmd == 'javascript'
-        requires = options.require or []
-        if typeof(requires) == 'string'
-          requires = [requires]
-        requiresStr = ""
-        for requirePath in requires
-          # TODO: css
-          if requirePath.match(/^(http|https)\:\/\//)
-            if (!requireCache[requirePath])
-              requireCache[requirePath] = true
-              scriptsStr += "<script src=\"#{requirePath}\"></script>\n"
-          else
-            requirePath = path.resolve(@fileDirectoryPath, requirePath)
-            if !requireCache[requirePath]
-              requiresStr += (fs.readFileSync(requirePath, {encoding: 'utf-8'}) + '\n')
-              requireCache[requirePath] = true
-
-        jsCode += (requiresStr + code + '\n')
+        jsCode += (code + '\n')
 
     html = $.html()
     html += "#{scriptsStr}\n" if scriptsStr

@@ -8,7 +8,8 @@
 // code here
 ```
 * [ ] `Markdown Preview Enhanced: Show Uploaded Images`  
-* [ ] Support `@import` pdf file. For example: `@import "test.pdf"`  
+* [ ] Support `@import` PDF file. For example: `@import "test.pdf"`  
+* [ ] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` but not by `node.js`.  
 
 #### v0.12.7  & v0.12.8
 * [x] Quick fix Welcome page issue. So the Welcome page will only open when this package is updated [#428](https://github.com/shd101wyy/markdown-preview-enhanced/issues/428).    

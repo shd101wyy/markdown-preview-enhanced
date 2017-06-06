@@ -978,7 +978,7 @@ parseMD = (inputString, option={}, callback)->
   yamlConfig = yamlConfig or {}
 
   # check document imports
-  fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, insertAnchors: option.isForPreview}).then ({outputString:inputString})->
+  fileImport(inputString, {filesCache: markdownPreview?.filesCache, fileDirectoryPath: option.fileDirectoryPath, projectDirectoryPath: option.projectDirectoryPath, forPreview: option.isForPreview}).then ({outputString:inputString})->
     # check slideConfigs
     if usePandocParser
       {slideConfigs, outputString:inputString} = analyzeSlideConfigs(inputString)
