@@ -744,7 +744,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
           else if href.match(/^file\:\/\/\//)
             # if href.startsWith 'file:///'
             openFilePath = href.slice(8) # remove protocal
-            openFilePath = openFilePath.replace(/\.md(\s*)[\#\?](.+)$/, '.md') # remove #anchor
+            openFilePath = openFilePath.replace(/(\s*)[\#\?](.+)$/, '') # remove #anchor and ?params...
             openFilePath = decodeURI(openFilePath)
             atom.workspace.open openFilePath,
               split: 'left',
