@@ -43,7 +43,7 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 - <strong>Markdown Preview Enhanced: Insert Page Break </strong>  
   Insert a page break.    
 
-- <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>
+- <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>  
   Edit `mermaid` init configuration.  
 
 - <strong> Markdown Preview Enhanced: Open Header Footer Config</strong>  

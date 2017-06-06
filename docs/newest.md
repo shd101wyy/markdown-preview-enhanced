@@ -3,7 +3,7 @@
 * [x] Add `Markdown Preview Enhanced: Show Uploaded Images`. Now every time you upload an image, it will be stored to history.    
 * [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](extra.md) is required.    
 * [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` but not by `node.js`.  
-* [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/).   
+* [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/).   
 * [x] Better support for multiple previews [#435](https://github.com/shd101wyy/markdown-preview-enhanced/issues/435).  
 * [x] Fix issue [#436](https://github.com/shd101wyy/markdown-preview-enhanced/issues/436).   
 

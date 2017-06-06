@@ -24,9 +24,9 @@
     - [Word](pandoc-word.md)
     - [RTF](pandoc-rtf.md)
     - [Beamer](pandoc-beamer.md)  
-    - [custom](pandoc-custom.md)
+    - [Custom](pandoc-custom.md)
     - [Bibliographies and Citations](pandoc-bibliographies-and-citations.md)
-  - [Markdown](markdown.md)
+  - [Markdown (GFM)](markdown.md)
 
 - Customization & Extension
   - [Customize CSS](customize-css.md)  

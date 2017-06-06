@@ -181,3 +181,5 @@ To show a footer image for every slide [#257](https://github.com/shd101wyy/markd
 }
 ```
 
+
+[➔ Pandoc](pandoc.md)

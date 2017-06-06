@@ -6,9 +6,7 @@
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 600, style: "position:relative; left: 50%; transform: translateX(-50%);"}
 
 
-**[Documentation](https://shd101wyy.github.io/markdown-preview-enhanced/#/)**    
-**[Support this project :)](https://shd101wyy.github.io/markdown-preview-enhanced/#/backers)**  
-
+**[Project website](https://shd101wyy.github.io/markdown-preview-enhanced/#/)**    
 
 @import "docs/newest.md";
 

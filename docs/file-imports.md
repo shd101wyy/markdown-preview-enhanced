@@ -24,7 +24,7 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.plantuml(.puml)` file will be rendered by plantuml.  
 * `.wavedrom` file will be rendered by wavedrom.  
 * `.html` file will be embeded directly.  
-* `.js` file will be evalued in `window` scope. It behaves similarly as the `<script>.. js code ..</script>` tag. 
+* `.js` file will be evalued in `window` scope. It behaves similarly as the `<script>.. js code ..</script>` tag.
 * `.less` and `.css` file will be included as style. Only local `less` file is currently supported.  
 * `.pdf` file will be converted to `svg` files by `pdf2svg` and then be included.
 * `markdown` file will be parsed and embeded directly.     
@@ -60,3 +60,5 @@ However, it is not recommended to import large PDF files.
 ## Known issues  
 * importing other docs might break scroll sync functionality.  
 * code chunk might be buggy.  
+
+[➔ Code Chunk](code-chunk.md)

@@ -16,6 +16,7 @@ Three mermaid themes are provided, and you can choose theme from [package settin
 * `mermaid.forest.css`  
 ![screen shot 2017-06-05 at 8 47 00 pm](https://cloud.githubusercontent.com/assets/1908863/26810274/555562d0-4a30-11e7-91ca-98742d6afbd5.png)
 
+You can also edit the mermaid init config by running `Markdown Preview Enhanced: Open Mermaid Config` command.  
 
 
 ## PlantUML

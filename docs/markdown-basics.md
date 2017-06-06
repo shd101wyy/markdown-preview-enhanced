@@ -113,7 +113,7 @@ You can enable line number for a code block by adding `lineNo` class.
 
 For example:    
 
-    ```javascript class:"lineNo"
+    ```javascript {.lineNo}
     function add(x, y) {
       return x + y
     }
