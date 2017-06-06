@@ -13,7 +13,7 @@ Right click at the preview, then choose `Export to Disk`.
 Click `PRINCE` tab.  
 Click `export` button.    
 
-![Screen Shot 2017-03-19 at 3.37.43 PM](http://i.imgur.com/vFHRABY.png)
+![screen shot 2017-06-06 at 4 46 27 pm](https://user-images.githubusercontent.com/1908863/26853716-b68b279e-4ad8-11e7-896e-8e7c2990326b.png)
 
 ## Customize Css
 <kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command or just open `style.less` file and add the following lines:  

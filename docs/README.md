@@ -19,19 +19,19 @@ How to install this package can be found [here](installation.md).
 - **Automatic scroll sync**  
 - **[Import external files](file-imports.md)**
 - **[Code Chunks](code-chunk.md)**
-- **[Pandoc](./docs/pandoc.md)**
-- **[Prince](./docs/prince.md)**  
-- **[Ebook](./docs/ebook.md)**
-- **[Presentation Writer](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)**
-- **[Extensible](#for-developer)**
+- **[Pandoc](pandoc.md)**
+- **[Prince](prince.md)**  
+- **[Ebook](ebook.md)**
+- **[Presentation Writer](presentation.md)**
+- **[Extensible](developer.md?id=how-to-write-extensions)**
 - **[LaTeX math](math.md)**  
-- Export **PDF**, **PNG**, and **JPEG**   
+- Export **PDF**, **PNG**, and **JPEG** by [PhantomJS](phantomjs.md)   
 - Export beautiful **HTML** (mobile device supported)  
-- [Compile to GitHub Flavored Markdown](./docs/markdown.md)
-- Customize Preview CSS  
-- [TOC](./docs/toc.md) generation  
+- [Compile to GitHub Flavored Markdown](markdown.md)
+- [Customize Preview CSS](customize-css.md)  
+- [TOC](toc.md) generation  
 - [Flowchart / Sequence diagram and many other kinds of graphs](graphs.md)
-- Embed LaTeX
+- [Embed LaTeX, render TikZ, Chemfig etc](code-chunk.md?id=latex)
 - Task List *(Github Flavored)*  
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)  

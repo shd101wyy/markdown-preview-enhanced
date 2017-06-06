@@ -9,7 +9,7 @@ By default:
 
 ![](https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif)  
 
-You can choose your math rendering method and change math delimiters from [package settings panel](package-settings.md).     
+You can choose your math rendering method and change math delimiters from [package settings panel](usages.md?id=package-settings).     
 
 You can Also modify the MathJax config by <kbd>cmd-shift-p</kbd> then choose `Markdown Preview Enhanced: Open Mathjax config` command.  
 

@@ -161,7 +161,7 @@ The width of result.
 The height of result.  
 
 **latex_engine**  
-The latex engine that you used to parse `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](package-settings.md).    
+The latex engine that you used to parse `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](usages.md?id=package-settings).    
 
 
 ### TikZ example  
