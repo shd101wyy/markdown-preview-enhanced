@@ -649,7 +649,7 @@ resolveImagePathAndCodeBlock = (html, graphData={}, codeChunksData={},  option={
     if idMatch = parameters.match(/\s*['"]?id['"]?\s*:\s*\"([^\"]*)\"/)
       $el.attr 'id', idMatch[1]
 
-    if not /\s*hide\s*:\s*true/.test(parameters)
+    if not /\s*['"]?hide['"]?\s*:\s*true/.test(parameters)
       highlighter ?= new Highlights({registry: atom.grammars, scopePrefix: 'mpe-syntax--'})
       html = highlighter.highlightSync
               fileContents: text,

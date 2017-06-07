@@ -2,9 +2,10 @@
 * [x] Support `LaTeX` code chunk.  [pdf2svg](extra.md) and [LaTeX engine](extra.md) are required.      
 * [x] Add `Markdown Preview Enhanced: Show Uploaded Images`. Now every time you upload an image, it will be stored to history.    
 * [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](extra.md) is required.    
-* [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` but not by `node.js`.  
-* [x] <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`.    
-* [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/).   
+* [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` scope but not by `node.js`.  
+* [x] <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`.   
+      For more information, check [this doc](graphs.md).     
+* [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/). Contact me if you are willing to help translate the documentation :)   
 * [x] Better support for multiple previews [#435](https://github.com/shd101wyy/markdown-preview-enhanced/issues/435).  
 * [x] Fix `sm.ms` image upload API issue.
 * [x] Fix issue [#436](https://github.com/shd101wyy/markdown-preview-enhanced/issues/436).   
@@ -44,3 +45,8 @@ It is recommended to use `standalone` while drawing `tikz` graphs.
 ![screen shot 2017-06-05 at 9 48 10 pm](https://cloud.githubusercontent.com/assets/1908863/26811633/b018aa76-4a38-11e7-9ec2-688f273468bb.png)
 
 
+$$ sin(x) $$
+
+121312312332123sasd
+
+$$ sin(x) $$
