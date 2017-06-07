@@ -1,6 +1,6 @@
-# PDF 文档
-## 概览
-创建 PDF 文档，你需要在 markdown 文件中的 front-matter 里声明 `pdf_document` 的输出类型：   
+# PDF 文檔
+## 概覽
+創建 PDF 文檔，你需要在 markdown 文件中的 front-matter 裡聲明 `pdf_document` 的輸出類型：   
 ```yaml
 ---
 title: "Habits"
@@ -10,8 +10,8 @@ output: pdf_document
 ---
 ```
 
-## 输出路径
-你可以通过 `path` 来定义文档的输出路径。例如：    
+## 輸出路徑
+你可以通過 `path` 來定義文檔的輸出路徑。例如：    
 
 ```yaml
 ---
@@ -21,10 +21,10 @@ output:
     path: /Exports/Habits.pdf
 ---
 ```   
-如果 `path` 没有被定义，那么 PDF 将会在相同的文件夹下生成。  
+如果 `path` 沒有被定義，那麼 PDF 將會在相同的文件夾下生成。  
 
-## 目录
-你可以通过 `toc` 选项来添加目录，以及 `toc_depth` 来控制目录的等级。例如：  
+## 目錄
+你可以通過 `toc` 選項來添加目錄，以及 `toc_depth` 來控制目錄的等級。例如：  
 ```yaml
 ---
 title: "Habits"
@@ -34,9 +34,9 @@ output:
     toc_depth: 2
 ---
 ```
-如果 `toc_depth` 没有被定义，那么默认 3 将会被使用。（意味着等级 1，2，已经 3 的标题将会被列举在目录中）。  
+如果 `toc_depth` 沒有被定義，那麼默認 3 將會被使用。（意味著等級 1，2，已經 3 的標題將會被列舉在目錄中）。  
 
-*注意：* 这个 TOC 和用 **Markdown Preview Enhanced** `<!-- toc -->` 生成的是不同的。  
+*注意：* 這個 TOC 和用 **Markdown Preview Enhanced** `<!-- toc -->` 生成的是不同的。  
 
 You can add section numbering to headers using the `number_sections` option:
 ```yaml
@@ -49,8 +49,8 @@ output:
 ---
 ```
 
-## 语法高亮
-`highlight` 选项定义了高亮的样式。支持的样式包括 “default”，“tango”，“pygments”，“kate”，“monochrome”，“espresso”，“zenburn”，以及 “haddock” （设置 null 来禁用语法高亮）：    
+## 語法高亮
+`highlight` 選項定義了高亮的樣式。支持的樣式包括 「default」，「tango」，「pygments」，「kate」，「monochrome」，「espresso」，「zenburn」，以及 「haddock」 （設置 null 來禁用語法高亮）：    
 
 例如：  
 ```yaml
@@ -61,8 +61,8 @@ output:
     highlight: tango
 ---
 ```
-## LaTeX 选项  
-你可以用 YAML metadata 来定义你的 LaTeX 模版（注意这些选项不是出现在 `output` 部分下的，但是出现在最上层）。例如
+## LaTeX 選項  
+你可以用 YAML metadata 來定義你的 LaTeX 模版（注意這些選項不是出現在 `output` 部分下的，但是出現在最上層）。例如
 ```yaml
 ---
 title: "Crop Analysis Q3 2013"
@@ -71,20 +71,20 @@ fontsize: 11pt
 geometry: margin=1in
 ---
 ```
-支持的 metadata 变量包括：  
+支持的 metadata 變量包括：  
 
-| 变量  | 描述  |
+| 變量  | 描述  |
 |---|---|
-| papersize | 纸张大小，e.g. `letter`, `A4` |
+| papersize | 紙張大小，e.g. `letter`, `A4` |
 | lang  | Document language code |
-| fontsize | 字体大小 (e.g. 10pt, 11pt, 12pt) |
+| fontsize | 字體大小 (e.g. 10pt, 11pt, 12pt) |
 | documentclass | LaTeX document class (e.g. article) |
 | classoption | Option for documentclass (e.g. oneside); may be repeated |
 | geometry | Options for geometry class (e.g. margin=1in); may be repeated |
 | linkcolor, urlcolor, citecolor	|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
 | thanks | specifies contents of acknowledgments footnote after document title. |  
 
-更多的可用变量请查看 [这里](http://pandoc.org/MANUAL.html#variables-for-latex).
+更多的可用變量請查看 [這裡](http://pandoc.org/MANUAL.html#variables-for-latex).
 
 ### LaTeX Packages for Citations
 By default, citations are processed through `pandoc-citeproc`, which works for all output formats. For PDF output, sometimes it is better to use LaTeX packages to process citations, such as `natbib` or `biblatex`. To use one of these packages, just set the option `citation_package` to be `natbib` or `biblatex`, e.g.  
@@ -96,9 +96,9 @@ output:
 ---
 ```
 
-## 高级自定义
+## 高級自定義
 ### LaTeX Engine   
-默认情况下 PDF 文档由 `pdflatex` 生成。你可以用 `latex_engine` 选项来定义你想用的引擎。支持的引擎有 `pdflatex`，`xelatex`，以及 `lualatex`。例如：  
+默認情況下 PDF 文檔由 `pdflatex` 生成。你可以用 `latex_engine` 選項來定義你想用的引擎。支持的引擎有 `pdflatex`，`xelatex`，以及 `lualatex`。例如：  
 ```yaml
 ---
 title: "Habits"
@@ -122,8 +122,8 @@ output:
 ---
 ```
 
-### 自定义模版
-你可以替代 pandoc 的基础模版通过 `template` 选项：
+### 自定義模版
+你可以替代 pandoc 的基礎模版通過 `template` 選項：
 ```yaml
 ---
 title: "Habits"
@@ -132,7 +132,7 @@ output:
     template: quarterly_report.tex
 ---
 ```
-请参考 [pandoc 模版](http://pandoc.org/README.html#templates) 文档了解更多关于模版的信息。你还可以学习 [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) 作为一个例子。  
+請參考 [pandoc 模版](http://pandoc.org/README.html#templates) 文檔了解更多關於模版的信息。你還可以學習 [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) 作為一個例子。  
 
 ### Pandoc Arguments   
 If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
@@ -156,4 +156,4 @@ pdf_document:
   toc: true
   highlight: zenburn
 ```
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit it』s options. Options defined explicitly within documents will override those specified in the shared options file.

@@ -44,7 +44,7 @@ Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to re
 
 ---  
 
-If you don't want to render graphs but only display code block, then you can add `{.code-block}` after:     
+If you don't want to render graphs but only display code block, then you can add `{.code-block}` like blow:       
 
     ```mermaid {.code-block}
     // your mermaid code here

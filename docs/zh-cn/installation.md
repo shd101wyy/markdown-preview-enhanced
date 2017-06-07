@@ -1,5 +1,7 @@
 # 安装教程
 
+> 感谢 [@zangchendi](https://github.com/zangchendi) 编写此文档.
+
 安装方法有很多，推荐用户根据个人情况（墙内/墙外）自行选择。
 
 ## 软件内安装（墙外推荐）
@@ -58,7 +60,5 @@ apm develop markdown-preview-enhanced
 * 然后您就可以修改代码
 每次更新代码，您都需要通过 <kbd>cmd-shift-p</kbd> 键搜索选择 `Window: Reload` 重新载入项目。
 
-
-感谢 [@zangchendi](https://github.com/zangchendi) 编写此文档.
 
 [➔ 使用](zh-cn/usages.md)

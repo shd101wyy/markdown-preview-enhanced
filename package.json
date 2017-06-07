@@ -50,5 +50,8 @@
     "request": "2.76.0",
     "temp": "^0.8.3",
     "uslug": "^1.0.4"
+  },
+  "devDependencies": {
+    "chinese-conv": "^1.0.1"
   }
 }

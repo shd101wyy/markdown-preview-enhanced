@@ -18,7 +18,7 @@
 
 - **自动编辑器及预览滑动同步**  
 - **[导入外部文件](zh-cn/file-imports.md)**
-- **[Code Chunks](zh-cn/code-chunk.md)**
+- **[Code Chunk](zh-cn/code-chunk.md)**
 - **[Pandoc](zh-cn/pandoc.md)**
 - **[Prince](zh-cn/prince.md)**  
 - **[电子书](zh-cn/ebook.md)**

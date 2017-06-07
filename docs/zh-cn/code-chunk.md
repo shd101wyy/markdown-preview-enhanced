@@ -4,7 +4,7 @@
 **未来可能会有变动**  
 如果你想要启动 code chunk 语法高亮，请安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 插件然后禁掉 `language-gfm` 插件。  
 
-**Markdown Preview Enhanced** 渲染代码的运行结果。       
+**Markdown Preview Enhanced** 支持渲染代码的运行结果。       
 
     ```{bash}
     ls .
@@ -22,7 +22,7 @@
 运行所有的 code chunks。  
 
 ## 格式  
-你可以设置 code chunk 通过以下形式：  
+你可以通过以下形式来设置 code chunk ：  
 `{lang  opt1:value1, opt2:value2, ...}`    
 
 **lang**  
@@ -167,7 +167,7 @@ Markdown Preview Enhanced 也支持 `LaTeX` 编译。
 输出结果的高度。  
 
 **latex_engine**   
-就会被用来编译 `tex` 文件的 latex 引擎。默认下 `pdflatex` 是被实用的。你可以在 [插件设置](zh-cn/usages.md?id=package-settings) 中改变它的默认值。    
+就会被用来编译 `tex` 文件的 latex 引擎。默认下 `pdflatex` 是被使用的。你可以在 [插件设置](zh-cn/usages.md?id=package-settings) 中改变它的默认值。    
 
 
 ### TikZ 例子  

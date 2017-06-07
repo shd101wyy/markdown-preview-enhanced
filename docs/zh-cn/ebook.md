@@ -69,24 +69,24 @@ ebook:
 ### 感觉和外观    
 下面的选项帮助你设置输出的电子书的外观：   
 * **asciiize** `[true/false]`   
-`default: false`, Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII
+`默认：false`, 是否将 unicode 字符转化为 ASCII 。请小心使用这一选项因为这将会将 unicode 字符转化为 ASCII。
 * **base-font-size** `[number]`   
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, the base font size is chosen based on the output profile you chose.
+基本字体大小，单位 pts。所有的字体大小将会根据这个基本字体大小进行缩放。选择大的字体意味着你输出的内容的字体会更大。默认下，基本字体大小和你的 profile 设置中的相同。
 * **disable-font-rescaling** `[true/false]`     
-`default: false` Disable all rescaling of font sizes.
+`默认：false` 禁掉所有字体的缩放。  
 * **line-height** `[number]`  
-The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+行间距，单位 pts。用于控制行与行之间的空隙大小。这个选项仅仅作用于没有定义自己行间距的元素。在普遍情况下，小的行间距是最有用的。默认下，没有行间距的操作。  
 * **margin-top** `[number]`  
-`default: 72.0` Set the top margin in pts. Default is 72. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
+`默认：72.0` Set the top margin in pts. Default is 72. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
 * **margin-right** `[number]`  
-`default: 72.0`
+`默认：72.0`
 * **margin-bottom** `[number]`  
-`default: 72.0`
+`默认：72.0`
 * **margin-left** `[number]`  
-`default: 72.0`
+`默认：72.0`
 * **margin** `[number/array]`  
-`default: 72.0`  
-You can define **margin top/right/bottom/left** at the same time.  For example:  
+`默认：72.0`  
+你也可以同时定义 **margin top/right/bottom/left**。例如：
 ```yaml
 ebook:
   margin: 5 # margin-top = margin-right = margin-bottom = margin-left = 5
@@ -100,7 +100,7 @@ ebook:
   margin: [1, 2, 3, 4] # margin-top=1, margin-right=2, margin-bottom=3, margin-left=4
 ```
 
-For example:
+例如：
 ```yaml
 ebook:
   title: My eBook
@@ -122,12 +122,12 @@ ebook:
 ---
 ```
 可进行的设置如下：  
-* **no-default-epub-cover** `[true/false]`  
-Normally, if the input file has no cover and you don't specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
+* **no-default-epub-cover** `[true/false]`    
+通常情况下，如果你没有提供书籍的封面 `(cover)`，那么我们会自动为你生成一个包含书名，作者名等的封面。禁用这个选项将会禁止自动生成封面。    
 * **no-svg-cover** `[true/false]`  
-Do not use SVG for the book cover. Use this option if your EPUB is going to be used on a device that does not support SVG, like the iPhone or the JetBook Lite. Without this option, such devices will display the cover as a blank page.
+不使用 SVG 作为书籍封面。启用这个选项如果你的 EPUB 将会被用于不支持 SVG 的设备，例如 iPhone 或者 JetBook Lite。没有这个选项，上述的设备将会显示空白页。  
 * **pretty-print** `[true/false]`  
-If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.   
+如果启用了这个选项，那么输出插件将会尽可能的生成人类可读的文档。可能对其他一些插件没作用。  
 
 
 ### PDF  
@@ -141,18 +141,18 @@ ebook:
 ```
 可进行的设置如下：  
 * **paper-size**  
-The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`, `b0`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `legal`, `letter`
+纸张的大小。这个选项将会覆盖掉默认 profile 中的大小。默认是 letter。可选的选项有：`a0`，`a1`，`a2`，`a3`，`a4`，`a5`，`a6`，`b0`，`b1`，`b2`，`b3`，`b4`，`b5`，`b6`，`legal`，`letter`
 * **default-font-size** `[number]`    
-The default font size
+默认字体大小  
 * **footer-template**  
-An HTML template used to generate footers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
+为每个页面的 footer 的模版。字符串 `_PAGENUM_`，`_TITLE_`，`_AUTHOR_` 已经 `_SECTION_` 将会被相应的值替代。    
 * **header-template**  
-An HTML template used to generate headers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
+为每个页面的 header 的模版。字符串 `_PAGENUM_`，`_TITLE_`，`_AUTHOR_` 已经 `_SECTION_` 将会被相应的值替代。    
 * **page-numbers** `[true/false]`     
-`default: false`  
-Add page numbers to the bottom of every page in the generated PDF file. If you specify a footer template, it will take precedence over this option.
+`默认：false`  
+添加页码到每一页的底部。如果你定义了 `footer-template`，那么 `footer-template` 会先被处理。  
 * **pretty-print** `[true/false]`  
-If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.
+如果启用了这个选项，那么输出插件将会尽可能的生成人类可读的文档。可能对其他一些插件没作用。  
 
 
 ### HTML

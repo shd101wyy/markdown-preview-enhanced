@@ -1,9 +1,9 @@
-# Custom 文档
-## 概览
-**Custom Document** 给予你 `pandoc` 的所有力量。  
-创建自定义文档，你需要在 markdown 文件中的 front-matter 里声明 `custom_document` 的输出类型，并且 `path` 项是**必须**被定义的：   
+# Custom 文檔
+## 概覽
+**Custom Document** 給予你 `pandoc` 的所有力量。  
+創建自定義文檔，你需要在 markdown 文件中的 front-matter 裡聲明 `custom_document` 的輸出類型，並且 `path` 項是**必須**被定義的：   
 
-下面的是一个展示了类似于 [PDF 文档导出](zh-cn/pandoc-pdf.md) 的例子：
+下面的是一個展示了類似於 [PDF 文檔導出](zh-tw/pandoc-pdf.md) 的例子：
 
 ```yaml
 ---
@@ -17,7 +17,7 @@ output:
 ---
 ```
 
-下面的是一个展示了类似于 [beamer presentation](zh-cn/pandoc-beamer.md) 的例子：
+下面的是一個展示了類似於 [beamer presentation](zh-tw/pandoc-beamer.md) 的例子：
 ```yaml
 ---
 title: "Habits"
@@ -53,4 +53,4 @@ custom_document:
   toc: true
   highlight: zenburn
 ```
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit it』s options. Options defined explicitly within documents will override those specified in the shared options file.

@@ -1,9 +1,9 @@
-# Beamer 文档
-## 概览
+# Beamer 文檔
+## 概覽
 
-创建 Word 文档，你需要在 markdown 文件中的 front-matter 里声明 `beamer_presentation` 的输出类型：  
-你可以用 `#` 以及 `##` 来分隔幻灯片（你还可以通过使用分隔符 (`---`) 来插入新的幻灯片）。
-例如，下面是一个简单的例子：
+創建 Word 文檔，你需要在 markdown 文件中的 front-matter 裡聲明 `beamer_presentation` 的輸出類型：  
+你可以用 `#` 以及 `##` 來分隔幻燈片（你還可以通過使用分隔符 (`---`) 來插入新的幻燈片）。
+例如，下面是一個簡單的例子：
 ```markdown
 ---
 title: "Habits"
@@ -41,8 +41,8 @@ output: beamer_presentation
 - Count sheep
 ```  
 
-## 输出路径
-你可以通过 `path` 来定义文档的输出路径。例如：    
+## 輸出路徑
+你可以通過 `path` 來定義文檔的輸出路徑。例如：    
 
 ```yaml
 ---
@@ -52,7 +52,7 @@ output:
     path: /Exports/Habits.pdf
 ---
 ```   
-如果 `path` 没有被定义，那么文档将会在相同的文件夹下生成。
+如果 `path` 沒有被定義，那麼文檔將會在相同的文件夾下生成。
 
 ## Incremental Bullets
 You can render bullets incrementally by adding the `incremental` option:
@@ -101,8 +101,8 @@ output:
 ---
 ```
 
-## 语法高亮
-`highlight` 选项定义了高亮的样式。支持的样式包括 “default”，“tango”，“pygments”，“kate”，“monochrome”，“espresso”，“zenburn”，以及 “haddock” （设置 null 来禁用语法高亮）：    
+## 語法高亮
+`highlight` 選項定義了高亮的樣式。支持的樣式包括 「default」，「tango」，「pygments」，「kate」，「monochrome」，「espresso」，「zenburn」，以及 「haddock」 （設置 null 來禁用語法高亮）：    
 
 例如：  
 ```yaml
@@ -135,4 +135,4 @@ If you want to specify a set of default options to be shared by multiple documen
 beamer_presentation:
   toc: true
 ```
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit it』s options. Options defined explicitly within documents will override those specified in the shared options file.

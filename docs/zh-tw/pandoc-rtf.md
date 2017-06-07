@@ -1,6 +1,6 @@
-# RTF 文档
-## 概览
-创建 RTF 文档，你需要在 markdown 文件中的 front-matter 里声明 `rtf_document` 的输出类型：    
+# RTF 文檔
+## 概覽
+創建 RTF 文檔，你需要在 markdown 文件中的 front-matter 裡聲明 `rtf_document` 的輸出類型：    
 ```yaml
 ---
 title: "Habits"
@@ -10,8 +10,8 @@ output: rtf_document
 ---
 ```
 
-## 输出路径
-你可以通过 `path` 来定义文档的输出路径。例如：    
+## 輸出路徑
+你可以通過 `path` 來定義文檔的輸出路徑。例如：    
 
 ```yaml
 ---
@@ -21,10 +21,10 @@ output:
     path: /Exports/Habits.rtf
 ---
 ```   
-如果 `path` 没有被定义，那么 RTF 将会在相同的文件夹下生成。  
+如果 `path` 沒有被定義，那麼 RTF 將會在相同的文件夾下生成。  
 
 ## Table of Contents
-你可以通过 `toc` 选项来添加目录，以及 `toc_depth` 来控制目录的等级。例如：  
+你可以通過 `toc` 選項來添加目錄，以及 `toc_depth` 來控制目錄的等級。例如：  
 ```yaml
 ---
 title: "Habits"
@@ -34,9 +34,9 @@ output:
     toc_depth: 2
 ---
 ```
-如果 `toc_depth` 没有被定义，那么默认 3 将会被使用。（意味着等级 1，2，已经 3 的标题将会被列举在目录中）。  
+如果 `toc_depth` 沒有被定義，那麼默認 3 將會被使用。（意味著等級 1，2，已經 3 的標題將會被列舉在目錄中）。  
 
-*注意：* 这个 TOC 和用 **Markdown Preview Enhanced** `<!-- toc -->` 生成的是不同的。  
+*注意：* 這個 TOC 和用 **Markdown Preview Enhanced** `<!-- toc -->` 生成的是不同的。  
 
 ## Pandoc Arguments   
 If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:  
@@ -59,4 +59,4 @@ If you want to specify a set of default options to be shared by multiple documen
 rtf_document:
   toc: true
 ```
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit it』s options. Options defined explicitly within documents will override those specified in the shared options file.

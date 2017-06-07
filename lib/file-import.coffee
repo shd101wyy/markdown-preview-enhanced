@@ -266,9 +266,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         else
           loadFile(absoluteFilePath, {imageDirectoryPath, fileDirectoryPath, forPreview}, filesCache).then (fileContent)->
             filesCache?[absoluteFilePath] = fileContent
-            if fileContent == true # true means we use empty string.
-              output = ''
-            else if config?.code_block
+            if config?.code_block
               fileExtension = extname.slice(1, extname.length)
               output = "```#{fileExtensionToLanguageMap[fileExtension] or fileExtension} #{formatClassesAndId(config)}  \n#{fileContent}\n```  "
             else if config?.code_chunk

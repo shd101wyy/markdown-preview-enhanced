@@ -21,6 +21,7 @@ If you want to add `id` and `class` to the header, then simply append `{#id .cla
 # This heading has 1 id      {#id1}
 # This heading has 2 classes {.class1 .class2}
 ```
+> This is a MPE extended feature.
 
 ### Emphasis
 ```markdown

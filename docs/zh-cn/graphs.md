@@ -1,7 +1,7 @@
 # 图像  
 
 **Markdown Preview Enhanced** 内部支持 `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz` 图像渲染。    
-你也可以渲染 `TikZ`, `Python Matplotlib`, `Plotly` 等图像通过使用 [Code Chunk](zh-cn/code-chunk.md).  
+你也可以通过使用 [Code Chunk](zh-cn/code-chunk.md) 来渲染 `TikZ`, `Python Matplotlib`, `Plotly` 等图像。  
 
 ## Mermaid
 

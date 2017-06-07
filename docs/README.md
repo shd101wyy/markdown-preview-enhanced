@@ -18,7 +18,7 @@ How to install this package can be found [here](installation.md).
 
 - **Automatic scroll sync**  
 - **[Import external files](file-imports.md)**
-- **[Code Chunks](code-chunk.md)**
+- **[Code Chunk](code-chunk.md)**
 - **[Pandoc](pandoc.md)**
 - **[Prince](prince.md)**  
 - **[eBook](ebook.md)**

@@ -1,5 +1,5 @@
-# PDF export  
-## Usage
+# PDF 导出  
+## 使用
 右键点击预览，然后选择 `Export to Disk`。  
 点击 `PDF` 标签。  
 点击 `export` 按钮。      

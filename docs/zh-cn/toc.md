@@ -1,5 +1,5 @@
 # 目录列表（TOC）
-**Markdown Preview Enhanced** 支持在你的 markdown 文件中创建 `TOC`。
+**Markdown Preview Enhanced** 支持你在 markdown 文件中创建 `TOC`。  
 你可以通过 <kbd>cmd-shift-p</kbd> 然后选择 `Markdown Preview Enhanced: Create Toc` 命令来创建 `TOC`。  
 多个 TOCs 可以被创建。  
 如果你想要在你的 `TOC` 中排除一个标题，请在你的标题 **后面** 添加 `{.ignore}` 即可。

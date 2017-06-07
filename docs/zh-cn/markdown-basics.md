@@ -21,6 +21,7 @@
 # 这个标题拥有 1 个 id {#id1}
 # 这个标题有 2 个 classes {.class1 .class2}
 ```
+> 这是一个 MPE 扩展的特性。  
 
 ### 强调
 ```markdown

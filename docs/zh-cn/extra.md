@@ -14,7 +14,7 @@ Windows 下的可执行文件可以在 [GitHub](https://github.com/jalios/pdf2sv
 很多 Linux 下的包管理工具都提供 `pdf2svg` 的安装。  
 
 ## 安装 LaTeX distribution  
-请查看 [Get LaTeX 网站](https://www.latex-project.org/get/).  
+请查看 [Get LaTeX 网站](https://www.latex-project.org/get/)。  
 [TeX Live](http://www.tug.org/texlive/) 是推荐的。  
 
 对于 **Mac** 用户，直接安装 [MacTex](https://www.tug.org/mactex) 然后你就没事儿了。     

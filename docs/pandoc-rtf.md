@@ -29,7 +29,7 @@ You can add a table of contents using the `toc` option and specify the depth of 
 ---
 title: "Habits"
 output:
-  pdf_document:
+  rtf_document:
     toc: true
     toc_depth: 2
 ---
