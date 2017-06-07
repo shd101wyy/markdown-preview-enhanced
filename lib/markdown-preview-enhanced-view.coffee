@@ -1930,6 +1930,15 @@ module.exports = config || {}
       while i >= 0
         if children[i].tagName == 'UL' # find table of contents
           getStructure(children[i], 0)
+
+          # delete TOC if necessary
+          if ebookConfig.include_toc == false
+            ul = children[i]
+            prev = ul.previousElementSibling
+            if prev?.tagName.startsWith('H')
+              prev.remove()
+            ul.remove()
+
           break
         i -= 1
 

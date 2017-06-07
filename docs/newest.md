@@ -7,6 +7,7 @@
       For more information, check [this doc](graphs.md).     
 * [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/). Contact me if you are willing to help translate the documentation :)   
 * [ ] Tried hard to fix key bindings issue, but dunno if resolved or not :(  
+* [x] Fix eBook generation issue. Add `include_toc` option.   
 * [x] Better support for multiple previews [#435](https://github.com/shd101wyy/markdown-preview-enhanced/issues/435).  
 * [x] Fix `sm.ms` image upload API issue. [#390](https://github.com/shd101wyy/markdown-preview-enhanced/issues/390).  
 * [x] Fix issue [#436](https://github.com/shd101wyy/markdown-preview-enhanced/issues/436).   

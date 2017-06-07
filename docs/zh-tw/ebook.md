@@ -30,7 +30,37 @@ ebook:
   authors: shd101wyy
 ---
 ```
-接著右鍵點擊預覽，選擇 `Export to Disk`，然後選擇 `EBOOK`。  
+
+---
+
+## Demo
+`SUMMARY.md` 是一個主文件。他應該擁有一個 目錄（TOC）來幫忙組織書的結構：
+
+```markdown
+---
+ebook:
+  title: Markdown Preview Enhanced
+  author: shd101wyy
+---
+
+# 前言  
+這個是前言，但是不是必須的。
+
+# 目錄
+* [章 1](/chapter1/README.md)
+  * [Markdown Preview Enhanced 的介紹](/chapter1/intro.md)
+  * [特性](/chapter1/feature.md)
+* [章 2](/chapter2/README.md)
+  * [已知問題](/chapter2/issues.md)
+```
+
+
+一般來講，最後一個列表會被視為目錄（TOC）。  
+
+---
+
+如果你要導出一個電子書，打開你的主文件預覽，例如上面提到的 `SUMMARY.md`。然後右鍵點擊預覽，選擇 `Export to Disk`，然後選擇 `EBOOK` 選項。接著你就可以導出你的電子書了。  
+
 
 ### Metadata
 * **title**  
@@ -57,6 +87,8 @@ http://path-to-image.png
 書的系列。  
 * **rating**  
 書的評價。應該是 1 到 5 之間的數字。    
+* **include_toc**  
+`默認：true` 是我包含你主文件中所寫的目錄（TOC）。
 
 例如：  
 ```yaml
@@ -179,32 +211,6 @@ ebook:
 ```  
 你可以在 [ebook-convert 手冊](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) 中找到一系列的參數。  
 
----
-
-## Demo
-`SUMMARY.md` 是一個主文件。他應該擁有一個 目錄（TOC）來幫忙組織書的結構：
-
-```markdown
----
-ebook:
-  title: Markdown Preview Enhanced
-  author: shd101wyy
----
-
-# 前言  
-這個是前言，但是不是必須的。
-
-# 目錄
-* [章 1](/chapter1/README.md)
-  * [Markdown Preview Enhanced 的介紹](/chapter1/intro.md)
-  * [特性](/chapter1/feature.md)
-* [章 2](/chapter2/README.md)
-  * [已知問題](/chapter2/issues.md)
-```
-
----
-
-如果你要導出一個電子書，打開你的主文件預覽，例如上面提到的 `SUMMARY.md`。然後右鍵點擊預覽，選擇 `Export to Disk`，然後選擇 `EBOOK` 選項。接著你就可以導出你的電子書了。  
 
 ## 已知問題 & 局限
 * 這個特性還在開發中。  

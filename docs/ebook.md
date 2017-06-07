@@ -29,7 +29,36 @@ ebook:
   authors: shd101wyy
 ---
 ```
-Next right click at the preview, choose `Export to Disk`, then choose `EBOOK`.
+
+---
+
+## Demo
+`SUMMARY.md` is a sample entry file. It should also have a TOC to help organize the book:  
+```markdown
+---
+ebook:
+  title: Markdown Preview Enhanced
+  author: shd101wyy
+---
+
+# Preface  
+This is the preface, but not necessary.
+
+# Table of Contents
+* [Chapter 1](/chapter1/README.md)
+  * [Introduction of Markdown Preview Enhanced](/chapter1/intro.md)
+  * [Features](/chapter1/feature.md)
+* [Chapter 2](/chapter2/README.md)
+  * [Known issues](/chapter2/issues.md)
+```
+
+The last list in the markdown file is regarded as TOC.  
+
+The link's title is used as the chapter's title, and the link's target is a path to that chapter's file.  
+
+---
+
+To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
 
 ### Metadata
 * **title**  
@@ -56,6 +85,8 @@ Set the tags for the book. Should be a comma separated list.
 Set the series this ebook belongs to.
 * **rating**  
 Set the rating. Should be a number between 1 and 5.
+* **include_toc**  
+`default: true` Whether or not to include the TOC you wrote in your entry file.  
 
 For example:   
 ```yaml
@@ -175,34 +206,6 @@ ebook:
 ---
 ```  
 You can find a list of arguments in [ebook-convert manual](https://manual.calibre-ebook.com/generated/en/ebook-convert.html).
-
----
-
-## Demo
-`SUMMARY.md` is a sample entry file. It should also have a TOC to help organize the book:  
-```markdown
----
-ebook:
-  title: Markdown Preview Enhanced
-  author: shd101wyy
----
-
-# Preface  
-This is the preface, but not necessary.
-
-# Table of Contents
-* [Chapter 1](/chapter1/README.md)
-  * [Introduction of Markdown Preview Enhanced](/chapter1/intro.md)
-  * [Features](/chapter1/feature.md)
-* [Chapter 2](/chapter2/README.md)
-  * [Known issues](/chapter2/issues.md)
-```
-
-The link's title is used as the chapter's title, and the link's target is a path to that chapter's file.  
-
----
-
-To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
 
 ## Known Issues & Limitations
 * eBook generation is still under development.
