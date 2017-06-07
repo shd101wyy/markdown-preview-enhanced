@@ -9,7 +9,7 @@
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
-![intro image](https://i.github-camo.com/001a3a3c5344cbeed6b7074b12777d489583f808/68747470733a2f2f636c6f75642e67697468756275736572636f6e74656e742e636f6d2f6173736574732f313930383836332f32323736333037322f33326630396538302d656532382d313165362d396434322d6333393533663537343961312e676966)
+![intro](https://user-images.githubusercontent.com/1908863/26898176-a5cad7fc-4b90-11e7-9d8c-74f85f28f133.gif)
 
 ## Installation
 How to install this package can be found [here](installation.md).  

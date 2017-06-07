@@ -1881,8 +1881,8 @@ module.exports = config || {}
         # load the last ul, analyze toc links.
         getStructure = (ul, level)->
           for li in ul.children
-            a = li.children[0]?.getElementsByTagName('a')?[0]
-            continue if not a
+            a = li.children[0]
+            continue if a?.tagName != "A"
             filePath = a.getAttribute('href') # assume markdown file path
             heading = a.innerHTML
             id = 'ebook-heading-id-'+headingOffset

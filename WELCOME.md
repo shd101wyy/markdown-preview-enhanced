@@ -6,7 +6,12 @@
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 600, style: "position:relative; left: 50%; transform: translateX(-50%);"}
 
 
-**[Project website](https://shd101wyy.github.io/markdown-preview-enhanced/#/)**    
+<p align="center">
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>  
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>  
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br><br>
+<a href="">Support this Project on Patreon!</a>
+</p>
 
 @import "docs/newest.md";
 
