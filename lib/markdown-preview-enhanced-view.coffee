@@ -1848,6 +1848,36 @@ module.exports = config || {}
                 @openFile dest if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
 
 
+  # This function doesn't deal with `reject` error
+  ebookDownloadImages: (div, dest)->
+    new Promise (resolve, reject)=>
+      # download images for .epub and .mobi
+      imagesToDownload = []
+      if path.extname(dest) in ['.epub', '.mobi']
+        for img in div.getElementsByTagName('img')
+          src = img.getAttribute('src')
+          if src.startsWith('http://') or src.startsWith('https://')
+            imagesToDownload.push(img)
+
+      request ?= require('request')
+
+      if imagesToDownload.length
+        atom.notifications.addInfo('downloading images...')
+
+      asyncFunctions = imagesToDownload.map (img)=>
+        (callback)=>
+          httpSrc = img.getAttribute('src')
+          savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
+          savePath =  path.resolve(@fileDirectoryPath, savePath)
+
+          stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
+
+          stream.on 'finish', ()->
+            img.setAttribute 'src', 'file:///'+savePath
+            callback(null, savePath)
+
+      async.parallel asyncFunctions, (error, downloadedImagePaths=[])=>
+        return resolve(downloadedImagePaths)
 
   ## EBOOK
   generateEbook: (dest)->
@@ -1860,110 +1890,83 @@ module.exports = config || {}
 
       if !ebookConfig
         return atom.notifications.addError('ebook config not found', detail: 'please insert ebook front-matter to your markdown file')
-      else
-        atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-        if ebookConfig.cover # change cover to absolute path if necessary
-          cover = ebookConfig.cover
-          if cover.startsWith('./') or cover.startsWith('../')
-            cover = path.resolve(@fileDirectoryPath, cover)
-            ebookConfig.cover = cover
-          else if cover.startsWith('/')
-            cover = path.resolve(@projectDirectoryPath, '.'+cover)
-            ebookConfig.cover = cover
+      atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
-        div = document.createElement('div')
-        div.innerHTML = html
+      if ebookConfig.cover # change cover to absolute path if necessary
+        cover = ebookConfig.cover
+        if cover.startsWith('./') or cover.startsWith('../')
+          cover = path.resolve(@fileDirectoryPath, cover)
+          ebookConfig.cover = cover
+        else if cover.startsWith('/')
+          cover = path.resolve(@projectDirectoryPath, '.'+cover)
+          ebookConfig.cover = cover
 
-        structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
-        headingOffset = 0
+      div = document.createElement('div')
+      div.innerHTML = html
 
-        # load the last ul, analyze toc links.
-        getStructure = (ul, level)->
-          for li in ul.children
-            a = li.children[0]
-            continue if a?.tagName != "A"
-            filePath = a.getAttribute('href') # assume markdown file path
-            heading = a.innerHTML
-            id = 'ebook-heading-id-'+headingOffset
+      structure = [] # {level:0, filePath: 'path to file', heading: '', id: ''}
+      headingOffset = 0
 
-            structure.push {level: level, filePath: filePath, heading: heading, id: id}
-            headingOffset += 1
+      # load the last ul as TOC, analyze toc links.
+      getStructure = (ul, level)->
+        for li in ul.children
+          a = li.children[0]
+          continue if a?.tagName != "A"
+          filePath = a.getAttribute('href') # assume markdown file path
+          heading = a.innerHTML
+          id = 'ebook-heading-id-'+headingOffset
 
-            a.href = '#'+id # change id
+          structure.push {level: level, filePath: filePath, heading: heading, id: id}
+          headingOffset += 1
 
-            if li.childElementCount > 1
-              getStructure(li.children[1], level+1)
+          a.href = '#'+id # change id
 
-        children = div.children
-        i = children.length - 1
-        while i >= 0
-          if children[i].tagName == 'UL' # find table of contents
-            getStructure(children[i], 0)
-            break
-          i -= 1
+          if li.childElementCount > 1
+            getStructure(li.children[1], level+1)
+
+      children = div.children
+      i = children.length - 1
+      while i >= 0
+        if children[i].tagName == 'UL' # find table of contents
+          getStructure(children[i], 0)
+          break
+        i -= 1
+
+      # load each markdown files according to TOC
+      async ?= require('async')
+      asyncFunctions = structure.map ({heading, id, level, filePath}, offset)=>
+        if filePath.startsWith('file:///')
+          filePath = filePath.slice(8)
+
+        (cb)=>
+          fs.readFile filePath, {encoding: 'utf-8'}, (error, text)=>
+            return cb(error.toString()) if error
+
+            @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, fileDirectoryPath: path.dirname(filePath)}, ({html})=>
+              html = @formatStringAfterParsing(html)
+              cb(null, {heading, id, level, filePath, html})
+
+      async.series asyncFunctions, (error, data)=>
+        if error
+          return atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
 
         outputHTML = div.innerHTML
 
-        # append files according to structure
-        for obj in structure
-          heading = obj.heading
-          id = obj.id
-          level = obj.level
-          filePath = obj.filePath
+        data.forEach ({heading, id, level, filePath, html})->
+          div.innerHTML = html
+          if div.childElementCount
+            div.children[0].id = id
+            div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
+            div.children[0].setAttribute('heading', heading)
 
-          if filePath.startsWith('file:///')
-            filePath = filePath.slice(8)
-
-          try
-            text = fs.readFileSync(filePath, {encoding: 'utf-8'})
-            @parseMD @formatStringBeforeParsing(text), {isForEbook: true, projectDirectoryPath: @projectDirectoryPath, fileDirectoryPath: path.dirname(filePath)}, ({html})=>
-              html = @formatStringAfterParsing(html)
-
-              # add to TOC
-              div.innerHTML = html
-              if div.childElementCount
-                div.children[0].id = id
-                div.children[0].setAttribute('ebook-toc-level-'+(level+1), '')
-                div.children[0].setAttribute('heading', heading)
-
-              outputHTML += div.innerHTML
-          catch error
-            atom.notifications.addError('Ebook generation: Failed to load file', detail: filePath + '\n ' + error)
-            return
+          outputHTML += div.innerHTML # append new content
 
         # render viz
         div.innerHTML = outputHTML
         @renderViz(div)
 
-        # download images for .epub and .mobi
-        imagesToDownload = []
-        if path.extname(dest) in ['.epub', '.mobi']
-          for img in div.getElementsByTagName('img')
-            src = img.getAttribute('src')
-            if src.startsWith('http://') or src.startsWith('https://')
-              imagesToDownload.push(img)
-
-        request ?= require('request')
-        async ?= require('async')
-
-        if imagesToDownload.length
-          atom.notifications.addInfo('downloading images...')
-
-        asyncFunctions = imagesToDownload.map (img)=>
-          (callback)=>
-            httpSrc = img.getAttribute('src')
-            savePath = Math.random().toString(36).substr(2, 9) + '_' + path.basename(httpSrc)
-            savePath =  path.resolve(@fileDirectoryPath, savePath)
-
-            stream = request(httpSrc).pipe(fs.createWriteStream(savePath))
-
-            stream.on 'finish', ()->
-              img.setAttribute 'src', 'file:///'+savePath
-              callback(null, savePath)
-
-
-        async.parallel asyncFunctions, (error, downloadedImagePaths=[])=>
+        @ebookDownloadImages(div, dest).then (downloadedImagePaths)=>
           # convert image to base64 if output html
           if path.extname(dest) == '.html'
             # check cover
