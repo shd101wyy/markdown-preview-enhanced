@@ -21,7 +21,7 @@ How to install this package can be found [here](installation.md).
 - **[Code Chunks](code-chunk.md)**
 - **[Pandoc](pandoc.md)**
 - **[Prince](prince.md)**  
-- **[Ebook](ebook.md)**
+- **[eBook](ebook.md)**
 - **[Presentation Writer](presentation.md)**
 - **[Extensible](developer.md?id=how-to-write-extensions)**
 - **[LaTeX math](math.md)**  
@@ -41,7 +41,7 @@ How to install this package can be found [here](installation.md).
 ## Support this project
 Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](backers.md). You can help make this project better by [supporting us on Patreon](). Thank you!  
 
-[➔ Installation](installation.md)
-
 ## Help translation
 If you are willing to help translate this documentation, please contact me by posting an issue [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues).      
+
+[➔ Installation](installation.md)

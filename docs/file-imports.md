@@ -1,4 +1,4 @@
-# Import external files.  
+# Import external files
 
 ![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
@@ -21,7 +21,7 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.csv` file will be converted to markdown table.  
 * `.mermaid` file will be rendered by mermaid.  
 * `.dot` file will be rendered by viz.js (graphviz).  
-* `.plantuml(.puml)` file will be rendered by plantuml.  
+* `.plantuml(.puml)` file will be rendered by PlantUML.  
 * `.wavedrom` file will be rendered by wavedrom.  
 * `.html` file will be embeded directly.  
 * `.js` file will be evalued in `window` scope. It behaves similarly as the `<script>.. js code ..</script>` tag.
@@ -43,7 +43,7 @@ For example:
 
 ## Import PDF file  
 To import PDF file, you need to have [pdf2svg](extra.md) installed.  
-Markdown Preview Enhanceds supports importing both local and online PDF files.  
+Markdown Preview Enhanced supports importing both local and online PDF files.  
 However, it is not recommended to import large PDF files.
 
 ## Force to render Code Block  
@@ -54,7 +54,7 @@ However, it is not recommended to import large PDF files.
 
 ## Import file as Code Chunk  
 ```markdown
-@import "test.py" {code_chunk:true, cmd: "python3"}
+@import "test.py" {code_chunk:true, cmd:"python3"}
 ```
 
 ## Known issues  

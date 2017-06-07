@@ -43,7 +43,7 @@ module.exports =
       title: "Automatically close preview when closing a markdown file"
       description: "This option only works if `Open Only One Preview` is unchecked."
       type: "boolean"
-      default: false
+      default: true
       order: 6
     breakOnSingleNewline:
       type: "boolean"

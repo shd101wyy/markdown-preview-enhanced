@@ -28,7 +28,7 @@ You can configure code chunk options in format of `{lang  opt1:value1, opt2:valu
 The grammar that the code block should highlight.  
 It should be put at the most front.  
 
-## Basic Options
+## Basic Configurations
 **cmd**    
 The command to run.  
 If `cmd` is not provided, then `lang` will be regarded as command.    
@@ -61,6 +61,8 @@ eg:
 
     plot [-10:10] sin(x),atan(x),cos(atan(x))
     ```
+
+![screen shot 2017-06-06 at 11 03 29 pm](https://user-images.githubusercontent.com/1908863/26861847-5f03df6e-4b0c-11e7-8eb1-bfdef40eb09d.png)
 
 **args**  
 args that append to command. eg:    
@@ -119,9 +121,11 @@ Please **Do Not** modify it. If you modify it, please make sure it is unique in 
 By default, it is appended at the very end of program arguments.  
 However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
 
+
     ```{program args:["-i", "{input_file}", "-o", "./output.png"], id:"chj3kxsvao"}
     ...your code here
     ```
+
 
 ## Matplotlib  
 If set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
@@ -161,7 +165,7 @@ The width of result.
 The height of result.  
 
 **latex_engine**  
-The latex engine that you used to parse `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](usages.md?id=package-settings).    
+The latex engine that you used to compile `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](usages.md?id=package-settings).    
 
 
 ### TikZ example  

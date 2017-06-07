@@ -1,10 +1,11 @@
-# Customize CSS  
+# 自定义 CSS  
 
 ## style.less
 
-To customize css for your markdown file, <kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command or `Application: Open your stylesheet` command.    
+要自定义 css，<kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css` 命令或者 `Application: Open your stylesheet` 命令。      
 
-The `style.less` file will open, and you can override existing style like this:  
+`style.less` 文件将会被打开，然后你就可以开始编写样式了：  
+
 ```less
 .markdown-preview-enhanced.markdown-preview-enhanced {
   // please write your custom style here
@@ -36,10 +37,10 @@ The `style.less` file will open, and you can override existing style like this:
 }
 ```
 
-## Local style
-Markdown Preview Enhanced also allows you to define different styles for different markdown files.  
-`id` and `class` can be configured inside front-matter.
-You can [import](file-imports.md) a `less` or `css` file in your markdown file easily:  
+## 本地样式  
+Markdown Preview Enhanced 允许你对于不同的 markdown 文件定义不同的样式。    
+你可以在 front-matter 设置 markdown 文档的 `id` 和 `class`。  
+你可以在你的 markdown 文件中非常简单地 [引用](zh-cn/file-imports.md) `less` 或者 `css` 文件。  
 
 ```markdown
 ---
@@ -52,7 +53,7 @@ class: ["my-class1", "my-class2"]
 # Heading1
 ```  
 
-the `my-style.less` could look like this:  
+`my-style.less` 如下：    
 
 ```less
 #my-id {
@@ -65,12 +66,12 @@ the `my-style.less` could look like this:
 }
 ```
 
-Every time you changed your `less` file, you can click the refresh button at the right top corner of the preview to recompile less to css.   
+每一次你更新了你的 `less` 文件，你都需要点击 刷新按钮 来重新编译 less 到 css。  
 
 ![](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
-## Change the font family  
-To change the font family of preview, you first need to download the font file `(.ttf)`, then modify `style.less` like below:   
+## 改编字体  
+要改变你的预览的字体，你需要首先下载字体文件 `(.ttf)`，然后编辑 `style.less` 如下：  
 
 ```less
 .markdown-preview-enhanced.markdown-preview-enhanced {
@@ -87,7 +88,7 @@ To change the font family of preview, you first need to download the font file `
 }
 ```
 
-You can also try the [fonts](https://atom.io/packages/fonts) package, which pre-installed a lot of fonts. For example, to use the `VT323` font:   
+你还可以尝试 [fonts](https://atom.io/packages/fonts) 插件。这个插件预先安装好了很多字体。例如，如果你想要使用 `VT323` 字体：    
 
 ```less  
 .markdown-preview-enhanced.markdown-preview-enhanced {

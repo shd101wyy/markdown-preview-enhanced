@@ -67,7 +67,7 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 
 - <strong>Markdown Preview Enhanced: Run All Code Chunks </strong>    
   <kbd>ctrl-shift-enter</kbd>  
-  Run single [Code Chunks](code-chunk.md).   
+  Run all [Code Chunks](code-chunk.md).   
 
 ---
 
@@ -106,7 +106,7 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 | <kbd>cmd-0</kbd> | Preview reset zoom |
 
 ## Package settings  
-To open the package settings, press <kbd>cmd-shift-p</kbd> then chosee `Settings View: Open`, then click `Package`.  
+To open the package settings, press <kbd>cmd-shift-p</kbd> then chosee `Settings View: Open`, then click `Packages`.  
 
 Search `markdown-preview-enhanced` under `Installed Packages`:  
 ![screen shot 2017-06-06 at 3 57 22 pm](https://user-images.githubusercontent.com/1908863/26851561-d6b1ca30-4ad0-11e7-96fd-6e436b5de45b.png)

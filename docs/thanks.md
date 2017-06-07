@@ -24,3 +24,4 @@ Special thanks to the following libraries that make this project possible.
 * [uslug](https://github.com/jeremys/uslug) - A permissive slug generator that works with unicode.
 * [md5](https://github.com/pvorb/node-md5) - A JavaScript function for hashing messages with MD5.
 * [atom](https://github.com/atom/atom) - The hackable text editor.
+* [docsify](https://docsify.js.org/#/) - A magical documentation site generator.  

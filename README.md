@@ -136,7 +136,7 @@ To use this package, press <kbd>cmd + shift + p</kbd>   in atom editor first to 
 
 ## Extra
 * **Code Chunks** [doc](./docs/code-chunk.md)
-* **EBook**  
+* **eBook**  
 	More information about how to create ebook can be found [here](./docs/ebook.md).
 * **Presentation Writer**  
 	More information about how to create Presentation can be found [here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html).

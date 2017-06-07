@@ -1,27 +1,28 @@
-# eBook generation
+# eBook 导出
 
 Inspired by *GitBook*  
-**Markdown Preview Enhanced** can output content as ebook (ePub, Mobi, PDF).   
+**Markdown Preview Enhanced** 可以导出 ePub，Mobi，PDF 的电子书。  
 
 ![Screen Shot 2016-09-08 at 9.42.43 PM](http://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
 
-To generate ebook, you need to have `ebook-convert` installed.  
+要导出电子书，你需要事先安装好 `ebook-convert`。
 
-## Installing ebook-convert
+## 安装 ebook-convert
 **macOS**  
-Download the [Calibre Application](https://calibre-ebook.com/download). After moving the `calibre.app` to your Applications folder, create a symbolic link to the `ebook-convert` tool:
+下载 [Calibre](https://calibre-ebook.com/download)。  
+在将 `calibre.app` 添加到你的 Applications 添加一个 symbolic link 到 `ebook-convert` 工具：  
 ```shell
 $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/bin
 ```
 **Windows**  
-Download and Install the [Calibre Application](https://calibre-ebook.com/download).  
-Add `ebook-convert` to your system path.
+下载并安装 [Calibre Application](https://calibre-ebook.com/download)。    
+添加 `ebook-convert` 到你的系统路径。  
 
-## eBook Example
-An eBook example project can be found [here](https://github.com/shd101wyy/ebook-example).   
+## eBook 例子
+一个电子书项目的例子可以查看 [这里](https://github.com/shd101wyy/ebook-example).   
 
-## Start writing eBook    
-You can set up a ebook configuration by simply adding `ebook front-matter` into your markdown file.   
+## 开始编写 eBook    
+你可以在你的 markdown 文件中添加 `ebook front-matter` 来设置你的电子书。     
 ```yaml
 ---
 ebook:
@@ -29,35 +30,35 @@ ebook:
   authors: shd101wyy
 ---
 ```
-Next right click at the preview, choose `Export to Disk`, then choose `EBOOK`.
+接着右键点击预览，选择 `Export to Disk`，然后选择 `EBOOK`。  
 
 ### Metadata
 * **title**  
-title of your book  
+你的书的标题    
 * **authors**  
-author1 & author2 & ...  
+作者1 & 作者2 & ...  
 * **cover**  
 http://path-to-image.png  
 * **comments**  
-Set the ebook description
+关于这本书的描述  
 * **publisher**  
-who is the publisher?  
+发行商是谁？    
 * **book-producer**  
-who is the book producer  
+制作商是谁？    
 * **pubdate**  
-publish date  
+发布日期    
 * **language**  
-Set the language
+语言
 * **isbn**  
-ISBN of the book  
+书的 ISBN
 * **tags**  
-Set the tags for the book. Should be a comma separated list.
+输的标签。应该用英文 `,` 隔开。  
 * **series**  
-Set the series this ebook belongs to.
+书的系列。  
 * **rating**  
-Set the rating. Should be a number between 1 and 5.
+书的评价。应该是 1 到 5 之间的数字。    
 
-For example:   
+例如：  
 ```yaml
 ebook:
   title: My eBook
@@ -65,8 +66,8 @@ ebook:
   rating: 5  
 ```
 
-### Feel and Look  
-The following options are provided to help control the look and feel of the output
+### 感觉和外观    
+下面的选项帮助你设置输出的电子书的外观：   
 * **asciiize** `[true/false]`   
 `default: false`, Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII
 * **base-font-size** `[number]`   
@@ -106,11 +107,12 @@ ebook:
   base-font-size: 8
   margin: 72
 ```
-## Output Formats
-Right now you can output ebook in format of `ePub`, `mobi`, `pdf`, `html`.  
+## 输出类型
+目前你可以输出以下类型的电子书：    
+`ePub`, `mobi`, `pdf`, `html`。    
 
 ### ePub
-To configure `ePub` output, simply add `epub` after `ebook`.   
+要设置 `ePub` 的输出，添加 `epub` 在 `ebook` 之后。     
 ```yaml
 ---
 ebook:
@@ -119,7 +121,7 @@ ebook:
     pretty-print: true
 ---
 ```
-the following options are provided:   
+可进行的设置如下：  
 * **no-default-epub-cover** `[true/false]`  
 Normally, if the input file has no cover and you don't specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
 * **no-svg-cover** `[true/false]`  
@@ -129,7 +131,7 @@ If specified, the output plugin will try to create output that is as human reada
 
 
 ### PDF  
-To configure `pdf` output, simply add `pdf` after `ebook`.   
+要设置 `ePub` 的输出，添加 `pdf` 在 `ebook` 之后。     
 ```yaml
 ebook:
   pdf:
@@ -137,7 +139,7 @@ ebook:
     default-font-size: 12
     header-template: "<span> Written by shd101wyy _PAGENUM_ </span>"
 ```
-the following options are provided:  
+可进行的设置如下：  
 * **paper-size**  
 The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`, `b0`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `legal`, `letter`
 * **default-font-size** `[number]`    
@@ -154,19 +156,20 @@ If specified, the output plugin will try to create output that is as human reada
 
 
 ### HTML
-Exporting `.html` doesn't depend on `ebook-convert`.  
-If you are exporting `.html` file, then all local images will be included as `base64` data inside a single `html` file.  
-To configure `html` output, simply add `html` after `ebook`.
+导出 `.html` 不依赖于 `ebook-convert`.  
+如果你要导出 `.html` 文件，那么所有的本地图片都将会被引用为 `base64` 数据到一个 `html` 文件中。    
+要设置 `html` 的输出，添加 `html` 在 `ebook` 之后。     
 ```yaml
 ebook:
   html:
     cdn: true
 ```
 * **cdn**  
-Load css and javascript files from `cdn.js`. This option is only used when exporting `.html` file.  
+是否从 `cdn.js` 读取 css 和 javascript 文件。
 
-## ebook-convert Arguments
-If there are `ebook-convert` features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `args`. For example:  
+## ebook-convert 参数
+如果这里有 `ebook-convert` 的一些你想要使用的特性，但是上面没有提到，你依旧可以在 `args` 中使用它们。  
+例如：  
 ```yaml
 ---
 ebook:
@@ -174,12 +177,13 @@ ebook:
   args: ["--embed-all-fonts", "--embed-font-family"]
 ---
 ```  
-You can find a list of arguments in [ebook-convert manual](https://manual.calibre-ebook.com/generated/en/ebook-convert.html).
+你可以在 [ebook-convert 手册](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) 中找到一系列的参数。  
 
 ---
 
 ## Demo
-`SUMMARY.md` is a sample entry file. It should also have a TOC to help organize the book:  
+`SUMMARY.md` 是一个主文件。他应该拥有一个 目录（TOC）来帮忙组织书的结构：
+
 ```markdown
 ---
 ebook:
@@ -187,27 +191,25 @@ ebook:
   author: shd101wyy
 ---
 
-# Preface  
-This is the preface, but not necessary.
+# 前言  
+这个是前言，但是不是必须的。
 
-# Table of Contents
-* [Chapter 1](/chapter1/README.md)
-  * [Introduction of Markdown Preview Enhanced](/chapter1/intro.md)
-  * [Features](/chapter1/feature.md)
-* [Chapter 2](/chapter2/README.md)
-  * [Known issues](/chapter2/issues.md)
+# 目录
+* [章 1](/chapter1/README.md)
+  * [Markdown Preview Enhanced 的介绍](/chapter1/intro.md)
+  * [特性](/chapter1/feature.md)
+* [章 2](/chapter2/README.md)
+  * [已知问题](/chapter2/issues.md)
 ```
-
-The link's title is used as the chapter's title, and the link's target is a path to that chapter's file.  
 
 ---
 
-To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
+如果你要导出一个电子书，打开你的主文件预览，例如上面提到的 `SUMMARY.md`。然后右键点击预览，选择 `Export to Disk`，然后选择 `EBOOK` 选项。接着你就可以导出你的电子书了。  
 
-## Known Issues & Limitations
-* eBook generation is still under development.
-* All SVG graph generated by `mermaid`, `PlantUML`, etc will not work in the ebook generated. Only `viz` works.   
-* Only **KaTeX** can be used for Math Typesetting.   
-  And the generated ebook file doesn't render math expression properly in **iBook**.
-* **PDF** and **Mobi** generation is buggy.
-* **Code Chunk** doesn't work with Ebook generation.
+## 已知问题 & 局限
+* 这个特性还在开发中。  
+* 所有由 `mermaid`，`PlantUML`，等 生成的 SVG 图像将不会在电子书中工作。只有 `viz` 没问题。
+* 只有 **KaTeX** 可以在电子书中使用。   
+  生成的电子书中的数学表达式无法在 **iBook** 显示。  
+* **PDF** 以及 **Mobi** 导出有些问题。  
+* **Code Chunk** 无法在电子书中工作。  

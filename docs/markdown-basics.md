@@ -10,6 +10,9 @@ This article is a brief introduction to [GitHub Flavored Markdown writing](https
 ```markdown
 # This is an <h1> tag
 ## This is an <h2> tag
+### This is an <h3> tag
+#### This is an <h4> tag
+##### This is an <h5> tag
 ###### This is an <h6> tag
 ```
 
@@ -71,6 +74,23 @@ As Kanye West said:
 
 ```
 
+### Horizontal Rule  
+```markdown
+Three or more...
+
+---
+
+Hyphens
+
+***
+
+Asterisks
+
+___
+
+Underscores
+```
+
 ### Inline code
 ```markdown  
 I think you should use an
@@ -97,7 +117,7 @@ markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
 ```
 
-#### Code block class
+#### Code block class (MPE extended feature)
 You can set `class` for your code blocks.  
 
 For example, to add `class1 class2` to a code block  

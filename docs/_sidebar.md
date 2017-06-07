@@ -16,7 +16,7 @@
 - Document Export
   - [HTML](html.md)  
   - [PDF](pdf.md)  
-  - [Ebook](ebook.md)
+  - [eBook](ebook.md)
   - [Prince (PDF)](prince.md)  
   - [PhantomJS](phantomjs.md)  
   - Pandoc

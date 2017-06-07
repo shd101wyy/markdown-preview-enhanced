@@ -32,6 +32,9 @@ Please note that `--filter=pandoc-citeproc` will be automatically added if there
 More information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).
 
 ## Exports
+
+You don't have to use the `Pandoc Parser` that I mentioned above to export files.    
+
 The following formats are currently supported, **more formats will be supported in the future.**  
 (Some examples are referred from [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html))  
 Click the link below to see the document format that you want to export.  
