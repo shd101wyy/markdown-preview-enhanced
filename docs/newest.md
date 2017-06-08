@@ -3,8 +3,7 @@
 * [x] Add `Markdown Preview Enhanced: Show Uploaded Images`. Now every time you upload an image, it will be stored to history.    
 * [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) is required.    
 * [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` scope but not by `node.js`.  
-* [x] **Attension:** <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`.   
-      For more information, check [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/graphs).     
+* [x] **Attension:** <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`. For more information, check [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/graphs).     
 * [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/). Contact me if you are willing to help translate the documentation :)   
 * [ ] Tried hard to fix key bindings issue, but dunno if resolved or not :(  
 * [x] Fix eBook generation issue. Add `include_toc` option.   
