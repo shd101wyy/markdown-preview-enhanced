@@ -301,7 +301,19 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
               output = "<style>#{fileContent}</style>"
               # filesCache?[absoluteFilePath] = output
             else if extname == '.pdf'
-              output = fileContent
+              if config?.page_no # only disply the nth page. 1-indexed
+                pages = fileContent.split('\n')
+                pageNo = parseInt(config.page_no) - 1
+                pageNo = 0 if pageNo < 0
+                output = pages[pageNo] or ''
+              else if config?.page_begin or config?.page_end
+                pages = fileContent.split('\n')
+                pageBegin = parseInt(config.page_begin) - 1 or 0
+                pageEnd = config.page_end or pages.length - 1
+                pageBegin = 0 if pageBegin < 0
+                output = pages.slice(pageBegin, pageEnd).join('\n') or ''
+              else
+                output = fileContent
             else if extname in ['.dot', '.gv', '.viz'] # graphviz
               output = "```dot\n#{fileContent}\n```  "
               # filesCache?[absoluteFilePath] = output

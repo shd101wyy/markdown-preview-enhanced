@@ -44,7 +44,17 @@ For example:
 ## Import PDF file  
 To import PDF file, you need to have [pdf2svg](extra.md) installed.  
 Markdown Preview Enhanced supports importing both local and online PDF files.  
-However, it is not recommended to import large PDF files.
+However, it is not recommended to import large PDF files.  
+For example:
+```markdown
+@import "test.pdf"
+```
+
+### PDF configuration
+* **page_no**  
+Display the `nth` page of PDF. 1-based indexing. For example `{page_no:1}` will display the 1st page of pdf.  
+* **page_begin**, **page_end**  
+Inclusive. For example `{page_begin:2, page_end:4}` will display the number 2, 3, 4 pages.
 
 ## Force to render Code Block  
 ```markdown

@@ -34,7 +34,7 @@ ebook:
 ---
 
 ## Demo
-`SUMMARY.md` 是一個主文件。他應該擁有一個 目錄（TOC）來幫忙組織書的結構：
+`SUMMARY.md` 是一個**主文件**。他應該擁有一個 目錄（TOC）來幫忙組織書的結構：
 
 ```markdown
 ---
@@ -88,7 +88,7 @@ http://path-to-image.png
 * **rating**  
 書的評價。應該是 1 到 5 之間的數字。    
 * **include_toc**  
-`默認：true` 是我包含你主文件中所寫的目錄（TOC）。
+`默認：true` 是否包含主文件中所寫的目錄（TOC）。
 
 例如：  
 ```yaml

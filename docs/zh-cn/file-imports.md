@@ -46,6 +46,17 @@
 Markdown Preview Enhanced 支持引用本地或者在线的 PDF 文件。  
 但是，引用大的 PDF 文件是不推荐的。  
 
+例如：
+```markdown
+@import "test.pdf"
+```
+
+### PDF 设置
+* **page_no**  
+显示第 `nth` 页。例如 `{page_no:1}` 将会只显示 PDF 文件的第 1 页。
+* **page_begin**, **page_end**  
+包含的。例如 `{page_begin:2, page_end:4}` 将会显示第 2，3，4 页。
+
 ## 强制渲染为代码块  
 ```markdown
 @import "test.puml" {code_block:true, class:"lineNo"}
