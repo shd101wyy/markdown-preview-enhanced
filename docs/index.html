@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Preview Enhanced</title>
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  window.$docsify = {
+    name: 'MPE',
+    repo: 'https://github.com/shd101wyy/markdown-preview-enhanced.git',
+
+    loadSidebar: true,
+    subMaxLevel: 3,
+
+    loadNavbar: true,
+    mergeNavbar: true,
+    // subMaxLevel: 2
+
+    auto2top: true,
+
+    search: {
+      noData: {
+        '/': 'No results!',
+        '/zh-cn/': '没有结果!',
+        '/zh-tw/': '沒有結果!',
+      },
+      paths: 'auto',
+      placeholder: {
+        '/': 'Search',
+        '/zh-cn/': '搜索',
+        '/zh-tw/': '搜索',
+      }
+    },
+  }
+</script>
+<script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/docsify.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/search.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/zoom-image.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-ruby.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-yaml.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-less.min.js"></script>
+
+</html>

@@ -1,5 +1,5 @@
-# Pandoc (beta)
-After version `0.8.4`, **Markdown Preview Enhanced** supports `pandoc document export` feature that works similarly to `RStudio Markdown`.   
+# Pandoc
+**Markdown Preview Enhanced** supports `pandoc document export` feature that works similarly to `RStudio Markdown`.   
 To use this feature, you need to have [pandoc](http://pandoc.org/) installed.   
 Installation instruction of pandoc can be found [here](http://pandoc.org/installing.html).  
 You can use `pandoc document export` by right clicking at the preview, then you will see it on the context menu.  
@@ -23,34 +23,34 @@ Please note that `--filter=pandoc-citeproc` will be automatically added if there
 
 **Attention**: This feature is still experimental. Feel free to post issues or suggestions.    
 **Known Issues & Limitations**:  
-1. `Live Update` will be disabled if `Use Pandoc Parser` is checked. The preview will only be updated when you save the file.  
-2. `Presentation` will not be working with `pandoc parser`.  
-3. `Scroll sync` is less accurate and has bugs sometimes.  
-4. `ebook` export has problem.  
-5. `Code Chunk` is sometimes buggy.  
-6. `Create TOC` command doesn't work, but `[TOC]` works.  
+1. `ebook` export has problem.  
+2. `Code Chunk` is sometimes buggy.  
+3. `Create TOC` command doesn't work, but `[TOC]` works.  
 
 ## Front-Matter   
 `pandoc document export` requires writing `front-matter`.  
-more information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).
+More information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).
 
-## Formats
+## Exports
+
+You don't have to use the `Pandoc Parser` that I mentioned above to export files.    
+
 The following formats are currently supported, **more formats will be supported in the future.**  
 (Some examples are referred from [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html))  
 Click the link below to see the document format that you want to export.  
 
-* [PDF](./pandoc/pdf.md)  
-* [Word](./pandoc/word.md)
-* [RTF](./pandoc/rtf.md)
-* [Beamer](./pandoc/beamer.md)  
+* [PDF](pandoc-pdf.md)  
+* [Word](pandoc-word.md)
+* [RTF](pandoc-rtf.md)
+* [Beamer](pandoc-beamer.md)  
 
 
 You can also define your own custom document:  
-* [custom](./pandoc/custom.md)
+* [custom](pandoc-custom.md)
 
 ## Articles  
-* [Bibliographies and Citations](./pandoc/bibliographies-and-citations.md)
+* [Bibliographies and Citations](pandoc-bibliographies-and-citations.md)
 
 ## Attention
 `mermaid, wavedrom` will not be working with `pandoc document export`.      
-[code chunk](./code-chunk.md) is partially compatible with `pandoc document export`.    
+[code chunk](code-chunk.md) is partially compatible with `pandoc document export`.    

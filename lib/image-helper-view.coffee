@@ -164,6 +164,23 @@ class ImageHelperView extends View
             url = "<#{url}>"
           editor.insertText("![#{description}](#{url})")
 
+  addImageURLToHistory: (markdownImage)->
+    imageHistoryPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/image_history.md')
+    fs.readFile imageHistoryPath, (error, data)->
+      if error
+        data = ''
+      data = """
+#{markdownImage}
+
+`#{markdownImage}`
+
+#{(new Date()).toString()}
+
+---
+
+""" + data
+      fs.writeFile imageHistoryPath, data
+
   setUploadedImageURL: (fileName, url, editor, hint, curPos)->
     if fileName.lastIndexOf('.')
       description = fileName.slice(0, fileName.lastIndexOf('.'))
@@ -181,6 +198,8 @@ class ImageHelperView extends View
         if (@replaceHint(editor, i, hint, withStr))
           break
         i++
+
+    @addImageURLToHistory(withStr)
 
   uploadImageFile: (file)->
     fileName = file.name
@@ -202,7 +221,7 @@ class ImageHelperView extends View
            .then (json)=>
              @setUploadedImageURL fileName, json.data.link, editor, hint, curPos
            .catch (err)=>
-              atom.notifications.addError(err.message)
+              atom.notifications.addError(err.message.message)
     else # sm.ms
       smAPI.uploadFile file.path,
         (err, url)=>

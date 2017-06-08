@@ -12,18 +12,16 @@ codeChunkAPI = require './code-chunk'
 # convert mermaid, wavedrom, viz.js from svg to png
 # used for markdown-convert and pandoc-convert
 # callback: function(text, imagePaths=[]){ ... }
-processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)->
+processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath, forPandoc}, callback)->
   lines = text.split('\n')
   codes = []
 
-  useStandardCodeFencingForGraphs = atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
   i = 0
   while i < lines.length
     line = lines[i]
     trimmedLine = line.trim()
     if trimmedLine.match(/^```\{(.+)\}$/) or
-       trimmedLine.match(/^```\@/) or
-       (useStandardCodeFencingForGraphs and trimmedLine.match(/^```(mermaid|wavedrom|viz|plantuml|puml|dot)/))
+       trimmedLine.match(/^```(mermaid|wavedrom|viz|plantuml|puml|dot)$/)
       numOfSpacesAhead = line.match(/\s*/).length
 
       j = i + 1
@@ -35,6 +33,9 @@ processGraphs = (text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryP
           break
         content += (lines[j]+'\n')
         j += 1
+    else if forPandoc and match = trimmedLine.match(/^```(.+?)\{(.+?)\}$/) # remove {...} after lang
+      lines[i] = line.replace(match[0], "```#{match[1]}")
+
     i += 1
 
   return processCodes(codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath, imageFilePrefix, useAbsoluteImagePath}, callback)
@@ -69,12 +70,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
     {start, end, content} = codeData
     def = lines[start].trim().slice(3)
 
-    if atom.config.get('markdown-preview-enhanced.useStandardCodeFencingForGraphs')
-      match = def.match(/^\@?(mermaid|wavedrom|viz|plantuml|puml|dot)/)
-    else
-      match = def.match(/^\@(mermaid|wavedrom|viz|plantuml|puml|dot)/)
-
-    if match  # builtin graph
+    if match = def.match(/^(mermaid|wavedrom|viz|plantuml|puml|dot)/)  # builtin graph
       graphType = match[1]
 
       if graphType == 'mermaid'
@@ -243,6 +239,9 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
             currentCodeChunk = last
 
           cmd = options.cmd or lang
+
+          if cmd.match(/(la)tex/)
+            options.latex_svg_dir = imageDirectoryPath
 
           codeChunkAPI.run content, fileDirectoryPath, cmd, options, (error, data, options)->
             outputType = options.output || 'text'

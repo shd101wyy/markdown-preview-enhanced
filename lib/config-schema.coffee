@@ -29,6 +29,22 @@ module.exports =
       type: "boolean"
       default: true,
       order: 3
+    openPreviewPaneAutomatically:
+      title: "Open preview pane automatically when opening a markdown file"
+      type: "boolean"
+      default: true
+      order: 4
+    automaticallyShowPreviewOfMarkdownBeingEdited:
+      title: "Automatically show preview of markdown being edited"
+      type: "boolean"
+      default: true,
+      order: 5
+    closePreviewAutomatically:
+      title: "Automatically close preview when closing a markdown file"
+      description: "This option only works if `Open Only One Preview` is unchecked."
+      type: "boolean"
+      default: true
+      order: 6
     breakOnSingleNewline:
       type: "boolean"
       default: true
@@ -97,6 +113,12 @@ module.exports =
       default: "[[\"$$\", \"$$\"], [\"\\\\[\", \"\\\\]\"]]"
       description: "Use customized Math expression block indicator. By default it is [[\"$$\", \"$$\"]]. `(Restart is required to take effect)`"
       order: 22
+    latexEngine:
+      title: "LaTeX Engine"
+      type: "string"
+      default: "pdflatex" # TODO: different default latex engine for different OS
+      description: "The LaTeX engine you want to you to run latex code chunk."
+      order: 25
     enableWikiLinkSyntax:
       title: "Enable Wiki Link syntax"
       type: "boolean"
@@ -109,12 +131,6 @@ module.exports =
       default: ".md"
       description: "By default, [[test]] will direct to file path `test.md`."
       order: 31
-    useStandardCodeFencingForGraphs:
-      title: "Use standard code fencing for graphs"
-      type: "boolean"
-      default: true
-      description: "Use standard code fencing for graphs. For example, code block `mermaid` or `@mermaid` will render mermaid graphs. If this option is disabled, then only `@mermaid` will render mermaid graphs. Works for mermaid, viz, plantuml, and wavedrom."
-      order: 35
     liveUpdate:
       type: "boolean"
       default: true
@@ -213,11 +229,6 @@ module.exports =
       type: "string"
       default: "1cm"
       order: 132
-    openPreviewPaneAutomatically:
-      title: "Open preview pane automatically when opening a markdown file"
-      type: "boolean"
-      default: true
-      order: 140
     imageFolderPath:
       title: "Image save folder path"
       description: "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'"

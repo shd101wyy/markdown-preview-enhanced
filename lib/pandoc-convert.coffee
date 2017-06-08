@@ -163,21 +163,32 @@ processPaths = (text, fileDirectoryPath, projectDirectoryPath)->
     else # ./test.png or test.png
       return src
 
-  # replace path in ![](...) and []()
-  r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
-  text = text.replace r, (whole, a, b, c)->
-    if b[0] == '<'
-      b = b.slice(1, b.length-1)
-      a + '<' + resolvePath(b.trim()) + '> ' + c
+  inBlock = false
+  lines = text.split('\n')
+  lines = lines.map (line)->
+    if line.match(/^\s*```/)
+      inBlock = !inBlock
+      line
+    else if inBlock
+      line
     else
-      a + resolvePath(b.trim()) + ' ' + c
+      # replace path in ![](...) and []()
+      r = /(\!?\[.*?]\()([^\)|^'|^"]*)(.*?\))/gi
+      line = line.replace r, (whole, a, b, c)->
+        if b[0] == '<'
+          b = b.slice(1, b.length-1)
+          a + '<' + resolvePath(b.trim()) + '> ' + c
+        else
+          a + resolvePath(b.trim()) + ' ' + c
 
-  # replace path in tag
-  r = /(<[img|a|iframe].*?[src|href]=['"])(.+?)(['"].*?>)/gi
-  text = text.replace r, (whole, a, b, c)->
-    a + resolvePath(b) + c
+      # replace path in tag
+      r = /(<[img|a|iframe].*?[src|href]=['"])(.+?)(['"].*?>)/gi
+      line = line.replace r, (whole, a, b, c)->
+        a + resolvePath(b) + c
 
-  text
+      line
+
+  lines.join('\n')
 
 # callback(error, html)
 pandocRender = (text='', {args, projectDirectoryPath, fileDirectoryPath}, callback)->
@@ -321,7 +332,7 @@ pandocConvert = (text, {fileDirectoryPath, projectDirectoryPath, sourceFilePath,
     atom.notifications.addInfo('Your document is being prepared', detail: ':)')
 
     # mermaid / viz / wavedrom graph
-    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath}, (text, imagePaths=[])->
+    processGraphs text, {fileDirectoryPath, projectDirectoryPath, imageDirectoryPath: fileDirectoryPath, forPandoc:true}, (text, imagePaths=[])->
       # console.log args.join(' ')
       #
       # pandoc will cause error if directory doesn't exist,

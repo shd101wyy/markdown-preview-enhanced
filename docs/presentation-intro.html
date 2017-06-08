@@ -1684,6 +1684,93 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
   color: #183691;
   text-decoration: underline;
 }
+.scrollbar-style::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-style::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #fff;
+}
+.scrollbar-style::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(150, 150, 150, 0.66);
+  border: 4px solid rgba(150, 150, 150, 0.66);
+  background-clip: content-box;
+}
+.markdown-preview-enhanced-container .mpe-toolbar {
+  position: absolute;
+  top: 32px;
+  right: 24px;
+  opacity: 0;
+  display: block;
+}
+.markdown-preview-enhanced-container .mpe-toolbar .back-to-top-btn,
+.markdown-preview-enhanced-container .mpe-toolbar .refresh-btn,
+.markdown-preview-enhanced-container .mpe-toolbar .sidebar-toc-btn {
+  float: right;
+  width: 32px;
+  margin-right: 4px;
+  opacity: 0.4;
+}
+.markdown-preview-enhanced-container .mpe-toolbar .back-to-top-btn:hover,
+.markdown-preview-enhanced-container .mpe-toolbar .refresh-btn:hover,
+.markdown-preview-enhanced-container .mpe-toolbar .sidebar-toc-btn:hover {
+  opacity: 1.0;
+}
+.markdown-preview-enhanced-container:hover .back-to-top-btn,
+.markdown-preview-enhanced-container:hover .refresh-btn,
+.markdown-preview-enhanced-container:hover .sidebar-toc-btn {
+  display: block;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-sidebar-toc {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 268px;
+  height: 100%;
+  padding: 32px 0 12px 0;
+  overflow: auto;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  box-shadow: -4px 0px 12px rgba(150, 150, 150, 0.33);
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-sidebar-toc a {
+  color: #333;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-sidebar-toc ul {
+  padding: 0 1.6em;
+  margin-top: 0.8em;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-sidebar-toc li {
+  margin-bottom: 0.8em;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-sidebar-toc ul {
+  list-style-type: none;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .mpe-toolbar {
+  right: 300px;
+}
+.markdown-preview-enhanced-container.show-sidebar-toc .markdown-preview-enhanced {
+  width: calc(100% - 268px);
+}
+.markdown-preview-enhanced-container .mpe-sidebar-toc::-webkit-scrollbar,
+.markdown-preview-enhanced-container .markdown-preview-enhanced::-webkit-scrollbar {
+  width: 8px;
+}
+.markdown-preview-enhanced-container .mpe-sidebar-toc::-webkit-scrollbar-track,
+.markdown-preview-enhanced-container .markdown-preview-enhanced::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #fff;
+}
+.markdown-preview-enhanced-container .mpe-sidebar-toc::-webkit-scrollbar-thumb,
+.markdown-preview-enhanced-container .markdown-preview-enhanced::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(150, 150, 150, 0.66);
+  border: 4px solid rgba(150, 150, 150, 0.66);
+  background-clip: content-box;
+}
 .markdown-preview-enhanced {
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
   font-size: 16px;
@@ -1699,11 +1786,11 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
 .markdown-preview-enhanced > :first-child {
   margin-top: 0;
 }
-.markdown-preview-enhanced[is="space-pen-div"] {
+.markdown-preview-enhanced[for="preview"] {
   width: 100%;
+  height: 100%;
   margin: 0;
-  z-index: 999;
-  overflow: scroll;
+  overflow: auto;
   font-size: 16px;
   display: block;
   position: absolute;
@@ -1956,6 +2043,30 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
   margin-top: 0;
   margin-bottom: 16px;
 }
+.markdown-preview-enhanced pre.editor-colors.lineNo {
+  counter-reset: lineNo;
+}
+.markdown-preview-enhanced pre.editor-colors.lineNo .line::before {
+  display: inline-block;
+  counter-increment: lineNo;
+  content: counter(lineNo);
+  text-align: right;
+  padding: 0;
+  margin-left: -1em;
+  margin-right: 1.5em;
+}
+.markdown-preview-enhanced pre.editor-colors.lineNo.lineno-100 .line::before {
+  width: 2em;
+}
+.markdown-preview-enhanced pre.editor-colors.lineNo.lineno-1000 .line::before {
+  width: 2.5em;
+}
+.markdown-preview-enhanced pre.editor-colors.lineNo.lineno-10000 .line::before {
+  width: 3em;
+}
+.markdown-preview-enhanced pre.editor-colors.lineNo.lineno-100000 .line::before {
+  width: 3.5em;
+}
 .markdown-preview-enhanced kbd {
   color: #000000;
   border: 1px solid #d6d6d6;
@@ -2016,26 +2127,29 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
     white-space: normal;
   }
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk {
+.markdown-preview-enhanced .mathjax-exps .MathJax_Display {
+  text-align: center !important;
+}
+.markdown-preview-enhanced[for="preview"] .code-chunk {
   position: relative;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .output-div {
+.markdown-preview-enhanced[for="preview"] .code-chunk .output-div {
   overflow-x: auto;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .output-div svg {
+.markdown-preview-enhanced[for="preview"] .code-chunk .output-div svg {
   display: block;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk pre {
+.markdown-preview-enhanced[for="preview"] .code-chunk pre {
   cursor: text;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group {
+.markdown-preview-enhanced[for="preview"] .code-chunk .btn-group {
   position: absolute;
   right: 0;
   top: 0;
   display: none;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-btn,
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-all-btn {
+.markdown-preview-enhanced[for="preview"] .code-chunk .btn-group .run-btn,
+.markdown-preview-enhanced[for="preview"] .code-chunk .btn-group .run-all-btn {
   float: right;
   margin-left: 4px;
   border-radius: 3px;
@@ -2045,15 +2159,15 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
   background-image: none;
   border: none;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-btn:hover,
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .btn-group .run-all-btn:hover {
+.markdown-preview-enhanced[for="preview"] .code-chunk .btn-group .run-btn:hover,
+.markdown-preview-enhanced[for="preview"] .code-chunk .btn-group .run-all-btn:hover {
   background-color: #4b7fe8;
   cursor: pointer;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk:hover .btn-group {
+.markdown-preview-enhanced[for="preview"] .code-chunk:hover .btn-group {
   display: block;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk .status {
+.markdown-preview-enhanced[for="preview"] .code-chunk .status {
   position: absolute;
   right: 0;
   top: 0;
@@ -2063,38 +2177,16 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
   background-color: rgba(0, 0, 0, 0.04);
   display: none;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk.running .btn-group {
+.markdown-preview-enhanced[for="preview"] .code-chunk.running .btn-group {
   display: none;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .code-chunk.running .status {
+.markdown-preview-enhanced[for="preview"] .code-chunk.running .status {
   display: block;
 }
-.markdown-preview-enhanced[is="space-pen-div"] .back-to-top-btn,
-.markdown-preview-enhanced[is="space-pen-div"] .refresh-btn {
-  position: fixed;
-  display: none;
-  right: 24px;
-  top: 54px;
-}
-.markdown-preview-enhanced[is="space-pen-div"] .back-to-top-btn {
-  right: 72px;
-}
-.markdown-preview-enhanced[is="space-pen-div"]:hover .back-to-top-btn,
-.markdown-preview-enhanced[is="space-pen-div"]:hover .refresh-btn {
-  display: block;
-  opacity: 0.4;
-}
-.markdown-preview-enhanced[is="space-pen-div"]:hover .back-to-top-btn:hover,
-.markdown-preview-enhanced[is="space-pen-div"]:hover .refresh-btn:hover {
-  opacity: 1.0;
-}
-.markdown-preview-enhanced:not([is="space-pen-div"]) .code-chunk .btn-group {
+.markdown-preview-enhanced:not([for="preview"]) .code-chunk .btn-group {
   display: none;
 }
-.markdown-preview-enhanced:not([is="space-pen-div"]) .code-chunk .status {
-  display: none;
-}
-.markdown-preview-enhanced:not([is="space-pen-div"]) .back-to-top-btn {
+.markdown-preview-enhanced:not([for="preview"]) .code-chunk .status {
   display: none;
 }
 /*
@@ -2152,7 +2244,6 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
   transform-style: preserve-3d;
   font-size: 100%;
   font: inherit;
-  z-index: 100;
 }
 .markdown-preview-enhanced[data-presentation-mode] {
   font-size: 24px;
@@ -2189,11 +2280,118 @@ pre.editor-colors .search-results .mpe-syntax--marker.current-result .region {
  * http://www.lesscss.org
  */
 /*
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+      // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #f2f2f2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      // border-radius: 10px;
+      // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: #000;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: darken(#000, 10%);
+    }
+  }
+}
+*/
+.markdown-preview-enhanced-container {
+  /*
+  .markdown-preview-enhanced.markdown-preview-enhanced {
+    // overflow: scroll;
+    pre.editor-colors.lineno {
+      .line::before {
+        // background-color: red;
+        // padding: 0 0.5em;
+        // margin-right: 1.5em;
+        // width: 2.5em;
+      }
+    }
+
+
+    &::-webkit-scrollbar-track {
+      // background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+    }
+
+    &::-webkit-scrollbar-thumb {
+      // background: red;
+      // -webkit-box-shadow: inset 0 0 6px rgba(168, 77, 77, 1);
+      // background-clip: content-box;
+      // background: transparent;
+      // border: 4px solid rgba(150, 150, 150, 0.66);
+      // background-color: rgba(150, 150, 150, .66);
+      // background: none;
+    }
+  }
+  */
+  /*
+  .markdown-preview-enhanced, .mpe-sidebar-toc {
+    .scrollbar();
+  }
+  */
+  /*
+  .mpe-sidebar-toc.mpe-sidebar-toc {
+    font-size: 1em;
+    ul {
+      padding: 0 1.6em;
+    }
+    p {
+      margin-bottom: 0.8em;
+    }
+  }
+  */
+  /*
+  &.show-sidebar-toc {
+    .mpe-sidebar-toc {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 268px;
+      height: 100%;
+      padding: 48px 0 12px 0;
+      overflow: scroll;
+
+      ul {
+        list-style-type: none;
+      }
+    }
+
+    .mpe-toolbar {
+      right: 300px;
+    }
+
+    .markdown-preview-enhanced {
+      width: calc(~"100% - 268px");
+    }
+  }
+  */
+}
+/*
  * markdown-preview-enhanced custom style
  */
 .markdown-preview-enhanced.markdown-preview-enhanced h1,
-.markdown-preview-enhanced.markdown-preview-enhanced h2 {
-  border: none;
+.markdown-preview-enhanced.markdown-preview-enhanced h2,
+.markdown-preview-enhanced.markdown-preview-enhanced h3,
+.markdown-preview-enhanced.markdown-preview-enhanced h4,
+.markdown-preview-enhanced.markdown-preview-enhanced h5,
+.markdown-preview-enhanced.markdown-preview-enhanced h6 {
+  border-bottom: none;
+}
+@page {
+  @bottom-left {
+    content: counter(page) "/" counter(pages);
+  }
 }
 .markdown-preview-enhanced.markdown-preview-enhanced.phantomjs-pdf {
   font-size: 0.8em;
@@ -2235,7 +2433,7 @@ Such as Math typesetting, mermaid graph, code chunk etc...<br>
 </section><section   class=""><p>You can set initialization config for your presentation.<br>
 Just add front-matter to your presentation markdown file.</p>
 <pre class="editor-colors lang-yaml"><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span class="mpe-syntax--punctuation mpe-syntax--definition mpe-syntax--directives mpe-syntax--end mpe-syntax--yaml"><span>---</span></span></span></div><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span class="mpe-syntax--entity mpe-syntax--name mpe-syntax--tag mpe-syntax--yaml"><span>presentation</span></span><span class="mpe-syntax--punctuation mpe-syntax--separator mpe-syntax--key-value mpe-syntax--yaml"><span>:</span></span><span>&nbsp;</span></span></div><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--entity mpe-syntax--name mpe-syntax--tag mpe-syntax--yaml"><span>width</span></span><span class="mpe-syntax--punctuation mpe-syntax--separator mpe-syntax--key-value mpe-syntax--yaml"><span>:</span></span><span>&nbsp;</span><span class="mpe-syntax--constant mpe-syntax--numeric mpe-syntax--yaml"><span>800</span></span><span>&nbsp;</span></span></div><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--entity mpe-syntax--name mpe-syntax--tag mpe-syntax--yaml"><span>height</span></span><span class="mpe-syntax--punctuation mpe-syntax--separator mpe-syntax--key-value mpe-syntax--yaml"><span>:</span></span><span>&nbsp;</span><span class="mpe-syntax--constant mpe-syntax--numeric mpe-syntax--yaml"><span>600</span></span><span>&nbsp;</span></span></div><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span>&nbsp;&nbsp;</span><span class="mpe-syntax--entity mpe-syntax--name mpe-syntax--tag mpe-syntax--yaml"><span>controls</span></span><span class="mpe-syntax--punctuation mpe-syntax--separator mpe-syntax--key-value mpe-syntax--yaml"><span>:</span></span><span>&nbsp;</span><span class="mpe-syntax--constant mpe-syntax--language mpe-syntax--yaml"><span>false</span></span></span></div><div class="line"><span class="mpe-syntax--source mpe-syntax--yaml"><span class="mpe-syntax--punctuation mpe-syntax--definition mpe-syntax--directives mpe-syntax--end mpe-syntax--yaml"><span>---</span></span></span></div></pre>
-<p>More information about front-matter settings can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-front-matter.md">here</a>.</p>
+<p>More information about front-matter settings can be found <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/presentation">here</a>.</p>
 </section><section  data-notes='This is speaker note'  class=""><p><strong>Speaker notes</strong> is also supported.<br>
 Press the <kbd>s</kbd> key on your keyboard to open the notes window.</p>
 <p>To enable speaker notes, set front-matter as:</p>
@@ -2292,9 +2490,9 @@ right clicking at the preview, then choose <code>Open in Browser</code> option.<
 </section><section   class=""><p><strong>Markdown Preview Enhanced</strong> can also generate beautiful <strong>HTML</strong> or <strong>PDF</strong> files for your presentation.</p>
 </section><section   class=""><h4 id="star-this-project-if-you-like-it">Star this project if you like it ;)</h4>
 <ul>
-<li><p>Github Repository can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced">here</a></p></li>
-<li><p>Feel free to post issues and request new features <a href="https://github.com/shd101wyy/markdown-preview-enhanced/issues">here</a></p></li>
-<li><p>Source code of this presentation can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md">here</a>, <a href="https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md">raw</a></p></li>
+<li>Github Repository can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced">here</a></li>
+<li>Feel free to post issues and request new features <a href="https://github.com/shd101wyy/markdown-preview-enhanced/issues">here</a></li>
+<li>Source code of this presentation can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md">here</a>, <a href="https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md">raw</a></li>
 </ul>
 </section><section  data-background-image='http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg'  class=""></section>
   </div>

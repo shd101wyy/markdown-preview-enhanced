@@ -1,17 +1,11 @@
-
-<!-- toc orderedList:0 depthFrom:1 depthTo:6 -->
-
-* [Table of Contents](#table-of-contents)
-	* [[TOC]](#toc)
-	* [Configuration](#configuration)
-
-<!-- tocstop -->
-
 # Table of Contents
 **Markdown Preview Enhanced** can create `TOC` for your markdown file.   
-You can press <kbd>cmd+shift+p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
+You can press <kbd>cmd-shift-p</kbd> then choose `Markdown Preview Enhanced: Create Toc` to create `TOC`.  
 Multiple TOCs can be created.  
 To exclude a heading from the `TOC`, append `{.ignore}` **after** your heading.  
+
+![screen shot 2017-06-05 at 9 02 20 pm](https://cloud.githubusercontent.com/assets/1908863/26810607/47f0aaa8-4a32-11e7-89ef-f5caebf00720.png)
+
 
 ## [TOC]  
 You can also create `TOC` by inserting `[TOC]` to your markdown file.  
@@ -32,3 +26,4 @@ Use orderedList or not.
 * **depthFrom**, **depthTo**  
 `[1~6]` inclusive.   
 
+[➔ File Imports](file-imports.md)

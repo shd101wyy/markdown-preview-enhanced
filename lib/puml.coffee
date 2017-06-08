@@ -58,8 +58,8 @@ render = (content, fileDirectoryPath='', callback)->
   fileDirectoryPath = content.match(/^'\s@mpe_file_directory_path:(.+)$/m)?[1] or fileDirectoryPath
 
 
-  if (content.match(/^\@start/m))
-    if (content.match(/^\@end/m))
+  if startMatch = content.match(/^\@start(.+?)\s+/m)
+    if (content.match(new RegExp("^\\@end#{startMatch[1]}", 'm')))
       null # do nothing
     else
       content = "@startuml\n@enduml" # error

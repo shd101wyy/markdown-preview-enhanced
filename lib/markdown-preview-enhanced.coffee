@@ -54,20 +54,26 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:toggle-zen-mode': => @toggleZenMode()
       'markdown-preview-enhanced:run-code-chunk': => @runCodeChunk()
       'markdown-preview-enhanced:run-all-code-chunks': => @runAllCodeChunks()
-      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+      'markdown-preview-enhanced:show-uploaded-images': => @showUploadedImages()
+      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../docs/welcome.md')
 
     # When the preview is displayed
     # preview will display the content of editor (pane item) that is activated
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor)=>
-        return if !@singlePreview
-        preview = @getSinglePreview()
         if editor and
             editor.buffer and
-          	editor.getGrammar and
-          	editor.getGrammar().scopeName == 'source.gfm' and
-          	preview?.isOnDom()
-          if preview.editor != editor
+          	editor.getGrammar?().scopeName == 'source.gfm'
+          preview = @getPreviewForEditor editor
+          return if !(preview?.isOnDom())
+
+          if @singlePreview and preview.editor != editor
             preview.bindEditor(editor)
+
+          if atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited')
+            pane = atom.workspace.paneForItem(preview)
+            if pane? and pane isnt atom.workspace.getActivePane()
+              pane.activateItem(preview)
+
 
     # automatically open preview when activate a markdown file
     # if 'openPreviewPaneAutomatically' option is enable
@@ -129,10 +135,15 @@ module.exports = MarkdownPreviewEnhanced =
 
   openWelcomePage: ->
     PACKAGE ?= require('../package.json')
-    packageJSONPath = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/package.json')
+    configDir = path.resolve(atom.config.configDirPath, './markdown-preview-enhanced')
+    packageJSONPath = path.resolve(configDir, './package.json')
 
     helper = ()->
-      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+      atom.workspace.open path.resolve(__dirname, '../docs/welcome.md')
+
+      if !fs.existsSync(configDir)
+        fs.mkdirSync(configDir)
+
       fs.writeFile packageJSONPath, JSON.stringify({version: PACKAGE.version})
 
     try
@@ -368,6 +379,9 @@ module.exports = MarkdownPreviewEnhanced =
   openMathJaxConfig: ()->
     require('./mathjax-wrapper').loadMathJaxConfig()
     atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/mathjax_config.js'))
+
+  showUploadedImages: ()->
+    atom.workspace.open(path.resolve(atom.config.configDirPath, './markdown-preview-enhanced/image_history.md'))
 
   toggleZenMode: ()->
     enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')

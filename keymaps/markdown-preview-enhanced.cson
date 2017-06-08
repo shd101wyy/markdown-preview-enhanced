@@ -7,14 +7,14 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-'atom-workspace atom-text-editor[data-grammar*="gfm"]':
-  'ctrl-M': 'markdown-preview-enhanced:toggle'
-  'ctrl-I': 'markdown-preview-enhanced:image-helper'
+'.platform-win32 atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-linux atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-darwin atom-workspace atom-text-editor[data-grammar="source gfm"]':
+  'ctrl-shift-m': 'markdown-preview-enhanced:toggle'
+  'ctrl-shift-i': 'markdown-preview-enhanced:image-helper'
   'shift-enter': 'markdown-preview-enhanced:run-code-chunk'
   'ctrl-shift-enter': 'markdown-preview-enhanced:run-all-code-chunks'
   'ctrl-shift-s': 'markdown-preview-enhanced:sync-preview'
 
-'.platform-darwin .markdown-preview-enhanced-container':
+'.platform-darwin atom-workspace .markdown-preview-enhanced-container':
   'cmd-+': 'markdown-preview-enhanced:zoom-in'
   'cmd-=': 'markdown-preview-enhanced:zoom-in'
   'cmd--': 'markdown-preview-enhanced:zoom-out'
@@ -23,7 +23,7 @@
   'cmd-r': 'markdown-preview-enhanced:refresh-preview'
   'ctrl-shift-s': 'markdown-preview-enhanced:sync-source'
 
-'.platform-win32 .markdown-preview-enhanced-container, .platform-linux .markdown-preview-enhanced-container':
+'.platform-win32 atom-workspace .markdown-preview-enhanced-container, .platform-linux atom-workspace .markdown-preview-enhanced-container':
   'ctrl-+': 'markdown-preview-enhanced:zoom-in'
   'ctrl-=': 'markdown-preview-enhanced:zoom-in'
   'ctrl--': 'markdown-preview-enhanced:zoom-out'

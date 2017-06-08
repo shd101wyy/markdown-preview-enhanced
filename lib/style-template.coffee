@@ -74,6 +74,7 @@ module.exports = """
 
       ul {
         padding: 0 1.6em;
+        margin-top: 0.8em;
       }
 
       li {
@@ -499,6 +500,11 @@ module.exports = """
         word-wrap: break-word;
         white-space: normal;
     }
+  }
+
+  // MathJax
+  .mathjax-exps .MathJax_Display {
+    text-align: center !important;
   }
 
   // code chunk
