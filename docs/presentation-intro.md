@@ -59,7 +59,7 @@ presentation:
   controls: false
 ---
 ```
-More information about front-matter settings can be found [here](https://shd101wyy.github.io/markdown-preview-enhanced-website/#/presentation).
+More information about front-matter settings can be found [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/presentation).
 
 <!-- slide data-notes:"This is speaker note"-->  
 **Speaker notes** is also supported.  
