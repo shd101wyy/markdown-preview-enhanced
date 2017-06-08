@@ -8,6 +8,12 @@
 
 ![intro](https://user-images.githubusercontent.com/1908863/26898176-a5cad7fc-4b90-11e7-9d8c-74f85f28f133.gif)
 
+<p align="center">
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>  
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>  
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br>
+</p>
+
 *Still Beta Version!*    
 
 ## Supporting this project
