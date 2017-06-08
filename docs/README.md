@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 
-**Markdown Preview Enhanced** is a **SUPER POWERFUL** markdown extension for **ATOM** editor that aims to make your markdown writing experience wonderful.
+**Markdown Preview Enhanced** is a **SUPER POWERFUL** markdown extension for **ATOM** editor that aims to give you a wonderful markdown writing experience.  
 
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 

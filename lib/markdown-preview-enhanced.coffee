@@ -55,7 +55,7 @@ module.exports = MarkdownPreviewEnhanced =
       'markdown-preview-enhanced:run-code-chunk': => @runCodeChunk()
       'markdown-preview-enhanced:run-all-code-chunks': => @runAllCodeChunks()
       'markdown-preview-enhanced:show-uploaded-images': => @showUploadedImages()
-      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+      'markdown-preview-enhanced:open-welcome-page': => atom.workspace.open path.resolve(__dirname, '../docs/welcome.md')
 
     # When the preview is displayed
     # preview will display the content of editor (pane item) that is activated
@@ -139,7 +139,7 @@ module.exports = MarkdownPreviewEnhanced =
     packageJSONPath = path.resolve(configDir, './package.json')
 
     helper = ()->
-      atom.workspace.open path.resolve(__dirname, '../WELCOME.md')
+      atom.workspace.open path.resolve(__dirname, '../docs/welcome.md')
 
       if !fs.existsSync(configDir)
         fs.mkdirSync(configDir)

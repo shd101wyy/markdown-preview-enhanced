@@ -1,10 +1,10 @@
 ## 0.13.0
-* [x] Support `LaTeX` code chunk.  [pdf2svg](extra.md) and [LaTeX engine](extra.md) are required. See below.      
+* [x] Support `LaTeX` code chunk.  [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) and [LaTeX engine](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) are required. See below.      
 * [x] Add `Markdown Preview Enhanced: Show Uploaded Images`. Now every time you upload an image, it will be stored to history.    
-* [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](extra.md) is required.    
+* [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) is required.    
 * [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` scope but not by `node.js`.  
 * [x] **Attension:** <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`.   
-      For more information, check [this doc](graphs.md).     
+      For more information, check [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/graphs).     
 * [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/). Contact me if you are willing to help translate the documentation :)   
 * [ ] Tried hard to fix key bindings issue, but dunno if resolved or not :(  
 * [x] Fix eBook generation issue. Add `include_toc` option.   
@@ -14,7 +14,7 @@
 
 ### LaTeX Code Chunk
 Markdown Preview Enhanced now supports `LaTeX` compilation.  
-Before using this feature, you need to have [pdf2svg](extra.md?id=install-svg2pdf) and [LaTeX engine](extra.md?id=install-latex-distribution) installed.  
+Before using this feature, you need to have [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra?id=install-svg2pdf) and [LaTeX engine](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra?id=install-latex-distribution) installed.  
 Then you can simply write LaTeX in code chunk like this:  
 
 
@@ -39,7 +39,7 @@ The width of result.
 The height of result.  
 
 **latex_engine**  
-The latex engine that you used to parse `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](usages.md?id=package-settings).    
+The latex engine that you used to parse `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](https://shd101wyy.github.io/markdown-preview-enhanced/#/usages?id=package-settings).    
 
 
 #### TikZ example  
