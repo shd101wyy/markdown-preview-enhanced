@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 
-**Markdown Preview Enhanced** is a **SUPER POWERFUL** markdown extension for **ATOM** editor that aims to give you a wonderful markdown writing experience.  
+**Markdown Preview Enhanced** is a **SUPER POWERFUL** markdown extension for **ATOM** editor that aims to bring you a wonderful markdown writing experience.  
 
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) is recommended to be installed to work with markdown-preview-enhanced.  
 
@@ -39,7 +39,7 @@ How to install this package can be found [here](installation.md).
 - And many more...
 
 ## Support this project
-Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](backers.md). You can help make this project better by [supporting us on Patreon](). Thank you!  
+Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](backers.md). You can help make this project better by [supporting us on Patreon](https://www.patreon.com/shd101wyy). Thank you!  
 
 ## Help translation
 If you are willing to help translate this documentation, please contact me by posting an issue [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues).      

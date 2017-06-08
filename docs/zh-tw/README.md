@@ -39,7 +39,7 @@
 - 以及更多。。。
 
 ## 支持這個項目
-Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source License](LICENSE.md) 下發布的免費開源軟件。這個項目的持續開發脫離不了這些可敬的[贊助者們](backers.md)。你也可以使這個項目變的更好，到 [Patreon]() 上來支持我們。謝謝！
+Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source License](LICENSE.md) 下發布的免費開源軟件。這個項目的持續開發脫離不了這些可敬的[贊助者們](backers.md)。你也可以使這個項目變的更好，到 [Patreon](https://www.patreon.com/shd101wyy) 上來支持我們。謝謝！
 
 ## 幫忙翻譯文檔
 如果你想要幫忙翻譯這個文檔到其他的語言, 請在 [這裡](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。      

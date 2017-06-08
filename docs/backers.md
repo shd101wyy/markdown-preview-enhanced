@@ -1,6 +1,6 @@
 # Backers
 
-You can join them in supporting Markdown Preview Enhanced development by [pledging on Patreon!](). Backers in the same pledge level appear in the order of pledge date.  
+You can join them in supporting Markdown Preview Enhanced development by [pledging on Patreon!](https://www.patreon.com/shd101wyy). Backers in the same pledge level appear in the order of pledge date.  
 
 ## $499
 empty

@@ -11,7 +11,7 @@
 *Still Beta Version!*    
 
 ## Supporting this project
-Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](./docs/backers.md). You can help make this project better by [supporting us on Patreon](). Thank you!  
+Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](./docs/backers.md). You can help make this project better by [supporting us on Patreon](https://www.patreon.com/shd101wyy). Thank you!  
 
 ## Introduction  
 Markdown Preview Enhanced is an Atom extension that provides you with many useful functionalities such as automatic scroll sync, math typesetting, mermaid, PlantUML, pandoc, PDF export, etc. A lot of its ideas are inspired by [Markdown Preview Plus](https://github.com/atom-community/markdown-preview-plus) and [RStudio Markdown](http://rmarkdown.rstudio.com/).  
