@@ -31,8 +31,8 @@ TAGS_TO_REPLACE = {
     '>': '&gt;',
     '"': '&quot;',
     '\'': '&#x27;',
-    '\/', '&#x2F;',
-    '\\', '&#x5C;',
+    '\/': '&#x2F;',
+    '\\': '&#x5C;',
 }
 
 TAGS_TO_REPLACE_REVERSE = {
