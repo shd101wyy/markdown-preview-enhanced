@@ -629,7 +629,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     backToTopBtn = document.createElement('div')
     backToTopBtn.classList.add('back-to-top-btn')
     backToTopBtn.classList.add('btn')
-    backToTopBtn.innerHTML = '<span>⭱</span>'
+    backToTopBtn.innerHTML = '<span>⬆︎</span>'
     @toolbar.appendChild(backToTopBtn)
 
     backToTopBtn.onclick = ()=>
