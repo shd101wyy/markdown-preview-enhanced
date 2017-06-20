@@ -648,7 +648,7 @@ class MarkdownPreviewEnhancedView extends ScrollView
     sidebarTOCBtn = document.createElement('div')
     sidebarTOCBtn.classList.add('sidebar-toc-btn')
     sidebarTOCBtn.classList.add('btn')
-    sidebarTOCBtn.innerHTML = '<span>≡</span>'
+    sidebarTOCBtn.innerHTML = '<span>§</span>'
     @toolbar.appendChild(sidebarTOCBtn)
 
     helper = ()=>
