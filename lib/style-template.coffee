@@ -40,6 +40,7 @@ module.exports = """
       width: 32px;
       margin-right: 4px;
       opacity: 0.4;
+      font-size: 20px;
 
       &:hover {
         opacity: 1.0;
