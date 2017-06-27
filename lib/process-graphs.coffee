@@ -102,7 +102,7 @@ processCodes = (codes, lines, {fileDirectoryPath, projectDirectoryPath, imageDir
         asyncFunc = helper(start, end, content)
         asyncFunctions.push asyncFunc
 
-      else if graphType == 'viz'
+      else if graphType in [ 'viz', 'dot']
         helper = (start, end, content)->
           (cb)->
             div = document.createElement('div')

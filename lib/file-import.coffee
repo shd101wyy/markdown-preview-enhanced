@@ -228,7 +228,7 @@ fileImport = (inputString, {filesCache, fileDirectoryPath, projectDirectoryPath,
         # if filesCache?[absoluteFilePath] # already in cache
         #  return helper(end+1, lineNo+1, outputString+filesCache[absoluteFilePath]+'\n')
 
-        extname = path.extname(filePath)
+        extname = path.extname(filePath).toLowerCase()
         output = ''
         if extname in ['.jpeg', '.jpg', '.gif', '.png', '.apng', '.svg', '.bmp'] # image
           imageSrc = filesCache?[filePath]
