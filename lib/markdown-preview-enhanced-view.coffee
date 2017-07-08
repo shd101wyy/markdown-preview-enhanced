@@ -1121,6 +1121,8 @@ class MarkdownPreviewEnhancedView extends ScrollView
 
             el.innerHTML = @Viz(content, options) # default svg
             el.setAttribute 'data-processed', true
+            svgElement = el.getElementsByTagName('svg')[0]
+            svgElement.removeAttribute 'height'
           catch error
             el.innerHTML = error
 
