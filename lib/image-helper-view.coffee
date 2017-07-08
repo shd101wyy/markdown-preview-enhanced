@@ -56,10 +56,6 @@ class ImageHelperView extends View
     closeBtn.click ()=>
       @hidePanel()
 
-    addBtn = $('.add-btn', @element)
-    addBtn.click ()=>
-      @insertImageURL()
-
     dropArea = $('.drop-area', @element)
     fileUploader = $('.file-uploader', @element)
 
@@ -186,9 +182,6 @@ class ImageHelperView extends View
       description = fileName.slice(0, fileName.lastIndexOf('.'))
     else
       description = fileName
-
-    buffer = editor.buffer
-    line = editor.buffer.lines[curPos.row]
 
     withStr = "![#{description}](#{url})"
 

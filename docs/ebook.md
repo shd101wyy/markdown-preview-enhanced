@@ -15,7 +15,7 @@ $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/
 ```
 **Windows**  
 Download and Install the [Calibre Application](https://calibre-ebook.com/download).  
-Add `ebook-convert` to your system path.
+Add `ebook-convert` to your `$PATH`.
 
 ## eBook Example
 An eBook example project can be found [here](https://github.com/shd101wyy/ebook-example).   

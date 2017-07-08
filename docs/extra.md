@@ -7,7 +7,7 @@ brew install pdf2svg
 ```  
 * **Windows**  
 Windows binaries are available from [GitHub](https://github.com/jalios/pdf2svg-windows).  
-You also need to set the `pdf2svg.exe` to your system path.  
+You also need to set the `pdf2svg.exe` to your `$PATH`.  
 
 
 * **Linux**   
