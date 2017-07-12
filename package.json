@@ -35,23 +35,13 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "async": "^2.1.5",
-    "atom-space-pen-views": "^2.2.0",
-    "babyparse": "^0.4.6",
-    "cheerio": "0.15.0",
-    "gray-matter": "^2.1.0",
-    "html-pdf": "^2.1.0",
-    "imgur": "^0.2.0",
-    "katex": "^0.7.1",
-    "less": "^2.7.2",
-    "loophole": "^1.1.0",
-    "md5": "^2.2.1",
-    "remarkable": "^1.7.1",
-    "request": "2.76.0",
-    "temp": "^0.8.3",
-    "uslug": "^1.0.4"
+    "atom-space-pen-views": "^2.2.0"
   },
   "devDependencies": {
-    "chinese-conv": "^1.0.1"
+    "@types/jquery": "^3.2.7",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.11",
+    "chinese-conv": "^1.0.1",
+    "typescript": "^2.4.1"
   }
 }
