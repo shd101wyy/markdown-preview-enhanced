@@ -22,7 +22,9 @@ let previewsMap:{[key:string]:MarkdownPreviewEnhancedView} = {}
  * Check if the `filePath` is a markdown file. 
  * @param filePath 
  */
-function isMarkdownFile(filePath:string='') {
+function isMarkdownFile(filePath:string=''):boolean {
+  if (filePath.startsWith('mpe://')) return false // this is preview
+
   const ext = path.extname(filePath)
   for (let i = 0; i < config.fileExtension.length; i++) {
     if (config.fileExtension[i] === ext) {

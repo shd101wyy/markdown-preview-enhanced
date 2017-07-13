@@ -57,7 +57,20 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public getTitle() {
-    return 'mpe preview'
+    let fileName = 'unknown'
+    if (this.editor) {
+      fileName = this.editor['getFileName']()
+    }
+    return `${fileName} preview`
+  }
+
+  private updateTabTitle() {
+    if (!this.config.singlePreview) return 
+
+    const title = this.getTitle()
+    const tabTitle = document.querySelector('[data-type="MarkdownPreviewEnhancedView"] div.title') as HTMLElement
+    if (tabTitle)
+      tabTitle.innerText = title
   }
 
   /**
@@ -73,17 +86,17 @@ export class MarkdownPreviewEnhancedView {
    */
   public bindEditor(editor:AtomCore.TextEditor) {
     if (!this.editor) {
+      this.editor = editor
       atom.workspace.open(this.uri, {
         split: "right",
         activatePane: false,
-        activateItem: false,
+        activateItem: true,
         searchAllPanes: false,
         initialLine: 0,
         initialColumn: 0,
         pending: false
       })
       .then(()=> {
-        this.editor = editor
         this.initEvents()
       })
     } else { // preview already on
@@ -97,6 +110,9 @@ export class MarkdownPreviewEnhancedView {
       this.disposables.dispose()
     }
     this.disposables = new CompositeDisposable()
+
+    // reset tab title
+    this.updateTabTitle()
 
     // reset 
     this.JSAndCssFiles = []

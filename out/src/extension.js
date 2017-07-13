@@ -19,6 +19,8 @@ let previewsMap = {};
  * @param filePath
  */
 function isMarkdownFile(filePath = '') {
+    if (filePath.startsWith('mpe://'))
+        return false; // this is preview
     const ext = path.extname(filePath);
     for (let i = 0; i < config.fileExtension.length; i++) {
         if (config.fileExtension[i] === ext) {

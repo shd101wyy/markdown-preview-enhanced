@@ -1,5 +1,5 @@
 University of Illinois/NCSA  
-Open Source License  
+Open Source License
 
 ```
 Copyright (c) 2017  Yiyi Wang

@@ -53,7 +53,19 @@ class MarkdownPreviewEnhancedView {
         return 'markdown';
     }
     getTitle() {
-        return 'mpe preview';
+        let fileName = 'unknown';
+        if (this.editor) {
+            fileName = this.editor['getFileName']();
+        }
+        return `${fileName} preview`;
+    }
+    updateTabTitle() {
+        if (!this.config.singlePreview)
+            return;
+        const title = this.getTitle();
+        const tabTitle = document.querySelector('[data-type="MarkdownPreviewEnhancedView"] div.title');
+        if (tabTitle)
+            tabTitle.innerText = title;
     }
     /**
      * Get the markdown editor for this preview
@@ -67,17 +79,17 @@ class MarkdownPreviewEnhancedView {
      */
     bindEditor(editor) {
         if (!this.editor) {
+            this.editor = editor;
             atom.workspace.open(this.uri, {
                 split: "right",
                 activatePane: false,
-                activateItem: false,
+                activateItem: true,
                 searchAllPanes: false,
                 initialLine: 0,
                 initialColumn: 0,
                 pending: false
             })
                 .then(() => {
-                this.editor = editor;
                 this.initEvents();
             });
         }
@@ -92,6 +104,8 @@ class MarkdownPreviewEnhancedView {
                 this.disposables.dispose();
             }
             this.disposables = new atom_1.CompositeDisposable();
+            // reset tab title
+            this.updateTabTitle();
             // reset 
             this.JSAndCssFiles = [];
             // init markdown engine 
