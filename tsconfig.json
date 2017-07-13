@@ -8,8 +8,7 @@
       "dom"
     ],
     "sourceMap": false,
-    "rootDir": ".",
-    "watch": true
+    "rootDir": "."
   },
   "include": [
     "src/**/*"

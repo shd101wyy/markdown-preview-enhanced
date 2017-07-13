@@ -52,10 +52,116 @@ class MarkdownPreviewEnhancedConfig {
         this.enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode');
         this.imageUploader = atom.config.get('markdown-preview-enhanced.imageUploader');
     }
-    isEqualTo(otherConfig) {
-        const json1 = JSON.stringify(this);
-        const json2 = JSON.stringify(otherConfig);
-        return json1 === json2;
+    onDidChange(subscriptions, callback) {
+        subscriptions.add(atom.config.onDidChange('markdown-preview-enhanced.usePandocParser', ({ newValue }) => {
+            this.usePandocParser = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.breakOnSingleNewLine', ({ newValue }) => {
+            this.breakOnSingleNewLine = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.enableTypographer', ({ newValue }) => {
+            this.enableTypographer = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.enableWikiLinkSyntax', ({ newValue }) => {
+            this.enableWikiLinkSyntax = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.wikiLinkFileExtension', ({ newValue }) => {
+            this.wikiLinkFileExtension = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.protocolsWhiteList', ({ newValue }) => {
+            this.protocolsWhiteList = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.mathRenderingOption', ({ newValue }) => {
+            this.mathRenderingOption = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.mathInlineDelimiters', ({ newValue }) => {
+            let mathInlineDelimiters;
+            try {
+                mathInlineDelimiters = JSON.parse(newValue);
+                if (JSON.stringify(mathInlineDelimiters) !== JSON.stringify(this.mathInlineDelimiters)) {
+                    this.mathInlineDelimiters = mathInlineDelimiters;
+                    callback(this);
+                }
+            }
+            catch (error) {
+                mathInlineDelimiters = [["$", "$"], ["\\(", "\\)"]];
+            }
+        }), atom.config.onDidChange('markdown-preview-enhanced.mathBlockDelimiters', ({ newValue }) => {
+            let mathBlockDelimiters;
+            try {
+                mathBlockDelimiters = JSON.parse(newValue);
+                if (JSON.stringify(mathBlockDelimiters) !== JSON.stringify(this.mathBlockDelimiters)) {
+                    this.mathBlockDelimiters = mathBlockDelimiters;
+                    callback(this);
+                }
+            }
+            catch (error) {
+                mathBlockDelimiters = [["$$", "$$"], ["\\[", "\\]"]];
+            }
+        }), atom.config.onDidChange('markdown-preview-enhanced.codeBlockTheme', ({ newValue }) => {
+            this.codeBlockTheme = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.previewTheme', ({ newValue }) => {
+            this.previewTheme = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.revealjsTheme', ({ newValue }) => {
+            this.revealjsTheme = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.mermaidTheme', ({ newValue }) => {
+            this.mermaidTheme = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.frontMatterRenderingOption', ({ newValue }) => {
+            this.frontMatterRenderingOption = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.imageFolderPath', ({ newValue }) => {
+            this.imageFolderPath = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.printBackground', ({ newValue }) => {
+            this.printBackground = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.phantomPath', ({ newValue }) => {
+            this.phantomPath = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.pandocPath', ({ newValue }) => {
+            this.pandocPath = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.pandocMarkdownFlavor', ({ newValue }) => {
+            this.pandocMarkdownFlavor = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.pandocArguments', ({ newValue }) => {
+            this.pandocArguments = newValue.split(',').map((x) => x.trim()).filter((x) => x.length) || [];
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.fileExtension', ({ newValue }) => {
+            this.fileExtension = newValue.split(',').map((x) => x.trim()).filter((x) => x.length) || [];
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.singlePreview', ({ newValue }) => {
+            this.singlePreview = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.scrollSync', ({ newValue }) => {
+            this.scrollSync = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.scrollDuration', ({ newValue }) => {
+            this.scrollDuration = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.liveUpdate', ({ newValue }) => {
+            this.liveUpdate = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.openPreviewPaneAutomatically', ({ newValue }) => {
+            this.openPreviewPaneAutomatically = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited', ({ newValue }) => {
+            this.automaticallyShowPreviewOfMarkdownBeingEdited = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.closePreviewAutomatically', ({ newValue }) => {
+            this.closePreviewAutomatically = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.enableZenMode', ({ newValue }) => {
+            this.enableZenMode = newValue;
+            callback(this);
+        }), atom.config.onDidChange('markdown-preview-enhanced.imageUploader', ({ newValue }) => {
+            this.imageUploader = newValue;
+            callback(this);
+        }));
     }
 }
 exports.MarkdownPreviewEnhancedConfig = MarkdownPreviewEnhancedConfig;

@@ -1,4 +1,5 @@
 import {MarkdownEngineConfig} from "@shd101wyy/mume"
+import {CompositeDisposable} from "atom"
 
 export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public static getCurrentConfig() {
@@ -8,41 +9,41 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   /*
    * MarkdownEngineConfig properties
    */
-  public readonly usePandocParser: boolean;
-  public readonly breakOnSingleNewLine: boolean;
-  public readonly enableTypographer: boolean;
-  public readonly enableWikiLinkSyntax: boolean;
-  public readonly wikiLinkFileExtension: string;
-  public readonly protocolsWhiteList: string;
-  public readonly mathRenderingOption: string;
-  public readonly mathInlineDelimiters: string[][];
-  public readonly mathBlockDelimiters: string[][];
-  public readonly codeBlockTheme: string;
-  public readonly previewTheme: string;
-  public readonly revealjsTheme: string;
-  public readonly mermaidTheme: string;
-  public readonly frontMatterRenderingOption: string;
-  public readonly imageFolderPath: string;
-  public readonly printBackground: boolean;
-  public readonly phantomPath: string;
-  public readonly pandocPath: string;
-  public readonly pandocMarkdownFlavor: string;
-  public readonly pandocArguments: string[];
+  public usePandocParser: boolean;
+  public breakOnSingleNewLine: boolean;
+  public enableTypographer: boolean;
+  public enableWikiLinkSyntax: boolean;
+  public wikiLinkFileExtension: string;
+  public protocolsWhiteList: string;
+  public mathRenderingOption: string;
+  public mathInlineDelimiters: string[][];
+  public mathBlockDelimiters: string[][];
+  public codeBlockTheme: string;
+  public previewTheme: string;
+  public revealjsTheme: string;
+  public mermaidTheme: string;
+  public frontMatterRenderingOption: string;
+  public imageFolderPath: string;
+  public printBackground: boolean;
+  public phantomPath: string;
+  public pandocPath: string;
+  public pandocMarkdownFlavor: string;
+  public pandocArguments: string[];
 
   /*
    * Extra config for mpe
    */
 
-  public readonly fileExtension: string[]
-  public readonly singlePreview: boolean
-  public readonly scrollSync: boolean
-  public readonly scrollDuration: number
-  public readonly liveUpdate: boolean
-  public readonly openPreviewPaneAutomatically: boolean
-  public readonly automaticallyShowPreviewOfMarkdownBeingEdited: boolean
-  public readonly closePreviewAutomatically: boolean
-  public readonly enableZenMode: boolean
-  public readonly imageUploader: string
+  public fileExtension: string[]
+  public singlePreview: boolean
+  public scrollSync: boolean
+  public scrollDuration: number
+  public liveUpdate: boolean
+  public openPreviewPaneAutomatically: boolean
+  public automaticallyShowPreviewOfMarkdownBeingEdited: boolean
+  public closePreviewAutomatically: boolean
+  public enableZenMode: boolean
+  public imageUploader: string
 
   public constructor() {
     /*
@@ -94,10 +95,146 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.imageUploader = atom.config.get('markdown-preview-enhanced.imageUploader')
   }
 
-  public isEqualTo(otherConfig: MarkdownPreviewEnhancedConfig) {
-    const json1 = JSON.stringify(this)
-    const json2 = JSON.stringify(otherConfig)
-    return json1 === json2
+  public onDidChange(subscriptions:CompositeDisposable, callback:(config:MarkdownPreviewEnhancedConfig)=>void) {
+    subscriptions.add(
+      atom.config.onDidChange('markdown-preview-enhanced.usePandocParser', ({newValue})=> {
+        this.usePandocParser = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.breakOnSingleNewLine', ({newValue})=> {
+        this.breakOnSingleNewLine = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.enableTypographer', ({newValue})=> {
+        this.enableTypographer = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.enableWikiLinkSyntax', ({newValue})=> {
+        this.enableWikiLinkSyntax = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.wikiLinkFileExtension', ({newValue})=> {
+        this.wikiLinkFileExtension = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.protocolsWhiteList', ({newValue})=> {
+        this.protocolsWhiteList = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.mathRenderingOption', ({newValue})=> {
+        this.mathRenderingOption = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.mathInlineDelimiters', ({newValue})=> {
+        let mathInlineDelimiters
+        try {
+          mathInlineDelimiters = JSON.parse(newValue)
+          if (JSON.stringify(mathInlineDelimiters) !== JSON.stringify(this.mathInlineDelimiters)) {
+            this.mathInlineDelimiters = mathInlineDelimiters
+            callback(this)
+          }
+        } catch(error) {
+          mathInlineDelimiters = [["$", "$"], ["\\(", "\\)"]]
+        }
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.mathBlockDelimiters', ({newValue})=> {
+        let mathBlockDelimiters
+        try {
+          mathBlockDelimiters = JSON.parse(newValue)
+          if (JSON.stringify(mathBlockDelimiters) !== JSON.stringify(this.mathBlockDelimiters)) {
+            this.mathBlockDelimiters = mathBlockDelimiters
+            callback(this)
+          }
+        } catch(error) {
+          mathBlockDelimiters = [["$$", "$$"], ["\\[", "\\]"]]
+        }
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.codeBlockTheme', ({newValue})=> {
+        this.codeBlockTheme = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.previewTheme', ({newValue})=> {
+        this.previewTheme = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.revealjsTheme', ({newValue})=> {
+        this.revealjsTheme = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.mermaidTheme', ({newValue})=> {
+        this.mermaidTheme = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.frontMatterRenderingOption', ({newValue})=> {
+        this.frontMatterRenderingOption = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.imageFolderPath', ({newValue})=> {
+        this.imageFolderPath = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.printBackground', ({newValue})=> {
+        this.printBackground = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.phantomPath', ({newValue})=> {
+        this.phantomPath = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.pandocPath', ({newValue})=> {
+        this.pandocPath = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.pandocMarkdownFlavor', ({newValue})=> {
+        this.pandocMarkdownFlavor = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.pandocArguments', ({newValue})=> {
+        this.pandocArguments = newValue.split(',').map((x)=> x.trim()).filter((x)=>x.length) || []
+        callback(this)
+      }),
+
+      atom.config.onDidChange('markdown-preview-enhanced.fileExtension', ({newValue})=> {
+        this.fileExtension = newValue.split(',').map((x)=> x.trim()).filter((x)=>x.length) || []
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.singlePreview', ({newValue})=> {
+        this.singlePreview = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.scrollSync', ({newValue})=> {
+        this.scrollSync = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.scrollDuration', ({newValue})=> {
+        this.scrollDuration = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.liveUpdate', ({newValue})=> {
+        this.liveUpdate = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.openPreviewPaneAutomatically', ({newValue})=> {
+        this.openPreviewPaneAutomatically = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited', ({newValue})=> {
+        this.automaticallyShowPreviewOfMarkdownBeingEdited = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.closePreviewAutomatically', ({newValue})=> {
+        this.closePreviewAutomatically = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.enableZenMode', ({newValue})=> {
+        this.enableZenMode = newValue
+        callback(this)
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.imageUploader', ({newValue})=> {
+        this.imageUploader = newValue
+        callback(this)
+      })
+    )
   }
 
   [key: string]: any
