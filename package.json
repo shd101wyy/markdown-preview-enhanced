@@ -1,6 +1,6 @@
 {
   "name": "markdown-preview-enhanced",
-  "main": "./lib/markdown-preview-enhanced",
+  "main": "./out/src/extension",
   "version": "0.13.0",
   "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
@@ -32,15 +32,17 @@
     "latex"
   ],
   "scripts": {
-    "build": "nothing happened"
+    "test": "nothing happened"
   },
   "dependencies": {
+    "@shd101wyy/mume": "file:../mume",
     "atom-space-pen-views": "^2.2.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.7",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.11",
+    "atom-typings": "^1.18.1",
     "chinese-conv": "^1.0.1",
     "typescript": "^2.4.1"
   }
