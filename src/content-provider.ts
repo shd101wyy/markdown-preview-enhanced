@@ -220,14 +220,40 @@ export class MarkdownPreviewEnhancedView {
     }))
 
     this.disposables.add(this.editor['onDidChangeScrollTop'](()=> {
+      if (!this.config.scrollSync) return
+      if (Date.now() < this.editorScrollDelay) return
+      
+      const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
+      if (firstVisibleScreenRow === 0) {
+        return this.postMessage({
+          command: 'changeTextEditorSelection',
+          line: 0,
+          topRatio: 0
+        })
+      }
+      
+      const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']()
+      if (lastVisibleScreenRow === this.editor.getLastScreenRow()) {
+        return this.postMessage({
+          command: 'changeTextEditorSelection',
+          line: this.editor.getLastBufferRow(),
+          topRatio: 1
+        })
+      }
 
+      let midBufferRow = this.editor.bufferPositionForScreenPosition([(lastVisibleScreenRow + firstVisibleScreenRow) / 2, 0]).row
+
+      this.postMessage({
+        command: 'changeTextEditorSelection',
+        line: midBufferRow,
+        topRatio: 0.5
+      })
+      
     }))
 
     this.disposables.add(this.editor.onDidChangeCursorPosition((event)=> {
       if (!this.config.scrollSync) return 
       if (Date.now() < this.editorScrollDelay) return
-
-      this.editorScrollDelay = Date.now() + 500
 
       const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
       const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']()
