@@ -124,6 +124,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 mpe.containerElement.appendChild(mpe.sidebarTOC);
                 mpe.containerElement.classList.add('show-sidebar-toc');
                 renderSidebarTOC();
+                bindTagAClickEvent();
                 setZoomLevel();
             }
             else {
@@ -553,19 +554,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     }
     function bindTagAClickEvent() {
         const as = mpe.previewElement.getElementsByTagName('a');
-        for (let i = 0; i < as.length; i++) {
-            const a = as[i];
-            const href = a.getAttribute('href');
-            if (href && href[0] === '#') {
-                // anchor, do nothing 
+        const helper = (as) => {
+            for (let i = 0; i < as.length; i++) {
+                const a = as[i];
+                const href = a.getAttribute('href');
+                if (href && href[0] === '#') {
+                    if (config.vscode) {
+                        // anchor, do nothing 
+                    }
+                    else {
+                        const targetElement = mpe.previewElement.querySelector(`[id=\"${href.slice(1)}\"]`); // fix number id bug
+                        if (targetElement) {
+                            a.onclick = (event) => {
+                                event.preventDefault();
+                                // jump to tag position
+                                let offsetTop = 0;
+                                let el = targetElement;
+                                while (el && el != mpe.previewElement) {
+                                    offsetTop += el.offsetTop;
+                                    el = el.offsetParent;
+                                }
+                                if (mpe.previewElement.scrollTop > offsetTop)
+                                    mpe.previewElement.scrollTop = offsetTop - 32 - targetElement.offsetHeight;
+                                else
+                                    mpe.previewElement.scrollTop = offsetTop;
+                            };
+                        }
+                    }
+                }
+                else {
+                    a.onclick = (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        postMessage('clickTagA', [sourceUri, encodeURIComponent(href)]);
+                    };
+                }
             }
-            else {
-                a.onclick = (event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    postMessage('clickTagA', [sourceUri, encodeURIComponent(href)]);
-                };
-            }
+        };
+        helper(as);
+        if (!config.vscode && mpe.sidebarTOC) {
+            const as = mpe.sidebarTOC.getElementsByTagName('a');
+            helper(as);
         }
     }
     function bindTaskListEvent() {

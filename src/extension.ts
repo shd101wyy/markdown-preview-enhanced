@@ -218,10 +218,10 @@ const MESSAGE_DISPATCH_EVENTS = {
     if (preview) preview.runAllCodeChunks()
   },
   'clickTagA': function(sourceUri, href) {
-		href = decodeURIComponent(href)
+    href = decodeURIComponent(href)
 		if (['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'].indexOf(path.extname(href)) >= 0) {
 			utility.openFile(href)
-		} else if (href.match(/^file\:\/\/\//)) {
+		} else if (href.match(/^file\:\/\//)) {
 			// openFilePath = href.slice(8) # remove protocal
 			let openFilePath = utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')) // remove #anchor and ?params...
       openFilePath = decodeURI(openFilePath)
