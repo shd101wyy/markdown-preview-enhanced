@@ -260,7 +260,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 "sync_source": {
                     name: "Sync Source",
                     callback: () => {
-                        postMessage('syncSource', [sourceUri]);
+                        previewSyncSource();
                     }
                 }
             }

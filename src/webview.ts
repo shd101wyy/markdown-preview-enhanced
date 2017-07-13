@@ -396,7 +396,7 @@ function initContextMenu() {
       "sync_source": {
         name: "Sync Source",
         callback: ()=> {
-          postMessage('syncSource', [sourceUri])
+          previewSyncSource()
         }
       }
     }

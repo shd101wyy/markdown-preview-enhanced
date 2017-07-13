@@ -11,28 +11,6 @@
       'label': 'Markdown Sync Preview',
       'command': 'markdown-preview-enhanced:sync-preview'}
   ]
-  '.markdown-preview-enhanced': [
-    {
-      'label': 'Open in Browser'
-      'command': 'markdown-preview-enhanced:open-in-browser'
-    }
-    {
-      'label': 'Export to Disk'
-      'command': 'markdown-preview-enhanced:export-to-disk'
-    }
-    {
-      'label': 'Pandoc'
-      'command': 'markdown-preview-enhanced:pandoc-document-export'
-    }
-    {
-      'label': 'Save as Markdown (GFM)'
-      'command': 'markdown-preview-enhanced:save-as-markdown'
-    }
-    {
-      'label': 'Sync Source'
-      'command': 'markdown-preview-enhanced:sync-source'
-    }
-  ]
 'menu': [
   {
     'label': 'Packages'
