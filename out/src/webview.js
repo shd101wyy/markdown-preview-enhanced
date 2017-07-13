@@ -175,13 +175,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                         "html_offline": {
                             name: "HTML (offline)",
                             callback() {
-                                postMessage('saveAsHTML', [sourceUri, true]);
+                                postMessage('htmlExport', [sourceUri, true]);
                             }
                         },
                         "html_cdn": {
                             name: "HTML (cdn hosted)",
                             callback() {
-                                postMessage('saveAsHTML', [sourceUri, false]);
+                                postMessage('htmlExport', [sourceUri, false]);
                             }
                         }
                     }

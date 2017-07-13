@@ -157,6 +157,95 @@ const MESSAGE_DISPATCH_EVENTS = {
   'refreshPreview': function(sourceUri) {
     const preview = getPreviewForEditor(sourceUri)
     if (preview) preview.refreshPreview()
+  },
+  'revealLine': function(sourceUri, line) {
+    console.log('revealLine: ' + line)
+  },
+  'insertImageUrl': function(sourceUri, imageUrl) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) {
+      const editor = preview.getEditor()
+      if (editor) {
+        editor.insertText(`![enter image description here](${imageUrl})`)
+      }
+    }
+  },
+  'pasteImageFile': function(sourceUri, imageUrl) {
+    // TODO:
+    console.log('pasteImageFile: ' + imageUrl) 
+  },
+  'uploadImageFile': function(sourceUri, imageUrl) {
+    // TODO:
+    console.log('uploadImageFile: ' + imageUrl)
+  },
+  'openInBrowser': function(sourceUri) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.openInBrowser()
+  },
+  'htmlExport': function(sourceUri, offline) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.htmlExport(offline)
+  },
+  'phantomjsExport': function(sourceUri, fileType) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.phantomjsExport(fileType)
+  },
+  'princeExport': function(sourceUri) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.princeExport()
+  },
+  'eBookExport': function(sourceUri, fileType) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.eBookExport(fileType)
+  },
+  'pandocExport': function(sourceUri) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.pandocExport()
+  },
+  'markdownExport': function(sourceUri) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.markdownExport()
+  },
+  'cacheCodeChunkResult': function(sourceUri, id, result) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.cacheCodeChunkResult(id, result)
+  },
+  'runCodeChunk': function(sourceUri, codeChunkId) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.runCodeChunk(codeChunkId)
+  },
+  'runCodeChunks': function(sourceUri) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) preview.runAllCodeChunks()
+  },
+  'clickTagA': function(sourceUri, href) {
+		href = decodeURIComponent(href)
+		if (['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'].indexOf(path.extname(href)) >= 0) {
+			utility.openFile(href)
+		} else if (href.match(/^file\:\/\/\//)) {
+			// openFilePath = href.slice(8) # remove protocal
+			let openFilePath = utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')) // remove #anchor and ?params...
+      openFilePath = decodeURI(openFilePath)
+      atom.workspace.open(openFilePath)
+		} else {
+			utility.openFile(href)
+		}
+  },
+  'clickTaskListCheckbox': function(sourceUri, dataLine) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) {
+      const editor = preview.getEditor()
+      if (!editor) return 
+      const buffer = editor.buffer
+      if (!buffer) return 
+      let line = buffer.lines[dataLine]
+      if (line.match(/\[ \]/)) {
+        line = line.replace('[ ]', '[x]')	
+      } else {
+        line = line.replace(/\[[xX]\]/, '[ ]')
+      }
+      buffer.setTextInRange([[dataLine, 0], [dataLine+1, 0]], line + '\n')
+    }
   }
 }
 

@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const atom_1 = require("atom");
 const path = require("path");
 const mume = require("@shd101wyy/mume");
+// TODO: presentation PDF export.
 /**
  * Key is editor.getPath()
  * Value is temp html file path.
@@ -26,15 +27,15 @@ class MarkdownPreviewEnhancedView {
         this.uri = '';
         this.disposables = null;
         /**
-         * The editor binded to this preview
+         * The editor binded to this preview.
          */
         this.editor = null;
         /**
-         * Configs
+         * Configs.
          */
         this.config = null;
         /**
-         * Markdown engine
+         * Markdown engine.
          */
         this.engine = null;
         this.uri = uri;
@@ -72,6 +73,12 @@ class MarkdownPreviewEnhancedView {
      */
     getEditor() {
         return this.editor;
+    }
+    /**
+     * Get markdown engine
+     */
+    getMarkdownEngine() {
+        return this.engine;
     }
     /**
      * Bind editor to preview
@@ -257,6 +264,75 @@ class MarkdownPreviewEnhancedView {
             // restart iframe 
             this.loadPreview();
         }
+    }
+    openInBrowser() {
+        this.engine.openInBrowser({})
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    htmlExport(offline) {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.htmlExport({ offline })
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    phantomjsExport(fileType = 'pdf') {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.phantomjsExport({ fileType })
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    princeExport() {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.princeExport({})
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    eBookExport(fileType) {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.eBookExport({ fileType })
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    pandocExport() {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.pandocExport({})
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    markdownExport() {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.markdownExport({})
+            .then((dest) => {
+            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error);
+        });
+    }
+    cacheCodeChunkResult(id, result) {
+        this.engine.cacheCodeChunkResult(id, result);
     }
     runCodeChunk(codeChunkId) {
         if (!this.engine)
