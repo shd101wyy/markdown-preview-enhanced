@@ -41,6 +41,7 @@ class MarkdownPreviewEnhancedView {
         this.engine = null;
         this.editorScrollDelay = Date.now();
         this.scrollTimeout = null;
+        this.zoomLevel = 1;
         this.uri = uri;
         this.config = config;
         this.element = document.createElement('div');
@@ -153,7 +154,8 @@ class MarkdownPreviewEnhancedView {
                 inputString: this.editor.getText(),
                 config: {
                     sourceUri: this.editor.getPath(),
-                    initialLine: this.editor.getCursorBufferPosition().row
+                    initialLine: this.editor.getCursorBufferPosition().row,
+                    zoomLevel: this.zoomLevel
                 },
                 webviewScript: path.resolve(__dirname, './webview.js')
             });
@@ -176,7 +178,9 @@ class MarkdownPreviewEnhancedView {
     initEditorEvents() {
         const editorElement = this.editor['getElement'](); // dunno why `getElement` not found.
         this.disposables.add(atom.commands.add(editorElement, {
-            'markdown-preview-enhanced:sync-preview': () => this.syncPreview()
+            'markdown-preview-enhanced:sync-preview': () => {
+                this.syncPreview();
+            }
         }));
         this.disposables.add(this.editor.onDidDestroy(() => {
             if (this.disposables) {
@@ -202,37 +206,17 @@ class MarkdownPreviewEnhancedView {
                 return;
             if (Date.now() < this.editorScrollDelay)
                 return;
-            const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']();
-            if (firstVisibleScreenRow === 0) {
-                return this.postMessage({
-                    command: 'changeTextEditorSelection',
-                    line: 0,
-                    topRatio: 0
-                });
-            }
-            const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']();
-            if (lastVisibleScreenRow === this.editor.getLastScreenRow()) {
-                return this.postMessage({
-                    command: 'changeTextEditorSelection',
-                    line: this.editor.getLastBufferRow(),
-                    topRatio: 1
-                });
-            }
-            let midBufferRow = this.editor['bufferRowForScreenRow'](Math.floor((lastVisibleScreenRow + firstVisibleScreenRow) / 2));
-            this.postMessage({
-                command: 'changeTextEditorSelection',
-                line: midBufferRow,
-                topRatio: 0.5
-            });
+            this.syncPreview();
         }));
         this.disposables.add(this.editor.onDidChangeCursorPosition((event) => {
             if (!this.config.scrollSync)
                 return;
             if (Date.now() < this.editorScrollDelay)
                 return;
+            const screenRow = event.newScreenPosition.row;
             const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']();
             const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']();
-            const topRatio = (event.newScreenPosition.row - firstVisibleScreenRow) / (lastVisibleScreenRow - firstVisibleScreenRow);
+            const topRatio = (screenRow - firstVisibleScreenRow) / (lastVisibleScreenRow - firstVisibleScreenRow);
             this.postMessage({
                 command: 'changeTextEditorSelection',
                 line: event.newBufferPosition.row,
@@ -240,7 +224,34 @@ class MarkdownPreviewEnhancedView {
             });
         }));
     }
+    /**
+     * sync preview to match source.
+     */
     syncPreview() {
+        if (!this.editor)
+            return;
+        const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']();
+        if (firstVisibleScreenRow === 0) {
+            return this.postMessage({
+                command: 'changeTextEditorSelection',
+                line: 0,
+                topRatio: 0
+            });
+        }
+        const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']();
+        if (lastVisibleScreenRow === this.editor.getLastScreenRow()) {
+            return this.postMessage({
+                command: 'changeTextEditorSelection',
+                line: this.editor.getLastBufferRow(),
+                topRatio: 1
+            });
+        }
+        let midBufferRow = this.editor['bufferRowForScreenRow'](Math.floor((lastVisibleScreenRow + firstVisibleScreenRow) / 2));
+        this.postMessage({
+            command: 'changeTextEditorSelection',
+            line: midBufferRow,
+            topRatio: 0.5
+        });
     }
     /**
      * Render markdown
@@ -435,6 +446,9 @@ class MarkdownPreviewEnhancedView {
     }
     startImageHelper() {
         this.postMessage({ command: 'openImageHelper' });
+    }
+    setZoomLevel(zoomLevel) {
+        this.zoomLevel = zoomLevel || 1;
     }
     destroy() {
         if (this.disposables) {

@@ -77,7 +77,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             enableSidebarTOC: false,
             sidebarTOC: null,
             sidebarTOCHTML: "",
-            zoomLevel: 1,
             refreshingIcon: document.getElementsByClassName('refreshing-icon')[0],
             refreshingIconTimeout: null
         };
@@ -85,6 +84,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         initToolbarEvent();
         /** init image helper */
         initImageHelper();
+        /** set zoom */
+        setZoomLevel();
         if (!mpe.presentationMode) {
             previewElement.onscroll = scrollEvent;
             postMessage('webviewFinishLoading', [sourceUri]);
@@ -372,6 +373,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 }
             });
         });
+    }
+    // zoom in preview
+    function zoomIn() {
+        config.zoomLevel = (config.zoomLevel || 1) + 0.1;
+        setZoomLevel();
+    }
+    // zoom out preview
+    function zoomOut() {
+        config.zoomLevel = (config.zoomLevel || 1) - 0.1;
+        setZoomLevel();
+    }
+    // reset preview zoom
+    function resetZoom() {
+        config.zoomLevel = 1;
+        setZoomLevel();
+    }
+    function setZoomLevel() {
+        mpe.previewElement.style.zoom = config.zoomLevel.toString() || '1';
+        if (mpe.enableSidebarTOC) {
+            mpe.previewElement.style.width = `calc(100% - ${268 / config.zoomLevel}px)`;
+        }
+        mpe.scrollMap = null;
+        postMessage('setZoomLevel', [sourceUri, config.zoomLevel]);
     }
     /**
      * render mermaid graphs
@@ -715,13 +739,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         // track currnet time to disable onDidChangeScrollTop
         // editorScrollDelay = Date.now() + 100
     }
-    function setZoomLevel() {
-        mpe.previewElement.style.zoom = mpe.zoomLevel.toString();
-        if (mpe.enableSidebarTOC) {
-            mpe.previewElement.style.width = `calc(100% - ${268 / mpe.zoomLevel}px)`;
-        }
-        mpe.scrollMap = null;
-    }
     function initSlidesData() {
         const slideElements = document.getElementsByTagName('section');
         let offset = 0;
@@ -802,7 +819,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
      * @param line
      */
     function scrollToRevealSourceLine(line, topRatio = 0.372) {
-        if (!config.scrollSync || line === mpe.currentLine) {
+        if (line === mpe.currentLine) {
             return;
         }
         else {
@@ -862,6 +879,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             runNearestCodeChunk();
         }
     }, false);
+    /**
+     * Several keyboard events.
+     */
+    window.addEventListener('keydown', (event) => {
+        // console.log('keydown!', event)
+        if (event.shiftKey && event.ctrlKey && event.which === 83) {
+            return previewSyncSource();
+        }
+        else if ((event.metaKey || event.ctrlKey)) {
+            if (event.which === 67) {
+                document.execCommand('copy');
+            }
+            else if (event.which === 187 && !config.vscode) {
+                zoomIn();
+            }
+            else if (event.which === 189 && !config.vscode) {
+                zoomOut();
+            }
+            else if (event.which === 48 && !config.vscode) {
+                resetZoom();
+            }
+            else if (event.which === 38) {
+                mpe.previewElement.scrollTop = 0;
+            }
+        }
+    });
     window.addEventListener('resize', resizeEvent);
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', onLoad);

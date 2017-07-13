@@ -249,6 +249,12 @@ const MESSAGE_DISPATCH_EVENTS = {
       }
       buffer.setTextInRange([[dataLine, 0], [dataLine+1, 0]], line + '\n')
     }
+  },
+  'setZoomLevel': function(sourceUri, zoomLevel) {
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) {
+      preview.setZoomLevel(zoomLevel)
+    }
   }
 }
 

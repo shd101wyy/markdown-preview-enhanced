@@ -8,6 +8,7 @@ interface MarkdownConfig {
   imageFolderPath?: string,
   imageUploader?: string
   vscode?: boolean
+  zoomLevel?: number
 }
 
 /**
@@ -67,10 +68,6 @@ interface MarkdownPreviewEnhancedPreview {
    */
   sidebarTOCHTML:string
 
-  /**
-   * zoom level
-   */
-  zoomLevel:number
 
   /**
    * .refreshing-icon element
@@ -197,7 +194,6 @@ function onLoad() {
     enableSidebarTOC: false,
     sidebarTOC: null,
     sidebarTOCHTML: "",
-    zoomLevel: 1,
     refreshingIcon: document.getElementsByClassName('refreshing-icon')[0] as HTMLElement, 
     refreshingIconTimeout: null
   }
@@ -207,6 +203,9 @@ function onLoad() {
 
   /** init image helper */
   initImageHelper()
+
+  /** set zoom */
+  setZoomLevel()
 
   if (!mpe.presentationMode) {
     previewElement.onscroll = scrollEvent
@@ -514,6 +513,33 @@ function initPresentationEvent() {
       }
     })
   })
+}
+
+// zoom in preview
+function zoomIn() {
+  config.zoomLevel = (config.zoomLevel || 1) + 0.1
+  setZoomLevel()
+}
+
+// zoom out preview
+function zoomOut() {
+  config.zoomLevel = (config.zoomLevel || 1) - 0.1
+  setZoomLevel()
+}
+
+// reset preview zoom
+function resetZoom() {
+  config.zoomLevel = 1
+  setZoomLevel()
+}
+
+function setZoomLevel () {
+  mpe.previewElement.style.zoom = config.zoomLevel.toString() || '1'
+  if (mpe.enableSidebarTOC) {
+    mpe.previewElement.style.width = `calc(100% - ${268 / config.zoomLevel}px)`
+  }
+  mpe.scrollMap = null
+  postMessage('setZoomLevel', [sourceUri, config.zoomLevel])
 }
 
 /**
@@ -904,14 +930,6 @@ function previewSyncSource() {
   // editorScrollDelay = Date.now() + 100
 }
 
-function setZoomLevel () {
-  mpe.previewElement.style.zoom = mpe.zoomLevel.toString()
-  if (mpe.enableSidebarTOC) {
-    mpe.previewElement.style.width = `calc(100% - ${268 / mpe.zoomLevel}px)`
-  }
-  mpe.scrollMap = null
-}
-
 function initSlidesData() {
   const slideElements = document.getElementsByTagName('section')
   let offset = 0
@@ -1004,7 +1022,7 @@ function scrollToPos(scrollTop) {
  * @param line 
  */
 function scrollToRevealSourceLine(line, topRatio=0.372) {
-  if (!config.scrollSync || line === mpe.currentLine) {
+  if (line === mpe.currentLine) {
     return 
   } else {
     mpe.currentLine = line
@@ -1061,7 +1079,29 @@ window.addEventListener('message', (event)=> {
   } else if (data.command === 'runCodeChunk') {
     runNearestCodeChunk()
   }
-}, false);
+}, false)
+
+/**
+ * Several keyboard events.
+ */
+window.addEventListener('keydown', (event)=> {
+  // console.log('keydown!', event)
+  if (event.shiftKey && event.ctrlKey && event.which === 83) { // ctrl+shift+s preview sync source
+    return previewSyncSource()
+  } else if ((event.metaKey || event.ctrlKey)) { // ctrl+c copy 
+    if (event.which === 67) { // [c] copy 
+      document.execCommand('copy')
+    } else if (event.which === 187 && !config.vscode) { // [+] zoom in
+      zoomIn()
+    } else if (event.which === 189 && !config.vscode) { // [-] zoom out
+      zoomOut()
+    } else if (event.which === 48 && !config.vscode) { // [0] reset zoom
+      resetZoom()
+    } else if (event.which === 38) { // [ArrowUp] scroll to the most top
+      mpe.previewElement.scrollTop = 0
+    }
+  }
+})
 
 window.addEventListener('resize', resizeEvent)
 
