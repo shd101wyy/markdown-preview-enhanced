@@ -42,6 +42,7 @@ class MarkdownPreviewEnhancedView {
         this.editorScrollDelay = Date.now();
         this.scrollTimeout = null;
         this.zoomLevel = 1;
+        this._destroyCB = null;
         this.uri = uri;
         this.config = config;
         this.element = document.createElement('div');
@@ -201,7 +202,7 @@ class MarkdownPreviewEnhancedView {
             if (!this.config.liveUpdate)
                 this.renderMarkdown(true);
         }));
-        this.disposables.add(this.editor['onDidChangeScrollTop'](() => {
+        this.disposables.add(editorElement['onDidChangeScrollTop'](() => {
             if (!this.config.scrollSync)
                 return;
             if (Date.now() < this.editorScrollDelay)
@@ -257,6 +258,8 @@ class MarkdownPreviewEnhancedView {
      * Render markdown
      */
     renderMarkdown(triggeredBySave = false) {
+        if (!this.editor)
+            return;
         // presentation mode 
         if (this.engine.isPreviewInPresentationMode) {
             this.loadPreview(); // restart preview.
@@ -457,6 +460,16 @@ class MarkdownPreviewEnhancedView {
         }
         this.element.remove();
         this.editor = null;
+        if (this._destroyCB) {
+            this._destroyCB(this);
+        }
+    }
+    /**
+     * cb will be called when this preview is destroyed.
+     * @param cb
+     */
+    onPreviewDidDestroy(cb) {
+        this._destroyCB = cb;
     }
 }
 exports.MarkdownPreviewEnhancedView = MarkdownPreviewEnhancedView;

@@ -48,7 +48,7 @@ class MarkdownPreviewEnhancedConfig {
         this.openPreviewPaneAutomatically = atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically');
         this.automaticallyShowPreviewOfMarkdownBeingEdited = atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited');
         this.closePreviewAutomatically = atom.config.get('markdown-preview-enhanced.closePreviewAutomatically');
-        this.enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode');
+        // this.enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')
         this.imageUploader = atom.config.get('markdown-preview-enhanced.imageUploader');
     }
     onDidChange(subscriptions, callback) {
@@ -151,10 +151,14 @@ class MarkdownPreviewEnhancedConfig {
         }), atom.config.onDidChange('markdown-preview-enhanced.closePreviewAutomatically', ({ newValue }) => {
             this.closePreviewAutomatically = newValue;
             callback();
-        }), atom.config.onDidChange('markdown-preview-enhanced.enableZenMode', ({ newValue }) => {
-            this.enableZenMode = newValue;
-            // callback()
-        }), atom.config.onDidChange('markdown-preview-enhanced.imageUploader', ({ newValue }) => {
+        }), 
+        /*
+        atom.config.onDidChange('markdown-preview-enhanced.enableZenMode', ({newValue})=> {
+          this.enableZenMode = newValue
+          // callback()
+        }),
+        */
+        atom.config.onDidChange('markdown-preview-enhanced.imageUploader', ({ newValue }) => {
             this.imageUploader = newValue;
             callback();
         }));

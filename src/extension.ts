@@ -40,11 +40,6 @@ function isMarkdownFile(filePath:string=''):boolean {
 function onDidChangeConfig():void {
   for (let sourceUri in previewsMap) {
     const preview = previewsMap[sourceUri]
-    if (!preview.getEditor()) {
-      delete previewsMap[sourceUri]
-      continue
-    }
-
     preview.updateConfiguration()
     preview.loadPreview()
   }
@@ -120,6 +115,7 @@ function startPreview(editor) {
       preview = new MarkdownPreviewEnhancedView('mpe://' + editor.getPath(), config)
       previewsMap[editor.getPath()] = preview
     }
+    preview.onPreviewDidDestroy(removePreviewFromMap)
   }
 
   if (preview.getEditor() !== editor) {
@@ -229,7 +225,7 @@ const MESSAGE_DISPATCH_EVENTS = {
 			// openFilePath = href.slice(8) # remove protocal
 			let openFilePath = utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')) // remove #anchor and ?params...
       openFilePath = decodeURI(openFilePath)
-      atom.workspace.open(openFilePath)
+      atom.workspace.open(utility.removeFileProtocol(openFilePath))
 		} else {
 			utility.openFile(href)
 		}
@@ -388,16 +384,13 @@ mume.init() // init mume package
     }))
 
     // use single preview
-    subscriptions.add(atom.config.observe('markdown-preview-enhanced.singlePreview', (singlePreview)=> {
+    subscriptions.add(atom.config.onDidChange('markdown-preview-enhanced.singlePreview', (singlePreview)=> {
       for (let sourceUri in previewsMap) {
         const preview = previewsMap[sourceUri]
-        if (!preview.getEditor()) {
-          delete previewsMap[sourceUri]
-          continue
-        }
-            const pane = atom.workspace.paneForItem(preview)
+        const pane = atom.workspace.paneForItem(preview)
         pane.destroyItem(preview) // this will trigger preview.destroy()
       }
+      previewsMap = {}
     }))
 
   // Register message event

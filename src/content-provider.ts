@@ -44,6 +44,8 @@ export class MarkdownPreviewEnhancedView {
 
   private zoomLevel:number = 1
 
+  private _destroyCB:(preview:MarkdownPreviewEnhancedView)=>void = null
+
   constructor(uri:string, config:MarkdownPreviewEnhancedConfig) {
     this.uri = uri
     this.config = config
@@ -224,7 +226,7 @@ export class MarkdownPreviewEnhancedView {
         this.renderMarkdown(true)
     }))
 
-    this.disposables.add(this.editor['onDidChangeScrollTop'](()=> {
+    this.disposables.add(editorElement['onDidChangeScrollTop'](()=> {
       if (!this.config.scrollSync) return
       if (Date.now() < this.editorScrollDelay) return
       this.syncPreview()
@@ -252,7 +254,7 @@ export class MarkdownPreviewEnhancedView {
    */
   private syncPreview() {
     if (!this.editor) return
-      
+
     const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
     if (firstVisibleScreenRow === 0) {
       return this.postMessage({
@@ -284,6 +286,8 @@ export class MarkdownPreviewEnhancedView {
    * Render markdown
    */
   public renderMarkdown(triggeredBySave:boolean=false) {
+    if (!this.editor) return 
+
     // presentation mode 
     if (this.engine.isPreviewInPresentationMode) {
       this.loadPreview() // restart preview.
@@ -511,6 +515,18 @@ export class MarkdownPreviewEnhancedView {
     }
     this.element.remove()
     this.editor = null
+
+    if (this._destroyCB) {
+      this._destroyCB(this)
+    }
+  }
+
+  /**
+   * cb will be called when this preview is destroyed.
+   * @param cb 
+   */
+  public onPreviewDidDestroy(cb:(preview:MarkdownPreviewEnhancedView)=>void) {
+    this._destroyCB = cb
   }
 }
 
