@@ -159,7 +159,10 @@ const MESSAGE_DISPATCH_EVENTS = {
     if (preview) preview.refreshPreview()
   },
   'revealLine': function(sourceUri, line) {
-    console.log('revealLine: ' + line)
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) {
+      preview.scrollToBufferPosition(line)
+    }
   },
   'insertImageUrl': function(sourceUri, imageUrl) {
     const preview = getPreviewForEditor(sourceUri)

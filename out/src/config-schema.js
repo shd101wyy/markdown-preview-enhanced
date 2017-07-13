@@ -220,12 +220,6 @@ exports.configSchema = {
         "description": "2 way scroll sync. Sync both markdown source and markdown preview when scrolling.",
         "order": 65
     },
-    "scrollDuration": {
-        "type": "string",
-        "default": "120",
-        "description": "Scroll duration is defined in milliseconds. Lower value indicates faster scrolling speed. Default is 120ms",
-        "order": 66
-    },
     "printBackground": {
         "title": "Print Background when generating pdf",
         "type": "boolean",

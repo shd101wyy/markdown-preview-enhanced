@@ -37,7 +37,6 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public fileExtension: string[]
   public singlePreview: boolean
   public scrollSync: boolean
-  public scrollDuration: number
   public liveUpdate: boolean
   public openPreviewPaneAutomatically: boolean
   public automaticallyShowPreviewOfMarkdownBeingEdited: boolean
@@ -86,7 +85,6 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.fileExtension = atom.config.get('markdown-preview-enhanced.fileExtension').split(',').map((x)=>x.trim()).filter((x)=>x.length) || ['.md', '.mmark', '.markdown']
     this.singlePreview = atom.config.get('markdown-preview-enhanced.singlePreview')
     this.scrollSync = atom.config.get('markdown-preview-enhanced.scrollSync')
-    this.scrollDuration = parseFloat(atom.config.get('markdown-preview-enhanced.scrollDuration')) || 120
     this.liveUpdate = atom.config.get('markdown-preview-enhanced.liveUpdate')
     this.openPreviewPaneAutomatically = atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
     this.automaticallyShowPreviewOfMarkdownBeingEdited = atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited')
@@ -204,10 +202,6 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
       }),
       atom.config.onDidChange('markdown-preview-enhanced.scrollSync', ({newValue})=> {
         this.scrollSync = newValue
-        callback()
-      }),
-      atom.config.onDidChange('markdown-preview-enhanced.scrollDuration', ({newValue})=> {
-        this.scrollDuration = newValue
         callback()
       }),
       atom.config.onDidChange('markdown-preview-enhanced.liveUpdate', ({newValue})=> {

@@ -948,7 +948,7 @@ function scrollSyncToSlide(line:number) {
  * scroll preview to match `line`
  * @param line: the buffer row of editor
  */
-function scrollSyncToLine(line:number) {
+function scrollSyncToLine(line:number, topRatio:number = 0.372) {
   if (!mpe.scrollMap) mpe.scrollMap = buildScrollMap()
   if (line >= mpe.scrollMap.length) return
 
@@ -956,7 +956,7 @@ function scrollSyncToLine(line:number) {
    * Since I am not able to access the viewport of the editor 
    * I used `golden section` here for scrollTop.  
    */
-  scrollToPos(Math.max(mpe.scrollMap[line] - mpe.previewElement.offsetHeight * 0.372, 0))
+  scrollToPos(Math.max(mpe.scrollMap[line] - mpe.previewElement.offsetHeight * topRatio, 0))
 }
 
 /**
@@ -1003,7 +1003,7 @@ function scrollToPos(scrollTop) {
  * It's unfortunate that I am not able to access the viewport.  
  * @param line 
  */
-function scrollToRevealSourceLine(line) {
+function scrollToRevealSourceLine(line, topRatio=0.372) {
   if (!config.scrollSync || line === mpe.currentLine) {
     return 
   } else {
@@ -1016,7 +1016,7 @@ function scrollToRevealSourceLine(line) {
   if (mpe.presentationMode) {
     scrollSyncToSlide(line)
   } else {
-    scrollSyncToLine(line)
+    scrollSyncToLine(line, topRatio)
   }
 }
 
@@ -1037,9 +1037,11 @@ window.addEventListener('message', (event)=> {
     sourceUri = data.sourceUri
     renderSidebarTOC()
     updateHTML(data.html, data.id, data.class)
-  } else if (data.command === 'change-text-editor-selection') {
+  } else if (data.command === 'changeTextEditorSelection') {
     const line = parseInt(data.line)
-    scrollToRevealSourceLine(line)
+    let topRatio = parseFloat(data.topRatio)
+    if (isNaN(topRatio)) topRatio = 0.372
+    scrollToRevealSourceLine(line, topRatio)
   } else if (data.command === 'startParsingMarkdown') {
     /**
      * show refreshingIcon after 1 second

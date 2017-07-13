@@ -39,6 +39,9 @@ export class MarkdownPreviewEnhancedView {
    */
   private JSAndCssFiles: string[]
 
+  private editorScrollDelay: number = Date.now()
+  private scrollTimeout = null
+
   constructor(uri:string, config:MarkdownPreviewEnhancedConfig) {
     this.uri = uri
     this.config = config
@@ -221,7 +224,20 @@ export class MarkdownPreviewEnhancedView {
     }))
 
     this.disposables.add(this.editor.onDidChangeCursorPosition((event)=> {
+      if (!this.config.scrollSync) return 
+      if (Date.now() < this.editorScrollDelay) return
 
+      this.editorScrollDelay = Date.now() + 500
+
+      const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
+      const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']()
+      const topRatio = (event.newScreenPosition.row - firstVisibleScreenRow) / (lastVisibleScreenRow - firstVisibleScreenRow)
+
+      this.postMessage({
+        command: 'changeTextEditorSelection',
+        line: event.newBufferPosition.row,
+        topRatio: topRatio
+      })
     }))
   }
 
@@ -260,6 +276,51 @@ export class MarkdownPreviewEnhancedView {
         })
       }
     })
+  }
+
+  /**
+   * Please notice that row is in center.
+   * @param row The buffer row
+   */
+  public scrollToBufferPosition(row) {
+    if (!this.editor) return
+    if (row < 0) return 
+    this.editorScrollDelay = Date.now() + 500
+
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout)
+    }
+
+    const editorElement = this.editor['getElement']()
+    const delay = 10
+    const screenRow = this.editor.screenPositionForBufferPosition([row, 0]).row
+    const scrollTop = screenRow * this.editor['getLineHeightInPixels']() - this.element.offsetHeight / 2
+
+    const helper = (duration=0)=> {
+      this.scrollTimeout = setTimeout(() => {
+        if (duration <= 0) {
+          this.editorScrollDelay = Date.now() + 500
+          editorElement.setScrollTop(scrollTop)
+          return
+        }
+
+        const difference = scrollTop - editorElement.getScrollTop()
+
+        const perTick = difference / duration * delay
+
+        // disable editor onscroll
+        this.editorScrollDelay = Date.now() + 500
+
+        const s = editorElement.getScrollTop() + perTick
+        editorElement.setScrollTop(s)
+
+        if (s == scrollTop) return 
+        helper(duration-delay)
+      }, delay)
+    }
+
+    const scrollDuration = 120
+    helper(scrollDuration)
   }
 
   /**
