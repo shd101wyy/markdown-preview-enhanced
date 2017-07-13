@@ -222,7 +222,6 @@ export class MarkdownPreviewEnhancedView {
     this.disposables.add(this.editor['onDidChangeScrollTop'](()=> {
       if (!this.config.scrollSync) return
       if (Date.now() < this.editorScrollDelay) return
-      
       const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
       if (firstVisibleScreenRow === 0) {
         return this.postMessage({
@@ -241,14 +240,13 @@ export class MarkdownPreviewEnhancedView {
         })
       }
 
-      let midBufferRow = this.editor.bufferPositionForScreenPosition([(lastVisibleScreenRow + firstVisibleScreenRow) / 2, 0]).row
+      let midBufferRow = this.editor['bufferRowForScreenRow'](Math.floor((lastVisibleScreenRow + firstVisibleScreenRow) / 2))
 
       this.postMessage({
         command: 'changeTextEditorSelection',
         line: midBufferRow,
         topRatio: 0.5
       })
-      
     }))
 
     this.disposables.add(this.editor.onDidChangeCursorPosition((event)=> {
@@ -372,7 +370,7 @@ export class MarkdownPreviewEnhancedView {
    * @param data 
    */
   private postMessage(data:any) {
-    if (this.iframe)
+    if (this.iframe && this.iframe.contentWindow)
       this.iframe.contentWindow.postMessage(data, 'file://')
   }
 
@@ -492,14 +490,12 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public destroy() {
-    this.element.remove()
-    this.editor = null
-
     if (this.disposables) {
       this.disposables.dispose()
       this.disposables = null
     }
-
+    this.element.remove()
+    this.editor = null
   }
 }
 

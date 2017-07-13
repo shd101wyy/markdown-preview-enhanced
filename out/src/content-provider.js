@@ -218,7 +218,7 @@ class MarkdownPreviewEnhancedView {
                     topRatio: 1
                 });
             }
-            let midBufferRow = this.editor.bufferPositionForScreenPosition([(lastVisibleScreenRow + firstVisibleScreenRow) / 2, 0]).row;
+            let midBufferRow = this.editor['bufferRowForScreenRow'](Math.floor((lastVisibleScreenRow + firstVisibleScreenRow) / 2));
             this.postMessage({
                 command: 'changeTextEditorSelection',
                 line: midBufferRow,
@@ -330,7 +330,7 @@ class MarkdownPreviewEnhancedView {
      * @param data
      */
     postMessage(data) {
-        if (this.iframe)
+        if (this.iframe && this.iframe.contentWindow)
             this.iframe.contentWindow.postMessage(data, 'file://');
     }
     updateConfiguration() {
@@ -437,12 +437,12 @@ class MarkdownPreviewEnhancedView {
         this.postMessage({ command: 'openImageHelper' });
     }
     destroy() {
-        this.element.remove();
-        this.editor = null;
         if (this.disposables) {
             this.disposables.dispose();
             this.disposables = null;
         }
+        this.element.remove();
+        this.editor = null;
     }
 }
 exports.MarkdownPreviewEnhancedView = MarkdownPreviewEnhancedView;

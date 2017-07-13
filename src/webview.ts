@@ -950,7 +950,7 @@ function scrollSyncToSlide(line:number) {
  */
 function scrollSyncToLine(line:number, topRatio:number = 0.372) {
   if (!mpe.scrollMap) mpe.scrollMap = buildScrollMap()
-  if (line >= mpe.scrollMap.length) return
+  if (!mpe.scrollMap || line >= mpe.scrollMap.length) return
 
   /**
    * Since I am not able to access the viewport of the editor 

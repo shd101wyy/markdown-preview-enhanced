@@ -757,7 +757,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     function scrollSyncToLine(line, topRatio = 0.372) {
         if (!mpe.scrollMap)
             mpe.scrollMap = buildScrollMap();
-        if (line >= mpe.scrollMap.length)
+        if (!mpe.scrollMap || line >= mpe.scrollMap.length)
             return;
         /**
          * Since I am not able to access the viewport of the editor
