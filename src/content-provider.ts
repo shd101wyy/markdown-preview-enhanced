@@ -256,7 +256,8 @@ export class MarkdownPreviewEnhancedView {
    * @param data 
    */
   private postMessage(data:any) {
-    this.iframe.contentWindow.postMessage(data, 'file://')
+    if (this.iframe)
+      this.iframe.contentWindow.postMessage(data, 'file://')
   }
 
   public updateConfiguration() {
@@ -299,10 +300,13 @@ export class MarkdownPreviewEnhancedView {
 
   public destroy() {
     this.element.remove()
+    this.editor = null
+
     if (this.disposables) {
       this.disposables.dispose()
       this.disposables = null
     }
+
   }
 }
 
