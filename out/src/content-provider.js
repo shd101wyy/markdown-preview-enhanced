@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const atom_1 = require("atom");
 const path = require("path");
 const mume = require("@shd101wyy/mume");
 /**
@@ -23,6 +24,7 @@ class MarkdownPreviewEnhancedView {
         this.element = null;
         this.iframe = null;
         this.uri = '';
+        this.disposables = null;
         /**
          * The editor binded to this preview
          */
@@ -86,6 +88,30 @@ class MarkdownPreviewEnhancedView {
     }
     initEvents() {
         return __awaiter(this, void 0, void 0, function* () {
+            if (this.disposables) {
+                this.disposables.dispose();
+            }
+            this.disposables = new atom_1.CompositeDisposable();
+            // reset 
+            this.JSAndCssFiles = [];
+            // init markdown engine 
+            this.engine = new mume.MarkdownEngine({
+                filePath: this.editor.getPath(),
+                projectDirectoryPath: this.getProjectDirectoryPath(),
+                config: this.config
+            });
+            yield this.loadPreview();
+            this.initEditorEvents();
+        });
+    }
+    /**
+     * This function will
+     * 1. Create a temp *.html file
+     * 2. Write preview html template
+     * 3. this.iframe will load that *.html file.
+     */
+    loadPreview() {
+        return __awaiter(this, void 0, void 0, function* () {
             const editorFilePath = this.editor.getPath();
             // create temp html file for preview
             let htmlFilePath;
@@ -97,16 +123,13 @@ class MarkdownPreviewEnhancedView {
                 htmlFilePath = info.path;
                 HTML_FILES_MAP[editorFilePath] = htmlFilePath;
             }
-            // init markdown engine 
-            this.engine = new mume.MarkdownEngine({
-                filePath: this.editor.getPath(),
-                projectDirectoryPath: this.getProjectDirectoryPath(),
-                config: this.config
-            });
             // load preview template
             const html = yield this.engine.generateHTMLTemplateForPreview({
                 inputString: this.editor.getText(),
-                config: {},
+                config: {
+                    sourceUri: this.editor.getPath(),
+                    initialLine: this.editor.getCursorBufferPosition().row
+                },
                 webviewScript: path.resolve(__dirname, './webview.js')
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
@@ -118,9 +141,72 @@ class MarkdownPreviewEnhancedView {
                 this.iframe.src = htmlFilePath;
             }
             // test postMessage
-            setTimeout(() => {
-                this.iframe.contentWindow.postMessage({ type: 'update-html' }, 'file://');
-            }, 2000);
+            /*
+            setTimeout(()=> {
+              this.iframe.contentWindow.postMessage({type: 'update-html'}, 'file://')
+            }, 2000)
+            */
+        });
+    }
+    initEditorEvents() {
+        const editorElement = this.editor['getElement'](); // dunno why `getElement` not found.
+        this.disposables.add(atom.commands.add(editorElement, {
+            'markdown-preview-enhanced:sync-preview': () => this.syncPreview()
+        }));
+        this.disposables.add(this.editor.onDidDestroy(() => {
+            if (this.disposables) {
+                this.disposables.dispose();
+                this.disposables = null;
+            }
+            this.editor = null;
+            if (!this.config.singlePreview && this.config.closePreviewAutomatically) {
+                const pane = atom.workspace.paneForItem(this);
+                pane.destroyItem(this); // this will trigger @destroy()
+            }
+        }));
+        this.disposables.add(this.editor.onDidStopChanging(() => {
+            if (this.config.liveUpdate)
+                this.renderMarkdown();
+        }));
+        this.disposables.add(this.editor.onDidSave(() => {
+            if (!this.config.liveUpdate)
+                this.renderMarkdown(true);
+        }));
+        this.disposables.add(this.editor['onDidChangeScrollTop'](() => {
+        }));
+        this.disposables.add(this.editor.onDidChangeCursorPosition((event) => {
+        }));
+    }
+    syncPreview() {
+    }
+    /**
+     * Render markdown
+     */
+    renderMarkdown(triggeredBySave = false) {
+        // presentation mode 
+        if (this.engine.isPreviewInPresentationMode) {
+            this.loadPreview(); // restart preview.
+        }
+        // not presentation mode 
+        const text = this.editor.getText();
+        // notice iframe that we started parsing markdown
+        this.postMessage({ command: 'startParsingMarkdown' });
+        this.engine.parseMD(text, { isForPreview: true, useRelativeFilePath: false, hideFrontMatter: false, triggeredBySave })
+            .then(({ markdown, html, tocHTML, JSAndCssFiles, yamlConfig }) => {
+            if (!mume.utility.isArrayEqual(JSAndCssFiles, this.JSAndCssFiles) || yamlConfig['isPresentationMode']) {
+                this.loadPreview(); // restart preview
+            }
+            else {
+                this.postMessage({
+                    command: 'updateHTML',
+                    html,
+                    tocHTML,
+                    totalLineCount: this.editor.getLineCount(),
+                    sourceUri: this.editor.getPath(),
+                    id: yamlConfig.id || '',
+                    class: yamlConfig.class || ''
+                });
+            }
         });
     }
     /**
@@ -138,8 +224,53 @@ class MarkdownPreviewEnhancedView {
         }
         return '';
     }
+    /**
+     * Post message to this.iframe
+     * @param data
+     */
+    postMessage(data) {
+        this.iframe.contentWindow.postMessage(data, 'file://');
+    }
+    updateConfiguration() {
+        if (this.engine) {
+            this.engine.updateConfiguration(this.config);
+        }
+    }
+    refreshPreview() {
+        if (this.engine) {
+            this.engine.clearCaches();
+            // restart iframe 
+            this.loadPreview();
+        }
+    }
+    runCodeChunk(codeChunkId) {
+        if (!this.engine)
+            return;
+        this.engine.runCodeChunk(codeChunkId)
+            .then(() => {
+            this.renderMarkdown();
+        });
+    }
+    runAllCodeChunks() {
+        if (!this.engine)
+            return;
+        this.engine.runAllCodeChunks()
+            .then(() => {
+            this.renderMarkdown();
+        });
+    }
+    sendRunCodeChunkCommand() {
+        this.postMessage({ command: 'runCodeChunk' });
+    }
+    startImageHelper() {
+        this.postMessage({ command: 'openImageHelper' });
+    }
     destroy() {
         this.element.remove();
+        if (this.disposables) {
+            this.disposables.dispose();
+            this.disposables = null;
+        }
     }
 }
 exports.MarkdownPreviewEnhancedView = MarkdownPreviewEnhancedView;

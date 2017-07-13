@@ -17,6 +17,7 @@ export class MarkdownPreviewEnhancedView {
   private element: HTMLDivElement = null
   private iframe: HTMLIFrameElement = null
   private uri: string = ''
+  private disposables: CompositeDisposable = null
   /**
    * The editor binded to this preview
    */
@@ -29,6 +30,10 @@ export class MarkdownPreviewEnhancedView {
    * Markdown engine
    */
   private engine:mume.MarkdownEngine = null
+  /**
+   * An array of strings of js and css file paths.
+   */
+  private JSAndCssFiles: string[]
 
   constructor(uri:string, config:MarkdownPreviewEnhancedConfig) {
     this.uri = uri
@@ -88,6 +93,32 @@ export class MarkdownPreviewEnhancedView {
   }
 
   private async initEvents() {
+    if (this.disposables) { // remove all binded events
+      this.disposables.dispose()
+    }
+    this.disposables = new CompositeDisposable()
+
+    // reset 
+    this.JSAndCssFiles = []
+
+    // init markdown engine 
+    this.engine = new mume.MarkdownEngine({
+      filePath: this.editor.getPath(),
+      projectDirectoryPath: this.getProjectDirectoryPath(),
+      config: this.config
+    })
+
+    await this.loadPreview()
+    this.initEditorEvents()
+  }
+
+  /**
+   * This function will 
+   * 1. Create a temp *.html file
+   * 2. Write preview html template
+   * 3. this.iframe will load that *.html file.
+   */
+  public async loadPreview() {
     const editorFilePath = this.editor.getPath()
 
     // create temp html file for preview
@@ -100,17 +131,13 @@ export class MarkdownPreviewEnhancedView {
       HTML_FILES_MAP[editorFilePath] = htmlFilePath
     }
 
-    // init markdown engine 
-    this.engine = new mume.MarkdownEngine({
-      filePath: this.editor.getPath(),
-      projectDirectoryPath: this.getProjectDirectoryPath(),
-      config: this.config
-    })
-
     // load preview template
     const html = await this.engine.generateHTMLTemplateForPreview({
       inputString: this.editor.getText(),
-      config:{},
+      config:{
+        sourceUri: this.editor.getPath(),
+        initialLine: this.editor.getCursorBufferPosition().row
+      },
       webviewScript: path.resolve(__dirname, './webview.js')
     })
     await mume.utility.writeFile(htmlFilePath, html, {encoding: 'utf-8'})
@@ -123,10 +150,87 @@ export class MarkdownPreviewEnhancedView {
     }
 
     // test postMessage
+    /*
     setTimeout(()=> {
       this.iframe.contentWindow.postMessage({type: 'update-html'}, 'file://')
-
     }, 2000)
+    */
+  }
+
+  private initEditorEvents() {
+    const editorElement = this.editor['getElement']() // dunno why `getElement` not found.
+
+    this.disposables.add(atom.commands.add(editorElement, {
+      'markdown-preview-enhanced:sync-preview': ()=> this.syncPreview()
+    }))
+
+    this.disposables.add(this.editor.onDidDestroy(()=> {
+      if (this.disposables) {
+        this.disposables.dispose()
+        this.disposables = null
+      }
+      this.editor = null
+
+      if (!this.config.singlePreview && this.config.closePreviewAutomatically) {
+        const pane = atom.workspace.paneForItem(this)
+        pane.destroyItem(this) // this will trigger @destroy()
+      }
+    }))
+
+    this.disposables.add(this.editor.onDidStopChanging(()=> {
+      if (this.config.liveUpdate)
+        this.renderMarkdown()
+    }))
+
+    this.disposables.add(this.editor.onDidSave(()=> {
+      if (!this.config.liveUpdate)
+        this.renderMarkdown(true)
+    }))
+
+    this.disposables.add(this.editor['onDidChangeScrollTop'](()=> {
+
+    }))
+
+    this.disposables.add(this.editor.onDidChangeCursorPosition((event)=> {
+
+    }))
+  }
+
+  private syncPreview() {
+
+  }
+
+  /**
+   * Render markdown
+   */
+  public renderMarkdown(triggeredBySave:boolean=false) {
+    // presentation mode 
+    if (this.engine.isPreviewInPresentationMode) {
+      this.loadPreview() // restart preview.
+    }
+
+    // not presentation mode 
+    const text = this.editor.getText()
+
+    // notice iframe that we started parsing markdown
+    this.postMessage({command: 'startParsingMarkdown'})
+
+    this.engine.parseMD(text, {isForPreview: true, useRelativeFilePath: false, hideFrontMatter: false, triggeredBySave})
+      .then(({markdown, html, tocHTML, JSAndCssFiles, yamlConfig})=> {
+      if (!mume.utility.isArrayEqual(JSAndCssFiles, this.JSAndCssFiles) || yamlConfig['isPresentationMode']) {
+        this.loadPreview() // restart preview
+      } else {
+        this.postMessage({
+          command: 'updateHTML',
+          html,
+          tocHTML,
+          totalLineCount: this.editor.getLineCount(),
+          sourceUri: this.editor.getPath(),
+          id: yamlConfig.id || '',
+          class: yamlConfig.class || ''
+        })
+      }
+    })
   }
 
   /**
@@ -147,8 +251,58 @@ export class MarkdownPreviewEnhancedView {
     return ''
   }
 
+  /**
+   * Post message to this.iframe
+   * @param data 
+   */
+  private postMessage(data:any) {
+    this.iframe.contentWindow.postMessage(data, 'file://')
+  }
+
+  public updateConfiguration() {
+    if (this.engine) {
+      this.engine.updateConfiguration(this.config)
+    }
+  }
+
+  public refreshPreview() {
+    if (this.engine) {
+      this.engine.clearCaches()
+      // restart iframe 
+      this.loadPreview()
+    }
+  }
+
+  public runCodeChunk(codeChunkId: string) {
+    if (!this.engine) return
+    this.engine.runCodeChunk(codeChunkId)
+    .then(()=> {
+      this.renderMarkdown()
+    })
+  }
+
+  public runAllCodeChunks() {
+    if (!this.engine) return
+    this.engine.runAllCodeChunks()
+    .then(()=> {
+      this.renderMarkdown()
+    })
+  }
+
+  public sendRunCodeChunkCommand() {
+    this.postMessage({command:'runCodeChunk'})
+  }
+
+  public startImageHelper() {
+    this.postMessage({command: 'openImageHelper'})
+  }
+
   public destroy() {
     this.element.remove()
+    if (this.disposables) {
+      this.disposables.dispose()
+      this.disposables = null
+    }
   }
 }
 

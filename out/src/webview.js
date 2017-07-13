@@ -825,7 +825,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         if (!data)
             return;
         // console.log('receive message: ' + data.command)
-        if (data.command === 'update-html') {
+        if (data.command === 'updateHTML') {
             mpe.totalLineCount = data.totalLineCount;
             mpe.sidebarTOCHTML = data.tocHTML;
             sourceUri = data.sourceUri;
@@ -836,7 +836,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             const line = parseInt(data.line);
             scrollToRevealSourceLine(line);
         }
-        else if (data.command === 'start-parsing-markdown') {
+        else if (data.command === 'startParsingMarkdown') {
             /**
              * show refreshingIcon after 1 second
              * if preview hasn't finished rendering.
@@ -849,13 +849,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 }
             }, 1000);
         }
-        else if (data.command === 'open-image-helper') {
+        else if (data.command === 'openImageHelper') {
             window['$']('#image-helper-view').modal();
         }
         else if (data.command === 'run-all-code-chunks') {
             runAllCodeChunks();
         }
-        else if (data.command === 'run-code-chunk') {
+        else if (data.command === 'runCodeChunk') {
             runNearestCodeChunk();
         }
     }, false);
