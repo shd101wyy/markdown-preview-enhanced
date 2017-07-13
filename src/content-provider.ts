@@ -5,6 +5,7 @@ import * as mume from "@shd101wyy/mume"
 import {MarkdownPreviewEnhancedConfig} from "./config"
 
 // TODO: presentation PDF export.
+// TODO: <!-- @import [toc] -->
 
 /**
  * Key is editor.getPath()
@@ -48,6 +49,8 @@ export class MarkdownPreviewEnhancedView {
     this.iframe.style.width = '100%'
     this.iframe.style.height = '100%'
     this.iframe.style.border = 'none'
+    this.iframe.src = path.resolve(__dirname, '../../html/loading.html')
+
     this.element.appendChild(this.iframe)
   }
 
@@ -144,7 +147,7 @@ export class MarkdownPreviewEnhancedView {
    * 2. Write preview html template
    * 3. this.iframe will load that *.html file.
    */
-  public async loadPreview() {
+  public async loadPreview() {    
     const editorFilePath = this.editor.getPath()
 
     // create temp html file for preview

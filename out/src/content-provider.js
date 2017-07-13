@@ -12,6 +12,7 @@ const atom_1 = require("atom");
 const path = require("path");
 const mume = require("@shd101wyy/mume");
 // TODO: presentation PDF export.
+// TODO: <!-- @import [toc] -->
 /**
  * Key is editor.getPath()
  * Value is temp html file path.
@@ -45,6 +46,7 @@ class MarkdownPreviewEnhancedView {
         this.iframe.style.width = '100%';
         this.iframe.style.height = '100%';
         this.iframe.style.border = 'none';
+        this.iframe.src = path.resolve(__dirname, '../../html/loading.html');
         this.element.appendChild(this.iframe);
     }
     getURI() {
