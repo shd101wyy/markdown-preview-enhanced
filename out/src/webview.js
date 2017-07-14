@@ -933,6 +933,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 mpe.previewElement.scrollTop = 0;
             }
         }
+        else if (event.which === 27) {
+            mpe.toolbar.sidebarTOCBtn.click();
+        }
     });
     window.addEventListener('resize', resizeEvent);
     if (document.readyState === 'loading') {

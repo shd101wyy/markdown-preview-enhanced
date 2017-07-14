@@ -1130,7 +1130,9 @@ window.addEventListener('keydown', (event)=> {
       resetZoom()
     } else if (event.which === 38) { // [ArrowUp] scroll to the most top
       mpe.previewElement.scrollTop = 0
-    }
+    } 
+  } else if (event.which === 27) { // [esc] toggle sidebar toc
+    mpe.toolbar.sidebarTOCBtn.click()
   }
 })
 
