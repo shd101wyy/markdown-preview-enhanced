@@ -93,6 +93,7 @@ class MarkdownPreviewEnhancedView {
      */
     bindEditor(editor) {
         if (!this.editor) {
+            this.editor = editor; // this has to be put here, otherwise the tab title will be `unknown`
             atom.workspace.open(this.uri, {
                 split: "right",
                 activatePane: false,
@@ -103,7 +104,6 @@ class MarkdownPreviewEnhancedView {
                 pending: false
             })
                 .then(() => {
-                this.editor = editor;
                 this.initEvents();
             });
         }
@@ -141,7 +141,7 @@ class MarkdownPreviewEnhancedView {
     loadPreview() {
         return __awaiter(this, void 0, void 0, function* () {
             const editorFilePath = this.editor.getPath();
-            this.postMessage('startParsingMarkdown');
+            this.postMessage({ command: 'startParsingMarkdown' });
             // create temp html file for preview
             let htmlFilePath;
             if (editorFilePath in HTML_FILES_MAP) {
