@@ -559,6 +559,63 @@ export class MarkdownPreviewEnhancedView {
     })
   }
 
+  private replaceHint(bufferRow:number, hint:string, withStr:string):boolean {
+    if (!this.editor) return false
+    let textLine = this.editor.buffer.lines[bufferRow]
+    if (textLine.indexOf(hint) >= 0) {
+      this.editor.buffer.setTextInRange([
+        [bufferRow, 0],
+        [bufferRow, textLine.length],
+      ], textLine.replace(hint, withStr))
+      return true 
+    }
+    return false 
+  }
+
+  private setUploadedImageURL(imageFileName:string, url:string, hint:string, bufferRow:number) {
+    let description
+    if (imageFileName.lastIndexOf('.'))
+      description = imageFileName.slice(0, imageFileName.lastIndexOf('.'))
+    else
+      description = imageFileName
+
+    const withStr = `![${description}](${url})`
+
+    if (!this.replaceHint(bufferRow, hint, withStr)) {
+      let i = bufferRow - 20
+      while (i <= bufferRow + 20) {
+        if (this.replaceHint(i, hint, withStr))
+          break
+        i++
+      }
+    }
+  }
+
+  /**
+   * Upload image at imageFilePath by this.config.imageUploader.
+   * Then insert markdown image url to markdown file.  
+   * @param imageFilePath 
+   */
+  public uploadImageFile(imageFilePath:string) {
+    if (!this.editor) return
+
+    const imageFileName = path.basename(imageFilePath)
+
+    const uid = Math.random().toString(36).substr(2, 9)
+    const hint = `![Uploading ${imageFileName}… (${uid})]()`
+    const bufferRow = this.editor.getCursorBufferPosition().row
+
+    this.editor.insertText(hint)
+
+    mume.utility.uploadImage(imageFilePath, {method:this.config.imageUploader})
+    .then((url)=> {
+      this.setUploadedImageURL(imageFileName, url, hint, bufferRow)
+    })
+    .catch((err)=> {
+      atom.notifications.addError(err)
+    })
+  }
+
   public destroy() {
     if (this.disposables) {
       this.disposables.dispose()

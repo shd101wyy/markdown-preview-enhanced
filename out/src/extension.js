@@ -171,16 +171,16 @@ const MESSAGE_DISPATCH_EVENTS = {
         }
     },
     'pasteImageFile': function (sourceUri, imageUrl) {
-        // TODO:
-        console.log('pasteImageFile: ' + imageUrl);
         const preview = getPreviewForEditor(sourceUri);
         if (preview) {
             preview.pasteImageFile(imageUrl);
         }
     },
     'uploadImageFile': function (sourceUri, imageUrl) {
-        // TODO:
-        console.log('uploadImageFile: ' + imageUrl);
+        const preview = getPreviewForEditor(sourceUri);
+        if (preview) {
+            preview.uploadImageFile(imageUrl);
+        }
     },
     'openInBrowser': function (sourceUri) {
         const preview = getPreviewForEditor(sourceUri);
