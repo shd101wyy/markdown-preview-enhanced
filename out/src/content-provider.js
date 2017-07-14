@@ -12,7 +12,6 @@ const atom_1 = require("atom");
 const path = require("path");
 const fs = require("fs");
 const mume = require("@shd101wyy/mume");
-// TODO: presentation PDF export.
 /**
  * Key is editor.getPath()
  * Value is temp html file path.

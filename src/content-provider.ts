@@ -5,8 +5,6 @@ import * as fs from "fs"
 import * as mume from "@shd101wyy/mume"
 import {MarkdownPreviewEnhancedConfig} from "./config"
 
-// TODO: presentation PDF export.
-
 /**
  * Key is editor.getPath()
  * Value is temp html file path.  

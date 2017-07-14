@@ -14,7 +14,7 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
   Toggle distraction free writing.   
 
 - <strong>Markdown Preview Enhanced: Customize Css</strong>  
-  Customize preview page css. You can edit styles inside `.markdown-preview-enhanced.markdown-preview-enhanced` section in `style.less` file.   
+  Customize preview page css.  
   Here is a quick [tutorial](customize-css.md).
 
 - <strong>Markdown Preview Enhanced: Create Toc </strong>  

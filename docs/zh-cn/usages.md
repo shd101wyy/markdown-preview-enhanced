@@ -14,7 +14,7 @@
   开关无干扰式写作模式。   
 
 - <strong>Markdown Preview Enhanced: Customize Css</strong>  
-  自定义预览 CSS。你可以在 `style.less` 文件中编辑 `.markdown-preview-enhanced.markdown-preview-enhanced` 部分。   
+  自定义预览 CSS。    
   这里有一个[快速教程](zh-cn/customize-css.md)。  
 
 - <strong>Markdown Preview Enhanced: Create Toc </strong>  
