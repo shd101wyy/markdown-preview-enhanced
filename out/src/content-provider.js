@@ -159,6 +159,7 @@ class MarkdownPreviewEnhancedView {
                     initialLine: this.editor.getCursorBufferPosition().row,
                     zoomLevel: this.zoomLevel
                 },
+                head: '',
                 webviewScript: path.resolve(__dirname, './webview.js')
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
@@ -288,6 +289,7 @@ class MarkdownPreviewEnhancedView {
         this.engine.parseMD(text, { isForPreview: true, useRelativeFilePath: false, hideFrontMatter: false, triggeredBySave })
             .then(({ markdown, html, tocHTML, JSAndCssFiles, yamlConfig }) => {
             if (!mume.utility.isArrayEqual(JSAndCssFiles, this.JSAndCssFiles) || yamlConfig['isPresentationMode']) {
+                this.JSAndCssFiles = JSAndCssFiles;
                 this.loadPreview(); // restart preview
             }
             else {
