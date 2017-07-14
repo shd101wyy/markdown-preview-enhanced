@@ -4,7 +4,7 @@
 
 ## 0.14.0  
 * Fully rewritten in TypeScript, so there might be some potential bugs.
-* Now powered by [Mume](https://github.com/shd101wyy/mume) project. The Atom version of this package shares the same core with the vscode version.   
+* Now powered by [Mume](https://github.com/shd101wyy/mume) project. The Atom version of this package shares the same core with the vscode version. 
 * Multiple new preview themes and code block themes are provided.
   * Github Light
   ![screen shot 2017-07-14 at 12 58 37 pm](https://user-images.githubusercontent.com/1908863/28224323-4899d896-6894-11e7-823a-233ee433d832.png)

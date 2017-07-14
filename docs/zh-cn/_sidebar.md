@@ -44,7 +44,8 @@
 - [疑难解答](zh-cn/faq.md)
 
 - Changelog  
-  - [Newest](newest.md)  
-  - [History](history.md)
-  
+  - Atom
+    - [Newest](newest.md)  
+    - [History](history.md)
+
 - [License](LICENSE.md)

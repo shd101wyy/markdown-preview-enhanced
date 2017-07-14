@@ -6,7 +6,7 @@
 </p>
 <br>
 
-![intro](https://user-images.githubusercontent.com/1908863/26898176-a5cad7fc-4b90-11e7-9d8c-74f85f28f133.gif)
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 <p align="center">
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>  
@@ -14,15 +14,19 @@
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br>
 </p>
 
-[Visual Studio Code version](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)    
+<p align="center">
+<a href="https://atom.io/packages/markdown-preview-enhanced">atom</a>
+&
+<a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">vscode</a>
+</p>
 
 *Still Beta Version!*      
 
 ## Supporting this project
-Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](./docs/backers.md). You can help make this project better by [supporting us on Patreon](https://www.patreon.com/shd101wyy). Thank you!  
+Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](./docs/backers.md). You can help make this project better by [supporting us on Patreon (monthly)](https://www.patreon.com/shd101wyy) or [微信支付 Wechat Pay](./docs/wechat.md). Thank you!  
 
 ## Introduction  
-Markdown Preview Enhanced is an Atom extension that provides you with many useful functionalities such as automatic scroll sync, math typesetting, mermaid, PlantUML, pandoc, PDF export, etc. A lot of its ideas are inspired by [Markdown Preview Plus](https://github.com/atom-community/markdown-preview-plus) and [RStudio Markdown](http://rmarkdown.rstudio.com/).  
+Markdown Preview Enhanced is an extension that provides you with many useful functionalities such as automatic scroll sync, math typesetting, mermaid, PlantUML, pandoc, PDF export, code chunk, etc. A lot of its ideas are inspired by [Markdown Preview Plus](https://github.com/atom-community/markdown-preview-plus) and [RStudio Markdown](http://rmarkdown.rstudio.com/).  
 
 Feel free to ask questions, post issues, submit pull request, and request new features.
 

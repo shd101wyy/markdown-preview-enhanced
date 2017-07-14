@@ -1,4 +1,4 @@
-# Installation for VSCode
+# Installation on VSCode
 
 There are several ways of installing this package.  
 

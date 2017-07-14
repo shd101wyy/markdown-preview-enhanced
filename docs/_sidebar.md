@@ -40,7 +40,8 @@
   - [Thanks](thanks.md)  
 - [Extra](extra.md)
 - [FAQ](faq.md)
-- Changelog  
-  - [Newest](newest.md)  
-  - [History](history.md)
+- Changelog
+  - Atom
+    - [Newest](newest.md)  
+    - [History](history.md)
 - [License](LICENSE.md)
