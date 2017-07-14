@@ -172,6 +172,10 @@ const MESSAGE_DISPATCH_EVENTS = {
   'pasteImageFile': function(sourceUri, imageUrl) {
     // TODO:
     console.log('pasteImageFile: ' + imageUrl) 
+    const preview = getPreviewForEditor(sourceUri)
+    if (preview) {
+      preview.pasteImageFile(imageUrl)
+    }
   },
   'uploadImageFile': function(sourceUri, imageUrl) {
     // TODO:

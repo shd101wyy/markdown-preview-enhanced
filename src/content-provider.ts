@@ -1,5 +1,6 @@
 import {CompositeDisposable} from "atom"
 import * as path from "path"
+import * as fs from "fs"
 
 import * as mume from "@shd101wyy/mume"
 import {MarkdownPreviewEnhancedConfig} from "./config"
@@ -505,6 +506,57 @@ export class MarkdownPreviewEnhancedView {
 
   public setZoomLevel(zoomLevel:number) {
     this.zoomLevel = zoomLevel || 1
+  }
+
+  public async pasteImageFile(imageFilePath: string) {
+    if (!this.editor) return
+    const imageFolderPath = this.config.imageFolderPath
+    let imageFileName = path.basename(imageFilePath)
+    const projectDirectoryPath = this.getProjectDirectoryPath()
+    let assetDirectoryPath, description
+    if (imageFolderPath[0] === '/') {
+      assetDirectoryPath = path.resolve(projectDirectoryPath, '.' + imageFolderPath)
+    } else {
+      assetDirectoryPath = path.resolve(path.dirname(this.editor.getPath()), imageFolderPath)
+    }
+
+    const destPath = path.resolve(assetDirectoryPath, path.basename(imageFilePath))
+
+    fs.mkdir(assetDirectoryPath, (error) => {
+      fs.stat(destPath, (err, stat) => {
+        if (err == null) { // file existed 
+          const lastDotOffset = imageFileName.lastIndexOf('.')
+          const uid = '_' + Math.random().toString(36).substr(2, 9)
+
+          if (lastDotOffset > 0) {
+            description = imageFileName.slice(0, lastDotOffset)
+            imageFileName = imageFileName.slice(0, lastDotOffset) + uid + imageFileName.slice(lastDotOffset, imageFileName.length)
+          } else {
+            description = imageFileName
+            imageFileName = imageFileName + uid
+          }
+
+          fs.createReadStream(imageFilePath).pipe(fs.createWriteStream(path.resolve(assetDirectoryPath, imageFileName)))
+        } else if (err.code === 'ENOENT') { // file doesn't exist 
+          fs.createReadStream(imageFilePath).pipe(fs.createWriteStream(destPath))
+
+          if (imageFileName.lastIndexOf('.'))
+            description = imageFileName.slice(0, imageFileName.lastIndexOf('.'))
+          else
+            description = imageFileName
+        } else {
+          return atom.notifications.addError(err.toString())
+        }
+
+        atom.notifications.addInfo(`Image ${imageFileName} has been copied to folder ${assetDirectoryPath}`)
+
+        let url = `${imageFolderPath}/${imageFileName}`
+        if (url.indexOf(' ') >= 0)
+          url = `<${url}>`
+
+        this.editor.insertText(`![${description}](${url})`)
+      })
+    })
   }
 
   public destroy() {
