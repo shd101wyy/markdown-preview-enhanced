@@ -42,20 +42,8 @@ digraph G {
 
 ## Code Chunk
 
-### Plotly
-@import "https://cdn.plot.ly/plotly-latest.min.js"  
-
-```{javascript id:"izbr5wl4", element:"<div id=\"tester\"></div>"}
-TESTER = document.getElementById('tester');
-Plotly.plot( TESTER, [{
-x: [1, 2, 3, 4, 5],
-y: [1, 2, 4, 8, 16] }], {
-
-margin: { t: 0 } } );
-''
-```
 ### GNUPlot
-```{gnuplot output:"html", id:"chj3mgv4pb"}
+```gnuplot {cmd:true, output:"html"}
 set terminal svg
 set title "Simple Plots" font ",20"
 set key left box
@@ -68,7 +56,7 @@ plot [-10:10] sin(x),atan(x),cos(atan(x))
 ### LaTeX
 > Branched Ring
 
-```{latex latex_zoom:1, id:"chj3nddq87"}
+```latex {cmd:true, latex_zoom:1}
 \documentclass{standalone}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -84,7 +72,7 @@ plot [-10:10] sin(x),atan(x),cos(atan(x))
 
 ### Python matplotlib
 
-```{python matplotlib:true, id:"chj3ndnxrv"}
+```python {cmd:true, matplotlib:true}
 import matplotlib.pyplot as plt
 import numpy as np
 

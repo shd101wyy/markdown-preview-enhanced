@@ -14,6 +14,14 @@ import {MarkdownPreviewEnhancedConfig} from "./config"
 const HTML_FILES_MAP = {}
 
 /**
+ * Key is editor.getPath()
+ * Value is MarkdownEngine
+ * This data structure prevents MarkdownPreviewEnhancedView from creating 
+ * markdown engine for one file more than once.
+ */
+const MARKDOWN_ENGINES_MAP:{[key:string]: mume.MarkdownEngine} = {}
+
+/**
  * The markdown previewer
  */
 export class MarkdownPreviewEnhancedView {
@@ -138,11 +146,16 @@ export class MarkdownPreviewEnhancedView {
     this.JSAndCssFiles = []
 
     // init markdown engine 
-    this.engine = new mume.MarkdownEngine({
-      filePath: this.editor.getPath(),
-      projectDirectoryPath: this.getProjectDirectoryPath(),
-      config: this.config
-    })
+    if (this.editor.getPath() in MARKDOWN_ENGINES_MAP) {
+      this.engine = MARKDOWN_ENGINES_MAP[this.editor.getPath()]
+    } else {
+      this.engine = new mume.MarkdownEngine({
+        filePath: this.editor.getPath(),
+        projectDirectoryPath: this.getProjectDirectoryPath(),
+        config: this.config
+      })
+      MARKDOWN_ENGINES_MAP[this.editor.getPath()] = this.engine
+    }
 
     await this.loadPreview()
     this.initEditorEvents()
@@ -413,7 +426,12 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public updateConfiguration() {
-    if (this.engine) {
+    if (this.config.singlePreview) {
+      for (let sourceUri in MARKDOWN_ENGINES_MAP) {
+        MARKDOWN_ENGINES_MAP[sourceUri].updateConfiguration(this.config)
+      }
+    }
+    else if (this.engine) {
       this.engine.updateConfiguration(this.config)
     }
   }
