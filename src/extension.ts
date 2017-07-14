@@ -527,6 +527,97 @@ function showUploadedImages() {
   atom.workspace.open(imageHistoryFilePath)
 }
 
+/**
+ * Code chunk `modify_source` is triggered.
+ * @param codeChunkData 
+ * @param result 
+ * @param filePath 
+ */
+async function onModifySource(codeChunkData, result, filePath) {
+  function insertResult(i:number, editor:AtomCore.TextEditor) {
+    const lineCount = editor.getLineCount()
+    let start = 0
+    // find <!- code_chunk_output --> 
+    for (let j = i + 2; j < i + 6 && j < lineCount; j++) {
+      if (editor.buffer.lines[j].startsWith('<!-- code_chunk_output -->')) {
+        start = j
+        break
+      }
+    }
+
+    if (start) { // found
+      // TODO: modify exited output 
+      let end = start + 1
+      while (end < lineCount) {
+        if (editor.buffer.lines[end].startsWith('<!-- /code_chunk_output -->')){
+          break
+        }
+        end += 1
+      }
+
+      // if output not changed, then no need to modify editor buffer
+      let r = ""
+      for (let i = start+2; i < end-1; i++) {
+        r += editor.buffer.lines[i]+'\n'
+      }
+      if (r === result+'\n') return "" // no need to modify output
+      editor.buffer.setTextInRange([
+        [start + 2, 0],
+        [end - 1, 0]
+      ], result + '\n')
+      /*
+      editor.edit((edit)=> {
+        edit.replace(new vscode.Range(
+          new vscode.Position(start + 2, 0),
+          new vscode.Position(end-1, 0)
+        ), result+'\n')
+      })
+      */
+      return ""
+    } else {
+      editor.buffer.insert([i+1, 0], `\n<!-- code_chunk_output -->\n\n${result}\n\n<!-- /code_chunk_output -->\n`)
+      return ""
+    }
+  }
+
+  const visibleTextEditors = atom.workspace.getTextEditors()
+  for (let i = 0; i < visibleTextEditors.length; i++) {
+    const editor = visibleTextEditors[i] as AtomCore.TextEditor
+    if (editor.getPath() === filePath) {
+      let codeChunkOffset = 0,
+          targetCodeChunkOffset = codeChunkData.options['code_chunk_offset']
+      const lineCount = editor.getLineCount()
+      for (let i = 0; i < lineCount; i++) {
+        const line = editor.buffer.lines[i]
+        if (line.match(/^```(.+)\"?cmd\"?\s*\:/)) {
+          if (codeChunkOffset === targetCodeChunkOffset) {
+            i = i + 1
+            while (i < lineCount) {
+              if (editor.buffer.lines[i].match(/^\`\`\`\s*/)) {
+                break
+              }
+              i += 1
+            }
+            return insertResult(i, editor)
+          } else {
+            codeChunkOffset++
+          }
+        } else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*\:/)) {
+          if (codeChunkOffset === targetCodeChunkOffset) {
+            // console.log('find code chunk' )
+            return insertResult(i, editor)
+          } else {
+            codeChunkOffset++
+          }
+        }
+      }
+      break
+    }
+  }
+  return ""  
+}
+
+mume.MarkdownEngine.onModifySource(onModifySource)
 
 export function deactivate() {
   subscriptions.dispose()

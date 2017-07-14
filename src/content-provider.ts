@@ -222,8 +222,7 @@ export class MarkdownPreviewEnhancedView {
     }))
 
     this.disposables.add(this.editor.onDidSave(()=> {
-      if (!this.config.liveUpdate)
-        this.renderMarkdown(true)
+      this.renderMarkdown(true)
     }))
 
     this.disposables.add(editorElement['onDidChangeScrollTop'](()=> {
