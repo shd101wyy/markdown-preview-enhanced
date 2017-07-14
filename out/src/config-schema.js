@@ -58,14 +58,20 @@ exports.configSchema = {
         "enum": [
             "atom-dark.css",
             "coy.css",
+            "darcula.css",
             "dark.css",
             "default.css",
             "funky.css",
             "github.css",
+            "hopscotch.css",
             "monokai.css",
             "okaidia.css",
+            "onedark.css",
+            "pojoaque.css",
             "solarized-light.css",
-            "twilight.css"
+            "twilight.css",
+            "vs.css",
+            "xonokai.css"
         ],
         "order": 20
     },

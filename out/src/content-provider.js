@@ -13,7 +13,6 @@ const path = require("path");
 const fs = require("fs");
 const mume = require("@shd101wyy/mume");
 // TODO: presentation PDF export.
-// TODO: <!-- @import [toc] -->
 /**
  * Key is editor.getPath()
  * Value is temp html file path.
@@ -387,7 +386,7 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.htmlExport({ offline })
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
             atom.notifications.addError(error);
@@ -397,7 +396,15 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.phantomjsExport({ fileType })
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            if (dest.endsWith('?print-pdf')) {
+                atom.notifications.addSuccess(`Please copy and open the following link in Chrome, then print as PDF`, {
+                    dismissable: true,
+                    detail: `Path: \`${dest}\``
+                });
+            }
+            else {
+                atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
+            }
         })
             .catch((error) => {
             atom.notifications.addError(error);
@@ -407,7 +414,15 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.princeExport({})
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            if (dest.endsWith('?print-pdf')) {
+                atom.notifications.addSuccess(`Please copy and open the following link in Chrome, then print as PDF`, {
+                    dismissable: true,
+                    detail: `Path: \`${dest}\``
+                });
+            }
+            else {
+                atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
+            }
         })
             .catch((error) => {
             atom.notifications.addError(error);
@@ -417,7 +432,7 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.eBookExport({ fileType })
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
             atom.notifications.addError(error);
@@ -427,7 +442,7 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.pandocExport({})
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
             atom.notifications.addError(error);
@@ -437,7 +452,7 @@ class MarkdownPreviewEnhancedView {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.markdownExport({})
             .then((dest) => {
-            atom.notifications.addSuccess(`File ${path.basename(dest)} was created at path: ${dest}`);
+            atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
             atom.notifications.addError(error);
