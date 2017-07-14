@@ -171,7 +171,6 @@ class MarkdownPreviewEnhancedView {
             backgroundIframe.style.border = 'none';
             backgroundIframe.style.display = 'none';
             this.element.appendChild(backgroundIframe);
-            const currentIframe = this.iframe;
             /*
             if (this.iframe.src === htmlFilePath) {
               this.iframe.contentWindow.location.reload()
@@ -182,7 +181,7 @@ class MarkdownPreviewEnhancedView {
             backgroundIframe.onload = () => {
                 // replace this.iframe to backgroundIframe
                 backgroundIframe.style.display = 'block';
-                currentIframe.remove();
+                this.iframe.remove();
                 this.iframe = backgroundIframe;
                 if (!this.engine.isPreviewInPresentationMode) {
                     this.renderMarkdown();

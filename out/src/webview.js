@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 // preview controller
 (function () {
-    console.log('init webview');
     let $ = null;
     /**
      * This config is the same as the one defined in `config.ts` file
@@ -51,6 +50,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         /** load config */
         config = JSON.parse(document.getElementById('mume-data').getAttribute('data-config'));
         sourceUri = config['sourceUri'];
+        console.log('init webview: ' + sourceUri);
         // console.log(document.getElementsByTagName('html')[0].innerHTML)
         // console.log(JSON.stringify(config))
         /** init mpe object */
@@ -805,11 +805,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             mpe.scrollMap = buildScrollMap();
         if (!mpe.scrollMap || line >= mpe.scrollMap.length)
             return;
-        /**
-         * Since I am not able to access the viewport of the editor
-         * I used `golden section` here for scrollTop.
-         */
-        scrollToPos(Math.max(mpe.scrollMap[line] - mpe.previewElement.offsetHeight * topRatio, 0));
+        if (line + 1 === mpe.totalLineCount) {
+            scrollToPos(mpe.previewElement.scrollHeight);
+        }
+        else {
+            /**
+             * Since I am not able to access the viewport of the editor
+             * I used `golden section` (0.372) here for scrollTop.
+             */
+            scrollToPos(Math.max(mpe.scrollMap[line] - mpe.previewElement.offsetHeight * topRatio, 0));
+        }
     }
     /**
      * Smoothly scroll the previewElement to `scrollTop` position.

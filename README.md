@@ -40,7 +40,5 @@ Contact me if you are willing to help translate the documentation :)
 Newest updates for the current minor version can be found at the  [newest notes](https://shd101wyy.github.io/markdown-preview-enhanced/#/newest).  
 Detailed changes for each old release can be found at [history notes](https://shd101wyy.github.io/markdown-preview-enhanced/#/history).  
 
-
-
 ## License
 [University of Illinois/NCSA Open Source License](LICENSE.md)  
