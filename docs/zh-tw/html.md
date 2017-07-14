@@ -1,19 +1,23 @@
 # HTML 導出  
 
 ## 使用
-右鍵點擊預覽，然後選擇 `Export to Disk`。  
-點擊 `HTML` 標簽。  
-點擊 `export` 按鈕。    
+右鍵點擊預覽，然後點擊 `HTML` 標簽。  
+接著選擇：
 
-![screen shot 2017-06-06 at 4 46 21 pm](https://user-images.githubusercontent.com/1908863/26853490-d5f01122-4ad7-11e7-9be7-eb4d5c50b72d.png)
+* `HTML (offline)`
+選擇這個選項如果你要離線使用這個 html 文件。  
+* `HTML (cdn hosted)`
+選擇這個選項如果你要遠程或在服務器上使用這個 html 文件。
+
+![screen shot 2017-07-14 at 1 14 28 am](https://user-images.githubusercontent.com/1908863/28200455-d5a12d60-6831-11e7-8572-91d3845ce8cf.png)
 
 ## 設置  
-* `Use CDN Hosted resources`  
-  如果這個選項被開啟了，那麼所有類似於 `reveal.js`，`MathJax` 的 `js` 庫 將會被遠程引用。  
-  如果你不想要在本地使用這個 html 文件，那麼你就需要開啟這個選項。  
+```yaml
+---
+html:
+  embed_local_images: false
+---
+```
 
-* `Use relative image path`  
-  如果開啟了，圖片將會使用相對路徑。  
 
-* `Embeded local images`     
-  如果開啟了，那麼所有的本地圖片將會被作為 `base64` 圖片嵌入到 html 中。  
+如果 `embed_local_images` 被設置為 `true`，那麼所有的本地圖片都將會被引用為 `base64` 格式。  

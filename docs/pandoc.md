@@ -25,7 +25,6 @@ Please note that `--filter=pandoc-citeproc` will be automatically added if there
 **Known Issues & Limitations**:  
 1. `ebook` export has problem.  
 2. `Code Chunk` is sometimes buggy.  
-3. `Create TOC` command doesn't work, but `[TOC]` works.  
 
 ## Front-Matter   
 `pandoc document export` requires writing `front-matter`.  

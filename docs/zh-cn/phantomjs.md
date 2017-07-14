@@ -2,15 +2,24 @@
 
 **PhantomJS** 支持 `pdf`，`jpeg`，以及 `png` 文件的导出。  
 
+在使用这个特性之前，请确保你已经安装好了 `phantomjs`。
+
+* Windows
+请查看 [PhantomJS](http://phantomjs.org/) 官网。
+* macOS
+`brew install phantomjs`
+
 ## 使用
-右键点击预览，然后选择 `Export to Disk`。    
-点击 `PHANTOMJS` 标签。     
-点击 `export` 按钮。    
+右键点击预览，然后点击 `PhantomJS`。     
+选择你想要导出的文件类型。  
 
-![screen shot 2017-06-06 at 4 46 33 pm](https://user-images.githubusercontent.com/1908863/26853700-a85dba6a-4ad8-11e7-9d42-78b1e4249e83.png)
+![screen shot 2017-07-14 at 1 37 38 am](https://user-images.githubusercontent.com/1908863/28201098-0e5fe3be-6835-11e7-8db6-75fe7e5c35c7.png)
 
-## Header 和 footer 设置
-你可以通过 `Markdown Preview Enhanced: Open Header Footer Config` 命令，来打开并修改 `phantomjs_config.js` 文件。  
+## 设置
+### 全局设置
+你可以通过 `Markdown Preview Enhanced: Open PhantomJS Config` 命令，来打开并修改 `phantomjs_config.js` 文件。  
+
+> `phantomjs_config.js` 文件位于 `~/.mume/phantomjs_config.js`
 
 `phantomjs_config.js` 应该如下：    
 
@@ -43,3 +52,14 @@ let config = {
 module.exports = config || {}
 ```
 
+### 单一文件设置  
+你可以编写 front-matter  来对设置 phantomjs：  
+
+```yaml
+---
+phantomjs:
+  orientation: landscape
+---
+```
+
+查看 [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) 了解更多信息。   

@@ -69,7 +69,7 @@ args that append to command. eg:
     print("Verbose will be printed first")
     ```
 
-    ```erd {cmd:true, args:["-f", "svg", "-i"], output:"html"}
+    ```erd {cmd:true, args:["-i", "$input_file", "-f", "svg"], output:"html"}
 		# output svg format and append as html result.
     ```
 
@@ -122,10 +122,10 @@ The `id` of the code chunk. This option would be useful if `continue` is used.
 * **input_file**  
 `input_file` is automatically generated under the same directory of your markdown file and will be deleted after running code that is copied to `input_file`.      
 By default, it is appended at the very end of program arguments.  
-However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
+However, you can set the position of `input_file` in your `args` option by `$input_file` macro. eg:  
 
 
-    ```program {cmd:true, args:["-i", "{input_file}", "-o", "./output.png"]}
+    ```program {cmd:true, args:["-i", "$input_file", "-o", "./output.png"]}
     ...your code here
     ```
 
@@ -154,7 +154,7 @@ Then you can simply write LaTeX in code chunk like this:
     \end{document}
     ```
 
-![screen shot 2017-06-20 at 8 45 15 am](https://user-images.githubusercontent.com/1908863/27336322-caba8658-5594-11e7-87cf-e54518d46435.png)
+![screen shot 2017-07-14 at 11 25 09 am](https://user-images.githubusercontent.com/1908863/28220981-23dd1b9c-6887-11e7-8e0f-1a0fd64f54cd.png)
 
 
 ### LaTeX output configuration  
@@ -173,7 +173,7 @@ The latex engine that you used to compile `tex` file. By default `pdflatex` is u
 
 ### TikZ example  
 It is recommended to use `standalone` while drawing `tikz` graphs.  
-![screen shot 2017-06-05 at 9 48 10 pm](https://cloud.githubusercontent.com/assets/1908863/26811633/b018aa76-4a38-11e7-9ec2-688f273468bb.png)
+![screen shot 2017-07-14 at 11 27 56 am](https://user-images.githubusercontent.com/1908863/28221069-8113a5b0-6887-11e7-82fa-23dd68f2be82.png)
 
 
 ## Plotly
@@ -187,7 +187,7 @@ For example:
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
-    ```erd {cmd:true, output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}
+    ```erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}
 
     [Person]
     *name
@@ -204,14 +204,14 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
     Person *--1 Location
     ```
 
-`erd {cmd:true, output:"html", args:["-i", "{input_file}", "-f", "svg"]}`  
+`erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}`  
 * `erd` the program that we are using. (*you need to have the program installed first*)  
 * `output:"html"` we will append the running result as `html`.  
 * `args` field shows the arguments that we will use.  
 
 Then we can click the `run` button at the preview to run our code.  
 
-![code_chunk](http://i.imgur.com/a7LkJYD.gif)
+![erd](https://user-images.githubusercontent.com/1908863/28221395-bcd0bd76-6888-11e7-8c6e-925e228d02cc.gif)
 
 ## Showcases (outdated)
 **bash**  

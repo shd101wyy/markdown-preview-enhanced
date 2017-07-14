@@ -30,6 +30,9 @@ Markdown Preview Enhanced 使用 [PlantUML](http://plantuml.com/) 来创建各�
 如果代码中 `@start...` 没有被找到，那么 `@startuml ... @enduml` 将会被自动添加。
 
 ## WaveDrom
+
+> 这个自 0.14.0 版本以后暂时不被支持了
+
 Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 来渲染 digital timing diagram.  
 - `wavedrom` 代码块中的内容将会被 [WaveDrom](https://github.com/drom/wavedrom) 渲染。
 
@@ -38,15 +41,15 @@ Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 来渲染 digi
 ## GraphViz  
 Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot 语言](https://tinyurl.com/kjoouup) 图形。  
 - `viz` 或者 `dot` 代码块中的内容将会被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。  
-- 在第一行中添加 `engine:[engine_name]`来设置不同的渲染引擎。例如 `engine:dot`。 引擎 `circo`，`dot`，`neato`，`osage`，或者 `twopi` 是被支持的。默认下，使用 `dot` 引擎。
+- 你可以通过 `{engine: "..."}` 来选择不同的渲染引擎。 引擎 `circo`，`dot`，`neato`，`osage`，或者 `twopi` 是被支持的。默认下，使用 `dot` 引擎。
 
-![screen shot 2017-06-05 at 8 08 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809493/d1dd166e-4a2a-11e7-84ff-fdb51c0b332e.png)
+![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
 
 ---  
 
-如果你只是想要显示代码块而不想画图，则只要在后面添加 `{.code-block}` 即可：     
+如果你只是想要显示代码块而不想画图，则只要在后面添加 `{code_block: true}` 即可：     
 
-    ```mermaid {.code-block}
+    ```mermaid {code_block: true}
     // 你的 mermaid 代码
     ```
 

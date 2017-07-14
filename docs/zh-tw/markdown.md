@@ -2,7 +2,7 @@
 **Markdown Preview Enhanced** 支持編譯到 **GitHub Flavored Markdown**。這麼做是為了使導出的 markdown 文件可以包含所有的繪制的圖形（為 png 圖片），code chunks，以及數學表達式（圖片形式）等等以方便於發布到 GitHub。    
 
 ## 使用
-右鍵點擊預覽，然後選擇 `Save as Markdown (GFM)`.
+右鍵點擊預覽，然後選擇 `Save as Markdown`.
 
 ## 設置
 你可以通過 front-matter 來設置圖片的保存路徑以及輸出路徑。  

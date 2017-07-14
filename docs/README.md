@@ -46,4 +46,4 @@ Markdown Preview Enhanced is an open source project released under the [Universi
 ## Help translation
 If you are willing to help translate this documentation, please contact me by posting an issue [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues).      
 
-[➔ Installation](installation.md)
+[➔ Usages](usages.md)

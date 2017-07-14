@@ -26,7 +26,7 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.plantuml(.puml)` file will be rendered by PlantUML.  
 * `.html` file will be embeded directly.  
 * `.js` file will included as `<script src="your_js"></script>`.
-* `.less` and `.css` file will be included as style. Only local `less` file is currently supported. `.css` file will be included as `<link rel="stylesheet" href="your_css">`
+* `.less` and `.css` file will be included as style. Only local `less` file is currently supported. `.css` file will be included as `<link rel="stylesheet" href="your_css">`.
 * `.pdf` file will be converted to `svg` files by `pdf2svg` and then be included.
 * `markdown` file will be parsed and embeded directly.     
 * All other files will be rendered as code block.    
@@ -65,7 +65,7 @@ Inclusive. For example `{page_begin:2, page_end:4}` will display the number 2, 3
 
 ## Import file as Code Chunk  
 ```markdown
-@import "test.py" {cmd:'python', cmd:"python3"}
+@import "test.py" {cmd:"python3"}
 ```
 
 ## Known issues  

@@ -46,8 +46,8 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 - <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>  
   Edit `mermaid` init configuration.  
 
-- <strong> Markdown Preview Enhanced: Open Header Footer Config</strong>  
-  **PhantomJS PDF** export header and footer configuration.  
+- <strong> Markdown Preview Enhanced: Open PhantomJS Config</strong>  
+  Edit `PhantomJS` export configuration.  
 
 - <strong> Markdown Preview Enhanced: Open Mathjax Config </strong>  
 	Edit `MathJax` init configuration.  
@@ -68,6 +68,9 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 - <strong>Markdown Preview Enhanced: Run All Code Chunks </strong>    
   <kbd>ctrl-shift-enter</kbd>  
   Run all [Code Chunks](code-chunk.md).   
+
+- <strong>Markdown Preview Enhanced: Extend Parser</strong>  
+  [Extend Markdown Parser](extend-parser.md).  
 
 ---
 

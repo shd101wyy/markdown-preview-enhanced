@@ -1,9 +1,9 @@
-# Extend Markdown Parser
+# 擴展 Markdown Parser
 
-Run `Markdown Preview Enhanced: Extend Parser` command.  
-Then edit the `parser.js` file.  
+運行 `Markdown Preview Enhanced: Extend Parser` 命令。    
+然後 `parser.js` 文件。    
 
-> `parser.js` file is located at `~/.mume/parser.js`   
+> `parser.js` 文件位於 `~/.mume/parser.js`   
 
 
 ```javascript
@@ -21,7 +21,7 @@ module.exports = {
 }
 ```
 
-For example, if you want to prepend `😀` to every headers, then just edit `onWillParseMarkdown` like this:  
+例如，你想在每個標題前添加 `😀` ，那麼你需要編輯 `onWillParseMarkdown` 如下：  
 
 ```javascript
 module.exports = {

@@ -9,17 +9,15 @@ brew install Caskroom/cask/prince
 ```
 
 ## 使用
-右鍵點擊預覽，然後選擇 `Export to Disk`。    
-點擊 `PRINCE` 標簽。     
-點擊 `export` 按鈕。      
+右鍵點擊預覽，然後選擇 `PDF (prince)`。    
 
-![screen shot 2017-06-06 at 4 46 27 pm](https://user-images.githubusercontent.com/1908863/26853716-b68b279e-4ad8-11e7-896e-8e7c2990326b.png)
+![screen shot 2017-07-14 at 1 44 23 am](https://user-images.githubusercontent.com/1908863/28201287-fb5ea8d0-6835-11e7-9bdb-2afb458ee5cc.png)
 
-## 自定義 Css
+## 自定義 CSS
 <kbd>cmd-shift-p</kbd> 然後運行 `Markdown Preview Enhanced: Customize Css` 命令，添加以下的代碼：    
 
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   &.prince {
     // 你的 prince css
   }
@@ -28,7 +26,7 @@ brew install Caskroom/cask/prince
 
 例如，改變紙張大小到 `A4 landscape`:  
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   &.prince {
     @page {
       size: A4 landscape

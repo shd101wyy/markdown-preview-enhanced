@@ -2,7 +2,7 @@
   - [Introduction](/)
   - [Usages](usages.md)  
   - Installation
-    - [ATOM](installation.md)
+    - [Atom](installation.md)
     - [VSCode](vscode-installation.md)
 
 - Writing Markdown
@@ -17,10 +17,10 @@
 
 - Document Export
   - [HTML](html.md)  
+  - [PhantomJS](phantomjs.md)  
   - [PDF](pdf.md)  
   - [eBook](ebook.md)
   - [Prince (PDF)](prince.md)  
-  - [PhantomJS](phantomjs.md)  
   - Pandoc
     - [PDF](pandoc-pdf.md)  
     - [Word](pandoc-word.md)

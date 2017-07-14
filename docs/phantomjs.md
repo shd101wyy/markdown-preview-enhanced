@@ -2,7 +2,7 @@
 
 **PhantomJS** supports `pdf`, `jpeg`, and `png` file export.  
 
-Before using this feature, you need to have `phantomjs installed`.  
+Before using this feature, you need to have `phantomjs` installed.  
 
 * Windows
 Check [PhantomJS](http://phantomjs.org/) website.
@@ -10,7 +10,7 @@ Check [PhantomJS](http://phantomjs.org/) website.
 `brew install phantomjs`
 
 ## Usage
-Right click at the preview, then click `PHANTOMJS` tab.  
+Right click at the preview, then click `PhantomJS` tab.  
 Choose the file type you want to export.  
 
 ![screen shot 2017-07-14 at 1 37 38 am](https://user-images.githubusercontent.com/1908863/28201098-0e5fe3be-6835-11e7-8db6-75fe7e5c35c7.png)
@@ -19,8 +19,9 @@ Choose the file type you want to export.
 ### For all files
 You can configure header and footer by running `Markdown Preview Enhanced: Open PhantomJS Config` command, then modify the `phantomjs_config.js` file.  
 
-The `phantomjs_config.js` file should look like this:   
+> `phantomjs_config.js` file is located at `~/.mume/phantomjs_config.js`
 
+The `phantomjs_config.js` file should look like this:   
 
 ```javascript
 'use strict'

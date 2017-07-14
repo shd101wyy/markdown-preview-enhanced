@@ -47,8 +47,8 @@
 - <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>  
   打開 `mermaid` 設置文件。  
 
-- <strong> Markdown Preview Enhanced: Open Header Footer Config</strong>  
-  打開 **PhantomJS PDF** header 和 footer 設置文件。    
+- <strong> Markdown Preview Enhanced: Open PhantomJS Config </strong>  
+  打開 `PhantomJS` 設置文件。    
 
 - <strong> Markdown Preview Enhanced: Open Mathjax Config </strong>  
 	打開 `MathJax` 設置文件。  
@@ -65,34 +65,37 @@
 
 - <strong>Markdown Preview Enhanced: Run Code Chunk </strong>    
   <kbd>shift-enter</kbd>  
-  運行單個 [Code Chunk](zh-tw/code-chunk.md).   
+  運行單個 [Code Chunk](zh-tw/code-chunk.md)。   
 
 - <strong>Markdown Preview Enhanced: Run All Code Chunks </strong>    
   <kbd>ctrl-shift-enter</kbd>  
-  運行所有 [Code Chunks](zh-tw/code-chunk.md).   
+  運行所有 [Code Chunks](zh-tw/code-chunk.md)。   
+
+- <strong>Markdown Preview Enhanced: Extend Parser</strong>  
+  [擴展 Markdown Parser](zh-tw/extend-parser.md)。  
 
 ---
 
 *預覽*    
 
 **右鍵點擊** 預覽打開菜單：   
-![screen shot 2017-06-06 at 3 53 04 pm](https://user-images.githubusercontent.com/1908863/26851375-45a3e96a-4ad0-11e7-9bbd-b3ea0ad80da9.png)
 
-- <strong>Markdown Preview Enhanced: Zoom In </strong>  
-  <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>.    
+![screen shot 2017-07-14 at 12 30 54 am](https://user-images.githubusercontent.com/1908863/28199502-b9ba39c6-682b-11e7-8bb9-89661100389e.png)
+
+- <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>.    
   放大預覽。  
 
-- <strong>Markdown Preview Enhanced: Zoom Out</strong>  
-  <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd>.    
+- <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd>.    
   縮小預覽。  
 
-- <strong>Markdown Preview Enhanced: Reset Zoom </strong>  
-  <kbd>cmd-0</kbd>  
+- <kbd>cmd-0</kbd>  
   重置預覽縮放。  
 
-- <strong>Markdown Preview Enhanced: Sync Source</strong>  
-  <kbd>cmd-shift-s</kbd>  
+- <kbd>cmd-shift-s</kbd>  
   滑動 markdown 編輯器到預覽的位置。
+
+- <kbd>esc</kbd>  
+  開／關邊欄 TOC。
 
 ## 快捷鍵  
 
@@ -106,8 +109,11 @@
 | <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd> | 預覽放大 |  
 | <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd> | 預覽縮小 |  
 | <kbd>cmd-0</kbd> | 預覽縮放重置 |
+| <kbd>esc</kbd>  | 開／關邊欄 TOC |
 
 ## 插件設置  
+
+### Atom
 如果你想要打開插件設置，請按下 <kbd>cmd-shift-p</kbd> 然後選擇 `Settings View: Open`。
 
 在 `Settings` 頁面中，接著點擊 `Packages`。  
@@ -116,5 +122,9 @@
 
 點擊 `Settings` 按鈕：   
 
-![screen shot 2017-06-06 at 3 56 34 pm](https://user-images.githubusercontent.com/1908863/26851587-e5fa4f4e-4ad0-11e7-9d70-89c67d0df1c2.png)
+![screen shot 2017-07-14 at 12 35 13 am](https://user-images.githubusercontent.com/1908863/28199574-50595dbc-682c-11e7-9d94-264e46387da8.png)
 
+### VSCode
+運行 `Preferences: Open User Settings` 命令，然後搜索 `markdown-preview-enhanced`。    
+
+![screen shot 2017-07-14 at 12 34 04 am](https://user-images.githubusercontent.com/1908863/28199551-2719acb8-682c-11e7-8163-e064ad8fe41c.png)

@@ -4,10 +4,12 @@
 
 ## 咋使呢？  
 僅僅  
-  ```markdown
-  @import "你的文件"  
-  ```
+
+`@import "你的文件"`  
+
 就可以了，很簡單對吧～ <code>d(\`･∀･)b</code>
+
+`<!-- @import "your_file" -->` 的寫法也是支持的。
 
 ## 刷新按鈕
 刷新按鈕可以在你的預覽右上角找到。  
@@ -22,10 +24,9 @@
 * `.mermaid` 將會被 mermaid 渲染。  
 * `.dot` 文件將會被 viz.js (graphviz) 渲染。  
 * `.plantuml(.puml)` 文件將會被 PlantUML 渲染。
-* `.wavedrom` 文件將會被 wavedrom 渲染。  
 * `.html` 將會直接被引入。  
-* `.js` 將會在 `window` 范圍內被執行。它的作用類似於 `<script>.. js 代碼 ..</script>`。
-* `.less` 和 `.css` 將會被引用為 style。目前 `less` 只支持本地文件。
+* `.js` 將會被引用為 `<script src="你的 js 文件"></script>`。
+* `.less` 和 `.css` 將會被引用為 style。目前 `less` 只支持本地文件。`.css` 文件將會被引用為 `<link rel="stylesheet" href="你的 css 文件">`。
 * `.pdf` 文件將會被 `pdf2svg` 轉換為 `svg` 然後被引用。
 * `markdown` 將會被分析處理然後被引用。
 * 其他所有的文件都將被視為代碼塊。    
@@ -65,7 +66,7 @@ Markdown Preview Enhanced 支持引用本地或者在線的 PDF 文件。
 
 ## 引用文件作為 Code Chunk  
 ```markdown
-@import "test.py" {code_chunk:true, cmd:"python3"}
+@import "test.py" {cmd:"python3"}
 ```
 
 ## 已知問題

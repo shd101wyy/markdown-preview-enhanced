@@ -1,8 +1,7 @@
 # HTML Export  
 
 ## Usage
-Right click at the preview, then choose `Export to Disk`.  
-Click `HTML` tab.  
+Right click at the preview, click `HTML` tab.  
 Then choose:
 
 * `HTML (offline)`

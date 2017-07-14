@@ -25,7 +25,6 @@ pandoc_args: ['--toc', '--toc-depth=2']
 **已知的問題 & 局限**:  
 1. `ebook` 導出有問題。  
 2. `Code Chunk` 有時候有問題。  
-3. `Create TOC` 命令無法工作，但是 `[TOC]` 這種寫法沒問題。  
 
 ## Front-Matter   
 `pandoc document export` 要求編寫 `front-matter`。    

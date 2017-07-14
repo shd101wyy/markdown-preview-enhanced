@@ -16,10 +16,10 @@
 ###### 这是 <h6> 六级标题
 ```
 
-如果你想要给你的标题添加 `id` 或者 `class`，请在标题最后添加 `{#id .class1 .class2}`。例如：  
+如果你想要给你的标题添加 `id` 或者 `class`，请在标题最后添加 `{id:"...", class:"..."}`。例如：  
 ```markdown
-# 这个标题拥有 1 个 id {#id1}
-# 这个标题有 2 个 classes {.class1 .class2}
+# 这个标题拥有 1 个 id {id:"my_id"}
+# 这个标题有 2 个 classes {class:"class1 class2"}
 ```
 > 这是一个 MPE 扩展的特性。  
 
@@ -125,7 +125,7 @@ puts markdown.to_html
 
 例如，添加 `class1 class2` 到一个 代码块：
 
-    ```javascript {.class1 .class2}
+    ```javascript {class:"class1 class"}
     function add(x, y) {
       return x + y
     }
@@ -136,7 +136,7 @@ puts markdown.to_html
 
 例如：
 
-    ```javascript {.line-numbers}
+    ```javascript {class:"line-numbers"}
     function add(x, y) {
       return x + y
     }
@@ -144,8 +144,7 @@ puts markdown.to_html
 
 将会得到下面的显示效果：
 
-![Screen Shot 2017-05-27 at 6.10.10 PM](http://i.imgur.com/5wfq8Uq.png)
-
+![screen shot 2017-07-14 at 1 20 27 am](https://user-images.githubusercontent.com/1908863/28200587-a8582b0a-6832-11e7-83a7-6c3bb011322f.png)
 
 ### 任务列表   
 ```markdown  
