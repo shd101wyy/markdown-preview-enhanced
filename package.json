@@ -55,8 +55,7 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "@shd101wyy/mume": "file:../mume",
-    "atom-space-pen-views": "^2.2.0"
+    "@shd101wyy/mume": "^0.1.1"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.7",
