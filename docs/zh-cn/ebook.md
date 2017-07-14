@@ -19,7 +19,7 @@ $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/
 添加 `ebook-convert` 到你的系统路径。  
 
 ## eBook 例子
-一个电子书项目的例子可以查看 [这里](https://github.com/shd101wyy/ebook-example).   
+一个电子书项目的例子可以查看 [这里](https://github.com/shd101wyy/ebook-example)。   
 
 ## 开始编写 eBook    
 你可以在你的 markdown 文件中添加 `ebook front-matter` 来设置你的电子书。     

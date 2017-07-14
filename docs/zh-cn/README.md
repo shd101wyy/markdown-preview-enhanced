@@ -2,17 +2,19 @@
 
 [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 
-**Markdown Preview Enhanced** 是一款为 **ATOM** 编辑器编写的**超级强大的** Markdown 插件。这款插件意在让你拥有飘逸的 Markdown 写作体验。
+**Markdown Preview Enhanced** 是一款为 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 以及 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 编辑器编写的**超级强大的** Markdown 插件。    
+这款插件意在让你拥有飘逸的 Markdown 写作体验。
 
 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 是推荐安装与 markdown-preview-enhanced 协同工作。  
 
 
 在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言如果你发现了问题或者想要请求新的特性。
 
-![intro](https://user-images.githubusercontent.com/1908863/26898176-a5cad7fc-4b90-11e7-9d8c-74f85f28f133.gif)
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## 安装
-如何安装该插件请查看 [这里](zh-cn/installation.md)。  
+[Atom 版安装](zh-cn/installation.md)
+[VSCode 版安装](zh-cn/vscode-installation.md)
 
 ## 特性
 
@@ -44,4 +46,4 @@ Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source 
 ## 帮忙翻译文档
 如果你想要帮忙翻译这个文档到其他的语言, 请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。      
 
-[➔ 安装教程](zh-cn/installation.md)
+[➔ 使用](zh-cn/usages.md)

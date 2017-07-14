@@ -1,10 +1,12 @@
 # 幻灯片制作  
 
+![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
+
 Markdown Preview Enhanced 使用 [reveal.js](https://github.com/hakimel/reveal.js) 来渲染漂亮的幻灯片。  
 
 [点击这里](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相关的介绍。  
 
-![presentation](https://user-images.githubusercontent.com/1908863/26854512-141e87ae-4adc-11e7-8c48-f6e2970338a6.gif)
+![presentation](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
 
 ## Presentation Front-Matter
@@ -155,32 +157,13 @@ presentation:
 或者你也可以自定义第 `nth` 个幻灯片，编写你的 `less` 如下：
 
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   // ...
   // change the font size of the second slide to 14px
-  .preview-slides .slide:nth-child(2),
-  &[data-presentation-mode] section:nth-child(2) {
+  .slides > section:nth-child(2) {
     font-size: 14px; // change font size to 14px;  
   }
 }
 ```
-
-如果你想要在每个幻灯片下显示一张图片 [#257](https://github.com/shd101wyy/markdown-preview-enhanced/issues/257)。   
-
-```less
-@footer-img: no-repeat url(assets/footer_logo.png) bottom left;
-
-.preview-slides .slide,
-&[data-presentation-mode] {
-  .slide-background {
-    background: @footer-img;
-    background-size: 8%; // I'm using a very large image, so I need to specify a smaller size here
-  }
-  .slide-background:last-child {
-    display: none;
-  }
-}
-```
-
 
 [➔ Pandoc](zh-cn/pandoc.md)

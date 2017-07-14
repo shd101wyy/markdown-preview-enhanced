@@ -1,17 +1,15 @@
-![code-chunk](http://i.imgur.com/MAtC3SD.gif)
+# Code Chunk  
 
-# Code Chunk
 **Changes might happen in the future.**  
-To enable code chunk highlighting, install [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) package and disable the `language-gfm` package.    
 
 **Markdown Preview Enhanced** allows you to render code output into documents.     
 
-    ```{bash}
+    ```bash {cmd:true}
     ls .
     ```
 
-    ```{javascript cmd:"node"}
-    var date = Date.now()
+    ```javascript {cmd:"node"}
+    const date = Date.now()
     console.log(date.toString())
     ```   
 
@@ -22,20 +20,20 @@ execute single code chunk where your cursor is at.
 execute all code chunks.    
 
 ## Format
-You can configure code chunk options in format of `{lang  opt1:value1, opt2:value2, ...}`    
+You can configure code chunk options in format of <code>```lang {opt1:value1, opt2:value2, ...}</code>    
 
 **lang**  
 The grammar that the code block should highlight.  
 It should be put at the most front.  
 
-## Basic Configurations
+## Basic Options
 **cmd**    
 The command to run.  
 If `cmd` is not provided, then `lang` will be regarded as command.    
 
 eg:  
 
-		```{python cmd:"/usr/local/bin/python3"}
+		```python {cmd:"/usr/local/bin/python3"}
 		print("This will run python3 program")
 		```
 
@@ -52,7 +50,7 @@ Defines how to render code output.
 
 eg:     
 
-    ```{gnuplot output:"html"}
+    ```gnuplot {cmd:true, output:"html"}
     set terminal svg
     set title "Simple Plots" font ",20"
     set key left box
@@ -62,16 +60,16 @@ eg:
     plot [-10:10] sin(x),atan(x),cos(atan(x))
     ```
 
-![screen shot 2017-06-06 at 11 03 29 pm](https://user-images.githubusercontent.com/1908863/26861847-5f03df6e-4b0c-11e7-8eb1-bfdef40eb09d.png)
+![screen shot 2017-06-20 at 8 40 07 am](https://user-images.githubusercontent.com/1908863/27336074-1cd3a88a-5594-11e7-857f-b8c598853433.png)
 
 **args**  
 args that append to command. eg:    
 
-    ```{python args:["-v"]}
+    ```python {cmd:true, args:["-v"]}
     print("Verbose will be printed first")
     ```
 
-    ```{erd args:["-f", "svg", "-i"], output:"html"}
+    ```erd {cmd:true, args:["-i", "$input_file", "-f", "svg"], output:"html"}
 		# output svg format and append as html result.
     ```
 
@@ -82,7 +80,7 @@ If `stdin` is set to true, then the code will be passed as stdin instead of as f
 `hide` will hide code chunk but only leave the output visible. default: `false`  
 eg:
 
-    ```{python hide:true}
+    ```python {hide:true}
     print('you can see this output message, but not this code')
     ```
 
@@ -91,38 +89,43 @@ If set `continue: true`, then this code chunk will continue from the last code c
 If set `continue: id`, then this code chunk will continue from the code chunk of id.  
 eg:    
 
-	```{python id:"izdlk700"}
+	```python {cmd:true, id:"izdlk700"}
 	x = 1
 	```
 
-	```{python id:"izdlkdim"}
+	```python {cmd:true, id:"izdlkdim"}
 	x = 2
 	```
 
-	```{python continue:"izdlk700", id:"izdlkhso"}
+	```python {cmd:true, continue:"izdlk700", id:"izdlkhso"}
 	print(x) # will print 1
 	```
 
 **class**  
 If set `class:"class1 class2"`, then `class1 class2` will be add to the code chunk.  
-* `lineNo` class will show line numbers to code chunk.
+* `line-numbers` class will show line numbers to code chunk.
 
 **element**  
 The element that you want to append after.  
 Check the **Plotly** example below.
 
+**run_on_save** `boolean`  
+Run code chunk when the markdown file is saved. Default `false`.  
+
+**modify_source** `boolean`  
+Insert code chunk output directly into markdown source file. Default `false`.  
+
 **id**  
-`id` will be automatically generated to track the running result.  
-Please **Do Not** modify it. If you modify it, please make sure it is unique in your markdown file.    
+The `id` of the code chunk. This option would be useful if `continue` is used.     
 
 ## Macro
 * **input_file**  
 `input_file` is automatically generated under the same directory of your markdown file and will be deleted after running code that is copied to `input_file`.      
 By default, it is appended at the very end of program arguments.  
-However, you can set the position of `input_file` in your `args` option by `{input_file}` macro. eg:  
+However, you can set the position of `input_file` in your `args` option by `$input_file` macro. eg:  
 
 
-    ```{program args:["-i", "{input_file}", "-o", "./output.png"], id:"chj3kxsvao"}
+    ```program {cmd:true, args:["-i", "$input_file", "-o", "./output.png"]}
     ...your code here
     ```
 
@@ -131,12 +134,12 @@ However, you can set the position of `input_file` in your `args` option by `{inp
 If set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
 eg:    
 
-	```{python matplotlib:true, id:"izbp0zt9"}
+	```python {cmd:true, matplotlib:true}
 	import matplotlib.pyplot as plt
 	plt.plot([1,2,3, 4])
 	plt.show() # show figure
 	```
-![screen shot 2017-06-05 at 9 21 25 pm](https://cloud.githubusercontent.com/assets/1908863/26811044/f39404d4-4a34-11e7-8be2-0e20c0e9b00e.png)
+![screen shot 2017-06-20 at 8 44 25 am](https://user-images.githubusercontent.com/1908863/27336286-acc41d8a-5594-11e7-9a10-ed7a6fc41f6c.png)
 
 ## LaTeX
 Markdown Preview Enhanced also supports `LaTeX` compilation.  
@@ -144,14 +147,14 @@ Before using this feature, you need to have [pdf2svg](extra.md?id=install-svg2pd
 Then you can simply write LaTeX in code chunk like this:  
 
 
-    ```{latex}
+    ```latex {cmd:true}
     \documentclass{standalone}
     \begin{document}
        Hello world!
     \end{document}
     ```
 
-![screen shot 2017-06-05 at 9 41 05 pm](https://cloud.githubusercontent.com/assets/1908863/26811469/b234c584-4a37-11e7-977c-73f7a3e07bd7.png)
+![screen shot 2017-07-14 at 11 25 09 am](https://user-images.githubusercontent.com/1908863/28220981-23dd1b9c-6887-11e7-8e0f-1a0fd64f54cd.png)
 
 
 ### LaTeX output configuration  
@@ -165,12 +168,12 @@ The width of result.
 The height of result.  
 
 **latex_engine**  
-The latex engine that you used to compile `tex` file. By default `pdflatex` is used. You can change the default value from the [pacakge settings](usages.md?id=package-settings).    
+The latex engine that you used to compile `tex` file. By default `pdflatex` is used. 
 
 
 ### TikZ example  
 It is recommended to use `standalone` while drawing `tikz` graphs.  
-![screen shot 2017-06-05 at 9 48 10 pm](https://cloud.githubusercontent.com/assets/1908863/26811633/b018aa76-4a38-11e7-9ec2-688f273468bb.png)
+![screen shot 2017-07-14 at 11 27 56 am](https://user-images.githubusercontent.com/1908863/28221069-8113a5b0-6887-11e7-82fa-23dd68f2be82.png)
 
 
 ## Plotly
@@ -184,7 +187,7 @@ For example:
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
-    ```{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}
+    ```erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}
 
     [Person]
     *name
@@ -201,17 +204,16 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
     Person *--1 Location
     ```
 
-`{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}`  
+`erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}`  
 * `erd` the program that we are using. (*you need to have the program installed first*)  
 * `output:"html"` we will append the running result as `html`.  
 * `args` field shows the arguments that we will use.  
-* `id` is a unique identifier automatically generated, you don't need to care about it.  
 
 Then we can click the `run` button at the preview to run our code.  
 
-![code_chunk](http://i.imgur.com/a7LkJYD.gif)
+![erd](https://user-images.githubusercontent.com/1908863/28221395-bcd0bd76-6888-11e7-8c6e-925e228d02cc.gif)
 
-## Showcases
+## Showcases (outdated)
 **bash**  
 ![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
 
@@ -221,6 +223,5 @@ Then we can click the `run` button at the preview to run our code.
 ## Limitations
 * Doesn't work with `ebook` yet.  
 * Might be buggy when using`pandoc document export`
-
 
 [➔ Presentation](presentation.md)

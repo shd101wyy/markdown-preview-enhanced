@@ -1,17 +1,14 @@
-![code-chunk](http://i.imgur.com/MAtC3SD.gif)
-
 # Code Chunk
 **未来可能会有变动**  
-如果你想要启动 code chunk 语法高亮，请安装 [language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 插件然后禁掉 `language-gfm` 插件。  
 
 **Markdown Preview Enhanced** 支持渲染代码的运行结果。       
 
-    ```{bash}
+    ```bash {cmd:true}
     ls .
     ```
 
-    ```{javascript cmd:"node"}
-    var date = Date.now()
+    ```javascript {cmd:"node"}
+    const date = Date.now()
     console.log(date.toString())
     ```   
 
@@ -23,7 +20,7 @@
 
 ## 格式  
 你可以通过以下形式来设置 code chunk ：  
-`{lang  opt1:value1, opt2:value2, ...}`    
+<code>````lang  {opt1:value1, opt2:value2, ...}</code>    
 
 **lang**  
 你想要代码所高亮的语言。
@@ -36,7 +33,7 @@
 
 例如：  
 
-		```{python cmd:"/usr/local/bin/python3"}
+		```python {cmd:"/usr/local/bin/python3"}
 		print("这个将会运行 python3 程序")
 		```
 
@@ -53,7 +50,7 @@
 
 例如：
 
-    ```{gnuplot output:"html"}
+    ```gnuplot {cmd:true, output:"html"}
     set terminal svg
     set title "Simple Plots" font ",20"
     set key left box
@@ -63,18 +60,18 @@
     plot [-10:10] sin(x),atan(x),cos(atan(x))
     ```
 
-![screen shot 2017-06-06 at 11 03 29 pm](https://user-images.githubusercontent.com/1908863/26861847-5f03df6e-4b0c-11e7-8eb1-bfdef40eb09d.png)
+  ![screen shot 2017-06-20 at 8 40 07 am](https://user-images.githubusercontent.com/1908863/27336074-1cd3a88a-5594-11e7-857f-b8c598853433.png)
 
 
 **args**  
 需要被添加到命令的 args 。 例如：  
 
-    ```{python args:["-v"]}
+    ```python {cmd:true, args:["-v"]}
     print("Verbose will be printed first")
     ```
 
-    ```{erd args:["-f", "svg", "-i"], output:"html"}
-		# output svg format and append as html result.
+    ```erd {cmd:true, args:["-i", "$input_file", "-f", "svg"], output:"html"}
+    # output svg format and append as html result.
     ```
 
 **stdin**  
@@ -84,8 +81,8 @@
 `hide` 将会隐藏代码块但是会显示运行结果，默认为 `false`。    
 例如：
 
-    ```{python hide:true}
-    print('你将会看到这条输出的文字，但是你不会看到这段代码')
+    ```python {hide:true}
+    print('you can see this output message, but not this code')
     ```
 
 **continue**  
@@ -93,51 +90,56 @@
 如果设置`continue: id`，那么这个 code chunk 从拥有这个 id 的 code chunk 运行。    
 例如：  
 
-	```{python id:"izdlk700"}
-	x = 1
-	```
+    ```python {cmd:true, id:"izdlk700"}
+    x = 1
+    ```
 
-	```{python id:"izdlkdim"}
-	x = 2
-	```
+    ```python {cmd:true, id:"izdlkdim"}
+    x = 2
+    ```
 
-	```{python continue:"izdlk700", id:"izdlkhso"}
-	print(x) # 将会打印出 1
-	```
+    ```python {cmd:true, continue:"izdlk700", id:"izdlkhso"}
+    print(x) # will print 1
+    ```
 
 **class**  
 如果设置 `class:"class1 class2"`，那么 `class1 class2` 将会被添加到 code chunk。    
-* `lineNo` class 将会添加代码行数到 code chunk。  
+* `line-numbers` class 将会添加代码行数到 code chunk。  
 
 **element**  
 你想要添加的元素。   
 请查看下面的 **Plotly** 例子。  
 
+**run_on_save** `boolean`  
+当 markdown 文件被保存时，自动运行 code chunk。默认 `false`。  
+
+**modify_source** `boolean`  
+插入 code chunk 的运行结果直接到 markdown 文件。默认 `false`。   
+
 **id**  
-`id` 将会被自动生成用来标记运行结果。     
-请 **不要** 修改它。如果你就是管不住手修改了它，请确保他在你的 markdown 文件中是独特唯一的。  
+Code chunk 的 `id`。这个选项可以配合 `continue` 选项使用。  
 
 ## 宏
 * **input_file**  
 `input_file` 将会拷贝你的 code chunk 中的代码，然后在你的 markdown 文件的目录下生成一个临时文件，并且会在 code chunk 运行结束后被自动删除。  
 默认条件下，它被作为程序运行的最后一个参数。  
-但是，如果你想要改变 `input_file` 在你的 `args` 中的位置，你可以使用 `{input_file}` 宏。例如：  
+但是，如果你想要改变 `input_file` 在你的 `args` 中的位置，你可以使用 `$input_file` 宏。例如：  
 
 
-    ```{program args:["-i", "{input_file}", "-o", "./output.png"], id:"chj3kxsvao"}
+    ```program {cmd:true, args:["-i", "$input_file", "-o", "./output.png"]}
     ...your code here
     ```
-
 
 ## Matplotlib  
 如果设置 `matplotlib: true`，那么你的 python code chunk 将会在你的预览中绘制图像。      
 例如：  
 
-	```{python matplotlib:true, id:"izbp0zt9"}
-	import matplotlib.pyplot as plt
-	plt.plot([1,2,3, 4])
-	plt.show() # show figure
-	```
+    ```python {cmd:true, matplotlib:true}
+    import matplotlib.pyplot as plt
+    plt.plot([1,2,3, 4])
+    plt.show() # show figure
+    ```
+
 ![screen shot 2017-06-05 at 9 21 25 pm](https://cloud.githubusercontent.com/assets/1908863/26811044/f39404d4-4a34-11e7-8be2-0e20c0e9b00e.png)
 
 ## LaTeX
@@ -146,14 +148,14 @@ Markdown Preview Enhanced 也支持 `LaTeX` 编译。
 然后你就可以很简单的利用 code chunk 编写 LaTeX 了：
 
 
-    ```{latex}
+    ```latex {cmd:true}
     \documentclass{standalone}
     \begin{document}
        Hello world!
     \end{document}
     ```
 
-![screen shot 2017-06-05 at 9 41 05 pm](https://cloud.githubusercontent.com/assets/1908863/26811469/b234c584-4a37-11e7-977c-73f7a3e07bd7.png)
+![screen shot 2017-07-14 at 11 25 09 am](https://user-images.githubusercontent.com/1908863/28220981-23dd1b9c-6887-11e7-8e0f-1a0fd64f54cd.png)
 
 
 ### LaTeX 输出设置    
@@ -171,8 +173,9 @@ Markdown Preview Enhanced 也支持 `LaTeX` 编译。
 
 
 ### TikZ 例子  
-推荐使用 `standalone` 绘制 `tikz` 图形。    
-![screen shot 2017-06-05 at 9 48 10 pm](https://cloud.githubusercontent.com/assets/1908863/26811633/b018aa76-4a38-11e7-9ec2-688f273468bb.png)
+推荐使用 `standalone` 绘制 `tikz` 图形。  
+
+![screen shot 2017-07-14 at 11 27 56 am](https://user-images.githubusercontent.com/1908863/28221069-8113a5b0-6887-11e7-82fa-23dd68f2be82.png)
 
 ## Plotly
 Markdown Preview Enhanced 支持你轻松的绘制 [Plotly](https://plot.ly/) 图形。
@@ -185,7 +188,7 @@ Markdown Preview Enhanced 支持你轻松的绘制 [Plotly](https://plot.ly/) �
 ## Demo  
 下面的例子展示了如何利用 [erd](https://github.com/BurntSushi/erd) 库绘制 ER diagram。     
 
-    ```{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}
+    ```erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}
 
     [Person]
     *name
@@ -202,15 +205,14 @@ Markdown Preview Enhanced 支持你轻松的绘制 [Plotly](https://plot.ly/) �
     Person *--1 Location
     ```
 
-`{erd output:"html", args:["-i", "{input_file}", "-f", "svg"], id:"ithhv4z4"}`  
+`erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}`   
 * `erd` 是我们将要用到的程序。 (*当然你得先安装好这个程序*)  
 * `output:"html"` 意味着代码的输出结果将会被视作为 `html`。  
 * `args` 显示了我们将要用到的参数。    
-* `id` 是自动生成的，你不用管它。    
 
 接着我们点击 `运行`按钮来运行我们的代码。  
 
-![code_chunk](http://i.imgur.com/a7LkJYD.gif)
+![erd](https://user-images.githubusercontent.com/1908863/28221395-bcd0bd76-6888-11e7-8c6e-925e228d02cc.gif)
 
 ## 展示  
 **bash**  

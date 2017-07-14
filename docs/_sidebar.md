@@ -1,7 +1,9 @@
 - Getting Started
   - [Introduction](/)
-  - [Installation](installation.md)
   - [Usages](usages.md)  
+  - Installation
+    - [Atom](installation.md)
+    - [VSCode](vscode-installation.md)
 
 - Writing Markdown
   - [Markdown Basics](markdown-basics.md)
@@ -15,10 +17,10 @@
 
 - Document Export
   - [HTML](html.md)  
+  - [PhantomJS](phantomjs.md)  
   - [PDF](pdf.md)  
   - [eBook](ebook.md)
   - [Prince (PDF)](prince.md)  
-  - [PhantomJS](phantomjs.md)  
   - Pandoc
     - [PDF](pandoc-pdf.md)  
     - [Word](pandoc-word.md)
@@ -30,6 +32,7 @@
 
 - Customization & Extension
   - [Customize CSS](customize-css.md)  
+  - [Extend Markdown Parser](extend-parser.md)
   - [For Developer](developer.md)  
 
 - Credits
@@ -37,7 +40,8 @@
   - [Thanks](thanks.md)  
 - [Extra](extra.md)
 - [FAQ](faq.md)
-- Changelog  
-  - [Newest](newest.md)  
-  - [History](history.md)
+- Changelog
+  - Atom
+    - [Newest](newest.md)  
+    - [History](history.md)
 - [License](LICENSE.md)

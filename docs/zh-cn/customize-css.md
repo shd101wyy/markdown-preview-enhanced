@@ -2,12 +2,15 @@
 
 ## style.less
 
-要自定义 css，<kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css` 命令或者 `Application: Open your stylesheet` 命令。      
+要自定义 css，<kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css`  
 
 `style.less` 文件将会被打开，然后你就可以开始编写样式了：  
 
+> `style.less` 文件位于 `~/.mume/style.less`
+
+
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   // please write your custom style here
   // eg:
   //  color: blue;          // change font color
@@ -29,10 +32,8 @@
   }
 
   // custom presentation style
-  .preview-slides .slide,
-  &[data-presentation-mode] {
-    // eg
-    // background-color: #000;
+  .slides > section:nth-child(1) {
+    // this will modify `the first slide`
   }
 }
 ```
@@ -45,7 +46,7 @@ Markdown Preview Enhanced 允许你对于不同的 markdown 文件定义不同�
 ```markdown
 ---
 id: "my-id"
-class: ["my-class1", "my-class2"]
+class: "my-class1 my-class2"
 ---
 
 @import "my-style.less"
@@ -74,7 +75,7 @@ class: ["my-class1", "my-class2"]
 要改变你的预览的字体，你需要首先下载字体文件 `(.ttf)`，然后编辑 `style.less` 如下：  
 
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   @font-face {
     font-family: 'your-font-family';
     src: url('your-font-file-url');
@@ -88,16 +89,4 @@ class: ["my-class1", "my-class2"]
 }
 ```
 
-你还可以尝试 [fonts](https://atom.io/packages/fonts) 插件。这个插件预先安装好了很多字体。例如，如果你想要使用 `VT323` 字体：    
-
-```less  
-.markdown-preview-enhanced.markdown-preview-enhanced {
-  font-family: 'VT323';
-
-  h1, h2, h3, h4, h5, h6, pre, code {
-    font-family: 'VT323' sans-serif;
-  }
-}
-```  
-
-![screen shot 2017-06-06 at 4 10 34 pm](https://user-images.githubusercontent.com/1908863/26852092-b03ef1c8-4ad2-11e7-951d-e384dc926b49.png)
+> 推荐使用在线的字体，例如从 google fonts 获得。

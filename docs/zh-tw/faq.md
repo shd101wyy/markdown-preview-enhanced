@@ -7,7 +7,7 @@
 1. **我導出了一個 presentation 的 html 文件，想把它放到我的服務器上，但是無法正確顯示？**  
 請參考上一個問題。
 1. **我想用黑色的預覽主題，該怎麼做？**  
-如果你想要你的預覽和你的 atom 編輯器風格顏色一致，你可以到該插件的設置中，更改 `Preview Theme` 項。 [#281](https://github.com/shd101wyy/markdown-preview-enhanced/issues/281)   
+如果你想要你的預覽和你的 atom 編輯器風格顏色一致，你可以到該插件的設置中，更改 `Preview Theme` 項。  
 還有一種方法是運行 `Markdown Preview Enhanced: Customize Css` 命令，然後修改 `style.less` 文件。[#68](https://github.com/shd101wyy/markdown-preview-enhanced/issues/68)，[#89](https://github.com/shd101wyy/markdown-preview-enhanced/issues/89)。
 1. **預覽特別特別卡，該怎麼做？**  
 如果你的預覽特別卡，那麼可能是你的文件太大了，或者用到的數學式，畫的圖過多。  

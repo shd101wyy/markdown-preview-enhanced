@@ -1,7 +1,9 @@
 - 开始
   - [简介](zh-cn/)
-  - [安装教程](zh-cn/installation.md)
   - [使用](zh-cn/usages.md)  
+  - 安装教程
+    - [Atom](zh-cn/installation.md)
+    - [VSCode](zh-cn/vscode-installation.md)
 
 - 编写 Markdown
   - [Markdown 基本要素](zh-cn/markdown-basics.md)
@@ -15,10 +17,10 @@
 
 - 文档导出
   - [HTML](zh-cn/html.md)  
+  - [PhantomJS](zh-cn/phantomjs.md)  
   - [PDF](zh-cn/pdf.md)  
   - [eBook](zh-cn/ebook.md)
   - [Prince (PDF)](zh-cn/prince.md)  
-  - [PhantomJS](zh-cn/phantomjs.md)  
   - Pandoc
     - [PDF](zh-cn/pandoc-pdf.md)  
     - [Word](zh-cn/pandoc-word.md)
@@ -30,6 +32,7 @@
 
 - 定制 & 扩展
   - [自定义 CSS](zh-cn/customize-css.md)  
+  - [扩展 Markdown Parser](zh-cn/extend-parser.md)
   - [开发者文档](developer.md)  
 
 - Credits
@@ -37,8 +40,12 @@
   - [Thanks](thanks.md)  
 
 - [额外](zh-cn/extra.md)
+
 - [疑难解答](zh-cn/faq.md)
+
 - Changelog  
-  - [Newest](newest.md)  
-  - [History](history.md)
+  - Atom
+    - [Newest](newest.md)  
+    - [History](history.md)
+
 - [License](LICENSE.md)

@@ -1,4 +1,4 @@
-# Installation
+# Installation on Atom
 
 There are several ways of installing this package.  
 

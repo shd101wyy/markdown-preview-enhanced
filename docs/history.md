@@ -1,3 +1,15 @@
+## 0.13.0
+* [x] Support `LaTeX` code chunk.  [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) and [LaTeX engine](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) are required. See below.      
+* [x] Add `Markdown Preview Enhanced: Show Uploaded Images`. Now every time you upload an image, it will be stored to history.    
+* [x] Support `@import` PDF file. For example: `@import "test.pdf"`. [pdf2svg](https://shd101wyy.github.io/markdown-preview-enhanced/#/extra) is required.    
+* [x] Support `@import` JavaScript file. The JavaScript will be evaluated in `window` scope but not by `node.js`.  
+* [x] **Attension:** <code>\`\`\`@mermaid</code> is deprecated. From now on only <code>\`\`\`mermaid</code> is supprted. Same as `PlantUML`, `viz.js`, and `WaveDrom`. For more information, check [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/graphs).     
+* [x] Migrate docs to GitHub page by [docsify](https://docsify.js.org/#/). [Project website is here](https://shd101wyy.github.io/markdown-preview-enhanced/#/). Contact me if you are willing to help translate the documentation :)   
+* [ ] Tried hard to fix key bindings issue, but dunno if resolved or not :(  
+* [x] Fix eBook generation issue. Add `include_toc` option.   
+* [x] Better support for multiple previews [#435](https://github.com/shd101wyy/markdown-preview-enhanced/issues/435).  
+* [x] Fix `sm.ms` image upload API issue. [#390](https://github.com/shd101wyy/markdown-preview-enhanced/issues/390).  
+* [x] Fix issue [#436](https://github.com/shd101wyy/markdown-preview-enhanced/issues/436).   
 
 ## v0.12.7  & v0.12.8
 * [x] Quick fix Welcome page issue. So the Welcome page will only open when this package is updated [#428](https://github.com/shd101wyy/markdown-preview-enhanced/issues/428).    
@@ -14,7 +26,7 @@
   3. Force to render Code Block  
   4. Code Chunk
 * [x] Support TOC to ignore headings by appending `{.ignore}` after the heading:  
-* [x] Support showing line numbers for Code Block and Code Chunk by adding `lineNo` class.  
+* [x] Support showing line numbers for Code Block and Code Chunk by adding `line-numbers` class.  
 * [x] Modifed scroll sync logic (Might cause issue).
 * [x] Support `Markdown Preview Enhanced: Sync Preview` and `Markdown Preview Enhanced: Sync Source` [#424](https://github.com/shd101wyy/markdown-preview-enhanced/issues/424).  
 * [x] Fix image `@import` issue on Windows [#414](https://github.com/shd101wyy/markdown-preview-enhanced/issues/414).  
@@ -31,7 +43,7 @@
 * [x] upgrade `reveal.js` to `3.5.0`.
 * [x] faster `plantuml` rendering thanks to the contribution by [@river0825](https://github.com/river0825).
 * [x] fix one toc bug [#406](https://github.com/shd101wyy/markdown-preview-enhanced/issues/406).
-* [x] add `class` support for code block and code chunk. Support `lineNo` class for showing line number for code block and code chunk.
+* [x] add `class` support for code block and code chunk. Support `line-numbers` class for showing line number for code block and code chunk.
 * [x] support `sidebar` toc.
 * [x] fix pandoc bibliography absolute file path issue [#409](https://github.com/shd101wyy/markdown-preview-enhanced/issues/409).
 * [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).

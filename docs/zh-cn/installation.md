@@ -1,4 +1,4 @@
-# 安装教程
+# Atom 版本安装教程
 
 > 感谢 [@zangchendi](https://github.com/zangchendi) 编写此文档.
 

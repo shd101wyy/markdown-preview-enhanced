@@ -30,6 +30,9 @@ Markdown Preview Enhanced 使用 [PlantUML](http://plantuml.com/) 來創建各�
 如果代碼中 `@start...` 沒有被找到，那麼 `@startuml ... @enduml` 將會被自動添加。
 
 ## WaveDrom
+
+> 這個自 0.14.0 版本以後暫時不被支持了
+
 Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 來渲染 digital timing diagram.  
 - `wavedrom` 代碼塊中的內容將會被 [WaveDrom](https://github.com/drom/wavedrom) 渲染。
 
@@ -38,15 +41,15 @@ Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 來渲染 digi
 ## GraphViz  
 Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 來渲染 [dot 語言](https://tinyurl.com/kjoouup) 圖形。  
 - `viz` 或者 `dot` 代碼塊中的內容將會被 [Viz.js](https://github.com/mdaines/viz.js) 渲染。  
-- 在第一行中添加 `engine:[engine_name]`來設置不同的渲染引擎。例如 `engine:dot`。 引擎 `circo`，`dot`，`neato`，`osage`，或者 `twopi` 是被支持的。默認下，使用 `dot` 引擎。
+- 你可以通過 `{engine: "..."}` 來選擇不同的渲染引擎。 引擎 `circo`，`dot`，`neato`，`osage`，或者 `twopi` 是被支持的。默認下，使用 `dot` 引擎。
 
-![screen shot 2017-06-05 at 8 08 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809493/d1dd166e-4a2a-11e7-84ff-fdb51c0b332e.png)
+![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
 
 ---  
 
-如果你只是想要顯示代碼塊而不想畫圖，則只要在後面添加 `{.code-block}` 即可：     
+如果你只是想要顯示代碼塊而不想畫圖，則只要在後面添加 `{code_block: true}` 即可：     
 
-    ```mermaid {.code-block}
+    ```mermaid {code_block: true}
     // 你的 mermaid 代碼
     ```
 
