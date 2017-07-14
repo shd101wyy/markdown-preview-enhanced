@@ -325,7 +325,7 @@ function activate(state) {
                 editor['getGrammar'] &&
                 editor['getGrammar']().scopeName == 'source.gfm') {
                 const preview = getPreviewForEditor(editor);
-                if (!preview || !preview.getEditor())
+                if (!preview)
                     return;
                 if (config.singlePreview && preview.getEditor() !== editor) {
                     preview.bindEditor(editor);

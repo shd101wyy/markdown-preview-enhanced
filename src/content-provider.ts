@@ -107,7 +107,6 @@ export class MarkdownPreviewEnhancedView {
    */
   public bindEditor(editor:AtomCore.TextEditor) {
     if (!this.editor) {
-      this.editor = editor
       atom.workspace.open(this.uri, {
         split: "right",
         activatePane: false,
@@ -118,6 +117,7 @@ export class MarkdownPreviewEnhancedView {
         pending: false
       })
       .then(()=> {
+        this.editor = editor
         this.initEvents()
       })
     } else { // preview already on
@@ -155,7 +155,7 @@ export class MarkdownPreviewEnhancedView {
    * 2. Write preview html template
    * 3. this.iframe will load that *.html file.
    */
-  public async loadPreview() {    
+  public async loadPreview() {        
     const editorFilePath = this.editor.getPath()
     this.postMessage('startParsingMarkdown')
 

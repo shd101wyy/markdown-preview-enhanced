@@ -93,7 +93,6 @@ class MarkdownPreviewEnhancedView {
      */
     bindEditor(editor) {
         if (!this.editor) {
-            this.editor = editor;
             atom.workspace.open(this.uri, {
                 split: "right",
                 activatePane: false,
@@ -104,6 +103,7 @@ class MarkdownPreviewEnhancedView {
                 pending: false
             })
                 .then(() => {
+                this.editor = editor;
                 this.initEvents();
             });
         }

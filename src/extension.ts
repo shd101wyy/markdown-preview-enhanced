@@ -316,7 +316,7 @@ mume.init() // init mume package
         editor['getGrammar'] &&
         editor['getGrammar']().scopeName == 'source.gfm') {
       const preview = getPreviewForEditor(editor)
-      if (!preview || !preview.getEditor()) return
+      if (!preview) return
 
       if (config.singlePreview && preview.getEditor() !== editor) {
         preview.bindEditor(editor as AtomCore.TextEditor)
