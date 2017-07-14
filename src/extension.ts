@@ -147,8 +147,12 @@ function initMessageReceiver() {
  */
 const MESSAGE_DISPATCH_EVENTS = {
   'webviewFinishLoading': function(sourceUri) {
-    const preview = getPreviewForEditor(sourceUri)
-    if (preview) preview.renderMarkdown()
+    /**
+     * This event does nothing now, because the preview backgroundIframe
+     * `onload` function does this.
+     */
+    // const preview = getPreviewForEditor(sourceUri)
+    // if (preview) preview.renderMarkdown()
   },
   'refreshPreview': function(sourceUri) {
     const preview = getPreviewForEditor(sourceUri)

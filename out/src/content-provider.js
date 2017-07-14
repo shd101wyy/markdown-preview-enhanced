@@ -141,6 +141,7 @@ class MarkdownPreviewEnhancedView {
     loadPreview() {
         return __awaiter(this, void 0, void 0, function* () {
             const editorFilePath = this.editor.getPath();
+            this.postMessage('startParsingMarkdown');
             // create temp html file for preview
             let htmlFilePath;
             if (editorFilePath in HTML_FILES_MAP) {
@@ -163,12 +164,30 @@ class MarkdownPreviewEnhancedView {
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
             // load to iframe
+            // background iframe
+            const backgroundIframe = document.createElement('iframe');
+            backgroundIframe.style.width = '100%';
+            backgroundIframe.style.height = '100%';
+            backgroundIframe.style.border = 'none';
+            backgroundIframe.style.display = 'none';
+            this.element.appendChild(backgroundIframe);
+            const currentIframe = this.iframe;
+            /*
             if (this.iframe.src === htmlFilePath) {
-                this.iframe.contentWindow.location.reload();
-            }
-            else {
-                this.iframe.src = htmlFilePath;
-            }
+              this.iframe.contentWindow.location.reload()
+            } else {
+              this.iframe.src = htmlFilePath
+            }*/
+            backgroundIframe.src = htmlFilePath;
+            backgroundIframe.onload = () => {
+                // replace this.iframe to backgroundIframe
+                backgroundIframe.style.display = 'block';
+                currentIframe.remove();
+                this.iframe = backgroundIframe;
+                if (!this.engine.isPreviewInPresentationMode) {
+                    this.renderMarkdown();
+                }
+            };
             // test postMessage
             /*
             setTimeout(()=> {
@@ -262,7 +281,7 @@ class MarkdownPreviewEnhancedView {
             return;
         // presentation mode 
         if (this.engine.isPreviewInPresentationMode) {
-            this.loadPreview(); // restart preview.
+            return this.loadPreview(); // restart preview.
         }
         // not presentation mode 
         const text = this.editor.getText();

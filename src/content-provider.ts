@@ -157,6 +157,7 @@ export class MarkdownPreviewEnhancedView {
    */
   public async loadPreview() {    
     const editorFilePath = this.editor.getPath()
+    this.postMessage('startParsingMarkdown')
 
     // create temp html file for preview
     let htmlFilePath
@@ -180,11 +181,32 @@ export class MarkdownPreviewEnhancedView {
     })
     await mume.utility.writeFile(htmlFilePath, html, {encoding: 'utf-8'})
 
+    
     // load to iframe
+    // background iframe
+    const backgroundIframe = document.createElement('iframe')
+    backgroundIframe.style.width = '100%'
+    backgroundIframe.style.height = '100%'
+    backgroundIframe.style.border = 'none'
+    backgroundIframe.style.display = 'none'
+    this.element.appendChild(backgroundIframe)
+
+    const currentIframe = this.iframe
+    /*
     if (this.iframe.src === htmlFilePath) {
       this.iframe.contentWindow.location.reload()
     } else {
       this.iframe.src = htmlFilePath
+    }*/
+    backgroundIframe.src = htmlFilePath
+    backgroundIframe.onload = ()=> {
+      // replace this.iframe to backgroundIframe
+      backgroundIframe.style.display = 'block'
+      currentIframe.remove()
+      this.iframe = backgroundIframe
+      if (!this.engine.isPreviewInPresentationMode) {
+        this.renderMarkdown()
+      }
     }
 
     // test postMessage
@@ -290,7 +312,7 @@ export class MarkdownPreviewEnhancedView {
 
     // presentation mode 
     if (this.engine.isPreviewInPresentationMode) {
-      this.loadPreview() // restart preview.
+      return this.loadPreview() // restart preview.
     }
 
     // not presentation mode 
