@@ -2,11 +2,14 @@
 
 ## style.less
 
-To customize css for your markdown file, <kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command or `Application: Open your stylesheet` command.    
+To customize css for your markdown file, <kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command.   
 
 The `style.less` file will open, and you can override existing style like this:  
+
+> `style.less` file is located at `~/.mume/style.less`
+
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   // please write your custom style here
   // eg:
   //  color: blue;          // change font color
@@ -28,10 +31,8 @@ The `style.less` file will open, and you can override existing style like this:
   }
 
   // custom presentation style
-  .preview-slides .slide,
-  &[data-presentation-mode] {
-    // eg
-    // background-color: #000;
+  .slides > section:nth-child(1) {
+    // this will modify `the first slide`
   }
 }
 ```
@@ -44,7 +45,7 @@ You can [import](file-imports.md) a `less` or `css` file in your markdown file e
 ```markdown
 ---
 id: "my-id"
-class: ["my-class1", "my-class2"]
+class: "my-class1 my-class2"
 ---
 
 @import "my-style.less"
@@ -73,7 +74,7 @@ Every time you changed your `less` file, you can click the refresh button at the
 To change the font family of preview, you first need to download the font file `(.ttf)`, then modify `style.less` like below:   
 
 ```less
-.markdown-preview-enhanced.markdown-preview-enhanced {
+html body {
   @font-face {
     font-family: 'your-font-family';
     src: url('your-font-file-url');
@@ -87,16 +88,4 @@ To change the font family of preview, you first need to download the font file `
 }
 ```
 
-You can also try the [fonts](https://atom.io/packages/fonts) package, which pre-installed a lot of fonts. For example, to use the `VT323` font:   
-
-```less  
-.markdown-preview-enhanced.markdown-preview-enhanced {
-  font-family: 'VT323';
-
-  h1, h2, h3, h4, h5, h6, pre, code {
-    font-family: 'VT323' sans-serif;
-  }
-}
-```  
-
-![screen shot 2017-06-06 at 4 10 34 pm](https://user-images.githubusercontent.com/1908863/26852092-b03ef1c8-4ad2-11e7-951d-e384dc926b49.png)
+> However, it is recommended to use online fonts like google fonts.  

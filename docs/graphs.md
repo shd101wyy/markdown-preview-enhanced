@@ -30,6 +30,9 @@ Markdown Preview Enhanced uses [PlantUML](http://plantuml.com/) to create multip
 If `@start...` is not found, then `@startuml ... @enduml` will automatically be inserted.  
 
 ## WaveDrom
+
+> This is temporarily not supported after version 0.14.0
+
 Markdown Preview Enhanced uses [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
 - Code block with `wavedrom` notation will be rendered by [WaveDrom](https://github.com/drom/wavedrom).
 
@@ -38,15 +41,15 @@ Markdown Preview Enhanced uses [WaveDrom](http://wavedrom.com/) to create digita
 ## GraphViz  
 Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://tinyurl.com/kjoouup) graph.  
 - Code block with `viz` or `dot` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).  
-- Add `engine:[engine_name]` at the first line of code block to choose different render engine. For example `engine:dot`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.
+- You can choose different engines by specifying `{engine: "..."}`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.
 
-![screen shot 2017-06-05 at 8 08 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809493/d1dd166e-4a2a-11e7-84ff-fdb51c0b332e.png)
+![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
 
 ---  
 
-If you don't want to render graphs but only display code block, then you can add `{.code-block}` like blow:       
+If you don't want to render graphs but only display code block, then you can add `{code_block: true}` like blow:       
 
-    ```mermaid {.code-block}
+    ```mermaid {code_block:true}
     // your mermaid code here
     ```
 

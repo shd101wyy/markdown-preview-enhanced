@@ -132,11 +132,11 @@ puts markdown.to_html
     ```
 
 ##### 代碼行數
-如果你想要你的代碼塊顯示代碼行數，只要添加 `lineNo` class 就可以了。
+如果你想要你的代碼塊顯示代碼行數，只要添加 `line-numbers` class 就可以了。
 
 例如：
 
-    ```javascript {.lineNo}
+    ```javascript {.line-numbers}
     function add(x, y) {
       return x + y
     }

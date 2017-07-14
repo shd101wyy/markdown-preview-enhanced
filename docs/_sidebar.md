@@ -1,7 +1,9 @@
 - Getting Started
   - [Introduction](/)
-  - [Installation](installation.md)
   - [Usages](usages.md)  
+  - Installation
+    - [ATOM](installation.md)
+    - [VSCode](vscode-installation.md)
 
 - Writing Markdown
   - [Markdown Basics](markdown-basics.md)
@@ -30,6 +32,7 @@
 
 - Customization & Extension
   - [Customize CSS](customize-css.md)  
+  - [Extend Markdown Parser](extend-parser.md)
   - [For Developer](developer.md)  
 
 - Credits

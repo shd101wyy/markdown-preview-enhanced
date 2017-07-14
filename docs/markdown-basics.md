@@ -16,10 +16,10 @@ This article is a brief introduction to [GitHub Flavored Markdown writing](https
 ###### This is an <h6> tag
 ```
 
-If you want to add `id` and `class` to the header, then simply append `{#id .class1 .class2}`. For example:  
+If you want to add `id` and `class` to the header, then simply append `{id:"...", class:"..."}`. For example:  
 ```markdown
-# This heading has 1 id      {#id1}
-# This heading has 2 classes {.class1 .class2}
+# This heading has 1 id      {id:"my_id"}
+# This heading has 2 classes {class:"class1 class2"}
 ```
 > This is a MPE extended feature.
 
@@ -123,24 +123,24 @@ You can set `class` for your code blocks.
 
 For example, to add `class1 class2` to a code block  
 
-    ```javascript {.class1 .class2}
+    ```javascript {class:"class1 class"}
     function add(x, y) {
       return x + y
     }
     ```
 
-##### lineNo
-You can enable line number for a code block by adding `lineNo` class.  
+##### line-numbers
+You can enable line number for a code block by adding `line-numbers` class.  
 
 For example:    
 
-    ```javascript {.lineNo}
+    ```javascript {class:"line-numbers"}
     function add(x, y) {
       return x + y
     }
     ```
 
-![Screen Shot 2017-05-27 at 6.10.10 PM](http://i.imgur.com/5wfq8Uq.png)
+![screen shot 2017-07-14 at 1 20 27 am](https://user-images.githubusercontent.com/1908863/28200587-a8582b0a-6832-11e7-83a7-6c3bb011322f.png)
 
 
 ### Task lists   

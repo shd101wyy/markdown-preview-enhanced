@@ -132,11 +132,11 @@ puts markdown.to_html
     ```
 
 ##### 代码行数
-如果你想要你的代码块显示代码行数，只要添加 `lineNo` class 就可以了。
+如果你想要你的代码块显示代码行数，只要添加 `line-numbers` class 就可以了。
 
 例如：
 
-    ```javascript {.lineNo}
+    ```javascript {.line-numbers}
     function add(x, y) {
       return x + y
     }

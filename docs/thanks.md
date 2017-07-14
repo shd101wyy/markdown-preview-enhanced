@@ -11,9 +11,8 @@ Special thanks to the following libraries that make this project possible.
 * [plantuml](https://github.com/plantuml/plantuml) - Generate UML diagram from textual description.
 * [WaveDrom](https://github.com/drom/wavedrom) - Digital timing diagram rendering engine.
 * [reveal.js](https://github.com/hakimel/reveal.js) - The HTML Presentation Framework.
-* [save-svg-as-png](https://github.com/exupero/saveSvgAsPng) - Save SVGs as PNGs from the browser.
 * [pandoc](https://github.com/jgm/pandoc) - Universal markup converter.
-* [async](https://github.com/caolan/async) - Async utilities for node and the browser.
+* [phantomjs](https://github.com/ariya/phantomjs) - Scriptable Headless WebKit.   
 * [babyparse](https://github.com/mholt/PapaParse) - Fast and powerful CSV (delimited text) parser that gracefully handles large files and malformed input.
 * [cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server.
 * [gray-matter](https://github.com/jonschlinkert/gray-matter) - Smarter yaml front matter parser, used by assemble, metalsmith and many others.
@@ -25,3 +24,8 @@ Special thanks to the following libraries that make this project possible.
 * [md5](https://github.com/pvorb/node-md5) - A JavaScript function for hashing messages with MD5.
 * [atom](https://github.com/atom/atom) - The hackable text editor.
 * [docsify](https://docsify.js.org/#/) - A magical documentation site generator.  
+* [prismjs](https://github.com/PrismJS/prism) - Lightweight, robust, elegant syntax highlighting.
+* [jQuery](https://github.com/jquery/jquery) - jQuery JavaScript Library.
+* [jQuery-contextMenu](https://github.com/swisnl/jQuery-contextMenu) - jQuery contextMenu plugin & polyfill.  
+* [jsonic](https://github.com/rjrodger/jsonic) - JSON parser that isn't strict.
+* [crypto-js](https://github.com/brix/crypto-js) - JavaScript library of crypto standards.

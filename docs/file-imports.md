@@ -4,10 +4,12 @@
 
 ## How to use?  
 just  
-  ```markdown
-  @import "your_file"  
-  ```
+
+`@import "your_file"`
+
 easy, right :)
+
+`<!-- @import "your_file" -->` is also valid.   
 
 ## Refresh button  
 Refresh button is now added at the right corner of preview.  
@@ -22,10 +24,9 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.mermaid` file will be rendered by mermaid.  
 * `.dot` file will be rendered by viz.js (graphviz).  
 * `.plantuml(.puml)` file will be rendered by PlantUML.  
-* `.wavedrom` file will be rendered by wavedrom.  
 * `.html` file will be embeded directly.  
-* `.js` file will be evalued in `window` scope. It behaves similarly as the `<script>.. js code ..</script>` tag.
-* `.less` and `.css` file will be included as style. Only local `less` file is currently supported.  
+* `.js` file will included as `<script src="your_js"></script>`.
+* `.less` and `.css` file will be included as style. Only local `less` file is currently supported. `.css` file will be included as `<link rel="stylesheet" href="your_css">`
 * `.pdf` file will be converted to `svg` files by `pdf2svg` and then be included.
 * `markdown` file will be parsed and embeded directly.     
 * All other files will be rendered as code block.    
@@ -58,13 +59,13 @@ Inclusive. For example `{page_begin:2, page_end:4}` will display the number 2, 3
 
 ## Force to render Code Block  
 ```markdown
-@import "test.puml" {code_block:true, class:"lineNo"}
-@import "test.py" {class:"lineNo"}
+@import "test.puml" {code_block:true, class:"line-numbers"}
+@import "test.py" {class:"line-numbers"}
 ```
 
 ## Import file as Code Chunk  
 ```markdown
-@import "test.py" {code_chunk:true, cmd:"python3"}
+@import "test.py" {cmd:'python', cmd:"python3"}
 ```
 
 ## Known issues  

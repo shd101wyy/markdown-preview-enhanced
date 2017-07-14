@@ -107,7 +107,7 @@
 
 **class**  
 如果設置 `class:"class1 class2"`，那麼 `class1 class2` 將會被添加到 code chunk。    
-* `lineNo` class 將會添加代碼行數到 code chunk。  
+* `line-numbers` class 將會添加代碼行數到 code chunk。  
 
 **element**  
 你想要添加的元素。   

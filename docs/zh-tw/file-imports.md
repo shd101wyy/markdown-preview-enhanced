@@ -59,8 +59,8 @@ Markdown Preview Enhanced 支持引用本地或者在線的 PDF 文件。
 
 ## 強制渲染為代碼塊  
 ```markdown
-@import "test.puml" {code_block:true, class:"lineNo"}
-@import "test.py" {class:"lineNo"}
+@import "test.puml" {code_block:true, class:"line-numbers"}
+@import "test.py" {class:"line-numbers"}
 ```
 
 ## 引用文件作為 Code Chunk  

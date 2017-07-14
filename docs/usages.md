@@ -74,23 +74,23 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 *Preview*    
 
 **Right click** at the preview to open the context menu:   
-![screen shot 2017-06-06 at 3 53 04 pm](https://user-images.githubusercontent.com/1908863/26851375-45a3e96a-4ad0-11e7-9bbd-b3ea0ad80da9.png)
 
-- <strong>Markdown Preview Enhanced: Zoom In </strong>  
-  <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>.    
+![screen shot 2017-07-14 at 12 30 54 am](https://user-images.githubusercontent.com/1908863/28199502-b9ba39c6-682b-11e7-8bb9-89661100389e.png)
+
+- <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>.    
   Zoom in the preview.  
 
-- <strong>Markdown Preview Enhanced: Zoom Out</strong>  
-  <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd>.    
+- <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd>.    
   Zoom out the preview.  
 
-- <strong>Markdown Preview Enhanced: Reset Zoom </strong>  
-  <kbd>cmd-0</kbd>  
+- <kbd>cmd-0</kbd>  
   Reset zoom.  
 
-- <strong>Markdown Preview Enhanced: Sync Source</strong>  
-  <kbd>cmd-shift-s</kbd>  
+- <kbd>cmd-shift-s</kbd>  
   Scroll markdown editor to match the position of the preview.  
+
+- <kbd>esc</kbd>  
+  Toggle sidebar TOC.  
 
 ## Keyboard Shortcuts  
 
@@ -104,8 +104,11 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 | <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd> | Preview zoom in |  
 | <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd> | Preview zoom out |  
 | <kbd>cmd-0</kbd> | Preview reset zoom |
+| <kbd>esc</kbd>  | Toggle sidebar TOC |
 
 ## Package settings  
+
+### Atom
 To open the package settings, press <kbd>cmd-shift-p</kbd> then chosee `Settings View: Open`, then click `Packages`.  
 
 Search `markdown-preview-enhanced` under `Installed Packages`:  
@@ -113,5 +116,9 @@ Search `markdown-preview-enhanced` under `Installed Packages`:
 
 Click `Settings` button:   
 
-![screen shot 2017-06-06 at 3 56 34 pm](https://user-images.githubusercontent.com/1908863/26851587-e5fa4f4e-4ad0-11e7-9d70-89c67d0df1c2.png)
+![screen shot 2017-07-14 at 12 35 13 am](https://user-images.githubusercontent.com/1908863/28199574-50595dbc-682c-11e7-9d94-264e46387da8.png)
 
+### VSCode
+Run `Preferences: Open User Settings` Command, then search `markdown-preview-enhanced`.  
+
+![screen shot 2017-07-14 at 12 34 04 am](https://user-images.githubusercontent.com/1908863/28199551-2719acb8-682c-11e7-8163-e064ad8fe41c.png)

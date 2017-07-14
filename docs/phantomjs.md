@@ -2,17 +2,24 @@
 
 **PhantomJS** supports `pdf`, `jpeg`, and `png` file export.  
 
+Before using this feature, you need to have `phantomjs installed`.  
+
+* Windows
+Check [PhantomJS](http://phantomjs.org/) website.
+* macOS
+`brew install phantomjs`
+
 ## Usage
-Right click at the preview, then choose `Export to Disk`.  
-Click `PHANTOMJS` tab.  
-Click `export` button.    
+Right click at the preview, then click `PHANTOMJS` tab.  
+Choose the file type you want to export.  
 
-![screen shot 2017-06-06 at 4 46 33 pm](https://user-images.githubusercontent.com/1908863/26853700-a85dba6a-4ad8-11e7-9d42-78b1e4249e83.png)
+![screen shot 2017-07-14 at 1 37 38 am](https://user-images.githubusercontent.com/1908863/28201098-0e5fe3be-6835-11e7-8db6-75fe7e5c35c7.png)
 
-## Header and footer configuration    
-You can configure header and footer by running `Markdown Preview Enhanced: Open Header Footer Config` command, then modify the `phantomjs_header_footer_config.js` file.  
+## Configuration    
+### For all files
+You can configure header and footer by running `Markdown Preview Enhanced: Open PhantomJS Config` command, then modify the `phantomjs_config.js` file.  
 
-The `phantomjs_header_footer_config.js` file should look like this:   
+The `phantomjs_config.js` file should look like this:   
 
 
 ```javascript
@@ -26,6 +33,7 @@ Attention: this config will override your config in exporter panel.
 eg:
 
   let config = {
+    ""
     "header": {
       "height": "45mm",
       "contents": '<div style="text-align: center;">Author: Marc Bachmann</div>'
@@ -43,3 +51,14 @@ let config = {
 module.exports = config || {}
 ```
 
+### For single file  
+You can write front-matter to configure phantomjs:  
+
+```yaml
+---
+phantomjs:
+  orientation: landscape
+---
+```
+
+Check [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) for more information.  

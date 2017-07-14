@@ -14,7 +14,7 @@
   3. Force to render Code Block  
   4. Code Chunk
 * [x] Support TOC to ignore headings by appending `{.ignore}` after the heading:  
-* [x] Support showing line numbers for Code Block and Code Chunk by adding `lineNo` class.  
+* [x] Support showing line numbers for Code Block and Code Chunk by adding `line-numbers` class.  
 * [x] Modifed scroll sync logic (Might cause issue).
 * [x] Support `Markdown Preview Enhanced: Sync Preview` and `Markdown Preview Enhanced: Sync Source` [#424](https://github.com/shd101wyy/markdown-preview-enhanced/issues/424).  
 * [x] Fix image `@import` issue on Windows [#414](https://github.com/shd101wyy/markdown-preview-enhanced/issues/414).  
@@ -31,7 +31,7 @@
 * [x] upgrade `reveal.js` to `3.5.0`.
 * [x] faster `plantuml` rendering thanks to the contribution by [@river0825](https://github.com/river0825).
 * [x] fix one toc bug [#406](https://github.com/shd101wyy/markdown-preview-enhanced/issues/406).
-* [x] add `class` support for code block and code chunk. Support `lineNo` class for showing line number for code block and code chunk.
+* [x] add `class` support for code block and code chunk. Support `line-numbers` class for showing line number for code block and code chunk.
 * [x] support `sidebar` toc.
 * [x] fix pandoc bibliography absolute file path issue [#409](https://github.com/shd101wyy/markdown-preview-enhanced/issues/409).
 * [x] support `language-diff` [#415](https://github.com/shd101wyy/markdown-preview-enhanced/issues/415).
