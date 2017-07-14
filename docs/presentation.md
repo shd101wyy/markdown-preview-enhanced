@@ -1,5 +1,7 @@
 # Presentation Writer  
 
+![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
+
 Markdown Preview Enhanced uses [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 
 [Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.

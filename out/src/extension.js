@@ -179,10 +179,10 @@ const MESSAGE_DISPATCH_EVENTS = {
             preview.pasteImageFile(imageUrl);
         }
     },
-    'uploadImageFile': function (sourceUri, imageUrl) {
+    'uploadImageFile': function (sourceUri, imageUrl, imageUploader) {
         const preview = getPreviewForEditor(sourceUri);
         if (preview) {
-            preview.uploadImageFile(imageUrl);
+            preview.uploadImageFile(imageUrl, imageUploader);
         }
     },
     'openInBrowser': function (sourceUri) {

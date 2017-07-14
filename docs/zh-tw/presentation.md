@@ -1,5 +1,7 @@
 # 幻燈片制作  
 
+![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
+
 Markdown Preview Enhanced 使用 [reveal.js](https://github.com/hakimel/reveal.js) 來渲染漂亮的幻燈片。  
 
 [點擊這裡](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相關的介紹。  

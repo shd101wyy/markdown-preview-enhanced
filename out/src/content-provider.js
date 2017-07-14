@@ -589,7 +589,7 @@ class MarkdownPreviewEnhancedView {
      * Then insert markdown image url to markdown file.
      * @param imageFilePath
      */
-    uploadImageFile(imageFilePath) {
+    uploadImageFile(imageFilePath, imageUploader = "imgur") {
         if (!this.editor)
             return;
         const imageFileName = path.basename(imageFilePath);
@@ -597,7 +597,7 @@ class MarkdownPreviewEnhancedView {
         const hint = `![Uploading ${imageFileName}… (${uid})]()`;
         const bufferRow = this.editor.getCursorBufferPosition().row;
         this.editor.insertText(hint);
-        mume.utility.uploadImage(imageFilePath, { method: this.config.imageUploader })
+        mume.utility.uploadImage(imageFilePath, { method: imageUploader })
             .then((url) => {
             this.setUploadedImageURL(imageFileName, url, hint, bufferRow);
         })
