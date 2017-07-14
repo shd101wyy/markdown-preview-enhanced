@@ -308,101 +308,124 @@ mume.init() // init mume package
     })
   )
 
-    // When the preview is displayed
-    // preview will display the content of editor (pane item) that is activated
-    subscriptions.add(atom.workspace.onDidChangeActivePaneItem((editor)=> {
-      if (editor &&
-          editor['buffer'] &&
-          editor['getGrammar'] &&
-          editor['getGrammar']().scopeName == 'source.gfm') {
-        const preview = getPreviewForEditor(editor)
-        if (!preview || !preview.getEditor()) return
+  // When the preview is displayed
+  // preview will display the content of editor (pane item) that is activated
+  subscriptions.add(atom.workspace.onDidChangeActivePaneItem((editor)=> {
+    if (editor &&
+        editor['buffer'] &&
+        editor['getGrammar'] &&
+        editor['getGrammar']().scopeName == 'source.gfm') {
+      const preview = getPreviewForEditor(editor)
+      if (!preview || !preview.getEditor()) return
 
-        if (config.singlePreview && preview.getEditor() !== editor) {
-          preview.bindEditor(editor as AtomCore.TextEditor)
-        }
-
-        if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
-          const pane = atom.workspace.paneForItem(preview)
-          if (pane && pane !== atom.workspace.getActivePane()) {
-            // I think typings here is wrong
-            // https://atom.io/docs/api/v1.18.0/Pane#instance-activateItem
-            const p = "activate" + "Item"
-            pane[p](preview)
-          }
-        }
-      }
-    }))
-
-
-    // automatically open preview when activate a markdown file
-    // if 'openPreviewPaneAutomatically' option is enable
-    subscriptions.add(atom.workspace.onDidOpen((event)=> {
-      if (config.openPreviewPaneAutomatically) {
-        if (event.uri &&
-            event.item &&
-            isMarkdownFile(event.uri) &&
-            !event.uri.startsWith('mpe://')) {
-          const pane = event.pane
-          const panes = atom.workspace.getPanes()
-
-          // if the markdown file is opened on the right pane, then move it to the left pane. Issue #25
-          if (pane != panes[0]) {
-            pane.moveItemToPane(event.item, panes[0], 0) // move md to left pane.
-            panes[0]['setActiveItem'](event.item)
-          }
-
-          const editor = event.item
-          startPreview(editor)
-        }
+      if (config.singlePreview && preview.getEditor() !== editor) {
+        preview.bindEditor(editor as AtomCore.TextEditor)
       }
 
-      // check zen mode
-      if (event.uri && event.item && isMarkdownFile(event.uri)) {
+      if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
+        const pane = atom.workspace.paneForItem(preview)
+        if (pane && pane !== atom.workspace.getActivePane()) {
+          // I think typings here is wrong
+          // https://atom.io/docs/api/v1.18.0/Pane#instance-activateItem
+          const p = "activate" + "Item"
+          pane[p](preview)
+        }
+      }
+    }
+  }))
+
+
+  // automatically open preview when activate a markdown file
+  // if 'openPreviewPaneAutomatically' option is enable
+  subscriptions.add(atom.workspace.onDidOpen((event)=> {
+    if (config.openPreviewPaneAutomatically) {
+      if (event.uri &&
+          event.item &&
+          isMarkdownFile(event.uri) &&
+          !event.uri.startsWith('mpe://')) {
+        const pane = event.pane
+        const panes = atom.workspace.getPanes()
+
+        // if the markdown file is opened on the right pane, then move it to the left pane. Issue #25
+        if (pane != panes[0]) {
+          pane.moveItemToPane(event.item, panes[0], 0) // move md to left pane.
+          panes[0]['setActiveItem'](event.item)
+        }
+
         const editor = event.item
-        const editorElement = editor['getElement']()
-        if (editor && editor['buffer'])
-          if (atom.config.get('markdown-preview-enhanced.enableZenMode'))
+        startPreview(editor)
+      }
+    }
+
+    // check zen mode
+    if (event.uri && event.item && isMarkdownFile(event.uri)) {
+      const editor = event.item
+      const editorElement = editor['getElement']()
+      if (editor && editor['buffer'])
+        if (atom.config.get('markdown-preview-enhanced.enableZenMode'))
+          editorElement.setAttribute('data-markdown-zen', '')
+        else
+          editorElement.removeAttribute('data-markdown-zen')
+    }
+  }))
+
+  // zen mode observation
+  subscriptions.add(atom.config.observe('markdown-preview-enhanced.enableZenMode', (enableZenMode)=> {
+    const paneItems = atom.workspace.getPaneItems()
+    for (let i = 0; i < paneItems.length; i++) {
+      const editor = paneItems[i]
+      if (editor && editor['getPath'] && isMarkdownFile(editor['getPath']())) {
+        if (editor['buffer']) {
+          const editorElement = editor['getElement']()
+          if (enableZenMode)
             editorElement.setAttribute('data-markdown-zen', '')
           else
             editorElement.removeAttribute('data-markdown-zen')
-      }
-    }))
-
-    // zen mode observation
-    subscriptions.add(atom.config.observe('markdown-preview-enhanced.enableZenMode', (enableZenMode)=> {
-      const paneItems = atom.workspace.getPaneItems()
-      for (let i = 0; i < paneItems.length; i++) {
-        const editor = paneItems[i]
-        if (editor && editor['getPath'] && isMarkdownFile(editor['getPath']())) {
-          if (editor['buffer']) {
-            const editorElement = editor['getElement']()
-            if (enableZenMode)
-              editorElement.setAttribute('data-markdown-zen', '')
-            else
-              editorElement.removeAttribute('data-markdown-zen')
-          }
         }
       }
+    }
 
-      if (enableZenMode)
-        document.getElementsByTagName('atom-workspace')[0].setAttribute('data-markdown-zen', '')
-      else
-        document.getElementsByTagName('atom-workspace')[0].removeAttribute('data-markdown-zen')
-    }))
+    if (enableZenMode)
+      document.getElementsByTagName('atom-workspace')[0].setAttribute('data-markdown-zen', '')
+    else
+      document.getElementsByTagName('atom-workspace')[0].removeAttribute('data-markdown-zen')
+  }))
 
-    // use single preview
-    subscriptions.add(atom.config.onDidChange('markdown-preview-enhanced.singlePreview', (singlePreview)=> {
-      for (let sourceUri in previewsMap) {
-        const preview = previewsMap[sourceUri]
-        const pane = atom.workspace.paneForItem(preview)
-        pane.destroyItem(preview) // this will trigger preview.destroy()
-      }
-      previewsMap = {}
-    }))
+  // use single preview
+  subscriptions.add(atom.config.onDidChange('markdown-preview-enhanced.singlePreview', (singlePreview)=> {
+    for (let sourceUri in previewsMap) {
+      const preview = previewsMap[sourceUri]
+      const pane = atom.workspace.paneForItem(preview)
+      pane.destroyItem(preview) // this will trigger preview.destroy()
+    }
+    previewsMap = {}
+  }))
 
   // Register message event
   initMessageReceiver()
+
+  // Check welcome page
+  const packageVersion = require(path.resolve(__dirname, '../../package.json'))['version']
+  if (packageVersion !== mume.configs.config['atom_mpe_version']) {
+    mume.utility.updateExtensionConfig({'atom_mpe_version': packageVersion})
+    
+    atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'))
+
+    // FIXME: For version 0.14.0 
+    // DELETE the line below later
+    const buttons = [{
+      text: 'Open ~/.atom/config.json',
+      onDidClick: function() {
+        atom.workspace.open(path.resolve(atom.config.getUserConfigPath()))
+      },
+      className: 'btn'
+    }] as object
+    atom.notifications.addInfo('As there are many changes to markdown-preview-enhanced version 0.14.0, please reset `markdown-preview-enhanced` configs by removing `markdown-preview-enhanced` section in `~/.atom/config.json` . Then restart atom. ', 
+    {
+      buttons,
+      dismissable: true
+    })
+  }
 })
 }
 

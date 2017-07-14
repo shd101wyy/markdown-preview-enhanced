@@ -402,6 +402,25 @@ function activate(state) {
         }));
         // Register message event
         initMessageReceiver();
+        // Check welcome page
+        const packageVersion = require(path.resolve(__dirname, '../../package.json'))['version'];
+        if (packageVersion !== mume.configs.config['atom_mpe_version']) {
+            mume.utility.updateExtensionConfig({ 'atom_mpe_version': packageVersion });
+            atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'));
+            // FIXME: For version 0.14.0 
+            // DELETE the line below later
+            const buttons = [{
+                    text: 'Open ~/.atom/config.json',
+                    onDidClick: function () {
+                        atom.workspace.open(path.resolve(atom.config.getUserConfigPath()));
+                    },
+                    className: 'btn'
+                }];
+            atom.notifications.addInfo('As there are many changes to markdown-preview-enhanced version 0.14.0, please reset `markdown-preview-enhanced` configs by removing `markdown-preview-enhanced` section in `~/.atom/config.json` . Then restart atom. ', {
+                buttons,
+                dismissable: true
+            });
+        }
     });
 }
 exports.activate = activate;
