@@ -445,7 +445,7 @@ export class MarkdownPreviewEnhancedView {
   public openInBrowser() {
     this.engine.openInBrowser({})
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 
@@ -456,7 +456,7 @@ export class MarkdownPreviewEnhancedView {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }  
 
@@ -474,7 +474,7 @@ export class MarkdownPreviewEnhancedView {
       }
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 
@@ -492,7 +492,7 @@ export class MarkdownPreviewEnhancedView {
       }
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 
@@ -503,7 +503,7 @@ export class MarkdownPreviewEnhancedView {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 
@@ -514,7 +514,7 @@ export class MarkdownPreviewEnhancedView {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 
@@ -525,7 +525,7 @@ export class MarkdownPreviewEnhancedView {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })
     .catch((error)=> {
-      atom.notifications.addError(error)
+      atom.notifications.addError(error.toString())
     })
   }
 

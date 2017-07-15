@@ -398,7 +398,7 @@ class MarkdownPreviewEnhancedView {
     openInBrowser() {
         this.engine.openInBrowser({})
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     htmlExport(offline) {
@@ -408,7 +408,7 @@ class MarkdownPreviewEnhancedView {
             atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     phantomjsExport(fileType = 'pdf') {
@@ -426,7 +426,7 @@ class MarkdownPreviewEnhancedView {
             }
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     princeExport() {
@@ -444,7 +444,7 @@ class MarkdownPreviewEnhancedView {
             }
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     eBookExport(fileType) {
@@ -454,7 +454,7 @@ class MarkdownPreviewEnhancedView {
             atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     pandocExport() {
@@ -464,7 +464,7 @@ class MarkdownPreviewEnhancedView {
             atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     markdownExport() {
@@ -474,7 +474,7 @@ class MarkdownPreviewEnhancedView {
             atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
         })
             .catch((error) => {
-            atom.notifications.addError(error);
+            atom.notifications.addError(error.toString());
         });
     }
     cacheCodeChunkResult(id, result) {
