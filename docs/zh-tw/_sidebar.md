@@ -3,7 +3,7 @@
   - [使用](zh-tw/usages.md)  
   - 安裝教程
     - [Atom](zh-tw/installation.md)
-    - [VSCode](zh-tw/vscode-installation.md)
+    - [VS Code](zh-tw/vscode-installation.md)
 
 - 編寫 Markdown
   - [Markdown 基本要素](zh-tw/markdown-basics.md)
@@ -47,5 +47,6 @@
   - Atom
     - [Newest](newest.md)  
     - [History](history.md)
+  - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 
 - [License](LICENSE.md)

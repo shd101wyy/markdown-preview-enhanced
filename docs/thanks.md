@@ -3,7 +3,7 @@ This package will not exist without the supports and helps from all the users an
 
 Special thanks to the following libraries that make this project possible.  
 
-* [remarkable](https://github.com/jonschlinkert/remarkable) - Markdown parser, done right. Commonmark support, extensions, syntax plugins, high speed - all in one. Gulp and metalsmith plugins are also available.  
+* [markdown-it](https://github.com/markdown-it/markdown-it) - Markdown parser, done right. 100% CommonMark support, extensions, syntax plugins & high speed.  
 * [KaTeX](https://github.com/Khan/KaTeX) - Fast math typesetting for the web.  
 * [MathJax](https://github.com/mathjax/MathJax) - Beautiful math in all browsers.  
 * [mermaid](https://github.com/knsv/mermaid) - Generation of diagram and flowchart from text in a similar manner as markdown.  

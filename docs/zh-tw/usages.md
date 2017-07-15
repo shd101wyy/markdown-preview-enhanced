@@ -124,7 +124,7 @@
 
 ![screen shot 2017-07-14 at 12 35 13 am](https://user-images.githubusercontent.com/1908863/28199574-50595dbc-682c-11e7-9d94-264e46387da8.png)
 
-### VSCode
+### VS Code
 運行 `Preferences: Open User Settings` 命令，然後搜索 `markdown-preview-enhanced`。    
 
 ![screen shot 2017-07-14 at 12 34 04 am](https://user-images.githubusercontent.com/1908863/28199551-2719acb8-682c-11e7-8163-e064ad8fe41c.png)

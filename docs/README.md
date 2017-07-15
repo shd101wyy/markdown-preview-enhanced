@@ -11,7 +11,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 
 ## Installation
 * [Install on Atom](installation.md)
-* [Install on VSCode](vscode-installation.md)
+* [Install on VS Code](vscode-installation.md)
 
 ## Features
 

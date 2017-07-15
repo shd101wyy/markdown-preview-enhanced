@@ -155,7 +155,7 @@ export const configSchema = {
     "title": "Use Pandoc Parser",
     "type": "boolean",
     "default": false,
-    "description": "Enable this option will render markdown by pandoc instead of remarkable. Live update will be disabled automatically if this option is enabled.",
+    "description": "Enable this option will render markdown by pandoc instead of markdown-it. Live update will be disabled automatically if this option is enabled.",
     "order": 35
   },
   "pandocPath": {

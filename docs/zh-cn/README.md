@@ -14,7 +14,7 @@
 
 ## 安装
 [Atom 版安装](zh-cn/installation.md)
-[VSCode 版安装](zh-cn/vscode-installation.md)
+[VS Code 版安装](zh-cn/vscode-installation.md)
 
 ## 特性
 

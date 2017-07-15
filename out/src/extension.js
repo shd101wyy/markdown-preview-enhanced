@@ -14,7 +14,7 @@ const atom_1 = require("atom");
 const mume = require("@shd101wyy/mume");
 const utility = mume.utility;
 const config_1 = require("./config");
-const content_provider_1 = require("./content-provider");
+const preview_content_provider_1 = require("./preview-content-provider");
 let subscriptions = null;
 let config = null;
 /**
@@ -65,7 +65,7 @@ function getPreviewForEditor(editor) {
     else if (typeof (editor) === 'string') {
         return previewsMap[editor];
     }
-    else if (editor instanceof content_provider_1.MarkdownPreviewEnhancedView) {
+    else if (editor instanceof preview_content_provider_1.MarkdownPreviewEnhancedView) {
         return editor;
     }
     else if (editor && editor.getPath) {
@@ -110,11 +110,11 @@ function startPreview(editor) {
     let preview = getPreviewForEditor(editor);
     if (!preview) {
         if (config.singlePreview) {
-            preview = new content_provider_1.MarkdownPreviewEnhancedView('mpe://single_preview', config);
+            preview = new preview_content_provider_1.MarkdownPreviewEnhancedView('mpe://single_preview', config);
             previewsMap['single_preview'] = preview;
         }
         else {
-            preview = new content_provider_1.MarkdownPreviewEnhancedView('mpe://' + editor.getPath(), config);
+            preview = new preview_content_provider_1.MarkdownPreviewEnhancedView('mpe://' + editor.getPath(), config);
             previewsMap[editor.getPath()] = preview;
         }
         preview.onPreviewDidDestroy(removePreviewFromMap);
@@ -230,7 +230,7 @@ const MESSAGE_DISPATCH_EVENTS = {
         if (preview)
             preview.runCodeChunk(codeChunkId);
     },
-    'runCodeChunks': function (sourceUri) {
+    'runAllCodeChunks': function (sourceUri) {
         const preview = getPreviewForEditor(sourceUri);
         if (preview)
             preview.runAllCodeChunks();
@@ -405,21 +405,23 @@ function activate(state) {
         // Check welcome page
         const packageVersion = require(path.resolve(__dirname, '../../package.json'))['version'];
         if (packageVersion !== mume.configs.config['atom_mpe_version']) {
-            mume.utility.updateExtensionConfig({ 'atom_mpe_version': packageVersion });
-            atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'));
             // FIXME: For version 0.14.0 
             // DELETE the line below later
-            const buttons = [{
-                    text: 'Open ~/.atom/config.json',
-                    onDidClick: function () {
-                        atom.workspace.open(path.resolve(atom.config.getUserConfigPath()));
-                    },
-                    className: 'btn'
-                }];
-            atom.notifications.addInfo('As there are many changes to markdown-preview-enhanced version 0.14.0, please reset `markdown-preview-enhanced` configs by removing `markdown-preview-enhanced` section in `~/.atom/config.json` . Then restart atom. ', {
-                buttons,
-                dismissable: true
-            });
+            if (!mume.configs.config['atom_mpe_version']) {
+                const buttons = [{
+                        text: 'Open ~/.atom/config.json',
+                        onDidClick: function () {
+                            atom.workspace.open(path.resolve(atom.config.getUserConfigPath()));
+                        },
+                        className: 'btn'
+                    }];
+                atom.notifications.addInfo('As there are many changes to markdown-preview-enhanced version 0.14.0, please reset `markdown-preview-enhanced` configs by removing `markdown-preview-enhanced` section in `~/.atom/config.json` . Then restart atom. ', {
+                    buttons,
+                    dismissable: true
+                });
+            }
+            mume.utility.updateExtensionConfig({ 'atom_mpe_version': packageVersion });
+            atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'));
         }
     });
 }

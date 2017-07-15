@@ -7,7 +7,7 @@ You can use `pandoc document export` by right clicking at the preview, then you 
 ---
 
 ## Pandoc Parser
-By default **Markdown Preview Enhanced** uses [remarkable](https://github.com/jonschlinkert/remarkable) to parse markdown.  
+By default **Markdown Preview Enhanced** uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse markdown.  
 You can also set it to `pandoc` parser from package settings.    
 
 ![Screen Shot 2017-03-07 at 10.05.25 PM](http://i.imgur.com/NdCJBgR.png)  

@@ -4,15 +4,6 @@ You can join them in supporting Markdown Preview Enhanced development by [pledgi
 
 Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `![your name](link you want) $amount_you_donate`. Your name will be saved to [backers](backers.md) file. Thank you! 
 
-## $499 (monthly)
-empty
-
----
-
-## $99 (monthly)
-empty
-
----
 
 ## $29+
 empty
@@ -22,6 +13,8 @@ empty
 ## $5+
 * [Tony Ennis](https://twitter.com/tonyennis)  
 * [Greg Slepak](https://twitter.com/taoeffect)
+
+---
 
 ## 😀
 * Brian
