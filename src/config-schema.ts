@@ -200,6 +200,13 @@ export const configSchema = {
     "description": "By default, [[test]] will direct to file path `test.md`.",
     "order": 51
   },
+  "enableExtendedTableSyntax": {
+    "title": "Enable extended table syntax",
+    "type": "boolean",
+    "default": false,
+    "description": "Enable extended table syntax to support merging table cells.",
+    "order": 52
+  },
   "liveUpdate": {
     "type": "boolean",
     "default": true,

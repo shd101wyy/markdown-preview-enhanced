@@ -12,6 +12,7 @@ class MarkdownPreviewEnhancedConfig {
         this.breakOnSingleNewLine = atom.config.get('markdown-preview-enhanced.breakOnSingleNewLine');
         this.enableTypographer = atom.config.get('markdown-preview-enhanced.enableTypographer');
         this.enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax');
+        this.enableExtendedTableSyntax = atom.config.get('markdown-preview-enhanced.enableExtendedTableSyntax');
         this.wikiLinkFileExtension = atom.config.get('markdown-preview-enhanced.wikiLinkFileExtension');
         this.protocolsWhiteList = atom.config.get('markdown-preview-enhanced.protocolsWhiteList');
         this.mathRenderingOption = atom.config.get('markdown-preview-enhanced.mathRenderingOption');
@@ -63,6 +64,9 @@ class MarkdownPreviewEnhancedConfig {
             callback();
         }), atom.config.onDidChange('markdown-preview-enhanced.enableWikiLinkSyntax', ({ newValue }) => {
             this.enableWikiLinkSyntax = newValue;
+            callback();
+        }), atom.config.onDidChange('markdown-preview-enhanced.enableExtendedTableSyntax', ({ newValue }) => {
+            this.enableExtendedTableSyntax = newValue;
             callback();
         }), atom.config.onDidChange('markdown-preview-enhanced.wikiLinkFileExtension', ({ newValue }) => {
             this.wikiLinkFileExtension = newValue;

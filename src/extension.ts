@@ -336,7 +336,7 @@ mume.init() // init mume package
 
 
   // automatically open preview when activate a markdown file
-  // if 'openPreviewPaneAutomatically' option is enable
+  // if 'openPreviewPaneAutomatically' option is enabled.  
   subscriptions.add(atom.workspace.onDidOpen((event)=> {
     if (config.openPreviewPaneAutomatically) {
       if (event.uri &&
