@@ -22,6 +22,6 @@
 
 <center>
 <br><br><br>
-Released under the [University of Illinois/NCSA Open Source License](./LICENSE.md)<br>
+Released under the <a href="../LICENSE.md">University of Illinois/NCSA Open Source License</a><br>
 Copyright © 2015-2017 Yiyi Wang
 </center>

@@ -2,9 +2,14 @@
 [Markdown Preview Enhanced for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) is now available! Cheeeers!
 
 ## 0.14.1
-* Switched the markdown parser from `remarkable` to `markdown-it`.  
-* Upgrade `Mume` to version `0.1.1`.
-  * Fixed pandoc export front-matter not included bug.  
+* Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.2`.  
+    * Switched the default markdown parser from `remarkable` to `markdown-it`.  
+    * Fixed pandoc export front-matter not included bug.  
+    * Fixed `bash` language highlighting bug.
+    * Fixed phantomjs export task list bug.   
+    * Upgraded `webview.ts` script for preview. Now both Atom and VS Code versions share the same preview logic.  
+    * Removed several redundandent dependencies.  
+
 
 ## 0.14.0  
 * Fully rewritten in TypeScript, so there might be some potential bugs.

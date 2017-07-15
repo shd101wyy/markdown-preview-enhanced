@@ -3,7 +3,7 @@
   - [Usages](usages.md)  
   - Installation
     - [Atom](installation.md)
-    - [VSCode](vscode-installation.md)
+    - [VS Code](vscode-installation.md)
 
 - Writing Markdown
   - [Markdown Basics](markdown-basics.md)
@@ -44,4 +44,5 @@
   - Atom
     - [Newest](newest.md)  
     - [History](history.md)
+  - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 - [License](LICENSE.md)

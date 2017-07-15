@@ -1,8 +1,8 @@
-# VSCode 版本安裝教程
+# VS Code 版本安裝教程
 
 這裡有如下方式安裝此插件：
 
-## 通過 VSCode 安裝（推薦）
+## 通過 VS Code 安裝（推薦）
 打開 **vscode** 編輯器，在插件頁搜索 `markdown-preview-enhanced`，接著點擊 `Install` 按鈕。  
 
 ![screen shot 2017-07-14 at 12 23 32 am](https://user-images.githubusercontent.com/1908863/28199365-bb03a570-682a-11e7-8f65-d7d2b258d583.png)

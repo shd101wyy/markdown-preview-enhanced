@@ -24,9 +24,9 @@ Or just insert to your markdown file
 
 <!-- slide -->
 Multiple Presentation themes are supported, you can change it easily from the extension settings.
-* vscode
+* vscode  
 @import "https://i.loli.net/2017/07/12/5965b5c7783fb.png" {width: 60%}
-* atom
+* atom  
 @import "http://i.imgur.com/lwaogVZ.png" {width: 60%}
 
 
