@@ -30,7 +30,7 @@ const MARKDOWN_ENGINES_MAP = {};
 class MarkdownPreviewEnhancedView {
     constructor(uri, config) {
         this.element = null;
-        this.iframe = null;
+        this.webview = null;
         this.uri = '';
         this.disposables = null;
         /**
@@ -52,12 +52,34 @@ class MarkdownPreviewEnhancedView {
         this.uri = uri;
         this.config = config;
         this.element = document.createElement('div');
-        this.iframe = document.createElement('iframe');
-        this.iframe.style.width = '100%';
-        this.iframe.style.height = '100%';
-        this.iframe.style.border = 'none';
-        this.iframe.src = path.resolve(__dirname, '../../html/loading.html');
-        this.element.appendChild(this.iframe);
+        // Prevent atom keyboard event.
+        this.element.classList.add('native-key-bindings');
+        this.element.classList.add('mpe-preview');
+        // Prevent atom context menu from popping up.  
+        this.element.oncontextmenu = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        // esc key
+        this.element.addEventListener('keydown', (event) => {
+            if (event.which === 27) {
+                this.postMessage({ command: 'escPressed' });
+            }
+        });
+        // Webview for markdown preview.
+        // Please note that the webview will load 
+        // the controller script at:
+        // https://github.com/shd101wyy/mume/blob/master/src/webview.ts
+        this.webview = document.createElement('webview');
+        this.webview.style.width = '100%';
+        this.webview.style.height = '100%';
+        this.webview.style.border = 'none';
+        this.webview.src = path.resolve(__dirname, '../../html/loading.html');
+        this.webview.preload = mume.utility.addFileProtocol(path.resolve(mume.utility.extensionDirectoryPath, './dependencies/electron-webview/preload.js'));
+        this.webview.addEventListener('did-stop-loading', this.webviewStopLoading.bind(this));
+        this.webview.addEventListener('ipc-message', this.webviewReceiveMessage.bind(this));
+        this.webview.addEventListener('console-message', this.webviewConsoleMessage.bind(this));
+        this.element.appendChild(this.webview);
     }
     getURI() {
         return this.uri;
@@ -141,13 +163,14 @@ class MarkdownPreviewEnhancedView {
             }
             yield this.loadPreview();
             this.initEditorEvents();
+            this.initPreviewEvents();
         });
     }
     /**
      * This function will
      * 1. Create a temp *.html file
      * 2. Write preview html template
-     * 3. this.iframe will load that *.html file.
+     * 3. this.webview will load that *.html file.
      */
     loadPreview() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -174,37 +197,36 @@ class MarkdownPreviewEnhancedView {
                 head: '',
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
-            // load to iframe
-            // background iframe
-            const backgroundIframe = document.createElement('iframe');
-            backgroundIframe.style.width = '100%';
-            backgroundIframe.style.height = '100%';
-            backgroundIframe.style.border = 'none';
-            backgroundIframe.style.display = 'none';
-            this.element.appendChild(backgroundIframe);
-            /*
-            if (this.iframe.src === htmlFilePath) {
-              this.iframe.contentWindow.location.reload()
-            } else {
-              this.iframe.src = htmlFilePath
-            }*/
-            backgroundIframe.src = htmlFilePath;
-            backgroundIframe.onload = () => {
-                // replace this.iframe to backgroundIframe
-                backgroundIframe.style.display = 'block';
-                this.iframe.remove();
-                this.iframe = backgroundIframe;
-                if (!this.engine.isPreviewInPresentationMode) {
-                    this.renderMarkdown();
-                }
-            };
-            // test postMessage
-            /*
-            setTimeout(()=> {
-              this.iframe.contentWindow.postMessage({type: 'update-html'}, 'file://')
-            }, 2000)
-            */
+            // load to webview
+            if (this.webview.getURL() === htmlFilePath) {
+                this.webview.reload();
+            }
+            else {
+                this.webview.loadURL(mume.utility.addFileProtocol(htmlFilePath));
+            }
         });
+    }
+    /**
+     * Webview finished loading content.
+     */
+    webviewStopLoading() {
+        if (!this.engine.isPreviewInPresentationMode) {
+            this.renderMarkdown();
+        }
+    }
+    /**
+     * Received message from webview.
+     * @param event
+     */
+    webviewReceiveMessage(event) {
+        const data = event.args[0].data;
+        const command = data['command'], args = data['args'];
+        if (command in MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS) {
+            MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS[command].apply(this, args);
+        }
+    }
+    webviewConsoleMessage(event) {
+        console.log('webview: ', event.message);
     }
     initEditorEvents() {
         const editorElement = this.editor['getElement'](); // dunno why `getElement` not found.
@@ -254,6 +276,15 @@ class MarkdownPreviewEnhancedView {
             });
         }));
     }
+    initPreviewEvents() {
+        // as esc key doesn't work in atom,
+        // I created command. 
+        this.disposables.add(atom.commands.add(this.element, {
+            'markdown-preview-enhanced:esc-pressed': () => {
+                console.log('esc pressed');
+            }
+        }));
+    }
     /**
      * sync preview to match source.
      */
@@ -295,7 +326,7 @@ class MarkdownPreviewEnhancedView {
         }
         // not presentation mode 
         const text = this.editor.getText();
-        // notice iframe that we started parsing markdown
+        // notice webview that we started parsing markdown
         this.postMessage({ command: 'startParsingMarkdown' });
         this.engine.parseMD(text, { isForPreview: true, useRelativeFilePath: false, hideFrontMatter: false, triggeredBySave })
             .then(({ markdown, html, tocHTML, JSAndCssFiles, yamlConfig }) => {
@@ -370,12 +401,12 @@ class MarkdownPreviewEnhancedView {
         return '';
     }
     /**
-     * Post message to this.iframe
+     * Post message to this.webview
      * @param data
      */
     postMessage(data) {
-        if (this.iframe && this.iframe.contentWindow)
-            this.iframe.contentWindow.postMessage(data, 'file://');
+        if (this.webview && this.webview.send)
+            this.webview.send('_postMessage', data);
     }
     updateConfiguration() {
         if (this.config.singlePreview) {
@@ -390,7 +421,7 @@ class MarkdownPreviewEnhancedView {
     refreshPreview() {
         if (this.engine) {
             this.engine.clearCaches();
-            // restart iframe 
+            // restart webview 
             this.loadPreview();
         }
     }
@@ -622,6 +653,97 @@ class MarkdownPreviewEnhancedView {
         this._destroyCB = cb;
     }
 }
+MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
+    'webviewFinishLoading': function (sourceUri) {
+        /**
+         * This event does nothing now, because the preview backgroundIframe
+         * `onload` function does this.
+         */
+        // const preview = getPreviewForEditor(sourceUri)
+        // if (preview) preview.renderMarkdown()
+    },
+    'refreshPreview': function (sourceUri) {
+        this.refreshPreview();
+    },
+    'revealLine': function (sourceUri, line) {
+        this.scrollToBufferPosition(line);
+    },
+    'insertImageUrl': function (sourceUri, imageUrl) {
+        if (this.editor) {
+            this.editor.insertText(`![enter image description here](${imageUrl})`);
+        }
+    },
+    'pasteImageFile': function (sourceUri, imageUrl) {
+        this.pasteImageFile(imageUrl);
+    },
+    'uploadImageFile': function (sourceUri, imageUrl, imageUploader) {
+        this.uploadImageFile(imageUrl, imageUploader);
+    },
+    'openInBrowser': function (sourceUri) {
+        this.openInBrowser();
+    },
+    'htmlExport': function (sourceUri, offline) {
+        this.htmlExport(offline);
+    },
+    'phantomjsExport': function (sourceUri, fileType) {
+        this.phantomjsExport(fileType);
+    },
+    'princeExport': function (sourceUri) {
+        this.princeExport();
+    },
+    'eBookExport': function (sourceUri, fileType) {
+        this.eBookExport(fileType);
+    },
+    'pandocExport': function (sourceUri) {
+        this.pandocExport();
+    },
+    'markdownExport': function (sourceUri) {
+        this.markdownExport();
+    },
+    'cacheCodeChunkResult': function (sourceUri, id, result) {
+        this.cacheCodeChunkResult(id, result);
+    },
+    'runCodeChunk': function (sourceUri, codeChunkId) {
+        this.runCodeChunk(codeChunkId);
+    },
+    'runAllCodeChunks': function (sourceUri) {
+        this.runAllCodeChunks();
+    },
+    'clickTagA': function (sourceUri, href) {
+        href = decodeURIComponent(href);
+        if (['.pdf', '.xls', '.xlsx', '.doc', '.ppt', '.docx', '.pptx'].indexOf(path.extname(href)) >= 0) {
+            mume.utility.openFile(href);
+        }
+        else if (href.match(/^file\:\/\//)) {
+            // openFilePath = href.slice(8) # remove protocal
+            let openFilePath = mume.utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')); // remove #anchor and ?params...
+            openFilePath = decodeURI(openFilePath);
+            atom.workspace.open(mume.utility.removeFileProtocol(openFilePath));
+        }
+        else {
+            mume.utility.openFile(href);
+        }
+    },
+    'clickTaskListCheckbox': function (sourceUri, dataLine) {
+        const editor = this.editor;
+        if (!editor)
+            return;
+        const buffer = editor.buffer;
+        if (!buffer)
+            return;
+        let line = buffer.lines[dataLine];
+        if (line.match(/\[ \]/)) {
+            line = line.replace('[ ]', '[x]');
+        }
+        else {
+            line = line.replace(/\[[xX]\]/, '[ ]');
+        }
+        buffer.setTextInRange([[dataLine, 0], [dataLine + 1, 0]], line + '\n');
+    },
+    'setZoomLevel': function (sourceUri, zoomLevel) {
+        this.setZoomLevel(zoomLevel);
+    }
+};
 exports.MarkdownPreviewEnhancedView = MarkdownPreviewEnhancedView;
 function isMarkdownFile(sourcePath) {
     return false;
