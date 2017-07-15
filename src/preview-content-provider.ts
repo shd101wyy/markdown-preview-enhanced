@@ -188,7 +188,7 @@ export class MarkdownPreviewEnhancedView {
         zoomLevel: this.zoomLevel
       },
       head: '', // <base url=""> will cause mermaid not able to render arrow.
-      webviewScript: path.resolve(__dirname, './webview.js')
+      // webviewScript: path.resolve(__dirname, './webview.js') // NVM, use default `mume` webview script.
     })
     await mume.utility.writeFile(htmlFilePath, html, {encoding: 'utf-8'})
 

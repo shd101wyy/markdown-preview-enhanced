@@ -7,7 +7,7 @@ import * as mume from "@shd101wyy/mume"
 const utility = mume.utility
 
 import {MarkdownPreviewEnhancedConfig} from "./config"
-import {MarkdownPreviewEnhancedView} from "./content-provider"
+import {MarkdownPreviewEnhancedView} from "./preview-content-provider"
 
 let subscriptions:CompositeDisposable = null
 let config:MarkdownPreviewEnhancedConfig = null
@@ -221,7 +221,7 @@ const MESSAGE_DISPATCH_EVENTS = {
     const preview = getPreviewForEditor(sourceUri)
     if (preview) preview.runCodeChunk(codeChunkId)
   },
-  'runCodeChunks': function(sourceUri) {
+  'runAllCodeChunks': function(sourceUri) {
     const preview = getPreviewForEditor(sourceUri)
     if (preview) preview.runAllCodeChunks()
   },

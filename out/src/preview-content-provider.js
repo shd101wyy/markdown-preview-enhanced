@@ -172,7 +172,6 @@ class MarkdownPreviewEnhancedView {
                     zoomLevel: this.zoomLevel
                 },
                 head: '',
-                webviewScript: path.resolve(__dirname, './webview.js')
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
             // load to iframe

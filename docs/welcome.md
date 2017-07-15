@@ -1,11 +1,12 @@
 <center>
   <h2 style="border-bottom: none;"> Markdown Preview Enhanced </h2>
-  [![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg)  [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)  
 </center><br>
 
+<!-- anchor -->
+
 @import "https://i.ytimg.com/vi/YgjzquvzTXU/maxresdefault.jpg" {width: 500, style: "position:relative; left: 50%; transform: translateX(-50%);"}
-
-
+<br>
+<br>
 <p align="center">
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>  
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>  
@@ -13,7 +14,11 @@
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/backers">Support this project!</a>
 </p>
 
+<!-- anchor -->
+
 @import "newest.md";
+
+<!-- anchor -->
 
 <center>
 <br><br><br>
