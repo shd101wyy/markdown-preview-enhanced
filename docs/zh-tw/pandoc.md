@@ -7,7 +7,7 @@ Pandoc 的安裝說明可以參考 [這裡](http://pandoc.org/installing.html)�
 ---
 
 ## Pandoc Parser
-默認情況下， **Markdown Preview Enhanced** 使用 [remarkable](https://github.com/jonschlinkert/remarkable) 來轉換 markdown。  
+默認情況下， **Markdown Preview Enhanced** 使用 [markdown-it](https://github.com/markdown-it/markdown-it) 來轉換 markdown。  
 你也可以在插件設置中設置使用 `Pandoc Parser` 來轉換 markdown。      
 
 ![Screen Shot 2017-03-07 at 10.05.25 PM](http://i.imgur.com/NdCJBgR.png)  
