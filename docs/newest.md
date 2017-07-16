@@ -4,12 +4,13 @@
 ## 0.14.2
 * Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.3`
 * Added `latexEngine` and `enableExtendedTableSyntax` config options.
-Now support merging table cells (disabled by default).  
+Now supporting merging table cells (disabled by default. Could be enabled from the settings) [#479](https://github.com/shd101wyy/markdown-preview-enhanced/issues/479), [#133](https://github.com/shd101wyy/markdown-preview-enhanced/issues/133).    
 
 ![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
 
 * Now preview is rendered using electron `webview` instead of `iframe`. Fixed issue [#500](https://github.com/shd101wyy/markdown-preview-enhanced/issues/500).  
 
+* Fixed pandoc export bug on Windows [#496](https://github.com/shd101wyy/markdown-preview-enhanced/issues/496).  
 
 ## 0.14.1
 * Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.2`.  
