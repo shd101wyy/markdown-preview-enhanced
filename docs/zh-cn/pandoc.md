@@ -47,6 +47,18 @@ pandoc_args: ['--toc', '--toc-depth=2']
 你还可以创建你自己的自定义文档：
 * [custom](zh-cn/pandoc-custom.md)
 
+## 保存时自动导出
+添加 front-matter 如下：
+```yaml
+---
+export_on_save:
+  pandoc: true
+---
+```
+这样每次当你保存你的 markdown 文件时，pandoc 将会自动运行。
+
+
+
 ## 文章  
 * [Bibliographies and Citations](zh-cn/pandoc-bibliographies-and-citations.md)
 

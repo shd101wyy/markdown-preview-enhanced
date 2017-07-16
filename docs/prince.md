@@ -38,6 +38,16 @@ html body {
 More information can be found at [prince user guide](https://www.princexml.com/doc/).  
 Especially [page styles](https://www.princexml.com/doc/paged/#page-styles).  
 
+## Export on save
+Add the front-matter like below:  
+```yaml
+---
+export_on_save:
+  prince: true
+---
+```
+So the PDF file will be generated every time you save your markdown source file.  
+
 
 ## Known issues
 * Doesn't work with `KaTeX` and `MathJax`.  

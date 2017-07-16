@@ -11,10 +11,7 @@
 markdown:
   image_dir: /assets
   path: output.md
-  absolute_image_path: true
-
-  front_matter:
-    your_front_matter_here: blablabla
+  ignore_from_front_matter: false
 ---
 ```
 
@@ -24,11 +21,18 @@ markdown:
 **path** `可選`   
 定義了哪裡輸出你的 markdown 文件。如果 **path** 沒有被定義，`filename_.md` 將會被使用。
 
-**absolute_image_path** `可選`   
-定義了是否使用絕對或者相對圖片路徑。默認為 `false`。
+**ignore_from_front_matter** `可選`   
+如果設置為 `true`，那麼 `markdown` 將會從導出的文件中的 front-matter 中剔除。  
 
-**front_matter** `可選`   
-生成的 markdown 文件中保留的 front matter。
+## 保存時自動導出
+添加 front-matter 如下：
+```yaml
+---
+export_on_save:
+  markdown: true
+---
+```
+這樣每次當你保存你的 markdown 文件時，目標 markdown 將會自動被導出。
 
 ## 已知問題
 * `WaveDrom` 無法工作。  

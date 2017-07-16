@@ -38,6 +38,15 @@ html body {
 更多信息請查看 [prince 用戶指南](https://www.princexml.com/doc/)。   
 特別是 [page 樣式](https://www.princexml.com/doc/paged/#page-styles)。    
 
+## 保存時自動導出
+添加 front-matter 如下：  
+```yaml
+---
+export_on_save:
+  prince: true
+---
+```
+這樣每次當你保存你的 markdown 文件時，Prince 將會自動運行生成 PDF 文件。  
 
 ## 已知問題
 * `KaTeX` 和 `MathJax` 無法工作。    

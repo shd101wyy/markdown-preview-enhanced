@@ -11,24 +11,28 @@ You can configure the image directory and output path by front-matter
 markdown:
   image_dir: /assets
   path: output.md
-  absolute_image_path: true
-
-  front_matter:
-    your_front_matter_here: blablabla
+  ignore_from_front_matter: false
 ---
 ```
 
 **image_dir** `optional`   
-specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image save folder path` in package settings will be used. Default is `/assets`.
+Specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image save folder path` in package settings will be used. Default is `/assets`.
 
 **path** `optional`   
-specifies where you want to output your markdown file. If **path** is not specified, `filename_.md` will be used as destination.
+Specifies where you want to output your markdown file. If **path** is not specified, `filename_.md` will be used as destination.
 
-**absolute_image_path** `optional`   
-determines whether to use absolute or relative image path. Default is `false`.
+**ignore_from_front_matter** `optional`   
+If set to `true`, then the `markdown` field will be removed from the front-matter.  
 
-**front_matter** `optional`   
-the front matter that you want to keep after export.
+## Export on save
+Add the front-matter like below:  
+```yaml
+---
+export_on_save:
+  markdown: true
+---
+```
+So the markdown file will be generated every time you save your markdown source file.  
 
 ## Known issues
 * `WaveDrom` doesn't work yet.

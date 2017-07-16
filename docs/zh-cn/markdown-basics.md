@@ -162,12 +162,27 @@ Content from cell 1 | Content from cell 2
 Content in the first column | Content in the second column
 ```
 
+## 扩展的语法
+### 表格  
+![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
+
+### 上标
+```markdown
+30^th^
+```
+
+### 下标
+```markdown
+H~2~O
+```
+
 ### 脚注
 ```markdown
 Content [^1]
 
 [^1]: Hi! This is a footnote
 ```
+
 
 ## References
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
