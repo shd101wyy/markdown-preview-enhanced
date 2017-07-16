@@ -47,6 +47,17 @@ Click the link below to see the document format that you want to export.
 You can also define your own custom document:  
 * [custom](pandoc-custom.md)
 
+## Export on save
+Add the front-matter like below:  
+```yaml
+---
+export_on_save:
+  pandoc: true
+---
+```
+So pandoc will run every time you save your markdown source file.  
+
+
 ## Articles  
 * [Bibliographies and Citations](pandoc-bibliographies-and-citations.md)
 

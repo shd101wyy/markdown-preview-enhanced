@@ -211,6 +211,22 @@ ebook:
 ```  
 你可以在 [ebook-convert 手冊](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) 中找到一系列的參數。  
 
+## 保存時自動導出
+Add the front-matter like below:  
+```yaml
+---
+export_on_save:
+  ebook: true
+  // or
+  ebook: "epub"
+  ebook: "pdf"
+  ebook: "mobi"
+  ebook: "html"
+  ebook: ["pdf", ...]
+---
+```
+這樣當你保存你的 markdown 文件時，電子書將會被自動導出。  
+
 
 ## 已知問題 & 局限
 * 這個特性還在開發中。  

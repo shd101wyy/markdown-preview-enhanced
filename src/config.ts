@@ -30,6 +30,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public pandocPath: string;
   public pandocMarkdownFlavor: string;
   public pandocArguments: string[];
+  public latexEngine: string;
 
   /*
    * Extra config for mpe
@@ -80,6 +81,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.pandocPath = atom.config.get('markdown-preview-enhanced.pandocPath')
     this.pandocMarkdownFlavor = atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor')
     this.pandocArguments = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)=> x.trim()).filter((x)=>x.length) || []
+    this.latexEngine = atom.config.get('markdown-preview-enhanced.latexEngine')
 
     /*
      * Extra configs for mpe
@@ -197,6 +199,10 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
         this.pandocArguments = newValue.split(',').map((x)=> x.trim()).filter((x)=>x.length) || []
         callback()
       }),
+      atom.config.onDidChange('markdown-preview-enhanced.latexEngine', ({newValue})=> {
+        this.latexEngine = newValue
+        // callback()
+      }), 
 
       atom.config.onDidChange('markdown-preview-enhanced.fileExtension', ({newValue})=> {
         this.fileExtension = newValue.split(',').map((x)=> x.trim()).filter((x)=>x.length) || []

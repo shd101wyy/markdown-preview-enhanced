@@ -63,3 +63,18 @@ phantomjs:
 ```
 
 查看 [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) 了解更多信息。   
+
+## 保存時自動導出
+添加 front-matter 如下：  
+```yaml
+---
+export_on_save:
+  phantomjs: true
+  // or
+  phantomjs: "pdf"
+  phantomjs: "jpeg"
+  phantomjs: "png"
+  phantomjs: ["pdf", "png", ...]
+---
+```
+這樣每次當你保存你的 markdown 文件時，PhantomJS  將會自動運行。

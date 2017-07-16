@@ -67,13 +67,6 @@ export class MarkdownPreviewEnhancedView {
       event.preventDefault()
       event.stopPropagation()
     }
-
-    // esc key
-    this.element.addEventListener('keydown', (event)=> {
-      if (event.which === 27) { // esc key
-        this.postMessage({command: 'escPressed'})
-      }
-    })
     
     // Webview for markdown preview.
     // Please note that the webview will load 
@@ -90,6 +83,8 @@ export class MarkdownPreviewEnhancedView {
     this.webview.addEventListener('did-stop-loading', this.webviewStopLoading.bind(this))
     this.webview.addEventListener('ipc-message', this.webviewReceiveMessage.bind(this))
     this.webview.addEventListener('console-message', this.webviewConsoleMessage.bind(this))
+    this.webview.addEventListener('keydown', this.webviewKeyDown.bind(this))
+
     this.element.appendChild(this.webview)
   }
 
@@ -338,6 +333,39 @@ export class MarkdownPreviewEnhancedView {
 
   private webviewConsoleMessage(event) {
     console.log('webview: ', event.message)
+  }
+
+  private webviewKeyDown(event) {
+    let found = false
+    if (event.shiftKey && event.ctrlKey && event.which === 83) { // ctrl+shift+s preview sync source
+      found = true
+      return this.postMessage({command: 'previewSyncSource'})
+    } else if ((event.metaKey || event.ctrlKey)) { // ctrl+c copy 
+      if (event.which === 67) { // [c] copy 
+        found = true
+        this.postMessage({command: 'copy'})
+      } else if (event.which === 187) { // [+] zoom in
+        found = true
+        this.postMessage({command: 'zommIn'})
+      } else if (event.which === 189) { // [-] zoom out
+        found = true
+        this.postMessage({command: 'zoomOut'})
+      } else if (event.which === 48) { // [0] reset zoom
+        found = true
+        this.postMessage({command: 'resetZoom'})
+      } else if (event.which === 38) { // [ArrowUp] scroll to the most top
+        found = true
+        this.postMessage({command: 'scrollPreviewToTop'})
+      } 
+    } else if (event.which === 27) { // [esc] toggle sidebar toc
+      found = true
+      this.postMessage({command: 'escPressed'})
+    }
+
+    if (found) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
   }
 
   private initEditorEvents() {

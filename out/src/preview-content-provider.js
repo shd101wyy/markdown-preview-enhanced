@@ -60,12 +60,6 @@ class MarkdownPreviewEnhancedView {
             event.preventDefault();
             event.stopPropagation();
         };
-        // esc key
-        this.element.addEventListener('keydown', (event) => {
-            if (event.which === 27) {
-                this.postMessage({ command: 'escPressed' });
-            }
-        });
         // Webview for markdown preview.
         // Please note that the webview will load 
         // the controller script at:
@@ -79,6 +73,7 @@ class MarkdownPreviewEnhancedView {
         this.webview.addEventListener('did-stop-loading', this.webviewStopLoading.bind(this));
         this.webview.addEventListener('ipc-message', this.webviewReceiveMessage.bind(this));
         this.webview.addEventListener('console-message', this.webviewConsoleMessage.bind(this));
+        this.webview.addEventListener('keydown', this.webviewKeyDown.bind(this));
         this.element.appendChild(this.webview);
     }
     getURI() {
@@ -227,6 +222,43 @@ class MarkdownPreviewEnhancedView {
     }
     webviewConsoleMessage(event) {
         console.log('webview: ', event.message);
+    }
+    webviewKeyDown(event) {
+        let found = false;
+        if (event.shiftKey && event.ctrlKey && event.which === 83) {
+            found = true;
+            return this.postMessage({ command: 'previewSyncSource' });
+        }
+        else if ((event.metaKey || event.ctrlKey)) {
+            if (event.which === 67) {
+                found = true;
+                this.postMessage({ command: 'copy' });
+            }
+            else if (event.which === 187) {
+                found = true;
+                this.postMessage({ command: 'zommIn' });
+            }
+            else if (event.which === 189) {
+                found = true;
+                this.postMessage({ command: 'zoomOut' });
+            }
+            else if (event.which === 48) {
+                found = true;
+                this.postMessage({ command: 'resetZoom' });
+            }
+            else if (event.which === 38) {
+                found = true;
+                this.postMessage({ command: 'scrollPreviewToTop' });
+            }
+        }
+        else if (event.which === 27) {
+            found = true;
+            this.postMessage({ command: 'escPressed' });
+        }
+        if (found) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
     initEditorEvents() {
         const editorElement = this.editor['getElement'](); // dunno why `getElement` not found.

@@ -63,3 +63,19 @@ phantomjs:
 ```
 
 Check [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) for more information.  
+
+
+## Export on save
+Add the front-matter like below:  
+```yaml
+---
+export_on_save:
+  phantomjs: true
+  // or
+  phantomjs: "pdf"
+  phantomjs: "jpeg"
+  phantomjs: "png"
+  phantomjs: ["pdf", "png", ...]
+---
+```
+So the files will be generated every time you save your markdown source file.  
