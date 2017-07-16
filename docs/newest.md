@@ -1,6 +1,16 @@
 ## Anouncement
 [Markdown Preview Enhanced for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) is now available! Cheeeers!
 
+## 0.14.2
+* Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.3`
+* Added `latexEngine` and `enableExtendedTableSyntax` config options.
+Now support merging table cells (disabled by default).  
+
+![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
+
+* Now preview is rendered using electron `webview` instead of `iframe`. Fixed issue [#500](https://github.com/shd101wyy/markdown-preview-enhanced/issues/500).  
+
+
 ## 0.14.1
 * Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.2`.  
     * Switched the default markdown parser from `remarkable` to `markdown-it`.  
