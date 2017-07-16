@@ -179,6 +179,13 @@ export const configSchema = {
     "description": "Enter the pandoc markdown flavor you want",
     "order": 38
   },
+  "latexEngine": {
+    "type": "string",
+    "default": "pdflatex",
+    "title": "LaTeX Engine",
+    "description": "Default LaTeX engine used for Pandoc export and LaTeX code chunk.",
+    "order": 39
+  },
   "phantomPath": {
     "title": "PhantomJS Options: Path",
     "type": "string",
