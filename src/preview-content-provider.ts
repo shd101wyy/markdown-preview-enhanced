@@ -137,7 +137,7 @@ export class MarkdownPreviewEnhancedView {
       atom.workspace.open(this.uri, {
         split: "right",
         activatePane: false,
-        activateItem: true,
+        activateItem: true, // <= this has to be true otherwise the webview will throw an error.
         searchAllPanes: false,
         initialLine: 0,
         initialColumn: 0,
@@ -308,7 +308,15 @@ export class MarkdownPreviewEnhancedView {
 			// openFilePath = href.slice(8) # remove protocal
 			let openFilePath = mume.utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')) // remove #anchor and ?params...
       openFilePath = decodeURI(openFilePath)
-      atom.workspace.open(mume.utility.removeFileProtocol(openFilePath))
+      atom.workspace.open(mume.utility.removeFileProtocol(openFilePath), {
+        activateItem: true, 
+        activatePane: true,
+        initialLine: 0,
+        initialColumn: 0,
+        split: null,
+        pending: false,
+        searchAllPanes: true
+      })
 		} else {
 			mume.utility.openFile(href)
 		}

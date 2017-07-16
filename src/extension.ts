@@ -210,8 +210,9 @@ mume.init() // init mume package
         // if the markdown file is opened on the right pane, then move it to the left pane. Issue #25
         if (pane != panes[0]) {
           pane.moveItemToPane(event.item, panes[0], 0) // move md to left pane.
-          panes[0]['setActiveItem'](event.item)
-        }
+        } 
+        panes[0]['setActiveItem'](event.item)
+        panes[0].activate()
 
         const editor = event.item
         startPreview(editor)
