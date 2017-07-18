@@ -6,14 +6,14 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `!
 
 
 ## $29+
-empty
+* [蓝牙彪](https://www.zhihu.com/people/bluetoothbiao/answers)
 
 ---
 
 ## $5+
 * [Tony Ennis](https://twitter.com/tonyennis)  
 * [Greg Slepak](https://twitter.com/taoeffect)
-* Eric M Fink
+* [Eric M Fink](https://github.com/LuckyJimJD)  
 
 ---
 

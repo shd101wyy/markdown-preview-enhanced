@@ -64,6 +64,22 @@ phantomjs:
 
 查看 [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) 了解更多信息。   
 
+## 自定義 CSS
+<kbd>cmd-shift-p</kbd> 然後運行 `Markdown Preview Enhanced: Customize Css` 命令打開 `style.less` 文件後，添加並修改以下的代碼：    
+```less
+html body {
+  // custom phantomjs png/jpeg export style
+  &.phantomjs-image {
+    // 你的代碼
+  }
+
+  //custom phantomjs pdf export style
+  &.phantomjs-pdf {
+    // 你的代碼
+  }
+}
+```
+
 ## 保存時自動導出
 添加 front-matter 如下：  
 ```yaml

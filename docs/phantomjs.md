@@ -64,6 +64,21 @@ phantomjs:
 
 Check [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) for more information.  
 
+## Customize CSS
+<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:  
+```less
+html body {
+  // custom phantomjs png/jpeg export style
+  &.phantomjs-image {
+    // your code here
+  }
+
+  //custom phantomjs pdf export style
+  &.phantomjs-pdf {
+    // your code here
+  }
+}
+```
 
 ## Export on save
 Add the front-matter like below:  

@@ -14,7 +14,7 @@ Right click at the preview, then choose `PDF (prince)`.
 ![screen shot 2017-07-14 at 1 44 23 am](https://user-images.githubusercontent.com/1908863/28201287-fb5ea8d0-6835-11e7-9bdb-2afb458ee5cc.png)
 
 ## Customize CSS
-<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command or just open `style.less` file and add the following lines:  
+<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:  
 
 ```less
 html body {
