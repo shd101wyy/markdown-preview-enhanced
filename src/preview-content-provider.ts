@@ -620,7 +620,7 @@ export class MarkdownPreviewEnhancedView {
 
   public phantomjsExport(fileType='pdf') {
     atom.notifications.addInfo('Your document is being prepared')
-    this.engine.phantomjsExport({fileType})
+    this.engine.phantomjsExport({fileType, openFileAfterGeneration: true})
     .then((dest)=> {
       if (dest.endsWith('?print-pdf')) { // presentation pdf
         atom.notifications.addSuccess(`Please copy and open the following link in Chrome, then print as PDF`, {
@@ -638,7 +638,7 @@ export class MarkdownPreviewEnhancedView {
 
   public princeExport() {
     atom.notifications.addInfo('Your document is being prepared')
-    this.engine.princeExport({})
+    this.engine.princeExport({openFileAfterGeneration: true})
     .then((dest)=> {
       if (dest.endsWith('?print-pdf')) { // presentation pdf
         atom.notifications.addSuccess(`Please copy and open the following link in Chrome, then print as PDF`, {
@@ -667,7 +667,7 @@ export class MarkdownPreviewEnhancedView {
 
   public pandocExport() {
     atom.notifications.addInfo('Your document is being prepared')
-    this.engine.pandocExport({})
+    this.engine.pandocExport({openFileAfterGeneration: true})
     .then((dest)=> {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })
@@ -772,7 +772,8 @@ export class MarkdownPreviewEnhancedView {
 
   private replaceHint(bufferRow:number, hint:string, withStr:string):boolean {
     if (!this.editor) return false
-    let textLine = this.editor.buffer.lines[bufferRow]
+    const lines = this.editor.buffer.getLines()
+    let textLine = lines[bufferRow] || ''
     if (textLine.indexOf(hint) >= 0) {
       this.editor.buffer.setTextInRange([
         [bufferRow, 0],

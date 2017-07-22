@@ -1,6 +1,14 @@
 ## Anouncement
 [Markdown Preview Enhanced for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) is now available! Cheeeers!
 
+## 0.14.3
+* Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.4`.
+  * Fixed header id bug [#516](https://github.com/shd101wyy/markdown-preview-enhanced/issues/516).  
+  * Fixed `enableExtendedTableSyntax` bug.  
+  * Fixed `MathJax` init error [#28](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/28), [#504](https://github.com/shd101wyy/markdown-preview-enhanced/issues/504).    
+  * Fixed plain text code block font size issue.  
+  * Fixed `transformMarkdown` function `Maximum call stack size exceeded` issue [515](https://github.com/shd101wyy/markdown-preview-enhanced/issues/515), [#517](https://github.com/shd101wyy/markdown-preview-enhanced/issues/517).  
+
 ## 0.14.2
 * Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.3`.  
     * Fixed pandoc export bug on Windows.

@@ -14,9 +14,11 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `!
 * [Tony Ennis](https://twitter.com/tonyennis)  
 * [Greg Slepak](https://twitter.com/taoeffect)
 * [Eric M Fink](https://github.com/LuckyJimJD)  
+* yueduz
 
 ---
 
 ## 😀
 * Brian
 * Pablo Di Noto
+* [initialzheng](https://github.com/initialzheng)
