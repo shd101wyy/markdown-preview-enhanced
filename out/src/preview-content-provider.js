@@ -619,7 +619,8 @@ class MarkdownPreviewEnhancedView {
     replaceHint(bufferRow, hint, withStr) {
         if (!this.editor)
             return false;
-        let textLine = this.editor.buffer.lines[bufferRow];
+        const lines = this.editor.buffer.getLines();
+        let textLine = lines[bufferRow] || '';
         if (textLine.indexOf(hint) >= 0) {
             this.editor.buffer.setTextInRange([
                 [bufferRow, 0],

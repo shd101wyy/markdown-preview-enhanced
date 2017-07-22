@@ -392,12 +392,12 @@ function showUploadedImages() {
  */
 function onModifySource(codeChunkData, result, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        function insertResult(i, editor) {
+        function insertResult(i, editor, lines) {
             const lineCount = editor.getLineCount();
             let start = 0;
             // find <!- code_chunk_output --> 
             for (let j = i + 2; j < i + 6 && j < lineCount; j++) {
-                if (editor.buffer.lines[j].startsWith('<!-- code_chunk_output -->')) {
+                if (lines[j].startsWith('<!-- code_chunk_output -->')) {
                     start = j;
                     break;
                 }
@@ -406,7 +406,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 // TODO: modify exited output 
                 let end = start + 1;
                 while (end < lineCount) {
-                    if (editor.buffer.lines[end].startsWith('<!-- /code_chunk_output -->')) {
+                    if (lines[end].startsWith('<!-- /code_chunk_output -->')) {
                         break;
                     }
                     end += 1;
@@ -414,7 +414,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 // if output not changed, then no need to modify editor buffer
                 let r = "";
                 for (let i = start + 2; i < end - 1; i++) {
-                    r += editor.buffer.lines[i] + '\n';
+                    r += lines[i] + '\n';
                 }
                 if (r === result + '\n')
                     return ""; // no need to modify output
@@ -443,18 +443,19 @@ function onModifySource(codeChunkData, result, filePath) {
             if (editor.getPath() === filePath) {
                 let codeChunkOffset = 0, targetCodeChunkOffset = codeChunkData.options['code_chunk_offset'];
                 const lineCount = editor.getLineCount();
+                const lines = editor.buffer.getLines();
                 for (let i = 0; i < lineCount; i++) {
-                    const line = editor.buffer.lines[i];
+                    const line = lines[i]; // editor.buffer.lines[i] will cause error.
                     if (line.match(/^```(.+)\"?cmd\"?\s*\:/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             i = i + 1;
                             while (i < lineCount) {
-                                if (editor.buffer.lines[i].match(/^\`\`\`\s*/)) {
+                                if (lines[i].match(/^\`\`\`\s*/)) {
                                     break;
                                 }
                                 i += 1;
                             }
-                            return insertResult(i, editor);
+                            return insertResult(i, editor, lines);
                         }
                         else {
                             codeChunkOffset++;
@@ -463,7 +464,7 @@ function onModifySource(codeChunkData, result, filePath) {
                     else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*\:/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             // console.log('find code chunk' )
-                            return insertResult(i, editor);
+                            return insertResult(i, editor, lines);
                         }
                         else {
                             codeChunkOffset++;
