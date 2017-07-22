@@ -5,9 +5,6 @@
 **Markdown Preview Enhanced** 是一款為 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 以及 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 編輯器編寫的**超級強大的** Markdown 插件。    
 這款插件意在讓你擁有飄逸的 Markdown 寫作體驗。
 
-[language-gfm-enhanced](https://atom.io/packages/language-gfm-enhanced) 是推薦安裝與 markdown-preview-enhanced 協同工作。  
-
-
 在 [這裡](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言如果你發現了問題或者想要請求新的特性。
 
 ![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
