@@ -38,7 +38,7 @@
 - 以及更多。。。
 
 ## 支持这个项目
-Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source License](LICENSE.md) 下发布的免费开源软件。这个项目的持续开发脱离不了这些可敬的[赞助者们](backers.md)。你也可以使这个项目变的更好，到 [Patreon](https://www.patreon.com/shd101wyy) 或者 [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat) 上来支持我们。谢谢！
+Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source License](LICENSE.md) 下发布的免费开源软件。这个项目的持续开发脱离不了这些可敬的[赞助者们](backers.md)。你也可以使这个项目变的更好，到 [Patreon](https://www.patreon.com/shd101wyy)，[PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal)，或者 [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat) 上来支持我们。谢谢！
 
 ## 帮忙翻译文档
 如果你想要帮忙翻译这个文档到其他的语言, 请在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。      

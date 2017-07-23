@@ -15,6 +15,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `!
 * [Greg Slepak](https://twitter.com/taoeffect)
 * [Eric M Fink](https://github.com/LuckyJimJD)  
 * yueduz
+* K Moses
 
 ---
 
