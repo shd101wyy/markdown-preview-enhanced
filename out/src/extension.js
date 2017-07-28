@@ -396,7 +396,7 @@ function onModifySource(codeChunkData, result, filePath) {
             const lineCount = editor.getLineCount();
             let start = 0;
             // find <!- code_chunk_output --> 
-            for (let j = i + 2; j < i + 6 && j < lineCount; j++) {
+            for (let j = i + 1; j < i + 6 && j < lineCount; j++) {
                 if (lines[j].startsWith('<!-- code_chunk_output -->')) {
                     start = j;
                     break;
@@ -433,7 +433,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 return "";
             }
             else {
-                editor.buffer.insert([i + 1, 0], `\n<!-- code_chunk_output -->\n\n${result}\n\n<!-- /code_chunk_output -->\n`);
+                editor.buffer.insert([i + 1, 0], `<!-- code_chunk_output -->\n\n${result}\n\n<!-- /code_chunk_output -->\n`);
                 return "";
             }
         }
