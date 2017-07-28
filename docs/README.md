@@ -29,7 +29,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - [Compile to GitHub Flavored Markdown](markdown.md)
 - [Customize Preview CSS](customize-css.md)  
 - [TOC](toc.md) generation  
-- [Flowchart / Sequence diagram and many other kinds of graphs](graphs.md)
+- [Flowchart / Sequence diagram and many other kinds of graphs](diagrams.md)
 - [Embed LaTeX, render TikZ, Chemfig etc](code-chunk.md?id=latex)
 - Task List *(Github Flavored)*  
 - Image Helper

@@ -40,6 +40,7 @@ class MarkdownPreviewEnhancedConfig {
         this.pandocMarkdownFlavor = atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor');
         this.pandocArguments = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x) => x.trim()).filter((x) => x.length) || [];
         this.latexEngine = atom.config.get('markdown-preview-enhanced.latexEngine');
+        this.enableScriptExecution = atom.config.get('markdown-preview-enhanced.enableScriptExecution');
         /*
          * Extra configs for mpe
          */
@@ -138,6 +139,9 @@ class MarkdownPreviewEnhancedConfig {
         }), atom.config.onDidChange('markdown-preview-enhanced.latexEngine', ({ newValue }) => {
             this.latexEngine = newValue;
             // callback()
+        }), atom.config.onDidChange('markdown-preview-enhanced.enableScriptExecution', ({ newValue }) => {
+            this.enableScriptExecution = newValue;
+            callback();
         }), atom.config.onDidChange('markdown-preview-enhanced.fileExtension', ({ newValue }) => {
             this.fileExtension = newValue.split(',').map((x) => x.trim()).filter((x) => x.length) || [];
             callback();

@@ -11,18 +11,22 @@ You can configure the image directory and output path by front-matter
 markdown:
   image_dir: /assets
   path: output.md
-  ignore_from_front_matter: false
+  ignore_from_front_matter: true
+  absolute_image_path: false
 ---
 ```
 
 **image_dir** `optional`   
-Specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image save folder path` in package settings will be used. Default is `/assets`.
+Specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image folder path` in package settings will be used. Default is `/assets`.
 
 **path** `optional`   
 Specifies where you want to output your markdown file. If **path** is not specified, `filename_.md` will be used as destination.
 
 **ignore_from_front_matter** `optional`   
-If set to `true`, then the `markdown` field will be removed from the front-matter.  
+If set to `false`, then the `markdown` field will be included in the front-matter.  
+
+**absolute_image_path** `optional`    
+Determines whether to use absolute or relative image path.  
 
 ## Export on save
 Add the front-matter like below:  

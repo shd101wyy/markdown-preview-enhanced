@@ -282,7 +282,7 @@ function customizeCSS() {
 function createTOC() {
     const editor = atom.workspace.getActiveTextEditor();
     if (editor && editor.buffer)
-        editor.insertText('\n<!-- @import "[TOC]" {cmd:"toc", depthFrom:1, depthTo:6, orderedList:false} -->\n');
+        editor.insertText('\n<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->\n');
 }
 function toggleScrollSync() {
     const flag = atom.config.get('markdown-preview-enhanced.scrollSync');
@@ -396,7 +396,7 @@ function onModifySource(codeChunkData, result, filePath) {
             const lineCount = editor.getLineCount();
             let start = 0;
             // find <!- code_chunk_output --> 
-            for (let j = i + 2; j < i + 6 && j < lineCount; j++) {
+            for (let j = i + 1; j < i + 6 && j < lineCount; j++) {
                 if (lines[j].startsWith('<!-- code_chunk_output -->')) {
                     start = j;
                     break;
@@ -433,7 +433,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 return "";
             }
             else {
-                editor.buffer.insert([i + 1, 0], `\n<!-- code_chunk_output -->\n\n${result}\n\n<!-- /code_chunk_output -->\n`);
+                editor.buffer.insert([i + 1, 0], `<!-- code_chunk_output -->\n\n${result}\n\n<!-- /code_chunk_output -->\n`);
                 return "";
             }
         }
@@ -446,7 +446,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 const lines = editor.buffer.getLines();
                 for (let i = 0; i < lineCount; i++) {
                     const line = lines[i]; // editor.buffer.lines[i] will cause error.
-                    if (line.match(/^```(.+)\"?cmd\"?\s*\:/)) {
+                    if (line.match(/^```(.+)\"?cmd\"?\s*[:=]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             i = i + 1;
                             while (i < lineCount) {
@@ -461,7 +461,7 @@ function onModifySource(codeChunkData, result, filePath) {
                             codeChunkOffset++;
                         }
                     }
-                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*\:/)) {
+                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*[:=]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             // console.log('find code chunk' )
                             return insertResult(i, editor, lines);

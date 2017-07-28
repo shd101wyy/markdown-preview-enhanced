@@ -151,7 +151,7 @@ presentation:
 ## Customize Slide Style
 You can add `id` and `class` to a specific slide like this:   
 ```markdown
-<!-- slide id:"my-id" class:"my-class1 my-class2" -->
+<!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
 Or if you only want to customize `nth` slide, modify your `less` file like this:   

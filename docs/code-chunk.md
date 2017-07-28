@@ -4,11 +4,11 @@
 
 **Markdown Preview Enhanced** allows you to render code output into documents.     
 
-    ```bash {cmd:true}
+    ```bash {cmd=true}
     ls .
     ```
 
-    ```javascript {cmd:"node"}
+    ```javascript {cmd="node"}
     const date = Date.now()
     console.log(date.toString())
     ```   
@@ -20,7 +20,7 @@ execute single code chunk where your cursor is at.
 execute all code chunks.    
 
 ## Format
-You can configure code chunk options in format of <code>```lang {opt1:value1, opt2:value2, ...}</code>    
+You can configure code chunk options in format of <code>```lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>    
 
 **lang**  
 The grammar that the code block should highlight.  
@@ -33,7 +33,7 @@ If `cmd` is not provided, then `lang` will be regarded as command.
 
 eg:  
 
-		```python {cmd:"/usr/local/bin/python3"}
+		```python {cmd="/usr/local/bin/python3"}
 		print("This will run python3 program")
 		```
 
@@ -50,7 +50,7 @@ Defines how to render code output.
 
 eg:     
 
-    ```gnuplot {cmd:true, output:"html"}
+    ```gnuplot {cmd=true output="html"}
     set terminal svg
     set title "Simple Plots" font ",20"
     set key left box
@@ -60,17 +60,17 @@ eg:
     plot [-10:10] sin(x),atan(x),cos(atan(x))
     ```
 
-![screen shot 2017-06-20 at 8 40 07 am](https://user-images.githubusercontent.com/1908863/27336074-1cd3a88a-5594-11e7-857f-b8c598853433.png)
+![screen shot 2017-07-28 at 7 14 24 am](https://user-images.githubusercontent.com/1908863/28716734-66142a5e-7364-11e7-83dc-a66df61971dc.png)
 
 **args**  
 args that append to command. eg:    
 
-    ```python {cmd:true, args:["-v"]}
+    ```python {cmd=true args=["-v"]}
     print("Verbose will be printed first")
     ```
 
-    ```erd {cmd:true, args:["-i", "$input_file", "-f", "svg"], output:"html"}
-		# output svg format and append as html result.
+    ```erd {cmd=true args=["-i", "$input_file", "-f", "svg"] output="html"}
+	  # output svg format and append as html result.
     ```
 
 **stdin**  
@@ -80,29 +80,29 @@ If `stdin` is set to true, then the code will be passed as stdin instead of as f
 `hide` will hide code chunk but only leave the output visible. default: `false`  
 eg:
 
-    ```python {hide:true}
+    ```python {hide=true}
     print('you can see this output message, but not this code')
     ```
 
 **continue**  
-If set `continue: true`, then this code chunk will continue from the last code chunk.  
-If set `continue: id`, then this code chunk will continue from the code chunk of id.  
+If set `continue=true`, then this code chunk will continue from the last code chunk.  
+If set `continue=id`, then this code chunk will continue from the code chunk of id.  
 eg:    
 
-	```python {cmd:true, id:"izdlk700"}
-	x = 1
-	```
+  	```python {cmd=true id="izdlk700"}
+  	x = 1
+  	```
 
-	```python {cmd:true, id:"izdlkdim"}
-	x = 2
-	```
+  	```python {cmd=true id="izdlkdim"}
+  	x = 2
+  	```
 
-	```python {cmd:true, continue:"izdlk700", id:"izdlkhso"}
-	print(x) # will print 1
-	```
+  	```python {cmd=true continue="izdlk700" id="izdlkhso"}
+  	print(x) # will print 1
+  	```
 
 **class**  
-If set `class:"class1 class2"`, then `class1 class2` will be add to the code chunk.  
+If set `class="class1 class2"`, then `class1 class2` will be add to the code chunk.  
 * `line-numbers` class will show line numbers to code chunk.
 
 **element**  
@@ -125,21 +125,21 @@ By default, it is appended at the very end of program arguments.
 However, you can set the position of `input_file` in your `args` option by `$input_file` macro. eg:  
 
 
-    ```program {cmd:true, args:["-i", "$input_file", "-o", "./output.png"]}
+    ```program {cmd=true args=["-i", "$input_file", "-o", "./output.png"]}
     ...your code here
     ```
 
 
 ## Matplotlib  
-If set `matplotlib: true`, then the python code chunk will plot graphs inline in the preview.    
+If set `matplotlib=true`, then the python code chunk will plot graphs inline in the preview.    
 eg:    
 
-	```python {cmd:true, matplotlib:true}
+	```python {cmd=true matplotlib=true}
 	import matplotlib.pyplot as plt
 	plt.plot([1,2,3, 4])
 	plt.show() # show figure
 	```
-![screen shot 2017-06-20 at 8 44 25 am](https://user-images.githubusercontent.com/1908863/27336286-acc41d8a-5594-11e7-9a10-ed7a6fc41f6c.png)
+![screen shot 2017-07-28 at 7 12 50 am](https://user-images.githubusercontent.com/1908863/28716704-4009d43a-7364-11e7-9e46-889f961e5afd.png)
 
 ## LaTeX
 Markdown Preview Enhanced also supports `LaTeX` compilation.  
@@ -147,19 +147,19 @@ Before using this feature, you need to have [pdf2svg](extra.md?id=install-svg2pd
 Then you can simply write LaTeX in code chunk like this:  
 
 
-    ```latex {cmd:true}
+    ```latex {cmd=true}
     \documentclass{standalone}
     \begin{document}
        Hello world!
     \end{document}
     ```
 
-![screen shot 2017-07-14 at 11 25 09 am](https://user-images.githubusercontent.com/1908863/28220981-23dd1b9c-6887-11e7-8e0f-1a0fd64f54cd.png)
+![screen shot 2017-07-28 at 7 15 16 am](https://user-images.githubusercontent.com/1908863/28716762-8686d980-7364-11e7-9669-71138cb2e6e7.png)
 
 
 ### LaTeX output configuration  
 **latex_zoom**  
-If set `latex_zoom:num`, then the result will be scaled `num` times.  
+If set `latex_zoom=num`, then the result will be scaled `num` times.  
 
 **latex_width**  
 The width of result.  
@@ -168,7 +168,7 @@ The width of result.
 The height of result.  
 
 **latex_engine**  
-The latex engine that you used to compile `tex` file. By default `pdflatex` is used. 
+The latex engine that you used to compile `tex` file. By default `pdflatex` is used.
 
 
 ### TikZ example  
@@ -187,7 +187,7 @@ For example:
 ## Demo
 This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.   
 
-    ```erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}
+    ```erd {cmd=true output="html" args=["-i", "$input_file" "-f", "svg"]}
 
     [Person]
     *name
@@ -204,9 +204,9 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
     Person *--1 Location
     ```
 
-`erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}`  
+`erd {cmd=true output="html" args=["-i", "$input_file", "-f", "svg"]}`  
 * `erd` the program that we are using. (*you need to have the program installed first*)  
-* `output:"html"` we will append the running result as `html`.  
+* `output="html"` we will append the running result as `html`.  
 * `args` field shows the arguments that we will use.  
 
 Then we can click the `run` button at the preview to run our code.  

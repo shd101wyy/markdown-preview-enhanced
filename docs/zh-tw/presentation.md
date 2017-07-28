@@ -151,7 +151,7 @@ presentation:
 ## 自定義幻燈片樣式  
 你可以添加 `id` 以及 `class` 到一個特定的幻燈片：   
 ```markdown
-<!-- slide id:"my-id" class:"my-class1 my-class2" -->
+<!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
 或者你也可以自定義第 `nth` 個幻燈片，編寫你的 `less` 如下：

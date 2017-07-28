@@ -13,6 +13,6 @@ KaTeX 拥有比 MathJax 更快的性能，但是它却少了很多 MathJax 拥�
 
 你也可以通过 <kbd>cmd-shift-p</kbd> 然后选择 `Markdown Preview Enhanced: Open Mathjax config` 命令来打开 Mathjax 配置文件。  
 
-[➔ 图像](zh-cn/graphs.md)
+[➔ 图像](zh-cn/diagrams.md)
 
 

@@ -39,7 +39,7 @@ $$ \chi(\lambda) = \left| \begin{array}{ccc}
 -g & -h & \lambda - i \end{array} \right|
 $$
 
-## Graphs
+## Diagrams
 ```@mermaid
 graph TD;
     A-->B;

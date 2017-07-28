@@ -8,7 +8,7 @@
 - Writing Markdown
   - [Markdown Basics](markdown-basics.md)
   - [Math Typesetting](math.md)
-  - [Graphs](graphs.md)  
+  - [Diagrams](diagrams.md)  
   - [TOC](toc.md)
   - [File Imports](file-imports.md)
   - [Code Chunk](code-chunk.md)  
