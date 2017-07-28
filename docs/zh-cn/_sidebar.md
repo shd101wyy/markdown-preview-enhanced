@@ -8,7 +8,7 @@
 - 编写 Markdown
   - [Markdown 基本要素](zh-cn/markdown-basics.md)
   - [数学](zh-cn/math.md)
-  - [图像](zh-cn/graphs.md)  
+  - [图像](zh-cn/diagrams.md)  
   - [TOC](zh-cn/toc.md)
   - [导入文件](zh-cn/file-imports.md)
   - [Code Chunk](zh-cn/code-chunk.md)  

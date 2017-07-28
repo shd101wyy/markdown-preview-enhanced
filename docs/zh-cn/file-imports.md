@@ -33,7 +33,7 @@
 
 ## 设置图片
 ```markdown  
-@import "test.png" {width:"300px", height:"200px", title:"图片的标题", alt:"我的 alt"}
+@import "test.png" {width="300px" height="200px" title="图片的标题" alt="我的 alt"}
 ```
 
 ## 引用在线文件
@@ -54,24 +54,26 @@ Markdown Preview Enhanced 支持引用本地或者在线的 PDF 文件。
 
 ### PDF 设置
 * **page_no**  
-显示第 `nth` 页。例如 `{page_no:1}` 将会只显示 PDF 文件的第 1 页。
+显示第 `nth` 页。例如 `{page_no=1}` 将会只显示 PDF 文件的第 1 页。
 * **page_begin**, **page_end**  
-包含的。例如 `{page_begin:2, page_end:4}` 将会显示第 2，3，4 页。
+包含的。例如 `{page_begin=2 page_end=4}` 将会显示第 2，3，4 页。
 
 ## 强制渲染为代码块  
 ```markdown
-@import "test.puml" {code_block:true, class:"line-numbers"}
-@import "test.py" {class:"line-numbers"}
+@import "test.puml" {code_block=true class="line-numbers"}
+@import "test.py" {class="line-numbers"}
+```
+
+## As（作为）代码块
+```markdown
+@import "test.json" {as="vega-lite"}
 ```
 
 ## 引用文件作为 Code Chunk  
 ```markdown
-@import "test.py" {cmd:"python3"}
+@import "test.py" {cmd="python3"}
 ```
 
-## 已知问题
-* 引用文件可能会影响滑动同步。
-* code chunk 可能会有问题。
 
 [➔ Code Chunk](zh-cn/code-chunk.md)
 

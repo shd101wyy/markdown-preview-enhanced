@@ -29,7 +29,7 @@
 - [編譯到 GitHub Flavored Markdown](zh-tw/markdown.md)
 - [自定義預覽 CSS](zh-tw/customize-css.md)  
 - [TOC](zh-tw/toc.md) 生成  
-- [流程圖 / 時序圖 以及各種其他種類的圖形](zh-tw/graphs.md)
+- [流程圖 / 時序圖 以及各種其他種類的圖形](zh-tw/diagrams.md)
 - [嵌入 LaTeX, 渲染 TikZ, Chemfig 等圖形](zh-tw/code-chunk.md?id=latex)
 - Task List *(Github Flavored)*  
 - 圖片助手

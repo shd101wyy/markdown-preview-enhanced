@@ -1,6 +1,6 @@
 # 图像  
 
-**Markdown Preview Enhanced** 内部支持 `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz` 图像渲染。    
+**Markdown Preview Enhanced** 内部支持 `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`，`Vega & Vega-lite`，`Ditaa` 图像渲染。    
 你也可以通过使用 [Code Chunk](zh-cn/code-chunk.md) 来渲染 `TikZ`, `Python Matplotlib`, `Plotly` 等图像。  
 
 ## Mermaid
@@ -45,6 +45,47 @@ Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 来
 
 ![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
 
+## Vega 和 Vega-lite
+Markdown Preview Enhanced 支持 [vega](https://vega.github.io/vega/) 以及 [vega-lite](https://vega.github.io/vega-lite/) 的**静态**图像.    
+* `vega` 代码块中的内容将会被 [vega](https://vega.github.io/vega/) 渲染。  
+* `vega-lite` 代码块中的内容将会被  [vega-lite](https://vega.github.io/vega-lite/) 渲染。    
+* `JSON` 以及 `YAML` 的输入是支持的。  
+
+![screen shot 2017-07-28 at 7 59 58 am](https://user-images.githubusercontent.com/1908863/28718265-d023e1c2-736a-11e7-8678-a29704f3a23c.png)
+
+你也可以 [@import](zh-cn/file-imports.md) 一个 `JSON` 或者 `YAML` 文件作为 `vega` 图像，例如：  
+
+```markdown
+@import "your_vega_source.json" {as:"vega"}
+@import "your_vega_lite_source.json" {as:"vega-lite"}
+```
+
+## Ditaa
+Markdown Preview Enhanced 支持 [ditaa](https://github.com/stathissideris/ditaa)。  
+
+(**Java** 是需要先被安装好的)       
+
+`ditaa` 整合于 [code chunk](zh-cn/code-chunk.md), for example:  
+<pre>
+  ```ditaa {cmd=true args=["-E"]}
+  +--------+   +-------+    +-------+
+  |        | --+ ditaa +--> |       |
+  |  Text  |   +-------+    |diagram|
+  |Document|   |!magic!|    |       |
+  |     {d}|   |       |    |       |
+  +---+----+   +-------+    +-------+
+      :                         ^
+      |       Lots of work      |
+      +-------------------------+
+  ```
+</pre>
+
+> <kbd>shift-enter</kbd> 来运行 code chunk。  
+> 设置 `{hide=true}` 来隐藏代码块。  
+> 设置 `{run_on_save=true}` 启动当文件保存时，渲染 ditaa 图像。   
+
+![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
+
 ---  
 
 如果你只是想要显示代码块而不想画图，则只要在后面添加 `{code_block: true}` 即可：     
@@ -52,5 +93,17 @@ Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 来
     ```mermaid {code_block: true}
     // 你的 mermaid 代码
     ```
+
+---
+
+当你保存你的 markdown 文件到 [GFM Markdown](zh-cn/markdown.md) 时， 所有图像将会被保存为 png 文件到 `imageFolderPath` 文件夹。     
+你可以设置导出文件的文件名 `{filename="图片.png"}`。    
+
+例如：
+
+    ```mermaid {filename="我的mermaid.png"}
+    ...
+    ```
+
 
 [➔ TOC](zh-cn/toc.md)

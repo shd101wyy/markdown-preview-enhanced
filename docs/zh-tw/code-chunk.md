@@ -3,11 +3,11 @@
 
 **Markdown Preview Enhanced** 支持渲染代碼的運行結果。       
 
-    ```bash {cmd:true}
+    ```bash {cmd=true}
     ls .
     ```
 
-    ```javascript {cmd:"node"}
+    ```javascript {cmd="node"}
     const date = Date.now()
     console.log(date.toString())
     ```   
@@ -20,7 +20,7 @@
 
 ## 格式  
 你可以通過以下形式來設置 code chunk ：  
-<code>````lang  {opt1:value1, opt2:value2, ...}</code>    
+<code>````lang  {cmd=你的命令 opt1=value1 opt2=value2 ...}</code>    
 
 **lang**  
 你想要代碼所高亮的語言。
@@ -33,7 +33,7 @@
 
 例如：  
 
-		```python {cmd:"/usr/local/bin/python3"}
+		```python {cmd="/usr/local/bin/python3"}
 		print("這個將會運行 python3 程序")
 		```
 
@@ -50,7 +50,7 @@
 
 例如：
 
-    ```gnuplot {cmd:true, output:"html"}
+    ```gnuplot {cmd=true output="html"}
     set terminal svg
     set title "Simple Plots" font ",20"
     set key left box
@@ -60,17 +60,17 @@
     plot [-10:10] sin(x),atan(x),cos(atan(x))
     ```
 
-  ![screen shot 2017-06-20 at 8 40 07 am](https://user-images.githubusercontent.com/1908863/27336074-1cd3a88a-5594-11e7-857f-b8c598853433.png)
+![screen shot 2017-07-28 at 7 14 24 am](https://user-images.githubusercontent.com/1908863/28716734-66142a5e-7364-11e7-83dc-a66df61971dc.png)
 
 
 **args**  
 需要被添加到命令的 args 。 例如：  
 
-    ```python {cmd:true, args:["-v"]}
+    ```python {cmd=true args=["-v"]}
     print("Verbose will be printed first")
     ```
 
-    ```erd {cmd:true, args:["-i", "$input_file", "-f", "svg"], output:"html"}
+    ```erd {cmd=true args=["-i", "$input_file", "-f", "svg"] output="html"}
     # output svg format and append as html result.
     ```
 
@@ -81,7 +81,7 @@
 `hide` 將會隱藏代碼塊但是會顯示運行結果，默認為 `false`。    
 例如：
 
-    ```python {hide:true}
+    ```python {hide=true}
     print('you can see this output message, but not this code')
     ```
 
@@ -90,20 +90,20 @@
 如果設置`continue: id`，那麼這個 code chunk 從擁有這個 id 的 code chunk 運行。    
 例如：  
 
-    ```python {cmd:true, id:"izdlk700"}
+    ```python {cmd=true id="izdlk700"}
     x = 1
     ```
 
-    ```python {cmd:true, id:"izdlkdim"}
+    ```python {cmd=true id="izdlkdim"}
     x = 2
     ```
 
-    ```python {cmd:true, continue:"izdlk700", id:"izdlkhso"}
+    ```python {cmd=true continue="izdlk700" id="izdlkhso"}
     print(x) # will print 1
     ```
 
 **class**  
-如果設置 `class:"class1 class2"`，那麼 `class1 class2` 將會被添加到 code chunk。    
+如果設置 `class="class1 class2"`，那麼 `class1 class2` 將會被添加到 code chunk。    
 * `line-numbers` class 將會添加代碼行數到 code chunk。  
 
 **element**  
@@ -126,21 +126,21 @@ Code chunk 的 `id`。這個選項可以配合 `continue` 選項使用。
 但是，如果你想要改變 `input_file` 在你的 `args` 中的位置，你可以使用 `$input_file` 宏。例如：  
 
 
-    ```program {cmd:true, args:["-i", "$input_file", "-o", "./output.png"]}
+    ```program {cmd=true args=["-i", "$input_file", "-o", "./output.png"]}
     ...your code here
     ```
 
 ## Matplotlib  
-如果設置 `matplotlib: true`，那麼你的 python code chunk 將會在你的預覽中繪制圖像。      
+如果設置 `matplotlib=true`，那麼你的 python code chunk 將會在你的預覽中繪制圖像。      
 例如：  
 
-    ```python {cmd:true, matplotlib:true}
+    ```python {cmd=true matplotlib=true}
     import matplotlib.pyplot as plt
     plt.plot([1,2,3, 4])
     plt.show() # show figure
     ```
 
-![screen shot 2017-06-05 at 9 21 25 pm](https://cloud.githubusercontent.com/assets/1908863/26811044/f39404d4-4a34-11e7-8be2-0e20c0e9b00e.png)
+![screen shot 2017-07-28 at 7 12 50 am](https://user-images.githubusercontent.com/1908863/28716704-4009d43a-7364-11e7-9e46-889f961e5afd.png)
 
 ## LaTeX
 Markdown Preview Enhanced 也支持 `LaTeX` 編譯。  
@@ -148,19 +148,19 @@ Markdown Preview Enhanced 也支持 `LaTeX` 編譯。
 然後你就可以很簡單的利用 code chunk 編寫 LaTeX 了：
 
 
-    ```latex {cmd:true}
+    ```latex {cmd=true}
     \documentclass{standalone}
     \begin{document}
        Hello world!
     \end{document}
     ```
 
-![screen shot 2017-07-14 at 11 25 09 am](https://user-images.githubusercontent.com/1908863/28220981-23dd1b9c-6887-11e7-8e0f-1a0fd64f54cd.png)
+![screen shot 2017-07-28 at 7 15 16 am](https://user-images.githubusercontent.com/1908863/28716762-8686d980-7364-11e7-9669-71138cb2e6e7.png)
 
 
 ### LaTeX 輸出設置    
 **latex_zoom**  
-如果設置了 `latex_zoom:num`，那麼輸出結果將會被縮放 `num` 倍。  
+如果設置了 `latex_zoom=num`，那麼輸出結果將會被縮放 `num` 倍。  
 
 **latex_width**  
 輸出結果的寬度。  
@@ -188,7 +188,7 @@ Markdown Preview Enhanced 支持你輕松的繪制 [Plotly](https://plot.ly/) �
 ## Demo  
 下面的例子展示了如何利用 [erd](https://github.com/BurntSushi/erd) 庫繪制 ER diagram。     
 
-    ```erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}
+    ```erd {cmd=true output="html" args=["-i", "$input_file", "-f", "svg"]}
 
     [Person]
     *name
@@ -205,7 +205,7 @@ Markdown Preview Enhanced 支持你輕松的繪制 [Plotly](https://plot.ly/) �
     Person *--1 Location
     ```
 
-`erd {cmd:true, output:"html", args:["-i", "$input_file", "-f", "svg"]}`   
+`erd {cmd=true output="html" args=["-i", "$input_file", "-f", "svg"]}`   
 * `erd` 是我們將要用到的程序。 (*當然你得先安裝好這個程序*)  
 * `output:"html"` 意味著代碼的輸出結果將會被視作為 `html`。  
 * `args` 顯示了我們將要用到的參數。    

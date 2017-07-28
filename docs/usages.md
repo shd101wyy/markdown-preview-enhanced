@@ -3,7 +3,7 @@
 ## Commands
 
 You can press <kbd>cmd-shift-p</kbd>  in atom editor to toggle <strong> Command Palette </strong>.  
-The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.  
+> The <kbd>cmd</kbd> key for *Windows* is <kbd>ctrl</kbd>.  
 
 *Markdown Source*
 - <strong>Markdown Preview Enhanced: Toggle</strong>  
@@ -100,6 +100,7 @@ The <kbd>cmd</kbd> key in `Windows` is <kbd>ctrl</kbd>.
 | Shortcuts  | Functionality  |
 |---|---|
 | <kbd>ctrl-shift-m</kbd>  | Toggle preview  |
+| <kbd>cmd-k v</kbd> | Open Preview `VSCode Only` |
 | <kbd>ctrl-shift-s</kbd>  | Sync preview / Sync source  |  
 | <kbd>ctrl-shift-i</kbd>  | Open Image Helper |  
 | <kbd>shift-enter</kbd> | Run Code Chunk |    

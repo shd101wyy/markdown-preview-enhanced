@@ -52,7 +52,7 @@ presentation:
 ```
 More information about front-matter settings can be found [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/presentation).
 
-<!-- slide data-notes:"This is speaker note"-->  
+<!-- slide data-notes="This is speaker note"-->  
 **Speaker notes** is also supported (not in preview).  
 Press the <kbd>s</kbd> key on your keyboard to open the notes window.  
 
@@ -67,36 +67,36 @@ presentation:
 To add notes, simply set `data-notes` property:
 
 ```html
-<!-- slide data-notes:"Write your note here" -->
+<!-- slide data-notes="Write your note here" -->
 ```
 
 check [Reveal.js Speaker Notes](https://github.com/hakimel/reveal.js#speaker-notes) section for more information.
 
 
 <!-- slide -->
-By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical:true`.  
+By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical=true`.  
 For example:  
 ```html
-<!-- slide vertical:true -->
+<!-- slide vertical=true -->
 ```  
 
-<!-- slide vertical:true -->
+<!-- slide vertical=true -->
 You just discovered a vertical slide!
 
 <!-- slide -->
 You can set `id` and `class` for your slide like this:  
 ```html
-<!-- slide id:"my-id" class:"my-class1 my-class2" -->
+<!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
 <!-- slide -->
 You can set slide background very easily.   
 For example:
 ```html
-<!-- slide data-background-color:"#ff0000" -->
+<!-- slide data-background-color="#ff0000" -->
 ```
 
-<!-- slide data-background-color:"#ffebcf"-->
+<!-- slide data-background-color="#ffebcf"-->
 Of course you can do more about slide **background**.  
 * `data-background-image`  
 URL of the image to show. GIFs restart when the slide opens.
@@ -121,14 +121,14 @@ Embeds a web page as a background.
 <!-- slide -->
 For example, the markdown snippet below will generate slide like...  
 ```html
-<!-- slide data-background-image:"https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition:"zoom" -->
+<!-- slide data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" -->
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
 ```
 
-<!-- slide data-background-image:"https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg"
-data-transition:"zoom"
+<!-- slide data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg"
+data-transition="zoom"
 -->
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
@@ -162,4 +162,4 @@ right clicking at the preview, then choose
 * Source code of this presentation can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md), [raw](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md)  
 
 
-<!-- slide data-background-image:"http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->
+<!-- slide data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->

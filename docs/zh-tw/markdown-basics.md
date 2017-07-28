@@ -16,10 +16,10 @@
 ###### 這是 <h6> 六級標題
 ```
 
-如果你想要給你的標題添加 `id` 或者 `class`，請在標題最後添加 `{id:"...", class:"..."}`。例如：  
+如果你想要給你的標題添加 `id` 或者 `class`，請在標題最後添加 `{#id .class1 .class2}`。例如：  
 ```markdown
-# 這個標題擁有 1 個 id {id:"my_id"}
-# 這個標題有 2 個 classes {class:"class1 class2"}
+# 這個標題擁有 1 個 id {#my_id}
+# 這個標題有 2 個 classes {.class1 .class2}
 ```
 > 這是一個 MPE 擴展的特性。  
 
@@ -125,7 +125,7 @@ puts markdown.to_html
 
 例如，添加 `class1 class2` 到一個 代碼塊：
 
-    ```javascript {class:"class1 class"}
+    ```javascript {.class1 .class}
     function add(x, y) {
       return x + y
     }
@@ -136,7 +136,7 @@ puts markdown.to_html
 
 例如：
 
-    ```javascript {class:"line-numbers"}
+    ```javascript {.line-numbers}
     function add(x, y) {
       return x + y
     }

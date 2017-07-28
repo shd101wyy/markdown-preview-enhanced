@@ -262,7 +262,7 @@ exports.configSchema = {
         "order": 70
     },
     "imageFolderPath": {
-        "title": "Image save folder path",
+        "title": "Image folder path",
         "description": "When using Image Helper to copy images, by default images will be copied to root image folder path '/assets'",
         "type": "string",
         "default": "/assets",

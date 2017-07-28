@@ -14,7 +14,7 @@ $$ u(x) =
   \end{cases}
 $$
 
-## Graphs
+## Diagrams
 
 ```mermaid
 graph LR

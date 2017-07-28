@@ -13,6 +13,6 @@ You can choose your math rendering method and change math delimiters from [packa
 
 You can Also modify the MathJax config by <kbd>cmd-shift-p</kbd> then choose `Markdown Preview Enhanced: Open Mathjax config` command.  
 
-[➔ Graphs](graphs.md)
+[➔ Diagrams](diagrams.md)
 
 

@@ -102,6 +102,7 @@
 | Shortcuts  | Functionality  |
 |---|---|
 | <kbd>ctrl-shift-m</kbd>  | 開／關預覽 |
+| <kbd>cmd-k v</kbd> | 打開預覽 `僅 VSCode 可用` |
 | <kbd>ctrl-shift-s</kbd>  | 滑動同步預覽 / 滑動同步 markdown 源  |  
 | <kbd>ctrl-shift-i</kbd>  | 打開圖片助手 |  
 | <kbd>shift-enter</kbd> | 運行 Code Chunk |    

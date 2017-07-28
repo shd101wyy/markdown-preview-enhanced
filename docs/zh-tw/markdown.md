@@ -11,7 +11,8 @@
 markdown:
   image_dir: /assets
   path: output.md
-  ignore_from_front_matter: false
+  ignore_from_front_matter: true
+  absolute_image_path: false
 ---
 ```
 
@@ -22,7 +23,10 @@ markdown:
 定義了哪裡輸出你的 markdown 文件。如果 **path** 沒有被定義，`filename_.md` 將會被使用。
 
 **ignore_from_front_matter** `可選`   
-如果設置為 `true`，那麼 `markdown` 將會從導出的文件中的 front-matter 中剔除。  
+如果設置為 `false`，那麼 `markdown` 將會被包含於導出的文件中的 front-matter 中。
+
+**absolute_image_path** `可選`  
+是否使用絕對（相對於項目文件夾）圖片路徑。  
 
 ## 保存時自動導出
 添加 front-matter 如下：

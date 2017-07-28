@@ -4,8 +4,8 @@
 
 
 当您捐款后，请邮件我（`shd101wyy@gmail.com`）或者留言以下内容。您的名字将会被保留在 [backers](backers.md) 名单中。非常感谢您的支持！   
-`![您的名字](您想要的链接) ¥您的捐款额度`
+`[您的名字](您想要的链接) ¥您的捐款额度`
 
 
 Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content below. Your name will be saved to [backers](backers.md) file. Appreciate it!   
-`![your name](link you want) $amount_you_donate.`  
+`[your name](link you want) $amount_you_donate.`  
