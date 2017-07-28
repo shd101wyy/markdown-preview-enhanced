@@ -335,7 +335,11 @@ export class MarkdownPreviewEnhancedView {
     buffer.setTextInRange([[dataLine, 0], [dataLine+1, 0]], line + '\n')
   },
   'setZoomLevel': function(sourceUri, zoomLevel) {
-      this.setZoomLevel(zoomLevel)
+    this.setZoomLevel(zoomLevel)
+  },
+  'showUploadedImageHistory': function(sourceUri) {
+    const imageHistoryFilePath = path.resolve(mume.utility.extensionConfigDirectoryPath, './image_history.md')
+    atom.workspace.open(imageHistoryFilePath)
   }
   }
 

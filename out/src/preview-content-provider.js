@@ -783,6 +783,10 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
     },
     'setZoomLevel': function (sourceUri, zoomLevel) {
         this.setZoomLevel(zoomLevel);
+    },
+    'showUploadedImageHistory': function (sourceUri) {
+        const imageHistoryFilePath = path.resolve(mume.utility.extensionConfigDirectoryPath, './image_history.md');
+        atom.workspace.open(imageHistoryFilePath);
     }
 };
 exports.MarkdownPreviewEnhancedView = MarkdownPreviewEnhancedView;

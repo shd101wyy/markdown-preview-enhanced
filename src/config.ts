@@ -31,6 +31,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public pandocMarkdownFlavor: string;
   public pandocArguments: string[];
   public latexEngine: string;
+  public enableScriptExecution: boolean;
 
   /*
    * Extra config for mpe
@@ -82,6 +83,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.pandocMarkdownFlavor = atom.config.get('markdown-preview-enhanced.pandocMarkdownFlavor')
     this.pandocArguments = atom.config.get('markdown-preview-enhanced.pandocArguments').split(',').map((x)=> x.trim()).filter((x)=>x.length) || []
     this.latexEngine = atom.config.get('markdown-preview-enhanced.latexEngine')
+    this.enableScriptExecution = atom.config.get('markdown-preview-enhanced.enableScriptExecution')
 
     /*
      * Extra configs for mpe
@@ -203,6 +205,10 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
         this.latexEngine = newValue
         // callback()
       }), 
+      atom.config.onDidChange('markdown-preview-enhanced.enableScriptExecution', ({newValue})=> {
+        this.enableScriptExecution = newValue
+        callback()
+      }),
 
       atom.config.onDidChange('markdown-preview-enhanced.fileExtension', ({newValue})=> {
         this.fileExtension = newValue.split(',').map((x)=> x.trim()).filter((x)=>x.length) || []

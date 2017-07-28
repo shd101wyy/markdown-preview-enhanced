@@ -52,22 +52,28 @@ exports.configSchema = {
         "order": 17
     },
     "codeBlockTheme": {
-        "description": "Code block theme.",
-        "default": "default.css",
+        "description": "Code block theme. If `auto.css` is chosen, then the code block theme that best matches the current preview theme will be picked.",
+        "default": "auto.css",
         "type": "string",
         "enum": [
+            "auto.css",
+            "default.css",
             "atom-dark.css",
+            "atom-light.css",
+            "atom-material.css",
             "coy.css",
             "darcula.css",
             "dark.css",
-            "default.css",
             "funky.css",
             "github.css",
             "hopscotch.css",
             "monokai.css",
             "okaidia.css",
-            "onedark.css",
+            "one-dark.css",
+            "one-light.css",
+            "pen-paper-coffee.css",
             "pojoaque.css",
+            "solarized-dark.css",
             "solarized-light.css",
             "twilight.css",
             "vs.css",
@@ -80,13 +86,21 @@ exports.configSchema = {
         "default": "github-light.css",
         "type": "string",
         "enum": [
-            "github-light.css",
+            "atom-dark.css",
+            "atom-light.css",
+            "atom-material.css",
             "github-dark.css",
+            "github-light.css",
             "gothic.css",
+            "medium.css",
+            "monokai.css",
             "newsprint.css",
             "night.css",
-            "medium.css",
-            "none.css"
+            "none.css",
+            "one-dark.css",
+            "one-light.css",
+            "solarized-dark.css",
+            "solarized-light.css"
         ],
         "order": 21
     },
@@ -264,5 +278,12 @@ exports.configSchema = {
             "sm.ms"
         ],
         "order": 76
+    },
+    "enableScriptExecution": {
+        "title": "Enable Script Execution",
+        "description": "Disabling this will prevent executing code chunks and importing JavaScript files.",
+        "type": "boolean",
+        "default": true,
+        "order": 80
     }
 };

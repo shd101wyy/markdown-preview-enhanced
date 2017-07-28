@@ -282,7 +282,7 @@ function customizeCSS() {
 function createTOC() {
     const editor = atom.workspace.getActiveTextEditor();
     if (editor && editor.buffer)
-        editor.insertText('\n<!-- @import "[TOC]" {cmd:"toc", depthFrom:1, depthTo:6, orderedList:false} -->\n');
+        editor.insertText('\n<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->\n');
 }
 function toggleScrollSync() {
     const flag = atom.config.get('markdown-preview-enhanced.scrollSync');
@@ -446,7 +446,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 const lines = editor.buffer.getLines();
                 for (let i = 0; i < lineCount; i++) {
                     const line = lines[i]; // editor.buffer.lines[i] will cause error.
-                    if (line.match(/^```(.+)\"?cmd\"?\s*\:/)) {
+                    if (line.match(/^```(.+)\"?cmd\"?\s*[:=]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             i = i + 1;
                             while (i < lineCount) {
@@ -461,7 +461,7 @@ function onModifySource(codeChunkData, result, filePath) {
                             codeChunkOffset++;
                         }
                     }
-                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*\:/)) {
+                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*[:=]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             // console.log('find code chunk' )
                             return insertResult(i, editor, lines);
