@@ -35,8 +35,8 @@ The updates in the following two months will be bug fixes only.
     You can also [@import](https://shd101wyy.github.io/markdown-preview-enhanced/#/file-imports) a `JSON` or `YAML` file as `vega` diagram, for example:  
 
 <pre>
-    \@import "your_vega_source.json" {as:"vega"}
-    \@import "your_vega_lite_source.json" {as:"vega-lite"}
+    \@import "your_vega_source.json" {as="vega"}
+    \@import "your_vega_lite_source.json" {as="vega-lite"}
 </pre>
 
 * Supported [ditaa](https://github.com/stathissideris/ditaa).  

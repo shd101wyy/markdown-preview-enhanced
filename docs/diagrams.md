@@ -41,7 +41,7 @@ Markdown Preview Enhanced uses [WaveDrom](http://wavedrom.com/) to create digita
 ## GraphViz  
 Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://tinyurl.com/kjoouup) diagram.  
 - Code block with `viz` or `dot` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).  
-- You can choose different engines by specifying `{engine: "..."}`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.
+- You can choose different engines by specifying `{engine="..."}`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.
 
 ![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
 
@@ -56,8 +56,8 @@ Markdown Preview Enhanced supports [vega](https://vega.github.io/vega/) and [veg
 You can also [@import](file-imports.md) a `JSON` or `YAML` file as `vega` diagram, for example:  
 
 ```markdown
-@import "your_vega_source.json" {as:"vega"}
-@import "your_vega_lite_source.json" {as:"vega-lite"}
+@import "your_vega_source.json" {as="vega"}
+@import "your_vega_lite_source.json" {as="vega-lite"}
 ```
 
 ## Ditaa
