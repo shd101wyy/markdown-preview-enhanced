@@ -9,7 +9,7 @@ The `style.less` file will open, and you can override existing style like this:
 > `style.less` file is located at `~/.mume/style.less`
 
 ```less
-html body {
+.markdown-preview.markdown-preview {
   // please write your custom style here
   // eg:
   //  color: blue;          // change font color
@@ -31,9 +31,17 @@ html body {
   }
 
   // custom presentation style
+  .reveal .slides {
+    // modify all slides
+  }
+
   .slides > section:nth-child(1) {
     // this will modify `the first slide`
   }
+}
+
+.md-sidebar-toc.md-sidebar-toc {
+  // sidebar TOC style
 }
 ```
 
@@ -74,7 +82,7 @@ Every time you changed your `less` file, you can click the refresh button at the
 To change the font family of preview, you first need to download the font file `(.ttf)`, then modify `style.less` like below:   
 
 ```less
-html body {
+.markdown-preview.markdown-preview {
   @font-face {
     font-family: 'your-font-family';
     src: url('your-font-file-url');

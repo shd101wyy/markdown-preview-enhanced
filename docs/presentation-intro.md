@@ -75,7 +75,7 @@ check [Reveal.js Speaker Notes](https://github.com/hakimel/reveal.js#speaker-not
 
 <!-- slide -->
 By default, all slides are aligned horizontally, but you can also create vertical slides by adding `vertical=true`.  
-For example:  
+For example: 
 ```html
 <!-- slide vertical=true -->
 ```  
