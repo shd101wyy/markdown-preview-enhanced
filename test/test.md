@@ -5,7 +5,9 @@ date: "2015-10-13 16:05:17 +0900"
 arr: [1, 2, 3]
 ---
 
-<!-- toc orderedList:0 -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+<!-- code_chunk_output -->
 
 * [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
 	* [Heading 2](#heading-2)
@@ -14,7 +16,9 @@ arr: [1, 2, 3]
 				* [Heading 5](#heading-5)
 					* [Heading 6](#heading-6)
 
-<!-- tocstop -->
+<!-- /code_chunk_output -->
+
+
 # This is Markdown Preview with KaTeX Support
 - write your math expression within $\$...\$$
     - $f(x) = sin(x) + y_a$
@@ -69,8 +73,8 @@ int main() {
 
 ---
 
-Test image paths   
-![markdown-icon](/markdown.png)  
+Test image paths
+![markdown-icon](/markdown.png)
 ![markdown-icon](../markdown.png)
 
 ---
@@ -181,10 +185,10 @@ database "MySql" {
 [Another Component] --> [Example 1]
 [Example 1] --> [Folder 3]
 [Folder 3] --> [Frame 4]
-```  
+```
 
 
-> Test WaveDrom  
+> Test WaveDrom
 
 ```wavedrom
 { signal: [
@@ -208,7 +212,7 @@ database "MySql" {
 ]}
 ```
 
-> Test Viz.js  
+> Test Viz.js
 
 ```viz
 digraph g {
@@ -253,22 +257,22 @@ graph graphname {
 }
 ```
 
-**Test opening files through links**  
-[markdown.png](1.pic.jpg)  
-[markdown.png](/test/1.pic.jpg)  
-[markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)  
+**Test opening files through links**
+[markdown.png](1.pic.jpg)
+[markdown.png](/test/1.pic.jpg)
+[markdown-preview-enhanced.coffee](/lib/markdown-preview-enhanced.coffee)
 [markdown-preview-enhanced.coffee](../lib/markdown-preview-enhanced.coffee)
 
-**Test Links**  
-[baidu](https://www.baidu.com/)  
+**Test Links**
+[baidu](https://www.baidu.com/)
 [this baidu should not work](www.baidu.com)
 
 
-**Bugs Fix**  
+**Bugs Fix**
 - too many bugs
-- [\$ bug](https://github.com/shd101wyy/markdown-preview-enhanced/issues/2)  
+- [\$ bug](https://github.com/shd101wyy/markdown-preview-enhanced/issues/2)
   \$ 12 + \$ 13 = 12
-- the local font family for **styles/katex.min.less** should be eg: **atom://markdown-preview-enhanced/styles/fonts/KaTeX_AMS-Regular.eot** instead of **fonts/blabla.eot**   
+- the local font family for **styles/katex.min.less** should be eg: **atom://markdown-preview-enhanced/styles/fonts/KaTeX_AMS-Regular.eot** instead of **fonts/blabla.eot**
 see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-editors-styles/8321/4)
 - Now support **2-way scroll sync!**
 

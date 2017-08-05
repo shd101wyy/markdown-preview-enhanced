@@ -751,6 +751,10 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
             // openFilePath = href.slice(8) # remove protocal
             let openFilePath = mume.utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')); // remove #anchor and ?params...
             openFilePath = decodeURI(openFilePath);
+            if (this.editor) {
+                const pane = atom.workspace.paneForItem(this.editor);
+                pane.activate();
+            }
             atom.workspace.open(mume.utility.removeFileProtocol(openFilePath), {
                 activateItem: true,
                 activatePane: true,
