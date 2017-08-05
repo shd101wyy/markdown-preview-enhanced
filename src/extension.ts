@@ -174,8 +174,8 @@ mume.init() // init mume package
   subscriptions.add(atom.workspace.onDidChangeActivePaneItem((editor)=> {
     if (editor &&
         editor['buffer'] &&
-        editor['getGrammar'] &&
-        editor['getGrammar']().scopeName == 'source.gfm') {
+        editor['getPath'] &&
+        isMarkdownFile(editor['getPath']())) {
       const preview = getPreviewForEditor(editor)
       if (!preview) return
 

@@ -7,7 +7,10 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-'atom-workspace atom-text-editor[data-grammar*="gfm"], .platform-win32 atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-linux atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-darwin atom-workspace atom-text-editor[data-grammar="source gfm"]':
+
+# I disabled this because for package like `language-markdown`, the `data-grammer` attribute is different.  
+# 'atom-workspace atom-text-editor[data-grammar*="gfm"], .platform-win32 atom-workspace atom-text-editor[data-grammar*="gfm"], .platform-linux atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-darwin atom-workspace atom-text-editor[data-grammar="source gfm"]':
+'atom-workspace, atom-workspace atom-text-editor':
   'ctrl-shift-m': 'markdown-preview-enhanced:toggle'
   'ctrl-shift-i': 'markdown-preview-enhanced:image-helper'
   'shift-enter': 'markdown-preview-enhanced:run-code-chunk'
