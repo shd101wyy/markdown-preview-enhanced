@@ -31,8 +31,6 @@ If `@start...` is not found, then `@startuml ... @enduml` will automatically be 
 
 ## WaveDrom
 
-> This is temporarily not supported after version 0.14.0
-
 Markdown Preview Enhanced uses [WaveDrom](http://wavedrom.com/) to create digital timing diagram.  
 - Code block with `wavedrom` notation will be rendered by [WaveDrom](https://github.com/drom/wavedrom).
 

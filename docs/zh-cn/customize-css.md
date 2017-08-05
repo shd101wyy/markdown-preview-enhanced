@@ -10,31 +10,40 @@
 
 
 ```less
-html body {
-  // please write your custom style here
-  // eg:
-  //  color: blue;          // change font color
-  //  font-size: 14px;      // change font size
-  // custom pdf output style
+.markdown-preview.markdown-preview {
+  // 在这里编写你的样式
+  // 例如：
+  //  color: blue;          // 改变字体颜色
+  //  font-size: 14px;      // 改变字体大小
+  // 自定义 pdf 导出样式
   @media print {
   }
 
-  // custom prince pdf export style
+  // 自定义 prince pdf 导出样式
   &.prince {
   }
 
-  // custom phantomjs png/jpeg export style
+  // 自定义 phantomjs png/jpeg 导出样式
   &.phantomjs-image {
   }
 
-  //custom phantomjs pdf export style
+  // 自定义 phantomjs pdf 导出样式
   &.phantomjs-pdf {
   }
 
-  // custom presentation style
-  .slides > section:nth-child(1) {
-    // this will modify `the first slide`
+  // 自定义 presentation 样式
+  .reveal .slides {
+    // 修改所有幻灯片
   }
+
+  // 自定义 presentation 样式
+  .slides > section:nth-child(1) {
+    // 修改 `第 1 个幻灯片`
+  }
+}
+
+.md-sidebar-toc.md-sidebar-toc {
+  // 边栏目录样式
 }
 ```
 
@@ -75,7 +84,7 @@ class: "my-class1 my-class2"
 要改变你的预览的字体，你需要首先下载字体文件 `(.ttf)`，然后编辑 `style.less` 如下：  
 
 ```less
-html body {
+.markdown-preview.markdown-preview {
   @font-face {
     font-family: 'your-font-family';
     src: url('your-font-file-url');

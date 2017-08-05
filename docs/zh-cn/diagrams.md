@@ -31,8 +31,6 @@ Markdown Preview Enhanced 使用 [PlantUML](http://plantuml.com/) 来创建各�
 
 ## WaveDrom
 
-> 这个自 0.14.0 版本以后暂时不被支持了
-
 Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 来渲染 digital timing diagram.  
 - `wavedrom` 代码块中的内容将会被 [WaveDrom](https://github.com/drom/wavedrom) 渲染。
 

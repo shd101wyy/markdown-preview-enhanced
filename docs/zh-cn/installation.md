@@ -2,6 +2,8 @@
 
 > 感谢 [@zangchendi](https://github.com/zangchendi) 编写此文档.
 
+> 请确保已禁用掉官方的 `markdown-preview` 插件
+
 安装方法有很多，推荐用户根据个人情况（墙内/墙外）自行选择。
 
 ## 软件内安装（墙外推荐）
