@@ -17,7 +17,7 @@ brew install Caskroom/cask/prince
 <kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css` 命令，添加以下的代码：    
 
 ```less
-html body {
+.markdown-preview.markdown-preview {
   &.prince {
     // 你的 prince css
   }
@@ -26,7 +26,7 @@ html body {
 
 例如，改变纸张大小到 `A4 landscape`:  
 ```less
-html body {
+.markdown-preview.markdown-preview {
   &.prince {
     @page {
       size: A4 landscape

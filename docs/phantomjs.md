@@ -1,8 +1,8 @@
-# PhantomJS Export  
+# PhantomJS Export
 
-**PhantomJS** supports `pdf`, `jpeg`, and `png` file export.  
+**PhantomJS** supports `pdf`, `jpeg`, and `png` file export.
 
-Before using this feature, you need to have `phantomjs` installed.  
+Before using this feature, you need to have `phantomjs` installed.
 
 * Windows
 Check [PhantomJS](http://phantomjs.org/) website.
@@ -10,18 +10,18 @@ Check [PhantomJS](http://phantomjs.org/) website.
 `brew install phantomjs`
 
 ## Usage
-Right click at the preview, then click `PhantomJS` tab.  
-Choose the file type you want to export.  
+Right click at the preview, then click `PhantomJS` tab.
+Choose the file type you want to export.
 
 ![screen shot 2017-07-14 at 1 37 38 am](https://user-images.githubusercontent.com/1908863/28201098-0e5fe3be-6835-11e7-8db6-75fe7e5c35c7.png)
 
-## Configuration    
+## Configuration
 ### For all files
-You can configure header and footer by running `Markdown Preview Enhanced: Open PhantomJS Config` command, then modify the `phantomjs_config.js` file.  
+You can configure header and footer by running `Markdown Preview Enhanced: Open PhantomJS Config` command, then modify the `phantomjs_config.js` file.
 
 > `phantomjs_config.js` file is located at `~/.mume/phantomjs_config.js`
 
-The `phantomjs_config.js` file should look like this:   
+The `phantomjs_config.js` file should look like this:
 
 ```javascript
 'use strict'
@@ -52,8 +52,8 @@ let config = {
 module.exports = config || {}
 ```
 
-### For single file  
-You can write front-matter to configure phantomjs:  
+### For single file
+You can write front-matter to configure phantomjs:
 
 ```yaml
 ---
@@ -62,12 +62,12 @@ phantomjs:
 ---
 ```
 
-Check [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) for more information.  
+Check [node-html-pdf](https://github.com/marcbachmann/node-html-pdf#options) for more information.
 
 ## Customize CSS
-<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:  
+<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:
 ```less
-html body {
+.markdown-preview.markdown-preview {
   // custom phantomjs png/jpeg export style
   &.phantomjs-image {
     // your code here
@@ -81,7 +81,7 @@ html body {
 ```
 
 ## Export on save
-Add the front-matter like below:  
+Add the front-matter like below:
 ```yaml
 ---
 export_on_save:
@@ -93,4 +93,4 @@ export_on_save:
   phantomjs: ["pdf", "png", ...]
 ---
 ```
-So the files will be generated every time you save your markdown source file.  
+So the files will be generated every time you save your markdown source file.

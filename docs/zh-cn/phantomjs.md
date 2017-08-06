@@ -67,7 +67,7 @@ phantomjs:
 ## 自定义 CSS
 <kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css` 命令打开 `style.less` 文件后，添加并修改以下的代码：    
 ```less
-html body {
+.markdown-preview.markdown-preview {
   // custom phantomjs png/jpeg export style
   &.phantomjs-image {
     // 你的代码
