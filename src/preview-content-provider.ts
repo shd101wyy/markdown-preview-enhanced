@@ -387,7 +387,7 @@ export class MarkdownPreviewEnhancedView {
 
     this.disposables.add(atom.commands.add(editorElement, {
       'markdown-preview-enhanced:sync-preview': ()=> {
-        this.syncPreview()
+        this.syncPreview(true)
       }
     }))
 
@@ -448,8 +448,9 @@ export class MarkdownPreviewEnhancedView {
 
   /**
    * sync preview to match source.
+   * @param forced whether to override scroll sync. 
    */
-  private syncPreview() {
+  private syncPreview(forced=false) {
     if (!this.editor) return
 
     const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']()
@@ -457,7 +458,8 @@ export class MarkdownPreviewEnhancedView {
       return this.postMessage({
         command: 'changeTextEditorSelection',
         line: 0,
-        topRatio: 0
+        topRatio: 0,
+        forced
       })
     }
     
@@ -466,7 +468,8 @@ export class MarkdownPreviewEnhancedView {
       return this.postMessage({
         command: 'changeTextEditorSelection',
         line: this.editor.getLastBufferRow(),
-        topRatio: 1
+        topRatio: 1,
+        forced
       })
     }
 
@@ -475,7 +478,8 @@ export class MarkdownPreviewEnhancedView {
     this.postMessage({
       command: 'changeTextEditorSelection',
       line: midBufferRow,
-      topRatio: 0.5
+      topRatio: 0.5,
+      forced
     })
   }
 

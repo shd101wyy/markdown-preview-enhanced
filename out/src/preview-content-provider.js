@@ -264,7 +264,7 @@ class MarkdownPreviewEnhancedView {
         const editorElement = this.editor['getElement'](); // dunno why `getElement` not found.
         this.disposables.add(atom.commands.add(editorElement, {
             'markdown-preview-enhanced:sync-preview': () => {
-                this.syncPreview();
+                this.syncPreview(true);
             }
         }));
         this.disposables.add(this.editor.onDidDestroy(() => {
@@ -319,8 +319,9 @@ class MarkdownPreviewEnhancedView {
     }
     /**
      * sync preview to match source.
+     * @param forced whether to override scroll sync.
      */
-    syncPreview() {
+    syncPreview(forced = false) {
         if (!this.editor)
             return;
         const firstVisibleScreenRow = this.editor['getFirstVisibleScreenRow']();
@@ -328,7 +329,8 @@ class MarkdownPreviewEnhancedView {
             return this.postMessage({
                 command: 'changeTextEditorSelection',
                 line: 0,
-                topRatio: 0
+                topRatio: 0,
+                forced
             });
         }
         const lastVisibleScreenRow = this.editor['getLastVisibleScreenRow']();
@@ -336,14 +338,16 @@ class MarkdownPreviewEnhancedView {
             return this.postMessage({
                 command: 'changeTextEditorSelection',
                 line: this.editor.getLastBufferRow(),
-                topRatio: 1
+                topRatio: 1,
+                forced
             });
         }
         let midBufferRow = this.editor['bufferRowForScreenRow'](Math.floor((lastVisibleScreenRow + firstVisibleScreenRow) / 2));
         this.postMessage({
             command: 'changeTextEditorSelection',
             line: midBufferRow,
-            topRatio: 0.5
+            topRatio: 0.5,
+            forced
         });
     }
     /**
