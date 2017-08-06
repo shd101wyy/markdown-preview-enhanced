@@ -308,10 +308,7 @@ export class MarkdownPreviewEnhancedView {
 			// openFilePath = href.slice(8) # remove protocal
 			let openFilePath = mume.utility.addFileProtocol(href.replace(/(\s*)[\#\?](.+)$/, '')) // remove #anchor and ?params...
       openFilePath = decodeURI(openFilePath)
-      if (this.editor) {
-        const pane = atom.workspace.paneForItem(this.editor)
-        pane.activate()
-      }
+      this.activatePaneForEditor()
       atom.workspace.open(mume.utility.removeFileProtocol(openFilePath), {
         activateItem: true, 
         activatePane: true,
@@ -342,6 +339,7 @@ export class MarkdownPreviewEnhancedView {
     this.setZoomLevel(zoomLevel)
   },
   'showUploadedImageHistory': function(sourceUri) {
+    this.activatePaneForEditor()
     const imageHistoryFilePath = path.resolve(mume.utility.extensionConfigDirectoryPath, './image_history.md')
     atom.workspace.open(imageHistoryFilePath)
   }
@@ -834,6 +832,13 @@ export class MarkdownPreviewEnhancedView {
     .catch((err)=> {
       atom.notifications.addError(err)
     })
+  }
+
+  private activatePaneForEditor() {
+    if (this.editor) {
+      const pane = atom.workspace.paneForItem(this.editor)
+      pane.activate()
+    }
   }
 
   public destroy() {
