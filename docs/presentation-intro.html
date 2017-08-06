@@ -1386,6 +1386,7 @@ body {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/lib/js/head.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/js/reveal.min.js"></script>
       
+      
 
       <style> 
       /**
@@ -1872,33 +1873,34 @@ body {
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
-@media screen and (min-width:914px){html body:not([data-presentation-mode]){width:980px;margin:10px auto}}@media screen and (max-width:400px){html body:not([data-presentation-mode]){font-size:14px;margin:0 auto;padding:15px}}html body .pagebreak,html body .newpage{page-break-before:always}html body pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}html body pre.line-numbers>code{position:relative}html body pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}html body pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}html body pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}html body .mathjax-exps .MathJax_Display{text-align:center !important}html body:not([for="preview"]) .code-chunk .btn-group{display:none}html body:not([for="preview"]) .code-chunk .status{display:none}html body:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px} 
-      @media print {
-}
- 
+.markdown-preview{width:100%;height:100%}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]{position:absolute;width:100%;height:100%;top:0;left:0;margin:0;padding:0}@media screen and (min-width:914px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){width:980px;margin:10px auto;padding:0 2em}}@media screen and (max-width:914px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){margin:0 auto;padding:0 2em}}@media screen and (max-width:450px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){font-size:14px !important;margin:0 auto;padding:0 1em}}@media print{html body[for="html-export"] #sidebar-toc-btn{display:none}}html body[for="html-export"] #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.6}html body[for="html-export"][html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:268px;height:100%;padding:32px 0 48px 0;overflow:auto;font-size:14px;box-shadow:4px 0 12px rgba(150,150,150,0.33);box-sizing:border-box}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"][html-show-sidebar-toc] .markdown-preview{position:relative;left:268px;max-width:980px;width:calc(100% - 268px);margin:0;padding:0 2em;box-sizing:border-box}html body[for="html-export"]:not([html-show-sidebar-toc]) .md-sidebar-toc{display:none} 
+       
       </style>
     </head>
-    <body class="mume   " data-presentation-mode="">
-    
+    <body for="html-export">
+      
+      
+      <div class="mume markdown-preview   " data-presentation-mode="">
+      
     <div style="display:none;"></div>
     <div class="reveal">
       <div class="slides">
-        <section class="slide " data-line="5" data-h="0" data-v="0">
+        <section lineNo="5" class="slide " data-line="5" data-h="0" data-v="0">
 <h1 class="mume-header" id="presentation-writer">Presentation Writer</h1>
 
 <p>by <strong>Markdown Preview Enhanced</strong><br>
 powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a><br>
 <br></p>
-<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>  
+<p style="font-size: 18px;">press <kbd>?</kbd> key to see keyboard help.</p>
 <p style="font-size: 18px;">press <kbd>s</kbd> key to open note window.</p>
 <p style="font-size: 18px;">press <kbd>arrow</kbd> key to navigate.</p>
 <p style="font-size: 18px;">press <kbd>esc</kbd> to toggle overview.</p>
-</section><section class="slide " data-line="16" data-h="1" data-v="0">
+</section><section lineNo="16" class="slide " data-line="16" data-h="1" data-v="0">
 <p>You can easily create beautiful presentation by running command</p>
 <p><code>Markdown Preview Enhanced: Insert New Slide</code></p>
 <p>Or just insert to your markdown file<br>
 <code>&lt;!-- slide --&gt;</code></p>
-</section><section class="slide " data-line="24" data-h="2" data-v="0">
+</section><section lineNo="24" class="slide " data-line="24" data-h="2" data-v="0">
 <p>Multiple Presentation themes are supported, you can change it easily from the extension settings.</p>
 <ul>
 <li>vscode<br>
@@ -1906,10 +1908,10 @@ powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a><br>
 <li>atom<br>
 <img src="http://i.imgur.com/lwaogVZ.png" width="60%"></li>
 </ul>
-</section><section class="slide " data-line="32" data-h="3" data-v="0">
+</section><section lineNo="32" class="slide " data-line="32" data-h="3" data-v="0">
 <p>All features of <strong>Markdown Preview Enhanced</strong> are supported.</p>
 <p><div class="mathjax-exps">$$f(x) = &#x5C;int_{-&#x5C;infty}^&#x5C;infty    &#x5C;hat f(&#x5C;xi)&#x5C;,e^{2 &#x5C;pi i &#x5C;xi x}    &#x5C;,d&#x5C;xi$$</div></p>
-</section><section class="slide " data-line="41" data-h="4" data-v="0">
+</section><section lineNo="41" class="slide " data-line="41" data-h="4" data-v="0">
 <p>You can set initialization config for your presentation.<br>
 Just add front-matter to your presentation markdown file.</p>
 <pre class="language-yaml"><span class="token punctuation">---</span>
@@ -1920,10 +1922,10 @@ Just add front-matter to your presentation markdown file.</p>
 <span class="token punctuation">---</span>
 </pre>
 <p>More information about front-matter settings can be found <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/presentation">here</a>.</p>
-</section><section data-notes="This is speaker note" class="slide " data-line="54" data-h="5" data-v="0">
+</section><section data-notes="This is speaker note" lineNo="54" class="slide " data-line="54" data-h="5" data-v="0">
 <p><strong>Speaker notes</strong> is also supported (not in preview).<br>
 Press the <kbd>s</kbd> key on your keyboard to open the notes window.</p>
-</section><section class="slide " data-line="58" data-h="6" data-v="0">
+</section><section lineNo="58" class="slide " data-line="58" data-h="6" data-v="0">
 <p>To enable speaker notes, set front-matter as:</p>
 <pre class="language-yaml"><span class="token punctuation">---</span>
 <span class="token key atrule">presentation</span><span class="token punctuation">:</span>
@@ -1934,23 +1936,23 @@ Press the <kbd>s</kbd> key on your keyboard to open the notes window.</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-notes="Write your note here" --></span>
 </pre>
 <p>check <a href="https://github.com/hakimel/reveal.js#speaker-notes">Reveal.js Speaker Notes</a> section for more information.</p>
-</section><section><section class="slide " data-line="75" data-h="7" data-v="0">
+</section><section><section lineNo="75" class="slide " data-line="75" data-h="7" data-v="0">
 <p>By default, all slides are aligned horizontally, but you can also create vertical slides by adding <code>vertical=true</code>.<br>
 For example:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide vertical=true --></span>
 </pre>
-</section><section class="slide " data-line="82" data-h="7" data-v="1">
+</section><section vertical="true" lineNo="82" class="slide " data-line="82" data-h="7" data-v="1">
 <p>You just discovered a vertical slide!</p>
-</section></section><section class="slide " data-line="85" data-h="8" data-v="0">
+</section></section><section lineNo="85" class="slide " data-line="85" data-h="8" data-v="0">
 <p>You can set <code>id</code> and <code>class</code> for your slide like this:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide id="my-id" class="my-class1 my-class2" --></span>
 </pre>
-</section><section class="slide " data-line="91" data-h="9" data-v="0">
+</section><section lineNo="91" class="slide " data-line="91" data-h="9" data-v="0">
 <p>You can set slide background very easily.<br>
 For example:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-background-color="#ff0000" --></span>
 </pre>
-</section><section data-background-color="#ffebcf" class="slide " data-line="98" data-h="10" data-v="0">
+</section><section data-background-color="#ffebcf" lineNo="98" class="slide " data-line="98" data-h="10" data-v="0">
 <p>Of course you can do more about slide <strong>background</strong>.</p>
 <ul>
 <li><code>data-background-image</code><br>
@@ -1962,7 +1964,7 @@ See <a href="https://developer.mozilla.org/docs/Web/CSS/background-position">bac
 <li><code>data-background-repeat</code><br>
 See <a href="https://developer.mozilla.org/docs/Web/CSS/background-repeat">background-repeat</a> on MDN.</li>
 </ul>
-</section><section class="slide " data-line="109" data-h="11" data-v="0">
+</section><section lineNo="109" class="slide " data-line="109" data-h="11" data-v="0">
 <p>You can also set <strong>video background</strong> and <strong>iframe background</strong>.</p>
 <ul>
 <li><code>data-background-video</code><br>
@@ -1974,34 +1976,39 @@ Flags if the audio should be muted.</li>
 <li><code>data-background-iframe</code><br>
 Embeds a web page as a background.</li>
 </ul>
-</section><section class="slide " data-line="120" data-h="12" data-v="0">
+</section><section lineNo="120" class="slide " data-line="120" data-h="12" data-v="0">
 <p>For example, the markdown snippet below will generate slide like...</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 </pre>
-</section><section data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" class="slide " data-line="129" data-h="13" data-v="0">
+</section><section data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" lineNo="129" class="slide " data-line="129" data-h="13" data-v="0">
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
-</section><section class="slide " data-line="135" data-h="14" data-v="0">
+</section><section lineNo="135" class="slide " data-line="135" data-h="14" data-v="0">
 <p>It is also very easy to customize presentation css.<br>
 Run command:<br>
 <code>Markdown Preview Enhanced: Customize Css</code><br>
 then edit:</p>
-<pre class="language-less"><span class="token selector">.slides > section:nth-child(1)</span> <span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">// This will modify `the first slide`.</span>
-  <span class="token property">background-color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+<pre class="language-less"><span class="token selector">.markdown-preview.markdown-preview</span> <span class="token punctuation">{</span>
+  <span class="token selector">.slides</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// This will modify all slides.</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.slides > section:nth-child(1)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// This will modify `the first slide`.</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </pre>
-</section><section class="slide " data-line="147" data-h="15" data-v="0">
+</section><section lineNo="152" class="slide " data-line="152" data-h="15" data-v="0">
 <p>You can check your presentation in browser by<br>
 right clicking at the preview, then choose</p>
 <p><code>Open in Browser</code></p>
-</section><section class="slide " data-line="153" data-h="16" data-v="0">
+</section><section lineNo="158" class="slide " data-line="158" data-h="16" data-v="0">
 <p><strong>Markdown Preview Enhanced</strong> can also generate beautiful <strong>HTML</strong> or <strong>PDF</strong> files for your presentation.</p>
-</section><section class="slide " data-line="156" data-h="17" data-v="0">
+</section><section lineNo="161" class="slide " data-line="161" data-h="17" data-v="0">
 <h4 class="mume-header" id="star-this-project-if-you-like-it">Star this project if you like it ;)</h4>
 
 <ul>
@@ -2009,17 +2016,19 @@ right clicking at the preview, then choose</p>
 <li>Feel free to post issues and request new features <a href="https://github.com/shd101wyy/markdown-preview-enhanced/issues">here</a></li>
 <li>Source code of this presentation can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md">here</a>, <a href="https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md">raw</a></li>
 </ul>
-</section><section data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" class="slide " data-line="163" data-h="18" data-v="0">
+</section><section data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" lineNo="168" class="slide " data-line="168" data-h="18" data-v="0">
 </section>
       </div>
     </div>
     
+      </div>
     </body>
     
       <script>
         Reveal.initialize({"margin":0.1,"enableSpeakerNotes":true,"dependencies":[{"src":"revealjs_deps/notes.js","async":true}]})
       </script>
       
+    
     
     <script>
 (function bindTaskListEvent() {
@@ -2034,4 +2043,5 @@ right clicking at the preview, then choose</p>
   }
 }())    
 </script>
+    
   </html>

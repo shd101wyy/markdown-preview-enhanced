@@ -4,7 +4,7 @@
 
 Markdown Preview Enhanced uses [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
 
-[Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction.
+[Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction (**Recommended**).
 
 ![presentation](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
@@ -156,11 +156,14 @@ You can add `id` and `class` to a specific slide like this:
 
 Or if you only want to customize `nth` slide, modify your `less` file like this:   
 ```less
-html body {
-  // ...
-  // change the font size of the second slide to 14px
-  .slides > section:nth-child(2) {
-    font-size: 14px; // change font size to 14px;  
+.markdown-preview.markdown-preview {
+  // custom presentation style
+  .reveal .slides {
+    // modify all slides
+  }
+
+  .slides > section:nth-child(1) {
+    // this will modify `the first slide`
   }
 }
 ```

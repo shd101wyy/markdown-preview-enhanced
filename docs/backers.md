@@ -17,6 +17,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * yueduz
 * K Moses
 * [cnin](https://github.com/cnin)  
+* Axel Dürkop
 
 ---
 

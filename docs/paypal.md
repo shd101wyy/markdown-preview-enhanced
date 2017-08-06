@@ -1,7 +1,6 @@
 # PayPal
+You can visit my [paypal.me/shd101wy](https://www.paypal.me/shd101wyy) page.  
 
-The primary email of my PayPal account is
-`shd101wyy@sina.com`. (Or `shd101wyy@gmail.com`).    
 Please leave a note when you send money:  
 ```markdown
 `[your name](link you want) $amount_you_donate.` 

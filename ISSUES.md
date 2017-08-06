@@ -1,1 +1,1 @@
-* [x] Header with id `exports` will cause issue.  
+* [x] Header with id `exports` will cause issue.

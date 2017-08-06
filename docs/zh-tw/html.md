@@ -19,10 +19,13 @@ html:
   embed_local_images: false
   embed_svg: true
   offline: false
+  toc: undefined
 ---
 ```
 
 如果 `embed_local_images` 被設置為 `true`，那麼所有的本地圖片將會被嵌入為 `base64` 格式。
+
+如果 `toc` 被設置為 `false`，那麼邊欄目錄將會被隱藏。如果 `toc` 被設置為 `true`，那麼邊欄目錄將會被缺省啟動並顯示。如果 `toc` 沒有被設置，那麼缺省邊欄目錄將會被啟動，但是並不顯示。
 
 ## 保存時自動導出  
 添加 front-matter 如下：
