@@ -157,11 +157,15 @@ presentation:
 或者你也可以自定義第 `nth` 個幻燈片，編寫你的 `less` 如下：
 
 ```less
-html body {
-  // ...
-  // change the font size of the second slide to 14px
-  .slides > section:nth-child(2) {
-    font-size: 14px; // change font size to 14px;  
+.markdown-preview.markdown-preview {
+  // 自定義 presentation 樣式
+  .reveal .slides {
+    // 修改所有幻燈片
+  }
+
+  // 自定義 presentation 樣式
+  .slides > section:nth-child(1) {
+    // 修改 `第 1 個幻燈片`
   }
 }
 ```

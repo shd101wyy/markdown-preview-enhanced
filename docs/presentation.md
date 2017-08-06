@@ -156,11 +156,14 @@ You can add `id` and `class` to a specific slide like this:
 
 Or if you only want to customize `nth` slide, modify your `less` file like this:   
 ```less
-html body {
-  // ...
-  // change the font size of the second slide to 14px
-  .slides > section:nth-child(2) {
-    font-size: 14px; // change font size to 14px;  
+.markdown-preview.markdown-preview {
+  // custom presentation style
+  .reveal .slides {
+    // modify all slides
+  }
+
+  .slides > section:nth-child(1) {
+    // this will modify `the first slide`
   }
 }
 ```

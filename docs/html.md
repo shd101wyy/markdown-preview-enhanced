@@ -19,10 +19,13 @@ html:
   embed_local_images: false
   embed_svg: true
   offline: false
+  toc: undefined
 ---
 ```
 
-If `embed_local_images` is set to true, then all local images will be embedded as `base64` format.  
+If `embed_local_images` is set to `true`, then all local images will be embedded as `base64` format.  
+
+If `toc` is set to `false`, then the sidebar TOC will be disabled. If `toc` is set to `true`, then the sidebar TOC will be enabled and displayed. If `toc` is not specified, then the sidebar TOC will be enabled, but not displayed.
 
 ## Export on save  
 Add the front-matter like below:  
