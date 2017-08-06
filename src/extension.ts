@@ -102,7 +102,7 @@ function removePreviewFromMap(preview:MarkdownPreviewEnhancedView) {
  * @param editor 
  */
 function startPreview(editor) {
-  if (!(isMarkdownFile(editor.getPath()))) 
+  if (!editor || !editor['getPath'] || !(isMarkdownFile(editor.getPath()))) 
     return 
 
   let preview = getPreviewForEditor(editor)
@@ -228,6 +228,9 @@ mume.init() // init mume package
           editorElement.setAttribute('data-markdown-zen', '')
         else
           editorElement.removeAttribute('data-markdown-zen')
+      
+      // drop drop image events
+      bindMarkdownEditorDropEvents(editor)
     }
   }))
 
@@ -244,6 +247,9 @@ mume.init() // init mume package
           else
             editorElement.removeAttribute('data-markdown-zen')
         }
+
+        // drop drop image events
+        bindMarkdownEditorDropEvents(editor)
       }
     }
 
@@ -287,6 +293,33 @@ mume.init() // init mume package
     atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'))
   }
 })
+}
+
+/**
+ * Drop image file to markdown editor and upload the file directly.  
+ * @param editor 
+ */
+function bindMarkdownEditorDropEvents(editor) {
+  if (editor && editor.getElement) {
+    const editorElement = editor.getElement()
+
+    function dropImageFile(event) {
+      const files = event.dataTransfer.files
+      for (let i = 0; i < files.length; i++) {
+        const filePath = files[i].path
+        if (files[i].type.startsWith('image')) { // upload image
+          event.stopPropagation()
+          event.preventDefault()
+
+          MarkdownPreviewEnhancedView.uploadImageFile(editor, filePath, config.imageUploader)
+        }
+      }
+      return false
+    }
+
+    editorElement.ondrop = dropImageFile
+    editorElement.ondragover = function(event) { event.preventDefault(); event.stopPropagation(); return false }
+  }
 }
 
 /**
