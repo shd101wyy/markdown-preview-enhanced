@@ -2,6 +2,14 @@
 I will be busy hunting jobs (August & September), so I won't have time to implement new features for this extension.
 The updates in the following two months will be bug fixes only.
 
+## 0.14.6
+* Supported quick image upload. Just drop your image file to markdown editor (not preview).
+
+![upload](https://i.loli.net/2017/08/07/5987db34cb33c.gif)
+
+* Fixed HTML export style bug.
+
+
 ## 0.14.5
 * The old feature [WaveDrom diagram](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=wavedrom) is now supported again.
 * The doc of customization css is updated, please [check it here](https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css).

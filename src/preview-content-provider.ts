@@ -67,7 +67,7 @@ export class MarkdownPreviewEnhancedView {
       event.preventDefault()
       event.stopPropagation()
     }
-    
+
     // Webview for markdown preview.
     // Please note that the webview will load 
     // the controller script at:
@@ -268,7 +268,8 @@ export class MarkdownPreviewEnhancedView {
     this.pasteImageFile(imageUrl)
   },
   'uploadImageFile': function(sourceUri, imageUrl, imageUploader) {
-    this.uploadImageFile(imageUrl, imageUploader)
+    if (!this.editor) return
+    MarkdownPreviewEnhancedView.uploadImageFile(this.editor, imageUrl, imageUploader)
   },
   'openInBrowser': function(sourceUri) {
     this.openInBrowser()
@@ -780,12 +781,12 @@ export class MarkdownPreviewEnhancedView {
     })
   }
 
-  private replaceHint(bufferRow:number, hint:string, withStr:string):boolean {
-    if (!this.editor) return false
-    const lines = this.editor.buffer.getLines()
+  private static replaceHint(editor: AtomCore.TextEditor, bufferRow:number, hint:string, withStr:string):boolean {
+    if (!editor) return false
+    const lines = editor.buffer.getLines()
     let textLine = lines[bufferRow] || ''
     if (textLine.indexOf(hint) >= 0) {
-      this.editor.buffer.setTextInRange([
+      editor.buffer.setTextInRange([
         [bufferRow, 0],
         [bufferRow, textLine.length],
       ], textLine.replace(hint, withStr))
@@ -794,7 +795,7 @@ export class MarkdownPreviewEnhancedView {
     return false 
   }
 
-  private setUploadedImageURL(imageFileName:string, url:string, hint:string, bufferRow:number) {
+  private static setUploadedImageURL(editor: AtomCore.TextEditor, imageFileName:string, url:string, hint:string, bufferRow:number) {
     let description
     if (imageFileName.lastIndexOf('.'))
       description = imageFileName.slice(0, imageFileName.lastIndexOf('.'))
@@ -803,10 +804,10 @@ export class MarkdownPreviewEnhancedView {
 
     const withStr = `![${description}](${url})`
 
-    if (!this.replaceHint(bufferRow, hint, withStr)) {
+    if (!this.replaceHint(editor, bufferRow, hint, withStr)) {
       let i = bufferRow - 20
       while (i <= bufferRow + 20) {
-        if (this.replaceHint(i, hint, withStr))
+        if (this.replaceHint(editor, i, hint, withStr))
           break
         i++
       }
@@ -818,20 +819,20 @@ export class MarkdownPreviewEnhancedView {
    * Then insert markdown image url to markdown file.  
    * @param imageFilePath 
    */
-  public uploadImageFile(imageFilePath:string, imageUploader:string="imgur") {
-    if (!this.editor) return
+  public static uploadImageFile(editor:AtomCore.TextEditor, imageFilePath:string, imageUploader:string="imgur") {
+    if (!editor) return
 
     const imageFileName = path.basename(imageFilePath)
 
     const uid = Math.random().toString(36).substr(2, 9)
     const hint = `![Uploading ${imageFileName}… (${uid})]()`
-    const bufferRow = this.editor.getCursorBufferPosition().row
+    const bufferRow = editor.getCursorBufferPosition().row
 
-    this.editor.insertText(hint)
+    editor.insertText(hint)
 
     mume.utility.uploadImage(imageFilePath, {method:imageUploader})
     .then((url)=> {
-      this.setUploadedImageURL(imageFileName, url, hint, bufferRow)
+      this.setUploadedImageURL(editor, imageFileName, url, hint, bufferRow)
     })
     .catch((err)=> {
       atom.notifications.addError(err)

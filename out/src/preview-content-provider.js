@@ -620,13 +620,13 @@ class MarkdownPreviewEnhancedView {
             });
         });
     }
-    replaceHint(bufferRow, hint, withStr) {
-        if (!this.editor)
+    static replaceHint(editor, bufferRow, hint, withStr) {
+        if (!editor)
             return false;
-        const lines = this.editor.buffer.getLines();
+        const lines = editor.buffer.getLines();
         let textLine = lines[bufferRow] || '';
         if (textLine.indexOf(hint) >= 0) {
-            this.editor.buffer.setTextInRange([
+            editor.buffer.setTextInRange([
                 [bufferRow, 0],
                 [bufferRow, textLine.length],
             ], textLine.replace(hint, withStr));
@@ -634,17 +634,17 @@ class MarkdownPreviewEnhancedView {
         }
         return false;
     }
-    setUploadedImageURL(imageFileName, url, hint, bufferRow) {
+    static setUploadedImageURL(editor, imageFileName, url, hint, bufferRow) {
         let description;
         if (imageFileName.lastIndexOf('.'))
             description = imageFileName.slice(0, imageFileName.lastIndexOf('.'));
         else
             description = imageFileName;
         const withStr = `![${description}](${url})`;
-        if (!this.replaceHint(bufferRow, hint, withStr)) {
+        if (!this.replaceHint(editor, bufferRow, hint, withStr)) {
             let i = bufferRow - 20;
             while (i <= bufferRow + 20) {
-                if (this.replaceHint(i, hint, withStr))
+                if (this.replaceHint(editor, i, hint, withStr))
                     break;
                 i++;
             }
@@ -655,17 +655,17 @@ class MarkdownPreviewEnhancedView {
      * Then insert markdown image url to markdown file.
      * @param imageFilePath
      */
-    uploadImageFile(imageFilePath, imageUploader = "imgur") {
-        if (!this.editor)
+    static uploadImageFile(editor, imageFilePath, imageUploader = "imgur") {
+        if (!editor)
             return;
         const imageFileName = path.basename(imageFilePath);
         const uid = Math.random().toString(36).substr(2, 9);
         const hint = `![Uploading ${imageFileName}… (${uid})]()`;
-        const bufferRow = this.editor.getCursorBufferPosition().row;
-        this.editor.insertText(hint);
+        const bufferRow = editor.getCursorBufferPosition().row;
+        editor.insertText(hint);
         mume.utility.uploadImage(imageFilePath, { method: imageUploader })
             .then((url) => {
-            this.setUploadedImageURL(imageFileName, url, hint, bufferRow);
+            this.setUploadedImageURL(editor, imageFileName, url, hint, bufferRow);
         })
             .catch((err) => {
             atom.notifications.addError(err);
@@ -720,7 +720,9 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         this.pasteImageFile(imageUrl);
     },
     'uploadImageFile': function (sourceUri, imageUrl, imageUploader) {
-        this.uploadImageFile(imageUrl, imageUploader);
+        if (!this.editor)
+            return;
+        MarkdownPreviewEnhancedView.uploadImageFile(this.editor, imageUrl, imageUploader);
     },
     'openInBrowser': function (sourceUri) {
         this.openInBrowser();
