@@ -18,6 +18,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * K Moses
 * [cnin](https://github.com/cnin)  
 * [xldrkp](axel-duerkop.de/blog)  
+* [湘君](http://www.sierxue.me/)  
 
 ---
 
