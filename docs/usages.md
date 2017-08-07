@@ -53,7 +53,8 @@ You can press <kbd>cmd-shift-p</kbd>  in atom editor to toggle <strong> Command 
 	Edit `MathJax` init configuration.  
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>   
-  <kbd>ctrl-shift-i</kbd>  
+  <kbd>ctrl-shift-i</kbd>   
+  For more information, check [this doc](image-helper.md).   
 	Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).        
   ![screen shot 2017-06-06 at 3 42 31 pm](https://user-images.githubusercontent.com/1908863/26850896-c43be8e2-4ace-11e7-802d-6a7b51bf3130.png)  
 
