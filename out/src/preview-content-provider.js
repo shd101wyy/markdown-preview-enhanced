@@ -55,13 +55,13 @@ class MarkdownPreviewEnhancedView {
         // Prevent atom keyboard event.
         this.element.classList.add('native-key-bindings');
         this.element.classList.add('mpe-preview');
-        // Prevent atom context menu from popping up.  
+        // Prevent atom context menu from popping up.
         this.element.oncontextmenu = function (event) {
             event.preventDefault();
             event.stopPropagation();
         };
         // Webview for markdown preview.
-        // Please note that the webview will load 
+        // Please note that the webview will load
         // the controller script at:
         // https://github.com/shd101wyy/mume/blob/master/src/webview.ts
         this.webview = document.createElement('webview');
@@ -142,9 +142,9 @@ class MarkdownPreviewEnhancedView {
             this.disposables = new atom_1.CompositeDisposable();
             // reset tab title
             this.updateTabTitle();
-            // reset 
+            // reset
             this.JSAndCssFiles = [];
-            // init markdown engine 
+            // init markdown engine
             if (this.editor.getPath() in MARKDOWN_ENGINES_MAP) {
                 this.engine = MARKDOWN_ENGINES_MAP[this.editor.getPath()];
             }
@@ -310,7 +310,7 @@ class MarkdownPreviewEnhancedView {
     }
     initPreviewEvents() {
         // as esc key doesn't work in atom,
-        // I created command. 
+        // I created command.
         this.disposables.add(atom.commands.add(this.element, {
             'markdown-preview-enhanced:esc-pressed': () => {
                 console.log('esc pressed');
@@ -356,11 +356,11 @@ class MarkdownPreviewEnhancedView {
     renderMarkdown(triggeredBySave = false) {
         if (!this.editor)
             return;
-        // presentation mode 
+        // presentation mode
         if (this.engine.isPreviewInPresentationMode) {
             return this.loadPreview(); // restart preview.
         }
-        // not presentation mode 
+        // not presentation mode
         const text = this.editor.getText();
         // notice webview that we started parsing markdown
         this.postMessage({ command: 'startParsingMarkdown' });
@@ -457,7 +457,7 @@ class MarkdownPreviewEnhancedView {
     refreshPreview() {
         if (this.engine) {
             this.engine.clearCaches();
-            // restart webview 
+            // restart webview
             this.loadPreview();
         }
     }
@@ -785,7 +785,10 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         const buffer = editor.buffer;
         if (!buffer)
             return;
-        let line = buffer.lines[dataLine];
+        let lines = buffer.getLines();
+        if (dataLine >= lines.length)
+            return;
+        let line = lines[dataLine];
         if (line.match(/\[ \]/)) {
             line = line.replace('[ ]', '[x]');
         }

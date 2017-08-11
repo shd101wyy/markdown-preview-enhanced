@@ -2,6 +2,17 @@
 I will be busy hunting jobs (August & September), so I won't have time to implement new features for this extension.
 The updates in the following two months will be bug fixes only.
 
+## 0.14.7  
+* Fixed revealjs html export style bug.  
+* Supported configuring attributes for diagram **containers**.  
+For example:  
+
+        ```puml {.center}
+        // your code here
+        ```
+    will add `class="center"` to the container.  
+* By default, all exported files will use `github-light.css` style. You can use your preview theme for export by setting `printBackground` to `true` from the extension settings, or add `print_background:true` to front-matter.  
+
 ## 0.14.6
 * Supported quick image upload. Just drop your image file to markdown editor (not preview).
 
