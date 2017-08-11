@@ -94,6 +94,17 @@ Markdown Preview Enhanced 支持 [ditaa](https://github.com/stathissideris/ditaa
 
 ---
 
+你可以為圖像的容器添加屬性。  
+例如：
+
+    ```puml {align="center"}
+    a->b  
+    ```
+
+將會把 puml 的圖像放在中間。  
+
+---
+
 當你保存你的 markdown 文件到 [GFM Markdown](zh-tw/markdown.md) 時， 所有圖像將會被保存為 png 文件到 `imageFolderPath` 文件夾。     
 你可以設置導出文件的文件名 `{filename="圖片.png"}`。    
 

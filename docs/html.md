@@ -20,6 +20,8 @@ html:
   embed_svg: true
   offline: false
   toc: undefined
+
+print_background: false
 ---
 ```
 

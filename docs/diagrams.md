@@ -94,6 +94,17 @@ If you don't want to render graphs but only display code block, then you can add
 
 ---
 
+You can set attributes for the container of the diagram.  
+For example:  
+
+    ```puml {align="center"}
+    a->b  
+    ```
+
+will put the puml diagram at the center of preview.
+
+---
+
 When you export your markdown file to [GFM Markdown](markdown.md), the diagrams will be saved as png images to your `imageFolderPath` defined in package settings.   
 You can control the exported image filename by declaring `{filename="your_file_name.png"}`.    
 
