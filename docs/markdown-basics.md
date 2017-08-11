@@ -182,6 +182,18 @@ Content [^1]
 [^1]: Hi! This is a footnote
 ```
 
+### Abbreviation  
+```markdown  
+*[HTML]: Hyper Text Markup Language
+*[W3C]:  World Wide Web Consortium
+The HTML specification
+is maintained by the W3C.
+```
+
+### Mark  
+```markdown
+==marked==
+```
 
 ## References
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
