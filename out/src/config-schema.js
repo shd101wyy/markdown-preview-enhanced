@@ -255,10 +255,10 @@ exports.configSchema = {
         "order": 65
     },
     "printBackground": {
-        "title": "Print Background when generating pdf",
+        "title": "Print Background",
         "type": "boolean",
-        "default": true,
-        "description": "Whether to print background for PDF file export or not. If set to `false`, then `github-light` preview theme will be used.",
+        "default": false,
+        "description": "Whether to print background for file export or not. If set to `false`, then `github-light` preview theme will be used. You can also set `print_background` in front-matter for individual files.",
         "order": 70
     },
     "imageFolderPath": {
