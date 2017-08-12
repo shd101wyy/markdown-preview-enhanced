@@ -6,7 +6,8 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 
 
 ## $29+
-* [蓝牙彪](https://www.zhihu.com/people/bluetoothbiao/answers)
+* [蓝牙彪](https://www.zhihu.com/people/bluetoothbiao/answers)  
+* [Toma Tasovac](https://twitter.com/ttasovac)  
 
 ---
 
