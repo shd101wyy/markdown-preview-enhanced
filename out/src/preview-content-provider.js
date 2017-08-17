@@ -48,6 +48,7 @@ class MarkdownPreviewEnhancedView {
         this.editorScrollDelay = Date.now();
         this.scrollTimeout = null;
         this.zoomLevel = 1;
+        this._webviewDOMReady = false;
         this._destroyCB = null;
         this.uri = uri;
         this.config = config;
@@ -70,6 +71,7 @@ class MarkdownPreviewEnhancedView {
         this.webview.style.border = 'none';
         this.webview.src = path.resolve(__dirname, '../../html/loading.html');
         this.webview.preload = mume.utility.addFileProtocol(path.resolve(mume.utility.extensionDirectoryPath, './dependencies/electron-webview/preload.js'));
+        this.webview.addEventListener('dom-ready', () => { this._webviewDOMReady = true; });
         this.webview.addEventListener('did-stop-loading', this.webviewStopLoading.bind(this));
         this.webview.addEventListener('ipc-message', this.webviewReceiveMessage.bind(this));
         this.webview.addEventListener('console-message', this.webviewConsoleMessage.bind(this));
@@ -193,11 +195,26 @@ class MarkdownPreviewEnhancedView {
             });
             yield mume.utility.writeFile(htmlFilePath, html, { encoding: 'utf-8' });
             // load to webview
+            yield this.waitUtilWebviewDOMReady();
             if (this.webview.getURL() === htmlFilePath) {
                 this.webview.reload();
             }
             else {
                 this.webview.loadURL(mume.utility.addFileProtocol(htmlFilePath));
+            }
+        });
+    }
+    /**
+     * Wait until this.webview is attached to DOM and dom-ready event is emitted.
+     */
+    waitUtilWebviewDOMReady() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this._webviewDOMReady)
+                return;
+            while (true) {
+                yield mume.utility.sleep(500);
+                if (this._webviewDOMReady)
+                    return;
             }
         });
     }

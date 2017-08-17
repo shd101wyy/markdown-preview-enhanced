@@ -15,7 +15,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'markdown-preview-enhanced'
+      'label': 'Markdown Preview Enhanced'
       'submenu': [
         {
           'label': 'Toggle'

@@ -49,6 +49,7 @@ export class MarkdownPreviewEnhancedView {
   private scrollTimeout = null
 
   private zoomLevel:number = 1
+  private _webviewDOMReady:boolean = false
 
   private _destroyCB:(preview:MarkdownPreviewEnhancedView)=>void = null
 
@@ -80,6 +81,7 @@ export class MarkdownPreviewEnhancedView {
     this.webview.preload = mume.utility.addFileProtocol(path.resolve(
       mume.utility.extensionDirectoryPath , './dependencies/electron-webview/preload.js'))
 
+    this.webview.addEventListener('dom-ready', ()=> {this._webviewDOMReady = true})
     this.webview.addEventListener('did-stop-loading', this.webviewStopLoading.bind(this))
     this.webview.addEventListener('ipc-message', this.webviewReceiveMessage.bind(this))
     this.webview.addEventListener('console-message', this.webviewConsoleMessage.bind(this))
@@ -215,10 +217,22 @@ export class MarkdownPreviewEnhancedView {
     await mume.utility.writeFile(htmlFilePath, html, {encoding: 'utf-8'})
 
     // load to webview
+    await this.waitUtilWebviewDOMReady()
     if (this.webview.getURL() === htmlFilePath) {
       this.webview.reload()
     } else {
       this.webview.loadURL(mume.utility.addFileProtocol(htmlFilePath))
+    }
+  }
+
+  /**
+   * Wait until this.webview is attached to DOM and dom-ready event is emitted.  
+   */
+  private async waitUtilWebviewDOMReady():Promise<void> {
+    if (this._webviewDOMReady) return 
+    while (true) {
+      await mume.utility.sleep(500)
+      if (this._webviewDOMReady) return
     }
   }
 
