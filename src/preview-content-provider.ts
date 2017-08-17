@@ -277,6 +277,9 @@ export class MarkdownPreviewEnhancedView {
   'htmlExport': function(sourceUri, offline) {
     this.htmlExport(offline)
   },
+  'chromeExport': function(sourceUri, fileType) {
+    this.chromeExport(fileType)
+  },
   'phantomjsExport': function(sourceUri, fileType) {
     this.phantomjsExport(fileType)
   },
@@ -623,6 +626,17 @@ export class MarkdownPreviewEnhancedView {
   public htmlExport(offline) {
     atom.notifications.addInfo('Your document is being prepared')
     this.engine.htmlExport({offline})
+    .then((dest)=> {
+      atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
+    })
+    .catch((error)=> {
+      atom.notifications.addError(error.toString())
+    })
+  }
+
+  public chromeExport(fileType='pdf') {
+    atom.notifications.addInfo('Your document is being prepared')
+    this.engine.chromeExport({fileType, openFileAfterGeneration: true})
     .then((dest)=> {
       atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``)
     })

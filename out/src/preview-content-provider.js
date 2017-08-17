@@ -477,6 +477,16 @@ class MarkdownPreviewEnhancedView {
             atom.notifications.addError(error.toString());
         });
     }
+    chromeExport(fileType = 'pdf') {
+        atom.notifications.addInfo('Your document is being prepared');
+        this.engine.chromeExport({ fileType, openFileAfterGeneration: true })
+            .then((dest) => {
+            atom.notifications.addSuccess(`File \`${path.basename(dest)}\` was created at path: \`${dest}\``);
+        })
+            .catch((error) => {
+            atom.notifications.addError(error.toString());
+        });
+    }
     phantomjsExport(fileType = 'pdf') {
         atom.notifications.addInfo('Your document is being prepared');
         this.engine.phantomjsExport({ fileType, openFileAfterGeneration: true })
@@ -729,6 +739,9 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
     },
     'htmlExport': function (sourceUri, offline) {
         this.htmlExport(offline);
+    },
+    'chromeExport': function (sourceUri, fileType) {
+        this.chromeExport(fileType);
     },
     'phantomjsExport': function (sourceUri, fileType) {
         this.phantomjsExport(fileType);
