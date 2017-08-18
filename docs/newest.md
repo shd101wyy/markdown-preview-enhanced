@@ -1,3 +1,7 @@
+## 0.14.9
+* Added `ignoreLink` option to TOC [#583](https://github.com/shd101wyy/markdown-preview-enhanced/issues/583).  
+* Fixed issue [#584](https://github.com/shd101wyy/markdown-preview-enhanced/issues/584), [#585](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585), [#586](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585).  
+
 ## 0.14.8  
 * Removed the `Welcome Page`.  
 * Supported revealjs `fragment` [#559](https://github.com/shd101wyy/markdown-preview-enhanced/issues/559).  

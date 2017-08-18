@@ -222,9 +222,14 @@ class MarkdownPreviewEnhancedView {
      * Webview finished loading content.
      */
     webviewStopLoading() {
-        if (!this.engine.isPreviewInPresentationMode) {
-            this.renderMarkdown();
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            while (!this.engine) {
+                yield mume.utility.sleep(500);
+            }
+            if (!this.engine.isPreviewInPresentationMode) {
+                this.renderMarkdown();
+            }
+        });
     }
     /**
      * Received message from webview.
@@ -371,7 +376,7 @@ class MarkdownPreviewEnhancedView {
      * Render markdown
      */
     renderMarkdown(triggeredBySave = false) {
-        if (!this.editor)
+        if (!this.editor || !this.engine)
             return;
         // presentation mode
         if (this.engine.isPreviewInPresentationMode) {

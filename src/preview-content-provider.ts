@@ -239,7 +239,10 @@ export class MarkdownPreviewEnhancedView {
   /**
    * Webview finished loading content.
    */
-  private webviewStopLoading() {
+  private async webviewStopLoading() { // #584
+    while (!this.engine) {
+      await mume.utility.sleep(500)
+    }
     if (!this.engine.isPreviewInPresentationMode) {
       this.renderMarkdown()
     }
@@ -507,7 +510,7 @@ export class MarkdownPreviewEnhancedView {
    * Render markdown
    */
   public renderMarkdown(triggeredBySave:boolean=false) {
-    if (!this.editor) return
+    if (!this.editor || !this.engine) return
 
     // presentation mode
     if (this.engine.isPreviewInPresentationMode) {
