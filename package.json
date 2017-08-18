@@ -55,7 +55,7 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.1.9"
+    "@shd101wyy/mume": "^0.2.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.7",
