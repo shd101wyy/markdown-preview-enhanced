@@ -1374,12 +1374,7 @@ body {
       
       </style>
       
-      
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({"extensions":["tex2jax.js"],"jax":["input/TeX","output/HTML-CSS"],"messageStyle":"none","tex2jax":{"processEnvironments":false,"processEscapes":true,"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"TeX":{"extensions":["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]},"HTML-CSS":{"availableFonts":["TeX"]}});
-        </script>
-        <script type="text/javascript" async src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js"></script>
-        
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.2/katex.min.css">
       
 
       
@@ -1389,195 +1384,7 @@ body {
       
 
       <style> 
-      /**
- * prism.js Github theme based on GitHub's theme.
- * @author Sam Clarke
- */
-code[class*="language-"],
-pre[class*="language-"] {
-  color: #333;
-  background: none;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.4;
-
-  -moz-tab-size: 8;
-  -o-tab-size: 8;
-  tab-size: 8;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-  padding: .8em;
-  overflow: auto;
-  /* border: 1px solid #ddd; */
-  border-radius: 3px;
-  /* background: #fff; */
-  background: #f5f5f5;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-  padding: .1em;
-  border-radius: .3em;
-  white-space: normal;
-  background: #f5f5f5;
-}
-
-.token.comment,
-.token.blockquote {
-  color: #969896;
-}
-
-.token.cdata {
-  color: #183691;
-}
-
-.token.doctype,
-.token.punctuation,
-.token.variable,
-.token.macro.property {
-  color: #333;
-}
-
-.token.operator,
-.token.important,
-.token.keyword,
-.token.rule,
-.token.builtin {
-  color: #a71d5d;
-}
-
-.token.string,
-.token.url,
-.token.regex,
-.token.attr-value {
-  color: #183691;
-}
-
-.token.property,
-.token.number,
-.token.boolean,
-.token.entity,
-.token.atrule,
-.token.constant,
-.token.symbol,
-.token.command,
-.token.code {
-  color: #0086b3;
-}
-
-.token.tag,
-.token.selector,
-.token.prolog {
-  color: #63a35c;
-}
-
-.token.function,
-.token.namespace,
-.token.pseudo-element,
-.token.class,
-.token.class-name,
-.token.pseudo-class,
-.token.id,
-.token.url-reference .token.variable,
-.token.attr-name {
-  color: #795da3;
-}
-
-.token.entity {
-  cursor: help;
-}
-
-.token.title,
-.token.title .token.punctuation {
-  font-weight: bold;
-  color: #1d3e81;
-}
-
-.token.list {
-  color: #ed6a43;
-}
-
-.token.inserted {
-  background-color: #eaffea;
-  color: #55a532;
-}
-
-.token.deleted {
-  background-color: #ffecec;
-  color: #bd2c00;
-}
-
-.token.bold {
-  font-weight: bold;
-}
-
-.token.italic {
-  font-style: italic;
-}
-
-
-/* JSON */
-.language-json .token.property {
-  color: #183691;
-}
-
-.language-markup .token.tag .token.punctuation {
-  color: #333;
-}
-
-/* CSS */
-code.language-css,
-.language-css .token.function {
-  color: #0086b3;
-}
-
-/* YAML */
-.language-yaml .token.atrule {
-  color: #63a35c;
-}
-
-code.language-yaml {
-  color: #183691;
-}
-
-/* Ruby */
-.language-ruby .token.function {
-  color: #333;
-}
-
-/* Markdown */
-.language-markdown .token.url {
-  color: #795da3;
-}
-
-/* Makefile */
-.language-makefile .token.symbol {
-  color: #795da3;
-}
-
-.language-makefile .token.variable {
-  color: #183691;
-}
-
-.language-makefile .token.builtin {
-  color: #0086b3;
-}
-
-/* Bash */
-.language-bash .token.keyword {
-  color: #0086b3;
-}/**
+      pre{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;padding:1em;margin:.5em 0;overflow:auto;line-height:1.5;tab-size:4;hyphens:none;color:#2b3f6a;background-color:#eee9dd !important;border:#ddd3bb;border-radius:3px}pre[class*="language-"]{padding:1em}code[class*="language-"] .token.comment,pre[class*="language-"] .token.comment,code[class*="language-"] .token.prolog,pre[class*="language-"] .token.prolog,code[class*="language-"] .token.doctype,pre[class*="language-"] .token.doctype,code[class*="language-"] .token.cdata,pre[class*="language-"] .token.cdata{color:#9ca3b0;font-style:italic}code[class*="language-"] .token.punctuation,pre[class*="language-"] .token.punctuation{color:#9ca3b0}code[class*="language-"] .namespace,pre[class*="language-"] .namespace{opacity:.7}code[class*="language-"] .token.constant,pre[class*="language-"] .token.constant{color:#c16161}code[class*="language-"] .token.boolean,pre[class*="language-"] .token.boolean,code[class*="language-"] .token.number,pre[class*="language-"] .token.number,code[class*="language-"] .token.function-name,pre[class*="language-"] .token.function-name{color:#c16161}code[class*="language-"] .token.tag,pre[class*="language-"] .token.tag{color:#ac4343}code[class*="language-"] .token.symbol,pre[class*="language-"] .token.symbol{color:#8f932b}code[class*="language-"] .token.selector,pre[class*="language-"] .token.selector{color:#d08e25}code[class*="language-"] .token.attr-name,pre[class*="language-"] .token.attr-name{color:#d08e25}code[class*="language-"] .token.string,pre[class*="language-"] .token.string{background-color:rgba(255,204,0,0.03);color:rgba(106,68,28,0.77)}code[class*="language-"] .token.char,pre[class*="language-"] .token.char{color:#8f932b}code[class*="language-"] .token.url,pre[class*="language-"] .token.url{color:#d08e25}code[class*="language-"] .token.atrule,pre[class*="language-"] .token.atrule,code[class*="language-"] .token.attr-value,pre[class*="language-"] .token.attr-value,code[class*="language-"] .token.keyword,pre[class*="language-"] .token.keyword{color:#8f932b}code[class*="language-"] .token.function,pre[class*="language-"] .token.function{color:#d08e25}code[class*="language-"] .token.class-name,pre[class*="language-"] .token.class-name{color:#2b3f6a}code[class*="language-"] .token.variable,pre[class*="language-"] .token.variable{color:#5e78e1}code[class*="language-"] .token.regex,pre[class*="language-"] .token.regex,code[class*="language-"] .token.important,pre[class*="language-"] .token.important{color:#379566}code[class*="language-"] .token.important,pre[class*="language-"] .token.important,code[class*="language-"] .token.bold,pre[class*="language-"] .token.bold{font-weight:bold}code[class*="language-"] .token.italic,pre[class*="language-"] .token.italic{font-style:italic}code[class*="language-"] .token.entity,pre[class*="language-"] .token.entity{cursor:help}/**
  * Beige theme for reveal.js.
  *
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
@@ -1873,13 +1680,11 @@ body {
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
-.markdown-preview{width:100%;height:100%}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]{position:absolute;width:100%;height:100%;top:0;left:0;margin:0;padding:0}@media screen and (min-width:914px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){width:980px;margin:10px auto;padding:0 2em}}@media screen and (max-width:914px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){margin:0 auto;padding:0 2em}}@media screen and (max-width:450px){html body[for="html-export"] .markdown-preview:not([data-presentation-mode]){font-size:14px !important;margin:0 auto;padding:0 1em}}@media print{html body[for="html-export"] #sidebar-toc-btn{display:none}}html body[for="html-export"] #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.6}html body[for="html-export"][html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:268px;height:100%;padding:32px 0 48px 0;overflow:auto;font-size:14px;box-shadow:4px 0 12px rgba(150,150,150,0.33);box-sizing:border-box}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"][html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"][html-show-sidebar-toc] .markdown-preview{position:relative;left:268px;max-width:980px;width:calc(100% - 268px);margin:0;padding:0 2em;box-sizing:border-box}html body[for="html-export"]:not([html-show-sidebar-toc]) .md-sidebar-toc{display:none} 
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none} 
        
       </style>
     </head>
-    <body for="html-export">
-      
-      
+    <body for="html-export" data-presentation-mode="">
       <div class="mume markdown-preview   " data-presentation-mode="">
       
     <div style="display:none;"></div>
@@ -1908,10 +1713,12 @@ powered by <a href="https://github.com/hakimel/reveal.js">reveal.js</a><br>
 <li>atom<br>
 <img src="http://i.imgur.com/lwaogVZ.png" width="60%"></li>
 </ul>
-</section><section lineNo="32" class="slide " data-line="32" data-h="3" data-v="0">
+</section><section lineNo="33" class="slide " data-line="33" data-h="3" data-v="0">
 <p>All features of <strong>Markdown Preview Enhanced</strong> are supported.</p>
-<p><div class="mathjax-exps">$$f(x) = &#x5C;int_{-&#x5C;infty}^&#x5C;infty    &#x5C;hat f(&#x5C;xi)&#x5C;,e^{2 &#x5C;pi i &#x5C;xi x}    &#x5C;,d&#x5C;xi$$</div></p>
-</section><section lineNo="41" class="slide " data-line="41" data-h="4" data-v="0">
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mi mathvariant="normal">∞</mi></mrow><mi mathvariant="normal">∞</mi></msubsup><mover accent="true"><mi>f</mi><mo>^</mo></mover><mo>(</mo><mi>ξ</mi><mo>)</mo><mspace width="0.16667em"></mspace><msup><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>ξ</mi><mi>x</mi></mrow></msup><mspace width="0.16667em"></mspace><mi>d</mi><mi>ξ</mi></mrow><annotation encoding="application/x-tex">f(x) = \int_{-\infty}^\infty
+    \hat f(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.414292em;"></span><span class="strut bottom" style="height:2.384573em;vertical-align:-0.970281em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.414292em;"><span style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathrm mtight">∞</span></span></span></span><span style="top:-3.8129000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.970281em;"></span></span></span></span></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578799999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathit" style="margin-right:0.10764em;">f</span></span><span style="top:-3.26344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="margin-left:0.33334em;"><span>^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04601em;">ξ</span><span class="mclose">)</span><span class="mord"><span class="mspace thinspace"></span><span class="mord mathit">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">2</span><span class="mord mathit mtight" style="margin-right:0.03588em;">π</span><span class="mord mathit mtight">i</span><span class="mord mathit mtight" style="margin-right:0.04601em;">ξ</span><span class="mord mathit mtight">x</span></span></span></span></span></span></span></span></span><span class="mord mathit"><span class="mspace thinspace"></span><span class="mord mathit">d</span></span><span class="mord mathit" style="margin-right:0.04601em;">ξ</span></span></span></span></span></p>
+</section><section lineNo="42" class="slide " data-line="42" data-h="4" data-v="0">
 <p>You can set initialization config for your presentation.<br>
 Just add front-matter to your presentation markdown file.</p>
 <pre class="language-yaml"><span class="token punctuation">---</span>
@@ -1922,10 +1729,10 @@ Just add front-matter to your presentation markdown file.</p>
 <span class="token punctuation">---</span>
 </pre>
 <p>More information about front-matter settings can be found <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/presentation">here</a>.</p>
-</section><section data-notes="This is speaker note" lineNo="54" class="slide " data-line="54" data-h="5" data-v="0">
+</section><section data-notes="This is speaker note" lineNo="55" class="slide " data-line="55" data-h="5" data-v="0">
 <p><strong>Speaker notes</strong> is also supported (not in preview).<br>
 Press the <kbd>s</kbd> key on your keyboard to open the notes window.</p>
-</section><section lineNo="58" class="slide " data-line="58" data-h="6" data-v="0">
+</section><section lineNo="59" class="slide " data-line="59" data-h="6" data-v="0">
 <p>To enable speaker notes, set front-matter as:</p>
 <pre class="language-yaml"><span class="token punctuation">---</span>
 <span class="token key atrule">presentation</span><span class="token punctuation">:</span>
@@ -1936,23 +1743,23 @@ Press the <kbd>s</kbd> key on your keyboard to open the notes window.</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-notes="Write your note here" --></span>
 </pre>
 <p>check <a href="https://github.com/hakimel/reveal.js#speaker-notes">Reveal.js Speaker Notes</a> section for more information.</p>
-</section><section><section lineNo="75" class="slide " data-line="75" data-h="7" data-v="0">
+</section><section><section lineNo="76" class="slide " data-line="76" data-h="7" data-v="0">
 <p>By default, all slides are aligned horizontally, but you can also create vertical slides by adding <code>vertical=true</code>.<br>
 For example:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide vertical=true --></span>
 </pre>
-</section><section vertical="true" lineNo="82" class="slide " data-line="82" data-h="7" data-v="1">
+</section><section vertical="true" lineNo="83" class="slide " data-line="83" data-h="7" data-v="1">
 <p>You just discovered a vertical slide!</p>
-</section></section><section lineNo="85" class="slide " data-line="85" data-h="8" data-v="0">
+</section></section><section lineNo="86" class="slide " data-line="86" data-h="8" data-v="0">
 <p>You can set <code>id</code> and <code>class</code> for your slide like this:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide id="my-id" class="my-class1 my-class2" --></span>
 </pre>
-</section><section lineNo="91" class="slide " data-line="91" data-h="9" data-v="0">
+</section><section lineNo="92" class="slide " data-line="92" data-h="9" data-v="0">
 <p>You can set slide background very easily.<br>
 For example:</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-background-color="#ff0000" --></span>
 </pre>
-</section><section data-background-color="#ffebcf" lineNo="98" class="slide " data-line="98" data-h="10" data-v="0">
+</section><section data-background-color="#ffebcf" lineNo="99" class="slide " data-line="99" data-h="10" data-v="0">
 <p>Of course you can do more about slide <strong>background</strong>.</p>
 <ul>
 <li><code>data-background-image</code><br>
@@ -1964,7 +1771,7 @@ See <a href="https://developer.mozilla.org/docs/Web/CSS/background-position">bac
 <li><code>data-background-repeat</code><br>
 See <a href="https://developer.mozilla.org/docs/Web/CSS/background-repeat">background-repeat</a> on MDN.</li>
 </ul>
-</section><section lineNo="109" class="slide " data-line="109" data-h="11" data-v="0">
+</section><section lineNo="110" class="slide " data-line="110" data-h="11" data-v="0">
 <p>You can also set <strong>video background</strong> and <strong>iframe background</strong>.</p>
 <ul>
 <li><code>data-background-video</code><br>
@@ -1976,18 +1783,28 @@ Flags if the audio should be muted.</li>
 <li><code>data-background-iframe</code><br>
 Embeds a web page as a background.</li>
 </ul>
-</section><section lineNo="120" class="slide " data-line="120" data-h="12" data-v="0">
+</section><section lineNo="121" class="slide " data-line="121" data-h="12" data-v="0">
+<p>Fragment is supported.</p>
+<pre class="language-">- Item 1 &lt;!-- .element: class=&quot;fragment&quot; data-fragment-index=&quot;2&quot; --&gt;
+- Item 2 &lt;!-- .element: class=&quot;fragment&quot; data-fragment-index=&quot;1&quot; --&gt;
+</pre>
+<ul>
+<li class="fragment">See <a href="https://github.com/hakimel/reveal.js#fragments">this doc</a> for different fragment animations <!-- .element: class="fragment" --></li>
+<li class="fragment" data-fragment-index="2">Item 1 <!-- .element: class="fragment" data-fragment-index="2" --></li>
+<li class="fragment" data-fragment-index="1">Item 2 <!-- .element: class="fragment" data-fragment-index="1" --></li>
+</ul>
+</section><section lineNo="132" class="slide " data-line="132" data-h="13" data-v="0">
 <p>For example, the markdown snippet below will generate slide like...</p>
 <pre class="language-html"><span class="token comment" spellcheck="true">&lt;!-- slide data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>国漫大法好！<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
 </pre>
-</section><section data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" lineNo="129" class="slide " data-line="129" data-h="13" data-v="0">
+</section><section data-background-image="https://i.loli.net/2017/07/12/5965b7edd3a2a.jpeg" data-transition="zoom" lineNo="141" class="slide " data-line="141" data-h="14" data-v="0">
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
 <p style="color: #fff;">国漫大法好！</p>
-</section><section lineNo="135" class="slide " data-line="135" data-h="14" data-v="0">
+</section><section lineNo="147" class="slide " data-line="147" data-h="15" data-v="0">
 <p>It is also very easy to customize presentation css.<br>
 Run command:<br>
 <code>Markdown Preview Enhanced: Customize Css</code><br>
@@ -2002,13 +1819,13 @@ then edit:</p>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </pre>
-</section><section lineNo="152" class="slide " data-line="152" data-h="15" data-v="0">
+</section><section lineNo="164" class="slide " data-line="164" data-h="16" data-v="0">
 <p>You can check your presentation in browser by<br>
 right clicking at the preview, then choose</p>
 <p><code>Open in Browser</code></p>
-</section><section lineNo="158" class="slide " data-line="158" data-h="16" data-v="0">
+</section><section lineNo="170" class="slide " data-line="170" data-h="17" data-v="0">
 <p><strong>Markdown Preview Enhanced</strong> can also generate beautiful <strong>HTML</strong> or <strong>PDF</strong> files for your presentation.</p>
-</section><section lineNo="161" class="slide " data-line="161" data-h="17" data-v="0">
+</section><section lineNo="173" class="slide " data-line="173" data-h="18" data-v="0">
 <h4 class="mume-header" id="star-this-project-if-you-like-it">Star this project if you like it ;)</h4>
 
 <ul>
@@ -2016,12 +1833,14 @@ right clicking at the preview, then choose</p>
 <li>Feel free to post issues and request new features <a href="https://github.com/shd101wyy/markdown-preview-enhanced/issues">here</a></li>
 <li>Source code of this presentation can be found <a href="https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md">here</a>, <a href="https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md">raw</a></li>
 </ul>
-</section><section data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" lineNo="168" class="slide " data-line="168" data-h="18" data-v="0">
+</section><section data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" lineNo="180" class="slide " data-line="180" data-h="19" data-v="0">
 </section>
       </div>
     </div>
     
       </div>
+      
+      
     </body>
     
       <script>

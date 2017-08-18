@@ -23,10 +23,11 @@ Or just insert to your markdown file
 `<!-- slide -->`
 
 <!-- slide -->
-Multiple Presentation themes are supported, you can change it easily from the extension settings.
-* vscode
+Multiple Presentation themes are supported, you can change it easily from the extension settings.  
+
+* vscode  
 @import "https://i.loli.net/2017/07/12/5965b5c7783fb.png" {width: 60%}
-* atom
+* atom  
 @import "http://i.imgur.com/lwaogVZ.png" {width: 60%}
 
 
@@ -117,6 +118,17 @@ Flags if the video should play repeatedly.
 Flags if the audio should be muted.
 * `data-background-iframe`
 Embeds a web page as a background.
+
+<!-- slide -->  
+Fragment is supported.  
+```
+- Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+- Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
+```
+
+- See [this doc](https://github.com/hakimel/reveal.js#fragments) for different fragment animations <!-- .element: class="fragment" -->
+- Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+- Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <!-- slide -->
 For example, the markdown snippet below will generate slide like...
