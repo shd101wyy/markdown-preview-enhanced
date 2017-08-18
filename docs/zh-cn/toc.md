@@ -27,5 +27,7 @@
 是否使用有序列表。
 * **depthFrom**, **depthTo**  
 `[1~6]` 包含的。   
+* **ignoreLink**
+如果设置为 `true`，那么 TOC 将不会被超链接。  
 
 [➔ 导入文件](zh-cn/file-imports.md)

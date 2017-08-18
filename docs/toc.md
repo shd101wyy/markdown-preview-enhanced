@@ -27,5 +27,7 @@ However, this way will only display TOC in preview, while leaving editor content
 Use orderedList or not.  
 * **depthFrom**, **depthTo**  
 `[1~6]` inclusive.   
+* **ignoreLink**
+If set to `true`, then TOC entry will not be hyperlinks.     
 
 [➔ File Imports](file-imports.md)
