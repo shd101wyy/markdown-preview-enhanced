@@ -22,7 +22,7 @@
 - **[Prince](zh-tw/prince.md)**
 - **[電子書](zh-tw/ebook.md)**
 - **[幻燈片](zh-tw/presentation.md)**
-- **[可擴展性](developer.md?id=how-to-write-extensions)**
+- **[可擴展性](zh-tw/extend-parser.md)**
 - **[LaTeX 數學](zh-tw/math.md)**
 - 導出 **PDF**, **PNG**, 以及 **JPEG** 憑借 [PhantomJS](zh-tw/phantomjs.md)
 - 導出漂亮的 **HTML**（移動端支持）

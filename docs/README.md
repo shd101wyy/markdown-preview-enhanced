@@ -22,7 +22,7 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **[Prince](prince.md)**
 - **[eBook](ebook.md)**
 - **[Presentation Writer](presentation.md)**
-- **[Extensible](developer.md?id=how-to-write-extensions)**
+- **[Extensible](extend-parser.md)**
 - **[LaTeX math](math.md)**
 - Export **PDF**, **PNG**, and **JPEG** by [PhantomJS](phantomjs.md)
 - Export beautiful **HTML** (mobile device supported)
