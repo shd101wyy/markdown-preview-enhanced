@@ -196,7 +196,21 @@ is maintained by the W3C.
 ==marked==
 ```
 
-## References
+### CriticMarkup  
+CriticMarkup 缺省是禁用的，你可以通過插件設置來啟動它。    
+有關 CriticMarkup 的更多信息，請查看 [CriticMarkup 用戶指南](http://criticmarkup.com/users-guide.php).    
+
+這裡有 5 種基本語法：
+
+* 添加 `{++ ++}`
+* 刪除 `{-- --}`
+* 替換 `{~~ ~> ~~}`
+* 注釋 `{>> <<}`
+* 高亮 `{== ==}{>> <<}`
+
+> CriticMarkup 僅可用於 markdown-it parser，不與 pandoc parser 兼容。  
+
+## 參考
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 * [Daring Fireball: Markdown Basics](https://daringfireball.net/projects/markdown/basics)
 

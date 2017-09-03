@@ -195,6 +195,20 @@ is maintained by the W3C.
 ==marked==
 ```
 
+### CriticMarkup  
+CriticMarkup is **disabled** by default, but you can enable it from the package settings.    
+For more information about CriticMarkup, check [CriticMarkup User's Guide](http://criticmarkup.com/users-guide.php).    
+
+There are five types of Critic marks:
+
+* Addition `{++ ++}`
+* Deletion `{-- --}`
+* Substitution `{~~ ~> ~~}`
+* Comment `{>> <<}`
+* Highlight `{== ==}{>> <<}`
+
+> CriticMarkup only works with the markdown-it parser, but not the pandoc parser.  
+
 ## References
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 * [Daring Fireball: Markdown Basics](https://daringfireball.net/projects/markdown/basics)
