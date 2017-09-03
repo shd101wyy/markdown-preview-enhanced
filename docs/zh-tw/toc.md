@@ -9,6 +9,16 @@
 > TOC 將會在你的 markdown 文件保存時更新。  
 > 你需要保持預覽打開才能更新 TOC。
 
+## 設置  
+* **orderedList**  
+是否使用有序列表。
+* **depthFrom**, **depthTo**  
+`[1~6]` 包含的。   
+* **ignoreLink**
+如果設置為 `true`，那麼 TOC 將不會被超鏈接。  
+
+[➔ 導入文件](zh-tw/file-imports.md)
+
 ## [TOC]  
 你也可以通過在你的 markdown 文件中輸入 `[TOC]` 來創建 `TOC`。  
 例如：  
@@ -22,12 +32,14 @@
 ```
 但是，這種方式創建的 `TOC` 只會在預覽中顯示，而不會修改你的 markdown 文件。
 
-## 設置  
-* **orderedList**  
-是否使用有序列表。
-* **depthFrom**, **depthTo**  
-`[1~6]` 包含的。   
-* **ignoreLink**
-如果設置為 `true`，那麼 TOC 將不會被超鏈接。  
+## [TOC] 以及邊欄 TOC 的設置
 
-[➔ 導入文件](zh-tw/file-imports.md)
+你可以通過編寫 front-matter 來進行設置：
+```markdown
+---
+toc:
+  depth_from: 1
+  depth_to: 6
+  ordered: false
+---
+```

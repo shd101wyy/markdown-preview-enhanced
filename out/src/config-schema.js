@@ -230,6 +230,13 @@ exports.configSchema = {
         "description": "Enable extended table syntax to support merging table cells.",
         "order": 52
     },
+    "enableCriticMarkupSyntax": {
+        "title": "Enable CriticMarkup syntax",
+        "type": "boolean",
+        "default": false,
+        "description": "Enable CriticMarkup syntax. Only works with markdown-it parser. Please check http://criticmarkup.com/users-guide.php for more information.",
+        "order": 53
+    },
     "liveUpdate": {
         "type": "boolean",
         "default": true,

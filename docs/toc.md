@@ -9,6 +9,16 @@ To exclude a heading from the `TOC`, append `{ignore=true}` **after** your headi
 > The TOC will be updated when you save the markdown file.  
 > You need to keep the preview open to get TOC updated.  
 
+## Configuration  
+* **orderedList**  
+Use orderedList or not.  
+* **depthFrom**, **depthTo**  
+`[1~6]` inclusive.   
+* **ignoreLink**
+If set to `true`, then TOC entry will not be hyperlinks.     
+
+[➔ File Imports](file-imports.md)
+
 ## [TOC]  
 You can also create `TOC` by inserting `[TOC]` to your markdown file.  
 For example:  
@@ -20,14 +30,16 @@ For example:
 ## Heading 2 {ignore=true}
 Heading 2 will be ignored from TOC.  
 ```
-However, this way will only display TOC in preview, while leaving editor content unchanged.  
+However, **this way will only display TOC in preview**, while leaving editor content unchanged.  
 
-## Configuration  
-* **orderedList**  
-Use orderedList or not.  
-* **depthFrom**, **depthTo**  
-`[1~6]` inclusive.   
-* **ignoreLink**
-If set to `true`, then TOC entry will not be hyperlinks.     
+## [TOC] and Sidebar TOC Configuration
+You can configure `[TOC]` and sidebar TOC by writting front-matter:  
 
-[➔ File Imports](file-imports.md)
+```markdown
+---
+toc:
+  depth_from: 1
+  depth_to: 6
+  ordered: false
+---
+```

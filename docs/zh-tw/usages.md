@@ -54,7 +54,6 @@
 	打開 `MathJax` 設置文件。  
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>   
-  <kbd>ctrl-shift-i</kbd>    
   更多詳細信息請查看[這個文檔](zh-tw/image-helper.md)。  
   圖片助手支持快速插入圖片鏈接，拷貝本地圖片，和上傳圖片（powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/)）。   
   國內用戶推薦使用 `sm.ms`，牆內不限量免費上傳圖片。          
@@ -105,7 +104,6 @@
 | <kbd>ctrl-shift-m</kbd>  | 開／關預覽 |
 | <kbd>cmd-k v</kbd> | 打開預覽 `僅 VSCode 可用` |
 | <kbd>ctrl-shift-s</kbd>  | 滑動同步預覽 / 滑動同步 markdown 源  |  
-| <kbd>ctrl-shift-i</kbd>  | 打開圖片助手 |  
 | <kbd>shift-enter</kbd> | 運行 Code Chunk |    
 | <kbd>ctrl-shift-enter</kbd> | 運行所有的 Code Chunks |  
 | <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd> | 預覽放大 |  
