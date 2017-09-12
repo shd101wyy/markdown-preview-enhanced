@@ -21,7 +21,8 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [xldrkp](axel-duerkop.de/blog)  
 * [湘君](http://www.sierxue.me/)  
 * Horace He
-* [Cherrot](http://cherrot.com/) 
+* [Cherrot](http://cherrot.com/)   
+* 黒瀬 崇弘  
 
 ---
 
