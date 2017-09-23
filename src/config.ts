@@ -1,5 +1,4 @@
 import {MarkdownEngineConfig} from "@shd101wyy/mume"
-import {CompositeDisposable} from "atom"
 
 export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public static getCurrentConfig() {
@@ -101,7 +100,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.imageUploader = atom.config.get('markdown-preview-enhanced.imageUploader')
   }
 
-  public onDidChange(subscriptions:CompositeDisposable, callback) {
+  public onDidChange(subscriptions:Atom.CompositeDisposable, callback) {
     subscriptions.add(
       atom.config.onDidChange('markdown-preview-enhanced.usePandocParser', ({newValue})=> {
         this.usePandocParser = newValue

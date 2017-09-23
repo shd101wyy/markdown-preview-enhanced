@@ -26,12 +26,12 @@ export class MarkdownPreviewEnhancedView {
   private element: HTMLDivElement = null
   private webview = null
   private uri: string = ''
-  private disposables: CompositeDisposable = null
+  private disposables: Atom.CompositeDisposable = null
 
   /**
    * The editor binded to this preview.
    */
-  private editor:AtomCore.TextEditor = null
+  private editor:Atom.TextEditor = null
   /**
    * Configs.
    */
@@ -133,7 +133,7 @@ export class MarkdownPreviewEnhancedView {
    * Bind editor to preview
    * @param editor
    */
-  public bindEditor(editor:AtomCore.TextEditor) {
+  public bindEditor(editor:Atom.TextEditor) {
     if (!this.editor) {
       this.editor = editor // this has to be put here, otherwise the tab title will be `unknown`
       atom.workspace.open(this.uri, {
@@ -814,7 +814,7 @@ export class MarkdownPreviewEnhancedView {
     })
   }
 
-  private static replaceHint(editor: AtomCore.TextEditor, bufferRow:number, hint:string, withStr:string):boolean {
+  private static replaceHint(editor: Atom.TextEditor, bufferRow:number, hint:string, withStr:string):boolean {
     if (!editor) return false
     const lines = editor.buffer.getLines()
     let textLine = lines[bufferRow] || ''
@@ -828,7 +828,7 @@ export class MarkdownPreviewEnhancedView {
     return false
   }
 
-  private static setUploadedImageURL(editor: AtomCore.TextEditor, imageFileName:string, url:string, hint:string, bufferRow:number) {
+  private static setUploadedImageURL(editor: Atom.TextEditor, imageFileName:string, url:string, hint:string, bufferRow:number) {
     let description
     if (imageFileName.lastIndexOf('.'))
       description = imageFileName.slice(0, imageFileName.lastIndexOf('.'))
@@ -852,7 +852,7 @@ export class MarkdownPreviewEnhancedView {
    * Then insert markdown image url to markdown file.
    * @param imageFilePath
    */
-  public static uploadImageFile(editor:AtomCore.TextEditor, imageFilePath:string, imageUploader:string="imgur") {
+  public static uploadImageFile(editor:Atom.TextEditor, imageFilePath:string, imageUploader:string="imgur") {
     if (!editor) return
 
     const imageFileName = path.basename(imageFilePath)
