@@ -23,6 +23,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * Horace He
 * [Cherrot](http://cherrot.com/)   
 * 黒瀬 崇弘  
+* [udscbt-wsx](https://github.com/udscbt-wsx)
 
 ---
 
