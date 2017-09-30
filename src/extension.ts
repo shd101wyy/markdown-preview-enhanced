@@ -9,7 +9,7 @@ const utility = mume.utility
 import {MarkdownPreviewEnhancedConfig} from "./config"
 import {MarkdownPreviewEnhancedView} from "./preview-content-provider"
 
-let subscriptions:CompositeDisposable = null
+let subscriptions:Atom.CompositeDisposable = null
 let config:MarkdownPreviewEnhancedConfig = null
 
 /**
@@ -179,7 +179,7 @@ mume.init() // init mume package
       if (!preview) return
 
       if (config.singlePreview && preview.getEditor() !== editor) {
-        preview.bindEditor(editor as AtomCore.TextEditor)
+        preview.bindEditor(editor as Atom.TextEditor)
       }
 
       if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
@@ -442,7 +442,7 @@ function showUploadedImages() {
  * @param filePath 
  */
 async function onModifySource(codeChunkData, result, filePath) {
-  function insertResult(i:number, editor:AtomCore.TextEditor, lines:string[]) {
+  function insertResult(i:number, editor:Atom.TextEditor, lines:string[]) {
     const lineCount = editor.getLineCount()
     let start = 0
     // find <!- code_chunk_output --> 
@@ -490,7 +490,7 @@ async function onModifySource(codeChunkData, result, filePath) {
 
   const visibleTextEditors = atom.workspace.getTextEditors()
   for (let i = 0; i < visibleTextEditors.length; i++) {
-    const editor = visibleTextEditors[i] as AtomCore.TextEditor
+    const editor = visibleTextEditors[i] as Atom.TextEditor
     if (editor.getPath() === filePath) {
       let codeChunkOffset = 0,
           targetCodeChunkOffset = codeChunkData.options['code_chunk_offset']
