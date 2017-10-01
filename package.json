@@ -55,14 +55,14 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.2.2"
+    "@shd101wyy/mume": "^0.2.3"
   },
   "devDependencies": {
-    "@types/jquery": "^3.2.7",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.11",
-    "atom-typings": "^1.20.1",
+    "@types/jquery": "^3.2.12",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.31",
+    "atom-typings": "^1.20.2",
     "chinese-conv": "^1.0.1",
-    "typescript": "^2.4.1"
+    "typescript": "^2.5.3"
   }
 }

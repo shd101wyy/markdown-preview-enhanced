@@ -185,10 +185,7 @@ mume.init() // init mume package
       if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
         const pane = atom.workspace.paneForItem(preview)
         if (pane && pane !== atom.workspace.getActivePane()) {
-          // I think typings here is wrong
-          // https://atom.io/docs/api/v1.18.0/Pane#instance-activateItem
-          const p = "activate" + "Item"
-          pane[p](preview)
+          pane.activateItem(preview)
         }
       }
     }
@@ -290,12 +287,24 @@ function bindMarkdownEditorDropEvents(editor) {
     function dropImageFile(event) {
       const files = event.dataTransfer.files
       for (let i = 0; i < files.length; i++) {
-        const filePath = files[i].path
-        if (files[i].type.startsWith('image')) { // upload image
-          event.stopPropagation()
-          event.preventDefault()
-
-          MarkdownPreviewEnhancedView.uploadImageFile(editor, filePath, config.imageUploader)
+        const imageFilePath = files[i].path
+        if (files[i].type.startsWith('image')) { // Drop image
+          const imageDropAction = atom.config.get('markdown-preview-enhanced.imageDropAction')
+          if (imageDropAction === 'upload') { // upload image
+            event.stopPropagation()
+            event.preventDefault()
+            MarkdownPreviewEnhancedView.uploadImageFile(editor, imageFilePath, config.imageUploader)            
+          } else if (imageDropAction.startsWith('insert')) { // insert relative path
+            event.stopPropagation()
+            event.preventDefault()
+            const editorPath = editor.getPath()
+            const description = path.basename(imageFilePath).replace(path.extname(imageFilePath), '')
+            editor.insertText(`![${description}](${path.relative(path.dirname(editorPath), imageFilePath)})`)            
+          } else if (imageDropAction.startsWith('copy')) { // copy to image folder
+            event.stopPropagation()
+            event.preventDefault()
+            MarkdownPreviewEnhancedView.pasteImageFile(editor, atom.config.get('markdown-preview-enhanced.imageFolderPath'), imageFilePath)
+          }
         }
       }
       return false

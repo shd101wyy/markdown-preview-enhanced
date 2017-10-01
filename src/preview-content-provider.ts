@@ -146,6 +146,7 @@ export class MarkdownPreviewEnhancedView {
         pending: false
       })
       .then(()=> {
+        this.activatePaneForEditor()
         this.initEvents()
       })
     } else { // preview already on
@@ -282,7 +283,7 @@ export class MarkdownPreviewEnhancedView {
     }
   },
   'pasteImageFile': function(sourceUri, imageUrl) {
-    this.pasteImageFile(imageUrl)
+    MarkdownPreviewEnhancedView.pasteImageFile(this.editor, this.config.imageFolderPath, imageUrl)
   },
   'uploadImageFile': function(sourceUri, imageUrl, imageUploader) {
     if (!this.editor) return
@@ -591,10 +592,17 @@ export class MarkdownPreviewEnhancedView {
    * Get the project directory path of current this.editor
    */
   private getProjectDirectoryPath() {
-    if (!this.editor)
+    return MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(this.editor);
+  }
+
+  /**
+   * Get the project directory path of the editor
+   */
+  public static getProjectDirectoryPathForEditor(editor:Atom.TextEditor) {
+    if (!editor)
       return ''
 
-    const editorPath = this.editor.getPath()
+    const editorPath = editor.getPath()
     const projectDirectories = atom.project.getDirectories()
 
     for (let i = 0; i < projectDirectories.length; i++) {
@@ -763,16 +771,15 @@ export class MarkdownPreviewEnhancedView {
     this.zoomLevel = zoomLevel || 1
   }
 
-  public async pasteImageFile(imageFilePath: string) {
-    if (!this.editor) return
-    const imageFolderPath = this.config.imageFolderPath
+  public static async pasteImageFile(editor: Atom.TextEditor, imageFolderPath: string, imageFilePath: string) {
+    if (!editor) return
     let imageFileName = path.basename(imageFilePath)
-    const projectDirectoryPath = this.getProjectDirectoryPath()
+    const projectDirectoryPath = MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(editor)
     let assetDirectoryPath, description
     if (imageFolderPath[0] === '/') {
       assetDirectoryPath = path.resolve(projectDirectoryPath, '.' + imageFolderPath)
     } else {
-      assetDirectoryPath = path.resolve(path.dirname(this.editor.getPath()), imageFolderPath)
+      assetDirectoryPath = path.resolve(path.dirname(editor.getPath()), imageFolderPath)
     }
 
     const destPath = path.resolve(assetDirectoryPath, path.basename(imageFilePath))
@@ -809,7 +816,7 @@ export class MarkdownPreviewEnhancedView {
         if (url.indexOf(' ') >= 0)
           url = `<${url}>`
 
-        this.editor.insertText(`![${description}](${url})`)
+        editor.insertText(`![${description}](${url})`)
       })
     })
   }

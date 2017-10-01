@@ -13,6 +13,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public enableTypographer: boolean;
   public enableWikiLinkSyntax: boolean;
   public wikiLinkFileExtension: string;
+  public enableEmojiSyntax: boolean;
   public enableExtendedTableSyntax: boolean;
   public enableCriticMarkupSyntax: boolean;
   public protocolsWhiteList: string;
@@ -46,6 +47,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public closePreviewAutomatically: boolean
   // public enableZenMode: boolean
   public imageUploader: string
+  public imageDropAction: string
 
   public constructor() {
     /*
@@ -55,6 +57,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.breakOnSingleNewLine = atom.config.get('markdown-preview-enhanced.breakOnSingleNewLine')
     this.enableTypographer = atom.config.get('markdown-preview-enhanced.enableTypographer')
     this.enableWikiLinkSyntax = atom.config.get('markdown-preview-enhanced.enableWikiLinkSyntax')
+    this.enableEmojiSyntax = atom.config.get('markdown-preview-enhanced.enableEmojiSyntax')
     this.enableExtendedTableSyntax = atom.config.get('markdown-preview-enhanced.enableExtendedTableSyntax')
     this.enableCriticMarkupSyntax = atom.config.get('markdown-preview-enhanced.enableCriticMarkupSyntax')
     this.wikiLinkFileExtension = atom.config.get('markdown-preview-enhanced.wikiLinkFileExtension')
@@ -98,6 +101,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.closePreviewAutomatically = atom.config.get('markdown-preview-enhanced.closePreviewAutomatically')
     // this.enableZenMode = atom.config.get('markdown-preview-enhanced.enableZenMode')
     this.imageUploader = atom.config.get('markdown-preview-enhanced.imageUploader')
+    this.imageDropAction = atom.config.get('markdown-preview-enhanced.imageDropAction')    
   }
 
   public onDidChange(subscriptions:Atom.CompositeDisposable, callback) {
@@ -116,6 +120,10 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
       }),
       atom.config.onDidChange('markdown-preview-enhanced.enableWikiLinkSyntax', ({newValue})=> {
         this.enableWikiLinkSyntax = newValue
+        callback()
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.enableEmojiSyntax', ({newValue})=> {
+        this.enableEmojiSyntax = newValue
         callback()
       }),
       atom.config.onDidChange('markdown-preview-enhanced.enableExtendedTableSyntax', ({newValue})=> {
@@ -221,7 +229,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
       }),
       atom.config.onDidChange('markdown-preview-enhanced.singlePreview', ({newValue})=> {
         this.singlePreview = newValue
-        callback()
+        // callback() // <= No need to call callback. will cause error here.
       }),
       atom.config.onDidChange('markdown-preview-enhanced.scrollSync', ({newValue})=> {
         this.scrollSync = newValue
@@ -252,6 +260,9 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
       atom.config.onDidChange('markdown-preview-enhanced.imageUploader', ({newValue})=> {
         this.imageUploader = newValue
         callback()
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.imageDropAction', ({newValue})=> {
+        this.imageDropAction = newValue
       })
     )
   }
