@@ -29,3 +29,5 @@ Special thanks to the following libraries that make this project possible.
 * [jQuery-contextMenu](https://github.com/swisnl/jQuery-contextMenu) - jQuery contextMenu plugin & polyfill.  
 * [jsonic](https://github.com/rjrodger/jsonic) - JSON parser that isn't strict.
 * [crypto-js](https://github.com/brix/crypto-js) - JavaScript library of crypto standards.
+* [font awesome](https://github.com/FortAwesome/Font-Awesome) - The iconic font and CSS toolkit.  
+* [atom-typings](https://github.com/GlenCFL/atom-typings) - TypeScript type definitions for the Atom API.

@@ -166,6 +166,16 @@ Content in the first column | Content in the second column
 ### 表格  
 ![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
 
+### Emoji & Font-Awesome
+
+> 只适用于 `markdown-it parser` 而不适用于 `pandoc parser`。    
+> 缺省下是启用的。你可以在插件设置里禁用此功能。  
+
+```
+:smile:
+:fa-car:
+```
+
 ### 上标
 ```markdown
 30^th^

@@ -26,12 +26,12 @@ export class MarkdownPreviewEnhancedView {
   private element: HTMLDivElement = null
   private webview = null
   private uri: string = ''
-  private disposables: CompositeDisposable = null
+  private disposables: Atom.CompositeDisposable = null
 
   /**
    * The editor binded to this preview.
    */
-  private editor:AtomCore.TextEditor = null
+  private editor:Atom.TextEditor = null
   /**
    * Configs.
    */
@@ -133,7 +133,7 @@ export class MarkdownPreviewEnhancedView {
    * Bind editor to preview
    * @param editor
    */
-  public bindEditor(editor:AtomCore.TextEditor) {
+  public bindEditor(editor:Atom.TextEditor) {
     if (!this.editor) {
       this.editor = editor // this has to be put here, otherwise the tab title will be `unknown`
       atom.workspace.open(this.uri, {
@@ -146,6 +146,7 @@ export class MarkdownPreviewEnhancedView {
         pending: false
       })
       .then(()=> {
+        this.activatePaneForEditor()
         this.initEvents()
       })
     } else { // preview already on
@@ -282,7 +283,7 @@ export class MarkdownPreviewEnhancedView {
     }
   },
   'pasteImageFile': function(sourceUri, imageUrl) {
-    this.pasteImageFile(imageUrl)
+    MarkdownPreviewEnhancedView.pasteImageFile(this.editor, this.config.imageFolderPath, imageUrl)
   },
   'uploadImageFile': function(sourceUri, imageUrl, imageUploader) {
     if (!this.editor) return
@@ -591,10 +592,17 @@ export class MarkdownPreviewEnhancedView {
    * Get the project directory path of current this.editor
    */
   private getProjectDirectoryPath() {
-    if (!this.editor)
+    return MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(this.editor);
+  }
+
+  /**
+   * Get the project directory path of the editor
+   */
+  public static getProjectDirectoryPathForEditor(editor:Atom.TextEditor) {
+    if (!editor)
       return ''
 
-    const editorPath = this.editor.getPath()
+    const editorPath = editor.getPath()
     const projectDirectories = atom.project.getDirectories()
 
     for (let i = 0; i < projectDirectories.length; i++) {
@@ -763,16 +771,15 @@ export class MarkdownPreviewEnhancedView {
     this.zoomLevel = zoomLevel || 1
   }
 
-  public async pasteImageFile(imageFilePath: string) {
-    if (!this.editor) return
-    const imageFolderPath = this.config.imageFolderPath
+  public static async pasteImageFile(editor: Atom.TextEditor, imageFolderPath: string, imageFilePath: string) {
+    if (!editor) return
     let imageFileName = path.basename(imageFilePath)
-    const projectDirectoryPath = this.getProjectDirectoryPath()
+    const projectDirectoryPath = MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(editor)
     let assetDirectoryPath, description
     if (imageFolderPath[0] === '/') {
       assetDirectoryPath = path.resolve(projectDirectoryPath, '.' + imageFolderPath)
     } else {
-      assetDirectoryPath = path.resolve(path.dirname(this.editor.getPath()), imageFolderPath)
+      assetDirectoryPath = path.resolve(path.dirname(editor.getPath()), imageFolderPath)
     }
 
     const destPath = path.resolve(assetDirectoryPath, path.basename(imageFilePath))
@@ -809,12 +816,12 @@ export class MarkdownPreviewEnhancedView {
         if (url.indexOf(' ') >= 0)
           url = `<${url}>`
 
-        this.editor.insertText(`![${description}](${url})`)
+        editor.insertText(`![${description}](${url})`)
       })
     })
   }
 
-  private static replaceHint(editor: AtomCore.TextEditor, bufferRow:number, hint:string, withStr:string):boolean {
+  private static replaceHint(editor: Atom.TextEditor, bufferRow:number, hint:string, withStr:string):boolean {
     if (!editor) return false
     const lines = editor.buffer.getLines()
     let textLine = lines[bufferRow] || ''
@@ -828,7 +835,7 @@ export class MarkdownPreviewEnhancedView {
     return false
   }
 
-  private static setUploadedImageURL(editor: AtomCore.TextEditor, imageFileName:string, url:string, hint:string, bufferRow:number) {
+  private static setUploadedImageURL(editor: Atom.TextEditor, imageFileName:string, url:string, hint:string, bufferRow:number) {
     let description
     if (imageFileName.lastIndexOf('.'))
       description = imageFileName.slice(0, imageFileName.lastIndexOf('.'))
@@ -852,7 +859,7 @@ export class MarkdownPreviewEnhancedView {
    * Then insert markdown image url to markdown file.
    * @param imageFilePath
    */
-  public static uploadImageFile(editor:AtomCore.TextEditor, imageFilePath:string, imageUploader:string="imgur") {
+  public static uploadImageFile(editor:Atom.TextEditor, imageFilePath:string, imageUploader:string="imgur") {
     if (!editor) return
 
     const imageFileName = path.basename(imageFilePath)

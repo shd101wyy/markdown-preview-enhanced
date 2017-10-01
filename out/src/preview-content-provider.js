@@ -128,6 +128,7 @@ class MarkdownPreviewEnhancedView {
                 pending: false
             })
                 .then(() => {
+                this.activatePaneForEditor();
                 this.initEvents();
             });
         }
@@ -447,9 +448,15 @@ class MarkdownPreviewEnhancedView {
      * Get the project directory path of current this.editor
      */
     getProjectDirectoryPath() {
-        if (!this.editor)
+        return MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(this.editor);
+    }
+    /**
+     * Get the project directory path of the editor
+     */
+    static getProjectDirectoryPathForEditor(editor) {
+        if (!editor)
             return '';
-        const editorPath = this.editor.getPath();
+        const editorPath = editor.getPath();
         const projectDirectories = atom.project.getDirectories();
         for (let i = 0; i < projectDirectories.length; i++) {
             const projectDirectory = projectDirectories[i];
@@ -603,19 +610,18 @@ class MarkdownPreviewEnhancedView {
     setZoomLevel(zoomLevel) {
         this.zoomLevel = zoomLevel || 1;
     }
-    pasteImageFile(imageFilePath) {
+    static pasteImageFile(editor, imageFolderPath, imageFilePath) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.editor)
+            if (!editor)
                 return;
-            const imageFolderPath = this.config.imageFolderPath;
             let imageFileName = path.basename(imageFilePath);
-            const projectDirectoryPath = this.getProjectDirectoryPath();
+            const projectDirectoryPath = MarkdownPreviewEnhancedView.getProjectDirectoryPathForEditor(editor);
             let assetDirectoryPath, description;
             if (imageFolderPath[0] === '/') {
                 assetDirectoryPath = path.resolve(projectDirectoryPath, '.' + imageFolderPath);
             }
             else {
-                assetDirectoryPath = path.resolve(path.dirname(this.editor.getPath()), imageFolderPath);
+                assetDirectoryPath = path.resolve(path.dirname(editor.getPath()), imageFolderPath);
             }
             const destPath = path.resolve(assetDirectoryPath, path.basename(imageFilePath));
             fs.mkdir(assetDirectoryPath, (error) => {
@@ -647,7 +653,7 @@ class MarkdownPreviewEnhancedView {
                     let url = `${imageFolderPath}/${imageFileName}`;
                     if (url.indexOf(' ') >= 0)
                         url = `<${url}>`;
-                    this.editor.insertText(`![${description}](${url})`);
+                    editor.insertText(`![${description}](${url})`);
                 });
             });
         });
@@ -749,7 +755,7 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         }
     },
     'pasteImageFile': function (sourceUri, imageUrl) {
-        this.pasteImageFile(imageUrl);
+        MarkdownPreviewEnhancedView.pasteImageFile(this.editor, this.config.imageFolderPath, imageUrl);
     },
     'uploadImageFile': function (sourceUri, imageUrl, imageUploader) {
         if (!this.editor)

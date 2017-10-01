@@ -221,19 +221,26 @@ export const configSchema = {
     "description": "By default, [[test]] will direct to file path `test.md`.",
     "order": 51
   },
+  "enableEmojiSyntax": {
+    "title": "Enable emoji and font-awesome syntax",
+    "type": "boolean",
+    "default": true,
+    "description": "Enable emoji & font-awesome plugin. This only works for markdown-it parser, but not pandoc parser.",
+    "order": 52
+  },
   "enableExtendedTableSyntax": {
     "title": "Enable extended table syntax",
     "type": "boolean",
     "default": false,
     "description": "Enable extended table syntax to support merging table cells.",
-    "order": 52
+    "order": 53
   },
   "enableCriticMarkupSyntax": {
     "title": "Enable CriticMarkup syntax",
     "type": "boolean",
     "default": false, 
     "description": "Enable CriticMarkup syntax. Only works with markdown-it parser. Please check http://criticmarkup.com/users-guide.php for more information.",
-    "order": 53
+    "order": 54
   },
   "liveUpdate": {
     "type": "boolean",
@@ -275,7 +282,7 @@ export const configSchema = {
   },
   "imageUploader": {
     "title": "Image Uploader",
-    "description": "you can choose different image uploader to upload image.",
+    "description": "You can choose different image uploader to upload image.",
     "type": "string",
     "default": "imgur",
     "enum": [
@@ -283,6 +290,19 @@ export const configSchema = {
       "sm.ms"
     ],
     "order": 76
+  },
+  "imageDropAction": {
+    "title": "Drop image to editor",
+    "description": "What to do after you drop an image to editor",
+    "type": "string",
+    "default": "upload",
+    "enum": [
+      "upload",
+      "insert relative path",
+      "copy to image folder",
+      "do nothing"
+    ],
+    "order": 77
   },
   "enableScriptExecution": {
     "title": "Enable Script Execution",

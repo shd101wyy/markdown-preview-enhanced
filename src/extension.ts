@@ -9,7 +9,7 @@ const utility = mume.utility
 import {MarkdownPreviewEnhancedConfig} from "./config"
 import {MarkdownPreviewEnhancedView} from "./preview-content-provider"
 
-let subscriptions:CompositeDisposable = null
+let subscriptions:Atom.CompositeDisposable = null
 let config:MarkdownPreviewEnhancedConfig = null
 
 /**
@@ -179,16 +179,13 @@ mume.init() // init mume package
       if (!preview) return
 
       if (config.singlePreview && preview.getEditor() !== editor) {
-        preview.bindEditor(editor as AtomCore.TextEditor)
+        preview.bindEditor(editor as Atom.TextEditor)
       }
 
       if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
         const pane = atom.workspace.paneForItem(preview)
         if (pane && pane !== atom.workspace.getActivePane()) {
-          // I think typings here is wrong
-          // https://atom.io/docs/api/v1.18.0/Pane#instance-activateItem
-          const p = "activate" + "Item"
-          pane[p](preview)
+          pane.activateItem(preview)
         }
       }
     }
@@ -290,12 +287,24 @@ function bindMarkdownEditorDropEvents(editor) {
     function dropImageFile(event) {
       const files = event.dataTransfer.files
       for (let i = 0; i < files.length; i++) {
-        const filePath = files[i].path
-        if (files[i].type.startsWith('image')) { // upload image
-          event.stopPropagation()
-          event.preventDefault()
-
-          MarkdownPreviewEnhancedView.uploadImageFile(editor, filePath, config.imageUploader)
+        const imageFilePath = files[i].path
+        if (files[i].type.startsWith('image')) { // Drop image
+          const imageDropAction = atom.config.get('markdown-preview-enhanced.imageDropAction')
+          if (imageDropAction === 'upload') { // upload image
+            event.stopPropagation()
+            event.preventDefault()
+            MarkdownPreviewEnhancedView.uploadImageFile(editor, imageFilePath, config.imageUploader)            
+          } else if (imageDropAction.startsWith('insert')) { // insert relative path
+            event.stopPropagation()
+            event.preventDefault()
+            const editorPath = editor.getPath()
+            const description = path.basename(imageFilePath).replace(path.extname(imageFilePath), '')
+            editor.insertText(`![${description}](${path.relative(path.dirname(editorPath), imageFilePath)})`)            
+          } else if (imageDropAction.startsWith('copy')) { // copy to image folder
+            event.stopPropagation()
+            event.preventDefault()
+            MarkdownPreviewEnhancedView.pasteImageFile(editor, atom.config.get('markdown-preview-enhanced.imageFolderPath'), imageFilePath)
+          }
         }
       }
       return false
@@ -442,7 +451,7 @@ function showUploadedImages() {
  * @param filePath 
  */
 async function onModifySource(codeChunkData, result, filePath) {
-  function insertResult(i:number, editor:AtomCore.TextEditor, lines:string[]) {
+  function insertResult(i:number, editor:Atom.TextEditor, lines:string[]) {
     const lineCount = editor.getLineCount()
     let start = 0
     // find <!- code_chunk_output --> 
@@ -490,7 +499,7 @@ async function onModifySource(codeChunkData, result, filePath) {
 
   const visibleTextEditors = atom.workspace.getTextEditors()
   for (let i = 0; i < visibleTextEditors.length; i++) {
-    const editor = visibleTextEditors[i] as AtomCore.TextEditor
+    const editor = visibleTextEditors[i] as Atom.TextEditor
     if (editor.getPath() === filePath) {
       let codeChunkOffset = 0,
           targetCodeChunkOffset = codeChunkData.options['code_chunk_offset']
