@@ -1,3 +1,8 @@
+## 0.14.11  
+* Upgraded mume to [0.2.3](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).  
+* Added `enableEmojiSyntax` option.  
+* Added `imageDropAction` option.  
+
 ## 0.14.10  
 * Upgraded mume to [0.2.2](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).  
   * Added `enableCriticMarkupSyntax` option. [Syntax guide](http://criticmarkup.com/users-guide.php).  
