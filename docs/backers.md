@@ -24,6 +24,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [Cherrot](http://cherrot.com/)   
 * 黒瀬 崇弘  
 * [udscbt-wsx](https://github.com/udscbt-wsx)
+* [杜在川](https://www.zhihu.com/people/duzaichuan/activities) 
 
 ---
 
