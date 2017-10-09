@@ -86,9 +86,9 @@ Markdown Preview Enhanced 支持 [ditaa](https://github.com/stathissideris/ditaa
 
 ---  
 
-如果你只是想要顯示代碼塊而不想畫圖，則只要在後面添加 `{code_block: true}` 即可：     
+如果你只是想要顯示代碼塊而不想畫圖，則只要在後面添加 `{code_block=true}` 即可：     
 
-    ```mermaid {code_block: true}
+    ```mermaid {code_block=true}
     // 你的 mermaid 代碼
     ```
 

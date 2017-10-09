@@ -86,9 +86,9 @@ Markdown Preview Enhanced supports [ditaa](https://github.com/stathissideris/dit
 
 ---  
 
-If you don't want to render graphs but only display code block, then you can add `{code_block: true}` like blow:       
+If you don't want to render graphs but only display code block, then you can add `{code_block=true}` like blow:       
 
-    ```mermaid {code_block:true}
+    ```mermaid {code_block=true}
     // your mermaid code here
     ```
 
