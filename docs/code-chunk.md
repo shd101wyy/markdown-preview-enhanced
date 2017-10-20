@@ -179,7 +179,7 @@ It is recommended to use `standalone` while drawing `tikz` graphs.
 ## Plotly
 Markdown Preview Enhanced allows you to draw [Plotly](https://plot.ly/) easily.  
 For example:  
-![screen shot 2017-06-06 at 3 27 28 pm](https://user-images.githubusercontent.com/1908863/26850341-c6095a94-4acc-11e7-83b4-7fdb4eb8b1d8.png)
+![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
 * The first line `@import "https://cdn.plot.ly/plotly-latest.min.js" ` uses the [file import](file-imports.md) functionality to import `plotly-latest.min.js` file. However, it is recommended to download the js file to local disk for better performance.  
 * Then we created a `javascript` code chunk.

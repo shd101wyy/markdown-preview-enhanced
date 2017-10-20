@@ -180,7 +180,7 @@ Markdown Preview Enhanced 也支持 `LaTeX` 编译。
 ## Plotly
 Markdown Preview Enhanced 支持你轻松的绘制 [Plotly](https://plot.ly/) 图形。
 例如：  
-![screen shot 2017-06-06 at 3 27 28 pm](https://user-images.githubusercontent.com/1908863/26850341-c6095a94-4acc-11e7-83b4-7fdb4eb8b1d8.png)
+![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
 * 第一行中的 `@import "https://cdn.plot.ly/plotly-latest.min.js" ` 使用了 [文件引用](zh-cn/file-imports.md) 的特性来引用 `plotly-latest.min.js` 文件。但是，引用本地的 js 文件是推荐的，因为这样更快。  
 * 接着我们创建了 `javascript` code chunk.
