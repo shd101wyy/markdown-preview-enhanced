@@ -652,7 +652,7 @@ class MarkdownPreviewEnhancedView {
                     atom.notifications.addInfo(`Image ${imageFileName} has been copied to folder ${assetDirectoryPath}`);
                     let url = `${imageFolderPath}/${imageFileName}`;
                     if (url.indexOf(' ') >= 0)
-                        url = `<${url}>`;
+                        url = url.replace(/ /g, '%20');
                     editor.insertText(`![${description}](${url})`);
                 });
             });
