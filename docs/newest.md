@@ -1,37 +1,41 @@
-## 0.14.11  
-* Upgraded mume to [0.2.3](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).  
-* Added `enableEmojiSyntax` option.  
-* Added `imageDropAction` option.  
+## 0.15.0
+* Upgraded mume to [0.2.4](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
+* Fixed <kbd>shift-enter</kbd> keymap bug.  
 
-## 0.14.10  
-* Upgraded mume to [0.2.2](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).  
-  * Added `enableCriticMarkupSyntax` option. [Syntax guide](http://criticmarkup.com/users-guide.php).  
-  * Added `toc` config to front-matter for `[TOC]` and sidebar TOC [#606](https://github.com/shd101wyy/markdown-preview-enhanced/issues/606).  
-  * Fixed ordered list TODO box bug [#592](https://github.com/shd101wyy/markdown-preview-enhanced/issues/592).  
-  * Upgraded `KaTeX` to version `0.8.3`.  
-  * Changed `MathJax` CDN url.  
-  * Fixed markdown export math issue [#601](https://github.com/shd101wyy/markdown-preview-enhanced/issues/601).  
-* Removed `ctrl-shift-i` keybord shortcut.  
+## 0.14.11
+* Upgraded mume to [0.2.3](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
+* Added `enableEmojiSyntax` option.
+* Added `imageDropAction` option.
+
+## 0.14.10
+* Upgraded mume to [0.2.2](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
+  * Added `enableCriticMarkupSyntax` option. [Syntax guide](http://criticmarkup.com/users-guide.php).
+  * Added `toc` config to front-matter for `[TOC]` and sidebar TOC [#606](https://github.com/shd101wyy/markdown-preview-enhanced/issues/606).
+  * Fixed ordered list TODO box bug [#592](https://github.com/shd101wyy/markdown-preview-enhanced/issues/592).
+  * Upgraded `KaTeX` to version `0.8.3`.
+  * Changed `MathJax` CDN url.
+  * Fixed markdown export math issue [#601](https://github.com/shd101wyy/markdown-preview-enhanced/issues/601).
+* Removed `ctrl-shift-i` keybord shortcut.
 
 ## 0.14.9
-* Added `ignoreLink` option to TOC [#583](https://github.com/shd101wyy/markdown-preview-enhanced/issues/583).  
-* Fixed issue [#584](https://github.com/shd101wyy/markdown-preview-enhanced/issues/584), [#585](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585), [#586](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585).  
+* Added `ignoreLink` option to TOC [#583](https://github.com/shd101wyy/markdown-preview-enhanced/issues/583).
+* Fixed issue [#584](https://github.com/shd101wyy/markdown-preview-enhanced/issues/584), [#585](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585), [#586](https://github.com/shd101wyy/markdown-preview-enhanced/issues/585).
 
-## 0.14.8  
-* Removed the `Welcome Page`.  
-* Supported revealjs `fragment` [#559](https://github.com/shd101wyy/markdown-preview-enhanced/issues/559).  
-* Supported Experimental Puppeteer export (Headless Chrome).   
+## 0.14.8
+* Removed the `Welcome Page`.
+* Supported revealjs `fragment` [#559](https://github.com/shd101wyy/markdown-preview-enhanced/issues/559).
+* Supported Experimental Puppeteer export (Headless Chrome).
 
-## 0.14.7  
-* Fixed revealjs html export style bug.  
-* Supported configuring attributes for diagram **containers**.  
-For example:  
+## 0.14.7
+* Fixed revealjs html export style bug.
+* Supported configuring attributes for diagram **containers**.
+For example:
 
         ```puml {.center}
         // your code here
         ```
-    will add `class="center"` to the container.  
-* By default, all exported files will use `github-light.css` style. You can use your preview theme for export by setting `printBackground` to `true` from the extension settings, or add `print_background:true` to front-matter.  
+    will add `class="center"` to the container.
+* By default, all exported files will use `github-light.css` style. You can use your preview theme for export by setting `printBackground` to `true` from the extension settings, or add `print_background:true` to front-matter.
 
 ## 0.14.6
 * Supported quick image upload. Just drop your image file to markdown editor (not preview).
