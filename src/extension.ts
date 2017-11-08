@@ -1,5 +1,3 @@
-/// <reference types="atom-typings" />
-
 import * as path from "path"
 import {CompositeDisposable, TextEditor} from "atom"
 
