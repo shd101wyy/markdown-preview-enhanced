@@ -25,6 +25,7 @@
 - **[可扩展性](zh-cn/extend-parser.md)**
 - **[LaTeX 数学](zh-cn/math.md)**
 - 导出 **PDF**, **PNG**, 以及 **JPEG** 凭借 [PhantomJS](zh-cn/phantomjs.md)
+- 导出 **PDF**, **PNG**, 以及 **JPEG** 凭借 [Puppeteer](zh-cn/puppeteer.md)
 - 导出漂亮的 **HTML**（移动端支持）
 - [编译到 GitHub Flavored Markdown](zh-cn/markdown.md)
 - [自定义预览 CSS](zh-cn/customize-css.md)

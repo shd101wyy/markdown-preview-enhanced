@@ -18,6 +18,7 @@
 - 文档导出
   - [HTML](zh-cn/html.md)
   - [PhantomJS](zh-cn/phantomjs.md)
+  - [Puppeteer](zh-cn/puppeteer.md)
   - [PDF](zh-cn/pdf.md)
   - [eBook](zh-cn/ebook.md)
   - [Prince (PDF)](zh-cn/prince.md)
