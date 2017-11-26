@@ -55,7 +55,7 @@
     "build": "nothing happened"
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.2.4"
+    "@shd101wyy/mume": "^0.2.7"
   },
   "devDependencies": {
     "@types/atom": "^1.21.8",

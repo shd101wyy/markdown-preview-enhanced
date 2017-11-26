@@ -18,6 +18,7 @@
 - Document Export
   - [HTML](html.md)
   - [PhantomJS](phantomjs.md)
+  - [Puppeteer](puppeteer.md)
   - [PDF](pdf.md)
   - [eBook](ebook.md)
   - [Prince (PDF)](prince.md)
