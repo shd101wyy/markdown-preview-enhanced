@@ -1,5 +1,5 @@
 import * as path from "path"
-import {CompositeDisposable, TextEditor} from "atom"
+import {CompositeDisposable, TextEditor, TextBuffer} from "atom"
 
 import * as mume from "@shd101wyy/mume"
 const utility = mume.utility
@@ -168,7 +168,7 @@ mume.init() // init mume package
 
   // When the preview is displayed
   // preview will display the content of editor (pane item) that is activated
-  subscriptions.add(atom.workspace.onDidChangeActivePaneItem((editor)=> {
+  subscriptions.add(atom.workspace.onDidStopChangingActivePaneItem((editor:TextEditor)=> {
     if (editor &&
         editor['buffer'] &&
         editor['getPath'] &&
@@ -176,7 +176,9 @@ mume.init() // init mume package
       const preview = getPreviewForEditor(editor)
       if (!preview) return
 
-      if (config.singlePreview && preview.getEditor() !== editor) {
+      if (config.singlePreview && 
+          preview.getEditor() !== editor && 
+          atom.workspace.paneForItem(preview) !== atom.workspace.paneForItem(editor)) { // This line fixed issue #692
         preview.bindEditor(editor as TextEditor)
       }
 

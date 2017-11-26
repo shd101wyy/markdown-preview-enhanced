@@ -164,7 +164,7 @@ function activate(state) {
         }));
         // When the preview is displayed
         // preview will display the content of editor (pane item) that is activated
-        subscriptions.add(atom.workspace.onDidChangeActivePaneItem((editor) => {
+        subscriptions.add(atom.workspace.onDidStopChangingActivePaneItem((editor) => {
             if (editor &&
                 editor['buffer'] &&
                 editor['getPath'] &&
@@ -172,7 +172,9 @@ function activate(state) {
                 const preview = getPreviewForEditor(editor);
                 if (!preview)
                     return;
-                if (config.singlePreview && preview.getEditor() !== editor) {
+                if (config.singlePreview &&
+                    preview.getEditor() !== editor &&
+                    atom.workspace.paneForItem(preview) !== atom.workspace.paneForItem(editor)) {
                     preview.bindEditor(editor);
                 }
                 if (config.automaticallyShowPreviewOfMarkdownBeingEdited) {
