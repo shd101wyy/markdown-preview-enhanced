@@ -26,6 +26,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [udscbt-wsx](https://github.com/udscbt-wsx)
 * [杜在川](https://www.zhihu.com/people/duzaichuan/activities) 
 * Dmitry Neyaglov
+* Jachin Zhong
 
 ---
 
