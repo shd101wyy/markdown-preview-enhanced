@@ -52,7 +52,8 @@
     "latex"
   ],
   "scripts": {
-    "build": "nothing happened"
+    "build": "tsc -p .",
+    "build:watch": "tsc -w -p ."
   },
   "dependencies": {
     "@shd101wyy/mume": "^0.2.7"
