@@ -321,27 +321,27 @@ export const configSchema = {
   "AccessKey": {
     "type": "string",
     "default": "",
-    "title": "AccessKey",
+    "title": "Qiniu AccessKey",
     "order": 78
   },
   "SecretKey": {
      "type": "string",
      "default": "",
-     "title": "SecretKey",
+     "title": "Qiniu SecretKey",
      "description": "",
      "order": 79
   },
   "Bucket": {
       "type": "string",
       "default": "",
-      "title": "Bucket",
+      "title": "Qiniu Bucket",
       "description": "",
       "order": 80
   },
   "Domain": {
       "type": "string",
       "default": "http://",
-      "title": "Domain",
+      "title": "Qiniu Domain",
       "description": "",
       "order": 81
   },
