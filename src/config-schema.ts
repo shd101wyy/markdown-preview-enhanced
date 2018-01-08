@@ -287,7 +287,8 @@ export const configSchema = {
     "default": "imgur",
     "enum": [
       "imgur",
-      "sm.ms"
+      "sm.ms",
+      "qiniu",
     ],
     "order": 76
   },
@@ -304,12 +305,40 @@ export const configSchema = {
     ],
     "order": 77
   },
+  "AccessKey": {
+    "type": "string",
+    "default": "",
+    "title": "AccessKey",
+    "order": 78
+  },
+  "SecretKey": {
+     "type": "string",
+     "default": "",
+     "title": "SecretKey",
+     "description": "",
+     "order": 79
+  },
+  "Bucket": {
+      "type": "string",
+      "default": "",
+      "title": "Bucket",
+      "description": "",
+      "order": 80
+  },
+  "Domain": {
+      "type": "string",
+      "default": "http://",
+      "title": "Domain",
+      "description": "",
+      "order": 81
+  },
+
   "enableScriptExecution": {
     "title": "Enable Script Execution",
     "description": "Disabling this will prevent executing code chunks and importing JavaScript files.",
     "type": "boolean",
     "default": true,
-    "order": 80
+    "order": 84
   }
 }
 

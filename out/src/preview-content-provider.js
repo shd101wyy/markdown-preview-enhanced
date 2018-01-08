@@ -700,8 +700,12 @@ class MarkdownPreviewEnhancedView {
         const uid = Math.random().toString(36).substr(2, 9);
         const hint = `![Uploading ${imageFileName}… (${uid})]()`;
         const bufferRow = editor.getCursorBufferPosition().row;
+        const AccessKey = atom.config.get('markdown-preview-enhanced.AccessKey');
+        const SecretKey = atom.config.get('markdown-preview-enhanced.SecretKey');
+        const Bucket = atom.config.get('markdown-preview-enhanced.Bucket');
+        const Domain = atom.config.get('markdown-preview-enhanced.Domain');
         editor.insertText(hint);
-        mume.utility.uploadImage(imageFilePath, { method: imageUploader })
+        mume.utility.uploadImage(imageFilePath, { method: imageUploader }, AccessKey, SecretKey, Bucket, Domain)
             .then((url) => {
             this.setUploadedImageURL(editor, imageFileName, url, hint, bufferRow);
         })
