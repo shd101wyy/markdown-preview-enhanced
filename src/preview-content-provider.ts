@@ -136,8 +136,22 @@ export class MarkdownPreviewEnhancedView {
   public bindEditor(editor:TextEditor) {
     if (!this.editor) {
       this.editor = editor // this has to be put here, otherwise the tab title will be `unknown`
+
+      let previewPosition = this.config.previewPanePosition
+      if (previewPosition === 'center') {
+        previewPosition = undefined
+      } else if (previewPosition === 'left' && atom.workspace.getCenter().getPanes().length === 1) {
+        const pane = atom.workspace.getActivePane()
+        pane.splitLeft()
+        pane.activate()
+      } else if (previewPosition === 'up' && atom.workspace.getCenter().getPanes().length === 1) {
+        const pane = atom.workspace.getActivePane()
+        pane.splitUp()
+        pane.activate()
+      }
+
       atom.workspace.open(this.uri, {
-        split: "right",
+        split: previewPosition as any, // left | right | up | down
         activatePane: false,
         activateItem: true, // <= this has to be true otherwise the webview will throw an error.
         searchAllPanes: false,

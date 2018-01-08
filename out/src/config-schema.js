@@ -13,6 +13,19 @@ exports.configSchema = {
         "default": true,
         "order": 5
     },
+    "previewPanePosition": {
+        "title": "Position of the preview pane",
+        "type": "string",
+        "default": "right",
+        "enum": [
+            "left",
+            "right",
+            "up",
+            "down",
+            "center"
+        ],
+        "order": 6
+    },
     "openPreviewPaneAutomatically": {
         "title": "Open preview pane automatically when opening a markdown file",
         "type": "boolean",
