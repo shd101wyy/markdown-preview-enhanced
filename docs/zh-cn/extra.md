@@ -1,6 +1,6 @@
 # 额外
-## 安装 svg2pdf
-[svg2pdf 官网](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
+## 安装 pdf2svg
+[pdf2svg 官网](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
 * **Mac**  
 ```bash
 brew install pdf2svg

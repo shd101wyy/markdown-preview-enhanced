@@ -56,7 +56,7 @@
     "build:watch": "tsc -w -p ."
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.2.7"
+    "@shd101wyy/mume": "^0.2.8"
   },
   "devDependencies": {
     "@types/atom": "^1.21.8",

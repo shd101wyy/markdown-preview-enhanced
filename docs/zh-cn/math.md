@@ -1,7 +1,7 @@
 # 数学  
 **Markdown Preview Enhanced** 使用 [KaTeX](https://github.com/Khan/KaTeX) 或者 [MathJax](https://github.com/mathjax/MathJax) 来渲染数学表达式。  
 
-KaTeX 拥有比 MathJax 更快的性能，但是它却少了很多 MathJax 拥有的特性。你可以查看 [KaTeX supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX) 来了解 KaTeX 支持那些符号和函数。     
+KaTeX 拥有比 MathJax 更快的性能，但是它却少了很多 MathJax 拥有的特性。你可以查看 [KaTeX supported functions/symbols](https://khan.github.io/KaTeX/function-support.html) 来了解 KaTeX 支持那些符号和函数。     
 
 默认下的分隔符：  
 * `$...$` 或者 `\(...\)` 中的数学表达式将会在行内显示。  
