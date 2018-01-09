@@ -88,6 +88,7 @@ export const configSchema = {
       "solarized-light.css",
       "twilight.css",
       "vs.css",
+      "vue.css",
       "xonokai.css"
     ],
     "order": 20
@@ -111,7 +112,8 @@ export const configSchema = {
       "one-dark.css",
       "one-light.css",
       "solarized-dark.css",
-      "solarized-light.css"
+      "solarized-light.css",
+      "vue.css"
     ],
     "order": 21
   },
