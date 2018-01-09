@@ -29,6 +29,22 @@ The presentation above will has size `800x600`
 ```yaml
 ---
 presentation:
+  # presentation theme
+  # === available themes ===
+  # "beige.css"
+  # "black.css"
+  # "blood.css"
+  # "league.css"
+  # "moon.css"
+  # "night.css"
+  # "serif.css"
+  # "simple.css"
+  # "sky.css"
+  # "solarized.css"
+  # "white.css"
+  # "none.css"  
+  theme: white.css
+
   # The "normal" size of the presentation, aspect ratio will be preserved
   # when the presentation is scaled to fit different resolutions. Can be
   # specified using percentage units.
