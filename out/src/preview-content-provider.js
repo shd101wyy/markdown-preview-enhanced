@@ -118,8 +118,22 @@ class MarkdownPreviewEnhancedView {
     bindEditor(editor) {
         if (!this.editor) {
             this.editor = editor; // this has to be put here, otherwise the tab title will be `unknown`
+            let previewPosition = this.config.previewPanePosition;
+            if (previewPosition === 'center') {
+                previewPosition = undefined;
+            }
+            else if (previewPosition === 'left' && atom.workspace.getCenter().getPanes().length === 1) {
+                const pane = atom.workspace.getActivePane();
+                pane.splitLeft();
+                pane.activate();
+            }
+            else if (previewPosition === 'up' && atom.workspace.getCenter().getPanes().length === 1) {
+                const pane = atom.workspace.getActivePane();
+                pane.splitUp();
+                pane.activate();
+            }
             atom.workspace.open(this.uri, {
-                split: "right",
+                split: previewPosition,
                 activatePane: false,
                 activateItem: true,
                 searchAllPanes: false,
@@ -700,13 +714,17 @@ class MarkdownPreviewEnhancedView {
         const uid = Math.random().toString(36).substr(2, 9);
         const hint = `![Uploading ${imageFileName}… (${uid})]()`;
         const bufferRow = editor.getCursorBufferPosition().row;
+        const AccessKey = atom.config.get('markdown-preview-enhanced.AccessKey') || '';
+        const SecretKey = atom.config.get('markdown-preview-enhanced.SecretKey') || '';
+        const Bucket = atom.config.get('markdown-preview-enhanced.Bucket') || '';
+        const Domain = atom.config.get('markdown-preview-enhanced.Domain') || '';
         editor.insertText(hint);
-        mume.utility.uploadImage(imageFilePath, { method: imageUploader })
+        mume.utility.uploadImage(imageFilePath, { method: imageUploader, qiniu: { AccessKey, SecretKey, Bucket, Domain } })
             .then((url) => {
             this.setUploadedImageURL(editor, imageFileName, url, hint, bufferRow);
         })
             .catch((err) => {
-            atom.notifications.addError(err);
+            atom.notifications.addError(err.toString());
         });
     }
     activatePaneForEditor() {

@@ -29,6 +29,22 @@ presentation:
 ```yaml
 ---
 presentation:
+  # presentation 主題
+  # === 可選的主題 ===
+  # "beige.css"
+  # "black.css"
+  # "blood.css"
+  # "league.css"
+  # "moon.css"
+  # "night.css"
+  # "serif.css"
+  # "simple.css"
+  # "sky.css"
+  # "solarized.css"
+  # "white.css"
+  # "none.css"  
+  theme: white.css
+
   # The "normal" size of the presentation, aspect ratio will be preserved
   # when the presentation is scaled to fit different resolutions. Can be
   # specified using percentage units.

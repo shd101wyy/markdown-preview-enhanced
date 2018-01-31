@@ -1,7 +1,7 @@
 # Math  
 **Markdown Preview Enhanced** uses [KaTeX](https://github.com/Khan/KaTeX) or [MathJax](https://github.com/mathjax/MathJax) to render math expressions.  
 
-KaTeX is faster than MathJax, but it lacks many features that MathJax has. You can check [KaTeX supported functions/symbols](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX).    
+KaTeX is faster than MathJax, but it lacks many features that MathJax has. You can check [KaTeX supported functions/symbols](https://khan.github.io/KaTeX/function-support.html).    
 
 By default:  
 * Expression within `$...$` or `\(...\)` will be rendered inline.  

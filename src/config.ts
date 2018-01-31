@@ -43,6 +43,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public singlePreview: boolean
   public scrollSync: boolean
   public liveUpdate: boolean
+  public previewPanePosition: string
   public openPreviewPaneAutomatically: boolean
   public automaticallyShowPreviewOfMarkdownBeingEdited: boolean
   public closePreviewAutomatically: boolean
@@ -97,6 +98,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     this.singlePreview = atom.config.get('markdown-preview-enhanced.singlePreview')
     this.scrollSync = atom.config.get('markdown-preview-enhanced.scrollSync')
     this.liveUpdate = atom.config.get('markdown-preview-enhanced.liveUpdate')
+    this.previewPanePosition = atom.config.get('markdown-preview-enhanced.previewPanePosition')
     this.openPreviewPaneAutomatically = atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically')
     this.automaticallyShowPreviewOfMarkdownBeingEdited = atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited')
     this.closePreviewAutomatically = atom.config.get('markdown-preview-enhanced.closePreviewAutomatically')
@@ -239,6 +241,9 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
       atom.config.onDidChange('markdown-preview-enhanced.liveUpdate', ({newValue})=> {
         this.liveUpdate = newValue
         // callback()
+      }),
+      atom.config.onDidChange('markdown-preview-enhanced.previewPanePosition', ({newValue})=> {
+        this.previewPanePosition = newValue
       }),
       atom.config.onDidChange('markdown-preview-enhanced.openPreviewPaneAutomatically', ({newValue})=> {
         this.openPreviewPaneAutomatically = newValue

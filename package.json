@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced",
   "main": "./out/src/extension",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "NCSA",
@@ -52,10 +52,11 @@
     "latex"
   ],
   "scripts": {
-    "build": "nothing happened"
+    "build": "tsc -p .",
+    "build:watch": "tsc -w -p ."
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.2.7"
+    "@shd101wyy/mume": "^0.2.8"
   },
   "devDependencies": {
     "@types/atom": "^1.21.8",

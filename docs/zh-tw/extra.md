@@ -1,6 +1,6 @@
 # 額外
-## 安裝 svg2pdf
-[svg2pdf 官網](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
+## 安裝 pdf2svg
+[pdf2svg 官網](http://www.cityinthesky.co.uk/opensource/pdf2svg/)  
 * **Mac**  
 ```bash
 brew install pdf2svg

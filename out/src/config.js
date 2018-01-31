@@ -50,6 +50,7 @@ class MarkdownPreviewEnhancedConfig {
         this.singlePreview = atom.config.get('markdown-preview-enhanced.singlePreview');
         this.scrollSync = atom.config.get('markdown-preview-enhanced.scrollSync');
         this.liveUpdate = atom.config.get('markdown-preview-enhanced.liveUpdate');
+        this.previewPanePosition = atom.config.get('markdown-preview-enhanced.previewPanePosition');
         this.openPreviewPaneAutomatically = atom.config.get('markdown-preview-enhanced.openPreviewPaneAutomatically');
         this.automaticallyShowPreviewOfMarkdownBeingEdited = atom.config.get('markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited');
         this.closePreviewAutomatically = atom.config.get('markdown-preview-enhanced.closePreviewAutomatically');
@@ -163,6 +164,8 @@ class MarkdownPreviewEnhancedConfig {
         }), atom.config.onDidChange('markdown-preview-enhanced.liveUpdate', ({ newValue }) => {
             this.liveUpdate = newValue;
             // callback()
+        }), atom.config.onDidChange('markdown-preview-enhanced.previewPanePosition', ({ newValue }) => {
+            this.previewPanePosition = newValue;
         }), atom.config.onDidChange('markdown-preview-enhanced.openPreviewPaneAutomatically', ({ newValue }) => {
             this.openPreviewPaneAutomatically = newValue;
             callback();

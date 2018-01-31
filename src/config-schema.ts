@@ -11,6 +11,19 @@ export const configSchema = {
     "default": true,
     "order": 5
   },
+  "previewPanePosition": {
+    "title": "Position of the preview pane",
+    "type": "string",
+    "default": "right",
+    "enum": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "center"
+    ],
+    "order": 6
+  },
   "openPreviewPaneAutomatically": {
     "title": "Open preview pane automatically when opening a markdown file",
     "type": "boolean",
@@ -75,6 +88,7 @@ export const configSchema = {
       "solarized-light.css",
       "twilight.css",
       "vs.css",
+      "vue.css",
       "xonokai.css"
     ],
     "order": 20
@@ -98,7 +112,8 @@ export const configSchema = {
       "one-dark.css",
       "one-light.css",
       "solarized-dark.css",
-      "solarized-light.css"
+      "solarized-light.css",
+      "vue.css"
     ],
     "order": 21
   },
@@ -287,7 +302,8 @@ export const configSchema = {
     "default": "imgur",
     "enum": [
       "imgur",
-      "sm.ms"
+      "sm.ms",
+      "qiniu",
     ],
     "order": 76
   },
@@ -304,12 +320,40 @@ export const configSchema = {
     ],
     "order": 77
   },
+  "AccessKey": {
+    "type": "string",
+    "default": "",
+    "title": "Qiniu AccessKey",
+    "order": 78
+  },
+  "SecretKey": {
+     "type": "string",
+     "default": "",
+     "title": "Qiniu SecretKey",
+     "description": "",
+     "order": 79
+  },
+  "Bucket": {
+      "type": "string",
+      "default": "",
+      "title": "Qiniu Bucket",
+      "description": "",
+      "order": 80
+  },
+  "Domain": {
+      "type": "string",
+      "default": "http://",
+      "title": "Qiniu Domain",
+      "description": "",
+      "order": 81
+  },
+
   "enableScriptExecution": {
     "title": "Enable Script Execution",
     "description": "Disabling this will prevent executing code chunks and importing JavaScript files.",
     "type": "boolean",
     "default": true,
-    "order": 80
+    "order": 84
   }
 }
 
