@@ -466,7 +466,7 @@ function onModifySource(codeChunkData, result, filePath) {
         for (let i = 0; i < visibleTextEditors.length; i++) {
             const editor = visibleTextEditors[i];
             if (editor.getPath() === filePath) {
-                let codeChunkOffset = 0, targetCodeChunkOffset = codeChunkData.options['code_chunk_offset'];
+                let codeChunkOffset = 0, targetCodeChunkOffset = codeChunkData.normalizedInfo.attributes['code_chunk_offset'];
                 const lineCount = editor.getLineCount();
                 const lines = editor.buffer.getLines();
                 for (let i = 0; i < lineCount; i++) {
