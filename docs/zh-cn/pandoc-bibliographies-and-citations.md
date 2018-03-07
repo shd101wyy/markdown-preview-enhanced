@@ -107,7 +107,7 @@ By default, pandoc will use a Chicago author-date format for citations and refer
 ```yaml  
 ---
 title: "Sample Document"
-output: html_document
+output: pdf_document
 bibliography: bibliography.bib
 csl: biomed-central.csl
 ---

@@ -1,5 +1,6 @@
 import {MarkdownEngineConfig} from "@shd101wyy/mume"
 import {CompositeDisposable} from "atom"
+import { MathRenderingOption } from "../../mume/out/src/markdown-engine-config";
 
 export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public static getCurrentConfig() {
@@ -18,7 +19,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public enableExtendedTableSyntax: boolean;
   public enableCriticMarkupSyntax: boolean;
   public protocolsWhiteList: string;
-  public mathRenderingOption: string;
+  public mathRenderingOption: MathRenderingOption;
   public mathInlineDelimiters: string[][];
   public mathBlockDelimiters: string[][];
   public codeBlockTheme: string;
