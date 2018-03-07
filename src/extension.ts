@@ -450,7 +450,7 @@ function showUploadedImages() {
  * @param result 
  * @param filePath 
  */
-async function onModifySource(codeChunkData, result, filePath) {
+async function onModifySource(codeChunkData:mume.CodeChunkData, result, filePath) {
   function insertResult(i:number, editor: TextEditor, lines:string[]) {
     const lineCount = editor.getLineCount()
     let start = 0
@@ -502,7 +502,7 @@ async function onModifySource(codeChunkData, result, filePath) {
     const editor = visibleTextEditors[i] as TextEditor
     if (editor.getPath() === filePath) {
       let codeChunkOffset = 0,
-          targetCodeChunkOffset = codeChunkData.options['code_chunk_offset']
+          targetCodeChunkOffset = codeChunkData.normalizedInfo.attributes['code_chunk_offset']
       const lineCount = editor.getLineCount()
       const lines = editor.buffer.getLines()
       for (let i = 0; i < lineCount; i++) {
