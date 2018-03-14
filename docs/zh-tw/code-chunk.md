@@ -19,8 +19,9 @@
 運行所有的 code chunks。  
 
 ## 格式  
-你可以通過以下形式來設置 code chunk ：  
-<code>````lang  {cmd=你的命令 opt1=value1 opt2=value2 ...}</code>    
+你可以通過以下形式來設置 code chunk：<code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>。  
+
+如果一個屬性的值是 `true`，那麼它可以被省略，（e.g. `{cmd hide}` 和 `{cmd=true hide=true}` 相同）。  
 
 **lang**  
 你想要代碼所高亮的語言。

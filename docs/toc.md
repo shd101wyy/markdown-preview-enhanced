@@ -4,7 +4,7 @@ You can press <kbd>cmd-shift-p</kbd> then choose `Markdown Preview Enhanced: Cre
 Multiple TOCs can be created.
 To exclude a heading from the `TOC`, append `{ignore=true}` **after** your heading.
 
-![screen shot 2017-07-14 at 1 56 32 am](https://user-images.githubusercontent.com/1908863/28201657-abf1ac78-6837-11e7-9a08-e785df68e19b.png)
+![screen shot 2018-03-14 at 12 03 00 pm](https://user-images.githubusercontent.com/1908863/37418218-bb624e62-277f-11e8-88f5-8747a1c2e012.png)
 
 > The TOC will be updated when you save the markdown file.
 > You need to keep the preview open to get TOC updated.

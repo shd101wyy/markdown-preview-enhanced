@@ -4,7 +4,7 @@
 多個 TOCs 可以被創建。
 如果你想要在你的 `TOC` 中排除一個標題，請在你的標題 **後面** 添加 `{ignore=true}` 即可。
 
-![screen shot 2017-07-14 at 1 56 32 am](https://user-images.githubusercontent.com/1908863/28201657-abf1ac78-6837-11e7-9a08-e785df68e19b.png)
+![screen shot 2018-03-14 at 12 03 00 pm](https://user-images.githubusercontent.com/1908863/37418218-bb624e62-277f-11e8-88f5-8747a1c2e012.png)
 
 > TOC 將會在你的 markdown 文件保存時更新。
 > 你需要保持預覽打開才能更新 TOC。

@@ -24,7 +24,7 @@ execute single code chunk where your cursor is at.
 execute all code chunks.    
 
 ## Format
-You can configure code chunk options in format of <code>```lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>.
+You can configure code chunk options in format of <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>.
 When a value of an attribute is `true`, it can be omitted (e.g. `{cmd hide}` is identical to `{cmd=true hide=true}`).
 
 **lang**  
