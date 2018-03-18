@@ -3,7 +3,7 @@
 **Markdown Preview Enhanced** supports rendering `flow charts`, `sequence diagrams`, `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`, `Vega & Vega-lite`, `Ditaa` diagrams.
 You can also render `TikZ`, `Python Matplotlib`, `Plotly` and all sorts of other graphs and diagrams by using [Code Chunk](code-chunk.md).
 
-> Please note that some diagrams doesn't work well with file export like PDF, pandoc, etc.  
+> Please note that some diagrams doesn't work well with file export like PDF, pandoc, etc.
 
 ## Flow Charts
 
@@ -58,7 +58,7 @@ Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to re
 - Code block with `viz` or `dot` notation will be rendered by [Viz.js](https://github.com/mdaines/viz.js).
 - You can choose different engines by specifying `{engine="..."}`. Engine `circo`, `dot`, `neato`, `osage`, or `twopi` are supported. Default engine is `dot`.
 
-![screen shot 2017-07-14 at 1 12 30 am](https://user-images.githubusercontent.com/1908863/28200410-86a4d45a-6831-11e7-9981-12988882ec83.png)
+![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
 ## Vega and Vega-lite
 Markdown Preview Enhanced supports [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/) **static** diagrams.
