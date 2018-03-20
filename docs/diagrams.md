@@ -3,7 +3,7 @@
 **Markdown Preview Enhanced** supports rendering `flow charts`, `sequence diagrams`, `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`, `Vega & Vega-lite`, `Ditaa` diagrams.
 You can also render `TikZ`, `Python Matplotlib`, `Plotly` and all sorts of other graphs and diagrams by using [Code Chunk](code-chunk.md).
 
-> Please note that some diagrams doesn't work well with file export like PDF, pandoc, etc.
+> Please note that some diagrams don't work well with file exports such as PDF, pandoc, etc.
 
 ## Flow Charts
 
