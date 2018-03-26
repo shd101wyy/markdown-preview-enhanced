@@ -1,6 +1,6 @@
-const chineseConv = require('chinese-conv'),
-      fs = require('fs'),
-      path = require('path')
+const chineseConv = require("chinese-conv"),
+  fs = require("fs"),
+  path = require("path");
 
 /*
 
@@ -11,10 +11,10 @@ const chineseConv = require('chinese-conv'),
 
  */
 
-const ignoreFiles = ['installation.md']
+const ignoreFiles = ["installation.md"];
 
-zhTWDir = path.resolve(__dirname, './docs/zh-tw')
-zhCNDir = path.resolve(__dirname, './docs/zh-cn')
+zhTWDir = path.resolve(__dirname, "./docs/zh-tw");
+zhCNDir = path.resolve(__dirname, "./docs/zh-cn");
 /*
 // delete all markdown files inside /docs/zh-tw
 fs.readdir(zhTWDir, (error, items)=> {
@@ -33,27 +33,28 @@ fs.readdir(zhTWDir, (error, items)=> {
 */
 
 // translate
-fs.readdir(zhCNDir, (error, items)=> {
-  if (error)
-    return console.log(error)
+fs.readdir(zhCNDir, (error, items) => {
+  if (error) return console.log(error);
 
-  items.forEach((fileName)=> {
+  items.forEach((fileName) => {
     for (let i = 0; i < ignoreFiles.length; i++) {
-      if (ignoreFiles[i] === fileName)
-        return
+      if (ignoreFiles[i] === fileName) return;
     }
 
-    const filePath = path.resolve(zhCNDir, fileName)
-    fs.readFile(filePath, {encoding:'utf-8'}, (error, data)=>{
-      if (error)
-        return console.log(error)
+    const filePath = path.resolve(zhCNDir, fileName);
+    fs.readFile(filePath, { encoding: "utf-8" }, (error, data) => {
+      if (error) return console.log(error);
 
-      let text = chineseConv.tify(data).replace(/\]\(\s*zh\-cn\//g, '](zh-tw/')
+      let text = chineseConv.tify(data).replace(/\]\(\s*zh\-cn\//g, "](zh-tw/");
 
-      fs.writeFile(path.resolve(zhTWDir, fileName), text, {encoding:'utf-8'}, (error)=> {
-        if (error)
-          return console.log(error)
-      })
-    })
-  })
-})
+      fs.writeFile(
+        path.resolve(zhTWDir, fileName),
+        text,
+        { encoding: "utf-8" },
+        (error) => {
+          if (error) return console.log(error);
+        },
+      );
+    });
+  });
+});
