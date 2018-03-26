@@ -54,8 +54,10 @@
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
-    "lint": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\"",
-    "format": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
+    "lint": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "lint-with-tests": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "format": "prettier --write --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
     "@shd101wyy/mume": "^0.3.2"
