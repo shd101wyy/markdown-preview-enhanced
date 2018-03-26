@@ -52,18 +52,24 @@
     "latex"
   ],
   "scripts": {
-    "build": "tsc -p .",
-    "build:watch": "tsc -w -p ."
+    "build": "tsc --project .",
+    "build:watch": "tsc --project . --watch",
+    "lint": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "format": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
     "@shd101wyy/mume": "^0.3.2"
   },
   "devDependencies": {
-    "@types/atom": "^1.23.3",
+    "@types/atom": "^1.25.0",
     "@types/jquery": "^3.3.0",
     "@types/mocha": "^2.2.47",
     "@types/node": "^9.4.0",
     "chinese-conv": "^1.0.1",
-    "typescript": "^2.6.2"
+    "prettier": "^1.11.1",
+    "prettier-check": "^2.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.7.2"
   }
 }
