@@ -3,7 +3,7 @@
   "main": "./out/src/extension",
   "version": "0.15.5",
   "description": "Fork of markdown-preview-enhanced with https://github.com/gicentre/litvis",
-  "repository": "https://github.com/gicentre/markdown-preview-enhanced-litvis",
+  "repository": "https://github.com/gicentre/markdown-preview-enhanced-with-litvis.git",
   "license": "BSD-3, NCSA",
   "engines": {
     "atom": ">=1.16.0"
@@ -60,7 +60,7 @@
     "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
-    "@gicentre/mume-with-litvis": "^0.1.0"
+    "mume-with-litvis": "^0.1.1"
   },
   "devDependencies": {
     "@types/atom": "^1.25.0",
