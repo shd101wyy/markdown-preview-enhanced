@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mume = require("@shd101wyy/mume");
 const atom_1 = require("atom");
+const mume = require("mume-with-litvis");
 const path = require("path");
 const config_1 = require("./config");
 const linting_1 = require("./linting");

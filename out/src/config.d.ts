@@ -1,5 +1,5 @@
-import { MarkdownEngineConfig } from "@shd101wyy/mume";
 import { CompositeDisposable } from "atom";
+import { MarkdownEngineConfig } from "mume-with-litvis";
 import { MathRenderingOption } from "../../mume/out/src/markdown-engine-config";
 export declare class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     static getCurrentConfig(): MarkdownPreviewEnhancedConfig;
