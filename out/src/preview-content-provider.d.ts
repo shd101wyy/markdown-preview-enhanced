@@ -1,5 +1,5 @@
-import * as mume from "@shd101wyy/mume";
 import { TextEditor } from "atom";
+import * as mume from "mume-with-litvis";
 import { MarkdownPreviewEnhancedConfig } from "./config";
 /**
  * The markdown previewer
