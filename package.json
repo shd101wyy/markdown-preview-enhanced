@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced-with-litvis",
   "main": "./out/src/extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fork of markdown-preview-enhanced with https://github.com/gicentre/litvis",
   "repository": "https://github.com/gicentre/markdown-preview-enhanced-with-litvis.git",
   "license": "BSD-3, NCSA",
@@ -9,7 +9,7 @@
     "atom": ">=1.16.0"
   },
   "activationCommands": {
-    "atom-workspace": "markdown-preview-enhanced:toggle"
+    "atom-workspace": "markdown-preview-enhanced-with-litvis:toggle"
   },
   "activationHooks": [
     "language-gfm:grammar-used",
