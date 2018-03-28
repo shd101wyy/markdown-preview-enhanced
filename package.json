@@ -1,0 +1,85 @@
+{
+  "name": "markdown-preview-enhanced-with-litvis",
+  "main": "./out/src/extension",
+  "version": "0.0.0",
+  "description": "Fork of markdown-preview-enhanced with https://github.com/gicentre/litvis",
+  "repository": "https://github.com/gicentre/markdown-preview-enhanced-with-litvis.git",
+  "license": "BSD-3, NCSA",
+  "engines": {
+    "atom": ">=1.16.0"
+  },
+  "activationCommands": {
+    "atom-workspace": "markdown-preview-enhanced:toggle"
+  },
+  "activationHooks": [
+    "language-gfm:grammar-used",
+    "language-gfm-enhanced:grammar-used",
+    "language-markdown:grammar-used",
+    "language-pfm:grammar-used"
+  ],
+  "files": [
+    "assets",
+    "images",
+    "keymaps",
+    "menu",
+    "out",
+    "styles",
+    "LICENSE.md",
+    "README.md",
+    "markdown.png"
+  ],
+  "keywords": [
+    "markdown",
+    "presentation",
+    "image helper",
+    "katex",
+    "mathjax",
+    "mermaid",
+    "plantuml",
+    "wavedrom",
+    "pdf",
+    "html",
+    "exporter",
+    "phantomjs",
+    "toc",
+    "footer",
+    "graphviz",
+    "dot language",
+    "ePub",
+    "ebook",
+    "pandoc",
+    "beamer",
+    "latex"
+  ],
+  "scripts": {
+    "build": "tsc --project .",
+    "build:watch": "tsc --project . --watch",
+    "lint": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "lint-with-tests": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "format": "prettier --write --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
+    "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
+  },
+  "dependencies": {
+    "mume-with-litvis": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/atom": "^1.25.0",
+    "@types/jquery": "^3.3.0",
+    "@types/mocha": "^2.2.47",
+    "@types/node": "^9.4.0",
+    "@types/vfile": "^2.2.2",
+    "chinese-conv": "^1.0.1",
+    "prettier": "^1.11.1",
+    "prettier-check": "^2.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.7.2"
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeIndie"
+      }
+    }
+  }
+}

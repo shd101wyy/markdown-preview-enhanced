@@ -1,0 +1,27 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle markdown-preview-enhanced'
+      'command': 'markdown-preview-enhanced:toggle'
+    }
+  ],
+  'atom-workspace atom-text-editor[data-grammar*="gfm"]': [
+    {
+      'label': 'Markdown Sync Preview',
+      'command': 'markdown-preview-enhanced:sync-preview'}
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Markdown Preview Enhanced'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'markdown-preview-enhanced:toggle'
+        }
+      ]
+    ]
+  }
+]

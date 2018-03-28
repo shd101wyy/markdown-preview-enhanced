@@ -1,0 +1,19 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to
+# execute.
+#
+# Below is a basic keybinding which registers on all platforms by applying to
+# the root workspace element.
+
+# For more detailed documentation see
+# https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+
+# I disabled this because for package like `language-markdown`, the `data-grammer` attribute is different.
+# 'atom-workspace atom-text-editor[data-grammar*="gfm"], .platform-win32 atom-workspace atom-text-editor[data-grammar*="gfm"], .platform-linux atom-workspace atom-text-editor[data-grammar="source gfm"], .platform-darwin atom-workspace atom-text-editor[data-grammar="source gfm"]':
+'atom-text-editor':
+  'ctrl-shift-m': 'markdown-preview-enhanced:toggle'
+
+'.editor[data-grammar*="gfm"], .editor[data-grammar*="md"], .editor[data-grammar*="markdown"]':
+  'shift-enter': 'markdown-preview-enhanced:run-code-chunk'
+  'ctrl-shift-enter': 'markdown-preview-enhanced:run-all-code-chunks'
+  'ctrl-shift-s': 'markdown-preview-enhanced:sync-preview'

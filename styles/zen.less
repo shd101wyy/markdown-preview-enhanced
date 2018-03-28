@@ -1,0 +1,31 @@
+@import "syntax-variables";
+
+atom-text-editor[data-markdown-zen].editor {
+  .gutter {
+    display: none;
+  }
+
+  atom-text-editor-minimap {
+    display: none;
+  }
+
+  .vertical-scrollbar {
+    display: none;
+  }
+}
+
+atom-text-editor[data-markdown-zen] {
+  top: 32px !important;
+
+  max-width: 874px;
+  width: 80%;
+  height: calc(~"100% - 64px");
+  margin: 0 auto;
+  background-color: @syntax-background-color;
+}
+
+atom-workspace[data-markdown-zen] {
+  .item-views {
+    background-color: @syntax-background-color !important;
+  }
+}
