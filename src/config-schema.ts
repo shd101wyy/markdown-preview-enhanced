@@ -349,7 +349,7 @@ export const configSchema = {
     description:
       "Disabling this will prevent executing code chunks and importing JavaScript files.",
     type: "boolean",
-    default: true,
+    default: false,
     order: 84,
   },
 };
