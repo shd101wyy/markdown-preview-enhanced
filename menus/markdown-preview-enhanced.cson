@@ -15,7 +15,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'Markdown Preview Enhanced'
+      'label': 'Markdown Preview Enhanced with litvis'
       'submenu': [
         {
           'label': 'Toggle'
