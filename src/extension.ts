@@ -2,6 +2,7 @@ import { CompositeDisposable, TextBuffer, TextEditor } from "atom";
 import * as mume from "mume-with-litvis";
 import * as path from "path";
 import { MarkdownPreviewEnhancedConfig } from "./config";
+import { updateLintingReport } from "./linting";
 import { MarkdownPreviewEnhancedView } from "./preview-content-provider";
 
 const utility = mume.utility;
@@ -675,9 +676,11 @@ async function onModifySource(
 }
 
 mume.MarkdownEngine.onModifySource(onModifySource);
+mume.MarkdownEngine.onUpdateLintingReport(updateLintingReport);
 
 export function deactivate() {
   subscriptions.dispose();
 }
 
 export { configSchema as config } from "./config-schema";
+export { consumeIndie } from "./linting";
