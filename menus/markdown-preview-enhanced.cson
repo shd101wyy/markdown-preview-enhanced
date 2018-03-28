@@ -2,14 +2,14 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle markdown-preview-enhanced'
-      'command': 'markdown-preview-enhanced:toggle'
+      'label': 'Toggle markdown preview enhanced with litvis'
+      'command': 'markdown-preview-enhanced-with-litvis:toggle'
     }
   ],
   'atom-workspace atom-text-editor[data-grammar*="gfm"]': [
     {
       'label': 'Markdown Sync Preview',
-      'command': 'markdown-preview-enhanced:sync-preview'}
+      'command': 'markdown-preview-enhanced-with-litvis:sync-preview'}
   ]
 'menu': [
   {
@@ -19,7 +19,7 @@
       'submenu': [
         {
           'label': 'Toggle'
-          'command': 'markdown-preview-enhanced:toggle'
+          'command': 'markdown-preview-enhanced-with-litvis:toggle'
         }
       ]
     ]

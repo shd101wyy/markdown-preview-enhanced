@@ -60,7 +60,7 @@
     "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
-    "mume-with-litvis": "^0.1.1"
+    "mume-with-litvis": "^0.1.3"
   },
   "devDependencies": {
     "@types/atom": "^1.25.0",
