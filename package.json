@@ -1,7 +1,7 @@
 {
   "name": "markdown-preview-enhanced-with-litvis",
   "main": "./out/src/extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fork of markdown-preview-enhanced with https://github.com/gicentre/litvis",
   "repository": "https://github.com/gicentre/markdown-preview-enhanced-with-litvis.git",
   "license": "BSD-3, NCSA",
