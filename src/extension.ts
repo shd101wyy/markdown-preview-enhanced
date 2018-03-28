@@ -1,5 +1,5 @@
-import * as mume from "@shd101wyy/mume";
 import { CompositeDisposable, TextBuffer, TextEditor } from "atom";
+import * as mume from "mume-with-litvis";
 import * as path from "path";
 import { MarkdownPreviewEnhancedConfig } from "./config";
 import { updateLintingReport } from "./linting";
