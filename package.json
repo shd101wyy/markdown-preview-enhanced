@@ -1,15 +1,15 @@
 {
-  "name": "markdown-preview-enhanced",
+  "name": "markdown-preview-enhanced-with-litvis",
   "main": "./out/src/extension",
   "version": "0.15.5",
-  "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
-  "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
-  "license": "NCSA",
+  "description": "Fork of markdown-preview-enhanced with https://github.com/gicentre/litvis",
+  "repository": "https://github.com/gicentre/markdown-preview-enhanced-litvis",
+  "license": "BSD-3, NCSA",
   "engines": {
     "atom": ">=1.16.0"
   },
   "activationCommands": {
-    "atom-workspace": "markdown-preview-enhanced:toggle"
+    "atom-workspace": "markdown-preview-enhanced-with-litvis:toggle"
   },
   "activationHooks": [
     "language-gfm:grammar-used",
@@ -56,7 +56,7 @@
     "build:watch": "tsc -w -p ."
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.3.2"
+    "@gicentre/mume-with-litvis": "^0.1.0"
   },
   "devDependencies": {
     "@types/atom": "^1.23.3",
