@@ -2,21 +2,12 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
+    "noUnusedLocals": false,
+    "sourceMap": true,
     "outDir": "out",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "sourceMap": false,
+    "lib": ["es6", "dom"],
     "rootDir": "."
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    ".vscode-test",
-    "dependencies"
-  ],
-  "compileOnSave": true
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules"]
 }
