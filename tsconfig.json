@@ -6,8 +6,7 @@
     "sourceMap": true,
     "outDir": "out",
     "lib": ["es6", "dom"],
-    "rootDir": ".",
-    "declaration": true
+    "rootDir": "."
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]
