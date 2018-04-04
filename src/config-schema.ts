@@ -264,12 +264,12 @@ export const configSchema = {
     order: 55,
   },
   frontMatterRenderingOption: {
-    title: "Front Matter rendering option",
+    title: "Front Matter Rendering Option",
     type: "string",
-    description:
-      "You can choose how to render front matter here. 'none' option will hide front matter.",
-    default: "table",
-    enum: ["table", "code block", "none"],
+    description: `You can choose how to preview [markdown front matter](http://assemble.io/docs/YAML-front-matter.html), which is a common place to store document metadata.
+Front matter is hidden by default, but you can choose between \`table\` (like [on GitHub](https://blog.github.com/2013-09-27-viewing-yaml-metadata-in-your-documents/)) or \`code block\` (to make it look like a source code listing).`,
+    default: "none",
+    enum: ["none", "table", "code block"],
     order: 60,
   },
   scrollSync: {
