@@ -17,6 +17,13 @@
     console.log(date.toString())
     ```   
 
+> ⚠️ **Script execution is off by default and needs to be explicitly enabled in Atom package / VSCode extension preferences**
+>
+> Please use this feature with caution because it may put your security at risk!
+> Your machine can get hacked if someone makes you open a markdown with malicious code while script execution is enabled.
+>
+> Option name: `enableScriptExecution`
+
 ## Commands & Keyboard Shortcuts
 * `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>      
 execute single code chunk where your cursor is at.    
