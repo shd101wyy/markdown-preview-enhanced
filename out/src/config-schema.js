@@ -330,9 +330,12 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
     },
     enableScriptExecution: {
         title: "Enable Script Execution",
-        description: "Disabling this will prevent executing code chunks and importing JavaScript files.",
+        description: `Enables executing code chunks and importing javascript files.
+    
+**⚠️ Please use this feature with caution because it may put your security at risk! Your machine can get hacked if someone makes you open a markdown with malicious code while script execution is enabled.**
+`,
         type: "boolean",
-        default: true,
+        default: false,
         order: 84,
     },
 };
