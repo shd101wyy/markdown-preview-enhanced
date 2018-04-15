@@ -143,8 +143,8 @@ exports.configSchema = {
     protocolsWhiteList: {
         title: "Protocols Whitelist",
         type: "string",
-        default: "http, https, atom, file",
-        description: "Accepted protocols followed by `://` for links.",
+        default: "http://, https://, atom://, file://, mailto:, tel:",
+        description: "Accepted protocols for links.",
         order: 25,
     },
     mathRenderingOption: {

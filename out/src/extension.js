@@ -524,7 +524,7 @@ function onModifySource(codeChunkData, result, filePath) {
                 const lines = editor.getBuffer().getLines();
                 for (let i2 = 0; i2 < lineCount; i2++) {
                     const line = lines[i2]; // editor.getBuffer().lines[i] will cause error.
-                    if (line.match(/^```(.+)\"?cmd\"?\s*[:=]/)) {
+                    if (line.match(/^```(.+)\"?cmd\"?\s*[=\s]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             i2 = i2 + 1;
                             while (i2 < lineCount) {
@@ -539,7 +539,7 @@ function onModifySource(codeChunkData, result, filePath) {
                             codeChunkOffset++;
                         }
                     }
-                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*[:=]/)) {
+                    else if (line.match(/\@import\s+(.+)\"?cmd\"?\s*[=\s]/)) {
                         if (codeChunkOffset === targetCodeChunkOffset) {
                             // console.log('find code chunk' )
                             return insertResult(i2, editor, lines);
