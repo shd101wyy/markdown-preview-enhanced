@@ -452,7 +452,7 @@ export class MarkdownPreviewEnhancedView {
 
   private webviewConsoleMessage(event) {
     // tslint:disable-next-line:no-console
-    console.log("webview: ", event.message);
+    // console.log("webview: ", event.message);
   }
 
   private webviewKeyDown(event) {
@@ -930,10 +930,8 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public runAllCodeChunks() {
-    if (!this.engine) {
-      return;
-    }
-    this.engine.runAllCodeChunks().then(() => {
+    if (!this.engine) return;
+    this.engine.runCodeChunks().then(() => {
       this.renderMarkdown();
     });
   }

@@ -143,8 +143,8 @@ exports.configSchema = {
     protocolsWhiteList: {
         title: "Protocols Whitelist",
         type: "string",
-        default: "http, https, atom, file",
-        description: "Accepted protocols followed by `://` for links.",
+        default: "http://, https://, atom://, file://, mailto:, tel:",
+        description: "Accepted protocols for links.",
         order: 25,
     },
     mathRenderingOption: {
@@ -292,11 +292,11 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
         title: "Drop image to editor",
         description: "What to do after you drop an image to editor",
         type: "string",
-        default: "upload",
+        default: "copy to image folder",
         enum: [
-            "upload",
             "insert relative path",
             "copy to image folder",
+            "upload",
             "do nothing",
         ],
         order: 77,

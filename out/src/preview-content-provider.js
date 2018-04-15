@@ -277,7 +277,7 @@ class MarkdownPreviewEnhancedView {
     }
     webviewConsoleMessage(event) {
         // tslint:disable-next-line:no-console
-        console.log("webview: ", event.message);
+        // console.log("webview: ", event.message);
     }
     webviewKeyDown(event) {
         let found = false;
@@ -670,10 +670,9 @@ class MarkdownPreviewEnhancedView {
         });
     }
     runAllCodeChunks() {
-        if (!this.engine) {
+        if (!this.engine)
             return;
-        }
-        this.engine.runAllCodeChunks().then(() => {
+        this.engine.runCodeChunks().then(() => {
             this.renderMarkdown();
         });
     }
