@@ -670,10 +670,10 @@ class MarkdownPreviewEnhancedView {
         });
     }
     runAllCodeChunks() {
-        if (!this.engine) {
+        if (!this.engine)
             return;
-        }
-        this.engine.runAllCodeChunks().then(() => {
+        this.engine.runCodeChunks()
+            .then(() => {
             this.renderMarkdown();
         });
     }

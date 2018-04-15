@@ -930,12 +930,11 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public runAllCodeChunks() {
-    if (!this.engine) {
-      return;
-    }
-    this.engine.runAllCodeChunks().then(() => {
-      this.renderMarkdown();
-    });
+    if (!this.engine) return
+    this.engine.runCodeChunks()
+    .then(()=> {
+      this.renderMarkdown()
+    })
   }
 
   public sendRunCodeChunkCommand() {
