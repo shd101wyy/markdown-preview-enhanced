@@ -9,6 +9,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [蓝牙彪](https://www.zhihu.com/people/bluetoothbiao/answers)
 * [Toma Tasovac](https://twitter.com/ttasovac)
 * [Rick Torres Jr.](https://twitter.com/Rick_Torres_Jr)
+* Wxll
 
 ---
 
@@ -41,3 +42,5 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [Virczz](https://github.com/Virczz)
 * [华盖山下的小和尚](http://www.kssm.ltd/)
 * 陈楚阳
+* [WeirdSnap](https://github.com/weirdsnap)
+* 吴威
