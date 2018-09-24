@@ -32,6 +32,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * Paul Egbert
 * [Alexander Y. Wagner](http://www2.ccs.tsukuba.ac.jp/Astro/Members/ayw/)
 * [masszhou](https://github.com/masszhou)
+* [Maxim](https://github.com/maxim-ge)
 
 ---
 
