@@ -136,10 +136,10 @@ export const configSchema = {
   },
   mermaidTheme: {
     description:
-      'Mermaid theme, you can choose one from ["mermaid.css", "mermaid.dark.css", "mermaid.forest.css"]',
-    default: "mermaid.css",
+      'Mermaid theme, you can choose one from ["default", "dark", "forest"]',
+    default: "default",
     type: "string",
-    enum: ["mermaid.css", "mermaid.dark.css", "mermaid.forest.css"],
+    enum: ["default", "dark", "forest"],
     order: 23,
   },
   protocolsWhiteList: {

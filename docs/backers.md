@@ -31,6 +31,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * Jachin Zhong
 * Paul Egbert
 * [Alexander Y. Wagner](http://www2.ccs.tsukuba.ac.jp/Astro/Members/ayw/)
+* [masszhou](https://github.com/masszhou)
 
 ---
 
@@ -44,3 +45,4 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * 陈楚阳
 * [WeirdSnap](https://github.com/weirdsnap)
 * 吴威
+* Daniel Wang

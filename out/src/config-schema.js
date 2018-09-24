@@ -134,10 +134,10 @@ exports.configSchema = {
         order: 22,
     },
     mermaidTheme: {
-        description: 'Mermaid theme, you can choose one from ["mermaid.css", "mermaid.dark.css", "mermaid.forest.css"]',
-        default: "mermaid.css",
+        description: 'Mermaid theme, you can choose one from ["default", "dark", "forest"]',
+        default: "default",
         type: "string",
-        enum: ["mermaid.css", "mermaid.dark.css", "mermaid.forest.css"],
+        enum: ["default", "dark", "forest"],
         order: 23,
     },
     protocolsWhiteList: {
