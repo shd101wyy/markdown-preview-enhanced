@@ -13,6 +13,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public usePandocParser: boolean;
   public breakOnSingleNewLine: boolean;
   public enableTypographer: boolean;
+  public enableLinkify: boolean;
   public enableWikiLinkSyntax: boolean;
   public wikiLinkFileExtension: string;
   public enableEmojiSyntax: boolean;
@@ -64,6 +65,9 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
     );
     this.enableTypographer = atom.config.get(
       "markdown-preview-enhanced.enableTypographer",
+    );
+    this.enableLinkify = atom.config.get(
+      "markdown-preview-enhanced.enableLinkify",
     );
     this.enableWikiLinkSyntax = atom.config.get(
       "markdown-preview-enhanced.enableWikiLinkSyntax",
@@ -193,6 +197,13 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
         "markdown-preview-enhanced.enableTypographer",
         ({ newValue }) => {
           this.enableTypographer = newValue;
+          callback();
+        },
+      ),
+      atom.config.onDidChange(
+        "markdown-preview-enhanced.enableLinkify",
+        ({ newValue }) => {
+          this.enableLinkify = newValue;
           callback();
         },
       ),

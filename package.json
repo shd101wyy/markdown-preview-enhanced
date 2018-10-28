@@ -60,13 +60,14 @@
     "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.3.4"
+    "@shd101wyy/mume": "^0.3.6"
   },
   "devDependencies": {
     "@types/atom": "^1.25.0",
     "@types/jquery": "^3.3.0",
     "@types/mocha": "^2.2.47",
     "@types/node": "^9.4.0",
+    "@types/vfile": "^2.2.2",
     "chinese-conv": "^1.0.1",
     "prettier": "^1.11.1",
     "prettier-check": "^2.0.0",

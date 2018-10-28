@@ -11,6 +11,7 @@ class MarkdownPreviewEnhancedConfig {
         this.usePandocParser = atom.config.get("markdown-preview-enhanced.usePandocParser");
         this.breakOnSingleNewLine = atom.config.get("markdown-preview-enhanced.breakOnSingleNewLine");
         this.enableTypographer = atom.config.get("markdown-preview-enhanced.enableTypographer");
+        this.enableLinkify = atom.config.get("markdown-preview-enhanced.enableLinkify");
         this.enableWikiLinkSyntax = atom.config.get("markdown-preview-enhanced.enableWikiLinkSyntax");
         this.enableEmojiSyntax = atom.config.get("markdown-preview-enhanced.enableEmojiSyntax");
         this.enableExtendedTableSyntax = atom.config.get("markdown-preview-enhanced.enableExtendedTableSyntax");
@@ -76,6 +77,9 @@ class MarkdownPreviewEnhancedConfig {
             callback();
         }), atom.config.onDidChange("markdown-preview-enhanced.enableTypographer", ({ newValue }) => {
             this.enableTypographer = newValue;
+            callback();
+        }), atom.config.onDidChange("markdown-preview-enhanced.enableLinkify", ({ newValue }) => {
+            this.enableLinkify = newValue;
             callback();
         }), atom.config.onDidChange("markdown-preview-enhanced.enableWikiLinkSyntax", ({ newValue }) => {
             this.enableWikiLinkSyntax = newValue;

@@ -224,6 +224,14 @@ export const configSchema = {
     default: true,
     description:
       "Enable Wiki Link syntax support. More information can be found at https://help.github.com/articles/adding-links-to-wikis/",
+    order: 49,
+  },
+  enableLinkify: {
+    title: "Enable Linkify",
+    type: "boolean",
+    default: true,
+    description:
+      "Enable or disable conversion of URL-like text to links in the markdown preview.",
     order: 50,
   },
   wikiLinkFileExtension: {
