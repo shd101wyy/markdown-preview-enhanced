@@ -82,12 +82,12 @@ Every time you changed your `less` file, you can click the refresh button at the
 To change the font family of preview, you first need to download the font file `(.ttf)`, then modify `style.less` like below:   
 
 ```less
-.markdown-preview.markdown-preview {
-  @font-face {
-    font-family: 'your-font-family';
-    src: url('your-font-file-url');
-  }
+@font-face {
+  font-family: 'your-font-family';
+  src: url('your-font-file-url');
+}
 
+.markdown-preview.markdown-preview {
   font-family: 'your-font-family' sans-serif;
 
   h1, h2, h3, h4, h5, h6, pre, code {
