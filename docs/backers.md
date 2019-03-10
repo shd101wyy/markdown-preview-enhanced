@@ -33,6 +33,10 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [Alexander Y. Wagner](http://www2.ccs.tsukuba.ac.jp/Astro/Members/ayw/)
 * [masszhou](https://github.com/masszhou)
 * [Maxim](https://github.com/maxim-ge)
+* Lars Klein
+* Wang Lei
+* Edward Blake
+* Nakada Hiroaki
 
 ---
 
@@ -47,3 +51,4 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 * [WeirdSnap](https://github.com/weirdsnap)
 * 吴威
 * Daniel Wang
+* Shark
