@@ -146,6 +146,22 @@ puts markdown.to_html
 
 ![screen shot 2017-07-14 at 1 20 27 am](https://user-images.githubusercontent.com/1908863/28200587-a8582b0a-6832-11e7-83a7-6c3bb011322f.png)
 
+
+##### 高亮代碼行數
+
+你可以通過添加 `highlight` 屬性的方式來高亮代碼行數：
+
+````markdown
+```javascript {highlight=10}
+```
+
+```javascript {highlight=10-20}
+```
+
+```javascript {highlight=[1-10,15,20-22]}
+```
+````
+
 ### 任務列表   
 ```markdown  
 - [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported

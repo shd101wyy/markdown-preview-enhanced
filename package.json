@@ -63,16 +63,16 @@
     "@shd101wyy/mume": "^0.3.7"
   },
   "devDependencies": {
-    "@types/atom": "^1.25.0",
-    "@types/jquery": "^3.3.0",
-    "@types/mocha": "^2.2.47",
-    "@types/node": "^9.4.0",
-    "@types/vfile": "^2.2.2",
+    "@types/atom": "^1.31.1",
+    "@types/jquery": "^3.3.29",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.11.0",
+    "@types/vfile": "^3.0.2",
     "chinese-conv": "^1.0.1",
-    "prettier": "^1.11.1",
+    "prettier": "^1.16.4",
     "prettier-check": "^2.0.0",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.10.0",
-    "typescript": "^2.7.2"
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.0.3"
   }
 }

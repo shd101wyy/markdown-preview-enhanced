@@ -134,14 +134,29 @@ You can enable line number for a code block by adding `line-numbers` class.
 
 For example:    
 
-    ```javascript {.line-numbers}
-    function add(x, y) {
-      return x + y
-    }
-    ```
+````markdown
+```javascript {.line-numbers}
+function add(x, y) {
+  return x + y
+}
+```
+````
 
 ![screen shot 2017-07-14 at 1 20 27 am](https://user-images.githubusercontent.com/1908863/28200587-a8582b0a-6832-11e7-83a7-6c3bb011322f.png)
 
+##### highlighting rows
+You can highlight rows by add `highlight` attribute:
+
+````markdown
+```javascript {highlight=10}
+```
+
+```javascript {highlight=10-20}
+```
+
+```javascript {highlight=[1-10,15,20-22]}
+```
+````
 
 ### Task lists   
 ```markdown  
