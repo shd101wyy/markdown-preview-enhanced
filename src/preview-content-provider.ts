@@ -711,7 +711,7 @@ export class MarkdownPreviewEnhancedView {
 
         const difference = scrollTop - editorElement.getScrollTop();
 
-        const perTick = difference / duration * delay;
+        const perTick = (difference / duration) * delay;
 
         // disable editor onscroll
         this.editorScrollDelay = Date.now() + 500;
@@ -1001,18 +1001,16 @@ export class MarkdownPreviewEnhancedView {
             imageFileName = imageFileName + uid;
           }
 
-          fs
-            .createReadStream(imageFilePath)
-            .pipe(
-              fs.createWriteStream(
-                path.resolve(assetDirectoryPath, imageFileName),
-              ),
-            );
+          fs.createReadStream(imageFilePath).pipe(
+            fs.createWriteStream(
+              path.resolve(assetDirectoryPath, imageFileName),
+            ),
+          );
         } else if (err.code === "ENOENT") {
           // file doesn't exist
-          fs
-            .createReadStream(imageFilePath)
-            .pipe(fs.createWriteStream(destPath));
+          fs.createReadStream(imageFilePath).pipe(
+            fs.createWriteStream(destPath),
+          );
 
           if (imageFileName.lastIndexOf(".")) {
             description = imageFileName.slice(
