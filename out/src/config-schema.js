@@ -168,6 +168,17 @@ exports.configSchema = {
         description: 'Use customized Math expression block indicator. By default it is [["$$", "$$"]].',
         order: 32,
     },
+    mathRenderingOnlineService: {
+        description: "Choose the Math expression rendering method option for GFM markdown export (Save as Markdown).",
+        default: "https://latex.codecogs.com/gif.latex",
+        type: "string",
+        enum: [
+            "https://latex.codecogs.com/gif.latex",
+            "https://latex.codecogs.com/svg.latex",
+            "https://latex.codecogs.com/png.latex",
+        ],
+        order: 33,
+    },
     usePandocParser: {
         title: "Use Pandoc Parser",
         type: "boolean",

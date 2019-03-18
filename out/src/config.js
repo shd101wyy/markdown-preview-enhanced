@@ -31,6 +31,7 @@ class MarkdownPreviewEnhancedConfig {
         catch (error) {
             this.mathBlockDelimiters = [["$$", "$$"], ["\\[", "\\]"]];
         }
+        this.mathRenderingOnlineService = atom.config.get("markdown-preview-enhanced.mathRenderingOnlineService");
         this.codeBlockTheme = atom.config.get("markdown-preview-enhanced.codeBlockTheme");
         this.previewTheme = atom.config.get("markdown-preview-enhanced.previewTheme");
         this.revealjsTheme = atom.config.get("markdown-preview-enhanced.revealjsTheme");
@@ -128,6 +129,9 @@ class MarkdownPreviewEnhancedConfig {
             catch (error) {
                 mathBlockDelimiters = [["$$", "$$"], ["\\[", "\\]"]];
             }
+        }), atom.config.onDidChange("markdown-preview-enhanced.mathRenderingOnlineService", ({ newValue }) => {
+            this.mathRenderingOnlineService = newValue;
+            callback();
         }), atom.config.onDidChange("markdown-preview-enhanced.codeBlockTheme", ({ newValue }) => {
             this.codeBlockTheme = newValue;
             callback();
