@@ -80,7 +80,7 @@ Markdown Preview Enhanced supports [ditaa](https://github.com/stathissideris/dit
 
 (**Java** is required to be installed)
 
-`ditaa` is intergrated with [code chunk](code-chunk.md), for example:
+`ditaa` is integrated with [code chunk](code-chunk.md), for example:
 <pre>
   ```ditaa {cmd=true args=["-E"]}
   +--------+   +-------+    +-------+
