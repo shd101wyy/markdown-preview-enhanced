@@ -14,5 +14,5 @@ Every time after you update the code, you need to <kbd>cmd-shift-p</kbd> then ch
 > As the Atom version is written in TypeScript, it is recommended to install `atom-typescript` to help develop the package.   
 > Well... I developed the atom version using vscode.   
 
-## Developthis package for VS Code
-Clone [vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced), then `npm install`, open in **vscde** and start debugging.  
+## Develop this package for VS Code
+Clone [vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced), then `npm install`, open in **vscode** and start debugging.  
