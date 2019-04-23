@@ -24,11 +24,11 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 * `.mermaid` file will be rendered by mermaid.  
 * `.dot` file will be rendered by viz.js (graphviz).  
 * `.plantuml(.puml)` file will be rendered by PlantUML.  
-* `.html` file will be embeded directly.  
+* `.html` file will be embedded directly.  
 * `.js` file will be included as `<script src="your_js"></script>`.
 * `.less` and `.css` file will be included as style. Only local `less` file is currently supported. `.css` file will be included as `<link rel="stylesheet" href="your_css">`.
 * `.pdf` file will be converted to `svg` files by `pdf2svg` and then be included.
-* `markdown` file will be parsed and embeded directly.     
+* `markdown` file will be parsed and embedded directly.     
 * All other files will be rendered as code block.    
 
 ## Configure images
