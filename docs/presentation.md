@@ -158,7 +158,7 @@ presentation:
   parallaxBackgroundHorizontal: 200
   parallaxBackgroundVertical: 50
 
-  # Enable Speake Notes
+  # Enable Speaker Notes
   enableSpeakerNotes: false
 ---
 ```
