@@ -234,6 +234,6 @@ Then we can click the `run` button at the preview to run our code.
 
 ## Limitations
 * Doesn't work with `ebook` yet.
-* Might be buggy when using`pandoc document export`
+* Might be buggy when using `pandoc document export`
 
 [➔ Presentation](presentation.md)
