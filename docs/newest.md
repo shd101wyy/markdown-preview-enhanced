@@ -15,7 +15,7 @@
   * Upgraded `KaTeX` to version `0.8.3`.
   * Changed `MathJax` CDN url.
   * Fixed markdown export math issue [#601](https://github.com/shd101wyy/markdown-preview-enhanced/issues/601).
-* Removed `ctrl-shift-i` keybord shortcut.
+* Removed `ctrl-shift-i` keyboard shortcut.
 
 ## 0.14.9
 * Added `ignoreLink` option to TOC [#583](https://github.com/shd101wyy/markdown-preview-enhanced/issues/583).
@@ -55,7 +55,7 @@ For example:
 * Upgraded [mume](https://github.com/shd101wyy/mume) to version [0.1.7](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
 
 ## 0.14.4
-* Deprecated the old way of defining attribtues (still supported but not recommened) [#529](https://github.com/shd101wyy/markdown-preview-enhanced/issues/529). Now attributes should be defined like below in order to be compatible with the pandoc parser:
+* Deprecated the old way of defining attributes (still supported but not recommended) [#529](https://github.com/shd101wyy/markdown-preview-enhanced/issues/529). Now attributes should be defined like below in order to be compatible with the pandoc parser:
 
         {#identifier .class .class key=value key=value}
 
@@ -94,7 +94,7 @@ For example:
 * Supported [ditaa](https://github.com/stathissideris/ditaa).
   ditaa can convert diagrams drawn using ascii art ('drawings' that contain characters that resemble lines like | / - ), into proper bitmap graphics. (**Java** is required to be installed)
 
-  `ditaa` is intergrated with [code chunk](https://shd101wyy.github.io/markdown-preview-enhanced/#/code-chunk), for example:
+  `ditaa` is integrated with [code chunk](https://shd101wyy.github.io/markdown-preview-enhanced/#/code-chunk), for example:
 <pre>
   ```ditaa {cmd=true args=["-E"]}
   +--------+   +-------+    +-------+
@@ -158,7 +158,7 @@ For example:
     * Fixed `bash` language highlighting bug.
     * Fixed phantomjs export task list bug.
     * Upgraded `webview.ts` script for preview. Now both Atom and VS Code versions share the same preview logic.
-    * Removed several redundandent dependencies.
+    * Removed several redundant dependencies.
 
 
 ## 0.14.0
