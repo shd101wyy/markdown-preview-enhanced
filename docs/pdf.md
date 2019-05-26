@@ -1,4 +1,7 @@
 # PDF export
+
+> We recommend to use [Chrome (Puppeteer) to export PDF](./puppeteer.md).
+
 ## Usage
 Right click at the preview, then choose `Open in Browser`.
 Print as PDF from browser.

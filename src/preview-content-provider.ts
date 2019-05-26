@@ -364,9 +364,6 @@ export class MarkdownPreviewEnhancedView {
     chromeExport(sourceUri, fileType) {
       this.chromeExport(fileType);
     },
-    phantomjsExport(sourceUri, fileType) {
-      this.phantomjsExport(fileType);
-    },
     princeExport(sourceUri) {
       this.princeExport();
     },
@@ -824,31 +821,6 @@ export class MarkdownPreviewEnhancedView {
       });
   }
 
-  public phantomjsExport(fileType = "pdf") {
-    atom.notifications.addInfo("Your document is being prepared");
-    this.engine
-      .phantomjsExport({ fileType, openFileAfterGeneration: true })
-      .then((dest) => {
-        if (dest.endsWith("?print-pdf")) {
-          // presentation pdf
-          atom.notifications.addSuccess(
-            `Please copy and open the following link in Chrome, then print as PDF`,
-            {
-              dismissable: true,
-              detail: `Path: \`${dest}\``,
-            },
-          );
-        } else {
-          atom.notifications.addSuccess(
-            `File \`${path.basename(dest)}\` was created at path: \`${dest}\``,
-          );
-        }
-      })
-      .catch((error) => {
-        atom.notifications.addError(error.toString());
-      });
-  }
-
   public princeExport() {
     atom.notifications.addInfo("Your document is being prepared");
     this.engine
@@ -930,7 +902,9 @@ export class MarkdownPreviewEnhancedView {
   }
 
   public runAllCodeChunks() {
-    if (!this.engine) return;
+    if (!this.engine) {
+      return;
+    }
     this.engine.runCodeChunks().then(() => {
       this.renderMarkdown();
     });

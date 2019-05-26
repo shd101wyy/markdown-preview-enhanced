@@ -1,4 +1,7 @@
 # PDF 导出  
+
+> 我们推荐使用 [Chrome (Puppeteer) 来导出 PDF](./puppeteer.md)。
+
 ## 使用
 右键点击预览，然后选择 `Open in Browser`。    
 从浏览器中打印为 PDF。

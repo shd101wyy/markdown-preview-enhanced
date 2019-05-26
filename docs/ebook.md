@@ -25,6 +25,7 @@ You can set up a ebook configuration by simply adding `ebook front-matter` into 
 ```yaml
 ---
 ebook:
+  theme: github-light.css
   title: My eBook
   authors: shd101wyy
 ---
@@ -37,6 +38,7 @@ ebook:
 ```markdown
 ---
 ebook:
+  theme: github-light.css
   title: Markdown Preview Enhanced
   author: shd101wyy
 ---
@@ -61,6 +63,8 @@ The link's title is used as the chapter's title, and the link's target is a path
 To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
 
 ### Metadata
+* **theme**
+the theme to use for eBook, by default it will use the preview theme. The list of available themes could be found at `previewTheme` section in [this doc](https://github.com/shd101wyy/mume/#markdown-engine-configuration).
 * **title**  
 title of your book  
 * **authors**  

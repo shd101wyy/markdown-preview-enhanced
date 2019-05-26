@@ -159,7 +159,6 @@ function activate(state) {
             "markdown-preview-enhanced:insert-table": insertTable,
             "markdown-preview-enhanced:image-helper": startImageHelper,
             "markdown-preview-enhanced:open-mermaid-config": openMermaidConfig,
-            "markdown-preview-enhanced:open-phantomjs-config": openPhantomJSConfig,
             "markdown-preview-enhanced:open-mathjax-config": openMathJaxConfig,
             "markdown-preview-enhanced:extend-parser": extendParser,
             "markdown-preview-enhanced:insert-new-slide": insertNewSlide,
@@ -399,10 +398,6 @@ function startImageHelper() {
 function openMermaidConfig() {
     const mermaidConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./mermaid_config.js");
     atom.workspace.open(mermaidConfigFilePath);
-}
-function openPhantomJSConfig() {
-    const phantomjsConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./phantomjs_config.js");
-    atom.workspace.open(phantomjsConfigFilePath);
 }
 function openMathJaxConfig() {
     const mathjaxConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./mathjax_config.js");
