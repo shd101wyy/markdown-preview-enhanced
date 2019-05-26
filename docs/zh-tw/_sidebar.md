@@ -17,7 +17,6 @@
 
 - 文檔導出
   - [HTML](zh-tw/html.md)
-  - [PhantomJS](zh-tw/phantomjs.md)
   - [Puppeteer](zh-tw/puppeteer.md)
   - [PDF](zh-tw/pdf.md)
   - [eBook](zh-tw/ebook.md)

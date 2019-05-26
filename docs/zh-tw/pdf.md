@@ -18,4 +18,4 @@
 
 ---  
 
-你也可以通過 [phantomjs](zh-tw/phantomjs.md) 或者 [prince.md](zh-tw/prince.md) 來生成 PDF 文件。
+你也可以通過 [puppeteer](zh-tw/puppeteer.md) 或者 [prince.md](zh-tw/prince.md) 來生成 PDF 文件。

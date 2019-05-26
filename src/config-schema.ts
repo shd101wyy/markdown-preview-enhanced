@@ -223,11 +223,12 @@ export const configSchema = {
       "Default LaTeX engine used for Pandoc export and LaTeX code chunk.",
     order: 39,
   },
-  phantomPath: {
-    title: "PhantomJS Options: Path",
+  chromePath: {
+    title: "Chrome executable path",
     type: "string",
-    default: "phantomjs",
-    description: "Please specify the correct path to your phantomjs executable",
+    default: "",
+    description:
+      "Chrome executable path, which is used for Puppeteer export. Leaving it empty means path will be found automatically.",
     order: 45,
   },
   enableWikiLinkSyntax: {

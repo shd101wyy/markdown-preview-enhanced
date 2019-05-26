@@ -40,7 +40,6 @@
     "pdf",
     "html",
     "exporter",
-    "phantomjs",
     "toc",
     "footer",
     "graphviz",
@@ -60,7 +59,7 @@
     "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.3.8"
+    "@shd101wyy/mume": "^0.4.0"
   },
   "devDependencies": {
     "@types/atom": "^1.31.1",

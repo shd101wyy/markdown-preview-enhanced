@@ -23,14 +23,6 @@
   &.prince {
   }
 
-  // 自定义 phantomjs png/jpeg 导出样式
-  &.phantomjs-image {
-  }
-
-  // 自定义 phantomjs pdf 导出样式
-  &.phantomjs-pdf {
-  }
-
   // 自定义 presentation 样式
   .reveal .slides {
     // 修改所有幻灯片

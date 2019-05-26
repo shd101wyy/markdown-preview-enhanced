@@ -214,11 +214,11 @@ exports.configSchema = {
         description: "Default LaTeX engine used for Pandoc export and LaTeX code chunk.",
         order: 39,
     },
-    phantomPath: {
-        title: "PhantomJS Options: Path",
+    chromePath: {
+        title: "Chrome executable path",
         type: "string",
-        default: "phantomjs",
-        description: "Please specify the correct path to your phantomjs executable",
+        default: "",
+        description: "Chrome executable path, which is used for Puppeteer export. Leaving it empty means path will be found automatically.",
         order: 45,
     },
     enableWikiLinkSyntax: {
@@ -355,6 +355,51 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
         type: "boolean",
         default: false,
         order: 84,
+    },
+    enableHTML5Embed: {
+        title: "Enable HTML5 Embed",
+        description: `Enables transform audio video link to to html5 audio video tags.
+    
+**⚠️ You need to restart your editor to make this take effect.**
+`,
+        type: "boolean",
+        default: false,
+        order: 90,
+    },
+    HTML5EmbedUseImageSyntax: {
+        title: "HTML5 Embed Options: Use Image Syntax",
+        description: "Enables video/audio embed with ![]() syntax.",
+        type: "boolean",
+        default: true,
+        order: 91,
+    },
+    HTML5EmbedUseLinkSyntax: {
+        title: "HTML5 Embed Options: Use Link Syntax",
+        description: "Enables video/audio embed with []() syntax.",
+        type: "boolean",
+        default: true,
+        order: 92,
+    },
+    HTML5EmbedIsAllowedHttp: {
+        title: "HTML5 Embed Options: Allow Http Schema",
+        description: "When true embed media with http:// schema in URLs. When false ignore and don't embed them.",
+        type: "boolean",
+        default: true,
+        order: 93,
+    },
+    HTML5EmbedAudioAttributes: {
+        title: "HTML5 Embed Options: Audio Attributes",
+        description: "HTML attributes to pass to audio tags",
+        type: "string",
+        default: 'controls preload="metadata"',
+        order: 94,
+    },
+    HTML5EmbedVideoAttributes: {
+        title: "HTML5 Embed Options: Video Attributes",
+        description: "HTML attributes to pass to video tags",
+        type: "string",
+        default: 'controls preload="metadata"',
+        order: 95,
     },
 };
 //# sourceMappingURL=config-schema.js.map

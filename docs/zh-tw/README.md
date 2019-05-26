@@ -24,7 +24,6 @@
 - **[幻燈片](zh-tw/presentation.md)**
 - **[可擴展性](zh-tw/extend-parser.md)**
 - **[LaTeX 數學](zh-tw/math.md)**
-- 導出 **PDF**, **PNG**, 以及 **JPEG** 憑借 [PhantomJS](zh-tw/phantomjs.md)
 - 導出 **PDF**, **PNG**, 以及 **JPEG** 憑借 [Puppeteer](zh-tw/puppeteer.md)
 - 導出漂亮的 **HTML**（移動端支持）
 - [編譯到 GitHub Flavored Markdown](zh-tw/markdown.md)

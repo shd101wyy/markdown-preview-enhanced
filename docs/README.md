@@ -24,7 +24,6 @@ Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if yo
 - **[Presentation Writer](presentation.md)**
 - **[Extensible](extend-parser.md)**
 - **[LaTeX math](math.md)**
-- Export **PDF**, **PNG**, and **JPEG** by [PhantomJS](phantomjs.md)
 - Export **PDF**, **PNG**, and **JPEG** by [Puppeteer](puppeteer.md)
 - Export beautiful **HTML** (mobile device supported)
 - [Compile to GitHub Flavored Markdown](markdown.md)
