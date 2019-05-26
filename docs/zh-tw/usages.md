@@ -45,10 +45,7 @@
   插入斷頁符。    
 
 - <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>  
-  打開 `mermaid` 設置文件。  
-
-- <strong> Markdown Preview Enhanced: Open PhantomJS Config </strong>  
-  打開 `PhantomJS` 設置文件。    
+  打開 `mermaid` 設置文件。   
 
 - <strong> Markdown Preview Enhanced: Open Mathjax Config </strong>  
 	打開 `MathJax` 設置文件。  

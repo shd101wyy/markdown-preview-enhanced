@@ -46,9 +46,6 @@ You can press <kbd>cmd-shift-p</kbd>  in atom editor to toggle <strong> Command 
 - <strong> Markdown Preview Enhanced: Open Mermaid Config</strong>  
   Edit `mermaid` init configuration.  
 
-- <strong> Markdown Preview Enhanced: Open PhantomJS Config</strong>  
-  Edit `PhantomJS` export configuration.  
-
 - <strong> Markdown Preview Enhanced: Open Mathjax Config </strong>  
 	Edit `MathJax` init configuration.  
 

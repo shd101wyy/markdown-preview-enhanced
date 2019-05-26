@@ -1,4 +1,7 @@
 # PDF 導出  
+
+> 我們推薦使用 [Chrome (Puppeteer) 來導出 PDF](./puppeteer.md)。
+
 ## 使用
 右鍵點擊預覽，然後選擇 `Open in Browser`。    
 從瀏覽器中打印為 PDF。
@@ -18,4 +21,4 @@
 
 ---  
 
-你也可以通過 [phantomjs](zh-tw/phantomjs.md) 或者 [prince.md](zh-tw/prince.md) 來生成 PDF 文件。
+你也可以通過 [puppeteer](zh-tw/puppeteer.md) 或者 [prince.md](zh-tw/prince.md) 來生成 PDF 文件。

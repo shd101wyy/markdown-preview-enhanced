@@ -26,6 +26,7 @@ $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/
 ```yaml
 ---
 ebook:
+  theme: github-light.css
   title: My eBook
   authors: shd101wyy
 ---
@@ -39,6 +40,7 @@ ebook:
 ```markdown
 ---
 ebook:
+  theme: github-light.css
   title: Markdown Preview Enhanced
   author: shd101wyy
 ---
@@ -63,6 +65,8 @@ ebook:
 
 
 ### Metadata
+* **theme**
+電子書的渲染主題。默認是使用預覽的主題。主題列表可以在[這個文檔](https://github.com/shd101wyy/mume/#markdown-engine-configuration)中的 `previewTheme` 部分找到。
 * **title**  
 你的書的標題    
 * **authors**  

@@ -20,7 +20,7 @@ const parseListOrDefault = (def: any) => (raw: any) => {
   );
 };
 
-const ConfigSettings: { [key: string]: (any) => any } = {
+const ConfigSettings: { [key: string]: (val: any) => any } = {
   usePandocParser: copyValue,
   breakOnSingleNewLine: copyValue,
   enableTypographer: copyValue,
@@ -40,7 +40,7 @@ const ConfigSettings: { [key: string]: (any) => any } = {
   frontMatterRenderingOption: copyValue,
   imageFolderPath: copyValue,
   printBackground: copyValue,
-  phantomPath: copyValue,
+  chromePath: copyValue,
   pandocPath: copyValue,
   pandocMarkdownFlavor: copyValue,
   enableHTML5Embed: copyValue,
@@ -95,7 +95,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public frontMatterRenderingOption: string;
   public imageFolderPath: string;
   public printBackground: boolean;
-  public phantomPath: string;
+  public chromePath: string;
   public pandocPath: string;
   public pandocMarkdownFlavor: string;
   public pandocArguments: string[];
@@ -126,23 +126,27 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
 
   public constructor() {
     for (const name in ConfigSettings) {
-      const transform = ConfigSettings[name];
-      const rawValue = atom.config.get(`markdown-preview-enhanced.${name}`);
-      this[name] = transform(rawValue);
+      if (ConfigSettings.hasOwnProperty(name)) {
+        const transform = ConfigSettings[name];
+        const rawValue = atom.config.get(`markdown-preview-enhanced.${name}`);
+        this[name] = transform(rawValue);
+      }
     }
   }
 
   public onDidChange(subscriptions: CompositeDisposable, callback) {
     for (const name in ConfigSettings) {
-      const transform = ConfigSettings[name];
-      const subscription = atom.config.onDidChange(
-        `markdown-preview-enhanced.${name}`,
-        ({ newValue }) => {
-          this[name] = transform(newValue);
-          callback();
-        },
-      );
-      subscriptions.add(subscription);
+      if (ConfigSettings.hasOwnProperty(name)) {
+        const transform = ConfigSettings[name];
+        const subscription = atom.config.onDidChange(
+          `markdown-preview-enhanced.${name}`,
+          ({ newValue }) => {
+            this[name] = transform(newValue);
+            callback();
+          },
+        );
+        subscriptions.add(subscription);
+      }
     }
   }
 

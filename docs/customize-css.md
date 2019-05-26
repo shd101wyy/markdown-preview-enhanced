@@ -22,14 +22,6 @@ The `style.less` file will open, and you can override existing style like this:
   &.prince {
   }
 
-  // custom phantomjs png/jpeg export style
-  &.phantomjs-image {
-  }
-
-  //custom phantomjs pdf export style
-  &.phantomjs-pdf {
-  }
-
   // custom presentation style
   .reveal .slides {
     // modify all slides

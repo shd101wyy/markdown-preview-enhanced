@@ -1,4 +1,7 @@
 # PDF export
+
+> We recommend to use [Chrome (Puppeteer) to export PDF](./puppeteer.md).
+
 ## Usage
 Right click at the preview, then choose `Open in Browser`.
 Print as PDF from browser.
@@ -18,4 +21,4 @@ Print as PDF from browser.
 
 ---
 
-You can also generate PDF file by [phantomjs](phantomjs.md) or [prince](prince.md).
+You can also generate PDF file by [puppeteer](puppeteer.md) or [prince](prince.md).
