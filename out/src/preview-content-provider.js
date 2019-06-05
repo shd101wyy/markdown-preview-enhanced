@@ -481,7 +481,10 @@ class MarkdownPreviewEnhancedView {
         }
         const editorElement = this.editor["getElement"]();
         const delay = 10;
-        const screenRow = this.editor.screenPositionForBufferPosition({ row, column: 0 }).row;
+        const screenRow = this.editor.screenPositionForBufferPosition({
+            row,
+            column: 0,
+        }).row;
         const scrollTop = screenRow * this.editor["getLineHeightInPixels"]() -
             this.element.offsetHeight / 2;
         const helper = (duration = 0) => {
