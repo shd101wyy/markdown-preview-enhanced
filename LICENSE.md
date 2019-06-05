@@ -2,7 +2,7 @@ University of Illinois/NCSA
 Open Source License
 
 ```
-Copyright (c) 2017  Yiyi Wang
+Copyright (c) 2019  Yiyi Wang
 All rights reserved.
 
 Developed by:     Yiyi Wang and many other contributors

@@ -468,7 +468,7 @@ class MarkdownPreviewEnhancedView {
      * Please notice that row is in center.
      * @param row The buffer row
      */
-    scrollToBufferPosition(row) {
+    _scrollToBufferPosition(row) {
         if (!this.editor) {
             return;
         }
@@ -481,7 +481,10 @@ class MarkdownPreviewEnhancedView {
         }
         const editorElement = this.editor["getElement"]();
         const delay = 10;
-        const screenRow = this.editor.screenPositionForBufferPosition([row, 0]).row;
+        const screenRow = this.editor.screenPositionForBufferPosition({
+            row,
+            column: 0,
+        }).row;
         const scrollTop = screenRow * this.editor["getLineHeightInPixels"]() -
             this.element.offsetHeight / 2;
         const helper = (duration = 0) => {
@@ -830,7 +833,7 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         this.refreshPreview();
     },
     revealLine(sourceUri, line) {
-        this.scrollToBufferPosition(line);
+        this._scrollToBufferPosition(line);
     },
     insertImageUrl(sourceUri, imageUrl) {
         if (this.editor) {

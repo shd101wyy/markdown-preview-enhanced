@@ -17,6 +17,7 @@ You could write [PDF](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs
 puppeteer:
     landscape: true
     format: "A4"
+    timeout: 3000 # <= Special config, which means waitFor 3000 ms
 ---
 ````
 
