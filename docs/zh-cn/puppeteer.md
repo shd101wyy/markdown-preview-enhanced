@@ -17,6 +17,7 @@
 puppeteer:
     landscape: true
     format: "A4"
+    timeout: 3000 # <= 特殊设置，意味着等待（waitFor） 3000 毫秒
 ---
 ````
 
