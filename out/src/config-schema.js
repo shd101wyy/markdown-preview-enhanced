@@ -221,6 +221,13 @@ exports.configSchema = {
         description: "Chrome executable path, which is used for Puppeteer export. Leaving it empty means path will be found automatically.",
         order: 45,
     },
+    imageMagickPath: {
+        title: "ImageMagick command line path",
+        type: "string",
+        default: "",
+        description: "ImageMagick command line path should be either `magick` or `convert`. Leaving it empty means the path will be found automatically.",
+        order: 46,
+    },
     enableWikiLinkSyntax: {
         title: "Enable Wiki Link syntax",
         type: "boolean",
@@ -400,6 +407,20 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
         type: "string",
         default: 'controls preload="metadata"',
         order: 95,
+    },
+    puppeteerWaitForTimeout: {
+        title: "Puppeteer waitFor Timeout",
+        description: "Puppeteer waits for a certain timeout in milliseconds before the document export.",
+        type: "number",
+        default: 0,
+        order: 100,
+    },
+    usePuppeteerCore: {
+        title: "Use puppeteer-core",
+        description: "If set to true, then locally installed puppeteer-core will be required. Otherwise, the puppeteer globally installed by `npm install -g puppeteer` will be required.",
+        type: "boolean",
+        default: true,
+        order: 101,
     },
 };
 //# sourceMappingURL=config-schema.js.map
