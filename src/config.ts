@@ -41,6 +41,7 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   imageFolderPath: copyValue,
   printBackground: copyValue,
   chromePath: copyValue,
+  imageMagickPath: copyValue,
   pandocPath: copyValue,
   pandocMarkdownFlavor: copyValue,
   enableHTML5Embed: copyValue,
@@ -49,6 +50,9 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   HTML5EmbedIsAllowedHttp: copyValue,
   HTML5EmbedAudioAttributes: copyValue,
   HTML5EmbedVideoAttributes: copyValue,
+  puppeteerWaitForTimeout: (v) => {
+    return parseInt(v, 10) || 0;
+  },
 
   scrollSync: copyValue,
   liveUpdate: copyValue,
@@ -96,6 +100,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public imageFolderPath: string;
   public printBackground: boolean;
   public chromePath: string;
+  public imageMagickPath: string;
   public pandocPath: string;
   public pandocMarkdownFlavor: string;
   public pandocArguments: string[];
@@ -107,6 +112,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public HTML5EmbedIsAllowedHttp: boolean;
   public HTML5EmbedAudioAttributes: string;
   public HTML5EmbedVideoAttributes: string;
+  public puppeteerWaitForTimeout: number;
 
   /*
    * Extra config for mpe

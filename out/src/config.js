@@ -36,6 +36,7 @@ const ConfigSettings = {
     imageFolderPath: copyValue,
     printBackground: copyValue,
     chromePath: copyValue,
+    imageMagickPath: copyValue,
     pandocPath: copyValue,
     pandocMarkdownFlavor: copyValue,
     enableHTML5Embed: copyValue,
@@ -44,6 +45,9 @@ const ConfigSettings = {
     HTML5EmbedIsAllowedHttp: copyValue,
     HTML5EmbedAudioAttributes: copyValue,
     HTML5EmbedVideoAttributes: copyValue,
+    puppeteerWaitForTimeout: (v) => {
+        return parseInt(v, 10) || 0;
+    },
     scrollSync: copyValue,
     liveUpdate: copyValue,
     previewPanePosition: copyValue,
