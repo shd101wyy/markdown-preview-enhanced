@@ -48,6 +48,7 @@ const ConfigSettings = {
     puppeteerWaitForTimeout: (v) => {
         return parseInt(v, 10) || 0;
     },
+    usePuppeteerCore: copyValue,
     scrollSync: copyValue,
     liveUpdate: copyValue,
     previewPanePosition: copyValue,

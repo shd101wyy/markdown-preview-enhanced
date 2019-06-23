@@ -53,6 +53,7 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   puppeteerWaitForTimeout: (v) => {
     return parseInt(v, 10) || 0;
   },
+  usePuppeteerCore: copyValue,
 
   scrollSync: copyValue,
   liveUpdate: copyValue,
@@ -113,6 +114,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public HTML5EmbedAudioAttributes: string;
   public HTML5EmbedVideoAttributes: string;
   public puppeteerWaitForTimeout: number;
+  public usePuppeteerCore: boolean;
 
   /*
    * Extra config for mpe
