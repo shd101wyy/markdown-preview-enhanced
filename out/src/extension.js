@@ -160,6 +160,7 @@ function activate(state) {
             "markdown-preview-enhanced:image-helper": startImageHelper,
             "markdown-preview-enhanced:open-mermaid-config": openMermaidConfig,
             "markdown-preview-enhanced:open-mathjax-config": openMathJaxConfig,
+            "markdown-preview-enhanced:open-katex-config": openKaTeXConfig,
             "markdown-preview-enhanced:extend-parser": extendParser,
             "markdown-preview-enhanced:insert-new-slide": insertNewSlide,
             "markdown-preview-enhanced:insert-page-break": insertPageBreak,
@@ -402,6 +403,10 @@ function openMermaidConfig() {
 function openMathJaxConfig() {
     const mathjaxConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./mathjax_config.js");
     atom.workspace.open(mathjaxConfigFilePath);
+}
+function openKaTeXConfig() {
+    const katexConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./katex_config.js");
+    atom.workspace.open(katexConfigFilePath);
 }
 function extendParser() {
     const parserConfigPath = path.resolve(utility.extensionConfigDirectoryPath, "./parser.js");
