@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-  background-color: #fff;
+  background-color: inherit;
 }
 
 body .markdown-spinner {
@@ -16,4 +16,5 @@ body .markdown-spinner {
   padding-top: 70px;
   text-align: center;
   font-size: 16px;
+  color: gray;
 }
