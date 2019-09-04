@@ -13,6 +13,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 - [ibbcall](https://github.com/ibbcall)
 - [Andrew Delong](https://github.com/andrewdelong)
 - [cyrasafia](https://github.com/cyrasafia)
+- [Mat Chavez](https://matchavez.com)
 
 ---
 
@@ -42,6 +43,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 - Edward Blake
 - Nakada Hiroaki
 - Han Shuo
+- Xinxuan Wang
 
 ---
 
