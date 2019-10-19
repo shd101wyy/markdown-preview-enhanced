@@ -1,4 +1,5 @@
 - Getting Started
+
   - [Introduction](/)
   - [Usages](usages.md)
   - Installation
@@ -6,6 +7,7 @@
     - [VS Code](vscode-installation.md)
 
 - Writing Markdown
+
   - [Markdown Basics](markdown-basics.md)
   - [Math Typesetting](math.md)
   - [Diagrams](diagrams.md)
@@ -16,6 +18,7 @@
   - [Pandoc](pandoc.md)
 
 - Document Export
+
   - [HTML](html.md)
   - [Puppeteer](puppeteer.md)
   - [PDF](pdf.md)
@@ -31,6 +34,7 @@
   - [Markdown (GFM)](markdown.md)
 
 - Customization & Extension
+
   - [Customize CSS](customize-css.md)
   - [Extend Markdown Parser](extend-parser.md)
   - [Image Helper](image-helper.md)

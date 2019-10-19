@@ -1,13 +1,15 @@
 # Markdown Preview Enhanced
+
 A super powerful markdown extension for **ATOM** with automatic scroll sync, math typesetting, and many more!
 
 [TOC]
 
-## Math typesetting  
+## Math typesetting
 
 $ f(x) = sin(x) + 12 $
 
-$$ u(x) =
+$$
+u(x) =
   \begin{cases}
    \exp{x} & \text{if } x \geq 0 \\
    1       & \text{if } x < 0
@@ -43,6 +45,7 @@ digraph G {
 ## Code Chunk
 
 ### GNUPlot
+
 ```gnuplot {cmd:true, output:"html"}
 set terminal svg
 set title "Simple Plots" font ",20"
@@ -54,6 +57,7 @@ plot [-10:10] sin(x),atan(x),cos(atan(x))
 ```
 
 ### LaTeX
+
 > Branched Ring
 
 ```latex {cmd:true, latex_zoom:1}
@@ -87,16 +91,17 @@ plt.grid(True)
 plt.show()
 ```
 
-## Import external files  
-> You can import local files  
+## Import external files
+
+> You can import local files
 
 @import "test.py" {code_chunk:true, cmd:"python"}
 
-> You can also import online files   
+> You can also import online files
 
 @import "https://github.com/atom/markdown-preview/blob/master/LICENSE.md"
 
-> images  
+> images
 
 @import "https://s3.amazonaws.com/animeeps3/upload/media/posts/2017-01/15/10-anime-similar-to-fuuka-recommendations_1484499773-b.jpg" {width:1200}
 
@@ -104,12 +109,6 @@ plt.show()
 
 @import "test.csv"
 
-Of course You can do more with `@import`.  
+Of course You can do more with `@import`.
 
 ## You can even create presentation!
-
-
-
-
-
-

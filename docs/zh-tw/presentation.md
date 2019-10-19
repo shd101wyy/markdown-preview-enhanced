@@ -1,18 +1,19 @@
-# 幻燈片制作  
+# 幻燈片制作
 
 ![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
 
-Markdown Preview Enhanced 使用 [reveal.js](https://github.com/hakimel/reveal.js) 來渲染漂亮的幻燈片。  
+Markdown Preview Enhanced 使用 [reveal.js](https://github.com/hakimel/reveal.js) 來渲染漂亮的幻燈片。
 
-[點擊這裡](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相關的介紹。  
+[點擊這裡](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) 查看相關的介紹。
 
 ![presentation](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
-
 ## Presentation Front-Matter
+
 你可以通過 `front-matter` 來設置你的幻燈片。  
 你需要將你的設置寫在 `presentation` 部分下。  
-例如：  
+例如：
+
 ```markdown
 ---
 presentation:
@@ -21,11 +22,14 @@ presentation:
 ---
 
 <!-- slide -->
-在這裡編寫你的幻燈片。。。
-```   
-這個幻燈片將會擁有 `800x600` 的大小。  
 
-### 設置    
+在這裡編寫你的幻燈片。。。
+```
+
+這個幻燈片將會擁有 `800x600` 的大小。
+
+### 設置
+
 ```yaml
 ---
 presentation:
@@ -42,7 +46,7 @@ presentation:
   # "sky.css"
   # "solarized.css"
   # "white.css"
-  # "none.css"  
+  # "none.css"
   theme: white.css
 
   # The "normal" size of the presentation, aspect ratio will be preserved
@@ -163,9 +167,10 @@ presentation:
 ---
 ```
 
+## 自定義幻燈片樣式
 
-## 自定義幻燈片樣式  
-你可以添加 `id` 以及 `class` 到一個特定的幻燈片：   
+你可以添加 `id` 以及 `class` 到一個特定的幻燈片：
+
 ```markdown
 <!-- slide id="my-id" class="my-class1 my-class2" -->
 ```

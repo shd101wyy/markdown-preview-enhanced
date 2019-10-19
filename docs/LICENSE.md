@@ -1,13 +1,13 @@
 University of Illinois/NCSA  
-Open Source License  
+Open Source License
 
 ```
 Copyright (c) 2017  Yiyi Wang
-All rights reserved.  
+All rights reserved.
 
-Developed by:     Yiyi Wang and many other contributors  
+Developed by:     Yiyi Wang and many other contributors
                   https://github.com/shd101wyy/markdown-preview-enhanced
-```  
+```
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal with the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
