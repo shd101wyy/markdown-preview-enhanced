@@ -36,12 +36,13 @@ If you want to add `id` and `class` to the header, then simply append `{#id .cla
 
 ### Emphasis
 
+<!-- prettier-ignore -->
 ```markdown
-_This text will be italic_
+*This text will be italic*
 _This will also be italic_
 
 **This text will be bold**
-**This will also be bold**
+__This will also be bold__
 
 _You **can** combine them_
 
