@@ -73,7 +73,6 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "prettier-check": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.1",
     "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.18.0",
