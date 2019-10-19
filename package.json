@@ -1,22 +1,31 @@
 {
   "name": "markdown-preview-enhanced",
-  "main": "./out/src/extension",
   "version": "0.16.3",
   "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
+  "keywords": [
+    "beamer",
+    "dot language",
+    "ePub",
+    "ebook",
+    "exporter",
+    "footer",
+    "graphviz",
+    "html",
+    "image helper",
+    "katex",
+    "latex",
+    "markdown",
+    "mathjax",
+    "mermaid",
+    "pandoc",
+    "pdf",
+    "plantuml",
+    "presentation",
+    "toc",
+    "wavedrom"
+  ],
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "NCSA",
-  "engines": {
-    "atom": ">=1.16.0"
-  },
-  "activationCommands": {
-    "atom-workspace": "markdown-preview-enhanced:toggle"
-  },
-  "activationHooks": [
-    "language-gfm:grammar-used",
-    "language-gfm-enhanced:grammar-used",
-    "language-markdown:grammar-used",
-    "language-pfm:grammar-used"
-  ],
   "files": [
     "assets",
     "images",
@@ -28,35 +37,28 @@
     "README.md",
     "markdown.png"
   ],
-  "keywords": [
-    "markdown",
-    "presentation",
-    "image helper",
-    "katex",
-    "mathjax",
-    "mermaid",
-    "plantuml",
-    "wavedrom",
-    "pdf",
-    "html",
-    "exporter",
-    "toc",
-    "footer",
-    "graphviz",
-    "dot language",
-    "ePub",
-    "ebook",
-    "pandoc",
-    "beamer",
-    "latex"
-  ],
+  "main": "./out/src/extension",
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
-    "lint": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
-    "lint-with-tests": "tsc --project . --noEmit && tslint --project . && prettier-check --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\"",
-    "format": "prettier --write --ignore-path .gitignore \"{.,src/**}/{*.{j,t}s,*.md,ts*.json}\"",
-    "format-with-tests": "prettier --write --ignore-path .gitignore \"{.,src/**,test/**}/{*.{j,t}s,*.md,ts*.json}\""
+    "check": "npm run check:prettier && npm run check:tsc && npm run check:tslint",
+    "check:prettier": "prettier --check \"**/*.*\"",
+    "check:tsc": "tsc --project . --noEmit",
+    "check:tslint": "tslint --project .",
+    "fix": "npm run fix:tslint && npm run fix:prettier",
+    "fix:prettier": "prettier --write \"**/*.*\"",
+    "fix:tslint": "tslint --project ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.*": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "@shd101wyy/mume": "^0.4.6"
@@ -68,10 +70,25 @@
     "@types/node": "^11.11.0",
     "@types/vfile": "^3.0.2",
     "chinese-conv": "^1.0.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.16.4",
     "prettier-check": "^2.0.0",
+    "prettier-plugin-packagejson": "^2.0.1",
     "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.0.3"
-  }
+  },
+  "engines": {
+    "atom": ">=1.16.0"
+  },
+  "activationCommands": {
+    "atom-workspace": "markdown-preview-enhanced:toggle"
+  },
+  "activationHooks": [
+    "language-gfm:grammar-used",
+    "language-gfm-enhanced:grammar-used",
+    "language-markdown:grammar-used",
+    "language-pfm:grammar-used"
+  ]
 }

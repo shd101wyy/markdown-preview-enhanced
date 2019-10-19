@@ -1,4 +1,3 @@
 .DS_Store
-npm-debug.log
 node_modules
-styles/theme.less
+npm-debug.log
