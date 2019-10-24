@@ -1,4 +1,4 @@
-> This file is derived and modified from the markdown-preview-plus package.  
+> This file is derived and modified from the markdown-preview-plus package.
 
 $x$ math at the start of the document
 
@@ -6,15 +6,14 @@ This document is to test $\LaTeX$ rendering with [markdown-preview-plus](https:/
 
 **Math environment Syntax testing**
 
-Inline Math should work with `$`  $\frac{x+y}{y}$
+Inline Math should work with `$` $\frac{x+y}{y}$
 and `\(` \(\frac{x+y}{y}\)
 
 Use `\[` on separate lines:
 
 \[
-\int_{-\infty}^\infty e^{-x^2} = \sqrt{\pi}
+\int\_{-\infty}^\infty e^{-x^2} = \sqrt{\pi}
 \]
-
 
 Use `\[` on the same line:
 
@@ -30,7 +29,7 @@ Use `$$` on the same line:
 
 $$E=mc^2$$
 
-----
+---
 
 **Some Tex Functions**
 
@@ -49,7 +48,7 @@ mc^2\ &= E
 \end{aligned}
 $$
 
-----
+---
 
 **Escaped Math environments**
 
@@ -60,9 +59,7 @@ a $5, a $10 and a \$100 Bill.
 All McScrooge sees
 
 $$
-
 and even more:
-
 $$
 
 \\[x+y\]
@@ -78,36 +75,38 @@ $x
 
 `\$`, `\[ \]`, `$x$`
 
-----
+---
 
 **Testing \newcommand**
 
 For all $x$ and $y$ in $\mathbb{R}^k$ it is true that
+
 $$
 \newcommand{sca}[1]{\langle #1 \rangle}
 |\sca{x,y}|^2 \le \sca{x,x} \cdot \sca{y,y},
 $$
 
 <!-- newcommand not in environment-->
+
 \newcommand{\scalong}[1]{(#1_1,\dots,#1_k)}
 
 where $\sca{\cdot,\cdot}$ denotes the inner product $\sca{\scalong{x}, \scalong{x}} = \sum_{i=1}^k x_i y_i$.
 
-----
+---
 
 **Testing several math fonts**
 \[
-p(\mathbf{m}) \sim \mathcal{N}(\mathbf{m}) e^{-\sum_{i} \beta_i m_i}
+p(\mathbf{m}) \sim \mathcal{N}(\mathbf{m}) e^{-\sum\_{i} \beta_i m_i}
 \]
 
 \[
 \langle \vec{m} \rangle =
 \frac{1}{Z(\vec{\beta})}\vec{m}(\mu)
-\sum_{\mu\in\mathcal{G}}
+\sum\_{\mu\in\mathcal{G}}
 e^{-\vec{\beta}\cdot\vec{m}(\mu)}
 \]
 
-----
+---
 
 Notice below that the `\[`-separated display math doesn't have a blank line before and after (i.e. in an actual $\LaTeX$ document it woulnd't be placed in a separate paragraph):
 
@@ -125,7 +124,7 @@ is given by the formula
 
 This is a long line: $\chi(\lambda) = a e i-a e \lambda -a f h-a i \lambda +a \lambda ^2-b d i+b d \lambda +b f g+c d h-c e g+c g \lambda -e i \lambda +e \lambda ^2+f h \lambda +i \lambda ^2-\lambda ^3$
 
-----
+---
 
 **Does it work in different MD elements?**
 
@@ -139,7 +138,7 @@ This is a long line: $\chi(\lambda) = a e i-a e \lambda -a f h-a i \lambda +a \l
 
 $x_1, x_2, \dots, x_N$ should not conflict with `_` _italics_?
 
-$(f*g*h)(x)$ should not conflict with `*` *syn***tax**?
+$(f*g*h)(x)$ should not conflict with `*` \*syn**\*tax**?
 
 $[a+b](c+d)$ should not conflict link [syntax](#)?
 
@@ -155,18 +154,19 @@ _math $x^2$ in emphasis_
 
 **In Tables**
 
-| Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| $a+b$         | some wordy text | $1600 |
-|               | $$
+| Left-Aligned | Center Aligned  | Right Aligned |
+| :----------- | :-------------: | ------------: |
+| $a+b$        | some wordy text |        \$1600 |
+|              |      \$\$       |
+
 A=\mathbf{A}=\underline{A}=\begin{pmatrix}
-a_{11} & a_{12} & \cdots & a_{1n}\\
-a_{21} & a_{22} & \cdots & a_{2n}\\
-\vdots & \vdots &        & \vdots\\
-a_{m1} & a_{m2} & \cdots & a_{mn}\\
-\end{pmatrix} = (a_{ij})
-$$                                |   $12 |
-|               |                 |    $1 |
+a*{11} & a*{12} & \cdots & a*{1n}\\
+a*{21} & a*{22} & \cdots & a*{2n}\\
+\vdots & \vdots & & \vdots\\
+a*{m1} & a*{m2} & \cdots & a*{mn}\\
+\end{pmatrix} = (a*{ij})
+\$$                                |   $12 |
+| | | \$1 |
 
 **In Image Captions**
 

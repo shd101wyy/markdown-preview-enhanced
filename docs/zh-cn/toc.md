@@ -1,4 +1,5 @@
 # 目录列表（TOC）
+
 **Markdown Preview Enhanced** 支持你在 markdown 文件中创建 `TOC`。
 你可以通过 <kbd>cmd-shift-p</kbd> 然后选择 `Markdown Preview Enhanced: Create Toc` 命令来创建 `TOC`。
 多个 TOCs 可以被创建。
@@ -10,29 +11,35 @@
 > 你需要保持预览打开才能更新 TOC。
 
 ## 设置
-* **orderedList**
-是否使用有序列表。
-* **depthFrom**, **depthTo**
-`[1~6]` 包含的。
-* **ignoreLink**
-如果设置为 `true`，那么 TOC 将不会被超链接。
+
+- **orderedList**
+  是否使用有序列表。
+- **depthFrom**, **depthTo**
+  `[1~6]` 包含的。
+- **ignoreLink**
+  如果设置为 `true`，那么 TOC 将不会被超链接。
 
 ## [TOC]
+
 你也可以通过在你的 markdown 文件中输入 `[TOC]` 来创建 `TOC`。
 例如：
-```markdown
 
+```markdown
 [TOC]
 
-# 标题1
-## 标题2 {ignore=true}
-标题2 将会被目录忽略.
+# 标题 1
+
+## 标题 2 {ignore=true}
+
+标题 2 将会被目录忽略.
 ```
+
 但是，这种方式创建的 `TOC` 只会在预览中显示，而不会修改你的 markdown 文件。
 
 ## [TOC] 以及边栏 TOC 的设置
 
 你可以通过编写 front-matter 来进行设置：
+
 ```markdown
 ---
 toc:

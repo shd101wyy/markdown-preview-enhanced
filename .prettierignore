@@ -1,0 +1,18 @@
+## extensions
+*.*
+!*.css
+!*.js
+!*.json
+!*.md
+!*.ts
+
+
+## same as in .gitignore
+.DS_Store
+node_modules
+npm-debug.log
+
+
+## extras
+docs/revealjs_deps
+out
