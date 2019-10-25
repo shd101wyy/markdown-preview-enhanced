@@ -1,4 +1,4 @@
-# Presentation Writer  
+# Presentation Writer
 
 ![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
 
@@ -8,11 +8,12 @@ Markdown Preview Enhanced uses [reveal.js](https://github.com/hakimel/reveal.js)
 
 ![presentation](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
-
 ## Presentation Front-Matter
-You can configure your presentation by adding front-matter to your markdown file.   
+
+You can configure your presentation by adding front-matter to your markdown file.  
 You need to write your settings under `presentation` section.  
-For example:  
+For example:
+
 ```markdown
 ---
 presentation:
@@ -21,11 +22,14 @@ presentation:
 ---
 
 <!-- slide -->
+
 Your slides goes here...
-```   
+```
+
 The presentation above will has size `800x600`
 
-### Settings  
+### Settings
+
 ```yaml
 ---
 presentation:
@@ -42,7 +46,7 @@ presentation:
   # "sky.css"
   # "solarized.css"
   # "white.css"
-  # "none.css"  
+  # "none.css"
   theme: white.css
 
   # The "normal" size of the presentation, aspect ratio will be preserved
@@ -163,14 +167,16 @@ presentation:
 ---
 ```
 
-
 ## Customize Slide Style
-You can add `id` and `class` to a specific slide like this:   
+
+You can add `id` and `class` to a specific slide like this:
+
 ```markdown
 <!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
-Or if you only want to customize `nth` slide, modify your `less` file like this:   
+Or if you only want to customize `nth` slide, modify your `less` file like this:
+
 ```less
 .markdown-preview.markdown-preview {
   // custom presentation style

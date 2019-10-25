@@ -5,7 +5,7 @@ date: "2015-10-13 16:05:17 +0900"
 arr: [1, 2, 3]
 ---
 
-
+<!--prettier-ignore-start -->
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 <!-- code_chunk_output -->
 
@@ -17,29 +17,35 @@ arr: [1, 2, 3]
 					* [Heading 6](#heading-6)
 
 <!-- /code_chunk_output -->
-
+<!--prettier-ignore-end -->
 
 # This is Markdown Preview with KaTeX Support
+
 - write your math expression within $\$...\$$
-    - $f(x) = sin(x) + y_a$
+  - $f(x) = sin(x) + y_a$
 - write within $\$\$...\$\$$ to render in display mode
-    - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
-		- $sin(x) = 1$
+  - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
+  - $sin(x) = 1$
 
 ## Heading 2
+
 ### Heading 3
+
 #### Heading 4
+
 ##### Heading 5
+
 ###### Heading 6
 
 ```javascript
 // this is comment
-var add = function(x, y){
-    return x + y
-}
-var x = 12
-var y = 13
+var add = function(x, y) {
+  return x + y;
+};
+var x = 12;
+var y = 13;
 ```
+
 ```clojure
 (def x 12)
 (def y 20)
@@ -65,6 +71,7 @@ int main() {
     return 0;
 }
 ```
+
 ---
 
 > export your markdown to PDF or Haha
@@ -118,6 +125,7 @@ gantt
         Create tests for renderer           :2d
         Add to mermaid                      :1d
 ```
+
 ```mermaid
 %% Example code
 graph LR
@@ -125,7 +133,9 @@ graph LR
     style id1 fill:#f9f,stroke:#333,stroke-width:4px;
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
+
 subgraphs
+
 ```mermaid
 graph LR
   f-->z;
@@ -142,6 +152,7 @@ B -> C
 ```
 
 [Graphvizdot](http://www.graphviz.org/)
+
 ```puml
 [*] --> State1
 State1 --> [*]
@@ -187,7 +198,6 @@ database "MySql" {
 [Folder 3] --> [Frame 4]
 ```
 
-
 > Test WaveDrom
 
 ```wavedrom
@@ -197,6 +207,7 @@ database "MySql" {
   { name: "wire", wave: "0.1..0." }
 ]}
 ```
+
 ```wavedrom
 { signal: [
   { name: "pclk", wave: "p......." },
@@ -267,13 +278,13 @@ graph graphname {
 [baidu](https://www.baidu.com/)
 [this baidu should not work](www.baidu.com)
 
-
 **Bugs Fix**
+
 - too many bugs
 - [\$ bug](https://github.com/shd101wyy/markdown-preview-enhanced/issues/2)
   \$ 12 + \$ 13 = 12
 - the local font family for **styles/katex.min.less** should be eg: **atom://markdown-preview-enhanced/styles/fonts/KaTeX_AMS-Regular.eot** instead of **fonts/blabla.eot**
-see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-editors-styles/8321/4)
+  see [this link](https://discuss.atom.io/t/how-do-i-load-google-fonts-into-my-editors-styles/8321/4)
 - Now support **2-way scroll sync!**
 
 [[wikilink]]
