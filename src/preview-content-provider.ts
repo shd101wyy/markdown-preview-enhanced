@@ -765,7 +765,7 @@ export class MarkdownPreviewEnhancedView {
    * @param data
    */
   private postMessage(data: any) {
-    if (this.webview && this.webview.send) {
+    if (this.webview && this.webview.send && this._webviewDOMReady) {
       this.webview.send("_postMessage", data);
     }
   }
