@@ -7,6 +7,8 @@
 
 在 [这里](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言如果你发现了问题或者想要请求新的特性。
 
+如果你感兴趣的话，请同时尝试一下我们新的原型项目：[0xGG/crossnote](https://github.com/0xGG/crossnote)
+
 ![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## 安装

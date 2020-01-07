@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.4.7"
+    "@shd101wyy/mume": "^0.4.8"
   },
   "devDependencies": {
     "@types/atom": "^1.31.1",

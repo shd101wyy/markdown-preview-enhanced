@@ -7,6 +7,8 @@ The goal of this project is to bring you a wonderful markdown writing experience
 
 Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
+If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
+
 ![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## Installation

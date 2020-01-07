@@ -20,7 +20,7 @@
 <a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">vscode</a>
 </p>
 
-_Still Beta Version!_
+If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
 ## Supporting this project
 

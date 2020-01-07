@@ -451,4 +451,12 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
     default: true,
     order: 101,
   },
+
+  puppeteerArgs: {
+    title: "Puppetter launch args",
+    description: "Args passed to puppeteer.launch({args: $puppeteerArgs})",
+    type: "string",
+    default: "[]",
+    order: 102,
+  },
 };
