@@ -63,6 +63,7 @@ const ConfigSettings = {
     mathBlockDelimiters: parseJsonOrDefault([["$$", "$$"], ["\\[", "\\]"]]),
     pandocArguments: parseListOrDefault([]),
     fileExtension: parseListOrDefault([".md", ".mmark", ".markdown"]),
+    puppeteerArgs: parseListOrDefault([]),
 };
 class MarkdownPreviewEnhancedConfig {
     static getCurrentConfig() {

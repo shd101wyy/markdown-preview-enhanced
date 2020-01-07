@@ -69,6 +69,7 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   mathBlockDelimiters: parseJsonOrDefault([["$$", "$$"], ["\\[", "\\]"]]),
   pandocArguments: parseListOrDefault([]),
   fileExtension: parseListOrDefault([".md", ".mmark", ".markdown"]),
+  puppeteerArgs: parseListOrDefault([]),
 };
 
 export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
@@ -115,6 +116,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public HTML5EmbedVideoAttributes: string;
   public puppeteerWaitForTimeout: number;
   public usePuppeteerCore: boolean;
+  public puppeteerArgs: string[];
 
   /*
    * Extra config for mpe
