@@ -14,6 +14,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 - [Andrew Delong](https://github.com/andrewdelong)
 - [cyrasafia](https://github.com/cyrasafia)
 - [Mat Chavez](https://matchavez.com)
+- StammReto
 
 ---
 
