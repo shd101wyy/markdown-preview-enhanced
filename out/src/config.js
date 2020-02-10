@@ -66,9 +66,6 @@ const ConfigSettings = {
     puppeteerArgs: parseListOrDefault([]),
 };
 class MarkdownPreviewEnhancedConfig {
-    static getCurrentConfig() {
-        return new MarkdownPreviewEnhancedConfig();
-    }
     constructor() {
         for (const name in ConfigSettings) {
             if (ConfigSettings.hasOwnProperty(name)) {
@@ -77,6 +74,9 @@ class MarkdownPreviewEnhancedConfig {
                 this[name] = transform(rawValue);
             }
         }
+    }
+    static getCurrentConfig() {
+        return new MarkdownPreviewEnhancedConfig();
     }
     onDidChange(subscriptions, callback) {
         for (const name in ConfigSettings) {
