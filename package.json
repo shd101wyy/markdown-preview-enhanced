@@ -61,22 +61,22 @@
     ]
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.4.10"
+    "@shd101wyy/mume": "^0.4.11"
   },
   "devDependencies": {
-    "@types/atom": "^1.31.1",
-    "@types/jquery": "^3.3.29",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^11.11.0",
-    "@types/vfile": "^3.0.2",
+    "@types/atom": "^1.36.2",
+    "@types/jquery": "^3.3.32",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.0",
+    "@types/vfile": "^4.0.0",
     "chinese-conv": "^1.0.1",
-    "husky": "^3.0.9",
-    "lint-staged": "^9.4.2",
-    "prettier": "^1.18.2",
-    "prettier-plugin-packagejson": "^2.0.1",
-    "tslint": "^5.13.1",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "prettier-plugin-packagejson": "^2.0.10",
+    "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.7.5"
   },
   "engines": {
     "atom": ">=1.16.0"
