@@ -1,8 +1,8 @@
 # Pandoc
 
 **Markdown Preview Enhanced** 支持類似於 `RStudio Markdown` 的 `pandoc 文檔導出`特性。  
-要使用這一特性，你需要安裝好 [pandoc](http://pandoc.org/)。  
-Pandoc 的安裝說明可以參考 [這裡](http://pandoc.org/installing.html)。  
+要使用這一特性，你需要安裝好 [pandoc](https://pandoc.org/)。  
+Pandoc 的安裝說明可以參考 [這裡](https://pandoc.org/installing.html)。  
 你可以通過右鍵點擊預覽，然後在菜單中點擊 `Pandoc` 使用 `pandoc document export`。
 
 ---
@@ -12,7 +12,7 @@ Pandoc 的安裝說明可以參考 [這裡](http://pandoc.org/installing.html)�
 默認情況下， **Markdown Preview Enhanced** 使用 [markdown-it](https://github.com/markdown-it/markdown-it) 來轉換 markdown。  
 你也可以在插件設置中設置使用 `Pandoc Parser` 來轉換 markdown。
 
-![Screen Shot 2017-03-07 at 10.05.25 PM](http://i.imgur.com/NdCJBgR.png)
+![Screen Shot 2017-03-07 at 10.05.25 PM](https://i.imgur.com/NdCJBgR.png)
 
 你還可以為單獨的文件設置 pandoc 的參數通過編寫 front-matter：
 
@@ -40,7 +40,7 @@ pandoc_args: ["--toc", "--toc-depth=2"]
 你不是必須使用我上面提到的 `Pandoc Parser` 才可以使用 Pandoc 導出文件。
 
 以下的文件類型是支持的，**更多的文件類型可能會在未來添加。**  
-（一些例子引用於 [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html)）  
+（一些例子引用於 [RStudio Markdown](https://rmarkdown.rstudio.com/formats.html)）  
 點擊以下的鏈接查看如何導出相應的文件類型。
 
 - [PDF](zh-tw/pandoc-pdf.md)

@@ -32,7 +32,7 @@ Multiple Presentation themes are supported, you can change it easily from the ex
 - vscode  
   @import "https://i.loli.net/2017/07/12/5965b5c7783fb.png" {width: 60%}
 - atom  
-  @import "http://i.imgur.com/lwaogVZ.png" {width: 60%}
+  @import "https://i.imgur.com/lwaogVZ.png" {width: 60%}
 
 <!-- slide -->
 
@@ -211,4 +211,4 @@ right clicking at the preview, then choose
 - Feel free to post issues and request new features [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues)
 - Source code of this presentation can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md), [raw](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md)
 
-<!-- slide data-background-image="http://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->
+<!-- slide data-background-image="https://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->

@@ -2,7 +2,7 @@
 
 ## Install pdf2svg
 
-[The official website of pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/)
+[The official website of pdf2svg](https://www.cityinthesky.co.uk/opensource/pdf2svg/)
 
 - **Mac**
 
@@ -20,7 +20,7 @@ brew install pdf2svg
 ## Install LaTeX distribution
 
 Please check [Get LaTeX website](https://www.latex-project.org/get/).  
-[TeX Live](http://www.tug.org/texlive/) is the best recommended to work with Markdown Preview Enhanced.
+[TeX Live](https://www.tug.org/texlive/) is the best recommended to work with Markdown Preview Enhanced.
 
 For **Mac** user, simply install [MacTex](https://www.tug.org/mactex) and you are done.
 

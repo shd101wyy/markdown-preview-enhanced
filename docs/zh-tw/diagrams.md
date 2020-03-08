@@ -7,9 +7,9 @@
 
 ## Flow Charts
 
-這一特性基於 [flowchart.js](http://flowchart.js.org/)。
+這一特性基於 [flowchart.js](https://flowchart.js.org/)。
 
-- `flow` 代碼快中的內容將會被 [flowchart.js](http://flowchart.js.org/) 渲染。
+- `flow` 代碼快中的內容將會被 [flowchart.js](https://flowchart.js.org/) 渲染。
 
 ![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
 
@@ -27,7 +27,7 @@
 Markdown Preview Enhanced 使用 [mermaid](https://github.com/knsv/mermaid) 來渲染流程圖和時序圖。
 
 - `mermaid` 代碼塊中的內容將會渲染 [mermaid](https://github.com/knsv/mermaid) 圖像。
-- 查看 [mermaid 文檔](http://knsv.github.io/mermaid/#flowcharts-basic-syntax) 了解更多如果創建圖形。
+- 查看 [mermaid 文檔](https://knsv.github.io/mermaid/#flowcharts-basic-syntax) 了解更多如果創建圖形。
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
 三個 mermaid 主題是支持的，並且你可以在 [插件設置](zh-tw/usages.md?id=package-settings) 中設置主題：
@@ -41,10 +41,10 @@ Markdown Preview Enhanced 使用 [mermaid](https://github.com/knsv/mermaid) 來�
 
 ## PlantUML
 
-Markdown Preview Enhanced 使用 [PlantUML](http://plantuml.com/) 來創建各種圖形。（**Java** 是需要先被安裝好的）
+Markdown Preview Enhanced 使用 [PlantUML](https://plantuml.com/) 來創建各種圖形。（**Java** 是需要先被安裝好的）
 
-- 你可以安裝 [Graphviz](http://www.graphviz.org/)（非必需）來輔助生成各種各種圖形。
-- `puml` 或者 `plantuml` 代碼塊中的內容將會被 [PlantUML](http://plantuml.com/) 渲染。
+- 你可以安裝 [Graphviz](https://www.graphviz.org/)（非必需）來輔助生成各種各種圖形。
+- `puml` 或者 `plantuml` 代碼塊中的內容將會被 [PlantUML](https://plantuml.com/) 渲染。
 
 ![screen shot 2017-06-05 at 8 05 55 pm](https://cloud.githubusercontent.com/assets/1908863/26809436/65414084-4a2a-11e7-91ee-7b03b0496513.png)
 
@@ -52,7 +52,7 @@ Markdown Preview Enhanced 使用 [PlantUML](http://plantuml.com/) 來創建各�
 
 ## WaveDrom
 
-Markdown Preview Enhanced 使用 [WaveDrom](http://wavedrom.com/) 來渲染 digital timing diagram.
+Markdown Preview Enhanced 使用 [WaveDrom](https://wavedrom.com/) 來渲染 digital timing diagram.
 
 - `wavedrom` 代碼塊中的內容將會被 [WaveDrom](https://github.com/drom/wavedrom) 渲染。
 

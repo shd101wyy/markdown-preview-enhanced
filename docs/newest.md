@@ -12,7 +12,7 @@
 ## 0.14.10
 
 - Upgraded mume to [0.2.2](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
-  - Added `enableCriticMarkupSyntax` option. [Syntax guide](http://criticmarkup.com/users-guide.php).
+  - Added `enableCriticMarkupSyntax` option. [Syntax guide](https://criticmarkup.com/users-guide.php).
   - Added `toc` config to front-matter for `[TOC]` and sidebar TOC [#606](https://github.com/shd101wyy/markdown-preview-enhanced/issues/606).
   - Fixed ordered list TODO box bug [#592](https://github.com/shd101wyy/markdown-preview-enhanced/issues/592).
   - Upgraded `KaTeX` to version `0.8.3`.

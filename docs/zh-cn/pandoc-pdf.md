@@ -105,7 +105,7 @@ geometry: margin=1in
 | linkcolor, urlcolor, citecolor | Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
 | thanks                         | specifies contents of acknowledgments footnote after document title.                      |
 
-更多的可用变量请查看 [这里](http://pandoc.org/MANUAL.html#variables-for-latex).
+更多的可用变量请查看 [这里](https://pandoc.org/MANUAL.html#variables-for-latex).
 
 ### LaTeX Packages for Citations
 
@@ -167,7 +167,7 @@ output:
 
 ```
 
-请参考 [pandoc 模版](http://pandoc.org/README.html#templates) 文档了解更多关于模版的信息。你还可以学习 [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) 作为一个例子。
+请参考 [pandoc 模版](https://pandoc.org/README.html#templates) 文档了解更多关于模版的信息。你还可以学习 [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) 作为一个例子。
 
 ### Pandoc Arguments
 

@@ -54,7 +54,7 @@ _Markdown 源文件_
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
   更多詳細信息請查看[這個文檔](zh-tw/image-helper.md)。  
-  圖片助手支持快速插入圖片鏈接，拷貝本地圖片，和上傳圖片（powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/)）。  
+  圖片助手支持快速插入圖片鏈接，拷貝本地圖片，和上傳圖片（powered by [imgur](https://imgur.com/) and [sm.ms](https://sm.ms/)）。  
   國內用戶推薦使用 `sm.ms`，牆內不限量免費上傳圖片。  
   ![screen shot 2017-06-06 at 3 42 31 pm](https://user-images.githubusercontent.com/1908863/26850896-c43be8e2-4ace-11e7-802d-6a7b51bf3130.png)
 

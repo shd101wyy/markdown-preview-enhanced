@@ -4,7 +4,7 @@
 
 ### Specifying a Bibliography
 
-[Pandoc](http://pandoc.org/MANUAL.html#citations) can automatically generate citations and a bibliography in a number of styles. In order to use this feature, you will need to specify a bibliography file using the `bibliography` metadata field in a YAML metadata section. For example:
+[Pandoc](https://pandoc.org/MANUAL.html#citations) can automatically generate citations and a bibliography in a number of styles. In order to use this feature, you will need to specify a bibliography file using the `bibliography` metadata field in a YAML metadata section. For example:
 
 ```yaml
 ---
@@ -54,7 +54,7 @@ references:
         given: Martin
     container-title: Nature Materials
     volume: 11
-    URL: "http://dx.doi.org/10.1038/nmat3283"
+    URL: "https://dx.doi.org/10.1038/nmat3283"
     DOI: 10.1038/nmat3283
     issue: 4
     publisher: Nature Publishing Group
@@ -136,7 +136,7 @@ csl: biomed-central.csl
 
 ```
 
-A primer on creating and modifying CSL styles can be found [here](http://citationstyles.org/downloads/primer.html). A repository of CSL styles can be found [here](https://github.com/citation-style-language/styles). See also http://zotero.org/styles for easy browsing.
+A primer on creating and modifying CSL styles can be found [here](https://citationstyles.org/downloads/primer.html). A repository of CSL styles can be found [here](https://github.com/citation-style-language/styles). See also https://zotero.org/styles for easy browsing.
 
 ### Citations for PDF Output
 

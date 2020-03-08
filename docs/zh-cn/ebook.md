@@ -3,7 +3,7 @@
 Inspired by _GitBook_  
 **Markdown Preview Enhanced** 可以导出 ePub，Mobi，PDF 的电子书。
 
-![Screen Shot 2016-09-08 at 9.42.43 PM](http://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
+![Screen Shot 2016-09-08 at 9.42.43 PM](https://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
 
 要导出电子书，你需要事先安装好 `ebook-convert`。
 
@@ -81,7 +81,7 @@ ebook:
 - **authors**  
   作者 1 & 作者 2 & ...
 - **cover**  
-  http://path-to-image.png
+  https://path-to-image.png
 - **comments**  
   关于这本书的描述
 - **publisher**  
