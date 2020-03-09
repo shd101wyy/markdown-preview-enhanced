@@ -3,7 +3,7 @@
 Inspired by _GitBook_  
 **Markdown Preview Enhanced** can output content as ebook (ePub, Mobi, PDF).
 
-![Screen Shot 2016-09-08 at 9.42.43 PM](http://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
+![Screen Shot 2016-09-08 at 9.42.43 PM](https://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
 
 To generate ebook, you need to have `ebook-convert` installed.
 
@@ -82,7 +82,7 @@ To export ebook, open the `SUMMARY.md` with the preview opened. Then right click
 - **authors**  
   author1 & author2 & ...
 - **cover**  
-  http://path-to-image.png
+  https://path-to-image.png
 - **comments**  
   Set the ebook description
 - **publisher**  

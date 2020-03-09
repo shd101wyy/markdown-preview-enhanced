@@ -53,7 +53,7 @@ _Markdown Source_
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
   For more information, check [this doc](image-helper.md).  
-   Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](http://imgur.com/) and [sm.ms](https://sm.ms/).  
+   Image Helper supports image url quick insertion, image paste, and image upload powered by [imgur](https://imgur.com/) and [sm.ms](https://sm.ms/).  
   ![screen shot 2017-06-06 at 3 42 31 pm](https://user-images.githubusercontent.com/1908863/26850896-c43be8e2-4ace-11e7-802d-6a7b51bf3130.png)
 
 - <strong>Markdown Preview Enhanced: Show Uploaded Images</strong>  

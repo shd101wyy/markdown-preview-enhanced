@@ -1,8 +1,8 @@
 # Pandoc
 
 **Markdown Preview Enhanced** supports `pandoc document export` feature that works similarly to `RStudio Markdown`.  
-To use this feature, you need to have [pandoc](http://pandoc.org/) installed.  
-Installation instruction of pandoc can be found [here](http://pandoc.org/installing.html).  
+To use this feature, you need to have [pandoc](https://pandoc.org/) installed.  
+Installation instruction of pandoc can be found [here](https://pandoc.org/installing.html).  
 You can use `pandoc document export` by right clicking at the preview, then you will see it on the context menu.
 
 ---
@@ -12,7 +12,7 @@ You can use `pandoc document export` by right clicking at the preview, then you 
 By default **Markdown Preview Enhanced** uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse markdown.  
 You can also set it to `pandoc` parser from package settings.
 
-![Screen Shot 2017-03-07 at 10.05.25 PM](http://i.imgur.com/NdCJBgR.png)
+![Screen Shot 2017-03-07 at 10.05.25 PM](https://i.imgur.com/NdCJBgR.png)
 
 You can also set pandoc arguments for individual files by writing front-matter
 
@@ -40,7 +40,7 @@ More information and tutorial about how to write `front-matter` can be found [he
 You don't have to use the `Pandoc Parser` that I mentioned above to export files.
 
 The following formats are currently supported, **more formats will be supported in the future.**  
-(Some examples are referred from [RStudio Markdown](http://rmarkdown.rstudio.com/formats.html))  
+(Some examples are referred from [RStudio Markdown](https://rmarkdown.rstudio.com/formats.html))  
 Click the link below to see the document format that you want to export.
 
 - [PDF](pandoc-pdf.md)

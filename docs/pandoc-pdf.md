@@ -105,7 +105,7 @@ Available metadata variables include:
 | linkcolor, urlcolor, citecolor | Color for internal, external, and citation links (red, green, magenta, cyan, blue, black) |
 | thanks                         | specifies contents of acknowledgments footnote after document title.                      |
 
-More available variables can be found [here](http://pandoc.org/MANUAL.html#variables-for-latex).
+More available variables can be found [here](https://pandoc.org/MANUAL.html#variables-for-latex).
 
 ### LaTeX Packages for Citations
 
@@ -167,7 +167,7 @@ output:
 
 ```
 
-Consult the documentation on [pandoc templates](http://pandoc.org/README.html#templates) for additional details on templates. You can also study the [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) as an example.
+Consult the documentation on [pandoc templates](https://pandoc.org/README.html#templates) for additional details on templates. You can also study the [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) as an example.
 
 ### Pandoc Arguments
 

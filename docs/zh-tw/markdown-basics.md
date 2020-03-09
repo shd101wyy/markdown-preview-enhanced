@@ -80,8 +80,8 @@ Format: ![Alt Text](url)
 ### 鏈接
 
 ```markdown
-http://github.com - 自動生成！
-[GitHub](http://github.com)
+https://github.com - 自動生成！
+[GitHub](https://github.com)
 ```
 
 ### 引用
@@ -260,7 +260,7 @@ is maintained by the W3C.
 ### CriticMarkup
 
 CriticMarkup 缺省是禁用的，你可以通過插件設置來啟動它。  
-有關 CriticMarkup 的更多信息，請查看 [CriticMarkup 用戶指南](http://criticmarkup.com/users-guide.php).
+有關 CriticMarkup 的更多信息，請查看 [CriticMarkup 用戶指南](https://criticmarkup.com/users-guide.php).
 
 這裡有 5 種基本語法：
 

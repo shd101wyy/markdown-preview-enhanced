@@ -233,10 +233,10 @@ Markdown Preview Enhanced 支持你輕松的繪制 [Plotly](https://plot.ly/) �
 ## 展示
 
 **bash**
-![Screen Shot 2016-09-24 at 1.41.06 AM](http://i.imgur.com/v5Y7juh.png)
+![Screen Shot 2016-09-24 at 1.41.06 AM](https://i.imgur.com/v5Y7juh.png)
 
 **gnuplot with svg output**
-![Screen Shot 2016-09-24 at 1.44.14 AM](http://i.imgur.com/S93g7Tk.png)
+![Screen Shot 2016-09-24 at 1.44.14 AM](https://i.imgur.com/S93g7Tk.png)
 
 ## 局限
 

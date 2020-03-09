@@ -7,9 +7,9 @@ You can also render `TikZ`, `Python Matplotlib`, `Plotly` and all sorts of other
 
 ## Flow Charts
 
-This feature is powered by [flowchart.js](http://flowchart.js.org/).
+This feature is powered by [flowchart.js](https://flowchart.js.org/).
 
-- code block with `flow` notation will be rendered by [flowchart.js](http://flowchart.js.org/).
+- code block with `flow` notation will be rendered by [flowchart.js](https://flowchart.js.org/).
 
 ![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
 
@@ -41,10 +41,10 @@ You can also edit the mermaid init config by running `Markdown Preview Enhanced:
 
 ## PlantUML
 
-Markdown Preview Enhanced uses [PlantUML](http://plantuml.com/) to create multiple kinds of graph. (**Java** is required to be installed)
+Markdown Preview Enhanced uses [PlantUML](https://plantuml.com/) to create multiple kinds of graph. (**Java** is required to be installed)
 
-- You can install [Graphviz](http://www.graphviz.org/) (not required) to generate all diagram types.
-- Code block with `puml` or `plantuml` notation will be rendered by [PlantUML](http://plantuml.com/).
+- You can install [Graphviz](https://www.graphviz.org/) (not required) to generate all diagram types.
+- Code block with `puml` or `plantuml` notation will be rendered by [PlantUML](https://plantuml.com/).
 
 ![screen shot 2017-06-05 at 8 05 55 pm](https://cloud.githubusercontent.com/assets/1908863/26809436/65414084-4a2a-11e7-91ee-7b03b0496513.png)
 
@@ -52,7 +52,7 @@ If `@start...` is not found, then `@startuml ... @enduml` will automatically be 
 
 ## WaveDrom
 
-Markdown Preview Enhanced uses [WaveDrom](http://wavedrom.com/) to create digital timing diagram.
+Markdown Preview Enhanced uses [WaveDrom](https://wavedrom.com/) to create digital timing diagram.
 
 - Code block with `wavedrom` notation will be rendered by [WaveDrom](https://github.com/drom/wavedrom).
 

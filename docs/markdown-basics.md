@@ -80,8 +80,8 @@ Format: ![Alt Text](url)
 ### Links
 
 ```markdown
-http://github.com - automatic!
-[GitHub](http://github.com)
+https://github.com - automatic!
+[GitHub](https://github.com)
 ```
 
 ### Blockquote
@@ -260,7 +260,7 @@ is maintained by the W3C.
 ### CriticMarkup
 
 CriticMarkup is **disabled** by default, but you can enable it from the package settings.  
-For more information about CriticMarkup, check [CriticMarkup User's Guide](http://criticmarkup.com/users-guide.php).
+For more information about CriticMarkup, check [CriticMarkup User's Guide](https://criticmarkup.com/users-guide.php).
 
 There are five types of Critic marks:
 

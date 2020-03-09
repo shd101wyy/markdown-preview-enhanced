@@ -337,7 +337,7 @@ Known issues:
 - [ ] solve issue [#85](https://github.com/shd101wyy/markdown-preview-enhanced/issues/85)
 - [x] merge pull request [#86](https://github.com/shd101wyy/markdown-preview-enhanced/pull/86)
 - [ ] presentation print pdf link not working
-- [x] epub generation. useful links [manual](http://pandoc.org/MANUAL.html) and [epub](http://pandoc.org/epub.html)
+- [x] epub generation. useful links [manual](https://pandoc.org/MANUAL.html) and [epub](https://pandoc.org/epub.html)
 
 ## 0.7.9
 

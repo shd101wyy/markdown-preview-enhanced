@@ -2,7 +2,7 @@
 
 ## 安裝 pdf2svg
 
-[pdf2svg 官網](http://www.cityinthesky.co.uk/opensource/pdf2svg/)
+[pdf2svg 官網](https://www.cityinthesky.co.uk/opensource/pdf2svg/)
 
 - **Mac**
 
@@ -20,7 +20,7 @@ brew install pdf2svg
 ## 安裝 LaTeX distribution
 
 請查看 [Get LaTeX 網站](https://www.latex-project.org/get/)。  
-[TeX Live](http://www.tug.org/texlive/) 是推薦的。
+[TeX Live](https://www.tug.org/texlive/) 是推薦的。
 
 對於 **Mac** 用戶，直接安裝 [MacTex](https://www.tug.org/mactex) 然後你就沒事兒了。
 
