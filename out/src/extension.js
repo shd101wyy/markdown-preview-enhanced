@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deactivate = exports.activate = void 0;
 const mume = require("@shd101wyy/mume");
 const atom_1 = require("atom");
 const path = require("path");
@@ -563,5 +562,5 @@ function deactivate() {
 }
 exports.deactivate = deactivate;
 var config_schema_1 = require("./config-schema");
-Object.defineProperty(exports, "config", { enumerable: true, get: function () { return config_schema_1.configSchema; } });
+exports.config = config_schema_1.configSchema;
 //# sourceMappingURL=extension.js.map
