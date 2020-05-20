@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.configSchema = void 0;
 exports.configSchema = {
     fileExtension: {
         type: "string",

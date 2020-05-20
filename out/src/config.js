@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MarkdownPreviewEnhancedConfig = void 0;
 const copyValue = (v) => v;
 const parseJsonOrDefault = (def) => (raw) => {
     try {
