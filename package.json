@@ -1,6 +1,6 @@
 {
   "name": "markdown-preview-enhanced",
-  "version": "0.17.8",
+  "version": "0.18.0",
   "description": "One of the 'BEST' markdown preview extensions for Atom editor!",
   "keywords": [
     "beamer",
@@ -26,7 +26,6 @@
   ],
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "NCSA",
-  "main": "./out/src/extension",
   "files": [
     "assets",
     "images",
@@ -38,6 +37,7 @@
     "README.md",
     "markdown.png"
   ],
+  "main": "./out/src/extension",
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
