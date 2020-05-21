@@ -5,6 +5,13 @@ export const configSchema = {
     description: "You may need restart Atom after making changes here.",
     order: 0,
   },
+  configPath: {
+    type: "string",
+    default: "",
+    description:
+      "The configuration directory path. Leave it empty to use '~/.mume' as the config path. Please reload atom to take effect.",
+    order: 1,
+  },
   singlePreview: {
     title: "Open Only One Preview",
     type: "boolean",

@@ -26,6 +26,7 @@
   ],
   "repository": "https://github.com/shd101wyy/markdown-preview-enhanced",
   "license": "NCSA",
+  "main": "./out/src/extension",
   "files": [
     "assets",
     "images",
@@ -37,7 +38,6 @@
     "README.md",
     "markdown.png"
   ],
-  "main": "./out/src/extension",
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.5.0"
+    "@shd101wyy/mume": "^0.5.5"
   },
   "devDependencies": {
     "@types/atom": "^1.36.2",
@@ -69,6 +69,7 @@
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.0",
     "@types/vfile": "^4.0.0",
+    "@types/vscode": "1.40.0",
     "chinese-conv": "^1.0.1",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.7",

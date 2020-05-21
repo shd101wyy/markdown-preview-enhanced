@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deactivate = exports.activate = void 0;
 const mume = require("@shd101wyy/mume");
 const atom_1 = require("atom");
 const path = require("path");
 const config_1 = require("./config");
 const preview_content_provider_1 = require("./preview-content-provider");
-const utility = mume.utility;
 let subscriptions = null;
 let config = null;
 /**
@@ -130,14 +130,14 @@ function startPreview(editor) {
     }
 }
 function activate(state) {
+    subscriptions = new atom_1.CompositeDisposable();
+    // Init config
+    config = new config_1.MarkdownPreviewEnhancedConfig();
+    config.onDidChange(subscriptions, onDidChangeConfig);
+    mume.onDidChangeConfigFile(onDidChangeConfig);
     mume
-        .init() // init mume package
+        .init((config.configPath || "").trim()) // init mume package
         .then(() => {
-        subscriptions = new atom_1.CompositeDisposable();
-        // Init config
-        config = new config_1.MarkdownPreviewEnhancedConfig();
-        config.onDidChange(subscriptions, onDidChangeConfig);
-        mume.onDidChangeConfigFile(onDidChangeConfig);
         // Set opener
         subscriptions.add(atom.workspace.addOpener((uri) => {
             if (uri.startsWith("mpe://")) {
@@ -275,15 +275,6 @@ function activate(state) {
             }
             previewsMap = {};
         }));
-        // Check package version
-        const packageVersion = require(path.resolve(__dirname, "../../package.json"))["version"];
-        if (packageVersion !== mume.configs.config["atom_mpe_version"]) {
-            mume.utility.updateExtensionConfig({
-                atom_mpe_version: packageVersion,
-            });
-            // Don't open `welcome.md` file anymore.
-            // atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'))
-        }
     });
 }
 exports.activate = activate;
@@ -339,7 +330,7 @@ function bindMarkdownEditorDropEvents(editor) {
  * Open ~/.mume/style.less
  */
 function customizeCSS() {
-    const globalStyleLessFile = path.resolve(utility.extensionConfigDirectoryPath, "./style.less");
+    const globalStyleLessFile = path.resolve(mume.getExtensionConfigPath(), "./style.less");
     atom.workspace.open(globalStyleLessFile);
 }
 function createTOC() {
@@ -398,19 +389,19 @@ function startImageHelper() {
     }
 }
 function openMermaidConfig() {
-    const mermaidConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./mermaid_config.js");
+    const mermaidConfigFilePath = path.resolve(mume.getExtensionConfigPath(), "./mermaid_config.js");
     atom.workspace.open(mermaidConfigFilePath);
 }
 function openMathJaxConfig() {
-    const mathjaxConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./mathjax_config.js");
+    const mathjaxConfigFilePath = path.resolve(mume.getExtensionConfigPath(), "./mathjax_config.js");
     atom.workspace.open(mathjaxConfigFilePath);
 }
 function openKaTeXConfig() {
-    const katexConfigFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./katex_config.js");
+    const katexConfigFilePath = path.resolve(mume.getExtensionConfigPath(), "./katex_config.js");
     atom.workspace.open(katexConfigFilePath);
 }
 function extendParser() {
-    const parserConfigPath = path.resolve(utility.extensionConfigDirectoryPath, "./parser.js");
+    const parserConfigPath = path.resolve(mume.getExtensionConfigPath(), "./parser.js");
     atom.workspace.open(parserConfigPath);
 }
 function insertNewSlide() {
@@ -456,7 +447,7 @@ function runAllCodeChunks() {
     }
 }
 function showUploadedImages() {
-    const imageHistoryFilePath = path.resolve(utility.extensionConfigDirectoryPath, "./image_history.md");
+    const imageHistoryFilePath = path.resolve(mume.getExtensionConfigPath(), "./image_history.md");
     atom.workspace.open(imageHistoryFilePath);
 }
 /**
@@ -495,9 +486,10 @@ function onModifySource(codeChunkData, result, filePath) {
                 if (r === result + "\n") {
                     return "";
                 } // no need to modify output
-                editor
-                    .getBuffer()
-                    .setTextInRange([[start + 2, 0], [end - 1, 0]], result + "\n");
+                editor.getBuffer().setTextInRange([
+                    [start + 2, 0],
+                    [end - 1, 0],
+                ], result + "\n");
                 /*
                 editor.edit((edit)=> {
                   edit.replace(new vscode.Range(
@@ -562,5 +554,5 @@ function deactivate() {
 }
 exports.deactivate = deactivate;
 var config_schema_1 = require("./config-schema");
-exports.config = config_schema_1.configSchema;
+Object.defineProperty(exports, "config", { enumerable: true, get: function () { return config_schema_1.configSchema; } });
 //# sourceMappingURL=extension.js.map
