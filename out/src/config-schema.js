@@ -1,11 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.configSchema = void 0;
 exports.configSchema = {
     fileExtension: {
         type: "string",
         default: ".md, .mmark, .markdown",
         description: "You may need restart Atom after making changes here.",
         order: 0,
+    },
+    configPath: {
+        type: "string",
+        default: "",
+        description: "The configuration directory path. Leave it empty to use '~/.mume' as the config path. Please reload atom to take effect.",
+        order: 1,
     },
     singlePreview: {
         title: "Open Only One Preview",
