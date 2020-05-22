@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = exports.activate = void 0;
+const fs = require("fs");
 const mume = require("@shd101wyy/mume");
 const atom_1 = require("atom");
 const path = require("path");
@@ -275,6 +276,31 @@ function activate(state) {
             }
             previewsMap = {};
         }));
+        // Check package version
+        const packageVersion = require(path.resolve(__dirname, "../../package.json"))["version"];
+        if (packageVersion !== mume.configs.config["atom_mpe_version"]) {
+            fs.writeFileSync(path.resolve(mume.getExtensionConfigPath(), "config.json"), JSON.stringify(Object.assign({}, mume.configs.config, {
+                atom_mpe_version: packageVersion,
+            })));
+            const noty = atom.notifications.addInfo("If you like using markdown-preview-enhanced, please consider sponsoring the developer to help make this project better 😊.", {
+                dismissable: true,
+                buttons: [
+                    {
+                        text: "Open GitHub Sponsors",
+                        onDidClick: () => {
+                            mume.utility.openFile("https://github.com/sponsors/shd101wyy");
+                            noty.dismiss();
+                        },
+                    },
+                    {
+                        text: "I already sponsored",
+                        onDidClick: () => {
+                            noty.dismiss();
+                        },
+                    },
+                ],
+            });
+        }
     });
 }
 exports.activate = activate;

@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as mume from "@shd101wyy/mume";
 import { CompositeDisposable, TextBuffer, TextEditor } from "atom";
 import * as path from "path";
@@ -311,6 +312,46 @@ export function activate(state) {
           },
         ),
       );
+
+      // Check package version
+      const packageVersion = require(path.resolve(
+        __dirname,
+        "../../package.json",
+      ))["version"];
+      if (packageVersion !== mume.configs.config["atom_mpe_version"]) {
+        fs.writeFileSync(
+          path.resolve(mume.getExtensionConfigPath(), "config.json"),
+          JSON.stringify(
+            Object.assign({}, mume.configs.config, {
+              atom_mpe_version: packageVersion,
+            }),
+          ),
+        );
+
+        const noty = atom.notifications.addInfo(
+          "If you like using markdown-preview-enhanced, please consider sponsoring the developer to help make this project better 😊.",
+          {
+            dismissable: true,
+            buttons: [
+              {
+                text: "Open GitHub Sponsors",
+                onDidClick: () => {
+                  mume.utility.openFile(
+                    "https://github.com/sponsors/shd101wyy",
+                  );
+                  noty.dismiss();
+                },
+              },
+              {
+                text: "I already sponsored",
+                onDidClick: () => {
+                  noty.dismiss();
+                },
+              },
+            ],
+          },
+        );
+      }
     });
 }
 
