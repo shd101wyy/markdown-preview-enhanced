@@ -1,16 +1,16 @@
-# Installation on VS Code
+# VS Codeへのインストール
 
-There are several ways of installing this package.
+このパッケージをインストールするにはいくつかの方法があります。
 
-## Install from VS Code (Recommended)
+## VS Codeからインストール（推奨）
 
-Open **vscode** editor, then search `markdown-preview-enhanced` in `Extensions`, then click `Install` button.
+**VS Code** を開き、`Extentions` で `markdown-preview-enhanced` を検索して、`Install` ボタンをクリックします。
 
 ![screen shot 2017-07-14 at 12 23 32 am](https://user-images.githubusercontent.com/1908863/28199365-bb03a570-682a-11e7-8f65-d7d2b258d583.png)
 
-## Install from GitHub
+## GitHubからインストール
 
-- Download `markdown-preview-enhanced-*.vsix` file from [Releases](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases).
-- Open **vscode**, run `Extension: Install from VSIX`, then choose the `*.vsix` file you just downloaded.
+- [Releases](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases) から `markdown-preview-enhanced-*.vsix` をダウンロードします。
+- **VS Code** を開き、`Extension：Install from VSIX` を実行して、ダウンロードした `*.vsix` ファイルを選択します。
 
-[➔ Usages](usages.md)
+[➔ 使い方](ja-jp/usages.md)

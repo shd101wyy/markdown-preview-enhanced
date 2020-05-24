@@ -1,30 +1,30 @@
-# Installation on Atom
+# Atomへのインストール
 
-> Please make sure that you have the official `markdown-preview` package disabled.
+> 公式の `markdown-preview` パッケージが無効になっていることを確認してください。
 
-There are several ways of installing this package.
+このパッケージをインストール方法はいくつかあります。
 
-## Install from atom (Recommended)
+## Atomからインストール(推奨)
 
-Open **atom** editor, open `Settings`, click `Install`, then search `markdown-preview-enhanced`.  
-After installation, you **must restart** atom to take effects.  
-It is recommended to disable the builtin `markdown-preview` package after you install this package.
+**atom** エディターを開き、`Settings` を開いて `Install` をクリックし、 `markdown-preview-enhanced` を検索します。
+インストール後、atom を**再起動する必要があります**。
+このパッケージをインストールした後、組み込みの `markdown-preview` パッケージを無効にすることをお勧めします。
 
 ![screen shot 2017-03-19 at 4 07 16 pm](https://cloud.githubusercontent.com/assets/1908863/24084798/260a9fee-0cbf-11e7-83e6-bf17fa9aca77.png)
 
-## Install from terminal
+## ターミナルからインストール
 
-Open terminal, then run the following command:
+ターミナルを開き、次のコマンドを実行します。
 
 ```bash
 apm install markdown-preview-enhanced
 ```
 
-## Install from GitHub
+## GitHubからインストール
 
-- **Clone** this project.
-- `cd` to the downloaded **markdown-preview-enhanced** folder.
-- Run `npm install` command. Then run `apm link` command.
+- このプロジェクトを **Clone** します。
+- ダウンロードした **markdown-preview-enhanced** フォルダーに `cd` します。
+- `npm install` コマンドを実行します。次に、`apm link` コマンドを実行します。
 
 ```bash
 cd the_path_to_folder/markdown-preview-enhanced
@@ -32,17 +32,17 @@ npm install
 apm link # <- This will copy markdown-preview-enhanced folder to ~/.atom/packages
 ```
 
-> If you don't have `npm` command, then you will need to install [node.js](https://nodejs.org/en/) first.  
-> If you don't want to install [node.js](https://nodejs.org/en/) yourself, then after `apm link`, open atom editor. Keyboard <kbd>cmd-shift-p</kbd> then choose `Update Package Dependencies: Update` command.
+> `npm` コマンドがない場合は、最初に [node.js](https://nodejs.org/en/) をインストールする必要があります。
+> [node.js](https://nodejs.org/en/) を自分でインストールしたくない場合は、`apm link` の後に、atom エディターを開きます。キーボード <kbd>cmd-shift-p</kbd> を押し、`Update Package Dependencies: Update` コマンドを選択します。
 
-## For developer
+## 開発者の方へ
 
 ```bash
 apm develop markdown-preview-enhanced
 ```
 
-- Open **markdown-preview-enhanced** folder in **Atom Editor** from **View->Developer->Open in Dev Mode...**
-- Then you can modify the code.
-  Every time after you update the code, you need to <kbd>cmd-shift-p</kbd> then choose `Window: Reload` to reload the package to see the update.
+- **Atom** で **View-> Developer-> Open in Dev Mode ...** から**markdown-preview-enhanced** フォルダーを開きます。
+- コードを変更できます。
+  コードを変更した後に更新を確認するには、毎回 <kbd>cmd-shift-p</kbd> を実行し、`Window: Reload` を選択してパッケージを再読み込みする必要があります。
 
-[➔ Usages](usages.md)
+[➔ 使い方](ja-jp/usages.md)

@@ -1,14 +1,14 @@
 # Save as Markdown
 
-**Markdown Preview Enhanced** supports compilation into **GitHub Flavored Markdown** so that the exported markdown file will include all graphs (as png images), code chunks (hide and only include results), math typesettings (show as image) etc and can be published on GitHub.
+**Markdown Preview Enhanced** は **GitHub Flavored Markdown** へのコンパイルをサポートします。出力された markdown ファイルにはすべてのグラフ(png画像として)、コードチャンク(結果を非表示にして含める)、数学タイプセット(画像として表示)が含まれ、GitHubで公開できます。
 
-## Usage
+## 使い方
 
-Right click at the preview, then choose `Save as Markdown`.
+プレビューを右クリックして、`Save as Markdown` を選択します。
 
-## Configurations
+## 設定
 
-You can configure the image directory and output path by front-matter
+フロントマターで画像ディレクトリと出力パスを設定できます。
 
 ```yaml
 ---
@@ -21,21 +21,21 @@ markdown:
 
 ```
 
-**image_dir** `optional`  
-Specifies where you want to save generated images. For example, `/assets` means all images will be saved into `assets` directory under project folder. If **image_dir** is not provided, the `Image folder path` in package settings will be used. Default is `/assets`.
+**image_dir** `省略可能`
+生成された画像を保存する場所を指定します。たとえば、`/ assets` はすべての画像がプロジェクトフォルダーの下の `assets` ディレクトリに保存されることを意味します。 **image_dir** が指定されていない場合、パッケージ設定の `Image folder path` が使用されます。既定値は `/assets` です。
 
-**path** `optional`  
-Specifies where you want to output your markdown file. If **path** is not specified, `filename_.md` will be used as destination.
+**path** `省略可能`  
+markdown ファイルを出力する場所を指定します。 **path** が指定されていない場合、 `filename_.md` が出力先として使用されます。
 
-**ignore_from_front_matter** `optional`  
-If set to `false`, then the `markdown` field will be included in the front-matter.
+**ignore_from_front_matter** `省略可能`  
+`false` に設定すると、`markdown` フィールドがフロントマターに含まれます。
 
-**absolute_image_path** `optional`  
-Determines whether to use absolute or relative image path.
+**absolute_image_path** `省略可能`  
+画像パスに絶対パスと相対パスのどちらを使用するかを指定します。
 
-## Export on save
+## 保存時に出力する
 
-Add the front-matter like below:
+以下のようにフロントマターを追加します:
 
 ```yaml
 ---
@@ -45,10 +45,10 @@ export_on_save:
 
 ```
 
-So the markdown file will be generated every time you save your markdown source file.
+このように設定すると、markdown ソースファイルを保存するたびに、markdown ファイルが生成されます。
 
-## Known issues
+## 既知の問題点
 
-- `WaveDrom` doesn't work yet.
-- Math typesettings display might be incorrect.
-- Doesn't work with `latex` code chunk yet.
+- `WaveDrom` はまだ動作しません。
+- 数学の組版表示が正しくない場合があります。
+- `latex` コードチャンクはまだ機能しません。

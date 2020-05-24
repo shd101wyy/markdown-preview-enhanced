@@ -1,17 +1,17 @@
-# PDF export
+# PDF出力
 
-> We recommend to use [Chrome (Puppeteer) to export PDF](./puppeteer.md).
+> [Chrome(Puppeteer) を使用したPDF出力](ja-jp/puppeteer.md) を使用することをお勧めします。
 
-## Usage
+## 使い方
 
-Right click at the preview, then choose `Open in Browser`.
-Print as PDF from browser.
+プレビューを右クリックして、`Open in Browser` を選択します。
+ブラウザからPDFとして印刷します。
 
 ![screen shot 2017-07-14 at 1 46 39 am](https://user-images.githubusercontent.com/1908863/28201366-536dbc0a-6836-11e7-866f-db9a5d12de16.png)
 
-## Customize CSS
+## CSSのカスタマイズ
 
-<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:
+<kbd>cmd-shift-p</kbd> 次に、`Markdown Preview Enhanced：Customize Css` コマンドを実行して `style.less` ファイルを開き、次の行を追加して変更します。
 
 ```less
 .markdown-preview.markdown-preview {
@@ -23,4 +23,4 @@ Print as PDF from browser.
 
 ---
 
-You can also generate PDF file by [puppeteer](puppeteer.md) or [prince](prince.md).
+[puppeteer](ja-jp/puppeteer.md) または[prince](ja-jp/prince.md) でPDFファイルを生成することもできます。

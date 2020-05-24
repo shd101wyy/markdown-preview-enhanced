@@ -1,12 +1,12 @@
-# Customize CSS
+# CSSの編集
 
 ## style.less
 
-To customize css for your markdown file, <kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command.
+markdown ファイルの css ファイルを編集するには、 <kbd>cmd-shift-p</kbd> に続けて `Markdown Preview Enhanced: Customize Css` コマンドを実行してください。
 
-The `style.less` file will open, and you can override existing style like this:
+`style.less` ファイルが開くので、既定のstyleを以下のようにオーバーライドすることができます。:
 
-> `style.less` file is located at `~/.mume/style.less`
+> `style.less` ファイルは `~/.mume/style.less` にあります
 
 ```less
 .markdown-preview.markdown-preview {
@@ -39,9 +39,9 @@ The `style.less` file will open, and you can override existing style like this:
 
 ## Local style
 
-Markdown Preview Enhanced also allows you to define different styles for different markdown files.  
-`id` and `class` can be configured inside front-matter.
-You can [import](file-imports.md) a `less` or `css` file in your markdown file easily:
+Markdown Preview Enhanced では markdown ファイル毎に style を定義することができます。
+`id` と `class` をファイルのフロント マターに設定することができます。
+あとは単に markdown ファイルに `less` か `css` ファイルを [import](ja-jp/file-imports.md) することができます:
 
 ```markdown
 ---
@@ -54,7 +54,7 @@ class: "my-class1 my-class2"
 # Heading1
 ```
 
-the `my-style.less` could look like this:
+`my-style.less` は以下のような内容です。
 
 ```less
 #my-id {
@@ -72,13 +72,13 @@ the `my-style.less` could look like this:
 }
 ```
 
-Every time you changed your `less` file, you can click the refresh button at the right top corner of the preview to recompile less to css.
+`less` ファイルを変更した場合、プレビュー右上の refresh ボタンを押すことで less を cssにコンパイルし直すことができます。
 
 ![](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
-## Change the font family
+## font family の変更
 
-To change the font family of preview, you first need to download the font file `(.ttf)`, then modify `style.less` like below:
+プレビューの font family を変更するには、まず、フォントファイル`(.ttf)`をダウンロードし、`style.less`を以下のように修正してください:
 
 ```less
 @font-face {
@@ -102,4 +102,4 @@ To change the font family of preview, you first need to download the font file `
 }
 ```
 
-> However, it is recommended to use online fonts like google fonts.
+> googleフォントのようなオンラインフォントの使用を推奨します

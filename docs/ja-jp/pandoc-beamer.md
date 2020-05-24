@@ -1,10 +1,10 @@
-# Beamer Document
+# Beamer プレゼンテーション
 
-## Overview
+## 概要
 
-To create a Beamer presentation from **Markdown Preview Enhanced**, you specify the `beamer_presentation` output format in the front-matter of your document.  
-You can create a slide show broken up into sections by using the `#` and `##` heading tags (you can also create a new slide without a header using a horizontal rule (`----`).  
-For example here’s a simple slide show:
+**Markdown Preview Enhanced** からBeamer プレゼンテーションを作成するには、ドキュメントのフロントマターで `beamer_presentation` 出力形式を指定します。
+`#` および `##` 見出しタグを使用して、セクションに分割されたスライドショーを作成できます(水平線(`----`)を使用して、ヘッダーなしで新しいスライドを作成することもできます。)
+たとえば、次は簡単なスライドショーです:
 
 ```markdown
 ---
@@ -14,38 +14,39 @@ date: March 22, 2005
 output: beamer_presentation
 ---
 
-# In the morning
+# 午前
 
-## Getting up
+## 起きる
 
-- Turn off alarm
-- Get out of bed
+- アラームをオフにする
+- ベッドから出る
 
 ## Breakfast
+## 朝ごはん
 
-- Eat eggs
-- Drink coffee
+- 卵を食べる
+- コーヒーを飲む
 
-# In the evening
+# 午後
 
-## Dinner
+## 晩ごはん
 
-- Eat spaghetti
-- Drink wine
+- スパゲッティを食べる
+- ワインを飲む
 
 ---
 
-![picture of spaghetti](images/spaghetti.jpg)
+![スパゲッティの写真](images/spaghetti.jpg)
 
-## Going to sleep
+## 寝る
 
-- Get in bed
-- Count sheep
+- 横になる
+- 羊を数える
 ```
 
-## Export Path
+## 出力先
 
-You can define the document export path by specifying `path` option. For example:
+`path` オプションを指定することでドキュメントの出力先を定義できます。例えば：
 
 ```yaml
 ---
@@ -57,11 +58,11 @@ output:
 
 ```
 
-If `path` is not defined, then document will be generated under the same directory.
+`path` が定義されていない場合、ドキュメントは同じディレクトリの下に生成されます。
 
-## Incremental Bullets
+## 箇条書き番号のインクリメント
 
-You can render bullets incrementally by adding the `incremental` option:
+`incremental` オプションを追加することで、箇条書きの番号をインクリメントしてレンダリングできます：
 
 ```yaml
 ---
@@ -72,16 +73,16 @@ output:
 
 ```
 
-If you want to render bullets incrementally for some slides but not others you can use this syntax:
+一部のスライドで箇条書き番号のインクリメント レンダリングをしたい場合は、次の構文を使用できます。
 
 ```markdown
 > - Eat eggs
 > - Drink coffee
 ```
 
-## Themes
+## テーマ
 
-You can specify Beamer themes using the `theme`, `colortheme`, and `fonttheme` options:
+`theme`、`colortheme`、および `fonttheme` オプションを使用してBeamerテーマを指定できます。
 
 ```yaml
 ---
@@ -94,9 +95,9 @@ output:
 
 ```
 
-## Table of Contents
+## 目次
 
-The `toc` option specifies that a table of contents should be included at the beginning of the presentation (only level 1 headers will be included in the table of contents). For example:
+`toc` オプションは、目次をプレゼンテーションの最初に含めるように指定します（目次にはレベル1ヘッダーのみが含まれます）。例えば：
 
 ```yaml
 ---
@@ -107,9 +108,9 @@ output:
 
 ```
 
-## Slide Level
+## スライドレベル
 
-The `slide_level` option defines the heading level that defines individual slides. By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit `slide_level`:
+`slide_level` オプションは個々のスライドを定義する見出しレベルを定義します。デフォルトでは、これは階層内で最も高いヘッダーレベルであり、直後にコンテンツが続きます。ドキュメント内の別のヘッダーではありません。このデフォルトは、 `slide_level` を明示的に指定することでオーバーライドできます。
 
 ```yaml
 ---
@@ -120,11 +121,11 @@ output:
 
 ```
 
-## Syntax Highlighting
+## シンタックス ハイライト
 
-The `highlight` option specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock” (specify null to prevent syntax highlighting):
+`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合はnullを指定します)。
 
-For example:
+例えば：
 
 ```yaml
 ---
@@ -136,9 +137,9 @@ output:
 
 ```
 
-## Pandoc Arguments
+## Pandocの引数
 
-If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
@@ -151,9 +152,9 @@ output:
 ---
 ```
 
-## Shared Options
+## 共有設定
 
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 
@@ -162,4 +163,4 @@ beamer_presentation:
   toc: true
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+`_output.yaml` と同じディレクトリにあるすべてのドキュメントは、その設定値を継承します。ドキュメント内で明示的に定義された設定値は、共有設定ファイルで指定された設定値を上書きします。

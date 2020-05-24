@@ -1,53 +1,53 @@
-- Getting Started
+- はじめに
 
-  - [Introduction](/)
-  - [Usages](usages.md)
-  - Installation
-    - [Atom](installation.md)
-    - [VS Code](vscode-installation.md)
+  - [概要](ja-jp/)
+  - [使い方](ja-jp/usages.md)
+  - 導入
+    - [Atom](ja-jp/installation.md)
+    - [VS Code](ja-jp/vscode-installation.md)
 
-- Writing Markdown
+- Markdownを書く
 
-  - [Markdown Basics](markdown-basics.md)
-  - [Math Typesetting](math.md)
-  - [Diagrams](diagrams.md)
-  - [TOC](toc.md)
-  - [File Imports](file-imports.md)
-  - [Code Chunk](code-chunk.md)
-  - [Presentation](presentation.md)
-  - [Pandoc](pandoc.md)
+  - [Markdownの基礎](ja-jp/markdown-basics.md)
+  - [数式](ja-jp/math.md)
+  - [ダイアグラム](ja-jp/diagrams.md)
+  - [目次](ja-jp/toc.md)
+  - [外部FileのImport](ja-jp/file-imports.md)
+  - [コード チャンク](ja-jp/code-chunk.md)
+  - [プレゼンテーション](ja-jp/presentation.md)
+  - [Pandoc](ja-jp/pandoc.md)
 
-- Document Export
+- 出力
 
-  - [HTML](html.md)
-  - [Puppeteer](puppeteer.md)
-  - [PDF](pdf.md)
-  - [eBook](ebook.md)
-  - [Prince (PDF)](prince.md)
+  - [HTML](ja-jp/html.md)
+  - [Puppeteer](ja-jp/puppeteer.md)
+  - [PDF](ja-jp/pdf.md)
+  - [eBook](ja-jp/ebook.md)
+  - [Prince (PDF)](ja-jp/prince.md)
   - Pandoc
-    - [PDF](pandoc-pdf.md)
-    - [Word](pandoc-word.md)
-    - [RTF](pandoc-rtf.md)
-    - [Beamer](pandoc-beamer.md)
-    - [Custom](pandoc-custom.md)
-    - [Bibliographies and Citations](pandoc-bibliographies-and-citations.md)
-  - [Markdown (GFM)](markdown.md)
+    - [PDF](ja-jp/pandoc-pdf.md)
+    - [Word](ja-jp/pandoc-word.md)
+    - [RTF](ja-jp/pandoc-rtf.md)
+    - [Beamer](ja-jp/pandoc-beamer.md)
+    - [カスタム文書](ja-jp/pandoc-custom.md)
+    - [参考文献](ja-jp/pandoc-bibliographies-and-citations.md)
+  - [Markdown (GFM)](ja-jp/markdown.md)
 
-- Customization & Extension
+- 設定と拡張
 
-  - [Customize CSS](customize-css.md)
-  - [Extend Markdown Parser](extend-parser.md)
-  - [Image Helper](image-helper.md)
-  - [For Developer](developer.md)
+  - [CSSの編集](ja-jp/customize-css.md)
+  - [Markdown Parserの拡張](ja-jp/extend-parser.md)
+  - [Image Helper](ja-jp/image-helper.md)
+  - [開発者の方へ](ja-jp/developer.md)
 
-- Credits
+- クレジット
   - [Backers](backers.md)
   - [Thanks](thanks.md)
-- [Extra](extra.md)
-- [FAQ](faq.md)
-- Changelog
+- [Extra](ja-jp/extra.md)
+- [FAQ](ja-jp/faq.md)
+- 変更履歴
   - Atom
     - [Newest](newest.md)
     - [History](history.md)
   - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
-- [License](LICENSE.md)
+- [ライセンス](LICENSE.md)

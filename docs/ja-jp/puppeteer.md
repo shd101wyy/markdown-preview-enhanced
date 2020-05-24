@@ -1,18 +1,18 @@
-# Chrome (Puppeteer) export
+# Chrome (Puppeteer) 出力
 
-## Installation
+## インストール
 
-You need to have the [Chrome browser](https://www.google.com/chrome/) installed.
+[Chromeブラウザ](https://www.google.com/chrome/) がインストールされている必要があります。
 
-> There is an extension setting with name `chromePath` that allows you to specify the path to the chrome executable. By default you don't have to modify it. The MPE extension will look for the path automatically.
+> chromeの実行可能ファイルへのパスを指定できる `chromePath` という名前の拡張機能の設定があります。通常、変更する必要はありません。 Markdown Preview Enhancedは自動的にパスを探します。
 
-## Usage
+## 使い方
 
-Right click at the preview, then choose `Chrome (Puppeteer)`.
+プレビューを右クリックして、`Chrome (Puppeteer)` を選択します。
 
-## Configure puppeteer
+## Puppeteerの設定
 
-You could write [PDF](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagepdfoptions) and [Screenshot](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagescreenshotoptions) export configuration inside front-matter. For example:
+[PDF](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagepdfoptions) と [Screenshot](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagescreenshotoptions) の出力設定をフロントマター内に書けます。例えば：
 
 ```yaml
 ---
@@ -24,7 +24,7 @@ puppeteer:
 
 ```
 
-## Export on save
+## 保存時に出力する
 
 ```yaml
 ---
@@ -35,9 +35,9 @@ export_on_save:
 ---
 ```
 
-## Customize CSS
+## CSSのカスタマイズ
 
-<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:
+<kbd>cmd-shift-p</kbd> 次に、`Markdown Preview Enhanced：Customize Css` コマンドを実行して `style.less` ファイルを開き、次の行を追加して変更します。
 
 ```less
 .markdown-preview.markdown-preview {

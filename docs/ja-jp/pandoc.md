@@ -1,20 +1,20 @@
 # Pandoc
 
-**Markdown Preview Enhanced** supports `pandoc document export` feature that works similarly to `RStudio Markdown`.  
-To use this feature, you need to have [pandoc](https://pandoc.org/) installed.  
-Installation instruction of pandoc can be found [here](https://pandoc.org/installing.html).  
-You can use `pandoc document export` by right clicking at the preview, then you will see it on the context menu.
+**Markdown Preview Enhanced** は、`RStudio Markdown` と同様に機能する `pandoc document export` 機能をサポートします。
+この機能を使用するには、[pandoc](https://pandoc.org/) がインストールされている必要があります。
+pandocのインストール手順は[こちら](https://pandoc.org/installing.html) にあります。
+プレビューを右クリックすると、コンテキストメニューに表示され `pandoc document export` 機能を使用できます。
 
 ---
 
-## Pandoc Parser
+## Pandocパーサー
 
-By default **Markdown Preview Enhanced** uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse markdown.  
-You can also set it to `pandoc` parser from package settings.
+既定では、**Markdown Preview Enhanced**は [markdown-it](https://github.com/markdown-it/markdown-it) を使用して markdown を解析します。
+パッケージ設定から `pandoc` パーサーに設定することもできます。
 
 ![Screen Shot 2017-03-07 at 10.05.25 PM](https://i.imgur.com/NdCJBgR.png)
 
-You can also set pandoc arguments for individual files by writing front-matter
+また、フロントマターに書いて、個々のファイルにpandoc引数を設定することもできます。
 
 ```markdown
 ---
@@ -22,39 +22,39 @@ pandoc_args: ["--toc", "--toc-depth=2"]
 ---
 ```
 
-Please note that `--filter=pandoc-citeproc` will be automatically added if there is `references` or `bibliography` in your front-matter.
+フロントマターに `references` または `bibliography` がある場合、`-filter=pandoc-citeproc` が自動的に引数に追加されることに注意してください。
 
-**Attention**: This feature is still experimental. Feel free to post issues or suggestions.  
-**Known Issues & Limitations**:
+**注意**: この機能はまだ実験段階です。バグや提案を投稿してください。
+**既知の問題と制限事項**：
 
-1. `ebook` export has problem.
-2. `Code Chunk` is sometimes buggy.
+1. `ebook` のエクスポートに問題があります。
+2. `Code Chunk` にはバグがある場合があります。
 
-## Front-Matter
+## フロントマター
 
-`pandoc document export` requires writing `front-matter`.  
-More information and tutorial about how to write `front-matter` can be found [here](https://jekyllrb.com/docs/frontmatter/).
+`pandoc document export` は `front-matter` の記載を必要とします。
+`front-matter` の記述方法に関する詳細とチュートリアルは、[ここ](https://jekyllrb.com/docs/frontmatter/) にあります。
 
-## Export
+## 出力
 
-You don't have to use the `Pandoc Parser` that I mentioned above to export files.
+上記の `Pandoc Parser` を使用してファイルをエクスポートする必要はありません。
 
-The following formats are currently supported, **more formats will be supported in the future.**  
-(Some examples are referred from [RStudio Markdown](https://rmarkdown.rstudio.com/formats.html))  
-Click the link below to see the document format that you want to export.
+現在サポートされている形式は次のとおりです。**今後、さらに多くの形式がサポートされる予定です。**
+(一部の例は [RStudio Markdown](https://rmarkdown.rstudio.com/formats.html) から参照されます))
+以下のリンクをクリックして、エクスポート出来るドキュメント形式を確認してください。
 
-- [PDF](pandoc-pdf.md)
-- [Word](pandoc-word.md)
-- [RTF](pandoc-rtf.md)
-- [Beamer](pandoc-beamer.md)
+- [PDF](ja-jp/pandoc-pdf.md)
+- [Word](ja-jp/pandoc-word.md)
+- [RTF](ja-jp/pandoc-rtf.md)
+- [Beamer](ja-jp/pandoc-beamer.md)
 
-You can also define your own custom document:
+独自のカスタムドキュメントを定義することもできます。
 
-- [custom](pandoc-custom.md)
+- [custom](ja-jp/pandoc-custom.md)
 
-## Export on save
+## 保存時に出力する
 
-Add the front-matter like below:
+以下のようにフロントマターを追加します。
 
 ```yaml
 ---
@@ -64,13 +64,13 @@ export_on_save:
 
 ```
 
-So pandoc will run every time you save your markdown source file.
+このように設定すると、markdown ファイルを保存するたびにpandocが実行されます。
 
-## Articles
+## 別の記事
 
-- [Bibliographies and Citations](pandoc-bibliographies-and-citations.md)
+- [参考文献](ja-jp/pandoc-bibliographies-and-citations.md)
 
-## Attention
+## 注意事項
 
-`mermaid, wavedrom` will not be working with `pandoc document export`.  
-[code chunk](code-chunk.md) is partially compatible with `pandoc document export`.
+`mermaid, wavedrom` は `pandoc document export` では機能しません。
+[コード チャンク](ja-jp/code-chunk.md) は、`pandoc document export` で使用できない機能があります。

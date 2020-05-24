@@ -1,15 +1,15 @@
 # Image Helper
 
-The image helper helps you to quickly copy and upload your images.
+Iamge helperを使用すると、画像をすばやく張り付けたりアップロードしたりできます。
 
-## Usages
+## 使い方
 
-To open image helper, you can run `Markdown Preview Enhanced: Image Helper` command, or right click at the preview, then choose the `Image Helper` option.
+Image helper を開くには、 `Markdown Preview Enhanced：Image Helper` コマンドを実行するか、プレビューを右クリックして、`Image Helper` オプションを選択します。
 
 ![Screen Shot 2017-08-06 at 10.06.48 PM](https://i.loli.net/2017/08/07/5987d95bae68b.png)
 
-## Quick image upload (Atom only)
+## クイック画像アップロード(Atomのみ)
 
-You can quickly upload a image by just dropping your image file to your markdown editor (not preview).
+画像ファイルを(プレビューではなく) markdown エディターにドロップするだけで、アップロードできます。
 
 ![upload](https://i.loli.net/2017/08/07/5987db34cb33c.gif)

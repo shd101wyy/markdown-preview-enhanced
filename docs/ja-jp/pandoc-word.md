@@ -1,8 +1,8 @@
-# Word Document
+# Word文書
 
-## Overview
+## 概要
 
-To create a Word document, you need to specify the word_document output format in the front-matter of your document:
+Word文書を作成するには、文書のフロントマターで`word_document` 出力形式を指定する必要があります。
 
 ```yaml
 ---
@@ -14,9 +14,9 @@ output: word_document
 
 ```
 
-## Export Path
+## 出力先
 
-You can define the document export path by specifying `path` option. For example:
+`path` オプションを指定することでドキュメントの出力先を定義できます。例えば：
 
 ```yaml
 ---
@@ -28,11 +28,13 @@ output:
 
 ```
 
-If `path` is not defined, then document will be generated under the same directory.
+`path` が定義されていない場合、ドキュメントは同じディレクトリの下に生成されます。
 
-## Syntax Highlighting
+## シンタックス ハイライト
 
-You can use the `highlight` option to control the syntax highlighting theme. For example:
+`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合はnullを指定します)。
+
+例えば：
 
 ```yaml
 ---
@@ -44,9 +46,9 @@ output:
 
 ```
 
-## Style Reference
+## スタイルリファレンス
 
-Use the specified file as a style reference in producing a docx file. For best results, the reference docx should be a modified version of a docx file produced using pandoc. The contents of the reference docx are ignored, but its stylesheets and document properties (including margins, page size, header, and footer) are used in the new docx. If no reference docx is specified on the command line, pandoc will look for a file `reference.docx` in the user data directory (see --data-dir). If this is not found either, sensible defaults will be used.
+指定されたファイルを、docxファイルを生成する際のスタイルリファレンスとして使用します。最良の結果を得るには、リファレンスdocxはpandocを使用して作成されたdocxファイルを修正したファイルである必要があります。リファレンスdocxの内容は無視されますが、スタイルシートとドキュメントプロパティ(マージン、ページサイズ、ヘッダー、フッターを含む)が出力されるdocxで使用されます。コマンドラインでリファレンスdocxが指定されていない場合、pandocはユーザーデータディレクトリ(--data-dirを参照)でファイル `reference.docx` を探します。これも見つからない場合は、既定値のスタイルが使用されます。
 
 ```yaml
 ---
@@ -58,9 +60,9 @@ output:
 
 ```
 
-## Pandoc Arguments
+## Pandocの引数
 
-If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
@@ -73,9 +75,9 @@ output:
 ---
 ```
 
-## Shared Options
+## 共有設定
 
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 
@@ -84,4 +86,4 @@ word_document:
   highlight: zenburn
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+`_output.yaml` と同じディレクトリにあるすべてのドキュメントは、その設定値を継承します。ドキュメント内で明示的に定義された設定値は、共有設定ファイルで指定された設定値を上書きします。

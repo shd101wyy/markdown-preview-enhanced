@@ -1,20 +1,20 @@
-# Developer
+# 開発者の方へ
 
-## Develop this package for Atom
+## Atom向けパッケージの開発
 
-Feel free to post pull request, report issues, or request new features!
+pull request、issuesの報告、新機能の追加要望はどうぞお気軽に!
 
-To modify and develop **markdown-preview-enhanced** package, you need to perform [local installation](installation.md?id=install-from-github).
+**markdown-preview-enhanced** の修正、開発には [local installation](installation.md?id=install-from-github) が必要です。
 
-After you have done installing the package, follow these steps:
+パッケージのインストールが完了したら、順番に実行して下さい:
 
-- Open **markdown-preview-enhanced** folder in **Atom Editor** from **View->Developer->Open in Dev Mode...**
-- Then you can modify the code.
-  Every time after you update the code, you need to <kbd>cmd-shift-p</kbd> then choose `Window: Reload` to reload the package to see the update.
+- **markdown-preview-enhanced** フォルダーを **Atom Editor** で **View->Developer->Open in Dev Mode...** から開く。
+- コードを修正する。
+  修正したコードの更新内容を確認するには <kbd>cmd-shift-p</kbd> から `Window: Reload` を実行する必要があります。
 
-> As the Atom version is written in TypeScript, it is recommended to install `atom-typescript` to help develop the package.  
-> Well... I developed the atom version using vscode.
+> Atom 版は TypeScript で書かれているので、パッケージ開発のために `atom-typescript` をインストールすることをお勧めします。
+> 実をいうと... VS Code を使って Atom 版を開発しました。
 
-## Develop this package for VS Code
+## VS Code向けパッケージの開発
 
-Clone [vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced), then `npm install`, open in **vscode** and start debugging.
+[vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)をクローンし、`yarn`し、**VS Code** で開いたらデバッグを開始できます。

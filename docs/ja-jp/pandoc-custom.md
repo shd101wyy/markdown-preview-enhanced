@@ -1,11 +1,11 @@
-# Custom Document
+# カスタム文書
 
-## Overview
+## 概要
 
-**Custom Document** grants you the ability to fully utilize the power of `pandoc`.  
-To create a custom document, you need to specify `custom_document` output format in the front-matter of your document, **and** `path` **has to be defined**.
+**カスタムドキュメント** を使用すると、`pandoc` の機能を最大限に活用できます。
+カスタム文書を作成するには、ドキュメントのフロントマターで `custom_document` 出力形式を指定する必要があります。**また、** `path` **を定義する必要があります**。
 
-The code example below will behave similarly as [pdf document](./pdf.md).
+以下のコード例は、[PDF](ja-jp/pandoc-pdf.md) と同様に動作します。
 
 ```yaml
 ---
@@ -20,7 +20,7 @@ output:
 
 ```
 
-The code example below will behave similarly as [beamer presentation](./beamer.md).
+以下のコード例は、[Beamer](ja-jp/pandoc-beamer.md) と同様に動作します。
 
 ```yaml
 ---
@@ -35,9 +35,9 @@ output:
 
 ```
 
-## Pandoc Arguments
+## Pandocの引数
 
-If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
@@ -51,9 +51,9 @@ output:
 ---
 ```
 
-## Shared Options
+## 共有設定
 
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 
@@ -63,4 +63,4 @@ custom_document:
   highlight: zenburn
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.
+`_output.yaml` と同じディレクトリにあるすべてのドキュメントは、その設定値を継承します。ドキュメント内で明示的に定義された設定値は、共有設定ファイルで指定された設定値を上書きします。

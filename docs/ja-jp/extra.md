@@ -1,8 +1,8 @@
 # Extra
 
-## Install pdf2svg
+## pdf2svgのインストール
 
-[The official website of pdf2svg](https://www.cityinthesky.co.uk/opensource/pdf2svg/)
+[pdf2svgの公式サ​​イト](https://www.cityinthesky.co.uk/opensource/pdf2svg/)
 
 - **Mac**
 
@@ -11,26 +11,26 @@ brew install pdf2svg
 ```
 
 - **Windows**  
-  Windows binaries are available from [GitHub](https://github.com/jalios/pdf2svg-windows).  
-  You also need to set the `pdf2svg.exe` to your `$PATH`.
+  Windows向けバイナリは [GitHub](https://github.com/jalios/pdf2svg-windows) から入手できます。
+  `pdf2svg.exe` に `$PATH` を通す必要があります。
 
-* **Linux**  
-  `pdf2svg` is packaged for various Linux distributions (including Ubuntu and Fedora) and is available via the different package managers.
+- **Linux**  
+  `pdf2svg` はさまざまなLinuxディストリビューション(UbuntuやFedoraを含む)用にパッケージ化されており、さまざまなパッケージマネージャーから入手できます。
 
-## Install LaTeX distribution
+## LaTeXディストリビューションのインストール
 
-Please check [Get LaTeX website](https://www.latex-project.org/get/).  
-[TeX Live](https://www.tug.org/texlive/) is the best recommended to work with Markdown Preview Enhanced.
+[LaTeX配布サイト](https://www.latex-project.org/get/) を確認してください。
+[TeX Live](https://www.tug.org/texlive/) は、Markdown Preview Enhancedでの作業に最適です。
 
-For **Mac** user, simply install [MacTex](https://www.tug.org/mactex) and you are done.
+**Mac** ユーザーの場合、[MacTex](https://www.tug.org/mactex) をインストールするだけで完了です。
 
-## Modify this website
+## このWebサイトを変更する方法
 
-This documentation website is powered by [docsify](https://docsify.js.org/#/).  
-To modify this website:
+このドキュメントは、[docsify](https://docsify.js.org/#/) によって生成されています。
+このWebサイトを変更するには:
 
 1. `git clone https://github.com/shd101wyy/markdown-preview-enhanced.git`
-2. run the following commands in terminal:
+2. ターミナルで次のコマンドを実行します：
 
 ```bash
 # install docsify

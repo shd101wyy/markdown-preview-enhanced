@@ -1,32 +1,32 @@
-# eBook generation
+# eBookの作成
 
-Inspired by _GitBook_  
-**Markdown Preview Enhanced** can output content as ebook (ePub, Mobi, PDF).
+_GitBook_ に触発されました。  
+**Markdown Preview Enhanced** はコンテンツを ebook(ePub, Mobi, PDF) として出力できます。
 
 ![Screen Shot 2016-09-08 at 9.42.43 PM](https://ooo.0o0.ooo/2016/09/09/57d221c0a618a.png)
 
-To generate ebook, you need to have `ebook-convert` installed.
+ebook を生成するには、`ebook-convert` をインストールする必要があります。
 
-## Installing ebook-convert
+## ebook-convertのインストール
 
 **macOS**  
-Download the [Calibre Application](https://calibre-ebook.com/download). After moving the `calibre.app` to your Applications folder, create a symbolic link to the `ebook-convert` tool:
+[Calibre Application](https://calibre-ebook.com/download) をダウンロードしてください。`calibre.app` をアプリケーションフォルダーに移動したら、`ebook-convert` ツールへのシンボリックリンクを作成します。
 
 ```shell
 $ sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/bin
 ```
 
 **Windows**  
-Download and Install the [Calibre Application](https://calibre-ebook.com/download).  
-Add `ebook-convert` to your `$PATH`.
+[Calibreアプリケーション](https://calibre-ebook.com/download) をダウンロードしてインストールします。
+`$PATH` に `ebook-convert` を追加します。
 
-## eBook Example
+## eBookの例
 
-An eBook example project can be found [here](https://github.com/shd101wyy/ebook-example).
+eBook サンプルプロジェクトは [こちら](https://github.com/shd101wyy/ebook-example) にあります。
 
-## Start writing eBook
+## eBookの書き方
 
-You can set up a ebook configuration by simply adding `ebook front-matter` into your markdown file.
+markdown ファイルに `ebook front-matter` を追加するだけで、ebook の設定を構成できます。
 
 ```yaml
 ---
@@ -40,9 +40,9 @@ ebook:
 
 ---
 
-## Demo
+## デモ
 
-`SUMMARY.md` is a sample entry file. It should also have a TOC to help organize the book:
+`SUMMARY.md` はサンプルエントリファイルです。本をまとめる目次がついています。
 
 ```markdown
 ---
@@ -65,46 +65,46 @@ This is the preface, but not necessary.
   - [Known issues](/chapter2/issues.md)
 ```
 
-The last list in the markdown file is regarded as TOC.
+markdownファイルの最後のリストは目次と見なされます。
 
-The link's title is used as the chapter's title, and the link's target is a path to that chapter's file.
+リンクのタイトルは章のタイトルとして使用され、リンクのターゲットはその章のファイルへのパスです。
 
 ---
 
-To export ebook, open the `SUMMARY.md` with the preview opened. Then right click at the preview, choose `Export to Disk`, then choose `EBOOK` option. You can then export your ebook.
+ebook をエクスポートするには、プレビューを開いた状態で `SUMMARY.md` を開きます。次に、プレビューを右クリックし、`Export to Disk` を選択して、`EBOOK` オプションを選択します。ebook がエクスポートされます。
 
-### Metadata
+### メタデータ
 
 - **theme**
-  the theme to use for eBook, by default it will use the preview theme. The list of available themes could be found at `previewTheme` section in [this doc](https://github.com/shd101wyy/mume/#markdown-engine-configuration).
+  eBook に使用するテーマ。既定ではプレビューテーマを使用します。利用可能なテーマのリストは、[このドキュメント](https://github.com/shd101wyy/mume/#markdown-engine-configuration) の `previewTheme` セクションにあります。
 - **title**  
-  title of your book
+  ebook のタイトル
 - **authors**  
-  author1 & author2 & ...
+  著者1 & 著者2 & ...
 - **cover**  
   https://path-to-image.png
 - **comments**  
-  Set the ebook description
+  ebook の説明
 - **publisher**  
-  who is the publisher?
+  ebook の出版者
 - **book-producer**  
-  who is the book producer
+  ebook のプロデューサー
 - **pubdate**  
-  publish date
+  ebook の発行日
 - **language**  
-  Set the language
+  ebook の言語
 - **isbn**  
-  ISBN of the book
+  ebook のISBN
 - **tags**  
-  Set the tags for the book. Should be a comma separated list.
+  ebook のタグを設定します。コンマ区切りのリストでなければなりません。
 - **series**  
-  Set the series this ebook belongs to.
+  この ebook が属するシリーズを設定します。
 - **rating**  
-  Set the rating. Should be a number between 1 and 5.
+  レーティングを設定します。 1と5の間の数でなければなりません。
 - **include_toc**  
-  `default: true` Whether or not to include the TOC you wrote in your entry file.
+  `既定値：true` エントリファイルに書き込んだ目次を含めるかどうか。
 
-For example:
+例:
 
 ```yaml
 ebook:
@@ -113,29 +113,29 @@ ebook:
   rating: 5
 ```
 
-### Feel and Look
+### 見た目
 
-The following options are provided to help control the look and feel of the output
+次のオプションは、出力の見た目の制御に役立ちます。
 
 - **asciiize** `[true/false]`  
-  `default: false`, Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII
+  `既定値：false`、Unicode文字をASCII表現に変換します。これはUnicode文字をASCIIに置き換えるため、注意して使用してください
 - **base-font-size** `[number]`  
-  The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, the base font size is chosen based on the output profile you chose.
+  基本フォントサイズをポイント単位で設定します。作成された ebook のすべてのフォントサイズは、このサイズに基づいて再スケーリングされます。大きいサイズを選択して出力のフォントを大きくしたり、その逆を行うこともできます。既定では、ベースフォントサイズは、選択した出力プロファイルに基づいて選択されます。
 - **disable-font-rescaling** `[true/false]`  
-  `default: false` Disable all rescaling of font sizes.
+  `既定値：false` フォントサイズのすべての再スケーリングを無効にします。
 - **line-height** `[number]`  
-  The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+  ポイント単位で行の高さを設定します。テキストの連続する行間の間隔を制御します。独自の行の高さを定義しない要素にのみ適用されます。ほとんどの場合、最小行高さオプションの方が便利です。デフォルトでは、行の高さの操作は実行されません。
 - **margin-top** `[number]`  
-  `default: 72.0` Set the top margin in pts. Default is 72. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: 72 pts equals 1 inch
+  `既定値：72.0` 上マージンをポイント単位で設定します。これをゼロ未満に設定すると、マージンは設定されません(元のドキュメントのマージン設定は保持されます)。注:72ポイントは1インチに相当します
 - **margin-right** `[number]`  
-  `default: 72.0`
+  `既定値: 72.0`
 - **margin-bottom** `[number]`  
-  `default: 72.0`
+  `既定値: 72.0`
 - **margin-left** `[number]`  
-  `default: 72.0`
+  `既定値: 72.0`
 - **margin** `[number/array]`  
-  `default: 72.0`  
-  You can define **margin top/right/bottom/left** at the same time. For example:
+  `既定値: 72.0`  
+  **マージンの上下左右** を同時に定義できます。例：
 
 ```yaml
 ebook:
@@ -152,7 +152,7 @@ ebook:
   margin: [1, 2, 3, 4] # margin-top=1, margin-right=2, margin-bottom=3, margin-left=4
 ```
 
-For example:
+例:
 
 ```yaml
 ebook:
@@ -161,13 +161,13 @@ ebook:
   margin: 72
 ```
 
-## Output Formats
+## 出力フォーマット
 
-Right now you can output ebook in format of `ePub`, `mobi`, `pdf`, `html`.
+現在のところ、ebook を `ePub`, `mobi`, `pdf`, `html` の形式で出力できます。
 
 ### ePub
 
-To configure `ePub` output, simply add `epub` after `ebook`.
+`ePub` 出力を設定するには、`ebook` の後に `epub` を追加します。
 
 ```yaml
 ---
@@ -179,18 +179,18 @@ ebook:
 
 ```
 
-the following options are provided:
+次のオプションが使用できます。
 
 - **no-default-epub-cover** `[true/false]`  
-  Normally, if the input file has no cover and you don't specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
+  通常、入力ファイルに表紙がなく、指定しない場合、既定の表紙がタイトル、著者などとともに生成されます。このオプションは、この表紙の生成を無効にします。
 - **no-svg-cover** `[true/false]`  
-  Do not use SVG for the book cover. Use this option if your EPUB is going to be used on a device that does not support SVG, like the iPhone or the JetBook Lite. Without this option, such devices will display the cover as a blank page.
+  表紙にSVGを使用しない。 iPhoneやJetBook Liteなど、SVGをサポートしていないデバイスでEPUBを使用する場合は、このオプションを使用します。このオプションがないと、このようなデバイスは表紙を空白ページとして表示します。
 - **pretty-print** `[true/false]`  
-  If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.
+  指定されている場合、出力プラグインは、可能な限り人間が読める形式の出力を作成しようとします。一部の出力プラグインには効果がない場合があります。
 
 ### PDF
 
-To configure `pdf` output, simply add `pdf` after `ebook`.
+`pdf` 出力を設定するには、`ebook` の後に `pdf` を追加します。
 
 ```yaml
 ebook:
@@ -200,27 +200,27 @@ ebook:
     header-template: "<span> Written by shd101wyy _PAGENUM_ </span>"
 ```
 
-the following options are provided:
+次のオプションが使用できます。
 
 - **paper-size**  
-  The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`, `b0`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `legal`, `letter`
+  用紙サイズ。このサイズは、既定以外の出力プロファイルが使用されると上書きされます。既定値はLetterサイズです。`a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`, `b0`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `legal`, `letter` が利用できます。
 - **default-font-size** `[number]`  
-  The default font size
+  既定のフォントサイズ
 - **footer-template**  
-  An HTML template used to generate footers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
+  各ページにフッターを生成するために使用されるHTMLテンプレート。文字列 `_PAGENUM_`, `_TITLE _`, `_AUTHOR_`, `_SECTION_` は、現在の値に置き換えられます。
 - **header-template**  
-  An HTML template used to generate headers on every page. The strings `_PAGENUM_`, `_TITLE_`, `_AUTHOR_` and `_SECTION_` will be replaced by their current values.
+  各ページでヘッダーを生成するために使用されるHTMLテンプレート。文字列 `_PAGENUM_`, `_TITLE _`, `_AUTHOR_`, `_SECTION_` は、現在の値に置き換えられます。
 - **page-numbers** `[true/false]`  
-  `default: false`  
-  Add page numbers to the bottom of every page in the generated PDF file. If you specify a footer template, it will take precedence over this option.
+  `既定値: false`  
+  生成されたPDFファイルの全ページの下部にページ番号を追加します。フッターテンプレートを指定すると、このオプションよりも優先されます。
 - **pretty-print** `[true/false]`  
-  If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.
+  指定されている場合、出力プラグインは、可能な限り人間が読める形式の出力を作成しようとします。一部の出力プラグインには効果がない場合があります。
 
 ### HTML
 
-Exporting `.html` doesn't depend on `ebook-convert`.  
-If you are exporting `.html` file, then all local images will be included as `base64` data inside a single `html` file.  
-To configure `html` output, simply add `html` after `ebook`.
+`.html` のエクスポートは `ebook-convert` に依存しません。
+`.html` ファイルをエクスポートする場合、すべてのローカル画像は単一の `html` ファイル内に `base64` データとして含まれます。
+`html` 出力を設定するには、`ebook` の後に `html` を追加します。
 
 ```yaml
 ebook:
@@ -229,11 +229,11 @@ ebook:
 ```
 
 - **cdn**  
-  Load css and javascript files from `cdn.js`. This option is only used when exporting `.html` file.
+  `cdn.js` からcssおよびjavascriptファイルをロードします。このオプションは、`.html` ファイルをエクスポートする場合にのみ使用されます。
 
-## ebook-convert Arguments
+## ebook-convertの引数
 
-If there are `ebook-convert` features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `args`. For example:
+上記のYAMLオプションに相当するものがない `ebook-convert` 機能がある場合、カスタムの `args` を渡すことで使用できます。例：
 
 ```yaml
 ---
@@ -244,11 +244,11 @@ ebook:
 
 ```
 
-You can find a list of arguments in [ebook-convert manual](https://manual.calibre-ebook.com/generated/en/ebook-convert.html).
+引数の一覧は [ebook-convert manual](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) にあります。
 
-## Export on save
+## 保存時に出力する
 
-Add the front-matter like below:
+以下のように front-matter を追加します。
 
 ```yaml
 ---
@@ -263,13 +263,13 @@ export_on_save:
 ---
 ```
 
-So the ebooks will be generated every time you save your markdown source file.
+このように設定すると、markdownファイルを保存するたびに ebook が生成されます。
 
-## Known Issues & Limitations
+## 既知の問題と制限
 
-- eBook generation is still under development.
-- All SVG graph generated by `mermaid`, `PlantUML`, etc will not work in the ebook generated. Only `viz` works.
-- Only **KaTeX** can be used for Math Typesetting.  
-  And the generated ebook file doesn't render math expression properly in **iBook**.
-- **PDF** and **Mobi** generation is buggy.
-- **Code Chunk** doesn't work with Ebook generation.
+- ebook の出力はまだ開発中です。
+- `mermaid`, `PlantUML` などによって生成されるすべてのSVGグラフは、出力された ebook では機能しません。 `viz` のみが機能します。
+- **KaTeX** のみが数式の記述に使用できます。
+  また、生成された ebook ファイルは、**iBook** で数式が正しくレンダリングされません。
+- **PDF** および **Mobi** の出力にはバグがあります。
+- **コード チャンク** は ebook の出力では機能しません。

@@ -1,8 +1,8 @@
-# Code Chunk
+# コード チャンク
 
-**Changes might happen in the future.**
+**将来的に仕様が変更される可能性があります。**
 
-**Markdown Preview Enhanced** allows you to render code output into documents.
+**Markdown Preview Enhanced** はコードの出力をドキュメントに埋め込むことができます。
 
     ```bash {cmd}
     ls .
@@ -17,52 +17,51 @@
     console.log(date.toString())
     ```
 
-> ⚠️ **Script execution is off by default and needs to be explicitly enabled in Atom package / VSCode extension preferences**
+> ⚠️ **スクリプトの実行は既定で無効になっており、Atom package、またはVSCodeの拡張機能から明示的に有効にする必要があります。**
 >
-> Please use this feature with caution because it may put your security at risk!
-> Your machine can get hacked if someone makes you open a markdown with malicious code while script execution is enabled.
+> セキュリティを危険にさらす可能性があるので、注意してこの機能を使用してください。
+> スクリプトの実行が有効になっている間に、誰かが悪意のあるコードでマークダウンを開かせた場合、マシンがハッキングされる可能性があります。
 >
-> Option name: `enableScriptExecution`
+> 設定名: `enableScriptExecution`
 
-## Commands & Keyboard Shortcuts
+## コマンドとキーボードショットカット
 
-- `Markdown Preview Enhanced: Run Code Chunk` or <kbd>shift-enter</kbd>
-  execute single code chunk where your cursor is at.
-- `Markdown Preview Enhanced: Run All Code Chunks` or <kbd>ctrl-shift-enter</kbd>
-  execute all code chunks.
+- `Markdown Preview Enhanced: Run Code Chunk` または <kbd>shift-enter</kbd>
+  カーソルがあるコード チャンクを実行します。
+- `Markdown Preview Enhanced: Run All Code Chunks`  または <kbd>ctrl-shift-enter</kbd>
+  全てのコード チャンクを実行します。
 
-## Format
+## 構文
 
-You can configure code chunk options in format of <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>.
-When a value of an attribute is `true`, it can be omitted (e.g. `{cmd hide}` is identical to `{cmd=true hide=true}`).
+コード チャンクのオプションは、<code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>の形式で設定することができます。
+属性の値が `true` の場合は、省略することができます (例: `{cmd hide}` は `{cmd=true hide=true}` と同じです)。
 
-**lang**
-The grammar that the code block should highlight.
-It should be put at the most front.
+**言語名**
+コード ブロックの言語名は一番最初に記載してください。
 
-## Basic Options
+## 基本的なオプション
 
 **cmd**
-The command to run.
-If `cmd` is not provided, then `lang` will be regarded as command.
+実行するコマンド。
+`cmd` が指定されなかった場合、 `lang` をコマンドとして使用します。
 
-eg:
+例:
 
     ```python {cmd="/usr/local/bin/python3"}
     print("This will run python3 program")
     ```
 
-**output**
+**出力**
 `html`, `markdown`, `text`, `png`, `none`
 
-Defines how to render code output.
-`html` will append output as html.
-`markdown` will parse output as markdown. (MathJax and graphs will not be supported in this case, but KaTeX works)
-`text` will append output to a `pre` block.
-`png` will append output as `base64` image.
-`none` will hide the output.
+どのような形式で出力結果を描画するかを設定します。
+`html` はHTMLとして出力を追加します。
+`markdown` はmarkdownとして出力します。(MathJaxとgraphsはサポートされません。一方、KaTexはサポートされます。)
+`text` は出力を `pre` ブロックに追加します。
+`png` は出力を `base64` 画像として追加します。
+`none` は出力を表示せず隠します。
 
-eg:
+例:
 
     ```gnuplot {cmd=true output="html"}
     set terminal svg
@@ -76,8 +75,9 @@ eg:
 
 ![screen shot 2017-07-28 at 7 14 24 am](https://user-images.githubusercontent.com/1908863/28716734-66142a5e-7364-11e7-83dc-a66df61971dc.png)
 
-**args**
-args that append to command. eg:
+**引数**
+args が引数としてコマンドに渡されます。
+例:
 
     ```python {cmd=true args=["-v"]}
     print("Verbose will be printed first")
@@ -87,21 +87,21 @@ args that append to command. eg:
       # output svg format and append as html result.
     ```
 
-**stdin**
-If `stdin` is set to true, then the code will be passed as stdin instead of as file.
+**標準入力**
+`stdin` がtrueに設定されている場合、コードはファイルではなく標準入力として渡されます。
 
 **hide**
-`hide` will hide code chunk but only leave the output visible. default: `false`
-eg:
+`hide` はコード チャンクを隠しますが、出力結果は表示します。既定値: `false`
+例:
 
     ```python {hide=true}
     print('you can see this output message, but not this code')
     ```
 
 **continue**
-If set `continue=true`, then this code chunk will continue from the last code chunk.
-If set `continue=id`, then this code chunk will continue from the code chunk of id.
-eg:
+`continue=true`に設定されているコード チャンクは前のコード チャンクの続きとして実行されます。
+`continue=id`が設定されている場合、このコード チャンクは同じidが設定されているコード チャンクの続きとして実行されます。
+例:
 
     ```python {cmd=true id="izdlk700"}
     x = 1
@@ -116,29 +116,29 @@ eg:
     ```
 
 **class**
-If set `class="class1 class2"`, then `class1 class2` will be add to the code chunk.
+`class="class1 class2"`が設定されている場合、`class1 class2` がコード チャンクに設定されます。
 
-- `line-numbers` class will show line numbers to code chunk.
+- `line-numbers` クラスが設定されているコード チャンクには行番号が表示されます。
 
 **element**
-The element that you want to append after.
-Check the **Plotly** example below.
+エレメントを追加したい場合は下記の **Plotly** の例を参照してください。
 
 **run_on_save** `boolean`
-Run code chunk when the markdown file is saved. Default `false`.
+markdown ファイルが保存されるときにコード チャンクを実行します。既定値: `false`
 
 **modify_source** `boolean`
-Insert code chunk output directly into markdown source file. Default `false`.
+markdown ファイルにコード チャンクの出力結果を直接挿入します。既定値: `false`
 
 **id**
-The `id` of the code chunk. This option would be useful if `continue` is used.
+コード チャンクの`id`。このオプションは `continue` を使用するときに役に立ちます。
 
-## Macro
+## マクロ
 
 - **input_file**
-  `input_file` is automatically generated under the same directory of your markdown file and will be deleted after running code that is copied to `input_file`.
-  By default, it is appended at the very end of program arguments.
-  However, you can set the position of `input_file` in your `args` option by `$input_file` macro. eg:
+  `input_file` はmarkdownファイルと同じディレクトリに自動的に生成され、`input_file` にコピーされたコードの実行が完了すると自動的に削除されます。
+  既定では、プログラムの引数の一番最後に追加されます。
+  しかし、 `input_file` マクロにより引数内で `input_file` の場所を設定することもできます。
+  例:
 
       ```program {cmd=true args=["-i", "$input_file", "-o", "./output.png"]}
       ...your code here
@@ -146,8 +146,8 @@ The `id` of the code chunk. This option would be useful if `continue` is used.
 
 ## Matplotlib
 
-If set `matplotlib=true`, then the python code chunk will plot graphs inline in the preview.
-eg:
+`matplotlib=true`の場合、python コード チャンクはプレビュー内にグラフとしてプロットされます。
+例:
 
     ```python {cmd=true matplotlib=true}
     import matplotlib.pyplot as plt
@@ -159,9 +159,9 @@ eg:
 
 ## LaTeX
 
-Markdown Preview Enhanced also supports `LaTeX` compilation.
-Before using this feature, you need to have [pdf2svg](extra.md?id=install-svg2pdf) and [LaTeX engine](extra.md?id=install-latex-distribution) installed.
-Then you can simply write LaTeX in code chunk like this:
+Markdown Preview Enhanced は `LaTeX` のコンパイルもサポートします。
+この機能を利用する前に、[pdf2svg](extra.md?id=install-svg2pdf) と [LaTeX engine](extra.md?id=install-latex-distribution) をインストールする必要があります。
+LaTex コード チャンクは以下のように書くことができます:
 
     ```latex {cmd=true}
     \documentclass{standalone}
@@ -172,38 +172,38 @@ Then you can simply write LaTeX in code chunk like this:
 
 ![screen shot 2017-07-28 at 7 15 16 am](https://user-images.githubusercontent.com/1908863/28716762-8686d980-7364-11e7-9669-71138cb2e6e7.png)
 
-### LaTeX output configuration
+### LaTeX 出力設定
 
 **latex_zoom**
-If set `latex_zoom=num`, then the result will be scaled `num` times.
+`latex_zoom=num`が設定されている場合、出力結果は `num` 倍に表示されます。
 
 **latex_width**
-The width of result.
+出力結果の幅を設定します。
 
 **latex_height**
-The height of result.
+出力結果の高さを設定します。
 
 **latex_engine**
-The latex engine that you used to compile `tex` file. By default `pdflatex` is used.
+`tex` ファイルをコンパイルするのに使用する latex engine を設定します。既定では、 `pdflatex` を使用します。
 
-### TikZ example
+### TikZ の例
 
-It is recommended to use `standalone` while drawing `tikz` graphs.
+`tikz` グラフを描画する場合、 `standalone` を使用することを推奨します。
 ![screen shot 2017-07-14 at 11 27 56 am](https://user-images.githubusercontent.com/1908863/28221069-8113a5b0-6887-11e7-82fa-23dd68f2be82.png)
 
 ## Plotly
 
-Markdown Preview Enhanced allows you to draw [Plotly](https://plot.ly/) easily.
-For example:
+Markdown Preview Enhanced で [Plotly](https://plot.ly/) を容易に描画できます。
+例:
 ![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
-- The first line `@import "https://cdn.plot.ly/plotly-latest.min.js"` uses the [file import](file-imports.md) functionality to import `plotly-latest.min.js` file.
-  However, it is recommended to download the js file to local disk for better performance.
-- Then we created a `javascript` code chunk.
+- 最初の行の `@import "https://cdn.plot.ly/plotly-latest.min.js"` は [file import](ja-jp/file-imports.md) 関数を `plotly-latest.min.js` ファイルをimportするために使用しています。
+  しかし、パフォーマンスの点からローカルディスクにjs ファイルをダウンロードすることを推奨します。。
+- あとは `javascript` コード チャンクを書くだけです。
 
-## Demo
+## ERDのデモ
 
-This demo shows you how to render entity-relation diagram by using [erd](https://github.com/BurntSushi/erd) library.
+ER図を [erd](https://github.com/BurntSushi/erd) ライブラリによって描画する方法のデモです。
 
     ```erd {cmd=true output="html" args=["-i", "$input_file" "-f", "svg"]}
 
@@ -224,15 +224,15 @@ This demo shows you how to render entity-relation diagram by using [erd](https:/
 
 `erd {cmd=true output="html" args=["-i", "$input_file", "-f", "svg"]}`
 
-- `erd` the program that we are using. (_you need to have the program installed first_)
-- `output="html"` we will append the running result as `html`.
-- `args` field shows the arguments that we will use.
+- `erd` 使用するプログラム(*最初にプログラムをインストールする必要があります。*)
+- `output="html"` `html`として出力結果を追加します
+- `args` フィールドは使用する引数を指定します
 
-Then we can click the `run` button at the preview to run our code.
+プレビュー上の `run` ボタンをクリックするとコードを実行することができます。
 
 ![erd](https://user-images.githubusercontent.com/1908863/28221395-bcd0bd76-6888-11e7-8c6e-925e228d02cc.gif)
 
-## Showcases (outdated)
+## Showcases (旧情報)
 
 **bash**
 ![Screen Shot 2016-09-24 at 1.41.06 AM](https://i.imgur.com/v5Y7juh.png)
@@ -240,9 +240,9 @@ Then we can click the `run` button at the preview to run our code.
 **gnuplot with svg output**
 ![Screen Shot 2016-09-24 at 1.44.14 AM](https://i.imgur.com/S93g7Tk.png)
 
-## Limitations
+## 制限
 
-- Doesn't work with `ebook` yet.
-- Might be buggy when using `pandoc document export`
+- `ebook` 出力ではまだ動作しません
+- `pandoc document export` 出力にはバグがありそうです
 
-[➔ Presentation](presentation.md)
+[➔ プレゼンテーション](ja-jp/presentation.md)

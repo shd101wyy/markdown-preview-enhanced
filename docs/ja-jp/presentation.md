@@ -1,18 +1,18 @@
-# Presentation Writer
+# プレゼンテーション出力
 
 ![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
 
-Markdown Preview Enhanced uses [reveal.js](https://github.com/hakimel/reveal.js) to render beautiful presentations.
+**Markdown Preview Enhanced** は、[reveal.js](https://github.com/hakimel/reveal.js) を使用して美しいプレゼンテーションをレンダリングします。
 
-[Click here](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) to see the introduction (**Recommended**).
+[ここをクリック](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) して、概要(英語)を確認してください（**推奨**）。
 
 ![presentation](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
-## Presentation Front-Matter
+## プレゼンテーションのフロントマター
 
-You can configure your presentation by adding front-matter to your markdown file.  
-You need to write your settings under `presentation` section.  
-For example:
+markdown ファイルにフロントマターを追加して、プレゼンテーションを構成できます。
+`presentation` セクションに設定を書いてください。
+例えば：
 
 ```markdown
 ---
@@ -23,18 +23,18 @@ presentation:
 
 <!-- slide -->
 
-Your slides goes here...
+ここにスライドを書く
 ```
 
-The presentation above will has size `800x600`
+上記のプレゼンテーションのサイズは `800x600` です
 
-### Settings
+### 設定
 
 ```yaml
 ---
 presentation:
-  # presentation theme
-  # === available themes ===
+  # プレゼンテーションのテーマ
+  # === 使用可能なテーマ ===
   # "beige.css"
   # "black.css"
   # "blood.css"
@@ -49,133 +49,120 @@ presentation:
   # "none.css"
   theme: white.css
 
-  # The "normal" size of the presentation, aspect ratio will be preserved
-  # when the presentation is scaled to fit different resolutions. Can be
-  # specified using percentage units.
+  # プレゼンテーションの「通常の」サイズ、アスペクト比は、
+  # プレゼンテーションが異なる解像度に合うように拡大縮小されたときに
+  # 保持されます。パーセント単位で指定できます。
   width: 960
   height: 700
 
-  # Factor of the display size that should remain empty around the content
+  # コンテンツの周りで空のままにしておくべきディスプレイサイズの係数
   margin: 0.1
 
-  # Bounds for smallest/largest possible scale to apply to content
+  # コンテンツに適用できる最小/最大の拡大倍率
   minScale: 0.2
   maxScale: 1.5
 
-  # Display controls in the bottom right corner
+  # 右下隅にコントロールを表示
   controls: true
 
-  # Display a presentation progress bar
+  # プレゼンテーションの進行状況バーを表示する
   progress: true
 
-  # Display the page number of the current slide
+  # 現在のスライドのページ番号を表示
   slideNumber: false
 
-  # Push each slide change to the browser history
+  # スライドの各変更をブラウザの履歴にプッシュする
   history: false
 
-  # Enable keyboard shortcuts for navigation
+  # ナビゲーションのキーボードショートカットを有効にする
   keyboard: true
 
-  # Enable the slide overview mode
+  # スライド概要モードを有効にする
   overview: true
 
-  # Vertical centering of slides
+  # スライドの垂直方向の中央揃え
   center: true
 
-  # Enables touch navigation on devices with touch input
+  # タッチ入力を備えたデバイスでタッチナビゲーションを有効にする
   touch: true
 
-  # Loop the presentation
+  # プレゼンテーションをループする
   loop: false
 
-  # Change the presentation direction to be RTL
+  # 文字方向を右から左(RTL)に変更する
   rtl: false
 
-  # Randomizes the order of slides each time the presentation loads
+  # プレゼンテーションが読み込まれるたびにスライドの順序をランダム化する
   shuffle: false
 
-  # Turns fragments on and off globally
+  # フラグメントをグローバルにオン/オフにします
   fragments: true
 
-  # Flags if the presentation is running in an embedded mode,
-  # i.e. contained within a limited portion of the screen
+  # プレゼンテーションが埋め込みモードで実行する、
+  # 例: 画面の限られた部分に埋め込む
   embedded: false
 
-  # Flags if we should show a help overlay when the questionmark
-  # key is pressed
+  # ?キーが押されたときにヘルプオーバーレイを表示する
   help: true
 
-  # Flags if speaker notes should be visible to all viewers
+  # スピーカーノートをすべての視聴者に表示するかどうか
   showNotes: false
 
-  # Number of milliseconds between automatically proceeding to the
-  # next slide, disabled when set to 0, this value can be overwritten
-  # by using a data-autoslide attribute on your slides
+  # 次のスライドに自動的に進むまでのミリ秒。
+  # 0に設定すると無効になります。
+  # この値はスライドのdata-autoslide属性を使用して上書きできます
   autoSlide: 0
 
-  # Stop auto-sliding after user input
+  # ユーザー入力後に自動スライドを停止する
   autoSlideStoppable: true
 
-  # Enable slide navigation via mouse wheel
+  # マウスホイールによるスライドナビゲーションを有効にする
   mouseWheel: false
 
-  # Hides the address bar on mobile devices
+  # モバイルデバイスのアドレスバーを非表示にする
   hideAddressBar: true
 
-  # Opens links in an iframe preview overlay
+  # iframeプレビューオーバーレイでリンクを開く
   previewLinks: false
 
-  # Transition style
+  # 遷移スタイル
   transition: 'default' # none/fade/slide/convex/concave/zoom
 
-  # Transition speed
+  # 遷移速度
   transitionSpeed: 'default' # default/fast/slow
 
-  # Transition style for full page slide backgrounds
+  # ページ全体のスライドの背景の遷移スタイル
   backgroundTransition: 'default' # none/fade/slide/convex/concave/zoom
 
-  # Number of slides away from the current that are visible
+  # 現在のスライドから表示するスライドの数
   viewDistance: 3
 
-  # Parallax background image
-  parallaxBackgroundImage: '' # e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+  # 視差背景画像
+  parallaxBackgroundImage: '' # 例: "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
 
-  # Parallax background size
-  parallaxBackgroundSize: '' # CSS syntax, e.g. "2100px 900px"
+  # 視差背景サイズ
+  parallaxBackgroundSize: '' # CSS構文, 例: "2100px 900px" - 現在のところ、Pixelのみサポートされています。(%とautoは使用しないでください)
 
-  # Number of pixels to move the parallax background per slide
-  # - Calculated automatically unless specified
-  # - Set to 0 to disable movement along an axis
-  parallaxBackgroundHorizontal: null
-  parallaxBackgroundVertical: null
-
-  # Parallax background image
-  parallaxBackgroundImage: '' # e.g. "https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg"
-
-  # Parallax background size
-  parallaxBackgroundSize: '' # CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
-
-  # Number of pixels to move the parallax background per slide
-  # - Calculated automatically unless specified
-  # - Set to 0 to disable movement along an axis
+  # スライドごとに視差背景を移動するピクセル数
+  # - 指定されない限り自動的に計算されます
+  # - 軸に沿った移動を無効にするには0に設定します
   parallaxBackgroundHorizontal: 200
   parallaxBackgroundVertical: 50
 
-  # Enable Speaker Notes
+  # スピーカーノートを有効にする
   enableSpeakerNotes: false
 ---
 ```
 
-## Customize Slide Style
+## スライドスタイルのカスタマイズ
 
-You can add `id` and `class` to a specific slide like this:
+次のように、`id` と `class` を特定のスライドに追加できます。
 
 ```markdown
 <!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
-Or if you only want to customize `nth` slide, modify your `less` file like this:
+または、n番目のスライドのみをカスタマイズする場合、次のように `less` ファイルを変更します。
 
 ```less
 .markdown-preview.markdown-preview {
@@ -190,4 +177,4 @@ Or if you only want to customize `nth` slide, modify your `less` file like this:
 }
 ```
 
-[➔ Pandoc](pandoc.md)
+[➔ Pandoc](ja-jp/pandoc.md)

@@ -1,57 +1,57 @@
-# Markdown Basics
+# Markdownの基本
 
-This article is a brief introduction to [GitHub Flavored Markdown writing](https://guides.github.com/features/mastering-markdown/).
+この記事は、[GitHub Flavored Markdown writing](https://guides.github.com/features/mastering-markdown/) の簡単な紹介です。
 
-## What is Markdown?
+## Markdownとは何か
 
-`Markdown` is a way to style text on the web. You control the display of the document; formatting words as bold or italic, adding images, and creating lists are just a few of the things we can do with Markdown. Mostly, Markdown is just regular text with a few non-alphabetic characters thrown in, like `#` or `*`.
+`Markdown` はWeb上のテキストのスタイルを設定する方法です。ドキュメントの表示を制御します。単語を太字または斜体にフォーマットしたり、画像を追加したり、リストを作成したりすることは、Markdownで実行できることのほんの一部です。ほとんどの場合、Markdownは通常のテキストであり、 `＃` や `*` などのアルファベット以外の文字がいくつか含まれています。
 
-## Syntax guide
+## 構文ガイド
 
-### Headers
-
-```markdown
-# This is an <h1> tag
-
-## This is an <h2> tag
-
-### This is an <h3> tag
-
-#### This is an <h4> tag
-
-##### This is an <h5> tag
-
-###### This is an <h6> tag
-```
-
-If you want to add `id` and `class` to the header, then simply append `{#id .class1 .class2}`. For example:
+### 見出し
 
 ```markdown
-# This heading has 1 id {#my_id}
+# これは<h1>タグです
 
-# This heading has 2 classes {.class1 .class2}
+## これは<h2>タグです
+
+### これは<h3>タグです
+
+#### これは<h4>タグです
+
+##### これは<h5>タグです
+
+###### これは<h6>タグです
 ```
 
-> This is a MPE extended feature.
+見出しに `id` と `class` を追加する場合は、単に `{#id .class1 .class2}` を追加します。例えば：
 
-### Emphasis
+```markdown
+# この見出しには1つのIDがあります {#my_id}
+
+# この見出しには2つのクラスがあります {.class1 .class2}
+```
+
+> これはMPEの拡張機能です。
+
+### 強調
 
 <!-- prettier-ignore -->
 ```markdown
-*This text will be italic*
-_This will also be italic_
+*このテキストは斜体になります*
+_これも斜体になります_
 
-**This text will be bold**
-__This will also be bold__
+**このテキストは太字になります**
+__これも太字になります__
 
-_You **can** combine them_
+_あなたはこれらを**組み合わせる**ことができます_
 
-~~This text will be strikethrough~~
+~~このテキストは取り消し線になります~~
 ```
 
-### Lists
+### リスト
 
-#### Unordered List
+#### 順不同リスト
 
 ```markdown
 - Item 1
@@ -60,7 +60,7 @@ _You **can** combine them_
   - Item 2b
 ```
 
-#### Ordered List
+#### 順序付きリスト
 
 ```markdown
 1. Item 1
@@ -70,63 +70,63 @@ _You **can** combine them_
    1. Item 3b
 ```
 
-### Images
+### 画像
 
 ```markdown
 ![GitHub Logo](/images/logo.png)
 Format: ![Alt Text](url)
 ```
 
-### Links
+### リンク
 
 ```markdown
-https://github.com - automatic!
+https://github.com - 自動的にリンクになります
 [GitHub](https://github.com)
 ```
 
-### Blockquote
+### ブロック引用
 
 ```markdown
-As Kanye West said:
+カニエ・ウェストは言った:
 
 > We're living the future so
 > the present is our past.
 ```
 
-### Horizontal Rule
+### 水平線
 
 ```markdown
-Three or more...
+3つ以上の
 
 ---
 
-Hyphens
+ハイフン -
 
 ---
 
-Asterisks
+アスタリスク *
 
 ---
 
-Underscores
+アンダーバー _
 ```
 
-### Inline code
+### インラインコード
 
 ```markdown
-I think you should use an
-`<addr>` element here instead.
+私はここで `<addr>` 要素を
+代わりに使用すべきだと思います。
 ```
 
-### Fenced code block
+### フェンスド コード ブロック
 
-You can create fenced code blocks by placing triple backticks <code>\`\`\`</code> before and after the code block.
+コード ブロックの前後にバッククウォート3つ <code>\`\`\`</code> を配置することで、フェンスド コード ブロックを作成できます。
 
-#### Syntax Highlighting
+#### シンタックス ハイライト
 
-You can add an optional language identifier to enable syntax highlighting in your fenced code block.
+オプションの言語識別子を追加して、フェンスド コード ブロックで構文の強調表示を有効にすることができます。
 
-For example, to syntax highlight Ruby code:
+たとえば、Rubyコードをシンタックス ハイライトするには：
 
     ```ruby
     require 'redcarpet'
@@ -140,11 +140,11 @@ markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
 ```
 
-#### Code block class (MPE extended feature)
+#### コード ブロック クラス（MPE拡張機能）
 
-You can set `class` for your code blocks.
+コード ブロックに `class` を設定できます。
 
-For example, to add `class1 class2` to a code block
+たとえば、 `class1 class2` をコード ブロックに追加するには
 
     ```javascript {.class1 .class}
     function add(x, y) {
@@ -152,11 +152,11 @@ For example, to add `class1 class2` to a code block
     }
     ```
 
-##### line-numbers
+##### 行番号
 
-You can enable line number for a code block by adding `line-numbers` class.
+`line-numbers` クラスを追加することで、コードブロックの行番号表示を有効にすることができます。
 
-For example:
+例えば：
 
 ````markdown
 ```javascript {.line-numbers}
@@ -168,9 +168,9 @@ function add(x, y) {
 
 ![screen shot 2017-07-14 at 1 20 27 am](https://user-images.githubusercontent.com/1908863/28200587-a8582b0a-6832-11e7-83a7-6c3bb011322f.png)
 
-##### highlighting rows
+##### 行を強調表示
 
-You can highlight rows by add `highlight` attribute:
+`highlight` 属性を追加することで特定の行を強調表示できます：
 
 ````markdown
 ```javascript {highlight=10}
@@ -183,72 +183,71 @@ You can highlight rows by add `highlight` attribute:
 ```
 ````
 
-### Task lists
+### タスク リスト
 
 ```markdown
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
-- [x] list syntax required (any unordered or ordered list supported)
-- [x] this is a complete item
-- [ ] this is an incomplete item
+- [x] @言及、#参照、[リンク]()、**強調**、および <del>tags</del> をサポートします
+- [x] リスト構文が必要（順不同リストまたは順序付きリストがサポートされています）
+- [x] これは完了したアイテムです
+- [ ] これは未完了なアイテムです
 ```
 
-### Tables
+### 表
 
-You can create tables by assembling a list of words and dividing them with hyphens `-` (for the first row), and then separating each column with a pipe `|`:
+単語のリストを組み立ててハイフン `-`（最初の行を）で分割し、各列をパイプ `|` で区切ることにより、表を作成できます。
 
 <!-- prettier-ignore -->
 ```markdown
-First Header | Second Header
+最初のヘッダー | 2番目のヘッダー
 ------------ | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+セル1のコンテンツ | セル2のコンテンツ
+最初の列のコンテンツ | 2列目の内容
 ```
 
-## Extended syntax
+## 拡張構文
 
-### Table
+### 表
 
-> Need to enable `enableExtendedTableSyntax` in extension settings to get it work.
+> 機能を有効にするには、拡張機能の設定で `enableExtendedTableSyntax` を有効にする必要があります。
 
 ![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
 
-### Emoji & Font-Awesome
+### 絵文字とフォント
 
-> This only works for `markdown-it parser` but not `pandoc parser`.  
-> Enabled by default. You can disable it from the package settings.
+> これは `markdown-it parser` でのみ機能し、`pandoc parser` では機能しません。
+> デフォルトで有効。パッケージ設定から無効にできます。
 
 ```
 :smile:
 :fa-car:
 ```
 
-### Superscript
+### 上付き文字
 
 ```markdown
 30^th^
 ```
 
-### Subscript
+### 下付き文字
 
 ```markdown
 H~2~O
 ```
 
-### Footnotes
+### 脚注
 
 ```markdown
-Content [^1]
+内容 [^1]
 
-[^1]: Hi! This is a footnote
+[^1]: やあ! これは脚注です。
 ```
 
-### Abbreviation
+### 略語
 
 ```markdown
 _[HTML]: Hyper Text Markup Language
 _[W3C]: World Wide Web Consortium
-The HTML specification
-is maintained by the W3C.
+HTMLの仕様はW3Cによって管理されています。
 ```
 
 ### Mark
@@ -259,22 +258,22 @@ is maintained by the W3C.
 
 ### CriticMarkup
 
-CriticMarkup is **disabled** by default, but you can enable it from the package settings.  
-For more information about CriticMarkup, check [CriticMarkup User's Guide](https://criticmarkup.com/users-guide.php).
+CriticMarkup は既定値で**無効**になっていますが、パッケージ設定から有効にすることができます。
+CriticMarkupの詳細については、[CriticMarkup User's Guide](https://criticmarkup.com/users-guide.php) を確認してください。
 
-There are five types of Critic marks:
+Critic Mark には5つのタイプがあります。
 
-- Addition `{++ ++}`
-- Deletion `{-- --}`
-- Substitution `{~~ ~> ~~}`
-- Comment `{>> <<}`
-- Highlight `{== ==}{>> <<}`
+- 追加 `{++ ++}`
+- 削除 `{-- --}`
+- 代入 `{~~ ~> ~~}`
+- コメント `{>> <<}`
+- ハイライト `{== ==}{>> <<}`
 
-> CriticMarkup only works with the markdown-it parser, but not the pandoc parser.
+> CriticMarkup は markdown-it parser でのみ機能し、pandoc parser では機能しません。
 
-## References
+## リファレンス
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 - [Daring Fireball: Markdown Basics](https://daringfireball.net/projects/markdown/basics)
 
-[➔ Math](math.md)
+[➔ 数式](ja-jp/math.md)

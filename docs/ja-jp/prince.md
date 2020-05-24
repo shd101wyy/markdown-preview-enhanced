@@ -1,25 +1,25 @@
-# Prince PDF Export
+# Prince PDF出力
 
-**Markdown Preview Enhanced** supports [prince](https://www.princexml.com/) pdf export.
+**Markdown Preview Enhanced** は、[prince](https://www.princexml.com/) pdf出力をサポートしています。
 
-## Installation
+## インストール
 
-You need to have [prince](https://www.princexml.com/) installed.
-For `macOS`, open terminal and run the following command:
+[prince](https://www.princexml.com/) をインストールする必要があります。
+`macOS` の場合は、ターミナルを開いて次のコマンドを実行します。
 
 ```sh
 brew install Caskroom/cask/prince
 ```
 
-## Usage
+## 使い方
 
-Right click at the preview, then choose `PDF (prince)`.
+プレビューを右クリックして、`PDF (prince)` を選択します。
 
 ![screen shot 2017-07-14 at 1 44 23 am](https://user-images.githubusercontent.com/1908863/28201287-fb5ea8d0-6835-11e7-9bdb-2afb458ee5cc.png)
 
-## Customize CSS
+## CSSのカスタマイズ
 
-<kbd>cmd-shift-p</kbd> then run `Markdown Preview Enhanced: Customize Css` command to open `style.less` file, then add and modify the following lines:
+<kbd>cmd-shift-p</kbd> 次に、`Markdown Preview Enhanced：Customize Css` コマンドを実行して `style.less` ファイルを開き、次の行を追加して変更します。
 
 ```less
 .markdown-preview.markdown-preview {
@@ -29,7 +29,7 @@ Right click at the preview, then choose `PDF (prince)`.
 }
 ```
 
-For example, to change the page size to `A4 landscape`:
+たとえば、ページサイズを「A4横」に変更するには：
 
 ```less
 .markdown-preview.markdown-preview {
@@ -41,12 +41,12 @@ For example, to change the page size to `A4 landscape`:
 }
 ```
 
-More information can be found at [prince user guide](https://www.princexml.com/doc/).
-Especially [page styles](https://www.princexml.com/doc/paged/#page-styles).
+詳細については、[princeユーザーガイド](https://www.princexml.com/doc/) をご覧ください。
+特に [ページスタイル](https://www.princexml.com/doc/paged/#page-styles)。
 
-## Export on save
+## 保存時に出力する
 
-Add the front-matter like below:
+以下のようにフロントマターを追加します。
 
 ```yaml
 ---
@@ -56,8 +56,8 @@ export_on_save:
 
 ```
 
-So the PDF file will be generated every time you save your markdown source file.
+このように設定すると、markdown ファイルを保存するたびにPDFが生成されます。
 
-## Known issues
+## 既知の問題
 
-- Doesn't work with `KaTeX` and `MathJax`.
+- `KaTeX` と `MathJax` が動作しません。

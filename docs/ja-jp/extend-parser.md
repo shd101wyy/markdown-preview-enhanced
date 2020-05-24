@@ -1,9 +1,9 @@
-# Extend Markdown Parser
+# Markdown Parserの拡張
 
-Run `Markdown Preview Enhanced: Extend Parser` command.  
-Then edit the `parser.js` file.
+`Markdown Preview Enhanced：Extend Parser` コマンドを実行します。
+次に、`parser.js` ファイルを編集します。
 
-> `parser.js` file is located at `~/.mume/parser.js`
+> `parser.js` ファイルは `~/.mume/parser.js` にあります
 
 ```javascript
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
 };
 ```
 
-For example, if you want to prepend `😀` to every headers, then just edit `onWillParseMarkdown` like this:
+たとえば、すべての見出しの前に `😀` を付ける場合は、次のように `onWillParseMarkdown` を編集します。
 
 ```javascript
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
 
 ![screen shot 2017-07-14 at 1 04 19 am](https://user-images.githubusercontent.com/1908863/28200243-78e1a10a-6830-11e7-836b-2defc528ee07.png)
 
-For example, if you want to use `<div class="mermaid"></div>` for mermaid graph.
+たとえば、mermaid ダイアグラムに `<div class="mermaid"></div>` を使用したい場合。
 
 ```javascript
 module.exports = {

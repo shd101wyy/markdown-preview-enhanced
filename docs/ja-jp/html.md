@@ -1,20 +1,20 @@
-# HTML Export
+# HTML出力
 
-## Usage
+## 使い方
 
-Right click at the preview, click `HTML` tab.  
-Then choose:
+プレビューで右クリックし、[HTML]タブをクリックします。
+次にオプションを選択します:
 
 - `HTML (offline)`
-  Choose this option if you are only going to use this html file locally.
+  このhtmlファイルをローカルでのみ使用する場合は、このオプションを選択します。
 - `HTML (cdn hosted)`
-  Choose this option if you want to deploy your html file remotely.
+  HTMLファイルをリモートでデプロイする場合は、このオプションを選択します。
 
 ![screen shot 2017-07-14 at 1 14 28 am](https://user-images.githubusercontent.com/1908863/28200455-d5a12d60-6831-11e7-8572-91d3845ce8cf.png)
 
-## Configuration
+## 設定
 
-Default values:
+既定値：
 
 ```yaml
 ---
@@ -29,13 +29,13 @@ print_background: false
 
 ```
 
-If `embed_local_images` is set to `true`, then all local images will be embedded as `base64` format.
+`embed_local_images` が `true` に設定されている場合、すべてのローカル画像は `base64` 形式として埋め込まれます。
 
-If `toc` is set to `false`, then the sidebar TOC will be disabled. If `toc` is set to `true`, then the sidebar TOC will be enabled and displayed. If `toc` is not specified, then the sidebar TOC will be enabled, but not displayed.
+`toc` が `false` に設定されている場合、サイドバーの目次は無効になります。 `toc` が `true` に設定されている場合、サイドバーの目次が有効になり、表示されます。 `toc` が指定されていない場合、サイドバーの目次は有効になりますが、表示されません。
 
-## Export on save
+## 保存時に出力する
 
-Add the front-matter like below:
+以下のようにフロントマターを追加します。
 
 ```yaml
 ---
@@ -45,4 +45,4 @@ export_on_save:
 
 ```
 
-So the html file will be generated every time you save your markdown file.
+このように設定すると、markdown ファイルを保存するたびにhtmlファイルが生成されます。
