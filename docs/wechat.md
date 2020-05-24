@@ -7,3 +7,6 @@
 
 Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content below. Your name will be saved to [backers](backers.md) file. Appreciate it!  
 `[your name](link you want) $amount_you_donate.`
+
+ご寄付を頂きましたら、以下の内容をメール (`shd101wyy@gmail.com`) でお送りください。お名前を [backers](backers.md) ファイルに追加させて頂きます。ありがとうございます!
+`[ご芳名](リンク先) ¥寄付額`

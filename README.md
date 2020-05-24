@@ -11,7 +11,8 @@
 <p align="center">
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/"> 日本語 &nbsp;&nbsp; </a> <br>
 </p>
 
 <p align="center">
@@ -41,6 +42,7 @@ To check out the documentation, visit
 - [English](https://shd101wyy.github.io/markdown-preview-enhanced/#/)
 - [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/)
 - [正體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/)
+- [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/)
 
 Contact me if you are willing to help translate the documentation :)
 
