@@ -61,10 +61,11 @@
     ]
   },
   "dependencies": {
-    "@shd101wyy/mume": "^0.5.6"
+    "@shd101wyy/mume": "^0.5.7"
   },
   "devDependencies": {
     "@types/atom": "^1.36.2",
+    "@types/cheerio": "^0.22.18",
     "@types/jquery": "^3.3.32",
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.0",
