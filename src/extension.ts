@@ -326,7 +326,7 @@ export function activate(state) {
           path.resolve(mume.getExtensionConfigPath(), "config.json"),
           JSON.stringify(mpeConfig),
         );
-        if (!mpeConfig["already_sponsored"]) {
+        if (!mume.configs.config["atom_mpe_version"]) {
           const noty = atom.notifications.addInfo(
             "If you like using markdown-preview-enhanced, please consider sponsoring the developer to help make this project better 😊.",
             {
