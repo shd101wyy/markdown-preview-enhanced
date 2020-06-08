@@ -1,8 +1,16 @@
 # Backers
 
-You can join them in supporting Markdown Preview Enhanced development by [pledging on Patreon!](https://www.patreon.com/shd101wyy), [PayPal](paypal.md), or [微信支付 Wechat Pay](wechat.md). Backers in the same pledge level appear in the order of pledge date.
+You can join them in supporting Markdown Preview Enhanced development by [pledging on GitHub Sponsors!](https://github.com/sponsors/shd101wyy), [PayPal](paypal.md), or [微信支付 Wechat Pay](wechat.md). Backers in the same pledge level appear in the order of pledge date.
 
 Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[your name](link you want) $amount_you_donate`. Your name will be saved to [backers](backers.md) file. Thank you!
+
+---
+
+## GitHub Sponsors
+
+Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed sponsors 😊.
+
+---
 
 ## \$29+
 
@@ -46,6 +54,7 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 - Nakada Hiroaki
 - Han Shuo
 - Xinxuan Wang
+- [Wang Lei](www.linkedin.com/in/leiwangsg)
 
 ---
 
@@ -62,3 +71,5 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content `[
 - 吴威
 - Daniel Wang
 - Shark
+- [Paweł Zmarzły](https://github.com/pzmarzly)
+- [Wildan Zulfikar](https://github.com/wzulfikar)

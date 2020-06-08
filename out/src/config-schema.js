@@ -11,7 +11,7 @@ exports.configSchema = {
     configPath: {
         type: "string",
         default: "",
-        description: "The configuration directory path. Leave it empty to use '~/.mume' as the config path. Please reload atom to take effect. Replaces '${projectDir}' or '${workspaceFolder}' with the current project directory of the engine.",
+        description: "The configuration directory path. Leave it empty to use '~/.mume' as the config path. Please reload atom to take effect.",
         order: 1,
     },
     singlePreview: {
