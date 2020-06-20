@@ -54,7 +54,7 @@ Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed s
 - Nakada Hiroaki
 - Han Shuo
 - Xinxuan Wang
-- [Wang Lei](www.linkedin.com/in/leiwangsg)
+- [Wang Lei](https://www.linkedin.com/in/leiwangsg)
 
 ---
 
