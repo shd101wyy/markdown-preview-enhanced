@@ -41,11 +41,11 @@
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
-    "check": "npm run check:prettier && npm run check:tsc && npm run check:tslint",
+    "check": "yarn check:prettier && yarn check:tsc && yarn check:tslint",
     "check:prettier": "prettier --check \"**/*.*\"",
     "check:tsc": "tsc --project . --noEmit",
     "check:tslint": "tslint --project .",
-    "fix": "npm run fix:tslint && npm run fix:prettier",
+    "fix": "yarn fix:tslint; yarn fix:prettier",
     "fix:prettier": "prettier --write \"**/*.*\"",
     "fix:tslint": "tslint --project ."
   },
