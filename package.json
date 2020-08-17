@@ -41,13 +41,15 @@
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
-    "check": "yarn check:prettier && yarn check:tsc && yarn check:tslint",
-    "check:prettier": "prettier --check \"**/*.*\"",
-    "check:tsc": "tsc --project . --noEmit",
-    "check:tslint": "tslint --project .",
-    "fix": "yarn fix:tslint; yarn fix:prettier",
+    "fix": "yarn fix:tslint; yarn fix:prettier; yarn fix:yarn-deduplicate",
     "fix:prettier": "prettier --write \"**/*.*\"",
-    "fix:tslint": "tslint --project ."
+    "fix:tslint": "tslint --project .",
+    "fix:yarn-deduplicate": "yarn install && yarn-deduplicate --strategy=fewer && yarn install",
+    "lint": "yarn lint:prettier && yarn lint:tsc && yarn lint:tslint && yarn lint:yarn-deduplicate",
+    "lint:prettier": "prettier --check \"**/*.*\"",
+    "lint:tsc": "tsc --project . --noEmit",
+    "lint:tslint": "tslint --project .",
+    "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer"
   },
   "husky": {
     "hooks": {
@@ -78,7 +80,8 @@
     "prettier-plugin-packagejson": "^2.0.10",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "yarn-deduplicate": "^2.1.1"
   },
   "engines": {
     "atom": ">=1.16.0"
