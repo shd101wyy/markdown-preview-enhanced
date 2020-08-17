@@ -21,11 +21,11 @@ apm install markdown-preview-enhanced
 
 - **Clone** 這個項目。
 - `cd` 到下載好的 **markdown-preview-enhanced** 目錄。
-- 運行 `npm install` 命令。然后運行 `apm link` 命令。
+- 運行 `yarn install` 命令。然后運行 `apm link` 命令。
 
 ```bash
 cd the_path_to_folder/markdown-preview-enhanced
-npm install
+yarn install
 apm link # <- 這個會拷貝 markdown-preview-enhanced 文件夾到 ~/.atom/packages
 ```
 
