@@ -24,11 +24,11 @@ apm install markdown-preview-enhanced
 
 - **Clone** this project.
 - `cd` to the downloaded **markdown-preview-enhanced** folder.
-- Run `npm install` command. Then run `apm link` command.
+- Run `yarn install` command. Then run `apm link` command.
 
 ```bash
 cd the_path_to_folder/markdown-preview-enhanced
-npm install
+yarn install
 apm link # <- This will copy markdown-preview-enhanced folder to ~/.atom/packages
 ```
 

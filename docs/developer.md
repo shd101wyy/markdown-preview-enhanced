@@ -17,4 +17,4 @@ After you have done installing the package, follow these steps:
 
 ## Develop this package for VS Code
 
-Clone [vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced), then `npm install`, open in **vscode** and start debugging.
+Clone [vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced), then `yarn install`, open in **vscode** and start debugging.

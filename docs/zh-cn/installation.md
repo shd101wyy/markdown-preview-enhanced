@@ -55,13 +55,13 @@ apm install check
 - `cd` 到 `.atom/packages` 文件夹
 - `Clone` 整个项目
 - `cd` 到下载的 **markdown-preview-enhanced** 文件夹
-- 运行 `npm install` 命令。墙内用户可以使用 `cnpm install` 命令。
+- 运行 `yarn install` 命令。墙内用户可以使用 `cyarn install` 命令。
 
 ```bash
 cd ~/.atom/packages
 git clone https://github.com/shd101wyy/markdown-preview-enhanced
 cd markdown-preview-enhanced
-npm install
+yarn install
 ```
 
 墙内用户如果没有安装 `npm` 命令，可以参照终端安装内的**关于墙内 npm 安装**
