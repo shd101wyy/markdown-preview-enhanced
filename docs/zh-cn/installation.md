@@ -36,7 +36,7 @@ apm install check
 > 运行如下命令使用淘宝镜像安装 npm：
 >
 > ```bash
-> yarn install -g cnpm --registry=https://registry.npm.taobao.org
+> npm install -g cnpm --registry=https://registry.npm.taobao.org
 > ```
 >
 > 可以通过`cnpm -v`查看版本命令查看是否安装成功。

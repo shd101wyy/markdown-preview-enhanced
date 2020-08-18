@@ -424,7 +424,7 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
     },
     usePuppeteerCore: {
         title: "Use puppeteer-core",
-        description: "If set to true, then locally installed puppeteer-core will be required. Otherwise, the puppeteer globally installed by `yarn install -g puppeteer` will be required.",
+        description: "If set to true, then locally installed puppeteer-core will be required. Otherwise, the puppeteer globally installed by `npm install -g puppeteer` will be required.",
         type: "boolean",
         default: true,
         order: 101,
