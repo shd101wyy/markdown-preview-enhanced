@@ -30,6 +30,7 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   enableEmojiSyntax: copyValue,
   enableExtendedTableSyntax: copyValue,
   enableCriticMarkupSyntax: copyValue,
+  useGitHubStylePipedLink: copyValue,
   wikiLinkFileExtension: copyValue,
   protocolsWhiteList: copyValue,
   mathRenderingOption: copyValue,
@@ -93,6 +94,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public enableTypographer: boolean;
   public enableLinkify: boolean;
   public enableWikiLinkSyntax: boolean;
+  public useGitHubStylePipedLink: boolean;
   public wikiLinkFileExtension: string;
   public enableEmojiSyntax: boolean;
   public enableExtendedTableSyntax: boolean;

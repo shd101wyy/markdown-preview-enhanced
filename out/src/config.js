@@ -26,6 +26,7 @@ const ConfigSettings = {
     enableEmojiSyntax: copyValue,
     enableExtendedTableSyntax: copyValue,
     enableCriticMarkupSyntax: copyValue,
+    useGitHubStylePipedLink: copyValue,
     wikiLinkFileExtension: copyValue,
     protocolsWhiteList: copyValue,
     mathRenderingOption: copyValue,
