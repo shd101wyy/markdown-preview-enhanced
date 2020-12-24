@@ -265,9 +265,10 @@ export const configSchema = {
   useGitHubStylePipedLink: {
     title: "Use GitHub style piped wiki link",
     type: "boolean",
-    default: "true",
-    description: "If checked, we use GitHub style piped wiki links, i.e. [[linkText|wikiLink]]. Otherwise, we use [[wikiLink|linkText]] as the original Wikipedia style.",
-    order: 51
+    default: true,
+    description:
+      "If checked, we use GitHub style piped wiki links, i.e. [[linkText|wikiLink]]. Otherwise, we use [[wikiLink|linkText]] as the original Wikipedia style.",
+    order: 51,
   },
   wikiLinkFileExtension: {
     title: "Wiki Link file extension",
