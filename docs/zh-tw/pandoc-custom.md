@@ -45,10 +45,9 @@ title: "Habits"
 output:
   custom_document:
     path: /Exports/test.pdf
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
+    pandoc_args: ["--no-tex-ligatures"]
 ---
+
 ```
 
 ## Shared Options

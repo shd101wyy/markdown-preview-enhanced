@@ -1,10 +1,10 @@
-# CSSの編集
+# CSS の編集
 
 ## style.less
 
 markdown ファイルの css ファイルを編集するには、 <kbd>cmd-shift-p</kbd> に続けて `Markdown Preview Enhanced: Customize Css` コマンドを実行してください。
 
-`style.less` ファイルが開くので、既定のstyleを以下のようにオーバーライドすることができます。:
+`style.less` ファイルが開くので、既定の style を以下のようにオーバーライドすることができます。:
 
 > `style.less` ファイルは `~/.mume/style.less` にあります
 
@@ -72,7 +72,7 @@ class: "my-class1 my-class2"
 }
 ```
 
-`less` ファイルを変更した場合、プレビュー右上の refresh ボタンを押すことで less を cssにコンパイルし直すことができます。
+`less` ファイルを変更した場合、プレビュー右上の refresh ボタンを押すことで less を css にコンパイルし直すことができます。
 
 ![](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
@@ -102,4 +102,4 @@ class: "my-class1 my-class2"
 }
 ```
 
-> googleフォントのようなオンラインフォントの使用を推奨します
+> google フォントのようなオンラインフォントの使用を推奨します

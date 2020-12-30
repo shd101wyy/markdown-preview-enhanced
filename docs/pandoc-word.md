@@ -67,10 +67,9 @@ If there are pandoc features you want to use that lack equivalents in the YAML o
 title: "Habits"
 output:
   word_document:
-    pandoc_args: [
-      "--csl", "/var/csl/acs-nano.csl"
-    ]
+    pandoc_args: ["--csl", "/var/csl/acs-nano.csl"]
 ---
+
 ```
 
 ## Shared Options

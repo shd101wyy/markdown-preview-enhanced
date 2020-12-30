@@ -1,4 +1,4 @@
-# Markdown Parserの拡張
+# Markdown Parser の拡張
 
 `Markdown Preview Enhanced：Extend Parser` コマンドを実行します。
 次に、`parser.js` ファイルを編集します。

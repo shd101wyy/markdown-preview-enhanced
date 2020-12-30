@@ -2,19 +2,19 @@
 
 **Markdown Preview Enhanced** は、`RStudio Markdown` と同様に機能する `pandoc document export` 機能をサポートします。
 この機能を使用するには、[pandoc](https://pandoc.org/) がインストールされている必要があります。
-pandocのインストール手順は[こちら](https://pandoc.org/installing.html) にあります。
+pandoc のインストール手順は[こちら](https://pandoc.org/installing.html) にあります。
 プレビューを右クリックすると、コンテキストメニューに表示され `pandoc document export` 機能を使用できます。
 
 ---
 
-## Pandocパーサー
+## Pandoc パーサー
 
 既定では、**Markdown Preview Enhanced**は [markdown-it](https://github.com/markdown-it/markdown-it) を使用して markdown を解析します。
 パッケージ設定から `pandoc` パーサーに設定することもできます。
 
 ![Screen Shot 2017-03-07 at 10.05.25 PM](https://i.imgur.com/NdCJBgR.png)
 
-また、フロントマターに書いて、個々のファイルにpandoc引数を設定することもできます。
+また、フロントマターに書いて、個々のファイルに pandoc 引数を設定することもできます。
 
 ```markdown
 ---
@@ -64,7 +64,7 @@ export_on_save:
 
 ```
 
-このように設定すると、markdown ファイルを保存するたびにpandocが実行されます。
+このように設定すると、markdown ファイルを保存するたびに pandoc が実行されます。
 
 ## 別の記事
 

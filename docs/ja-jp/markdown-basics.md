@@ -1,10 +1,10 @@
-# Markdownの基本
+# Markdown の基本
 
 この記事は、[GitHub Flavored Markdown writing](https://guides.github.com/features/mastering-markdown/) の簡単な紹介です。
 
-## Markdownとは何か
+## Markdown とは何か
 
-`Markdown` はWeb上のテキストのスタイルを設定する方法です。ドキュメントの表示を制御します。単語を太字または斜体にフォーマットしたり、画像を追加したり、リストを作成したりすることは、Markdownで実行できることのほんの一部です。ほとんどの場合、Markdownは通常のテキストであり、 `＃` や `*` などのアルファベット以外の文字がいくつか含まれています。
+`Markdown` は Web 上のテキストのスタイルを設定する方法です。ドキュメントの表示を制御します。単語を太字または斜体にフォーマットしたり、画像を追加したり、リストを作成したりすることは、Markdown で実行できることのほんの一部です。ほとんどの場合、Markdown は通常のテキストであり、 `＃` や `*` などのアルファベット以外の文字がいくつか含まれています。
 
 ## 構文ガイド
 
@@ -27,12 +27,12 @@
 見出しに `id` と `class` を追加する場合は、単に `{#id .class1 .class2}` を追加します。例えば：
 
 ```markdown
-# この見出しには1つのIDがあります {#my_id}
+# この見出しには 1 つの ID があります {#my_id}
 
-# この見出しには2つのクラスがあります {.class1 .class2}
+# この見出しには 2 つのクラスがあります {.class1 .class2}
 ```
 
-> これはMPEの拡張機能です。
+> これは MPE の拡張機能です。
 
 ### 強調
 
@@ -96,7 +96,7 @@ https://github.com - 自動的にリンクになります
 ### 水平線
 
 ```markdown
-3つ以上の
+3 つ以上の
 
 ---
 
@@ -104,11 +104,11 @@ https://github.com - 自動的にリンクになります
 
 ---
 
-アスタリスク *
+アスタリスク \*
 
 ---
 
-アンダーバー _
+アンダーバー \_
 ```
 
 ### インラインコード
@@ -120,13 +120,13 @@ https://github.com - 自動的にリンクになります
 
 ### フェンスド コード ブロック
 
-コード ブロックの前後にバッククウォート3つ <code>\`\`\`</code> を配置することで、フェンスド コード ブロックを作成できます。
+コード ブロックの前後にバッククウォート 3 つ <code>\`\`\`</code> を配置することで、フェンスド コード ブロックを作成できます。
 
 #### シンタックス ハイライト
 
 オプションの言語識別子を追加して、フェンスド コード ブロックで構文の強調表示を有効にすることができます。
 
-たとえば、Rubyコードをシンタックス ハイライトするには：
+たとえば、Ruby コードをシンタックス ハイライトするには：
 
     ```ruby
     require 'redcarpet'
@@ -140,7 +140,7 @@ markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
 ```
 
-#### コード ブロック クラス（MPE拡張機能）
+#### コード ブロック クラス（MPE 拡張機能）
 
 コード ブロックに `class` を設定できます。
 
@@ -247,7 +247,7 @@ H~2~O
 ```markdown
 _[HTML]: Hyper Text Markup Language
 _[W3C]: World Wide Web Consortium
-HTMLの仕様はW3Cによって管理されています。
+HTML の仕様は W3C によって管理されています。
 ```
 
 ### Mark
@@ -259,9 +259,9 @@ HTMLの仕様はW3Cによって管理されています。
 ### CriticMarkup
 
 CriticMarkup は既定値で**無効**になっていますが、パッケージ設定から有効にすることができます。
-CriticMarkupの詳細については、[CriticMarkup User's Guide](https://criticmarkup.com/users-guide.php) を確認してください。
+CriticMarkup の詳細については、[CriticMarkup User's Guide](https://criticmarkup.com/users-guide.php) を確認してください。
 
-Critic Mark には5つのタイプがあります。
+Critic Mark には 5 つのタイプがあります。
 
 - 追加 `{++ ++}`
 - 削除 `{-- --}`
