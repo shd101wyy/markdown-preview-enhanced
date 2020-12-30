@@ -2,15 +2,15 @@
 
 ## インストール
 
-[Chromeブラウザ](https://www.google.com/chrome/) がインストールされている必要があります。
+[Chrome ブラウザ](https://www.google.com/chrome/) がインストールされている必要があります。
 
-> chromeの実行可能ファイルへのパスを指定できる `chromePath` という名前の拡張機能の設定があります。通常、変更する必要はありません。 Markdown Preview Enhancedは自動的にパスを探します。
+> chrome の実行可能ファイルへのパスを指定できる `chromePath` という名前の拡張機能の設定があります。通常、変更する必要はありません。 Markdown Preview Enhanced は自動的にパスを探します。
 
 ## 使い方
 
 プレビューを右クリックして、`Chrome (Puppeteer)` を選択します。
 
-## Puppeteerの設定
+## Puppeteer の設定
 
 [PDF](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagepdfoptions) と [Screenshot](https://github.com/GoogleChrome/puppeteer/blob/v1.9.0/docs/api.md#pagescreenshotoptions) の出力設定をフロントマター内に書けます。例えば：
 
@@ -35,7 +35,7 @@ export_on_save:
 ---
 ```
 
-## CSSのカスタマイズ
+## CSS のカスタマイズ
 
 <kbd>cmd-shift-p</kbd> 次に、`Markdown Preview Enhanced：Customize Css` コマンドを実行して `style.less` ファイルを開き、次の行を追加して変更します。
 

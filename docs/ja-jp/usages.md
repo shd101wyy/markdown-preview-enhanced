@@ -10,13 +10,13 @@ _Markdown_
 
 - <strong>Markdown Preview Enhanced: Toggle</strong>  
   <kbd>ctrl-shift-m</kbd>  
-  Markdown ファイルのpreviewを切り替えます。
+  Markdown ファイルの preview を切り替えます。
 
 - <strong>Markdown Preview Enhanced: Toggle Zen Mode </strong>  
-  Zen Modeを切り替えます。
+  Zen Mode を切り替えます。
 
 - <strong>Markdown Preview Enhanced: Customize Css</strong>  
-  プレビューページのCSSをカスタマイズします。
+  プレビューページの CSS をカスタマイズします。
   ここに簡単な[チュートリアル](ja-jp/customize-css.md) があります。
 
 - <strong>Markdown Preview Enhanced: Create Toc </strong>  
@@ -31,7 +31,7 @@ _Markdown_
 
 - <strong>Markdown Preview Enhanced: Toggle Live Update </strong>  
    プレビュー用のライブ更新を有効/無効にします。
-   無効にすると、ファイルが保存されたときにのみプレビューがレンダリングされます。
+  無効にすると、ファイルが保存されたときにのみプレビューがレンダリングされます。
 
 - <strong>Markdown Preview Enhanced: Toggle Break On Single Newline </strong>  
   単一の改行文字での改行を有効/無効にします。
@@ -53,7 +53,7 @@ _Markdown_
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
   詳細については、[このドキュメント](ja-jp/image-helper.md) を確認してください。
-   Image helper は、[imgur](https://imgur.com/) および [sm.ms](https://sm.ms/) による画像URLのクイック挿入、画像貼り付け、および画像アップロードをサポートしています。
+  Image helper は、[imgur](https://imgur.com/) および [sm.ms](https://sm.ms/) による画像 URL のクイック挿入、画像貼り付け、および画像アップロードをサポートしています。
   ![screen shot 2017-06-06 at 3 42 31 pm](https://user-images.githubusercontent.com/1908863/26850896-c43be8e2-4ace-11e7-802d-6a7b51bf3130.png)
 
 - <strong>Markdown Preview Enhanced: Show Uploaded Images</strong>  
@@ -69,7 +69,7 @@ _Markdown_
   すべての [コード チャンク](ja-jp/code-chunk.md) を実行します。
 
 - <strong>Markdown Preview Enhanced: Extend Parser</strong>  
-  [Markdown Parserの拡張](ja-jp/extend-parser.md).
+  [Markdown Parser の拡張](ja-jp/extend-parser.md).
 
 ---
 
@@ -103,8 +103,8 @@ _プレビュー_
 | <kbd>ctrl-shift-s</kbd>                         | プレビューと同期 / エディタと同期 |
 | <kbd>shift-enter</kbd>                          | コード チャンクを実行             |
 | <kbd>ctrl-shift-enter</kbd>                     | 全てのコード チャンクを実行       |
-| <kbd>cmd-=</kbd> または <kbd>cmd-shift-=</kbd>  | プレビューを拡大するin            |
-| <kbd>cmd--</kbd> または <kbd>cmd-shift-\_</kbd> | プレビューを縮小するout           |
+| <kbd>cmd-=</kbd> または <kbd>cmd-shift-=</kbd>  | プレビューを拡大する in           |
+| <kbd>cmd--</kbd> または <kbd>cmd-shift-\_</kbd> | プレビューを縮小する out          |
 | <kbd>cmd-0</kbd>                                | プレビューのズームをリセットする  |
 | <kbd>esc</kbd>                                  | サイドバーの目次表示を切り替える  |
 

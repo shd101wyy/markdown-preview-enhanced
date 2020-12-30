@@ -1,6 +1,6 @@
 # Save as Markdown
 
-**Markdown Preview Enhanced** は **GitHub Flavored Markdown** へのコンパイルをサポートします。出力された markdown ファイルにはすべてのグラフ(png画像として)、コードチャンク(結果を非表示にして含める)、数学タイプセット(画像として表示)が含まれ、GitHubで公開できます。
+**Markdown Preview Enhanced** は **GitHub Flavored Markdown** へのコンパイルをサポートします。出力された markdown ファイルにはすべてのグラフ(png 画像として)、コードチャンク(結果を非表示にして含める)、数学タイプセット(画像として表示)が含まれ、GitHub で公開できます。
 
 ## 使い方
 

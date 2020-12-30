@@ -2,7 +2,7 @@
 
 ## 概要
 
-PDFドキュメントを作成するには、ドキュメントのフロントマターで `pdf_document` 出力形式を指定する必要があります。
+PDF ドキュメントを作成するには、ドキュメントのフロントマターで `pdf_document` 出力形式を指定する必要があります。
 
 ```yaml
 ---
@@ -45,7 +45,7 @@ output:
 
 ```
 
-目次の深さが明示的に指定されていない場合、デフォルトで3になります（つまり、すべてのレベル1、2、3の見出しが目次に含まれます）。
+目次の深さが明示的に指定されていない場合、デフォルトで 3 になります（つまり、すべてのレベル 1、2、3 の見出しが目次に含まれます）。
 
 _注意:_ この目次は、**Markdown Preview Enhanced** によって生成される `<!-- toc -->` とは異なります。
 
@@ -64,7 +64,7 @@ output:
 
 ## シンタックス ハイライト
 
-`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合はnullを指定します)。
+`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合は null を指定します)。
 
 例えば：
 
@@ -78,9 +78,9 @@ output:
 
 ```
 
-## LaTeXオプション
+## LaTeX オプション
 
-PDFドキュメントの作成に使用されるLaTeXテンプレートのパラメータの内いくつかは、トップレベル YAML メタデータを使用して設定できます(これらの設定は、`output` セクションの下に設定せず、`title`、`author`などとともにトップレベルに設定することに注意してください) 。例えば：
+PDF ドキュメントの作成に使用される LaTeX テンプレートのパラメータの内いくつかは、トップレベル YAML メタデータを使用して設定できます(これらの設定は、`output` セクションの下に設定せず、`title`、`author`などとともにトップレベルに設定することに注意してください) 。例えば：
 
 ```yaml
 ---
@@ -107,9 +107,9 @@ geometry: margin=1in
 
 利用可能な変数の詳細については、[こちら](https://pandoc.org/MANUAL.html#variables-for-latex) をご覧ください。
 
-### 引用のLaTeXパッケージ
+### 引用の LaTeX パッケージ
 
-既定では、引用はすべての出力形式で機能する `pandoc-citeproc` によって処理されます。PDF出力の場合、`natbib` や `biblatex` などの引用を処理するにはLaTeXパッケージを使用する方がよい場合があります。引用に特定のLaTexパッケージを使用するには、オプション `citation_package` を`natbib` または `biblatex` に設定します。たとえば、
+既定では、引用はすべての出力形式で機能する `pandoc-citeproc` によって処理されます。PDF 出力の場合、`natbib` や `biblatex` などの引用を処理するには LaTeX パッケージを使用する方がよい場合があります。引用に特定の LaTex パッケージを使用するには、オプション `citation_package` を`natbib` または `biblatex` に設定します。たとえば、
 
 ```yaml
 ---
@@ -122,9 +122,9 @@ output:
 
 ## 高度なカスタマイズ
 
-### LaTeXエンジン
+### LaTeX エンジン
 
-既定では、PDFドキュメントは `pdflatex` を使用してレンダリングされます。`latex_engine` オプションを使用して使用するLaTexエンジンを指定できます。利用可能なエンジンは、`pdflatex`、`xelatex`、および `lualatex`です。例えば：
+既定では、PDF ドキュメントは `pdflatex` を使用してレンダリングされます。`latex_engine` オプションを使用して使用する LaTex エンジンを指定できます。利用可能なエンジンは、`pdflatex`、`xelatex`、および `lualatex`です。例えば：
 
 ```yaml
 ---
@@ -138,7 +138,7 @@ output:
 
 ### Include
 
-LaTeXディレクティブやLaTexコンテンツの追加、または、core pandoc テンプレートを完全に置き換えることにより、PDF出力のより高度なカスタマイズを行うことができます。ドキュメントヘッダーまたはドキュメント本文の前後にコンテンツを含めるには、次のように `includes`オプションを使用します。
+LaTeX ディレクティブや LaTex コンテンツの追加、または、core pandoc テンプレートを完全に置き換えることにより、PDF 出力のより高度なカスタマイズを行うことができます。ドキュメントヘッダーまたはドキュメント本文の前後にコンテンツを含めるには、次のように `includes`オプションを使用します。
 
 ```yaml
 ---
@@ -155,7 +155,7 @@ output:
 
 ### カスタムテンプレート
 
-`template` オプションを使用してpandocテンプレートを置き換えることもできます：
+`template` オプションを使用して pandoc テンプレートを置き換えることもできます：
 
 ```yaml
 ---
@@ -167,26 +167,25 @@ output:
 
 ```
 
-テンプレートの詳細については、[pandocテンプレート](https://pandoc.org/README.html#templates) のドキュメントを参照してください。例として、[デフォルトのLaTeXテンプレート](https://github.com/jgm/pandoc-templates/blob/master/default.latex) を学習することもできます。
+テンプレートの詳細については、[pandoc テンプレート](https://pandoc.org/README.html#templates) のドキュメントを参照してください。例として、[デフォルトの LaTeX テンプレート](https://github.com/jgm/pandoc-templates/blob/master/default.latex) を学習することもできます。
 
-### Pandocの引数
+### Pandoc の引数
 
-上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
+上記の YAML オプションにない pandoc の機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
 title: "Habits"
 output:
   pdf_document:
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
+    pandoc_args: ["--no-tex-ligatures"]
 ---
+
 ```
 
 ## 共有設定
 
-ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML 区切り文字、または YAML 区切り文字で囲んでいる output オブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 

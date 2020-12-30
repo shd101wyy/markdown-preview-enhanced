@@ -6,13 +6,13 @@
     - [Atom](ja-jp/installation.md)
     - [VS Code](ja-jp/vscode-installation.md)
 
-- Markdownを書く
+- Markdown を書く
 
-  - [Markdownの基礎](ja-jp/markdown-basics.md)
+  - [Markdown の基礎](ja-jp/markdown-basics.md)
   - [数式](ja-jp/math.md)
   - [ダイアグラム](ja-jp/diagrams.md)
   - [目次](ja-jp/toc.md)
-  - [外部FileのImport](ja-jp/file-imports.md)
+  - [外部 File の Import](ja-jp/file-imports.md)
   - [コード チャンク](ja-jp/code-chunk.md)
   - [プレゼンテーション](ja-jp/presentation.md)
   - [Pandoc](ja-jp/pandoc.md)
@@ -35,8 +35,8 @@
 
 - 設定と拡張
 
-  - [CSSの編集](ja-jp/customize-css.md)
-  - [Markdown Parserの拡張](ja-jp/extend-parser.md)
+  - [CSS の編集](ja-jp/customize-css.md)
+  - [Markdown Parser の拡張](ja-jp/extend-parser.md)
   - [Image Helper](ja-jp/image-helper.md)
   - [開発者の方へ](ja-jp/developer.md)
 

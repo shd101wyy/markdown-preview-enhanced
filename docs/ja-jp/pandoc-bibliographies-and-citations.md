@@ -4,7 +4,7 @@
 
 ### 参考文献の指定
 
-[Pandoc](https://pandoc.org/MANUAL.html#citations) は、さまざまなスタイルで引用・参考文献リストを自動的に生成できます。この機能を使用するには、YAMLメタデータセクションの `bibliography` メタデータフィールドを使用して参考文献ファイルを指定する必要があります。例えば：
+[Pandoc](https://pandoc.org/MANUAL.html#citations) は、さまざまなスタイルで引用・参考文献リストを自動的に生成できます。この機能を使用するには、YAML メタデータセクションの `bibliography` メタデータフィールドを使用して参考文献ファイルを指定する必要があります。例えば：
 
 ```yaml
 ---
@@ -26,23 +26,23 @@ bibliography: [bibliography1.bib, bibliography2.bib]
 
 参考文献ファイルは、次の形式のみ対応します。
 
-| 形式        | 拡張子          |
-| ----------- | -------------- |
-| BibLaTeX    | .bib           |
-| BibTeX      | .bibtex        |
-| Copac       | .copac         |
-| CSL JSON    | .json          |
-| CSL YAML    | .yaml          |
-| EndNote     | .enl           |
-| EndNote XML | .xml           |
-| ISI         | .wos           |
-| MEDLINE     | .medline       |
-| MODS        | .mods          |
-| RIS         | .ris           |
+| 形式        | 拡張子   |
+| ----------- | -------- |
+| BibLaTeX    | .bib     |
+| BibTeX      | .bibtex  |
+| Copac       | .copac   |
+| CSL JSON    | .json    |
+| CSL YAML    | .yaml    |
+| EndNote     | .enl     |
+| EndNote XML | .xml     |
+| ISI         | .wos     |
+| MEDLINE     | .medline |
+| MODS        | .mods    |
+| RIS         | .ris     |
 
 ### インライン参考文献
 
-または、ドキュメントのYAMLメタデータで `references` フィールドを使用できます。これには、YAMLでエンコードされた参照の配列を含める必要があります。次に例を示します。
+または、ドキュメントの YAML メタデータで `references` フィールドを使用できます。これには、YAML でエンコードされた参照の配列を含める必要があります。次に例を示します。
 
 ```yaml
 ---
@@ -124,7 +124,7 @@ nocite: |
 
 ### 引用スタイル
 
-既定では、pandocは引用と参照にChicago author-date formatを使用します。別のスタイルを使用するには、 `csl` メタデータフィールドでCSL 1.0スタイルファイルを指定する必要があります。例えば：
+既定では、pandoc は引用と参照に Chicago author-date format を使用します。別のスタイルを使用するには、 `csl` メタデータフィールドで CSL 1.0 スタイルファイルを指定する必要があります。例えば：
 
 ```yaml
 ---
@@ -136,8 +136,8 @@ csl: biomed-central.csl
 
 ```
 
-CSLスタイルの作成と変更に関する入門書は[こちら](https://citationstyles.org/downloads/primer.html) にあります。 CSLスタイルのリポジトリは[こちら](https://github.com/citation-style-language/styles) にあります。ぱっと見るだけなら、https://zotero.org/styles も参照してください。
+CSL スタイルの作成と変更に関する入門書は[こちら](https://citationstyles.org/downloads/primer.html) にあります。 CSL スタイルのリポジトリは[こちら](https://github.com/citation-style-language/styles) にあります。ぱっと見るだけなら、https://zotero.org/styles も参照してください。
 
-### PDF出力時の引用
+### PDF 出力時の引用
 
-既定では、引用は pandoc-citeproc によって生成され、すべての出力形式で機能します。出力が LaTeX/PDF の場合は、LaTeXパッケージ(natbibなど)を使用して引用を生成することもできます。詳細については、[PDFドキュメント](ja-jp/pandoc-pdf.md) を参照してください。
+既定では、引用は pandoc-citeproc によって生成され、すべての出力形式で機能します。出力が LaTeX/PDF の場合は、LaTeX パッケージ(natbib など)を使用して引用を生成することもできます。詳細については、[PDF ドキュメント](ja-jp/pandoc-pdf.md) を参照してください。

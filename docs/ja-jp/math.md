@@ -2,7 +2,7 @@
 
 **Markdown Preview Enhanced** は、[KaTeX](https://github.com/Khan/KaTeX) または[MathJax](https://github.com/mathjax/MathJax) を使用して数式をレンダリングします。
 
-KaTeX は MathJax より高速ですが、MathJax の方が高機能です。 [KaTeXでサポートされている関数/記号](https://khan.github.io/KaTeX/function-support.html) を確認して下さい。
+KaTeX は MathJax より高速ですが、MathJax の方が高機能です。 [KaTeX でサポートされている関数/記号](https://khan.github.io/KaTeX/function-support.html) を確認して下さい。
 
 既定では：
 
@@ -13,6 +13,6 @@ KaTeX は MathJax より高速ですが、MathJax の方が高機能です。 [K
 
 数式のレンダリング方法と数式の区切り文字を [パッケージ設定パネル](ja-jp/usages.md?id=package-settings) から変更できます。
 
-<kbd>cmd-shift-p</kbd> で、`Markdown Preview Enhanced：Open Mathjax config` コマンドを選択しMathJax設定を変更することもできます。
+<kbd>cmd-shift-p</kbd> で、`Markdown Preview Enhanced：Open Mathjax config` コマンドを選択し MathJax 設定を変更することもできます。
 
 [➔ ダイアグラム](ja-jp/diagrams.md)

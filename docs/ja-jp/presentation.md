@@ -126,22 +126,22 @@ presentation:
   previewLinks: false
 
   # 遷移スタイル
-  transition: 'default' # none/fade/slide/convex/concave/zoom
+  transition: "default" # none/fade/slide/convex/concave/zoom
 
   # 遷移速度
-  transitionSpeed: 'default' # default/fast/slow
+  transitionSpeed: "default" # default/fast/slow
 
   # ページ全体のスライドの背景の遷移スタイル
-  backgroundTransition: 'default' # none/fade/slide/convex/concave/zoom
+  backgroundTransition: "default" # none/fade/slide/convex/concave/zoom
 
   # 現在のスライドから表示するスライドの数
   viewDistance: 3
 
   # 視差背景画像
-  parallaxBackgroundImage: '' # 例: "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+  parallaxBackgroundImage: "" # 例: "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
 
   # 視差背景サイズ
-  parallaxBackgroundSize: '' # CSS構文, 例: "2100px 900px" - 現在のところ、Pixelのみサポートされています。(%とautoは使用しないでください)
+  parallaxBackgroundSize: "" # CSS構文, 例: "2100px 900px" - 現在のところ、Pixelのみサポートされています。(%とautoは使用しないでください)
 
   # スライドごとに視差背景を移動するピクセル数
   # - 指定されない限り自動的に計算されます
@@ -152,6 +152,7 @@ presentation:
   # スピーカーノートを有効にする
   enableSpeakerNotes: false
 ---
+
 ```
 
 ## スライドスタイルのカスタマイズ
@@ -162,7 +163,7 @@ presentation:
 <!-- slide id="my-id" class="my-class1 my-class2" -->
 ```
 
-または、n番目のスライドのみをカスタマイズする場合、次のように `less` ファイルを変更します。
+または、n 番目のスライドのみをカスタマイズする場合、次のように `less` ファイルを変更します。
 
 ```less
 .markdown-preview.markdown-preview {

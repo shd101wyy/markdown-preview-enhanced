@@ -1,4 +1,4 @@
-# 外部FileのImport
+# 外部 File の Import
 
 ![doc-imports](https://cloud.githubusercontent.com/assets/1908863/22716507/f352a4b6-ed5b-11e6-9bac-88837f111de0.gif)
 
@@ -8,7 +8,7 @@
 
 `@import "your_file"`
 
-でOKです。単純ですね :)
+で OK です。単純ですね :)
 
 `<!-- @import "your_file" -->` でも有効です。
 
@@ -20,7 +20,7 @@
 
 ![screen shot 2017-02-07 at 5 48 52 pm](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
-## 利用可能なFile
+## 利用可能な File
 
 - `.jpeg(.jpg), .gif, .png, .apng, .svg, .bmp` ファイルは markdown の画像として扱われます。
 - `.csv` ファイルは markdown の Table に変換されます。
@@ -40,7 +40,7 @@
 @import "test.png" {width="300px" height="200px" title="my title" alt="my alt"}
 ```
 
-## オンラインファイルのImport
+## オンラインファイルの Import
 
 例:
 
@@ -48,23 +48,23 @@
 @import "https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/LICENSE.md"
 ```
 
-## PDFファイルのImport
+## PDF ファイルの Import
 
-PDFファイルをImportするには、[pdf2svg](extra.md) がインストールされている必要があります。
-Markdown Preview Enhancedは、ローカルとオンラインの両方のPDFファイルのImportをサポートしています。
-ただし、大きなPDFファイルをインポートすることはお勧めしません。
+PDF ファイルを Import するには、[pdf2svg](extra.md) がインストールされている必要があります。
+Markdown Preview Enhanced は、ローカルとオンラインの両方の PDF ファイルの Import をサポートしています。
+ただし、大きな PDF ファイルをインポートすることはお勧めしません。
 例:
 
 ```markdown
 @import "test.pdf"
 ```
 
-### PDFの設定
+### PDF の設定
 
 - **page_no**
-  PDFの `n番目` のページを表示します。 ページ数は1から数えます。たとえば、`{page_no=1}` はPDFの最初のページを表示します。
+  PDF の `n番目` のページを表示します。 ページ数は 1 から数えます。たとえば、`{page_no=1}` は PDF の最初のページを表示します。
 - **page_begin**, **page_end**
-  範囲指定。たとえば、`{page_begin=2 page_end=4}`は、2、3、4ページを表示します。
+  範囲指定。たとえば、`{page_begin=2 page_end=4}`は、2、3、4 ページを表示します。
 
 ## 強制的にコード ブロックとしてレンダリングする
 
@@ -73,13 +73,13 @@ Markdown Preview Enhancedは、ローカルとオンラインの両方のPDFフ�
 @import "test.py" {class="line-numbers"}
 ```
 
-## コード ブロックとしてImport
+## コード ブロックとして Import
 
 ```markdown
 @import "test.json" {as="vega-lite"}
 ```
 
-## 特定の行のImport
+## 特定の行の Import
 
 ```markdown
 @import "test.md" {line_begin=2}
@@ -87,7 +87,7 @@ Markdown Preview Enhancedは、ローカルとオンラインの両方のPDFフ�
 @import "test.md" {line_end=-4}
 ```
 
-## ファイルをコード チャンクとしてImport
+## ファイルをコード チャンクとして Import
 
 ```markdown
 @import "test.py" {cmd="python3"}

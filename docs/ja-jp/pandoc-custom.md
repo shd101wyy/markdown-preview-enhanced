@@ -35,9 +35,9 @@ output:
 
 ```
 
-## Pandocの引数
+## Pandoc の引数
 
-上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
+上記の YAML オプションにない pandoc の機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
@@ -45,15 +45,14 @@ title: "Habits"
 output:
   custom_document:
     path: /Exports/test.pdf
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
+    pandoc_args: ["--no-tex-ligatures"]
 ---
+
 ```
 
 ## 共有設定
 
-ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML 区切り文字、または YAML 区切り文字で囲んでいる output オブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 

@@ -13,7 +13,7 @@
 ## 設定
 
 - **orderedList**
-  orderedListを使用するかどうか。
+  orderedList を使用するかどうか。
 - **depthFrom**, **depthTo**
   `[1〜6]` のどの範囲の見出しを目次に含むか。
 - **ignoreLink**
@@ -31,14 +31,14 @@ markdown ファイルに `[TOC]` を挿入して、`TOC` を作成すること�
 
 ## 見出し 2 {ignore=true}
 
-見出し 2は目次から無視されます。
+見出し 2 は目次から無視されます。
 ```
 
 ただし、**この方法では、目次はプレビューでのみ表示され**、エディターのコンテンツは変更されません。
 
-## [TOC]およびサイドバーTOC構成
+## [TOC]およびサイドバー TOC 構成
 
-フロントマターを書くことで  `[TOC]` とサイドバーTOCを設定できます：
+フロントマターを書くことで `[TOC]` とサイドバー TOC を設定できます：
 
 ```markdown
 ---
@@ -49,4 +49,4 @@ toc:
 ---
 ```
 
-[➔ 外部FileのImports](ja-jp/file-imports.md)
+[➔ 外部 File の Imports](ja-jp/file-imports.md)

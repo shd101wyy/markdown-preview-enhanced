@@ -178,10 +178,9 @@ If there are pandoc features you want to use that lack equivalents in the YAML o
 title: "Habits"
 output:
   pdf_document:
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
+    pandoc_args: ["--no-tex-ligatures"]
 ---
+
 ```
 
 ## Shared Options

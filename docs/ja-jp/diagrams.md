@@ -3,7 +3,7 @@
 **Markdown Preview Enhanced** は、`flow charts`, `sequence diagrams`, `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`, `Vega & Vega-lite`, `Ditaa` ダイアグラムのレンダリングをサポートします。
 [コード チャンク](ja-jp/code-chunk.md) を使用して、 `TikZ`, `Python Matplotlib`, `Plotly`、およびその他のあらゆるグラフや図をレンダリングすることもできます。
 
-> 一部のダイアグラムは、PDF、pandocなどのファイルエクスポートではうまく機能しないことに注意してください。
+> 一部のダイアグラムは、PDF、pandoc などのファイルエクスポートではうまく機能しないことに注意してください。
 
 ## Flow Charts
 
@@ -18,7 +18,7 @@
 この機能は、[js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) を利用しています。
 
 - `sequence` 表記のコードブロックは [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) によってレンダリングされます。
-- 2つのテーマがサポートされています： `simple`(既定のテーマ)と `hand`
+- 2 つのテーマがサポートされています： `simple`(既定のテーマ)と `hand`
 
 ![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
 
@@ -30,7 +30,7 @@ Markdown Preview Enhanced は、[mermaid](https://github.com/knsv/mermaid) を�
 - フローチャートとシーケンス図の作成方法の詳細については、[mermaid doc](https://mermaidjs.github.io/#/flowchart?id=flowcharts-basic-syntax) を参照してください
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
-3種類のテーマが提供されており、[package settings](ja-jp/usages.md?id=package-settings) からテーマを選択できます:
+3 種類のテーマが提供されており、[package settings](ja-jp/usages.md?id=package-settings) からテーマを選択できます:
 
 - `mermaid.css`
 - `mermaid.dark.css`
@@ -41,7 +41,7 @@ Markdown Preview Enhanced は、[mermaid](https://github.com/knsv/mermaid) を�
 
 ## PlantUML
 
-Markdown Preview Enhancedは、[PlantUML](https://plantuml.com/) を使用して複数の種類のグラフを作成します。(**Java** のインストールが必要です)
+Markdown Preview Enhanced は、[PlantUML](https://plantuml.com/) を使用して複数の種類のグラフを作成します。(**Java** のインストールが必要です)
 
 - [Graphviz](https://www.graphviz.org/)(必須ではありません) をインストールすると、すべての種類の図を生成できます。
 - `puml` または `plantuml` 表記のコードブロックは、[PlantUML](https://plantuml.com/) によってレンダリングされます。
@@ -52,7 +52,7 @@ Markdown Preview Enhancedは、[PlantUML](https://plantuml.com/) を使用して
 
 ## WaveDrom
 
-Markdown Preview Enhancedは、[WaveDrom](https://wavedrom.com/) を使用してデジタルタイミングチャートを作成します。
+Markdown Preview Enhanced は、[WaveDrom](https://wavedrom.com/) を使用してデジタルタイミングチャートを作成します。
 
 - `wavedrom` 表記のコードブロックは、[WaveDrom](https://github.com/drom/wavedrom) によってレンダリングされます。
 
@@ -60,7 +60,7 @@ Markdown Preview Enhancedは、[WaveDrom](https://wavedrom.com/) を使用して
 
 ## GraphViz
 
-Markdown Preview Enhancedは、[Viz.js](https://github.com/mdaines/viz.js) を使用して [dot言語](https://tinyurl.com/kjoouup) ダイアグラムをレンダリングします。
+Markdown Preview Enhanced は、[Viz.js](https://github.com/mdaines/viz.js) を使用して [dot 言語](https://tinyurl.com/kjoouup) ダイアグラムをレンダリングします。
 
 - `viz` または `dot` 表記のコードブロックは [Viz.js](https://github.com/mdaines/viz.js) によってレンダリングされます。
 - `{engine =" ... "}` を指定すると、描画エンジンを選択できます。`circo`, `dot`, `neato`, `osage`, `twopi` がサポートされています。既定の描画エンジンは `dot` です。
@@ -69,7 +69,7 @@ Markdown Preview Enhancedは、[Viz.js](https://github.com/mdaines/viz.js) を�
 
 ## Vega and Vega-lite
 
-Markdown Preview Enhancedは、[vega](https://vega.github.io/vega/) および [vega-lite](https://vega.github.io/vega-lite/) **静的**グラフをサポートしています。
+Markdown Preview Enhanced は、[vega](https://vega.github.io/vega/) および [vega-lite](https://vega.github.io/vega-lite/) **静的**グラフをサポートしています。
 
 - `vega` 表記のコードブロックは [vega](https://vega.github.io/vega/) によってレンダリングされます。
 - `vega-lite` 表記のコードブロックは、[vega-lite](https://vega.github.io/vega-lite/) によってレンダリングされます。
@@ -87,7 +87,7 @@ Markdown Preview Enhancedは、[vega](https://vega.github.io/vega/) および [v
 
 ## Ditaa
 
-Markdown Preview Enhancedは、[ditaa](https://github.com/stathissideris/ditaa) をサポートし、アスキーアートを使用して描画された図(| /-のような線に似た文字を含む '図面') をビットマップグラフィックに変換できます。
+Markdown Preview Enhanced は、[ditaa](https://github.com/stathissideris/ditaa) をサポートし、アスキーアートを使用して描画された図(| /-のような線に似た文字を含む '図面') をビットマップグラフィックに変換できます。
 
 (**Java** のインストールが必要です)
 
@@ -109,7 +109,7 @@ Markdown Preview Enhancedは、[ditaa](https://github.com/stathissideris/ditaa) 
 
 > <kbd>shift-enter</kbd>でコード チャンクを実行できます。
 > コードブロックを非表示にするには、`{hide = true}` を設定します。
-> markdownファイルを保存するときにditaaをレンダリングするには、`{run_on_save = true}` を設定します。
+> markdown ファイルを保存するときに ditaa をレンダリングするには、`{run_on_save = true}` を設定します。
 
 ![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
 
@@ -130,11 +130,11 @@ Markdown Preview Enhancedは、[ditaa](https://github.com/stathissideris/ditaa) 
     a->b
     ```
 
-この場合、プレビューの中央にpumlダイアグラムが配置されます。
+この場合、プレビューの中央に puml ダイアグラムが配置されます。
 
 ---
 
-markdownファイルを [GFM Markdown](ja-jp/markdown.md) にエクスポートすると、ダイアグラムはパッケージ設定で定義された `imageFolderPath` にpng画像として保存されます。
+markdown ファイルを [GFM Markdown](ja-jp/markdown.md) にエクスポートすると、ダイアグラムはパッケージ設定で定義された `imageFolderPath` に png 画像として保存されます。
 `{filename ="your_file_name.png"}` を宣言することで、エクスポートされる画像のファイル名を制御できます。
 
 例:

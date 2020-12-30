@@ -17,7 +17,7 @@
     console.log(date.toString())
     ```
 
-> ⚠️ **スクリプトの実行は既定で無効になっており、Atom package、またはVSCodeの拡張機能から明示的に有効にする必要があります。**
+> ⚠️ **スクリプトの実行は既定で無効になっており、Atom package、または VSCode の拡張機能から明示的に有効にする必要があります。**
 >
 > セキュリティを危険にさらす可能性があるので、注意してこの機能を使用してください。
 > スクリプトの実行が有効になっている間に、誰かが悪意のあるコードでマークダウンを開かせた場合、マシンがハッキングされる可能性があります。
@@ -28,7 +28,7 @@
 
 - `Markdown Preview Enhanced: Run Code Chunk` または <kbd>shift-enter</kbd>
   カーソルがあるコード チャンクを実行します。
-- `Markdown Preview Enhanced: Run All Code Chunks`  または <kbd>ctrl-shift-enter</kbd>
+- `Markdown Preview Enhanced: Run All Code Chunks` または <kbd>ctrl-shift-enter</kbd>
   全てのコード チャンクを実行します。
 
 ## 構文
@@ -55,8 +55,8 @@
 `html`, `markdown`, `text`, `png`, `none`
 
 どのような形式で出力結果を描画するかを設定します。
-`html` はHTMLとして出力を追加します。
-`markdown` はmarkdownとして出力します。(MathJaxとgraphsはサポートされません。一方、KaTexはサポートされます。)
+`html` は HTML として出力を追加します。
+`markdown` は markdown として出力します。(MathJax と graphs はサポートされません。一方、KaTex はサポートされます。)
 `text` は出力を `pre` ブロックに追加します。
 `png` は出力を `base64` 画像として追加します。
 `none` は出力を表示せず隠します。
@@ -88,7 +88,7 @@ args が引数としてコマンドに渡されます。
     ```
 
 **標準入力**
-`stdin` がtrueに設定されている場合、コードはファイルではなく標準入力として渡されます。
+`stdin` が true に設定されている場合、コードはファイルではなく標準入力として渡されます。
 
 **hide**
 `hide` はコード チャンクを隠しますが、出力結果は表示します。既定値: `false`
@@ -100,7 +100,7 @@ args が引数としてコマンドに渡されます。
 
 **continue**
 `continue=true`に設定されているコード チャンクは前のコード チャンクの続きとして実行されます。
-`continue=id`が設定されている場合、このコード チャンクは同じidが設定されているコード チャンクの続きとして実行されます。
+`continue=id`が設定されている場合、このコード チャンクは同じ id が設定されているコード チャンクの続きとして実行されます。
 例:
 
     ```python {cmd=true id="izdlk700"}
@@ -135,7 +135,7 @@ markdown ファイルにコード チャンクの出力結果を直接挿入し�
 ## マクロ
 
 - **input_file**
-  `input_file` はmarkdownファイルと同じディレクトリに自動的に生成され、`input_file` にコピーされたコードの実行が完了すると自動的に削除されます。
+  `input_file` は markdown ファイルと同じディレクトリに自動的に生成され、`input_file` にコピーされたコードの実行が完了すると自動的に削除されます。
   既定では、プログラムの引数の一番最後に追加されます。
   しかし、 `input_file` マクロにより引数内で `input_file` の場所を設定することもできます。
   例:
@@ -197,13 +197,13 @@ Markdown Preview Enhanced で [Plotly](https://plot.ly/) を容易に描画で�
 例:
 ![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
-- 最初の行の `@import "https://cdn.plot.ly/plotly-latest.min.js"` は [file import](ja-jp/file-imports.md) 関数を `plotly-latest.min.js` ファイルをimportするために使用しています。
-  しかし、パフォーマンスの点からローカルディスクにjs ファイルをダウンロードすることを推奨します。。
+- 最初の行の `@import "https://cdn.plot.ly/plotly-latest.min.js"` は [file import](ja-jp/file-imports.md) 関数を `plotly-latest.min.js` ファイルを import するために使用しています。
+  しかし、パフォーマンスの点からローカルディスクに js ファイルをダウンロードすることを推奨します。。
 - あとは `javascript` コード チャンクを書くだけです。
 
-## ERDのデモ
+## ERD のデモ
 
-ER図を [erd](https://github.com/BurntSushi/erd) ライブラリによって描画する方法のデモです。
+ER 図を [erd](https://github.com/BurntSushi/erd) ライブラリによって描画する方法のデモです。
 
     ```erd {cmd=true output="html" args=["-i", "$input_file" "-f", "svg"]}
 
@@ -224,7 +224,7 @@ ER図を [erd](https://github.com/BurntSushi/erd) ライブラリによって描
 
 `erd {cmd=true output="html" args=["-i", "$input_file", "-f", "svg"]}`
 
-- `erd` 使用するプログラム(*最初にプログラムをインストールする必要があります。*)
+- `erd` 使用するプログラム(_最初にプログラムをインストールする必要があります。_)
 - `output="html"` `html`として出力結果を追加します
 - `args` フィールドは使用する引数を指定します
 

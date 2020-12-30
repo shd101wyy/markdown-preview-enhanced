@@ -2,7 +2,7 @@
 
 ## 概要
 
-**Markdown Preview Enhanced** からBeamer プレゼンテーションを作成するには、ドキュメントのフロントマターで `beamer_presentation` 出力形式を指定します。
+**Markdown Preview Enhanced** から Beamer プレゼンテーションを作成するには、ドキュメントのフロントマターで `beamer_presentation` 出力形式を指定します。
 `#` および `##` 見出しタグを使用して、セクションに分割されたスライドショーを作成できます(水平線(`----`)を使用して、ヘッダーなしで新しいスライドを作成することもできます。)
 たとえば、次は簡単なスライドショーです:
 
@@ -22,6 +22,7 @@ output: beamer_presentation
 - ベッドから出る
 
 ## Breakfast
+
 ## 朝ごはん
 
 - 卵を食べる
@@ -82,7 +83,7 @@ output:
 
 ## テーマ
 
-`theme`、`colortheme`、および `fonttheme` オプションを使用してBeamerテーマを指定できます。
+`theme`、`colortheme`、および `fonttheme` オプションを使用して Beamer テーマを指定できます。
 
 ```yaml
 ---
@@ -97,7 +98,7 @@ output:
 
 ## 目次
 
-`toc` オプションは、目次をプレゼンテーションの最初に含めるように指定します（目次にはレベル1ヘッダーのみが含まれます）。例えば：
+`toc` オプションは、目次をプレゼンテーションの最初に含めるように指定します（目次にはレベル 1 ヘッダーのみが含まれます）。例えば：
 
 ```yaml
 ---
@@ -123,7 +124,7 @@ output:
 
 ## シンタックス ハイライト
 
-`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合はnullを指定します)。
+`highlight` オプションはシンタックス ハイライト スタイルを指定します。サポートされているスタイルには、“default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”と“haddock”です(シンタックス ハイライトを行わない場合は null を指定します)。
 
 例えば：
 
@@ -137,24 +138,23 @@ output:
 
 ```
 
-## Pandocの引数
+## Pandoc の引数
 
-上記のYAMLオプションにないpandocの機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
+上記の YAML オプションにない pandoc の機能は、カスタム引数 `pandoc_args` を渡すことで使用できます。例えば：
 
 ```yaml
 ---
 title: "Habits"
 output:
   beamer_presentation:
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
+    pandoc_args: ["--no-tex-ligatures"]
 ---
+
 ```
 
 ## 共有設定
 
-ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML区切り文字、またはYAML区切り文字で囲んでいるoutputオブジェクトは使用されないことに注意してください。例えば：
+ディレクトリ内の複数のドキュメントで共有する既定の設定値を指定する場合は、ディレクトリ内に `_output.yaml` という名前のファイルを含めることができます。このファイルでは、YAML 区切り文字、または YAML 区切り文字で囲んでいる output オブジェクトは使用されないことに注意してください。例えば：
 
 **\_output.yaml**
 
