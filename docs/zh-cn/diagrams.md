@@ -9,7 +9,7 @@
 
 这一特性基于 [flowchart.js](https://flowchart.js.org/)。
 
-- `flow` 代码快中的内容将会被 [flowchart.js](https://flowchart.js.org/) 渲染。
+- `flow` 代码块中的内容将会被 [flowchart.js](https://flowchart.js.org/) 渲染。
 
 ![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
 
@@ -17,7 +17,7 @@
 
 这一特性基于 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/)。
 
-- `sequence` 代码快中的内容将会被 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) 渲染。
+- `sequence` 代码块中的内容将会被 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) 渲染。
 - 支持两个主题 `simple`（默认主题）和 `hand`。
 
 ![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
