@@ -34,7 +34,7 @@
 - [目次](ja-jp/toc.md) 生成
 - [フローチャート/シーケンス図およびその他多くの種類のグラフ](ja-jp/diagrams.md)
 - [LaTeX の埋め込み、TikZ、Chemfig などのレンダリング](ja-jp/code-chunk.md?id=latex)
-- タスクリスト*(Github 形式)*
+- タスクリスト *(GitHub 形式)*
 - Image Helper
 - [脚注](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
 - [フロントマター](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
