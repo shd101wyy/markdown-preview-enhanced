@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = exports.activate = void 0;
-const fs = require("fs");
 const mume = require("@shd101wyy/mume");
 const atom_1 = require("atom");
+const fs = require("fs");
 const path = require("path");
 const config_1 = require("./config");
 const preview_content_provider_1 = require("./preview-content-provider");

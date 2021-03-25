@@ -1,6 +1,6 @@
-import * as fs from "fs";
 import * as mume from "@shd101wyy/mume";
-import { CompositeDisposable, TextBuffer, TextEditor } from "atom";
+import { CompositeDisposable, TextEditor } from "atom";
+import * as fs from "fs";
 import * as path from "path";
 import { MarkdownPreviewEnhancedConfig } from "./config";
 import { MarkdownPreviewEnhancedView } from "./preview-content-provider";
