@@ -44,10 +44,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@shd101wyy/mume@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.npmjs.org/@shd101wyy/mume/-/mume-0.6.4.tgz#2a46022266387a445dda858783320078f3a4e0c5"
-  integrity sha512-LW274cX4C8jwR+XMx+Wmu6bs/t52WwLeZZFsRhGWOGvOndPcegqdCBfdz7GcKmjX+ib0ZELcuentV14kVeIjCA==
+"@shd101wyy/mume@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.npmjs.org/@shd101wyy/mume/-/mume-0.6.5.tgz#d41817e4606bda52d0d0a06530a485737a5ae105"
+  integrity sha512-s6pprTr0zv0Ze8S+jRD/HKfYprwznO6QghetLDV8PPvMzv+qg4dXOAoZJGQGHqcIa92ODt/1HIdM1TVy1/jFiQ==
   dependencies:
     babyparse "^0.4.6"
     cheerio "^1.0.0-rc.3"
