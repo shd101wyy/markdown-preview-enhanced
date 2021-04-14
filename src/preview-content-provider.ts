@@ -90,26 +90,6 @@ export class MarkdownPreviewEnhancedView {
 
     this.webview.addEventListener("dom-ready", () => {
       this._webviewDOMReady = true;
-
-      this.webview.getWebContents().on("before-input-event", (event, input) => {
-        if (input.type !== "keyDown") {
-          return;
-        }
-
-        // Create a fake KeyboardEvent from the data provided
-        const emulatedKeyboardEvent = new KeyboardEvent("keydown", {
-          code: input.code,
-          key: input.key,
-          shiftKey: input.shift,
-          altKey: input.alt,
-          ctrlKey: input.control,
-          metaKey: input.meta,
-          repeat: input.isAutoRepeat,
-        });
-
-        // do something with the event as before
-        this.webviewKeyDown(emulatedKeyboardEvent);
-      });
     });
     this.webview.addEventListener(
       "did-stop-loading",
@@ -347,6 +327,9 @@ export class MarkdownPreviewEnhancedView {
       // const preview = getPreviewForEditor(sourceUri)
       // if (preview) preview.renderMarkdown()
     },
+    keydown(sourceUri, event) {
+      this.webviewKeyDown(event);
+    },
     refreshPreview(sourceUri) {
       this.refreshPreview();
     },
@@ -470,6 +453,9 @@ export class MarkdownPreviewEnhancedView {
         "./image_history.md",
       );
       atom.workspace.open(imageHistoryFilePath);
+    },
+    setPreviewTheme(sourceUri, previewTheme) {
+      atom.config.set("markdown-preview-enhanced.previewTheme", previewTheme);
     },
   };
 
