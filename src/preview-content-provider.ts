@@ -328,8 +328,6 @@ export class MarkdownPreviewEnhancedView {
       // if (preview) preview.renderMarkdown()
     },
     keydown(sourceUri, event) {
-      // tslint:disable-next-line:no-console
-      console.log("keydown: ", event);
       this.webviewKeyDown(event);
     },
     refreshPreview(sourceUri) {
