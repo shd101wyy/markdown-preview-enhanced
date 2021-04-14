@@ -78,23 +78,6 @@ class MarkdownPreviewEnhancedView {
         this.webview.setAttribute("enableremotemodule", "true");
         this.webview.addEventListener("dom-ready", () => {
             this._webviewDOMReady = true;
-            this.webview.getWebContents().on("before-input-event", (event, input) => {
-                if (input.type !== "keyDown") {
-                    return;
-                }
-                // Create a fake KeyboardEvent from the data provided
-                const emulatedKeyboardEvent = new KeyboardEvent("keydown", {
-                    code: input.code,
-                    key: input.key,
-                    shiftKey: input.shift,
-                    altKey: input.alt,
-                    ctrlKey: input.control,
-                    metaKey: input.meta,
-                    repeat: input.isAutoRepeat,
-                });
-                // do something with the event as before
-                this.webviewKeyDown(emulatedKeyboardEvent);
-            });
         });
         this.webview.addEventListener("did-stop-loading", this.webviewStopLoading.bind(this));
         this.webview.addEventListener("ipc-message", this.webviewReceiveMessage.bind(this));
@@ -851,6 +834,11 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         // const preview = getPreviewForEditor(sourceUri)
         // if (preview) preview.renderMarkdown()
     },
+    keydown(sourceUri, event) {
+        // tslint:disable-next-line:no-console
+        console.log("keydown: ", event);
+        this.webviewKeyDown(event);
+    },
     refreshPreview(sourceUri) {
         this.refreshPreview();
     },
@@ -957,6 +945,9 @@ MarkdownPreviewEnhancedView.MESSAGE_DISPATCH_EVENTS = {
         this.activatePaneForEditor();
         const imageHistoryFilePath = path.resolve(mume.getExtensionConfigPath(), "./image_history.md");
         atom.workspace.open(imageHistoryFilePath);
+    },
+    setPreviewTheme(sourceUri, previewTheme) {
+        atom.config.set("markdown-preview-enhanced.previewTheme", previewTheme);
     },
 };
 function isMarkdownFile(sourcePath) {
