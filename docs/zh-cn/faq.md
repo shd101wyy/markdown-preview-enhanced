@@ -13,4 +13,4 @@
    如果你的预览特别卡，那么可能是你的文件太大了，或者用到的数学式，画的图过多。  
    这里我建议关闭 `Live Update` 的功能。可以运行 `Markdown Preview Enhanced: Toggle Live Update` 来关闭（disable）。然后预览就只会在你保存文件的时候刷新了，这样就不会卡了。
 1. **快捷键没用啊？**  
-   <kbd>cmd-shift-p</kbd> 然后选择 `Key Binding Resolver: Toggle`。查看一下有没有快捷键冲突，或者直接给我发个 issue／
+   <kbd>cmd-shift-p</kbd> 然后选择 `Key Binding Resolver: Toggle`。查看一下有没有快捷键冲突，或者直接给我发个 issue。
