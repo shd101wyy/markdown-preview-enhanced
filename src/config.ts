@@ -78,6 +78,7 @@ const ConfigSettings: { [key: string]: (val: any) => any } = {
   pandocArguments: parseListOrDefault([]),
   fileExtension: parseListOrDefault([".md", ".mmark", ".markdown"]),
   puppeteerArgs: parseListOrDefault([]),
+  plantumlServer: copyValue,
 };
 
 export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
@@ -127,6 +128,7 @@ export class MarkdownPreviewEnhancedConfig implements MarkdownEngineConfig {
   public puppeteerWaitForTimeout: number;
   public usePuppeteerCore: boolean;
   public puppeteerArgs: string[];
+  public plantumlServer: string;
 
   /*
    * Extra config for mpe
