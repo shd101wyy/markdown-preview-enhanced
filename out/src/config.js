@@ -73,6 +73,7 @@ const ConfigSettings = {
     pandocArguments: parseListOrDefault([]),
     fileExtension: parseListOrDefault([".md", ".mmark", ".markdown"]),
     puppeteerArgs: parseListOrDefault([]),
+    plantumlServer: copyValue,
 };
 class MarkdownPreviewEnhancedConfig {
     constructor() {

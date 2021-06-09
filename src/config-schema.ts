@@ -474,4 +474,15 @@ Front matter is hidden by default, but you can choose between \`table\` (like [o
     default: "[]",
     order: 102,
   },
+
+  plantumlServer: {
+    title: "PlantUML server",
+    description: `Render using PlantUML server instead of binary. Leave it empty to use the builtin plantuml.jar binary (\`java\` is required in system path). 
+Eg: "http://localhost:8080/svg/"
+    
+**⚠️ You need to restart your editor to make this take effect.**`,
+    type: "string",
+    default: "",
+    order: 110,
+  },
 };
