@@ -27,7 +27,7 @@
 Markdown Preview Enhanced 使用 [mermaid](https://github.com/knsv/mermaid) 来渲染流程图和时序图。
 
 - `mermaid` 代码块中的内容将会渲染 [mermaid](https://github.com/knsv/mermaid) 图像。
-- 查看 [mermaid 文档](https://knsv.github.io/mermaid/#flowcharts-basic-syntax) 了解更多如果创建图形。
+- 查看 [mermaid 文档](https://mermaid-js.github.io/mermaid) 了解更多如果创建图形。
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
 三个 mermaid 主题是支持的，并且你可以在 [插件设置](zh-cn/usages.md?id=package-settings) 中设置主题：
@@ -69,7 +69,7 @@ Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 来
 
 ## Vega 和 Vega-lite
 
-Markdown Preview Enhanced 支持 [vega](https://vega.github.io/vega/) 以及 [vega-lite](https://vega.github.io/vega-lite/) 的**静态**图像.
+Markdown Preview Enhanced 支持 [vega](https://vega.github.io/vega/) 以及 [vega-lite](https://vega.github.io/vega-lite/) 的**静态**图像。
 
 - `vega` 代码块中的内容将会被 [vega](https://vega.github.io/vega/) 渲染。
 - `vega-lite` 代码块中的内容将会被 [vega-lite](https://vega.github.io/vega-lite/) 渲染。
@@ -138,7 +138,7 @@ Markdown Preview Enhanced 支持 [ditaa](https://github.com/stathissideris/ditaa
 
 例如：
 
-    ```mermaid {filename="我的mermaid.png"}
+    ```mermaid {filename="我的 mermaid.png"}
     ...
     ```
 
