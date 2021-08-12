@@ -25,6 +25,7 @@ Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed s
 - StammReto
 - SomuahHenry
 - [Youqing](https://github.com/hanyouqing)
+- [LifeDigitalWiki](https://lifedigitalwiki.org)
 
 ---
 
