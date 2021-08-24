@@ -245,8 +245,8 @@ Content [^1]
 ### Abbreviation
 
 ```markdown
-*[HTML]: Hyper Text Markup Language
-*[W3C]: World Wide Web Consortium
+_[HTML]: Hyper Text Markup Language
+_[W3C]: World Wide Web Consortium
 The HTML specification
 is maintained by the W3C.
 ```
@@ -271,6 +271,15 @@ There are five types of Critic marks:
 - Highlight `{== ==}{>> <<}`
 
 > CriticMarkup only works with the markdown-it parser, but not the pandoc parser.
+
+### Admonition
+
+```
+!!! note This is the admonition title
+    This is the admonition body
+```
+
+> Please see more information at https://squidfunk.github.io/mkdocs-material/reference/admonitions/
 
 ## References
 

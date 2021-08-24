@@ -272,6 +272,15 @@ CriticMarkup 缺省是禁用的，你可以通過插件設置來啟動它。
 
 > CriticMarkup 僅可用於 markdown-it parser，不與 pandoc parser 兼容。
 
+### Admonition
+
+```
+!!! note This is the admonition title
+    This is the admonition body
+```
+
+> 请在 https://squidfunk.github.io/mkdocs-material/reference/admonitions/ 查看更多信息
+
 ## 參考
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
