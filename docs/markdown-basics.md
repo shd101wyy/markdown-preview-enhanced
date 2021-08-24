@@ -272,6 +272,15 @@ There are five types of Critic marks:
 
 > CriticMarkup only works with the markdown-it parser, but not the pandoc parser.
 
+### Admonition
+
+```
+!!! note This is the admonition title
+    This is the admonition body
+```
+
+> Please see more information at https://squidfunk.github.io/mkdocs-material/reference/admonitions/
+
 ## References
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

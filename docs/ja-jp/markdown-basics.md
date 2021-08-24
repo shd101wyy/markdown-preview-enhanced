@@ -271,6 +271,15 @@ Critic Mark には 5 つのタイプがあります。
 
 > CriticMarkup は markdown-it parser でのみ機能し、pandoc parser では機能しません。
 
+### Admonition
+
+```
+!!! note This is the admonition title
+    This is the admonition body
+```
+
+> 詳細については、https：//squidfunk.github.io/mkdocs-material/reference/admonitions/をご覧ください。
+
 ## リファレンス
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
