@@ -283,28 +283,6 @@ function activate(state) {
                 atom_mpe_version: packageVersion,
             });
             fs.writeFileSync(path.resolve(mume.getExtensionConfigPath(), "config.json"), JSON.stringify(mpeConfig));
-            if (!mume.configs.config["atom_mpe_version"]) {
-                const noty = atom.notifications.addInfo("If you like using markdown-preview-enhanced, please consider sponsoring the developer to help make this project better 😊.", {
-                    dismissable: true,
-                    buttons: [
-                        {
-                            text: "Open GitHub Sponsors",
-                            onDidClick: () => {
-                                mume.utility.openFile("https://github.com/sponsors/shd101wyy");
-                                noty.dismiss();
-                            },
-                        },
-                        {
-                            text: "I already sponsored",
-                            onDidClick: () => {
-                                mpeConfig["already_sponsored"] = true;
-                                fs.writeFileSync(path.resolve(mume.getExtensionConfigPath(), "config.json"), JSON.stringify(mpeConfig));
-                                noty.dismiss();
-                            },
-                        },
-                    ],
-                });
-            }
         }
     });
 }
