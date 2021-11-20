@@ -11,7 +11,7 @@
 <p align="center">
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br><br>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 繁體中文 &nbsp;&nbsp; </a> <br><br>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/backers">Support this project!</a>
 </p>
 

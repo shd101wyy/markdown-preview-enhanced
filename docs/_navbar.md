@@ -1,5 +1,5 @@
 - Language / 语言
   - [English](/)
   - [简体中文](/zh-cn/)
-  - [正體中文](/zh-tw/)
+  - [繁體中文](/zh-tw/)
   - [日本語](/ja-jp/)
