@@ -27,7 +27,7 @@ This feature is powered by [js-sequence-diagrams](https://bramp.github.io/js-seq
 Markdown Preview Enhanced uses [mermaid](https://github.com/knsv/mermaid) to render flow charts and sequence diagram.
 
 - code block with `mermaid` notation will be rendered by [mermaid](https://github.com/knsv/mermaid).
-- check [mermaid doc](https://mermaidjs.github.io/#/flowchart?id=flowcharts-basic-syntax) for more information about how to create flowchart and sequence diagram
+- check [mermaid doc](https://mermaid-js.github.io/mermaid) for more information about how to create flowchart and sequence diagram
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
 Three mermaid themes are provided, and you can choose theme from [package settings](usages.md?id=package-settings):

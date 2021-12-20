@@ -27,10 +27,10 @@
 Markdown Preview Enhanced は、[mermaid](https://github.com/knsv/mermaid) を使用して、フローチャートとシーケンス図をレンダリングします。
 
 - `mermaid` 表記のコードブロックは [mer​​maid](https://github.com/knsv/mermaid) によってレンダリングされます。
-- フローチャートとシーケンス図の作成方法の詳細については、[mermaid doc](https://mermaidjs.github.io/#/flowchart?id=flowcharts-basic-syntax) を参照してください
+- フローチャートとシーケンス図の作成方法の詳細については、[mermaid doc](https://mermaid-js.github.io/mermaid) を参照してください
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
-3 種類のテーマが提供されており、[package settings](ja-jp/usages.md?id=package-settings) からテーマを選択できます:
+3 種類のテーマが提供されており、[package settings](ja-jp/usages.md?id=package-settings) からテーマを選択できます：
 
 - `mermaid.css`
 - `mermaid.dark.css`
@@ -78,7 +78,7 @@ Markdown Preview Enhanced は、[vega](https://vega.github.io/vega/) および [
 ![screen shot 2017-07-28 at 7 59 58 am](https://user-images.githubusercontent.com/1908863/28718265-d023e1c2-736a-11e7-8678-a29704f3a23c.png)
 
 `JSON` または `YAML` ファイルを `vega` ダイアグラムとして [@import](ja-jp/file-imports.md) することもできます。
-例:
+例：
 
 ```markdown
 @import "your_vega_source.json" {as="vega"}
@@ -124,7 +124,7 @@ Markdown Preview Enhanced は、[ditaa](https://github.com/stathissideris/ditaa)
 ---
 
 ダイアグラムのコンテナの属性を設定できます。
-例:
+例：
 
     ```puml {align="center"}
     a->b
@@ -137,7 +137,7 @@ Markdown Preview Enhanced は、[ditaa](https://github.com/stathissideris/ditaa)
 markdown ファイルを [GFM Markdown](ja-jp/markdown.md) にエクスポートすると、ダイアグラムはパッケージ設定で定義された `imageFolderPath` に png 画像として保存されます。
 `{filename ="your_file_name.png"}` を宣言することで、エクスポートされる画像のファイル名を制御できます。
 
-例:
+例：
 
     ```mermaid {filename="my_mermaid.png"}
     ...
