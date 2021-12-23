@@ -13,4 +13,7 @@ Open **vscode** editor, then search `markdown-preview-enhanced` in `Extensions`,
 - Download `markdown-preview-enhanced-*.vsix` file from [Releases](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases).
 - Open **vscode**, run `Extension: Install from VSIX`, then choose the `*.vsix` file you just downloaded.
 
+## DevContainer Setup
+[DocuKit](https://github.com/logwolvy/docukit) allows for seamless/out-of-box experience without manual installation of MPE and required dependencies.
+
 [➔ Usages](usages.md)
