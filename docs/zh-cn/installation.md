@@ -36,7 +36,7 @@ apm install check
 > 运行如下命令使用淘宝镜像安装 npm：
 >
 > ```bash
-> npm install -g cnpm --registry=https://registry.npm.taobao.org
+> npm install -g cnpm --registry=https://registry.npmmirror.com
 > ```
 >
 > 可以通过`cnpm -v`查看版本命令查看是否安装成功。
@@ -46,7 +46,7 @@ apm install check
 > 打开 `.atomrc` 文件（如不存在请自行创建），输入如下内容并保存
 >
 > ```
-> registry=https://registry.npm.taobao.org
+> registry=https://registry.npmmirror.com
 > strict-ssl = false
 > ```
 
