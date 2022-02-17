@@ -33,43 +33,44 @@
 
 ## 0.14.7
 
-- Fixed revealjs html export style bug.
-- Supported configuring attributes for diagram **containers**.
-  For example:
+- revealjs html 내보내기 스타일 버그 수정.
+- diagram의 설정 속성 **containers** 지원.
+  예제:
 
           ```puml {.center}
           // your code here
           ```
       will add `class="center"` to the container.
 
-- By default, all exported files will use `github-light.css` style. You can use your preview theme for export by setting `printBackground` to `true` from the extension settings, or add `print_background:true` to front-matter.
+- 기본값으로, 모든 내보내기 파일은 `github-light.css` 스타일 사용. 미리보기 테마를 내보내기에 사용하려면 `printBackground` 설정을 `true`로 지정하거나 `print_background:true` 를 front-matter에 추가.
 
 ## 0.14.6
 
 - Supported quick image upload. Just drop your image file to markdown editor (not preview).
+- 빠른 이지미 업로드 지원. (프리뷰 화면이 아님) markdown editor에 이미지 파일을 드래그앤 드롭 
 
 ![upload](https://i.loli.net/2017/08/07/5987db34cb33c.gif)
 
-- Fixed HTML export style bug.
+- HTML 내보내기 스타일 버그 수정.
 
 ## 0.14.5
 
-- The old feature [WaveDrom diagram](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=wavedrom) is now supported again.
-- The doc of customization css is updated, please [check it here](https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css).
-- Sidebar TOC is now supported in HTML export, and it is enabled by default.
+- 이전에 지원하였던 [WaveDrom diagram](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=wavedrom) 기능을 다시 지원.
+- 사용자 정의 css 문서 업데이트 [check it here](https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css).
+- Sidebar TOC가 HTML 내보내기에서 지원. 기본적으로 활성화 되어 있음.
   ![screen shot 2017-08-05 at 8 50 16 pm](https://user-images.githubusercontent.com/1908863/28999904-c40b56b6-7a1f-11e7-9a9e-ab2e19a82b41.png)
 
-  You can configure the sidebar TOC by front-matter. For more information, please check [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/html?id=configuration).
+  sidebar TOC 를 front-matter를 통해서 설정할 수 있음. 상세 정보는 [this doc](https://shd101wyy.github.io/markdown-preview-enhanced/#/html?id=configuration).
 
-- Upgraded [mume](https://github.com/shd101wyy/mume) to version [0.1.7](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
+- [mume](https://github.com/shd101wyy/mume) 업그레이드 버전 [0.1.7](https://github.com/shd101wyy/mume/blob/master/CHANGELOG.md).
 
 ## 0.14.4
 
-- Deprecated the old way of defining attributes (still supported but not recommended) [#529](https://github.com/shd101wyy/markdown-preview-enhanced/issues/529). Now attributes should be defined like below in order to be compatible with the pandoc parser:
+- 속성을 정의하는 이전 방식을 삭제 (아직 지원하지만, 사용하지 않기를 권함) [#529](https://github.com/shd101wyy/markdown-preview-enhanced/issues/529). 지금 부터 속성은 다음과 같은 순서로 정의하여 pandoc parsor와 호환성을 유지하도록 한다:
 
         {#identifier .class .class key=value key=value}
 
-  And here are a few changes:
+  몇가지 변경된 사례:
 
         # Hi {#id .class1 .class2}
 
@@ -86,26 +87,26 @@
 
         \@import "test.png" {width=50% height=30%}
 
-- Added a few more preview themes.
-- Supported [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/). [#524](https://github.com/shd101wyy/markdown-preview-enhanced/issues/524).
+- 미리보기 테마 추가. 
+- [vega](https://vega.github.io/vega/) 와 [vega-lite](https://vega.github.io/vega-lite/) 지원. [#524](https://github.com/shd101wyy/markdown-preview-enhanced/issues/524).
 
-  - Code block with `vega` notation will be rendered by [vega](https://vega.github.io/vega/).
-  - Code block with `vega-lite` notation will be rendered by [vega-lite](https://vega.github.io/vega-lite/).
-  - Both `JSON` and `YAML` inputs are supported.
+  - `vega` 형식의 코드 블럭 렌더링이 가능 [vega](https://vega.github.io/vega/).
+  - `vega-lite` 형식의 코드 블럭 렌더링이 가능  [vega-lite](https://vega.github.io/vega-lite/).
+  - `JSON` 과 `YAML` 입력을 지원.
 
   ![screen shot 2017-07-28 at 7 59 58 am](https://user-images.githubusercontent.com/1908863/28718265-d023e1c2-736a-11e7-8678-a29704f3a23c.png)
 
-  You can also [@import](https://shd101wyy.github.io/markdown-preview-enhanced/#/file-imports) a `JSON` or `YAML` file as `vega` diagram, for example:
+  파일 가져오기에서 [@import](https://shd101wyy.github.io/markdown-preview-enhanced/#/file-imports) `JSON` 또는 `YAML` 파일을 `vega` 그림으로 가져올 수 있음, 예:
 
 <pre>
     \@import "your_vega_source.json" {as="vega"}
     \@import "your_vega_lite_source.json" {as="vega-lite"}
 </pre>
 
-- Supported [ditaa](https://github.com/stathissideris/ditaa).
-  ditaa can convert diagrams drawn using ascii art ('drawings' that contain characters that resemble lines like | / - ), into proper bitmap graphics. (**Java** is required to be installed)
+- [ditaa](https://github.com/stathissideris/ditaa) 지원.
+  ditaa 를 이용하여 도표를 ascii art로 그릴 수 있음 ('drawings' 그림의 선들은 미슷한 문자로 대체됨 | / - ). (**Java** 가 사전에 설치되어 있어야 함)
 
-  `ditaa` is integrated with [code chunk](https://shd101wyy.github.io/markdown-preview-enhanced/#/code-chunk), for example:
+  `ditaa`가 [code chunk](https://shd101wyy.github.io/markdown-preview-enhanced/#/code-chunk)와 통합됨. 예:
 
   <pre>
     ```ditaa {cmd=true args=["-E"]}
@@ -121,15 +122,15 @@
     ```
   </pre>
 
-> <kbd>shift-enter</kbd> to run code chunk.
-> set `{hide=true}` to hide code block.
-> set `{run_on_save=true}` to render ditaa when you save the markdown file.
+> <kbd>shift-enter</kbd> 로 code chunk 실행.
+> `{hide=true}` 설정하여 code block 숨기기.
+> `{run_on_save=true}` 설정하여  markdown 파일을 저장할때 ditaa를 렌더링.
 
 ![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
 
 ## 0.14.3
 
-- Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.4`.
+- 업그레이드 [mume](https://github.com/shd101wyy/mume) 버전 `0.1.4`.
   - 수정 header id 버그 [#516](https://github.com/shd101wyy/markdown-preview-enhanced/issues/516).
   - 수정 `enableExtendedTableSyntax` 버그.
   - 수정 `MathJax` 초기화 에러 [#28](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/28), [#504](https://github.com/shd101wyy/markdown-preview-enhanced/issues/504).
@@ -140,14 +141,14 @@
 
 - 업그레이드 [mume](https://github.com/shd101wyy/mume) 버전 `0.1.3`.
 
-  - Fixed pandoc export bug on Windows.
-  - Fixed markdown export bug. Added `ignore_from_front_matter` option in `markdown` field. Removed `front_matter` option from `markdown` field.
-  - Added `latexEngine` and `enableExtendedTableSyntax` config options. Now supporting merging table cells (disabled by default. Could be enabled from settings).
+  - Windows에서 pandoc 내보내기 버그 수정.
+  - markdown 내보내기 버그 수정. `ignore_from_front_matter` 옵션이 `markdown` 필드에 추가됨. `front_matter`가 `markdown` 필드에서 삭제됨.
+  - `latexEngine` 와 `enableExtendedTableSyntax` 설정 옵션이 추가됨. 표의 셀 합치기가 지원됨. (초기값은 비활성. 사용하려면 설정에서 활성화 해야 함).
     [#479](https://github.com/shd101wyy/markdown-preview-enhanced/issues/479), [#133](https://github.com/shd101wyy/markdown-preview-enhanced/issues/133).
 
   ![screen shot 2017-07-15 at 8 16 45 pm](https://user-images.githubusercontent.com/1908863/28243710-945e3004-699a-11e7-9a5f-d74f6c944c3b.png)
 
-  - Supported `export_on_save` front-matter that exports files when you save your markdown file. However, `phantomjs`, `prince`, `pandoc`, `ebook` are not recommended for `export_on_save` because it's too slow.
+  - `export_on_save` front-matter를 지원하여 markdown 파일을 저장할때 동시에 파일 내보내기 지원. 하지만, `phantomjs`, `prince`, `pandoc`, `ebook` 에서는 `export_on_save` 사용하면 너무 느려지는 단점이 있음.
 
   eg:
 
@@ -163,42 +164,42 @@
   ---
   ```
 
-  - Added `embed_svg` front-matter option for HTML export, which is enabled by default.
+  - HTML 내보내기에 `embed_svg` front-matter 옵션 추가. 기본적으로 활성화 되어 있음.
 
-* Now preview is rendered using electron `webview` instead of `iframe`. Fixed issue [#500](https://github.com/shd101wyy/markdown-preview-enhanced/issues/500).
+* 미리보기가 electron `webview`를 사용하여 렌더링 됨. 더이상 `iframe` 사용되지 않음. 이슈 수정 [#500](https://github.com/shd101wyy/markdown-preview-enhanced/issues/500).
 
 ## 0.14.1
 
-- Upgraded [mume](https://github.com/shd101wyy/mume) to version `0.1.2`.
-  - Switched the default markdown parser from `remarkable` to `markdown-it`.
-  - Fixed pandoc export front-matter not included bug.
-  - Fixed `bash` language highlighting bug.
-  - Fixed phantomjs export task list bug.
-  - Upgraded `webview.ts` script for preview. Now both Atom and VS Code versions share the same preview logic.
-  - Removed several redundant dependencies.
+- [mume](https://github.com/shd101wyy/mume) 업그레이드 버전 `0.1.2`.
+  - 기본 마크다운 파서를 `remarkable` 에서 `markdown-it`로 변경.
+  - pandoc 내보내기에서 front-matter 포함한되는 버그 수정.
+  - `bash` language highlighting 버그 수정.
+  - phantomjs 작업 리스트 내보내기 버그 수정.
+  - `webview.ts` 스크립트 업그레이드. Atom 과 VS Code 동일한 디스플레이 로직 사용.
+  - 중복된 의존성 제거.
 
 ## 0.14.0
 
-- Fully rewritten in TypeScript, so there might be some potential bugs.
-- Now powered by [Mume](https://github.com/shd101wyy/mume) project. The Atom version of this package shares the same core with the vscode version.
-- Multiple new preview themes and code block themes are provided.
+- TypeScript로 전체를 다시 작성하여 잠재적인 버그가 감소될 것으로 예상됨. 
+- [Mume](https://github.com/shd101wyy/mume) 프로젝트의 지원을 받음. Atom 버전과 vscode 버전이 동일한 코어를 사용.
+- 여러개의 미리보기 테마와 코드 블럭 테마를 지원.
 
   - Github Light
     ![screen shot 2017-07-14 at 12 58 37 pm](https://user-images.githubusercontent.com/1908863/28224323-4899d896-6894-11e7-823a-233ee433d832.png)
   - Night
     ![screen shot 2017-07-14 at 12 59 04 pm](https://user-images.githubusercontent.com/1908863/28224327-4b0f77a2-6894-11e7-8133-99a2d04172a4.png)
 
-- New presentation mode design, all reveal.js official themes are supported.
+- 새로운 프레젠테이션 모드 디자인, 모든 reaveal.js 공식 테마가 지원됨.
 
 ![screen shot 2017-07-14 at 12 33 14 pm](https://user-images.githubusercontent.com/1908863/28223480-2c61461c-6891-11e7-9389-5adec0588c32.png)
 
-- Much easier to customize css. The `.markdown-preview-enhanced.markdown-preview-enhanced` is now deprecated. You can simply write your styles inside `html body`.
+- 사용자 지정 css 사용하기 쉽도록 변경. `.markdown-preview-enhanced.markdown-preview-enhanced` 기능은 삭제되고, 단지 `html body`에 스타일을 작성할 수 있음.
   [Customize CSS Tutorial](https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css).
 
-- Code chunk syntax change. You have to define `cmd` property to declare a code chunk, and `id` is no longer required. The new syntax is like below:
+- Code chunk의 문법 변경, code chunk를 적절하게 선언하기 위해서는 `cmd` 정의가 필요하며, `id`는 더이상 필요하지 않음. 새로운 문법 예제:
 
       ```python {cmd:true}
       print("Hi There")
       ```
 
-- And many more, please go check the [project website](https://shd101wyy.github.io/markdown-preview-enhanced).
+- 상세한 정보는 [project website](https://shd101wyy.github.io/markdown-preview-enhanced).
