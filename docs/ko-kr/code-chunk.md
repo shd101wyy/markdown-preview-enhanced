@@ -51,7 +51,7 @@ code chunk 옵션은 <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}
     print("This will run python3 program")
     ```
 
-**출력**
+**output**
 `html`, `markdown`, `text`, `png`, `none`
 
 어느 형식으로 코드의 출력을 렌더링 할 지 정의한다.
