@@ -2,7 +2,7 @@
 
 ## Atom용 패키지 개발
 
-부담없이 pull request, issues 보고하거나 새로운 기능 요청을 요청 해주기 바란다!
+부담없이 pull request, issues 보고하거나 새로운 기능 요청을 해주기 바란다!
 
 **markdown-preview-enhanced**를 수정하고 개발하려면 [local installation](installation.md?id=install-from-github) 이 필요하다.
 
