@@ -1,4 +1,4 @@
-# Table of content
+# Table of content (목차)
 
 **Markdown Preview Enhanced**는 markdown파일에 대해 `TOC`를 만들 수있다.
 <kbd>cmd-shift-p</kbd>를 누른 후 `Markdown Preview Enhanced: Create Toc` 
