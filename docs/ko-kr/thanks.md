@@ -1,7 +1,7 @@
 # 감사
 
 이 패키지는 많은 사용자와 후원자의 지원과 도움 없이는 존재하지 못했을 것입니다.<br></br>
-이 프로젝트를 가능하게 하는 아래의 라이브러리에 특별한 감사를 표합니다.<br></br>
+이 프로젝트를 가능하게 해준 아래의 라이브러리에 특별한 감사를 표합니다.<br></br>
 - [markdown-it](https://github.com/markdown-it/markdown-it) - 마크다운 구문분석이 제대로 실행되었다. 100% CommonMark 지원, 확장, 구문 플러그인, 고속화.
 - [KaTeX](https://github.com/KaTeX/KaTeX) - 웹용 고속 수학 식자.
 - [MathJax](https://github.com/mathjax/MathJax) - 모든 브라우저에서 아름다운 수학.
