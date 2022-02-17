@@ -34,7 +34,7 @@
 ## 형식
 
 code chunk 옵션은 <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}</code>형식으로 설정할 수 있다.
-만약 속성의 값이 true 의 경우는, 생략할 수 있다. (예: {cmd hide} 는 {cmd=true hide=true} 와 동일).
+만약 속성의 값이 `true`의 경우는, 생략할 수 있다. (예: `{cmd hide}` 는 `{cmd=true hide=true}` 와 동일).
 
 **lang**
 코드블록이 사용하는 문법이다. (ex. python ) 가장 앞에 위치해야한다.
