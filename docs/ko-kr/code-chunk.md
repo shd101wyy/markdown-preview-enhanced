@@ -146,8 +146,8 @@ code chunk의 `id` 이다. 해당 옵션은 `continue`를 사용할 때 유용�
 
 ## Matplotlib
 
-`matplotlib=true`으로 설정하면 파이썬 코드 청크가 미리보기에서 플롯 그래프를 인라인으로 출력한다.
-예시:
+`matplotlib=true`으로 설정하면 파이썬 Code Chunk가 미리보기에서 그래프를 그려 인라인으로 출력한다.
+예:
 
     ```python {cmd=true matplotlib=true}
     import matplotlib.pyplot as plt
