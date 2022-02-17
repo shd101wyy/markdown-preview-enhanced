@@ -41,8 +41,6 @@ Heading 2는 하이퍼 사용이 불가능해진다.
 
 `[TOC]` sidebar TOC는 front-matter를 써서 구현할 수 있다.
 
-`[TOC]`
-
 ```markdown
 ---
 toc:
