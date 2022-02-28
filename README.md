@@ -12,7 +12,9 @@
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 繁體中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/"> 日本語 &nbsp;&nbsp; </a> <br>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/"> 日本語 &nbsp;&nbsp; </a> 
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/"> 한국어 &nbsp;&nbsp; </a> 
+<br>
 </p>
 
 <p align="center">

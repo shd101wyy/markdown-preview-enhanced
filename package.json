@@ -41,6 +41,7 @@
   "scripts": {
     "build": "tsc --project .",
     "build:watch": "tsc --project . --watch",
+    "docsify": "docsify serve ./docs",
     "fix": "yarn fix:tslint; yarn fix:prettier; yarn fix:yarn-deduplicate",
     "fix:prettier": "prettier --write \"**/*.*\"",
     "fix:tslint": "tslint --project .",
@@ -74,6 +75,7 @@
     "@types/vfile": "^4.0.0",
     "@types/vscode": "1.40.0",
     "chinese-conv": "^1.0.1",
+    "docsify-cli": "^4.4.3",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
