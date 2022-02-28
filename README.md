@@ -57,6 +57,7 @@ To check out the documentation, visit
 - [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/)
 - [繁體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/)
 - [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/)
+- [한국어](https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/)
 
 Contact me if you are willing to help translate the documentation :)
 
