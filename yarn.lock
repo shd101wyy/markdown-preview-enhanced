@@ -44,10 +44,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@shd101wyy/mume@^0.6.9":
-  version "0.6.9"
-  resolved "https://registry.npmjs.org/@shd101wyy/mume/-/mume-0.6.9.tgz#e4a4fcb29909d31f7fd10659079d46845e47e69f"
-  integrity sha512-Ni6ihstTyACuQ3Q306rJV3Q9dOoBeMf1sNGORydAekw4V4nQ7XE1h6X2G5UTrvkOeQtVHHqq+NEH6/deEXz9Ew==
+"@shd101wyy/mume@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/@shd101wyy/mume/-/mume-0.7.0.tgz#47298502190793db0cc2fd0f4c81d15651360331"
+  integrity sha512-yWDfumZzp6WAyNRMq2vTRNjlYRyAR9uJBeA28+LsaMphOmAvKZ4NMa2d6CvCGJGb84ge3W7m8I8mjYKGADJcLw==
   dependencies:
     babyparse "^0.4.6"
     cheerio "1.0.0-rc.3"
@@ -64,7 +64,7 @@
     request "^2.88.0"
     slash "^2.0.0"
     temp "^0.9.0"
-    twemoji "^12.1.5"
+    twemoji "^13.1.0"
     uslug "^1.0.4"
     vega-loader "^4.1.0"
     yamljs "^0.3.0"
@@ -2331,19 +2331,19 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-twemoji-parser@12.1.3:
-  version "12.1.3"
-  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-12.1.3.tgz#916c0153e77bd5f1011e7a99cbeacf52e43c9371"
-  integrity sha512-ND4LZXF4X92/PFrzSgGkq6KPPg8swy/U0yRw1k/+izWRVmq1HYi3khPwV3XIB6FRudgVICAaBhJfW8e8G3HC7Q==
+twemoji-parser@13.1.0:
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/twemoji-parser/-/twemoji-parser-13.1.0.tgz#65e7e449c59258791b22ac0b37077349127e3ea4"
+  integrity sha512-AQOzLJpYlpWMy8n+0ATyKKZzWlZBJN+G0C+5lhX7Ftc2PeEVdUU/7ns2Pn2vVje26AIZ/OHwFoUbdv6YYD/wGg==
 
-twemoji@^12.1.5:
-  version "12.1.6"
-  resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-12.1.6.tgz#3425427627a38ab5cae24e7690cecb691022479f"
-  integrity sha512-FIKi9Jne5IiDGDWekoANJ1a8ltUKVbJLEIR8XUpbFRDMqIPgLWnYgjeWZ1KOrdiTztRCAa9x4v+5w5OuiJOGVw==
+twemoji@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/twemoji/-/twemoji-13.1.0.tgz#65bb71e966dae56f0d42c30176f04cbdae109913"
+  integrity sha512-e3fZRl2S9UQQdBFLYXtTBT6o4vidJMnpWUAhJA+yLGR+kaUTZAt3PixC0cGvvxWSuq2MSz/o0rJraOXrWw/4Ew==
   dependencies:
     fs-extra "^8.0.1"
     jsonfile "^5.0.0"
-    twemoji-parser "12.1.3"
+    twemoji-parser "13.1.0"
     universalify "^0.1.2"
 
 type-check@~0.3.2:

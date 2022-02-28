@@ -9,12 +9,12 @@ arr: [1, 2, 3]
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 <!-- code_chunk_output -->
 
-* [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
-	* [Heading 2](#heading-2)
-		* [Heading 3](#heading-3)
-			* [Heading 4](#heading-4)
-				* [Heading 5](#heading-5)
-					* [Heading 6](#heading-6)
+- [This is Markdown Preview with KaTeX Support](#this-is-markdown-preview-with-katex-support)
+  - [Heading 2](#heading-2)
+    - [Heading 3](#heading-3)
+      - [Heading 4](#heading-4)
+        - [Heading 5](#heading-5)
+          - [Heading 6](#heading-6)
 
 <!-- /code_chunk_output -->
 <!--prettier-ignore-end -->
@@ -26,6 +26,7 @@ arr: [1, 2, 3]
 - write within $\$\$...\$\$$ to render in display mode
   - $$ \frac{1}{3} + 3x + 4y + \sum_{i=0}^{n}i$$
   - $sin(x) = 1$
+- Chemistry $\ce{CO2 + C -> 2 CO}$
 
 ## Heading 2
 
