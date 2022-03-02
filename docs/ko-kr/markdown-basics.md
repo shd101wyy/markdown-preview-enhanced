@@ -287,4 +287,4 @@ Critic 표시의 5가지 유형:
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 - [Daring Fireball: Markdown Basics](https://daringfireball.net/projects/markdown/basics)
 
-[➔ Math](math.md)
+[➔ Math](ko-kr/math.md)

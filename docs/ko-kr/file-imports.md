@@ -90,4 +90,4 @@ Markdown Preview Enhanced는 로컬 및 온라인 PDF 파일 가져오기를 지
 @import "test.py" {cmd="python3"}
 ```
 
-[➔ Code Chunk](code-chunk.md)
+[➔ Code Chunk](ko-kr/code-chunk.md)

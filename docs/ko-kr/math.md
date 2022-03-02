@@ -11,8 +11,8 @@ KaTeX는 MathJax보다 빠르지만, MathJax에 비해 가지고 있는 기능 �
 
 ![](https://cloud.githubusercontent.com/assets/1908863/14398210/0e408954-fda8-11e5-9eb4-562d7c0ca431.gif)
 
-수식 렌더링 방법 선택 및 산술 구분 기호를 변경은 [패키지 설정 패널](usages.md?id=package-settings) 에서 확인할 수 있다.
+수식 렌더링 방법 선택 및 산술 구분 기호를 변경은 [패키지 설정 패널](ko-kr/usages.md?id=package-settings) 에서 확인할 수 있다.
 
 또한, MathJax 구성을 수정할 수 있는데, 이는 <kbd>cmd-shift-p</kbd>를 누른 뒤 `Markdown Preview Enhanced: Open Mathjax config` 명령을 실행시키면 된다.
 
-[➔ Diagrams](diagrams.md)
+[➔ Diagrams](ko-kr/diagrams.md)

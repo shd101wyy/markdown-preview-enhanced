@@ -40,7 +40,7 @@ markdown 파일의 css를 사용자 정의 하려면, <kbd>cmd-shift-p</kbd> 다
 ## Local style
 
 Markdown Preview Enhanced 에서는 각각의 markdown 파일에 대해 style을 정의할 수도 있다.  
-`id` 와 `class` 를 파일의 front-matter에 설정할 수 있다. 그리고 markdown 파일에 `less` 또는 `css` 파일을 [import](file-imports.md) 할 수 있다:
+`id` 와 `class` 를 파일의 front-matter에 설정할 수 있다. 그리고 markdown 파일에 `less` 또는 `css` 파일을 [import](ko-kr/file-imports.md) 할 수 있다:
 
 ```markdown
 ---

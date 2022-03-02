@@ -13,4 +13,4 @@
 - [Releases](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases) 에서 `markdown-preview-enhanced-*.vsix` 파일을 다운로드한다.
 - **vscode** 를 열고, `Extension: Install from VSIX` 를 실행한 다음, 방금 다운로드한 `*.vsix` 파일을 선택한다.
 
-[➔ 사용법](usages.md)
+[➔ 사용법](ko-kr/usages.md)

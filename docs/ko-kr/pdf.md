@@ -23,4 +23,4 @@
 
 ---
 
-[puppeteer](puppeteer.md) 또는 [prince](prince.md)로 PDF 파일을 생성할 수도 있습니다
+[puppeteer](ko-kr/puppeteer.md) 또는 [prince](ko-kr/prince.md)로 PDF 파일을 생성할 수도 있습니다

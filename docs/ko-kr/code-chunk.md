@@ -160,7 +160,7 @@ code chunk의 `id` 이다. 해당 옵션은 `continue`를 사용할 때 유용�
 ## LaTeX
 
 Markdown Preview Enhanced 는 `LaTeX` 컴파일을 지원한다.
-이 기능을 사용하기 위해서는 [pdf2svg](extra.md?id=install-svg2pdf) 와 [LaTeX engine](extra.md?id=install-latex-distribution) 이 설치되어있어야한다.
+이 기능을 사용하기 위해서는 [pdf2svg](ko-kr/extra.md?id=install-svg2pdf) 와 [LaTeX engine](ko-kr/extra.md?id=install-latex-distribution) 이 설치되어있어야한다.
 다음과 같이 코드청크에 LaTeX를 작성할 수 있다. 예시:
 
     ```latex {cmd=true}
@@ -197,7 +197,7 @@ Markdown Preview Enhanced 는 [Plotly](https://plot.ly/) 를 쉽게 그릴 수 �
 예제:
 ![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
-- 첫번째 줄 `@import "https://cdn.plot.ly/plotly-latest.min.js"` 은 [file import](file-imports.md) 기능을 이용하여  `plotly-latest.min.js` 파일을 가져왔다.
+- 첫번째 줄 `@import "https://cdn.plot.ly/plotly-latest.min.js"` 은 [file import](ko-kr/file-imports.md) 기능을 이용하여  `plotly-latest.min.js` 파일을 가져왔다.
   물론, 더 좋은 성능을 위해서는 로컬 디스크에 javascript 파일을 다운로드 하는 것이 낫다.
 - 위의 예시와 같이 `javascript` 코드 청크를 만들었다.
 
@@ -245,4 +245,4 @@ Markdown Preview Enhanced 는 [Plotly](https://plot.ly/) 를 쉽게 그릴 수 �
 - 아직 `ebook` 출력에서 작동하지 않는다.
 - `pandoc document export`를 사용할 때 버그가 있을 수 있다.
 
-[➔ 프레젠테이션](presentation.md)
+[➔ 프레젠테이션](ko-kr/presentation.md)

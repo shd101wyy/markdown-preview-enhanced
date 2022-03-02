@@ -189,4 +189,4 @@ presentation:
 }
 ```
 
-[➔ Pandoc](pandoc.md)
+[➔ Pandoc](ko-kr/pandoc.md)

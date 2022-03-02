@@ -1,6 +1,6 @@
 # 다이어그램
 
-**Markdown Preview Enhanced** 는 `flow charts`, `sequence diagrams`, `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`, `Vega & Vega-lite`, `Ditaa` 다이어그램 렌더링을 지원한다. 또한 [Code Chunk](code-chunk.md) 를 사용하여 `TikZ`, `Python Matplotlib`, `Plotly` 및 기타 그래프 및 다이어그램을 렌더링할 수도 있다.
+**Markdown Preview Enhanced** 는 `flow charts`, `sequence diagrams`, `mermaid`, `PlantUML`, `WaveDrom`, `GraphViz`, `Vega & Vega-lite`, `Ditaa` 다이어그램 렌더링을 지원한다. 또한 [Code Chunk](ko-kr/code-chunk.md) 를 사용하여 `TikZ`, `Python Matplotlib`, `Plotly` 및 기타 그래프 및 다이어그램을 렌더링할 수도 있다.
 
 > 일부 다이어그램은 PDF, pandoc 등의 파일 내보내기에서는 제대로 작동하지 않는다.
 
@@ -29,7 +29,7 @@ Markdown Preview Enhanced는 [mermaid](https://github.com/knsv/mermaid) 를 사�
 - flow chart와 sequence diagram을 만드는 방법에 대한 자세한 내용은 [mermaid doc](https://mermaid-js.github.io/mermaid) 을 참조하기 바란다.
   ![screen shot 2017-06-05 at 8 04 58 pm](https://cloud.githubusercontent.com/assets/1908863/26809423/42afb410-4a2a-11e7-8a18-57e7c67caa9f.png)
 
-세 가지 테마가 제공되며 [package settings](usages.md?id=package-settings)에서 테마를 선택할 수 있다:
+세 가지 테마가 제공되며 [package settings](ko-kr/usages.md?id=package-settings)에서 테마를 선택할 수 있다:
 
 - `mermaid.css`
 - `mermaid.dark.css`
@@ -76,7 +76,7 @@ Markdown Preview Enhanced는 [vega](https://vega.github.io/vega/) 와 [vega-lite
 
 ![screen shot 2017-07-28 at 7 59 58 am](https://user-images.githubusercontent.com/1908863/28718265-d023e1c2-736a-11e7-8678-a29704f3a23c.png)
 
-`JSON` 또는 `YAML` 파일을 `vega` 다이어그램으로 [@import](file-imports.md) 할 수도 있다. 예:
+`JSON` 또는 `YAML` 파일을 `vega` 다이어그램으로 [@import](ko-kr/file-imports.md) 할 수도 있다. 예:
 
 ```markdown
 @import "your_vega_source.json" {as="vega"}
@@ -89,7 +89,7 @@ Markdown Preview Enhanced는 ascii art로 그려진 다이어그램 (| /-과 같
 
 (**Java** 설치가 요구됨)
 
-`ditaa`는 [code chunk](code-chunk.md)와 통합되어 있다. 예:
+`ditaa`는 [code chunk](ko-kr/code-chunk.md)와 통합되어 있다. 예:
 
 <pre>
   ```ditaa {cmd=true args=["-E"]}
@@ -132,7 +132,7 @@ Markdown Preview Enhanced는 ascii art로 그려진 다이어그램 (| /-과 같
 
 ---
 
-markdown 파일을 [GFM Markdown](markdown.md) 으로 내보내면 다이어그램이 패키지 설정에 정의된 `imageFolderPath` 에 png 이미지로 저장된다.
+markdown 파일을 [GFM Markdown](ko-kr/markdown.md) 으로 내보내면 다이어그램이 패키지 설정에 정의된 `imageFolderPath` 에 png 이미지로 저장된다.
 `{filename ="your_file_name.png"}` 를 선언하여 내보낼 이미지의 파일 이름을 제어할 수 있다.
 
 예:
@@ -141,4 +141,4 @@ markdown 파일을 [GFM Markdown](markdown.md) 으로 내보내면 다이어그�
     ...
     ```
 
-[➔ 목차](toc.md)
+[➔ 목차](ko-kr/toc.md)
