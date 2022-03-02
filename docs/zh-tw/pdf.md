@@ -1,6 +1,6 @@
 # PDF 導出
 
-> 我們推薦使用 [Chrome (Puppeteer) 來導出 PDF](./puppeteer.md)。
+> 我們推薦使用 [Chrome (Puppeteer) 來導出 PDF](puppeteer.md)。
 
 ## 使用
 
