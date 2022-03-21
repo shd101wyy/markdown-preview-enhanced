@@ -4,7 +4,7 @@
 
 부담없이 pull request, issues 보고하거나 새로운 기능 요청을 해주기 바란다!
 
-**markdown-preview-enhanced**를 수정하고 개발하려면 [local installation](installation.md?id=install-from-github) 이 필요하다.
+**markdown-preview-enhanced**를 수정하고 개발하려면 [local installation](ko-kr/installation.md?id=install-from-github) 이 필요하다.
 
 패키지 설치가 완료되면 다음 단계를 진행하라:
 

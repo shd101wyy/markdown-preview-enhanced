@@ -13,27 +13,27 @@
 
 ## 설치
 
-- [Atom](installation.md)
-- [VS Code](vscode-installation.md)
+- [Atom](ko-kr/installation.md)
+- [VS Code](ko-kr/vscode-installation.md)
 
 ## 기능
 
 - **자동 스크롤 동기화**
-- **[외부파일 가져오기](file-imports.md)**
-- **[Code Chunk](code-chunk.md)**
-- **[Pandoc](pandoc.md)**
-- **[Prince](prince.md)**
-- **[eBook](ebook.md)**
-- **[프레젠테이션](presentation.md)**
-- **[Markdown parser 확장](extend-parser.md)**
-- **[LaTeX 수식 입력](math.md)**
-- [Puppeteer](puppeteer.md) 로 **PDF**, **PNG**, and **JPEG**로 내보내기
+- **[외부파일 가져오기](ko-kr/file-imports.md)**
+- **[Code Chunk](ko-kr/code-chunk.md)**
+- **[Pandoc](ko-kr/pandoc.md)**
+- **[Prince](ko-kr/prince.md)**
+- **[eBook](ko-kr/ebook.md)**
+- **[프레젠테이션](ko-kr/presentation.md)**
+- **[Markdown parser 확장](ko-kr/extend-parser.md)**
+- **[LaTeX 수식 입력](ko-kr/math.md)**
+- [Puppeteer](ko-kr/puppeteer.md) 로 **PDF**, **PNG**, and **JPEG**로 내보내기
 -  **HTML** 로 내보내기(모바일 환경 지원)
-- [GitHub Flavored Markdown으로 컴파일하기](markdown.md)
-- [CSS 설정](customize-css.md)
-- [목차 생성](toc.md)
-- [플로우 차트, 시퀀스 다이어그램 등 다양한 그래프 만들기](diagrams.md)
-- [LaTeX, render TikZ, Chemfig 등 넣기](code-chunk.md?id=latex)
+- [GitHub Flavored Markdown으로 컴파일하기](ko-kr/markdown.md)
+- [CSS 설정](ko-kr/customize-css.md)
+- [목차 생성](ko-kr/toc.md)
+- [플로우 차트, 시퀀스 다이어그램 등 다양한 그래프 만들기](ko-kr/diagrams.md)
+- [LaTeX, render TikZ, Chemfig 등 넣기](ko-kr/code-chunk.md?id=latex)
 - 작업 목록 _(Github Flavored)_
 - Image Helper
 - [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
@@ -52,4 +52,4 @@ Markdown Preview Enhanced 는 [University of Illinois/NCSA Open Source License](
 
 이 문서를 번역하는 것을 돕고 싶다면, [여기](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 에 이슈를 올려 주기 바란다.
 
-[➔ 사용법](usages.md)
+[➔ 사용법](ko-kr/usages.md)

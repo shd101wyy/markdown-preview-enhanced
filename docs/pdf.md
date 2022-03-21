@@ -1,6 +1,6 @@
 # PDF export
 
-> We recommend to use [Chrome (Puppeteer) to export PDF](./puppeteer.md).
+> We recommend to use [Chrome (Puppeteer) to export PDF](puppeteer.md).
 
 ## Usage
 

@@ -50,4 +50,4 @@ toc:
 ---
 ```
 
-[➔ File Imports](file-imports.md)
+[➔ File Imports](ko-kr/file-imports.md)

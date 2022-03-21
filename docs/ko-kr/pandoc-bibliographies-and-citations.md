@@ -146,4 +146,4 @@ CSL 스타일 생성 및 수정에 대한 기본 사항은 [여기](https://cita
 
 ### PDF 출력에 대한 인용문
 
-기본적으로 인용문은 유틸리티 pandoc-citeproc에 의해 생성되며 모든 출력 형식에 대해 작동한다. 출력이 LaTeX/PDF인 경우, LaTeX 패키지(예: natbib)를 사용하여 인용문을  생성할 수 있다. 자세한 내용은 [PDF documents](pandoc-pdf.md) 를 참조.
+기본적으로 인용문은 유틸리티 pandoc-citeproc에 의해 생성되며 모든 출력 형식에 대해 작동한다. 출력이 LaTeX/PDF인 경우, LaTeX 패키지(예: natbib)를 사용하여 인용문을  생성할 수 있다. 자세한 내용은 [PDF documents](ko-kr/pandoc-pdf.md) 를 참조.

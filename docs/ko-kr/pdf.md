@@ -1,6 +1,6 @@
 # PDF 내보내기
 
-> [Chrome (Puppeteer) 를 사용하여 PDF 내보내기](./puppeteer.md) 를 사용하는 것이 좋다.
+> [Chrome (Puppeteer) 를 사용하여 PDF 내보내기](ko-kr/puppeteer.md) 를 사용하는 것이 좋다.
 
 ## 사용법
 
@@ -23,4 +23,4 @@
 
 ---
 
-[puppeteer](puppeteer.md) 또는 [prince](prince.md)로 PDF 파일을 생성할 수도 있습니다
+[puppeteer](ko-kr/puppeteer.md) 또는 [prince](ko-kr/prince.md)로 PDF 파일을 생성할 수도 있습니다

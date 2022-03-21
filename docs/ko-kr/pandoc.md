@@ -43,14 +43,14 @@ pandoc_args: ["--toc", "--toc-depth=2"]
 (몇 가지 예는 [RStudio Markdown](https://rmarkdown.rstudio.com/formats.html) 를 참고하였다.)  
 특정 내보내기 문서 형식은 아래 링크에서 확인할 수 있다.
 
-- [PDF](pandoc-pdf.md)
-- [Word](pandoc-word.md)
-- [RTF](pandoc-rtf.md)
-- [Beamer](pandoc-beamer.md)
+- [PDF](ko-kr/pandoc-pdf.md)
+- [Word](ko-kr/pandoc-word.md)
+- [RTF](ko-kr/pandoc-rtf.md)
+- [Beamer](ko-kr/pandoc-beamer.md)
 
 사용자 정의 문서를 직접 정의하는 방법:
 
-- [custom](pandoc-custom.md)
+- [custom](ko-kr/pandoc-custom.md)
 
 ## 저장 시 내보내기
 
@@ -73,4 +73,4 @@ export_on_save:
 ## 주의
 
 `mermaid, wavedrom`은 `pandoc 문서로 내보내기`가 적용되지 않는다.  
-[code chunk](code-chunk.md)는 `pandoc 문서로 내보내기`와 부분적으로 호환된다.
+[code chunk](ko-kr/code-chunk.md)는 `pandoc 문서로 내보내기`와 부분적으로 호환된다.

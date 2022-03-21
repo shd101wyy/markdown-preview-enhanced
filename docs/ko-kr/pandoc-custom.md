@@ -19,7 +19,7 @@ output:
 ---
 ```
 
-아래 코드 예제는 [beamer presentation](.beamer.md)과 유사하게 동작한다.
+아래 코드 예제는 [beamer presentation](ko-kr/pandoc-beamer.md)과 유사하게 동작한다.
 ```javascript 
 ---
 title: "Habits"

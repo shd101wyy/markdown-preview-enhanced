@@ -17,10 +17,10 @@ _Markdown 소스_
 
 - <strong>Markdown Preview Enhanced: Customize Css</strong>  
   미리보기 페이지 css 커스터마이징.  
-  간단한 튜토리얼은 [여기](customize-css.md) 에서 확인할 수 있다.
+  간단한 튜토리얼은 [여기](ko-kr/customize-css.md) 에서 확인할 수 있다.
 
 - <strong>Markdown Preview Enhanced: Create Toc </strong>  
-  TOC 생성 (미리보기 토글 필요). [문서는 여기](toc.md).
+  TOC 생성 (미리보기 토글 필요). [문서는 여기](ko-kr/toc.md).
 
 - <strong>Markdown Preview Enhanced: Toggle Scroll Sync </strong>  
   미리 보기를 위해 스크롤 동기화 활성화/비활성화.
@@ -37,7 +37,7 @@ _Markdown 소스_
   단일 줄 바꿈 활성화/비활성화.
 
 - <strong>Markdown Preview Enhanced: Insert New Slide </strong>  
-  새 슬라이드를 삽입한 후, [프레젠테이션 모드](presentation.md) 로 들어가기.
+  새 슬라이드를 삽입한 후, [프레젠테이션 모드](ko-kr/presentation.md) 로 들어가기.
 
 - <strong>Markdown Preview Enhanced: Insert Table </strong>  
   Markdown 표 삽입.
@@ -52,7 +52,7 @@ _Markdown 소스_
   `MathJax` 초기 구성 편집.
 
 - <strong>Markdown Preview Enhanced: Image Helper</strong>  
-  자세한 내용은 [이 문서](image-helper.md)를 참조.  
+  자세한 내용은 [이 문서](ko-kr/image-helper.md)를 참조.  
    Image Helper는 [imgur](https://imgur.com/) 또는 [sm.ms](https://sm.ms/) 에서 제공되는 이미지 URL 빠른 삽입, 이미지 붙여넣기 및 이미지 업로드를 지원한다.
   ![screen shot 2017-06-06 at 3 42 31 pm](https://user-images.githubusercontent.com/1908863/26850896-c43be8e2-4ace-11e7-802d-6a7b51bf3130.png)
 
@@ -62,14 +62,14 @@ _Markdown 소스_
 
 - <strong>Markdown Preview Enhanced: Run Code Chunk </strong>  
   <kbd>shift-enter</kbd>  
-  하나의 [Code Chunk](code-chunk.md) 실행.
+  하나의 [Code Chunk](ko-kr/code-chunk.md) 실행.
 
 - <strong>Markdown Preview Enhanced: Run All Code Chunks </strong>  
   <kbd>ctrl-shift-enter</kbd>  
-  모든 [Code Chunks](code-chunk.md) 실행.
+  모든 [Code Chunks](ko-kr/code-chunk.md) 실행.
 
 - <strong>Markdown Preview Enhanced: Extend Parser</strong>  
-  [Extend Markdown Parser](extend-parser.md).
+  [Extend Markdown Parser](ko-kr/extend-parser.md).
 
 ---
 

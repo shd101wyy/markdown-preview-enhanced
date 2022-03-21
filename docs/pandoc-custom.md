@@ -5,7 +5,7 @@
 **Custom Document** grants you the ability to fully utilize the power of `pandoc`.  
 To create a custom document, you need to specify `custom_document` output format in the front-matter of your document, **and** `path` **has to be defined**.
 
-The code example below will behave similarly as [pdf document](./pdf.md).
+The code example below will behave similarly as [pdf document](pdf.md).
 
 ```yaml
 ---
@@ -20,7 +20,7 @@ output:
 
 ```
 
-The code example below will behave similarly as [beamer presentation](./beamer.md).
+The code example below will behave similarly as [beamer presentation](pandoc-beamer.md).
 
 ```yaml
 ---

@@ -42,4 +42,4 @@ apm develop markdown-preview-enhanced
 - **Atom Editor**에서 **View->Developer->Open in Dev Mode...** 를 통해 **markdown-preview-enhanced** 폴더를 연다.
 - 이후부터는 코드 수정이 가능하다. 코드를 업데이트할 때마다 <kbd>cmd-shift-p</kbd>를 실행하고 `Window: Reload`를 선택해야 업데이트가 적용된다.
 
-[➔ 사용법](usages.md)
+[➔ 사용법](ko-kr/usages.md)
