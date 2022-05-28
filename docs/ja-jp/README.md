@@ -52,4 +52,4 @@ Markdown Preview Enhanced は、[University of Illinois/NCSA Open Source License
 
 このドキュメントの翻訳を手伝っていただける場合は、[こちら](https://github.com/shd101wyy/markdown-preview-enhanced/issues) に issue を投稿してご連絡ください。
 
-[➔ 使い方](ja-jp/usages.md)
+[➔ 使い方](usages.md)
