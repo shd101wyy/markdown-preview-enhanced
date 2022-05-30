@@ -278,7 +278,7 @@ Critic Mark には 5 つのタイプがあります。
     This is the admonition body
 ```
 
-> 詳細については、https://squidfunk.github.io/mkdocs-material/reference/admonitions/ をご覧ください。
+> 詳細については、[Admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)をご覧ください。
 
 ## リファレンス
 
