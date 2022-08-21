@@ -77,7 +77,7 @@ class: "my-class1 my-class2"
 
 ![](https://cloud.githubusercontent.com/assets/1908863/22716917/c7088ae0-ed5d-11e6-8db9-e1ab035a3a2b.png)
 
-## 改编字体
+## 改变字体
 
 要改变你的预览的字体，你需要首先下载字体文件 `(.ttf)`，然后编辑 `style.less` 如下：
 
