@@ -1,10 +1,10 @@
 <h1 align="center"> Markdown Preview Enhanced </h1>
-<p align="center">
-<a href="https://github.com/shd101wyy/markdown-preview-enhanced/releases"><img src="https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg"></a>
-<a href="https://github.com/shd101wyy/markdown-preview-enhanced"><img src="https://img.shields.io/apm/dm/markdown-preview-enhanced.svg"></a>
-<a href="https://github.com/shd101wyy/markdown-preview-enhanced"><img src="https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star"></a>
-</p>
-<br>
+
+**⚠️ Note:**
+
+This repository is now only used for hosting the documentation of **Markdown Preview Enhanced**.  
+The source code of the VSCode extension has been moved to [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced).  
+If you are posting **issues** or **feature requests** related to the VSCode extension, please post them at [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced).
 
 ![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
