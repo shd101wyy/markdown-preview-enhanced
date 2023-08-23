@@ -1,21 +1,14 @@
 # Markdown Preview Enhanced
 
-**⚠️ 注意:**
-
-このリポジトリは現在、**Markdown Preview Enhanced** のドキュメンテーションのホスティングにのみ使用されています。    
-VSCode 拡張機能のソースコードは [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) に移動されました。    
-VSCode 拡張機能に関する **問題** や **機能リクエスト** を投稿する際は、[shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) で投稿してください。
-
-![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
-
 
 **Markdown Preview Enhanced** は [**Atom**](https://atom.io/packages/markdown-preview-enhanced) および [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) の**スーパー強力な**markdown 拡張機能です。
 このプロジェクトの目標は、素晴らしい markdown 編集経験を提供することです。
 
-新しい機能をリクエストする場合、またはバグを報告する場合は、[ここ](https://github.com/shd101wyy/markdown-preview-enhanced/issues) に投稿してください;）
+新しい機能をリクエストする場合、またはバグを報告する場合は、[ここ](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) に投稿してください;）
 
 興味がある場合は、新しいプロトタイプ Web アプリも試してください : [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## インストール
 
@@ -42,8 +35,8 @@ VSCode 拡張機能に関する **問題** や **機能リクエスト** を投�
 - [LaTeX の埋め込み、TikZ、Chemfig などのレンダリング](ja-jp/code-chunk.md?id=latex)
 - タスクリスト *(GitHub 形式)*
 - Image Helper
-- [脚注](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
-- [フロントマター](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- 脚注
+- フロントマター
 - などなど...
 
 ## このプロジェクトをサポートする
@@ -56,6 +49,6 @@ Markdown Preview Enhanced は、[University of Illinois/NCSA Open Source License
 
 ## 翻訳のお手伝い
 
-このドキュメントの翻訳を手伝っていただける場合は、[こちら](https://github.com/shd101wyy/markdown-preview-enhanced/issues) に issue を投稿してご連絡ください。
+このドキュメントの翻訳を手伝っていただける場合は、[こちら](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) に issue を投稿してご連絡ください。
 
 [➔ 使い方](ja-jp/usages.md)

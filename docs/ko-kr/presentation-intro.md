@@ -200,7 +200,7 @@ data-transition="zoom"
 #### 해당 프로젝트가 마음에 들었다면 star을 눌러주세요 ;)
 
 - Github Repository는 [여기](https://github.com/shd101wyy/markdown-preview-enhanced) 에서 확인할 수 있다.
-- Issues 또는 새로운 기능 요청은 [여기](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 에서 할 수 있다.
+- Issues 또는 새로운 기능 요청은 [여기](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 에서 할 수 있다.
 - 이 프레젠테이션의 소스 코드는 [여기](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md) [(raw)](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md) 에서 확인할 수 있다.
 
 <!-- slide data-background-image="https://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->

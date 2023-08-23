@@ -1,21 +1,13 @@
 # Markdown Preview Enhanced
 
-**⚠️ 注意：**
-
-此儲存庫現在僅用於托管 **Markdown Preview Enhanced** 的文件。  
-VSCode 擴充功能的原始碼已移至 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)。  
-如果您要發佈與 VSCode 擴充功能相關的 **問題** 或 **功能請求**，請在 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) 上發佈。  
-
-![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
-
-
 **Markdown Preview Enhanced** 是一款為 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 以及 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 編輯器編寫的**超級強大的** Markdown 插件。
 這款插件意在讓你擁有飄逸的 Markdown 寫作體驗。
 
-在 [這裡](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言如果你發現了問題或者想要請求新的特性。
+在 [這裡](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 留言如果你發現了問題或者想要請求新的特性。
 
 如果妳感興趣的話，請同時嘗試壹下我們新的原型項目：[0xGG/crossnote](https://github.com/0xGG/crossnote)
 
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## 安裝
 
@@ -42,8 +34,8 @@ VSCode 擴充功能的原始碼已移至 [shd101wyy/vscode-markdown-preview-enha
 - [嵌入 LaTeX, 渲染 TikZ, Chemfig 等圖形](zh-tw/code-chunk.md?id=latex)
 - Task List _(Github Flavored)_
 - 圖片助手
-- [腳注](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
-- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- 腳注
+- Front Matter
 - 以及更多。。。
 
 ## 支持這個項目
@@ -56,6 +48,6 @@ Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source 
 
 ## 幫忙翻譯文檔
 
-如果你想要幫忙翻譯這個文檔到其他的語言, 請在 [這裡](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 留言。
+如果你想要幫忙翻譯這個文檔到其他的語言, 請在 [這裡](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 留言。
 
 [➔ 使用](zh-tw/usages.md)

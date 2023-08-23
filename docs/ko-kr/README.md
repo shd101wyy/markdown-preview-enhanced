@@ -1,20 +1,13 @@
 # Markdown Preview Enhanced
 
-**⚠️ 주의:**
-
-이 저장소는 현재 **Markdown Preview Enhanced** 문서 호스팅에만 사용됩니다.  
-VSCode 확장 프로그램의 소스 코드는 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)로 이동되었습니다.  
-VSCode 확장 프로그램과 관련된 **문제**나 **기능 요청**을 게시하려면 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)에서 게시해 주십시오.
-
-![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
-
-
 **Markdown Preview Enhanced** 은 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 과 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 에서 작동하는 **매우 강력한** 마크다운 확장이다. 
 이 프로젝트의 목표는 당신에게 마크다운 작성의 놀라운 경험을 선사하는 것이다.
 
-새 기능을 요청하거나 버그를 리포트 하려면 [여기](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 에 게시하면 된다.
+새 기능을 요청하거나 버그를 리포트 하려면 [여기](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 에 게시하면 된다.
 
 관심이 있다면, 새로운 프로토타임 웹 앱도 사용해보길 바란다 : [0xGG/crossnote](https://github.com/0xGG/crossnote)
+
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## 설치
 
@@ -41,8 +34,8 @@ VSCode 확장 프로그램과 관련된 **문제**나 **기능 요청**을 게�
 - [LaTeX, render TikZ, Chemfig 등 넣기](ko-kr/code-chunk.md?id=latex)
 - 작업 목록 _(Github Flavored)_
 - Image Helper
-- [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
-- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- Footnotes
+- Front Matter
 - 기타 등등...
 
 ## 프로젝트 지원
@@ -55,6 +48,6 @@ Markdown Preview Enhanced 는 [University of Illinois/NCSA Open Source License](
 
 ## 번역 지원
 
-이 문서를 번역하는 것을 돕고 싶다면, [여기](https://github.com/shd101wyy/markdown-preview-enhanced/issues) 에 이슈를 올려 주기 바란다.
+이 문서를 번역하는 것을 돕고 싶다면, [여기](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 에 이슈를 올려 주기 바란다.
 
 [➔ 사용법](ko-kr/usages.md)
