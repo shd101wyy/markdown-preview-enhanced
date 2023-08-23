@@ -1,6 +1,13 @@
 # Markdown Preview Enhanced
 
-[![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg) [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)
+**⚠️ 注意:**
+
+このリポジトリは現在、**Markdown Preview Enhanced** のドキュメンテーションのホスティングにのみ使用されています。    
+VSCode 拡張機能のソースコードは [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) に移動されました。    
+VSCode 拡張機能に関する **問題** や **機能リクエスト** を投稿する際は、[shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) で投稿してください。
+
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
+
 
 **Markdown Preview Enhanced** は [**Atom**](https://atom.io/packages/markdown-preview-enhanced) および [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) の**スーパー強力な**markdown 拡張機能です。
 このプロジェクトの目標は、素晴らしい markdown 編集経験を提供することです。
@@ -9,7 +16,6 @@
 
 興味がある場合は、新しいプロトタイプ Web アプリも試してください : [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
-![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## インストール
 

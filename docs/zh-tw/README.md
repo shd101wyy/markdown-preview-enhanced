@@ -1,6 +1,13 @@
 # Markdown Preview Enhanced
 
-[![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg) [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)
+**⚠️ 注意：**
+
+此儲存庫現在僅用於托管 **Markdown Preview Enhanced** 的文件。  
+VSCode 擴充功能的原始碼已移至 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)。  
+如果您要發佈與 VSCode 擴充功能相關的 **問題** 或 **功能請求**，請在 [shd101wyy/vscode-markdown-preview-enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) 上發佈。  
+
+![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
+
 
 **Markdown Preview Enhanced** 是一款為 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 以及 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 編輯器編寫的**超級強大的** Markdown 插件。
 這款插件意在讓你擁有飄逸的 Markdown 寫作體驗。
@@ -9,7 +16,6 @@
 
 如果妳感興趣的話，請同時嘗試壹下我們新的原型項目：[0xGG/crossnote](https://github.com/0xGG/crossnote)
 
-![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
 ## 安裝
 
