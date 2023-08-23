@@ -208,7 +208,7 @@ right clicking at the preview, then choose
 #### Star this project if you like it ;)
 
 - Github Repository can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced)
-- Feel free to post issues and request new features [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues)
+- Feel free to post issues and request new features [here](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues)
 - Source code of this presentation can be found [here](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/docs/presentation-intro.md), [raw](https://raw.githubusercontent.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.md)
 
 <!-- slide data-background-image="https://ooo.0o0.ooo/2016/07/18/578c66da6a5a3.jpg" -->

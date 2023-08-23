@@ -1,11 +1,9 @@
 # Markdown Preview Enhanced
 
-[![](https://img.shields.io/github/tag/shd101wyy/markdown-preview-enhanced.svg)](https://github.com/shd101wyy/markdown-preview-enhanced/releases) ![](https://img.shields.io/apm/dm/markdown-preview-enhanced.svg) [![](https://img.shields.io/github/stars/shd101wyy/markdown-preview-enhanced.svg?style=social&label=Star)](https://github.com/shd101wyy/markdown-preview-enhanced)
-
 **Markdown Preview Enhanced** is a **SUPER POWERFUL** markdown extension for [**Atom**](https://atom.io/packages/markdown-preview-enhanced) and [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced).
 The goal of this project is to bring you a wonderful markdown writing experience.
 
-Post [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
+Post [here](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) if you request new features or you want to report bugs ;)
 
 If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
@@ -36,8 +34,8 @@ If you are interested, please also try out our new prototype web app: [0xGG/cros
 - [Embed LaTeX, render TikZ, Chemfig etc](code-chunk.md?id=latex)
 - Task List _(Github Flavored)_
 - Image Helper
-- [Footnotes](https://github.com/shd101wyy/markdown-preview-enhanced/issues/35)
-- [Front Matter](https://github.com/shd101wyy/markdown-preview-enhanced/issues/100)
+- Footnotes
+- Front Matter
 - And many more...
 
 ## Support this project
@@ -50,6 +48,6 @@ Markdown Preview Enhanced is an open source project released under the [Universi
 
 ## Help translation
 
-If you are willing to help translate this documentation, please contact me by posting an issue [here](https://github.com/shd101wyy/markdown-preview-enhanced/issues).
+If you are willing to help translate this documentation, please contact me by posting an issue [here](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues).
 
 [➔ Usages](usages.md)
