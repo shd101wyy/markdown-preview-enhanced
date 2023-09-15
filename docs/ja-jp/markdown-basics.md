@@ -244,9 +244,9 @@ H~2~O
 
 ### 略語
 
-```markdown
-_[HTML]: Hyper Text Markup Language
-_[W3C]: World Wide Web Consortium
+```
+*[HTML]: Hyper Text Markup Language
+*[W3C]: World Wide Web Consortium
 HTML の仕様は W3C によって管理されています。
 ```
 

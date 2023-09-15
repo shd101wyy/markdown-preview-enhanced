@@ -244,9 +244,9 @@ Content [^1]
 
 ### Abbreviation
 
-```markdown
-_[HTML]: Hyper Text Markup Language
-_[W3C]: World Wide Web Consortium
+```
+*[HTML]: Hyper Text Markup Language
+*[W3C]: World Wide Web Consortium
 The HTML specification
 is maintained by the W3C.
 ```
