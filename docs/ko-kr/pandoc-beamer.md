@@ -17,6 +17,7 @@ output: beamer_presentation
 # 아침
 
 ## 기상
+
 - 알람을 끄고
 - 침대에서 일어난다.
 
@@ -123,7 +124,6 @@ output:
 
 `highlight` 옵션은 구문 하이라이트 스타일을 지정한다. 지원되는 스타일로는 “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, 그리고 “haddock” 이 있다.(구문 하이라이트를 사용하고 싶지 않다면 null 로 지정한다.)
 
-
 예시:
 
 ```yaml
@@ -152,7 +152,7 @@ output:
 
 ## 공유 옵션
 
-여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에  `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
+여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에 `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
 
 **\_output.yaml**
 

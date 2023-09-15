@@ -1,6 +1,6 @@
 # Backers (후원자)
 
-당신은 'Markdown Preview Enhanced' 개발을 아래의 후원하시려면, 다음 3개의 방법을 사용하시면 됩니다. 
+당신은 'Markdown Preview Enhanced' 개발을 아래의 후원하시려면, 다음 3개의 방법을 사용하시면 됩니다.
 [pledging on GitHub Sponsors!](https://github.com/sponsors/shd101wyy),
 [PayPal](paypal.md),
 [微信支付 Wechat Pay](wechat.md) 같은 레벨의 후원자는 후원일 순서대로 기록됩니다.

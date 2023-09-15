@@ -28,23 +28,23 @@ bibliography: [bibliography1.bib, bibliography2.bib]
 
 참고 문헌은 아래의 포맷을 따른다.
 
-| 포맷      | 확장자명 |
-| ----------- | -------------- |
-| BibLaTeX    | .bib           |
-| BibTeX      | .bibtex        |
-| Copac       | .copac         |
-| CSL JSON    | .json          |
-| CSL YAML    | .yaml          |
-| EndNote     | .enl           |
-| EndNote XML | .xml           |
-| ISI         | .wos           |
-| MEDLINE     | .medline       |
-| MODS        | .mods          |
-| RIS         | .ris           |
+| 포맷        | 확장자명 |
+| ----------- | -------- |
+| BibLaTeX    | .bib     |
+| BibTeX      | .bibtex  |
+| Copac       | .copac   |
+| CSL JSON    | .json    |
+| CSL YAML    | .yaml    |
+| EndNote     | .enl     |
+| EndNote XML | .xml     |
+| ISI         | .wos     |
+| MEDLINE     | .medline |
+| MODS        | .mods    |
+| RIS         | .ris     |
 
 ### 인라인 참조
 
-또는 문서의 YAML 메타 데이터의 `references` 필드를 이용할 수 있다. 아래와 같이 YAML 로 인코딩된 참조 배열이 포함되어야 한다. 
+또는 문서의 YAML 메타 데이터의 `references` 필드를 이용할 수 있다. 아래와 같이 YAML 로 인코딩된 참조 배열이 포함되어야 한다.
 
 예시:
 
@@ -73,7 +73,7 @@ references:
 
 ### 참고문헌 배치
 
-참고문헌은 문서의 끝에 배치된다. 보통 적절한 헤더를 이용해 문서를 마무리 짓는다. 
+참고문헌은 문서의 끝에 배치된다. 보통 적절한 헤더를 이용해 문서를 마무리 짓는다.
 
 예시:
 
@@ -100,7 +100,7 @@ Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
 Blah blah [@smith04; @doe99].
 ```
 
-`(-)`  `@` 앞에 마이너스 기호`(-)를 붙이면 저자를 언급하지 않는다. 작성자가 이미 텍스트에 언급된 경우 유용하다.
+`(-)` `@` 앞에 마이너스 기호`(-)를 붙이면 저자를 언급하지 않는다. 작성자가 이미 텍스트에 언급된 경우 유용하다.
 
 ```
 Smith says blah [-@smith04].
@@ -117,6 +117,7 @@ Smith says blah [-@smith04].
 ### 사용되지 않은 참고 문헌 (nocite)
 
 본문에서 문헌을 하지 않고 참고 문헌에 포함시키고 싶은 경우, 더미 `nocite` 메타데이터 필드를 정의하고, 거기에 인용문을 추가할 수 있다.
+
 ```
 ---
 nocite: |
@@ -146,4 +147,4 @@ CSL 스타일 생성 및 수정에 대한 기본 사항은 [여기](https://cita
 
 ### PDF 출력에 대한 인용문
 
-기본적으로 인용문은 유틸리티 pandoc-citeproc에 의해 생성되며 모든 출력 형식에 대해 작동한다. 출력이 LaTeX/PDF인 경우, LaTeX 패키지(예: natbib)를 사용하여 인용문을  생성할 수 있다. 자세한 내용은 [PDF documents](ko-kr/pandoc-pdf.md) 를 참조.
+기본적으로 인용문은 유틸리티 pandoc-citeproc에 의해 생성되며 모든 출력 형식에 대해 작동한다. 출력이 LaTeX/PDF인 경우, LaTeX 패키지(예: natbib)를 사용하여 인용문을 생성할 수 있다. 자세한 내용은 [PDF documents](ko-kr/pandoc-pdf.md) 를 참조.

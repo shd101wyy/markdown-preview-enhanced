@@ -10,7 +10,7 @@ _Markdown 소스_
 
 - <strong>Markdown Preview Enhanced: Toggle</strong>  
   <kbd>ctrl-shift-m</kbd>  
-  Markdown 파일 미리보기 전환.  
+  Markdown 파일 미리보기 전환.
 
 - <strong>Markdown Preview Enhanced: Toggle Zen Mode </strong>  
   자유로운 글쓰기 모드 전환.
@@ -97,15 +97,15 @@ _미리보기_
 ## 키보드 단축키
 
 | 단축키                                      | Functionality                      |
-| ------------------------------------------- | ---------------------------------  |
+| ------------------------------------------- | ---------------------------------- |
 | <kbd>ctrl-shift-m</kbd>                     | 미리보기 전환                      |
 | <kbd>cmd-k v</kbd>                          | `VSCode Only` 모드로 미리보기 열기 |
-| <kbd>ctrl-shift-s</kbd>                     | 미리보기 동기화 / 원본 동기화       |
-| <kbd>shift-enter</kbd>                      | Code Chunk 실행                   |
+| <kbd>ctrl-shift-s</kbd>                     | 미리보기 동기화 / 원본 동기화      |
+| <kbd>shift-enter</kbd>                      | Code Chunk 실행                    |
 | <kbd>ctrl-shift-enter</kbd>                 | 모든 Code Chunks 실행              |
 | <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>  | 미리보기 확대                      |
 | <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd> | 미리보기 축소                      |
-| <kbd>cmd-0</kbd>                            | 미리보기 확대/축소/초기화           |
+| <kbd>cmd-0</kbd>                            | 미리보기 확대/축소/초기화          |
 | <kbd>esc</kbd>                              | 사이드바 TOC 전환                  |
 
 ## 패키지 설정
@@ -114,7 +114,7 @@ _미리보기_
 
 패키지 설정을 열려면 <kbd>cmd-shift-p</kbd>를 누른 후, `Settings View: Open`를 선택해 `Packages`를 클릭한다.
 
-`Installed Packages`에서  `markdown-preview-enhanced` 검색.  
+`Installed Packages`에서 `markdown-preview-enhanced` 검색.  
 ![screen shot 2017-06-06 at 3 57 22 pm](https://user-images.githubusercontent.com/1908863/26851561-d6b1ca30-4ad0-11e7-96fd-6e436b5de45b.png)
 
 `Settings` 버튼 클릭:

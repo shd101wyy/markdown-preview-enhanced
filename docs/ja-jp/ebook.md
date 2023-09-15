@@ -76,7 +76,7 @@ ebook をエクスポートするには、プレビューを開いた状態で `
 ### メタデータ
 
 - **theme**
-  eBook に使用するテーマ。既定ではプレビューテーマを使用します。利用可能なテーマのリストは、[このドキュメント](https://github.com/shd101wyy/mume/#markdown-engine-configuration) の `previewTheme` セクションにあります。
+  eBook に使用するテーマ。既定ではプレビューテーマを使用します。利用可能なテーマのリストは、[このドキュメント](https://github.com/shd101wyy/crossnote/#notebook-configuration) の `previewTheme` セクションにあります。
 - **title**  
   ebook のタイトル
 - **authors**  

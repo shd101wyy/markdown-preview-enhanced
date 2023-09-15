@@ -1,3 +1,5 @@
+# [No longer maintained]
+
 # Installation on Atom
 
 > Please make sure that you have the official `markdown-preview` package disabled.

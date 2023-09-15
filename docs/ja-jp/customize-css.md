@@ -2,11 +2,9 @@
 
 ## style.less
 
-markdown ファイルの css ファイルを編集するには、 <kbd>cmd-shift-p</kbd> に続けて `Markdown Preview Enhanced: Customize Css` コマンドを実行してください。
+Markdown ファイルの CSS をカスタマイズするには、<kbd>cmd-shift-p</kbd>を押してから`Markdown Preview Enhanced: Customize CSS (Global)`または`Markdown Preview Enhanced: Customize CSS (Workspace)`コマンドを実行します。
 
 `style.less` ファイルが開くので、既定の style を以下のようにオーバーライドすることができます。:
-
-> `style.less` ファイルは `~/.mume/style.less` にあります
 
 ```less
 .markdown-preview.markdown-preview {

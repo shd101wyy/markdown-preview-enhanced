@@ -35,6 +35,7 @@
 
 - 設定と拡張
 
+  - [設定](ja-jp/config.md)
   - [CSS の編集](ja-jp/customize-css.md)
   - [Markdown Parser の拡張](ja-jp/extend-parser.md)
   - [Image Helper](ja-jp/image-helper.md)
@@ -46,8 +47,5 @@
 - [Extra](ja-jp/extra.md)
 - [FAQ](ja-jp/faq.md)
 - 変更履歴
-  - Atom
-    - [Newest](newest.md)
-    - [History](history.md)
   - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 - [ライセンス](LICENSE.md)

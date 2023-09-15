@@ -75,7 +75,7 @@ markdown 파일의 마지막 list는 목차로 간주된다.
 ### Metadata
 
 - **theme**  
-  eBook에 사용할 테마. 기본적으로 미리보기 테마를 사용한다. 사용 가능한 테마 목록은 [이 문서](https://github.com/shd101wyy/mume/#markdown-engine-configuration) 의 `previewTheme` 섹션에 있다.
+  eBook에 사용할 테마. 기본적으로 미리보기 테마를 사용한다. 사용 가능한 테마 목록은 [이 문서](https://github.com/shd101wyy/crossnote/#notebook-configuration) 의 `previewTheme` 섹션에 있다.
 - **title**  
   ebook의 제목
 - **authors**  
@@ -185,7 +185,7 @@ ebook:
 - **no-svg-cover** `[true/false]`  
   표지에 SVG를 사용하지 마시오. iPhone 또는 JetBook Lite와 같은 SVG를 지원하지 않는 장치에서 EPUB를 사용하려면 이 옵션을 사용한다. 이 옵션이 없으면 이러한 장치는 표지를 빈 페이지로 표시할 것이다.
 - **pretty-print** `[true/false]`  
-  지정된 경우 출력 플러그인은 가능한 한 인간이 읽을 수 있는 형식의 출력을 작성하려고 한다. 일부 출력 플러그인에는 효과가 없을 수 있다.  
+  지정된 경우 출력 플러그인은 가능한 한 인간이 읽을 수 있는 형식의 출력을 작성하려고 한다. 일부 출력 플러그인에는 효과가 없을 수 있다.
 
 ### PDF
 
@@ -210,10 +210,10 @@ ebook:
 - **header-template**  
   각 페이지에 머리말을 생성하는 데 사용되는 HTML 템플릿이다. 문자열 `_PAGENUM_`, `_TITLE _`, `_AUTHOR_`, `_SECTION_` 은 현재 값으로 대체된다.
 - **page-numbers** `[true/false]`  
-  `기본값: false` 
-  생성된 PDF 파일의 모든 페이지 하단에 페이지 번호를 추가한다. 꼬리말 템플릿을 지정하면 이 옵션보다 먼저 적용된다. 
+  `기본값: false`
+  생성된 PDF 파일의 모든 페이지 하단에 페이지 번호를 추가한다. 꼬리말 템플릿을 지정하면 이 옵션보다 먼저 적용된다.
 - **pretty-print** `[true/false]`  
-  지정된 경우 출력 플러그인은 가능한 한 인간이 읽을 수 있는 형식의 출력을 작성하려고 한다. 일부 출력 플러그인에는 효과가 없을 수 있다. 
+  지정된 경우 출력 플러그인은 가능한 한 인간이 읽을 수 있는 형식의 출력을 작성하려고 한다. 일부 출력 플러그인에는 효과가 없을 수 있다.
 
 ### HTML
 
@@ -265,8 +265,8 @@ export_on_save:
 ## 알려진 이슈 & 한계
 
 - eBook 생성은 아직 개발 중인 기능이다.
-- `mermaid`, `PlantUML` 등으로 생성된 모든 SVG 그래프는 생성된 전자책에서 작동하지 않는다. 오직 `viz`만 작동한다. 
-- 오직 **KaTeX** 만 수식에 사용될 수 있다. 
+- `mermaid`, `PlantUML` 등으로 생성된 모든 SVG 그래프는 생성된 전자책에서 작동하지 않는다. 오직 `viz`만 작동한다.
+- 오직 **KaTeX** 만 수식에 사용될 수 있다.
   또한 생성된 ebook 파일은 **iBook**에서 수식을 제대로 렌더링하지 못한다.
 - **PDF** 및 **Mobi** 출력에는 버그가 있다.
 - **Code Chunk** 는 ebook 생성에서 작동하지 않는다.

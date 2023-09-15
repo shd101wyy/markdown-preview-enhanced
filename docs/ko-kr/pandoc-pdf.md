@@ -94,20 +94,21 @@ geometry: margin=1in
 
 사용가능한 메타데이터 variable 은 아래와 같다. 예시:
 
-| Variable 이름                       | 설명                                                                               |
-| ------------------------------ | ----------------------------------------------------------------------------------------- |
-| papersize                      | 용지 크기, 예시: `letter`, `A4`                                                           |
-| lang                           | 문서의 언어 코드                                                                    |
-| fontsize                       | 폰트 사이즈 (예시: 10pt, 11pt, 12pt)                                                         |
-| documentclass                  | LaTeX 문서 클래스 (예시: article)                                                       |
-| classoption                    | 문서 클래스 옵션 (예시. oneside); _반복될 수 있다._                                 |
-| geometry                       | geometry 클래스 옵션 (예시. margin=1in); _반복될 수 있다._                            |
+| Variable 이름                  | 설명                                                                              |
+| ------------------------------ | --------------------------------------------------------------------------------- |
+| papersize                      | 용지 크기, 예시: `letter`, `A4`                                                   |
+| lang                           | 문서의 언어 코드                                                                  |
+| fontsize                       | 폰트 사이즈 (예시: 10pt, 11pt, 12pt)                                              |
+| documentclass                  | LaTeX 문서 클래스 (예시: article)                                                 |
+| classoption                    | 문서 클래스 옵션 (예시. oneside); _반복될 수 있다._                               |
+| geometry                       | geometry 클래스 옵션 (예시. margin=1in); _반복될 수 있다._                        |
 | linkcolor, urlcolor, citecolor | 내부, 외부, 그리고 인용 링크의 색상 지정 (red, green, magenta, cyan, blue, black) |
-| thanks                         | 문서 타이틀 뒤에 있는 사사의 말의 내용을 지정한다.                      |
+| thanks                         | 문서 타이틀 뒤에 있는 사사의 말의 내용을 지정한다.                                |
 
 더 사용가능한 variable은 [여기](https://pandoc.org/MANUAL.html#variables-for-latex) 에서 찾을 수 있다.
 
-### 인용문을 위한 LaTeX 패키지 
+### 인용문을 위한 LaTeX 패키지
+
 기본적으로 인용문은 모든 출력 포맷에서 작동하는`pandoc-citeproc`으로 처리된다.
 PDF 출력의 경우 LaTeX 패키지를 사용하여 `natbib` 이나 `biblatex` 같은 인용문을 처리하는 것이 나을 수 있다.
 이 패키지를 사용하려면 `citation_package`옵션을 `natbib` 이나 `biblatex`으로 설정하면 된다.
@@ -157,7 +158,7 @@ output:
 
 ```
 
-### 사용자 지정 템플릿 
+### 사용자 지정 템플릿
 
 `template` 옵션을 사용해 기본 pandoc 템플릿을 바꿀 수 있다. 예시:
 
@@ -171,7 +172,7 @@ output:
 
 ```
 
-템플릿에 대한 자세한 정보는 [pandoc templates](https://pandoc.org/README.html#templates) 에서 알아볼 수 있다. 
+템플릿에 대한 자세한 정보는 [pandoc templates](https://pandoc.org/README.html#templates) 에서 알아볼 수 있다.
 또한 예시로 [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) 을 학습해도 된다.
 
 ### Pandoc Arguments
@@ -190,7 +191,7 @@ output:
 
 ## 옵션 공유
 
-여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에  `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
+여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에 `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
 
 **\_output.yaml**
 

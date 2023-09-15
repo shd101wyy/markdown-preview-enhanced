@@ -87,7 +87,7 @@ presentation:
 
 <!-- slide -->
 
-기본적으로 모든 슬라이드는 수평으로 정렬되지만, `vertical=true`를 추가해 수직 슬라이드를 만들 수  있다.  
+기본적으로 모든 슬라이드는 수평으로 정렬되지만, `vertical=true`를 추가해 수직 슬라이드를 만들 수 있다.  
 예:
 
 ```html
@@ -189,11 +189,11 @@ data-transition="zoom"
 
 <!-- slide -->
 
-브라우저에서 프레젠테이션을 확인하기 위해서는 미리보기에서 마우스 우클릭을 통해 `Open in Browser`를 선택한다. 
+브라우저에서 프레젠테이션을 확인하기 위해서는 미리보기에서 마우스 우클릭을 통해 `Open in Browser`를 선택한다.
 
 <!-- slide -->
 
-**Markdown Preview Enhanced**는 프레젠테이션에 사용될 **HTML** 또는 **PDF** 파일을 생성할  수도 있다.
+**Markdown Preview Enhanced**는 프레젠테이션에 사용될 **HTML** 또는 **PDF** 파일을 생성할 수도 있다.
 
 <!-- slide -->
 

@@ -6,6 +6,8 @@
 
 **VS Code** を開き、`Extentions` で `markdown-preview-enhanced` を検索して、`Install` ボタンをクリックします。
 
+VS Code for the Web にもこの拡張機能をインストールできます。単に[VS Code for the web](https://vscode.dev/)を開き、`Extensions`で`markdown-preview-enhanced`を検索し、`インストール`ボタンをクリックしてください。
+
 ![screen shot 2017-07-14 at 12 23 32 am](https://user-images.githubusercontent.com/1908863/28199365-bb03a570-682a-11e7-8f65-d7d2b258d583.png)
 
 ## GitHub からインストール

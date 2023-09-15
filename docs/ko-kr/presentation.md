@@ -4,13 +4,13 @@
 
 Markdown Preview Enhanced는 [reveal.js](https://github.com/hakimel/reveal.js) 를 사용해 프레젠테이션을 아름답게 렌더링한다.
 
-소개를 보려면 [여기를 클릭](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html)  (**권장**).
+소개를 보려면 [여기를 클릭](https://rawgit.com/shd101wyy/markdown-preview-enhanced/master/docs/presentation-intro.html) (**권장**).
 
 ![프레젠테이션](https://user-images.githubusercontent.com/1908863/28202176-caf103c4-6839-11e7-8776-942679f3698b.gif)
 
 ## 프레젠테이션 Front-Matter
 
-Markdown 파일에 front-matter를 추가해 프레젠테이션을 구성할 수 있다.   
+Markdown 파일에 front-matter를 추가해 프레젠테이션을 구성할 수 있다.  
 `presentation` 섹션 아래에 다음과 같이 설정 내용을 적어야 한다.  
 예:
 
@@ -55,7 +55,7 @@ presentation:
   width: 960
   height: 700
 
-  # display 크기를 결정하는 요소로 내용 주위에 얼마나 비어 있어야 크기 
+  # display 크기를 결정하는 요소로 내용 주위에 얼마나 비어 있어야 크기
   margin: 0.1
 
   # 콘텐츠에 적용할 수 있는 최소/최대 scale의 한계
@@ -178,7 +178,7 @@ presentation:
 
 ```less
 .markdown-preview.markdown-preview {
-  // 사용자 정의 프레젠테이션 스타일 
+  // 사용자 정의 프레젠테이션 스타일
   .reveal .slides {
     // 모든 슬라이드 수정
   }

@@ -4,23 +4,6 @@
 
 > 일부 다이어그램은 PDF, pandoc 등의 파일 내보내기에서는 제대로 작동하지 않는다.
 
-## Flow Charts
-
-이 기능은 [flowchart.js](https://flowchart.js.org/) 를 사용한다.
-
-- `flow` 표기법의 코드 블록은 [flowchart.js](https://flowchart.js.org/) 에 의해 렌더링된다.
-
-![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
-
-## Sequence Diagrams
-
-이 기능은 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) 를 사용한다.
-
-- `sequence` 표기법의 코드 블록은 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) 에 의해 렌더링 된다.
-- 두 가지 테마 지원: `simple`(기본 테마)와 `hand`.
-
-![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
-
 ## Mermaid
 
 Markdown Preview Enhanced는 [mermaid](https://github.com/knsv/mermaid) 를 사용하여 flow chart와 sequence diagram을 렌더링한다.
@@ -57,6 +40,8 @@ Markdown Preview Enhanced는 [WaveDrom](https://wavedrom.com/) 을 사용하여 
 
 ![screen shot 2017-06-05 at 8 07 30 pm](https://cloud.githubusercontent.com/assets/1908863/26809462/9dc3eb96-4a2a-11e7-90e7-ad6bcb8dbdb1.png)
 
+[Bitfield](https://github.com/wavedrom/bitfield) 다이어그램도 지원됩니다. 언어 식별자로 `bitfield`를 사용하십시오.
+
 ## GraphViz
 
 Markdown Preview Enhanced는 [Viz.js](https://github.com/mdaines/viz.js) 를 사용하여 [dot language](https://tinyurl.com/kjoouup) diagram을 렌더링한다.
@@ -83,33 +68,38 @@ Markdown Preview Enhanced는 [vega](https://vega.github.io/vega/) 와 [vega-lite
 @import "your_vega_lite_source.json" {as="vega-lite"}
 ```
 
-## Ditaa
+## Kroki
 
-Markdown Preview Enhanced는 ascii art로 그려진 다이어그램 (| /-과 같은 선과 유사한 문자가 포함된 '그림')을 비트맵 그래픽으로 변환할 수 있는 [ditaa](https://github.com/stathissideris/ditaa) 를 지원한다.
+Markdown Preview Enhanced는 [Kroki](https://kroki.io/)를 지원하며 다양한 종류의 다이어그램을 지원합니다. 코드 블록 속성에서 `kroki=true` 또는 `kroki=DIAGRAM_TYPE`을 설정하여 활성화하세요.
 
-(**Java** 설치가 요구됨)
+````markdown
+```blockdiag {kroki=true}
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
 
-`ditaa`는 [code chunk](ko-kr/code-chunk.md)와 통합되어 있다. 예:
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+```
 
-<pre>
-  ```ditaa {cmd=true args=["-E"]}
-  +--------+   +-------+    +-------+
-  |        | --+ ditaa +--> |       |
-  |  Text  |   +-------+    |diagram|
-  |Document|   |!magic!|    |       |
-  |     {d}|   |       |    |       |
-  +---+----+   +-------+    +-------+
-      :                         ^
-      |       Lots of work      |
-      +-------------------------+
-  ```
-</pre>
-
-> <kbd>shift-enter</kbd> 로 code chunk를 실행할 수 있다.
-> 코드 블럭을 숨기려면 `{hide=true}` 를 설정한다.
-> markdown 파일을 저장할 때 ditaa를 렌더링하려면 `{run_on_save=true}`를 설정한다.
-
-![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
+```javascript {kroki="wavedrom"}
+{
+  signal: [
+    { name: "clk", wave: "p.....|..." },
+    {
+      name: "Data",
+      wave: "x.345x|=.x",
+      data: ["head", "body", "tail", "data"],
+    },
+    { name: "Request", wave: "0.1..0|1.0" },
+    {},
+    { name: "Acknowledge", wave: "1.....|01." },
+  ];
+}
+```
+````
 
 ---
 

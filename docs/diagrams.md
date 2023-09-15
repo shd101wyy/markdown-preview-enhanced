@@ -5,23 +5,6 @@ You can also render `TikZ`, `Python Matplotlib`, `Plotly` and all sorts of other
 
 > Please note that some diagrams don't work well with file exports such as PDF, pandoc, etc.
 
-## Flow Charts
-
-This feature is powered by [flowchart.js](https://flowchart.js.org/).
-
-- code block with `flow` notation will be rendered by [flowchart.js](https://flowchart.js.org/).
-
-![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
-
-## Sequence Diagrams
-
-This feature is powered by [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/).
-
-- code block with `sequence` notation will be rendered by [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/).
-- Two themes are supported: `simple`(default theme) and `hand`.
-
-![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
-
 ## Mermaid
 
 Markdown Preview Enhanced uses [mermaid](https://github.com/knsv/mermaid) to render flow charts and sequence diagram.
@@ -58,6 +41,8 @@ Markdown Preview Enhanced uses [WaveDrom](https://wavedrom.com/) to create digit
 
 ![screen shot 2017-06-05 at 8 07 30 pm](https://cloud.githubusercontent.com/assets/1908863/26809462/9dc3eb96-4a2a-11e7-90e7-ad6bcb8dbdb1.png)
 
+[Bitfield](https://github.com/wavedrom/bitfield) diagrams are also supported. Please use `bitfield` as language identifier.
+
 ## GraphViz
 
 Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to render [dot language](https://tinyurl.com/kjoouup) diagram.
@@ -84,33 +69,38 @@ You can also [@import](file-imports.md) a `JSON` or `YAML` file as `vega` diagra
 @import "your_vega_lite_source.json" {as="vega-lite"}
 ```
 
-## Ditaa
+## Kroki
 
-Markdown Preview Enhanced supports [ditaa](https://github.com/stathissideris/ditaa) that can convert diagrams drawn using ascii art ('drawings' that contain characters that resemble lines like | / - ), into proper bitmap graphics.
+Markdown Preview Enhanced supports [Kroki](https://kroki.io/), which supports different kinds of diagrams. Simply set `kroki=true` or `kroki=DIAGRAM_TYPE` in code block attributes to enable it.
 
-(**Java** is required to be installed)
+````markdown
+```blockdiag {kroki=true}
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
 
-`ditaa` is integrated with [code chunk](code-chunk.md), for example:
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+```
 
-<pre>
-  ```ditaa {cmd=true args=["-E"]}
-  +--------+   +-------+    +-------+
-  |        | --+ ditaa +--> |       |
-  |  Text  |   +-------+    |diagram|
-  |Document|   |!magic!|    |       |
-  |     {d}|   |       |    |       |
-  +---+----+   +-------+    +-------+
-      :                         ^
-      |       Lots of work      |
-      +-------------------------+
-  ```
-</pre>
-
-> <kbd>shift-enter</kbd> to run code chunk.
-> set `{hide=true}` to hide code block.
-> set `{run_on_save=true}` to render ditaa when you save the markdown file.
-
-![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
+```javascript {kroki="wavedrom"}
+{
+  signal: [
+    { name: "clk", wave: "p.....|..." },
+    {
+      name: "Data",
+      wave: "x.345x|=.x",
+      data: ["head", "body", "tail", "data"],
+    },
+    { name: "Request", wave: "0.1..0|1.0" },
+    {},
+    { name: "Acknowledge", wave: "1.....|01." },
+  ];
+}
+```
+````
 
 ---
 

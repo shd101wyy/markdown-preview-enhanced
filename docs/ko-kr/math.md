@@ -1,6 +1,6 @@
 # 수식(Math)
 
-**Markdown Preview Enhanced**는 [KaTeX](https://github.com/Khan/KaTeX) 또는  [MathJax](https://github.com/mathjax/MathJax)를 사용하여 수학 표현식을 렌더링한다.
+**Markdown Preview Enhanced**는 [KaTeX](https://github.com/Khan/KaTeX) 또는 [MathJax](https://github.com/mathjax/MathJax)를 사용하여 수학 표현식을 렌더링한다.
 
 KaTeX는 MathJax보다 빠르지만, MathJax에 비해 가지고 있는 기능 수가 부족하다. 자세한 내용은 [KaTeX 지원 기능/기호](https://khan.github.io/KaTeX/function-support.html) 에서 확인할 수 있다.
 

@@ -35,6 +35,7 @@
 
 - 定制 & 擴展
 
+  - [設定](zh-tw/config.md)
   - [自定義 CSS](zh-tw/customize-css.md)
   - [擴展 Markdown Parser](zh-tw/extend-parser.md)
   - [圖片助手](zh-tw/image-helper.md)
@@ -51,9 +52,6 @@
 
 - Changelog
 
-  - Atom
-    - [Newest](newest.md)
-    - [History](history.md)
   - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 
 - [License](LICENSE.md)
