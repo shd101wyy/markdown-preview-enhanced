@@ -5,23 +5,6 @@
 
 > 一部のダイアグラムは、PDF、pandoc などのファイルエクスポートではうまく機能しないことに注意してください。
 
-## Flow Charts
-
-この機能は、[flowchart.js](https://flowchart.js.org/) を利用しています。
-
-- `flow` 表記のコードブロックは [flowchart.js](https://flowchart.js.org/) によってレンダリングされます。
-
-![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
-
-## Sequence Diagrams
-
-この機能は、[js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) を利用しています。
-
-- `sequence` 表記のコードブロックは [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) によってレンダリングされます。
-- 2 つのテーマがサポートされています： `simple`(既定のテーマ)と `hand`
-
-![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
-
 ## Mermaid
 
 Markdown Preview Enhanced は、[mermaid](https://github.com/knsv/mermaid) を使用して、フローチャートとシーケンス図をレンダリングします。
@@ -58,6 +41,8 @@ Markdown Preview Enhanced は、[WaveDrom](https://wavedrom.com/) を使用し�
 
 ![screen shot 2017-06-05 at 8 07 30 pm](https://cloud.githubusercontent.com/assets/1908863/26809462/9dc3eb96-4a2a-11e7-90e7-ad6bcb8dbdb1.png)
 
+[Bitfield](https://github.com/wavedrom/bitfield)ダイアグラムもサポートされています。言語識別子として `bitfield` を使用してください。
+
 ## GraphViz
 
 Markdown Preview Enhanced は、[Viz.js](https://github.com/mdaines/viz.js) を使用して [dot 言語](https://tinyurl.com/kjoouup) ダイアグラムをレンダリングします。
@@ -85,33 +70,38 @@ Markdown Preview Enhanced は、[vega](https://vega.github.io/vega/) および [
 @import "your_vega_lite_source.json" {as="vega-lite"}
 ```
 
-## Ditaa
+## Kroki
 
-Markdown Preview Enhanced は、[ditaa](https://github.com/stathissideris/ditaa) をサポートし、アスキーアートを使用して描画された図(| /-のような線に似た文字を含む '図面') をビットマップグラフィックに変換できます。
+Markdown Preview Enhanced は [Kroki](https://kroki.io/) をサポートしており、さまざまな種類のダイアグラムをサポートしています。単にコードブロックの属性で `kroki=true` または `kroki=DIAGRAM_TYPE` を設定して有効にします。
 
-(**Java** のインストールが必要です)
+````markdown
+```blockdiag {kroki=true}
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
 
-`ditaa` は [コードチャンク](ja-jp/code-chunk.md) と統合されています。例：
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+```
 
-<pre>
-  ```ditaa {cmd=true args=["-E"]}
-  +--------+   +-------+    +-------+
-  |        | --+ ditaa +--> |       |
-  |  Text  |   +-------+    |diagram|
-  |Document|   |!magic!|    |       |
-  |     {d}|   |       |    |       |
-  +---+----+   +-------+    +-------+
-      :                         ^
-      |       Lots of work      |
-      +-------------------------+
-  ```
-</pre>
-
-> <kbd>shift-enter</kbd>でコード チャンクを実行できます。
-> コードブロックを非表示にするには、`{hide = true}` を設定します。
-> markdown ファイルを保存するときに ditaa をレンダリングするには、`{run_on_save = true}` を設定します。
-
-![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
+```javascript {kroki="wavedrom"}
+{
+  signal: [
+    { name: "clk", wave: "p.....|..." },
+    {
+      name: "Data",
+      wave: "x.345x|=.x",
+      data: ["head", "body", "tail", "data"],
+    },
+    { name: "Request", wave: "0.1..0|1.0" },
+    {},
+    { name: "Acknowledge", wave: "1.....|01." },
+  ];
+}
+```
+````
 
 ---
 

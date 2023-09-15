@@ -1,9 +1,7 @@
 # Markdown Preview Enhanced
 
-**Markdown Preview Enhanced** 是一款為 [**Atom**](https://atom.io/packages/markdown-preview-enhanced) 以及 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 編輯器編寫的**超級強大的** Markdown 插件。
+**Markdown Preview Enhanced** 是一款為 [**Visual Studio Code**](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) 編輯器編寫的**超級強大的** Markdown 插件。
 這款插件意在讓你擁有飄逸的 Markdown 寫作體驗。
-
-在 [這裡](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues) 留言如果你發現了問題或者想要請求新的特性。
 
 如果妳感興趣的話，請同時嘗試壹下我們新的原型項目：[0xGG/crossnote](https://github.com/0xGG/crossnote)
 
@@ -11,8 +9,8 @@
 
 ## 安裝
 
-[Atom 版安裝](zh-tw/installation.md)
-[VS Code 版安裝](zh-tw/vscode-installation.md)
+- ~~[Atom 版安裝](zh-tw/installation.md)~~ (不再維護)
+- [VS Code 版安裝](zh-tw/vscode-installation.md)
 
 ## 特性
 
@@ -42,9 +40,9 @@
 
 Markdown Preview Enhanced 是一款由 [University of Illinois/NCSA Open Source License](LICENSE.md) 下發布的免費開源軟件。這個項目的持續開發脫離不了這些可敬的[贊助者們](backers.md)。你也可以使這個項目變的更好，到 [GitHub Sponsors](https://github.com/sponsors/shd101wyy)，[PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal)，或者 [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat) 上來支持我們。謝謝！
 
-## Mume - 該項目的核心
+## Crossnote - 該項目的核心
 
-[Mume](https://github.com/shd101wyy/mume) 驅動了 atom 以及 vscode 版本的 markdown preview enhanced。
+[Crossnote](https://github.com/shd101wyy/crossnote) 驅動了 vscode 版本的 markdown preview enhanced。
 
 ## 幫忙翻譯文檔
 

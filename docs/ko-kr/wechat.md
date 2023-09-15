@@ -11,4 +11,4 @@ Once you make donation, please email me ( `shd101wyy@gmail.com` ) the content be
 ご寄付を頂きましたら、以下の内容をメール (`shd101wyy@gmail.com`) でお送りください。お名前を [backers](backers.md) ファイルに追加させて頂きます。ありがとうございます!
 `[ご芳名](リンク先) ¥寄付額`
 
-기부를 하신 경우, 이메일 ( `shd101wyy@gmail.com` ) 로 `[your name](link you want) $amount_you_donate.` 형식으로 보내 주십시오. 후원자의 이름은 [후원자](backers.md)에 표시 됩니다. 
+기부를 하신 경우, 이메일 ( `shd101wyy@gmail.com` ) 로 `[your name](link you want) $amount_you_donate.` 형식으로 보내 주십시오. 후원자의 이름은 [후원자](backers.md)에 표시 됩니다.

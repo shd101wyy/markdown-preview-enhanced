@@ -76,7 +76,7 @@ To export ebook, open the `SUMMARY.md` with the preview opened. Then right click
 ### Metadata
 
 - **theme**
-  the theme to use for eBook, by default it will use the preview theme. The list of available themes could be found at `previewTheme` section in [this doc](https://github.com/shd101wyy/mume/#markdown-engine-configuration).
+  the theme to use for eBook, by default it will use the preview theme. The list of available themes could be found at `previewTheme` section in [this doc](https://github.com/shd101wyy/crossnote/#notebook-configuration).
 - **title**  
   title of your book
 - **authors**  

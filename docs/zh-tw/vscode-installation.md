@@ -6,6 +6,8 @@
 
 打開 **vscode** 編輯器，在插件頁搜索 `markdown-preview-enhanced`，接著點擊 `Install` 按鈕。
 
+您還可以在 VS Code for the Web 上安裝此擴展。只需打開[VS Code for the web](https://vscode.dev/)，然後在“擴展”中搜索`markdown-preview-enhanced`，然後點擊“安裝”按鈕。
+
 ![screen shot 2017-07-14 at 12 23 32 am](https://user-images.githubusercontent.com/1908863/28199365-bb03a570-682a-11e7-8f65-d7d2b258d583.png)
 
 ## 通過 GitHub 安裝

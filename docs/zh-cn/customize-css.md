@@ -2,11 +2,9 @@
 
 ## style.less
 
-要自定义 css，<kbd>cmd-shift-p</kbd> 然后运行 `Markdown Preview Enhanced: Customize Css`
+要自定义 Markdown 文件的 CSS，请按<kbd>cmd-shift-p</kbd>，然后运行`Markdown Preview Enhanced: Customize CSS (Global)`或`Markdown Preview Enhanced: Customize CSS (Workspace)`命令。
 
 `style.less` 文件将会被打开，然后你就可以开始编写样式了：
-
-> `style.less` 文件位于 `~/.mume/style.less`
 
 ```less
 .markdown-preview.markdown-preview {

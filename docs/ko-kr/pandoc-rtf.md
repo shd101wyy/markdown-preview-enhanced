@@ -66,7 +66,7 @@ output:
 
 ## 옵션 공유
 
-여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에  `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
+여러 개의 문서들의 옵션을 통일해서 정해주고 싶다면 디렉토리에 `_output.yaml` 이름을 포함하면 된다. YAML 구분기호나 출력개체는 이 파일에 적용되지 않는다. 예시:
 
 **\_output.yaml**
 
@@ -75,5 +75,5 @@ rtf_document:
   toc: true
 ```
 
-`_output.yaml`과 같은 directory에 있는 모든 문서는 _output.yaml의 옵션과
+`_output.yaml`과 같은 directory에 있는 모든 문서는 \_output.yaml의 옵션과
 같은 값을 입력받는다. 문서에 명시적으로 정의된 선택사항은 공유 옵션 파일에 지정된 선택사항 보다 우선시 한다.

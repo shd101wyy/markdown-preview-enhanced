@@ -15,7 +15,7 @@
 
 ![marketplace](https://user-images.githubusercontent.com/32936898/197322932-16818f2b-0f15-4503-8fb8-691fd5633997.png)
 
-搜索 `coc-markdown-preview-enhanced` 和 `coc-webview` ，并输入 <kbd>Enter</kbd> 
+搜索 `coc-markdown-preview-enhanced` 和 `coc-webview` ，并输入 <kbd>Enter</kbd>
 。
 
 ![coc-markdown-preview-enhanced](https://user-images.githubusercontent.com/32936898/197322933-4a7926f6-0563-4241-b0bc-010a3ded828c.png)

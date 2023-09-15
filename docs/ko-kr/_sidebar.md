@@ -35,6 +35,7 @@
 
 - 설정 & 확장
 
+  - [설정](ko-kr/config.md)
   - [사용자정의 CSS](ko-kr/customize-css.md)
   - [Markdown Parser 확장](ko-kr/extend-parser.md)
   - [Image Helper](ko-kr/image-helper.md)
@@ -46,8 +47,5 @@
 - [추가기능](ko-kr/extra.md)
 - [FAQ](ko-kr/faq.md)
 - 변경이력
-  - Atom
-    - [Newest](newest.md)
-    - [History](history.md)
   - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 - [라이선스](LICENSE.md)

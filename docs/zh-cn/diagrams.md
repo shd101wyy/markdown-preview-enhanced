@@ -5,23 +5,6 @@
 
 > Please note that some diagrams doesn't work well with file export like PDF, pandoc, etc.
 
-## Flow Charts
-
-这一特性基于 [flowchart.js](https://flowchart.js.org/)。
-
-- `flow` 代码块中的内容将会被 [flowchart.js](https://flowchart.js.org/) 渲染。
-
-![screenshot from 2017-11-25 21-43-02](https://user-images.githubusercontent.com/1908863/33236942-aa809c1c-d229-11e7-9c4b-9a680fd852ed.png)
-
-## Sequence Diagrams
-
-这一特性基于 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/)。
-
-- `sequence` 代码块中的内容将会被 [js-sequence-diagrams](https://bramp.github.io/js-sequence-diagrams/) 渲染。
-- 支持两个主题 `simple`（默认主题）和 `hand`。
-
-![screenshot from 2017-11-25 21-47-41](https://user-images.githubusercontent.com/1908863/33236972-4f190f98-d22a-11e7-842f-d9c4a74d2118.png)
-
 ## Mermaid
 
 Markdown Preview Enhanced 使用 [mermaid](https://github.com/knsv/mermaid) 来渲染流程图和时序图。
@@ -58,6 +41,8 @@ Markdown Preview Enhanced 使用 [WaveDrom](https://wavedrom.com/) 来渲染 dig
 
 ![screen shot 2017-06-05 at 8 07 30 pm](https://cloud.githubusercontent.com/assets/1908863/26809462/9dc3eb96-4a2a-11e7-90e7-ad6bcb8dbdb1.png)
 
+支持[Bitfield](https://github.com/wavedrom/bitfield)图表。请使用`bitfield`作为语言标识符。
+
 ## GraphViz
 
 Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 来渲染 [dot 语言](https://tinyurl.com/kjoouup) 图形。
@@ -84,33 +69,38 @@ Markdown Preview Enhanced 支持 [vega](https://vega.github.io/vega/) 以及 [ve
 @import "your_vega_lite_source.json" {as="vega-lite"}
 ```
 
-## Ditaa
+## Kroki
 
-Markdown Preview Enhanced 支持 [ditaa](https://github.com/stathissideris/ditaa)。
+Markdown Preview Enhanced 支持 [Kroki](https://kroki.io/)，它支持不同类型的图表。只需在代码块属性中设置 `kroki=true` 或 `kroki=DIAGRAM_TYPE` 即可启用它。
 
-(**Java** 是需要先被安装好的)
+````markdown
+```blockdiag {kroki=true}
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
 
-`ditaa` 整合于 [code chunk](zh-cn/code-chunk.md), for example:
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+```
 
-<pre>
-  ```ditaa {cmd=true args=["-E"]}
-  +--------+   +-------+    +-------+
-  |        | --+ ditaa +--> |       |
-  |  Text  |   +-------+    |diagram|
-  |Document|   |!magic!|    |       |
-  |     {d}|   |       |    |       |
-  +---+----+   +-------+    +-------+
-      :                         ^
-      |       Lots of work      |
-      +-------------------------+
-  ```
-</pre>
-
-> <kbd>shift-enter</kbd> 来运行 code chunk。
-> 设置 `{hide=true}` 来隐藏代码块。
-> 设置 `{run_on_save=true}` 启动当文件保存时，渲染 ditaa 图像。
-
-![screen shot 2017-07-28 at 8 11 15 am](https://user-images.githubusercontent.com/1908863/28718626-633fa18e-736c-11e7-8a4a-915858dafff6.png)
+```javascript {kroki="wavedrom"}
+{
+  signal: [
+    { name: "clk", wave: "p.....|..." },
+    {
+      name: "Data",
+      wave: "x.345x|=.x",
+      data: ["head", "body", "tail", "data"],
+    },
+    { name: "Request", wave: "0.1..0|1.0" },
+    {},
+    { name: "Acknowledge", wave: "1.....|01." },
+  ];
+}
+```
+````
 
 ---
 

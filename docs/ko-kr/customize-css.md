@@ -1,12 +1,10 @@
-# 사용자 정의 CSS 
+# 사용자 정의 CSS
 
 ## style.less
 
-markdown 파일의 css를 사용자 정의 하려면, <kbd>cmd-shift-p</kbd> 다음에 `Markdown Preview Enhanced: Customize Css` 명령을 실행한다.
+Markdown 파일의 CSS를 사용자 정의하려면 <kbd>cmd-shift-p</kbd>를 누르고 `Markdown Preview Enhanced: Customize CSS (Global)` 또는 `Markdown Preview Enhanced: Customize CSS (Workspace)` 명령을 실행하세요.
 
 그러면 `style.less` 파일이 열리고, 다음과 같이 기존의 style을 재정의할 수 있다.:
-
-> `style.less` 파일은 `~/.mume/style.less` 경로에 있다.
 
 ```less
 .markdown-preview.markdown-preview {
@@ -100,4 +98,5 @@ class: "my-class1 my-class2"
   }
 }
 ```
+
 > google 폰트와 같은 온라인 폰트 사용을 권장한다.

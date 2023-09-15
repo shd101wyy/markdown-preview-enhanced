@@ -75,7 +75,7 @@ ebook:
 ### Metadata
 
 - **theme**
-  电子书的渲染主题。默认是使用预览的主题。主题列表可以在[这个文档](https://github.com/shd101wyy/mume/#markdown-engine-configuration)中的 `previewTheme` 部分找到。
+  电子书的渲染主题。默认是使用预览的主题。主题列表可以在[这个文档](https://github.com/shd101wyy/crossnote/#notebook-configuration)中的 `previewTheme` 部分找到。
 - **title**  
   你的书的标题
 - **authors**  

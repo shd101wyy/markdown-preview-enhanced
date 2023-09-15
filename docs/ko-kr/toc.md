@@ -1,7 +1,7 @@
 # Table of content (목차)
 
 **Markdown Preview Enhanced**는 markdown파일에 대해 `TOC`를 만들 수있다.
-<kbd>cmd-shift-p</kbd>를 누른 후 `Markdown Preview Enhanced: Create Toc` 
+<kbd>cmd-shift-p</kbd>를 누른 후 `Markdown Preview Enhanced: Create Toc`
 TOC를 여러 개 만들 수 있다.
 `TOC` 에서 heading을 제외하려면 heading에 `{ignore = true}`를 추가한다.
 
@@ -30,12 +30,13 @@ TOC를 여러 개 만들 수 있다.
 [TOC]
 
 # Heading 1
+
 ## Heading 2 {ignore=true}
 
 Heading 2는 하이퍼 사용이 불가능해진다.
 ```
 
-그러나 **이방법은 TOC preview에서만 나타나고.** 편집기 내용은 바뀌지 않는다. 
+그러나 **이방법은 TOC preview에서만 나타나고.** 편집기 내용은 바뀌지 않는다.
 
 ## [TOC] and Sidebar TOC Configuration
 

@@ -22,7 +22,7 @@ Search `coc-markdown-preview-enhanced` and `coc-webview` and press <kbd>Enter</k
 
 ## Install by CocInstall
 
-Input `CocInstall coc-markdown-preview-enhanced coc-webview` directly in command 
+Input `CocInstall coc-markdown-preview-enhanced coc-webview` directly in command
 mode.
 
 ## Install by vimrc (Recommended)

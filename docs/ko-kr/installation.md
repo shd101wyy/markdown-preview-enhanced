@@ -1,3 +1,5 @@
+# [더 이상 유지되지 않음]
+
 # Atom에 설치
 
 > 공식 `markdown-preview` 패키지를 비활성화했는지 꼭 확인해야 한다.
@@ -14,6 +16,7 @@
 ## Terminal을 통한 설치
 
 Terminal을 열어 다음 명령을 실행한다.
+
 ```bash
 apm install markdown-preview-enhanced
 ```
@@ -27,7 +30,7 @@ apm install markdown-preview-enhanced
 ```bash
 cd the_path_to_folder/markdown-preview-enhanced
 yarn install
-apm link # <- 해당 명령어를 통해 markdown-preview-enhanced 폴더가 ~/.atom/packages 위치로 복사된다. 
+apm link # <- 해당 명령어를 통해 markdown-preview-enhanced 폴더가 ~/.atom/packages 위치로 복사된다.
 ```
 
 > `npm` 명령이 없다면 [node.js](https://nodejs.org/en/) 를 먼저 설치해야 한다.  

@@ -18,9 +18,8 @@ If you are posting **issues** or **feature requests** related to the VSCode exte
 </p>
 
 <p align="center">
-<a href="https://atom.io/packages/markdown-preview-enhanced">atom</a>
-&
 <a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">vscode</a>
+</p> & <a href="https://vscode.dev">vscode.dev</a>
 </p>
 
 If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
@@ -78,8 +77,7 @@ Contact me if you are willing to help translate the documentation :)
 
 ## Changelog
 
-Newest updates for the current minor version can be found at the [newest notes](https://shd101wyy.github.io/markdown-preview-enhanced/#/newest).
-Detailed changes for each old release can be found at [history notes](https://shd101wyy.github.io/markdown-preview-enhanced/#/history).
+Please visit https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases
 
 ## License
 

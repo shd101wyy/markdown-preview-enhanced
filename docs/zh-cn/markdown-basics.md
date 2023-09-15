@@ -244,7 +244,7 @@ Content [^1]
 
 ### 缩略
 
-```markdown
+```
 *[HTML]: Hyper Text Markup Language
 *[W3C]: World Wide Web Consortium
 The HTML specification

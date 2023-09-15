@@ -35,6 +35,7 @@
 
 - Customization & Extension
 
+  - [Configuration](config.md)
   - [Customize CSS](customize-css.md)
   - [Extend Markdown Parser](extend-parser.md)
   - [Image Helper](image-helper.md)
@@ -46,8 +47,5 @@
 - [Extra](extra.md)
 - [FAQ](faq.md)
 - Changelog
-  - Atom
-    - [Newest](newest.md)
-    - [History](history.md)
   - [VS Code](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases)
 - [License](LICENSE.md)

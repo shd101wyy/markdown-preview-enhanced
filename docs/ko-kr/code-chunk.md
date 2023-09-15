@@ -91,7 +91,7 @@ code chunk 옵션은 <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}
 `stdin` 이 true로 설정된 경우 코드는 파일이 아닌 표준 입력으로 전달된다.
 
 **hide**
-`hide`는 code chunk는 숨기지만 출력 결과는 표시한다. 기본값: `false` 
+`hide`는 code chunk는 숨기지만 출력 결과는 표시한다. 기본값: `false`
 예시:
 
     ```python {hide=true}
@@ -100,7 +100,7 @@ code chunk 옵션은 <code>\`\`\`lang {cmd=your_cmd opt1=value1 opt2=value2 ...}
 
 **continue**
 `continue = true`로 설정된 경우, code chunk는 이전 code chunk에 이어 연속적으로 실행된다.
-continue = id로 설정된 경우, code chunk는 동일한 id가 설정된 code chunk에 이어 연속적으로 실행된다. 
+continue = id로 설정된 경우, code chunk는 동일한 id가 설정된 code chunk에 이어 연속적으로 실행된다.
 예시:
 
     ```python {cmd=true id="izdlk700"}
@@ -138,7 +138,7 @@ code chunk의 `id` 이다. 해당 옵션은 `continue`를 사용할 때 유용�
 - **input_file**
   `input_file` 은 마크다운 파일과 동일한 디렉토리에 자동적으로 생성되며, `input_file`에 복사된 코드를 실행한 후 삭제된다.
   기본값으로 프로그램 argument 의 마지막에 추가된다.
-  그러나 `args` 옵션에서 `$input_file` 매크로로  `input_file`의 위치를 설정할 수 있다. 예시:
+  그러나 `args` 옵션에서 `$input_file` 매크로로 `input_file`의 위치를 설정할 수 있다. 예시:
 
       ```program {cmd=true args=["-i", "$input_file", "-o", "./output.png"]}
       ...your code here
@@ -188,7 +188,7 @@ Markdown Preview Enhanced 는 `LaTeX` 컴파일을 지원한다.
 
 ### TikZ 예제
 
-`tikz` 그래프를 그릴 때는  `standalone`을 이용하는 것을 추천한다.
+`tikz` 그래프를 그릴 때는 `standalone`을 이용하는 것을 추천한다.
 ![screen shot 2017-07-14 at 11 27 56 am](https://user-images.githubusercontent.com/1908863/28221069-8113a5b0-6887-11e7-82fa-23dd68f2be82.png)
 
 ## Plotly
@@ -197,7 +197,7 @@ Markdown Preview Enhanced 는 [Plotly](https://plot.ly/) 를 쉽게 그릴 수 �
 예제:
 ![screen shot 2017-10-20 at 10 41 25 am](https://user-images.githubusercontent.com/1908863/31829580-526a0c06-b583-11e7-82f2-09ea7a0b9672.png)
 
-- 첫번째 줄 `@import "https://cdn.plot.ly/plotly-latest.min.js"` 은 [file import](ko-kr/file-imports.md) 기능을 이용하여  `plotly-latest.min.js` 파일을 가져왔다.
+- 첫번째 줄 `@import "https://cdn.plot.ly/plotly-latest.min.js"` 은 [file import](ko-kr/file-imports.md) 기능을 이용하여 `plotly-latest.min.js` 파일을 가져왔다.
   물론, 더 좋은 성능을 위해서는 로컬 디스크에 javascript 파일을 다운로드 하는 것이 낫다.
 - 위의 예시와 같이 `javascript` 코드 청크를 만들었다.
 
@@ -228,7 +228,7 @@ Markdown Preview Enhanced 는 [Plotly](https://plot.ly/) 를 쉽게 그릴 수 �
 - `output="html"` 결과값을 `html`으로 출력한다.
 - `args` 필드는 우리가 사용할 arguments를 보여준다.
 
-미리보기에서 `run` 버튼을 눌러 코드를 실행할 수 있다. 
+미리보기에서 `run` 버튼을 눌러 코드를 실행할 수 있다.
 
 ![erd](https://user-images.githubusercontent.com/1908863/28221395-bcd0bd76-6888-11e7-8c6e-925e228d02cc.gif)
 
