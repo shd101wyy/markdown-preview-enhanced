@@ -19,13 +19,6 @@ Run `Markdown Preview Enhanced: Extend Parser (Global)` or `Markdown Preview Enh
   onDidTransformMarkdown: async function(markdown) {
     return markdown;
   },
-
-  processWikiLink: function({ text, link }) {
-    return {
-      text,
-      link: link ? link : text.endsWith(".md") ? text : `${text}.md`,
-    };
-  },
 });
 ```
 
