@@ -12,6 +12,17 @@ easy, right :)
 
 `<!-- @import "your_file" -->` is also valid.
 
+Or
+
+```markdown
+- image like syntax
+  ![](file/path/to/your_file)
+
+- wikilink like syntax
+  ![[ file/path/to/your_file ]]
+  ![[ my_file ]]
+```
+
 ## Refresh button
 
 Refresh button is now added at the right corner of preview.
@@ -38,6 +49,10 @@ It could be useful if you want to clear image cache. [#144](https://github.com/s
 
 ```markdown
 @import "test.png" {width="300px" height="200px" title="my title" alt="my alt"}
+
+![](test.png){width="300px" height="200px"}
+
+![[ test.png ]]{width="300px" height="200px"}
 ```
 
 ## Import online files

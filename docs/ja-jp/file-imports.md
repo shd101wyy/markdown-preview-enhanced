@@ -12,6 +12,17 @@
 
 `<!-- @import "your_file" -->` でも有効です。
 
+または
+
+```markdown
+- image like syntax
+  ![](file/path/to/your_file)
+
+- wikilink like syntax
+  ![[ file/path/to/your_file ]]
+  ![[ my_file ]]
+```
+
 ## Refresh ボタン
 
 プレビューの右隅に更新ボタンが追加されました。
@@ -38,6 +49,10 @@
 
 ```markdown
 @import "test.png" {width="300px" height="200px" title="my title" alt="my alt"}
+
+![](test.png){width="300px" height="200px"}
+
+![[ test.png ]]{width="300px" height="200px"}
 ```
 
 ## オンラインファイルの Import

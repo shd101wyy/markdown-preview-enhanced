@@ -12,6 +12,17 @@
 
 `<!-- @import "your_file" -->` 的寫法也是支持的。
 
+或者
+
+```markdown
+- image like syntax
+  ![](file/path/to/your_file)
+
+- wikilink like syntax
+  ![[ file/path/to/your_file ]]
+  ![[ my_file ]]
+```
+
 ## 刷新按鈕
 
 刷新按鈕可以在你的預覽右上角找到。
@@ -38,6 +49,10 @@
 
 ```markdown
 @import "test.png" {width="300px" height="200px" title="圖片的標題" alt="我的 alt"}
+
+![](test.png){width="300px" height="200px"}
+
+![[ test.png ]]{width="300px" height="200px"}
 ```
 
 ## 引用在線文件
