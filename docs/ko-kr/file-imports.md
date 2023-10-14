@@ -12,6 +12,17 @@
 
 `<!-- @import "your_file" -->` 또한 가능하다.
 
+또는
+
+```markdown
+- image like syntax
+  ![](file/path/to/your_file)
+
+- wikilink like syntax
+  ![[ file/path/to/your_file ]]
+  ![[ my_file ]]
+```
+
 ## 새로고침 버튼
 
 새로고침(Refresh) 버튼은 미리보기의 오른쪽 하단 위치해 있다. 클릭을 하면 파일 캐시가 지워지며 미리보기가 새로고침된다.
@@ -37,6 +48,10 @@
 
 ```markdown
 @import "test.png" {width="300px" height="200px" title="my title" alt="my alt"}
+
+![](test.png){width="300px" height="200px"}
+
+![[ test.png ]]{width="300px" height="200px"}
 ```
 
 ## 온라인 파일 가져오기
