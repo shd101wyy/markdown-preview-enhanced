@@ -85,7 +85,7 @@ To change the font family of preview, you first need to download the font file `
 }
 
 .markdown-preview.markdown-preview {
-  font-family: "your-font-family" sans-serif;
+  font-family: "your-font-family", sans-serif;
 
   h1,
   h2,
@@ -95,7 +95,7 @@ To change the font family of preview, you first need to download the font file `
   h6,
   pre,
   code {
-    font-family: "your-font-family" sans-serif;
+    font-family: "your-font-family", sans-serif;
   }
 }
 ```
