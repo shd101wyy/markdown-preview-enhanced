@@ -59,6 +59,9 @@ Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed s
 - [Wang Lei](https://www.linkedin.com/in/leiwangsg)
 - [libukai](https://markdown.10k.xyz)
 - [absurdist](https://github.com/absurdist)
+- [fredsun](https://github.com/fredsun)
+- 一路有风
+
 
 ---
 
