@@ -22,6 +22,32 @@ Markdown Preview Enhanced 使用 [mermaid](https://github.com/knsv/mermaid) 来�
 
 你还可以通过 `Markdown Preview Enhanced: Open Mermaid Config` 命令打开 mermaid 配置文件。
 
+此外，您可以在 head.html 中注册图标标志（通过 Markdown Preview Enhanced: Customize Preview Html Head 命令打开），如下所示：
+
+```html
+<script type="text/javascript">
+  const configureMermaidIconPacks = () => {
+    window["mermaid"].registerIconPacks([
+      {
+        name: "logos",
+        loader: () =>
+          fetch("https://unpkg.com/@iconify-json/logos/icons.json").then(
+            (res) => res.json()
+          ),
+      },
+    ]);
+  };
+
+  if (document.readyState !== 'loading') {
+    configureMermaidIconPacks();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMermaidIconPacks();
+    });
+  }
+</script>
+```
+
 ## PlantUML
 
 Markdown Preview Enhanced 使用 [PlantUML](https://plantuml.com/) 来创建各种图形。（**Java** 是需要先被安装好的）
