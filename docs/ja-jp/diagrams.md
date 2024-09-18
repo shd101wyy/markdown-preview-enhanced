@@ -22,6 +22,32 @@ Markdown Preview Enhanced は、[mermaid](https://github.com/knsv/mermaid) を�
 
 `Markdown Preview Enhanced：Open Mermaid Config` コマンドを実行して、`mermaid` の初期設定を編集することもできます。
 
+また、ロゴを登録することもできます。`Markdown Preview Enhanced: Customize Preview Html Head`で開く head.html ファイル内に、次のコードを追加することで実現できます。
+
+```html
+<script type="text/javascript">
+  const configureMermaidIconPacks = () => {
+    window["mermaid"].registerIconPacks([
+      {
+        name: "logos",
+        loader: () =>
+          fetch("https://unpkg.com/@iconify-json/logos/icons.json").then(
+            (res) => res.json()
+          ),
+      },
+    ]);
+  };
+
+  if (document.readyState !== 'loading') {
+    configureMermaidIconPacks();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMermaidIconPacks();
+    });
+  }
+</script>
+```
+
 ## PlantUML
 
 Markdown Preview Enhanced は、[PlantUML](https://plantuml.com/) を使用して複数の種類のグラフを作成します。(**Java** のインストールが必要です)

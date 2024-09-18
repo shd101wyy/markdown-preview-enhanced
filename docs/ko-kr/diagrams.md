@@ -20,6 +20,31 @@ Markdown Preview Enhanced는 [mermaid](https://github.com/knsv/mermaid) 를 사�
   ![screen shot 2017-06-05 at 8 47 00 pm](https://cloud.githubusercontent.com/assets/1908863/26810274/555562d0-4a30-11e7-91ca-98742d6afbd5.png)
 
 또한 `Markdown Preview Enhanced: Open Mermaid Config` 명령을 실행하여 mermaid의 초기 설정을 편집할 수도 있다.
+또한 Markdown Preview Enhanced: Customize Preview Html Head 명령을 통해 열리는 head.html에서 아이콘 로고를 다음과 같이 등록할 수 있습니다:
+
+```html
+<script type="text/javascript">
+  const configureMermaidIconPacks = () => {
+    window["mermaid"].registerIconPacks([
+      {
+        name: "logos",
+        loader: () =>
+          fetch("https://unpkg.com/@iconify-json/logos/icons.json").then(
+            (res) => res.json()
+          ),
+      },
+    ]);
+  };
+
+  if (document.readyState !== 'loading') {
+    configureMermaidIconPacks();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMermaidIconPacks();
+    });
+  }
+</script>
+```
 
 ## PlantUML
 

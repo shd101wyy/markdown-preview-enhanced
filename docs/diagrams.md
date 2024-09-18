@@ -22,6 +22,32 @@ Three mermaid themes are provided, and you can choose theme from [package settin
 
 You can also edit the mermaid init config by running `Markdown Preview Enhanced: Open Mermaid Config` command.
 
+Moreover, you can register icon logos in head.html (opened via `Markdown Preview Enhanced: Customize Preview Html Head` command) as follows:
+
+```html
+<script type="text/javascript">
+  const configureMermaidIconPacks = () => {
+    window["mermaid"].registerIconPacks([
+      {
+        name: "logos",
+        loader: () =>
+          fetch("https://unpkg.com/@iconify-json/logos/icons.json").then(
+            (res) => res.json()
+          ),
+      },
+    ]);
+  };
+
+  if (document.readyState !== 'loading') {
+    configureMermaidIconPacks();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMermaidIconPacks();
+    });
+  }
+</script>
+```
+
 ## PlantUML
 
 Markdown Preview Enhanced uses [PlantUML](https://plantuml.com/) to create multiple kinds of graph. (**Java** is required to be installed)
