@@ -8,29 +8,26 @@ If you are posting **issues** or **feature requests** related to the VSCode exte
 
 ![intro](https://user-images.githubusercontent.com/1908863/28227953-eb6eefa4-68a1-11e7-8769-96ea83facf3b.png)
 
-<p align="center">
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 繁體中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/"> 日本語 &nbsp;&nbsp; </a> 
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/"> 한국어 &nbsp;&nbsp; </a> 
-<br>
-</p>
+<div align="center">
 
-<p align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">vscode</a>
-</p> & <a href="https://vscode.dev">vscode.dev</a>
-</p>
+[English](https://shd101wyy.github.io/markdown-preview-enhanced/#/) · [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/) · [繁體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/) · [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/) · [한국어](https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/)
+
+</div>
+
+<div align="center">
+
+[VScode](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) · [VScode.dev](https://vscode.dev)
+
+</div>
 
 If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
 ## Supporting this project
 
-Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](https://shd101wyy.github.io/markdown-preview-enhanced/#/backers). You can help make this project better by [supporting us on GitHub Sponsors](https://github.com/sponsors/shd101wyy), [PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal), or [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat). Thank you!
+Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](https://shd101wyy.github.io/markdown-preview-enhanced/#/backers). You can help make this project better by supporting us on [GitHub Sponsors](https://github.com/sponsors/shd101wyy), [PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal) or [Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat). Thank you!
 
 ## Sponsors
 
-<p><a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&amp;utm_campaign=shd101wyy-markdown&amp;utm_medium=banner"><img src="https://alt-images.codestream.com/codestream_logo_shd101wyy-markdown.png"></a></br>
 Manage pull requests and conduct code reviews in your IDE with full source-tree context. Comment on any line, not just the diffs. Use jump-to-definition, your favorite keybindings, and code intelligence with more of your workflow.<br> <a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&amp;utm_campaign=shd101wyy-markdown&amp;utm_medium=banner">Learn More</a></p>
 
 <br>
@@ -66,13 +63,13 @@ Contact me if you are willing to help translate the documentation :)
 
 | Shortcuts                                   | Functionality              |
 | ------------------------------------------- | -------------------------- |
-| <kbd>ctrl-shift-m</kbd>                     | Toggle preview             |
-| <kbd>ctrl-shift-s</kbd>                     | Sync preview / Sync source |
-| <kbd>shift-enter</kbd>                      | Run Code Chunk             |
-| <kbd>ctrl-shift-enter</kbd>                 | Run all Code Chunks        |
-| <kbd>cmd-=</kbd> or <kbd>cmd-shift-=</kbd>  | Preview zoom in            |
-| <kbd>cmd--</kbd> or <kbd>cmd-shift-\_</kbd> | Preview zoom out           |
-| <kbd>cmd-0</kbd>                            | Preview reset zoom         |
+| <kbd>ctrl+shift+m</kbd>                     | Toggle preview             |
+| <kbd>ctrl+shift+s</kbd>                     | Sync preview / Sync source |
+| <kbd>shift+enter</kbd>                      | Run Code Chunk             |
+| <kbd>ctrl+shift+enter</kbd>                 | Run all Code Chunks        |
+| <kbd>cmd+=</kbd> or <kbd>cmd+shift+=</kbd>  | Preview zoom in            |
+| <kbd>cmd+-</kbd> or <kbd>cmd+shift+\_</kbd> | Preview zoom out           |
+| <kbd>cmd+0</kbd>                            | Preview reset zoom         |
 | <kbd>esc</kbd>                              | Toggle sidebar TOC         |
 
 ## Changelog
