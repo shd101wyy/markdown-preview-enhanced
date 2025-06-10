@@ -4,20 +4,24 @@ Run `Markdown Preview Enhanced: Extend Parser (Global)` or `Markdown Preview Enh
 
 ```javascript
 ({
+  /**
+   * Hook to modify the Markdown code before it is parsed.
+   *
+   * @param {String} markdown The original Markdown code.
+   * @returns {String} The modified Markdown code.
+   */
   onWillParseMarkdown: async function(markdown) {
     return markdown;
   },
 
-  onDidParseMarkdown: async function(html) {
+  /**
+   * Hook to modify the HTML output of the parser.
+   *
+   * @param {String} html The HTML code returned by the parser.
+   * @returns {String} The modified HTML code.
+   */
+  onDidTransformMarkdown: async function(html) {
     return html;
-  },
-
-  onWillTransformMarkdown: async function(markdown) {
-    return markdown;
-  },
-
-  onDidTransformMarkdown: async function(markdown) {
-    return markdown;
   },
 });
 ```
