@@ -20,7 +20,7 @@ Run `Markdown Preview Enhanced: Extend Parser (Global)` or `Markdown Preview Enh
    * @param {String} html The HTML code returned by the parser.
    * @returns {String} The modified HTML code.
    */
-  onDidTransformMarkdown: async function(html) {
+  onDidParseMarkdown: async function(html) {
     return html;
   },
 });
