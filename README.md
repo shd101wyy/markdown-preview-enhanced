@@ -10,7 +10,7 @@ If you are posting **issues** or **feature requests** related to the VSCode exte
 
 <div align="center">
 
-[English](https://shd101wyy.github.io/markdown-preview-enhanced/#/) · [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/) · [繁體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/) · [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/) · [한국어](https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/)
+[English](https://shd101wyy.github.io/markdown-preview-enhanced/#/) · [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/) · [繁體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/) · [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/) · [한국어](https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/) · [Français](https://shd101wyy.github.io/markdown-preview-enhanced/#/fr-fr/) · [Español](https://shd101wyy.github.io/markdown-preview-enhanced/#/es-es/) · [Português](https://shd101wyy.github.io/markdown-preview-enhanced/#/pt-br/) · [Nederlands](https://shd101wyy.github.io/markdown-preview-enhanced/#/nl-nl/) · [Türkçe](https://shd101wyy.github.io/markdown-preview-enhanced/#/tr-tr/)
 
 </div>
 
@@ -54,6 +54,11 @@ To check out the documentation, visit
 - [繁體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/)
 - [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/)
 - [한국어](https://shd101wyy.github.io/markdown-preview-enhanced/#/ko-kr/)
+- [Français](https://shd101wyy.github.io/markdown-preview-enhanced/#/fr-fr/)
+- [Español](https://shd101wyy.github.io/markdown-preview-enhanced/#/es-es/)
+- [Português](https://shd101wyy.github.io/markdown-preview-enhanced/#/pt-br/)
+- [Nederlands](https://shd101wyy.github.io/markdown-preview-enhanced/#/nl-nl/)
+- [Türkçe](https://shd101wyy.github.io/markdown-preview-enhanced/#/tr-tr/)
 
 Contact me if you are willing to help translate the documentation :)
 
