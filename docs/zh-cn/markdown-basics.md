@@ -91,6 +91,12 @@ https://github.com - 自动生成！
 
 > We're living the future so
 > the present is our past.
+
+> [!NOTE]
+> This is a note blockquote.
+
+> [!WARNING]
+> This is a warning blockquote.
 ```
 
 ### 分割线
