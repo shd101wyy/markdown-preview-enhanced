@@ -11,14 +11,6 @@
   onDidParseMarkdown: async function(html) {
     return html;
   },
-
-  onWillTransformMarkdown: async function(markdown) {
-    return markdown;
-  },
-
-  onDidTransformMarkdown: async function(markdown) {
-    return markdown;
-  },
 });
 ```
 

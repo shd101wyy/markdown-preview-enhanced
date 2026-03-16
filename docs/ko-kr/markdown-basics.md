@@ -92,6 +92,12 @@ Kanye West가 말하길:
 
 > We're living the future so
 > the present is our past.
+
+> [!NOTE]
+> This is a note blockquote.
+
+> [!WARNING]
+> This is a warning blockquote.
 ```
 
 ### 수평줄

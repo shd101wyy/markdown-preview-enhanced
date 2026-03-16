@@ -91,6 +91,12 @@ As Kanye West said:
 
 > We're living the future so
 > the present is our past.
+
+> [!NOTE]
+> This is a note blockquote.
+
+> [!WARNING]
+> This is a warning blockquote.
 ```
 
 ### Horizontal Rule

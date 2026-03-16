@@ -91,6 +91,12 @@ https://github.com - 自動的にリンクになります
 
 > We're living the future so
 > the present is our past.
+
+> [!NOTE]
+> This is a note blockquote.
+
+> [!WARNING]
+> This is a warning blockquote.
 ```
 
 ### 水平線
