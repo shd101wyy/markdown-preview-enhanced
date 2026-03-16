@@ -5,3 +5,7 @@
   - [日本語](/ja-jp/)
   - [한국어](/ko-kr/)
   - [Français](/fr-fr/)
+  - [Türkçe](/tr-tr/)
+  - [Português](/pt-br/)
+  - [Español](/es-es/)
+  - [Nederlands](/nl-nl/)
