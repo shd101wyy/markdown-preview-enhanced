@@ -78,6 +78,34 @@ Markdown Preview Enhanced uses [Viz.js](https://github.com/mdaines/viz.js) to re
 
 ![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
+## D2
+
+Markdown Preview Enhanced uses [D2](https://d2lang.com/) to render diagrams. D2 is a declarative diagramming language that turns text into diagrams.
+
+- [D2](https://d2lang.com/) must be installed and available on your `PATH` (or configured via `d2Path` in settings).
+- Code block with `d2` notation will be rendered by [D2](https://d2lang.com/).
+- Check the [D2 docs](https://d2lang.com/tour/intro/) for the full syntax reference.
+
+You can override the layout engine, theme, and sketch style per code block:
+![d2-test](https://github.com/user-attachments/assets/809cc0e7-e7a0-4637-9a4d-3992edab725d)
+
+| Attribute | Description                                                        | Default |
+| --------- | ------------------------------------------------------------------ | ------- |
+| `layout`  | Layout engine: `dagre`, `elk`, `tala`                              | `dagre` |
+| `theme`   | Theme ID number (see [D2 themes](https://d2lang.com/tour/themes/)) | `0`     |
+| `sketch`  | Render in hand-drawn / sketch style                                | `false` |
+
+Global defaults can be configured in [package settings](usages.md?id=package-settings):
+
+| Setting    | Description                 | Default |
+| ---------- | --------------------------- | ------- |
+| `d2Path`   | Path to the `d2` executable | `d2`    |
+| `d2Layout` | Default layout engine       | `dagre` |
+| `d2Theme`  | Default theme ID            | `0`     |
+| `d2Sketch` | Default sketch mode         | `false` |
+
+> **Note:** D2 rendering requires the `d2` CLI to be installed on your machine. If it is not found, the code block will be displayed as plain text. See the [D2 installation guide](https://d2lang.com/tour/install/) for instructions.
+
 ## Vega and Vega-lite
 
 Markdown Preview Enhanced supports [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/) **static** diagrams.
