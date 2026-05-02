@@ -106,6 +106,38 @@ Global defaults can be configured in [package settings](usages.md?id=package-set
 
 > **Note:** D2 rendering requires the `d2` CLI to be installed on your machine. If it is not found, the code block will be displayed as plain text. See the [D2 installation guide](https://d2lang.com/tour/install/) for instructions.
 
+## TikZ
+
+Markdown Preview Enhanced supports rendering [TikZ](https://tikz.dev/) diagrams via `tikz` fenced code blocks.
+
+- In Node.js (desktop VS Code): renders TikZ to SVG server-side using [node-tikzjax](https://github.com/prinsss/node-tikzjax), with caching.
+- In web (VS Code web extension) and HTML export: falls back to client-side rendering via [tikzjax.com](https://tikzjax.com).
+- Automatically wraps code in `\begin{document}...\end{document}` if not present.
+- Automatically loads base TeX packages: `amsmath`, `amssymb`, `amsfonts`, `amstext`, `array`.
+- Auto-detects and loads specialized packages: `tikz-cd` (for `\begin{tikzcd}`), `pgfplots` (for `\begin{axis}`), `circuitikz` (for `\begin{circuitikz}`), `chemfig` (for `\chemfig`), `tikz-3dplot` (for `\tdplotsetmaincoords`).
+
+Per-block options supported in the fence info string:
+
+| Option | Description | Accepted Values |
+| ------ | ----------- | --------------- |
+| `texPackages` / `tex_packages` | Additional TeX packages to load | Comma-separated list |
+| `tikzLibraries` / `tikz_libraries` | TikZ libraries to load | Comma-separated list |
+| `addToPreamble` / `add_to_preamble` | Custom LaTeX code to add to the preamble | LaTeX string |
+| `showConsole` / `show_console` | Show the console output | `true` / `false` |
+| `embedFontCss` / `embed_font_css` | Embed font CSS | `true` / `false` |
+| `fontCssUrl` / `font_css_url` | Custom font CSS URL | URL string |
+
+> **Note:** TikZ rendering requires network access for client-side rendering (tikzjax.com). Server-side rendering with node-tikzjax works offline after initial setup.
+
+## WebSequenceDiagrams
+
+Markdown Preview Enhanced supports rendering [WebSequenceDiagrams](https://www.websequencediagrams.com/) via `wsd` fenced code blocks.
+
+- Code block with `wsd` notation will be rendered by [WebSequenceDiagrams](https://www.websequencediagrams.com/).
+- An optional API key can be configured in [package settings](usages.md?id=package-settings).
+
+> **Note:** WebSequenceDiagrams rendering requires network access to websequencediagrams.com.
+
 ## Vega and Vega-lite
 
 Markdown Preview Enhanced supports [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/) **static** diagrams.

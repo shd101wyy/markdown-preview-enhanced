@@ -78,6 +78,66 @@ Markdown Preview Enhanced gebruikt [Viz.js](https://github.com/mdaines/viz.js) o
 
 ![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
+## D2
+
+Markdown Preview Enhanced gebruikt [D2](https://d2lang.com/) om diagrammen te renderen. D2 is een declaratieve diagramtaal die tekst omzet in diagrammen.
+
+- [D2](https://d2lang.com/) moet geïnstalleerd zijn en beschikbaar in uw `PATH` (of geconfigureerd via `d2Path` in de instellingen).
+- Een codeblok met `d2`-notatie wordt gerenderd door [D2](https://d2lang.com/).
+- Raadpleeg de [D2-documentatie](https://d2lang.com/tour/intro/) voor de volledige syntaxreferentie.
+
+U kunt de lay-outengine, het thema en de schetsstijl per codeblok overschrijven:
+![d2-test](https://github.com/user-attachments/assets/809cc0e7-e7a0-4637-9a4d-3992edab725d)
+
+| Attribuut  | Beschrijving                                                     | Standaard |
+| ---------- | ---------------------------------------------------------------- | --------- |
+| `layout`   | Lay-outengine: `dagre`, `elk`, `tala`                            | `dagre`   |
+| `theme`    | Thema ID-nummer (zie [D2-thema's](https://d2lang.com/tour/themes/)) | `0`     |
+| `sketch`   | Renderen in handgetekende / schetsstijl                          | `false`   |
+
+Globale standaardwaarden kunnen worden geconfigureerd in [pakketinstellingen](usages.md?id=package-settings):
+
+| Instelling  | Beschrijving                      | Standaard |
+| ----------- | --------------------------------- | --------- |
+| `d2Path`    | Pad naar het `d2` uitvoerbare bestand | `d2`    |
+| `d2Layout`  | Standaard lay-outengine           | `dagre`   |
+| `d2Theme`   | Standaard thema ID                | `0`       |
+| `d2Sketch`  | Standaard schetsmodus             | `false`   |
+
+> **Opmerking:** D2-rendering vereist dat de `d2` CLI op uw machine is geïnstalleerd. Als deze niet wordt gevonden, wordt het codeblok weergegeven als platte tekst. Zie de [D2-installatiegids](https://d2lang.com/tour/install/) voor instructies.
+
+## TikZ
+
+Markdown Preview Enhanced ondersteunt het renderen van [TikZ](https://tikz.dev/)-diagrammen via `tikz`-afgebakende codeblokken.
+
+- In Node.js (desktop VS Code): rendert TikZ naar SVG aan de serverzijde met behulp van [node-tikzjax](https://github.com/prinsss/node-tikzjax), met caching.
+- In web (VS Code web-extensie) en HTML-export: valt terug op client-side rendering via [tikzjax.com](https://tikzjax.com).
+- Als `\begin{document}...\end{document}` niet aanwezig is, wordt dit automatisch toegevoegd.
+- Laadt automatisch de basis-TeX-pakketten: `amsmath`, `amssymb`, `amsfonts`, `amstext`, `array`.
+- Detecteert en laadt automatisch gespecialiseerde pakketten: `tikz-cd` (voor `\begin{tikzcd}`), `pgfplots` (voor `\begin{axis}`), `circuitikz` (voor `\begin{circuitikz}`), `chemfig` (voor `\chemfig`), `tikz-3dplot` (voor `\tdplotsetmaincoords`).
+
+Per-blok opties ondersteund in de afbakeningsinformatietekenreeks:
+
+| Optie | Beschrijving | Geaccepteerde waarden |
+| ------ | ----------- | --------------- |
+| `texPackages` / `tex_packages` | Aanvullende TeX-pakketten om te laden | Door komma's gescheiden lijst |
+| `tikzLibraries` / `tikz_libraries` | TikZ-bibliotheken om te laden | Door komma's gescheiden lijst |
+| `addToPreamble` / `add_to_preamble` | Aangepaste LaTeX-code om aan de preambule toe te voegen | LaTeX-tekenreeks |
+| `showConsole` / `show_console` | Console-uitvoer weergeven | `true` / `false` |
+| `embedFontCss` / `embed_font_css` | Lettertype-CSS insluiten | `true` / `false` |
+| `fontCssUrl` / `font_css_url` | Aangepaste lettertype-CSS-URL | URL-tekenreeks |
+
+> **Opmerking:** TikZ-rendering vereist netwerktoegang voor client-side rendering (tikzjax.com). Server-side rendering met node-tikzjax werkt offline na de initiële installatie.
+
+## WebSequenceDiagrams
+
+Markdown Preview Enhanced ondersteunt het renderen van [WebSequenceDiagrams](https://www.websequencediagrams.com/) via `wsd`-afgebakende codeblokken.
+
+- Een codeblok met `wsd`-notatie wordt gerenderd door [WebSequenceDiagrams](https://www.websequencediagrams.com/).
+- Een optionele API-sleutel kan worden geconfigureerd in [pakketinstellingen](usages.md?id=package-settings).
+
+> **Opmerking:** WebSequenceDiagrams-rendering vereist netwerktoegang tot websequencediagrams.com.
+
 ## Vega en Vega-lite
 
 Markdown Preview Enhanced ondersteunt **statische** [vega](https://vega.github.io/vega/)- en [vega-lite](https://vega.github.io/vega-lite/)-diagrammen.
