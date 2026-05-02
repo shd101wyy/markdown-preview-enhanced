@@ -76,6 +76,66 @@ Markdown Preview Enhanced는 [Viz.js](https://github.com/mdaines/viz.js) 를 사
 
 ![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
+## D2
+
+Markdown Preview Enhanced는 [D2](https://d2lang.com/)를 사용하여 다이어그램을 렌더링합니다. D2는 텍스트를 다이어그램으로 변환하는 선언형 다이어그래밍 언어입니다.
+
+- [D2](https://d2lang.com/)가 설치되어 `PATH`에 있어야 합니다(또는 설정에서 `d2Path`로 구성 가능).
+- `d2` 표기법의 코드 블록은 [D2](https://d2lang.com/)에 의해 렌더링됩니다.
+- 전체 구문 참조는 [D2 문서](https://d2lang.com/tour/intro/)를 확인하세요.
+
+코드 블록별로 레이아웃 엔진, 테마 및 스케치 스타일을 재정의할 수 있습니다:
+![d2-test](https://github.com/user-attachments/assets/809cc0e7-e7a0-4637-9a4d-3992edab725d)
+
+| 속성       | 설명                                                              | 기본값    |
+| --------- | ------------------------------------------------------------------ | ------- |
+| `layout`  | 레이아웃 엔진: `dagre`, `elk`, `tala`                                | `dagre` |
+| `theme`   | 테마 ID 번호 ([D2 테마](https://d2lang.com/tour/themes/) 참조)        | `0`     |
+| `sketch`  | 손그림/스케치 스타일로 렌더링                                         | `false` |
+
+전역 기본값은 [패키지 설정](ko-kr/usages.md?id=package-settings)에서 구성할 수 있습니다:
+
+| 설정        | 설명                         | 기본값   |
+| ---------- | ---------------------------- | ------- |
+| `d2Path`   | `d2` 실행 파일의 경로          | `d2`    |
+| `d2Layout` | 기본 레이아웃 엔진             | `dagre` |
+| `d2Theme`  | 기본 테마 ID                  | `0`     |
+| `d2Sketch` | 기본 스케치 모드               | `false` |
+
+> **참고:** D2 렌더링을 위해서는 머신에 `d2` CLI가 설치되어 있어야 합니다. 찾을 수 없는 경우 코드 블록이 일반 텍스트로 표시됩니다. 설치 안내는 [D2 설치 가이드](https://d2lang.com/tour/install/)를 참조하세요.
+
+## TikZ
+
+Markdown Preview Enhanced는 `tikz` 펜스 코드 블록을 통해 [TikZ](https://tikz.dev/) 다이어그램 렌더링을 지원합니다.
+
+- Node.js(데스크톱 VS Code): [node-tikzjax](https://github.com/prinsss/node-tikzjax)를 사용하여 서버 측에서 TikZ를 SVG로 렌더링하며 캐싱합니다.
+- 웹(VS Code 웹 확장) 및 HTML 내보내기: [tikzjax.com](https://tikzjax.com)을 통한 클라이언트 측 렌더링으로 폴백합니다.
+- 코드에 `\begin{document}...\end{document}`가 없으면 자동으로 추가됩니다.
+- 기본 TeX 패키지를 자동 로드: `amsmath`, `amssymb`, `amsfonts`, `amstext`, `array`.
+- 특수 패키지를 자동 감지 및 로드: `tikz-cd`(`\begin{tikzcd}` 용), `pgfplots`(`\begin{axis}` 용), `circuitikz`(`\begin{circuitikz}` 용), `chemfig`(`\chemfig` 용), `tikz-3dplot`(`\tdplotsetmaincoords` 용).
+
+펜스 정보 문자열에서 지원하는 블록별 옵션:
+
+| 옵션 | 설명 | 허용 값 |
+| ------ | ----------- | --------------- |
+| `texPackages` / `tex_packages` | 추가로 로드할 TeX 패키지 | 쉼표로 구분된 목록 |
+| `tikzLibraries` / `tikz_libraries` | 로드할 TikZ 라이브러리 | 쉼표로 구분된 목록 |
+| `addToPreamble` / `add_to_preamble` | 전문에 추가할 사용자 LaTeX 코드 | LaTeX 문자열 |
+| `showConsole` / `show_console` | 콘솔 출력 표시 | `true` / `false` |
+| `embedFontCss` / `embed_font_css` | 폰트 CSS 포함 | `true` / `false` |
+| `fontCssUrl` / `font_css_url` | 사용자 정의 폰트 CSS URL | URL 문자열 |
+
+> **참고:** TikZ 렌더링은 클라이언트 측 렌더링(tikzjax.com)을 위해 네트워크 액세스가 필요합니다. node-tikzjax를 사용한 서버 측 렌더링은 초기 설정 후 오프라인에서도 작동합니다.
+
+## WebSequenceDiagrams
+
+Markdown Preview Enhanced는 `wsd` 펜스 코드 블록을 통해 [WebSequenceDiagrams](https://www.websequencediagrams.com/) 렌더링을 지원합니다.
+
+- `wsd` 표기법의 코드 블록은 [WebSequenceDiagrams](https://www.websequencediagrams.com/)에 의해 렌더링됩니다.
+- 선택적 API 키는 [패키지 설정](ko-kr/usages.md?id=package-settings)에서 구성할 수 있습니다.
+
+> **참고:** WebSequenceDiagrams 렌더링에는 websequencediagrams.com에 대한 네트워크 액세스가 필요합니다.
+
 ## Vega and Vega-lite
 
 Markdown Preview Enhanced는 [vega](https://vega.github.io/vega/) 와 [vega-lite](https://vega.github.io/vega-lite/) **정적** 그래프를 지원한다.

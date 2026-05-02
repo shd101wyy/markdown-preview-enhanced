@@ -78,6 +78,66 @@ Markdown Preview Enhanced 使用 [Viz.js](https://github.com/mdaines/viz.js) 來
 
 ![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
+## D2
+
+Markdown Preview Enhanced 使用 [D2](https://d2lang.com/) 來渲染圖表。D2 是一種宣告式圖表語言，可以將文字轉換為圖表。
+
+- [D2](https://d2lang.com/) 必須已安裝並位於您的 `PATH` 環境變數中（或透過設定中的 `d2Path` 配置）。
+- `d2` 程式碼區塊中的內容將會被 [D2](https://d2lang.com/) 渲染。
+- 查看 [D2 文件](https://d2lang.com/tour/intro/) 了解完整的語法參考。
+
+您可以為每個程式碼區塊覆蓋佈局引擎、主題和草圖樣式：
+![d2-test](https://github.com/user-attachments/assets/809cc0e7-e7a0-4637-9a4d-3992edab725d)
+
+| 屬性       | 描述                                                    | 預設值    |
+| --------- | ------------------------------------------------------------------ | ------- |
+| `layout`  | 佈局引擎：`dagre`、`elk`、`tala`                                       | `dagre` |
+| `theme`   | 主題 ID 編號（參見 [D2 主題](https://d2lang.com/tour/themes/)）         | `0`     |
+| `sketch`  | 以手繪/草圖風格渲染                                                  | `false` |
+
+全域預設值可以在[插件設定](zh-tw/usages.md?id=package-settings)中配置：
+
+| 設定        | 描述                      | 預設值   |
+| ---------- | --------------------------- | ------- |
+| `d2Path`   | `d2` 可執行檔案的路徑          | `d2`    |
+| `d2Layout` | 預設佈局引擎                | `dagre` |
+| `d2Theme`  | 預設主題 ID                 | `0`     |
+| `d2Sketch` | 預設草圖模式                 | `false` |
+
+> **注意：** D2 渲染需要在您的機器上安裝 `d2` CLI。如果未找到，程式碼區塊將顯示為純文字。請參閱 [D2 安裝指南](https://d2lang.com/tour/install/) 了解安裝說明。
+
+## TikZ
+
+Markdown Preview Enhanced 支援透過 `tikz` 圍欄程式碼區塊渲染 [TikZ](https://tikz.dev/) 圖表。
+
+- 在 Node.js（桌面版 VS Code）中：使用 [node-tikzjax](https://github.com/prinsss/node-tikzjax) 在伺服端將 TikZ 渲染為 SVG，並帶有快取。
+- 在 Web（VS Code Web 擴充功能）和 HTML 匯出中：回退到透過 [tikzjax.com](https://tikzjax.com) 進行客戶端渲染。
+- 如果程式碼中沒有 `\begin{document}...\end{document}`，將自動新增。
+- 自動載入基礎 TeX 套件：`amsmath`、`amssymb`、`amsfonts`、`amstext`、`array`。
+- 自動偵測並載入專用套件：`tikz-cd`（用於 `\begin{tikzcd}`）、`pgfplots`（用於 `\begin{axis}`）、`circuitikz`（用於 `\begin{circuitikz}`）、`chemfig`（用於 `\chemfig`）、`tikz-3dplot`（用於 `\tdplotsetmaincoords`）。
+
+圍欄資訊字串中支援的每個程式碼區塊選項：
+
+| 選項 | 描述 | 可接受的值 |
+| ------ | ----------- | --------------- |
+| `texPackages` / `tex_packages` | 額外載入的 TeX 套件 | 逗號分隔清單 |
+| `tikzLibraries` / `tikz_libraries` | 載入的 TikZ 庫 | 逗號分隔清單 |
+| `addToPreamble` / `add_to_preamble` | 新增到前言的自訂 LaTeX 程式碼 | LaTeX 字串 |
+| `showConsole` / `show_console` | 顯示控制台輸出 | `true` / `false` |
+| `embedFontCss` / `embed_font_css` | 嵌入字型 CSS | `true` / `false` |
+| `fontCssUrl` / `font_css_url` | 自訂字型 CSS URL | URL 字串 |
+
+> **注意：** TikZ 渲染在客戶端渲染（tikzjax.com）時需要網路存取。使用 node-tikzjax 的伺服端渲染在初始設定後可離線工作。
+
+## WebSequenceDiagrams
+
+Markdown Preview Enhanced 支援透過 `wsd` 圍欄程式碼區塊渲染 [WebSequenceDiagrams](https://www.websequencediagrams.com/) 圖表。
+
+- `wsd` 程式碼區塊中的內容將會被 [WebSequenceDiagrams](https://www.websequencediagrams.com/) 渲染。
+- 可選的 API 金鑰可以在[插件設定](zh-tw/usages.md?id=package-settings)中配置。
+
+> **注意：** WebSequenceDiagrams 渲染需要網路存取 websequencediagrams.com。
+
 ## Vega 和 Vega-lite
 
 Markdown Preview Enhanced 支持 [vega](https://vega.github.io/vega/) 以及 [vega-lite](https://vega.github.io/vega-lite/) 的**靜態**圖像。

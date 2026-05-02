@@ -78,6 +78,66 @@ Markdown Preview Enhanced usa [Viz.js](https://github.com/mdaines/viz.js) para r
 
 ![screen shot 2018-03-18 at 3 18 17 pm](https://user-images.githubusercontent.com/1908863/37570596-a565306e-2abf-11e8-8904-d73306f675ec.png)
 
+## D2
+
+Markdown Preview Enhanced usa [D2](https://d2lang.com/) para renderizar diagramas. D2 é uma linguagem de diagramação declarativa que transforma texto em diagramas.
+
+- [D2](https://d2lang.com/) deve estar instalado e disponível no seu `PATH` (ou configurado via `d2Path` nas configurações).
+- Blocos de código com notação `d2` serão renderizados pelo [D2](https://d2lang.com/).
+- Consulte a [documentação do D2](https://d2lang.com/tour/intro/) para a referência completa da sintaxe.
+
+Você pode substituir o mecanismo de layout, tema e estilo de rascunho por bloco de código:
+![d2-test](https://github.com/user-attachments/assets/809cc0e7-e7a0-4637-9a4d-3992edab725d)
+
+| Atributo  | Descrição                                                        | Padrão    |
+| --------- | ---------------------------------------------------------------- | --------- |
+| `layout`  | Mecanismo de layout: `dagre`, `elk`, `tala`                      | `dagre`   |
+| `theme`   | Número do ID do tema (veja [temas D2](https://d2lang.com/tour/themes/)) | `0` |
+| `sketch`  | Renderizar em estilo desenhado à mão / rascunho                  | `false`   |
+
+Os padrões globais podem ser configurados nas [configurações do pacote](usages.md?id=package-settings):
+
+| Configuração | Descrição                        | Padrão    |
+| ------------ | -------------------------------- | --------- |
+| `d2Path`     | Caminho para o executável `d2`   | `d2`      |
+| `d2Layout`   | Mecanismo de layout padrão       | `dagre`   |
+| `d2Theme`    | ID do tema padrão                | `0`       |
+| `d2Sketch`   | Modo rascunho padrão             | `false`   |
+
+> **Nota:** A renderização de D2 requer que a CLI `d2` esteja instalada em sua máquina. Se não for encontrada, o bloco de código será exibido como texto simples. Consulte o [guia de instalação do D2](https://d2lang.com/tour/install/) para obter instruções.
+
+## TikZ
+
+Markdown Preview Enhanced suporta a renderização de diagramas [TikZ](https://tikz.dev/) através de blocos de código delimitados por `tikz`.
+
+- No Node.js (VS Code desktop): renderiza TikZ para SVG no lado do servidor usando [node-tikzjax](https://github.com/prinsss/node-tikzjax), com cache.
+- Na web (extensão web do VS Code) e exportação HTML: recorre à renderização no lado do cliente via [tikzjax.com](https://tikzjax.com).
+- Se `\begin{document}...\end{document}` não estiver presente, é adicionado automaticamente.
+- Carrega automaticamente os pacotes TeX base: `amsmath`, `amssymb`, `amsfonts`, `amstext`, `array`.
+- Detecta e carrega automaticamente pacotes especializados: `tikz-cd` (para `\begin{tikzcd}`), `pgfplots` (para `\begin{axis}`), `circuitikz` (para `\begin{circuitikz}`), `chemfig` (para `\chemfig`), `tikz-3dplot` (para `\tdplotsetmaincoords`).
+
+Opções por bloco suportadas na string de informação do delimitador:
+
+| Opção | Descrição | Valores aceitos |
+| ------ | ----------- | --------------- |
+| `texPackages` / `tex_packages` | Pacotes TeX adicionais para carregar | Lista separada por vírgulas |
+| `tikzLibraries` / `tikz_libraries` | Bibliotecas TikZ para carregar | Lista separada por vírgulas |
+| `addToPreamble` / `add_to_preamble` | Código LaTeX personalizado para adicionar ao preâmbulo | String LaTeX |
+| `showConsole` / `show_console` | Mostrar a saída do console | `true` / `false` |
+| `embedFontCss` / `embed_font_css` | Incorporar CSS de fonte | `true` / `false` |
+| `fontCssUrl` / `font_css_url` | URL personalizada do CSS de fonte | String URL |
+
+> **Nota:** A renderização TikZ requer acesso à rede para renderização no lado do cliente (tikzjax.com). A renderização no lado do servidor com node-tikzjax funciona offline após a configuração inicial.
+
+## WebSequenceDiagrams
+
+Markdown Preview Enhanced suporta a renderização de [WebSequenceDiagrams](https://www.websequencediagrams.com/) através de blocos de código delimitados por `wsd`.
+
+- Blocos de código com notação `wsd` serão renderizados pelo [WebSequenceDiagrams](https://www.websequencediagrams.com/).
+- Uma chave de API opcional pode ser configurada nas [configurações do pacote](usages.md?id=package-settings).
+
+> **Nota:** A renderização do WebSequenceDiagrams requer acesso à rede a websequencediagrams.com.
+
 ## Vega e Vega-lite
 
 Markdown Preview Enhanced suporta diagramas **estáticos** [vega](https://vega.github.io/vega/) e [vega-lite](https://vega.github.io/vega-lite/).
