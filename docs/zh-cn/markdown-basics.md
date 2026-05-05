@@ -287,6 +287,74 @@ CriticMarkup 缺省是禁用的，你可以通过插件设置来启动它。
 
 > 请在 https://squidfunk.github.io/mkdocs-material/reference/admonitions/ 查看更多信息
 
+### Wiki 链接（Wikilinks）
+
+> 自 vscode-mpe 0.8.25 / crossnote 0.9.23 起支持。Obsidian 风格的笔记链接。
+
+```markdown
+[[Note]]                       <!-- 链接到 Note（默认解析为 Note.md） -->
+[[Note|显示文本]]              <!-- 自定义显示文本的链接 -->
+[[Note#Heading]]               <!-- 链接到 Note 中的某个标题 -->
+[[Note^block-id]]              <!-- 链接到 Note 中的某个 ^block-id -->
+[[Note#Heading^block-id]]      <!-- 同时指定标题 + 块引用 -->
+[[#Heading]]                   <!-- 链接到当前笔记中的标题 -->
+[[^block-id]]                  <!-- 链接到当前笔记中的块 -->
+```
+
+在预览中点击任意 wiki 链接即可跳转。在编辑器中按住 alt 点击（macOS 上为 Ctrl+点击）以跟随链接。将鼠标悬停在 wiki 链接上可预览目标内容（整篇文件开头、标题所在小节，或被引用的块本身——取决于链接所指）。
+
+如果点击 `[[NewNote]]` 而 `NewNote.md` 尚不存在，则会自动创建一个带有 `# NewNote` 占位标题的新文件并打开它——与 Obsidian 的「点击创建」一致。
+
+配置项（位于 notebook config 中）：
+
+- `wikiLinkTargetFileExtension`（默认 `.md`）——当链接未指定扩展名时附加的扩展名。对于非 `.md` 的笔记本，可设为 `.markdown` / `.mdx` / `.qmd` 等。
+- `useGitHubStylePipedLink`（默认 `false`）——为 `true` 时，顺序为 `[[显示文本|链接]]`（GitHub 风格）；为 `false` 时为 `[[链接|显示文本]]`（Obsidian / 维基百科风格）。
+
+### 笔记嵌入（`![[…]]`）
+
+带 `!` 前缀的写法会将目标内容直接嵌入到当前位置：
+
+```markdown
+![[Note]]                      <!-- 嵌入整篇笔记 -->
+![[Note#Heading]]              <!-- 仅嵌入对应的标题小节 -->
+![[Note^block-id]]             <!-- 仅嵌入对应的块 -->
+![[Note|要显示的标题]]         <!-- 嵌入并自定义显示标题 -->
+![[image.png]]                 <!-- 普通图片嵌入（支持各种图片扩展名） -->
+```
+
+递归层级上限为 3 层——即使形成嵌入循环也不会撑爆预览。
+
+### 块引用（`^block-id`）
+
+在段落或列表项末尾追加 `^block-id`，把它标记为可被引用的块：
+
+```markdown
+这一段可以被引用。 ^my-block
+
+- 列表项也可以。 ^another-block
+```
+
+之后可以在工作区任意位置引用它：
+
+```markdown
+参见 [[Note^my-block]]，或者直接嵌入：![[Note^my-block]]
+```
+
+命令 `Markdown Preview Enhanced: Copy Block Reference`（命令面板）会为光标所在段落生成（或复用已有的）`^id`，并把可直接粘贴使用的 `[[Note#^id]]` 链接复制到剪贴板。
+
+### 标签（Tags）
+
+正文中的 `#tag-name` 语法：
+
+```markdown
+这个想法被标记为 #important 和 #project/q1。
+```
+
+- 通过 `/` 实现**嵌套标签**：`#parent/child`，可以更深（`#a/b/c`）。
+- 行首仅有 `#` 时不会触发标签（所以 `# 标题`、`## 标题` 等正常工作）。
+- 在预览中点击某个标签，会打开 Quick Pick 列出所有提及该标签的笔记。
+- 通过 `enableTagSyntax` 设置（默认 `true`）开关此功能。
+
 ## 参考
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

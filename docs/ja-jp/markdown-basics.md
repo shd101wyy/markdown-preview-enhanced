@@ -286,6 +286,74 @@ Critic Mark には 5 つのタイプがあります。
 
 > 詳細については、[Admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)をご覧ください。
 
+### Wikilink
+
+> vscode-mpe 0.8.25 / crossnote 0.9.23 以降で利用可能。Obsidian 風のノートリンクです。
+
+```markdown
+[[Note]]                       <!-- Note へのリンク（既定では Note.md に解決） -->
+[[Note|表示テキスト]]          <!-- 表示テキストを指定したリンク -->
+[[Note#Heading]]               <!-- Note 内の特定の見出しへのリンク -->
+[[Note^block-id]]              <!-- Note 内の特定の ^block-id へのリンク -->
+[[Note#Heading^block-id]]      <!-- 見出し + ブロック参照の組み合わせ -->
+[[#Heading]]                   <!-- 現在のノート内の見出しへのリンク -->
+[[^block-id]]                  <!-- 現在のノート内のブロックへのリンク -->
+```
+
+プレビュー上ではクリックでリンク先に移動できます。エディタでは Alt+クリック（macOS では Ctrl+クリック）でリンクを辿れます。Wikilink にホバーするとリンク先のプレビュー（ファイル冒頭、見出しセクション、またはブロック本体——リンクの指す先に応じて）が表示されます。
+
+`[[NewNote]]` をクリックしたときに `NewNote.md` がまだ存在しない場合、`# NewNote` のスタブ付きでファイルが自動的に作成されて開かれます——Obsidian の「クリックして作成」と同じ動作です。
+
+設定キー（notebook config）:
+
+- `wikiLinkTargetFileExtension`（既定 `.md`）—— リンクに拡張子が無い場合に付与される拡張子。`.md` 以外のノートブックでは `.markdown` / `.mdx` / `.qmd` などに設定します。
+- `useGitHubStylePipedLink`（既定 `false`）—— `true` のとき順序は `[[表示|リンク]]`（GitHub 風）、`false` のとき `[[リンク|表示]]`（Obsidian / Wikipedia 風）になります。
+
+### ノート埋め込み（`![[…]]`）
+
+`!` プレフィックスを付けると、対象の内容をその場に埋め込みます:
+
+```markdown
+![[Note]]                      <!-- ノート全体を埋め込む -->
+![[Note#Heading]]              <!-- 該当見出しのセクションだけを埋め込む -->
+![[Note^block-id]]             <!-- 該当ブロックだけを埋め込む -->
+![[Note|表示する見出し]]       <!-- 見出しを指定して埋め込む -->
+![[image.png]]                 <!-- 通常の画像埋め込み（各種画像拡張子に対応） -->
+```
+
+再帰の深さは 3 段までに制限されています—— 埋め込みのループでプレビューが膨れ上がることはありません。
+
+### ブロック参照（`^block-id`）
+
+段落やリスト項目の末尾に `^block-id` を追加すると、そのブロックを参照可能なブロックとして印付けられます:
+
+```markdown
+この段落は参照できます。 ^my-block
+
+- リスト項目もです。 ^another-block
+```
+
+ワークスペース内のどこからでも参照できます:
+
+```markdown
+[[Note^my-block]] を参照、または埋め込み: ![[Note^my-block]]
+```
+
+コマンド `Markdown Preview Enhanced: Copy Block Reference`（コマンドパレット）は、カーソル位置の段落に `^id` を生成（または既存のものを再利用）し、貼り付け可能な `[[Note#^id]]` リンクをクリップボードにコピーします。
+
+### タグ（Tags）
+
+本文中の `#tag-name` 構文:
+
+```markdown
+この考えには #important と #project/q1 のタグを付けています。
+```
+
+- `/` による**ネストタグ**: `#parent/child`、さらに深くも (`#a/b/c`)。
+- 行頭が `#` のみのときはタグとして扱われません（つまり `# 見出し`、`## 見出し` などは引き続き機能します）。
+- プレビュー上でタグをクリックすると、そのタグに言及している全ノートの Quick Pick が開きます。
+- `enableTagSyntax` 設定（既定 `true`）で機能をオン／オフできます。
+
 ## リファレンス
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

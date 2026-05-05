@@ -287,6 +287,74 @@ Il existe cinq types de marques Critic :
 
 > Veuillez consulter plus d'informations sur https://squidfunk.github.io/mkdocs-material/reference/admonitions/
 
+### Wikilinks
+
+> Disponible depuis vscode-mpe 0.8.25 / crossnote 0.9.23. Liens entre notes au style Obsidian.
+
+```markdown
+[[Note]]                       <!-- lien vers Note (résolu vers Note.md par défaut) -->
+[[Note|Texte affiché]]         <!-- lien avec texte d'affichage personnalisé -->
+[[Note#Heading]]               <!-- lien vers un titre précis de Note -->
+[[Note^block-id]]              <!-- lien vers un ^block-id précis de Note -->
+[[Note#Heading^block-id]]      <!-- combinaison titre + référence de bloc -->
+[[#Heading]]                   <!-- lien vers un titre dans la note courante -->
+[[^block-id]]                  <!-- lien vers un bloc dans la note courante -->
+```
+
+Dans l'aperçu, cliquez sur n'importe quel wikilink pour naviguer. Dans l'éditeur, alt+clic (Ctrl+clic sur macOS) pour suivre le lien. Survolez un wikilink pour prévisualiser le contenu cible (début du fichier, section du titre, ou contenu du bloc — selon ce que pointe le lien).
+
+Si vous cliquez `[[NewNote]]` et que `NewNote.md` n'existe pas encore, le fichier est créé avec une ébauche `# NewNote` puis ouvert — comportement identique au flux « cliquer pour créer » d'Obsidian.
+
+Clés de configuration (notebook config) :
+
+- `wikiLinkTargetFileExtension` (par défaut `.md`) — extension ajoutée quand le lien n'en a pas. À régler sur `.markdown` / `.mdx` / `.qmd` pour les notebooks non-`.md`.
+- `useGitHubStylePipedLink` (par défaut `false`) — quand `true`, l'ordre est `[[affichage|lien]]` (style GitHub) ; quand `false`, `[[lien|affichage]]` (style Obsidian / Wikipedia).
+
+### Intégration de notes (`![[…]]`)
+
+Le préfixe `!` intègre le contenu cible directement à la position courante :
+
+```markdown
+![[Note]]                      <!-- intègre la note entière -->
+![[Note#Heading]]              <!-- intègre seulement la section du titre -->
+![[Note^block-id]]             <!-- intègre seulement ce bloc -->
+![[Note|Titre à afficher]]     <!-- intègre avec un titre personnalisé -->
+![[image.png]]                 <!-- intégration d'image standard (toute extension d'image) -->
+```
+
+La récursion est limitée à 3 niveaux — un cycle d'intégration ne fera pas exploser l'aperçu.
+
+### Références de bloc (`^block-id`)
+
+Ajoutez `^block-id` à la fin d'un paragraphe ou d'un élément de liste pour le marquer comme bloc référençable :
+
+```markdown
+Ce paragraphe peut être référencé. ^my-block
+
+- Un élément de liste aussi. ^another-block
+```
+
+Référencez-le depuis n'importe quel endroit du workspace :
+
+```markdown
+Voir [[Note^my-block]] ou l'intégrer : ![[Note^my-block]]
+```
+
+La commande `Markdown Preview Enhanced: Copy Block Reference` (palette de commandes) génère un `^id` pour le paragraphe au curseur (ou réutilise l'existant) et copie un lien `[[Note#^id]]` prêt à coller dans le presse-papiers.
+
+### Tags
+
+Syntaxe `#tag-name` dans le texte :
+
+```markdown
+Cette pensée porte les tags #important et #project/q1.
+```
+
+- **Tags imbriqués** via `/` : `#parent/child`, et plus profond (`#a/b/c`).
+- Les tags ne se déclenchent pas quand une ligne ne contient que des `#` (donc `# Titre`, `## Titre` etc. fonctionnent toujours).
+- Cliquez sur un tag dans l'aperçu pour ouvrir une Quick Pick listant toutes les notes qui le mentionnent.
+- Le réglage `enableTagSyntax` (par défaut `true`) active/désactive la fonctionnalité.
+
 ## Références
 
 - [Maîtriser Markdown](https://guides.github.com/features/mastering-markdown/)
