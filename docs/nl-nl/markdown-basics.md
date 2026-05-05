@@ -287,6 +287,74 @@ Er zijn vijf soorten Critic-markeringen:
 
 > Zie meer informatie op https://squidfunk.github.io/mkdocs-material/reference/admonitions/
 
+### Wikilinks
+
+> Beschikbaar vanaf vscode-mpe 0.8.25 / crossnote 0.9.23. Notitielinks in Obsidian-stijl.
+
+```markdown
+[[Note]]                       <!-- link naar Note (standaard naar Note.md) -->
+[[Note|Weergavetekst]]         <!-- link met aangepaste weergavetekst -->
+[[Note#Heading]]               <!-- link naar een specifieke kop in Note -->
+[[Note^block-id]]              <!-- link naar een specifiek ^block-id in Note -->
+[[Note#Heading^block-id]]      <!-- combinatie van kop + blokverwijzing -->
+[[#Heading]]                   <!-- link naar een kop in de huidige notitie -->
+[[^block-id]]                  <!-- link naar een blok in de huidige notitie -->
+```
+
+Klik in de preview op een wikilink om te navigeren. In de editor: alt+klik (Ctrl+klik op macOS) om de link te volgen. Beweeg de muis over een wikilink voor een voorbeeld van de doelinhoud (begin van het bestand, kop-sectie of blokinhoud — afhankelijk van waar de link naar verwijst).
+
+Als je op `[[NewNote]]` klikt en `NewNote.md` nog niet bestaat, wordt het bestand aangemaakt met een `# NewNote` skelet en geopend — hetzelfde gedrag als de "klikken om te maken"-flow van Obsidian.
+
+Configuratiesleutels (notebook config):
+
+- `wikiLinkTargetFileExtension` (standaard `.md`) — de extensie die wordt toegevoegd als de link er geen heeft. Stel in op `.markdown` / `.mdx` / `.qmd` voor notebooks die geen `.md` gebruiken.
+- `useGitHubStylePipedLink` (standaard `false`) — bij `true` is de volgorde `[[weergave|link]]` (GitHub-stijl); bij `false` is het `[[link|weergave]]` (Obsidian / Wikipedia-stijl).
+
+### Notitie-inbedding (`![[…]]`)
+
+Het `!` voorvoegsel bedt de doelinhoud direct in:
+
+```markdown
+![[Note]]                      <!-- bedt de hele notitie in -->
+![[Note#Heading]]              <!-- bedt alleen die kop-sectie in -->
+![[Note^block-id]]             <!-- bedt alleen dat blok in -->
+![[Note|Weer te geven titel]]  <!-- bedt in met een aangepaste titel -->
+![[image.png]]                 <!-- standaard afbeelding inbedden (elke afbeeldingsextensie) -->
+```
+
+Recursie is begrensd op 3 niveaus — een inbeddingscyclus laat de preview niet ontploffen.
+
+### Blokverwijzingen (`^block-id`)
+
+Voeg `^block-id` toe aan het einde van een alinea of lijstitem om het te markeren als een verwijsbaar blok:
+
+```markdown
+Naar deze alinea kan worden verwezen. ^my-block
+
+- Een lijstitem ook. ^another-block
+```
+
+Verwijs ernaar van overal in de workspace:
+
+```markdown
+Zie [[Note^my-block]] of bed het in: ![[Note^my-block]]
+```
+
+Het commando `Markdown Preview Enhanced: Copy Block Reference` (commandopalet) genereert een `^id` voor de alinea bij de cursor (of hergebruikt de bestaande) en kopieert een kant-en-klare `[[Note#^id]]` link naar je klembord.
+
+### Tags
+
+`#tag-name` syntax in tekst:
+
+```markdown
+Deze gedachte heeft de tags #important en #project/q1.
+```
+
+- **Geneste tags** via `/`: `#parent/child`, en dieper (`#a/b/c`).
+- Tags worden niet geactiveerd als een regel alleen uit `#` bestaat (dus `# Kop`, `## Kop` etc. blijven werken).
+- Klik op een tag in de preview om een Quick Pick te openen met alle notities die de tag noemen.
+- De instelling `enableTagSyntax` (standaard `true`) schakelt de functie aan/uit.
+
 ## Referenties
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

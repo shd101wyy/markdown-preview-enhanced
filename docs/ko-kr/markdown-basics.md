@@ -288,6 +288,74 @@ Critic 표시의 5가지 유형:
 
 > 자세한 내용은 [Admonition](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) 에서 확인할 수 있다.
 
+### 위키링크(Wikilinks)
+
+> vscode-mpe 0.8.25 / crossnote 0.9.23 부터 사용 가능. Obsidian 스타일의 노트 링크.
+
+```markdown
+[[Note]]                       <!-- Note 로 링크 (기본적으로 Note.md 로 해석) -->
+[[Note|표시 텍스트]]           <!-- 표시 텍스트를 지정한 링크 -->
+[[Note#Heading]]               <!-- Note 안의 특정 제목으로 링크 -->
+[[Note^block-id]]              <!-- Note 안의 특정 ^block-id 로 링크 -->
+[[Note#Heading^block-id]]      <!-- 제목 + 블록 참조 결합 -->
+[[#Heading]]                   <!-- 현재 노트의 제목으로 링크 -->
+[[^block-id]]                  <!-- 현재 노트의 블록으로 링크 -->
+```
+
+미리보기에서 위키링크를 클릭하여 이동할 수 있다. 편집기에서는 alt+클릭(macOS 에서는 Ctrl+클릭)으로 링크를 따라간다. 위키링크 위에 마우스를 올리면 대상 내용(파일 시작 부분, 제목 섹션, 또는 블록 본문 — 링크가 가리키는 위치에 따라)의 미리보기가 표시된다.
+
+`[[NewNote]]` 를 클릭했을 때 `NewNote.md` 가 아직 존재하지 않으면, `# NewNote` 골격으로 파일이 자동 생성되어 열린다 — Obsidian 의 "클릭하여 생성" 흐름과 동일하다.
+
+설정 키(notebook config):
+
+- `wikiLinkTargetFileExtension` (기본값 `.md`) — 링크에 확장자가 없을 때 추가되는 확장자. `.md` 가 아닌 노트북에서는 `.markdown` / `.mdx` / `.qmd` 등으로 설정한다.
+- `useGitHubStylePipedLink` (기본값 `false`) — `true` 일 때 순서는 `[[표시|링크]]` (GitHub 스타일); `false` 일 때 `[[링크|표시]]` (Obsidian / Wikipedia 스타일).
+
+### 노트 임베드(`![[…]]`)
+
+`!` 접두사를 붙이면 대상 내용을 그 자리에 임베드한다:
+
+```markdown
+![[Note]]                      <!-- 노트 전체 임베드 -->
+![[Note#Heading]]              <!-- 해당 제목 섹션만 임베드 -->
+![[Note^block-id]]             <!-- 해당 블록만 임베드 -->
+![[Note|표시할 제목]]          <!-- 사용자 지정 제목으로 임베드 -->
+![[image.png]]                 <!-- 일반 이미지 임베드 (모든 이미지 확장자) -->
+```
+
+재귀는 3 단계로 제한된다 — 임베드 순환이 미리보기를 폭발시키지 않는다.
+
+### 블록 참조(`^block-id`)
+
+문단이나 목록 항목의 끝에 `^block-id` 를 붙여 참조 가능한 블록으로 표시한다:
+
+```markdown
+이 문단은 참조될 수 있다. ^my-block
+
+- 목록 항목도 가능하다. ^another-block
+```
+
+워크스페이스 어디서나 참조할 수 있다:
+
+```markdown
+[[Note^my-block]] 참조, 또는 임베드: ![[Note^my-block]]
+```
+
+명령 `Markdown Preview Enhanced: Copy Block Reference` (명령 팔레트)는 커서가 있는 문단에 `^id` 를 생성(또는 기존 것을 재사용)하고, 붙여넣기 가능한 `[[Note#^id]]` 링크를 클립보드에 복사한다.
+
+### 태그(Tags)
+
+본문 텍스트에서의 `#tag-name` 구문:
+
+```markdown
+이 생각에는 #important 와 #project/q1 태그가 붙어 있다.
+```
+
+- `/` 를 통한 **중첩 태그**: `#parent/child`, 더 깊은 단계도 (`#a/b/c`).
+- 줄이 `#` 만으로 시작할 때는 태그가 작동하지 않는다 (그래서 `# 제목`, `## 제목` 등은 그대로 동작한다).
+- 미리보기에서 태그를 클릭하면 해당 태그를 언급하는 모든 노트를 나열하는 Quick Pick 이 열린다.
+- 설정 `enableTagSyntax` (기본값 `true`) 로 기능을 켜고 끌 수 있다.
+
 ## 참조 사항(References)
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

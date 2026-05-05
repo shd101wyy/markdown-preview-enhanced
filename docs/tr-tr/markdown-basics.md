@@ -287,6 +287,74 @@ Beş tür Critic işareti vardır:
 
 > Daha fazla bilgi için lütfen https://squidfunk.github.io/mkdocs-material/reference/admonitions/ adresine bakın.
 
+### Wiki Bağlantıları (Wikilinks)
+
+> vscode-mpe 0.8.25 / crossnote 0.9.23 sürümünden itibaren kullanılabilir. Obsidian tarzı not bağlantıları.
+
+```markdown
+[[Note]]                       <!-- Note 'a bağlantı (varsayılan olarak Note.md olarak çözülür) -->
+[[Note|Görüntülenen metin]]    <!-- özel görüntü metni olan bağlantı -->
+[[Note#Heading]]               <!-- Note içindeki belirli bir başlığa bağlantı -->
+[[Note^block-id]]              <!-- Note içindeki belirli bir ^block-id 'ye bağlantı -->
+[[Note#Heading^block-id]]      <!-- başlık + blok referansı birleşimi -->
+[[#Heading]]                   <!-- mevcut notta bir başlığa bağlantı -->
+[[^block-id]]                  <!-- mevcut notta bir bloğa bağlantı -->
+```
+
+Önizlemede gezinmek için herhangi bir wiki bağlantısına tıklayın. Düzenleyicide bağlantıyı takip etmek için alt+tıklayın (macOS'ta Ctrl+tıklayın). Bir wiki bağlantısının üzerine geldiğinizde hedefin içeriği (dosya başı, başlık bölümü veya blok gövdesi — bağlantının işaret ettiği şeye göre) önizlenir.
+
+`[[NewNote]]` 'a tıkladığınızda `NewNote.md` henüz mevcut değilse, dosya `# NewNote` iskeletiyle oluşturulup açılır — Obsidian'ın "tıkla ve oluştur" akışıyla aynı davranış.
+
+Yapılandırma anahtarları (notebook config):
+
+- `wikiLinkTargetFileExtension` (varsayılan `.md`) — bağlantıda uzantı yokken eklenen uzantı. `.md` dışındaki notebook'lar için `.markdown` / `.mdx` / `.qmd` olarak ayarlayın.
+- `useGitHubStylePipedLink` (varsayılan `false`) — `true` olduğunda sıralama `[[gösterilen|bağlantı]]` (GitHub tarzı); `false` olduğunda `[[bağlantı|gösterilen]]` (Obsidian / Wikipedia tarzı).
+
+### Not Gömme (`![[…]]`)
+
+`!` öneki, hedefin içeriğini olduğu yere gömer:
+
+```markdown
+![[Note]]                      <!-- notun tamamını göm -->
+![[Note#Heading]]              <!-- yalnızca o başlık bölümünü göm -->
+![[Note^block-id]]             <!-- yalnızca o bloğu göm -->
+![[Note|Gösterilecek başlık]]  <!-- özel başlıkla göm -->
+![[image.png]]                 <!-- standart görüntü gömme (herhangi bir görüntü uzantısı) -->
+```
+
+Özyineleme 3 düzeyde sınırlandırılmıştır — bir gömme döngüsü önizlemeyi şişirmez.
+
+### Blok Referansları (`^block-id`)
+
+Bir paragrafın veya liste öğesinin sonuna `^block-id` ekleyerek onu referans verilebilir bir blok olarak işaretleyin:
+
+```markdown
+Bu paragraf referans verilebilir. ^my-block
+
+- Bir liste öğesi de. ^another-block
+```
+
+Workspace'in herhangi bir yerinden referans verin:
+
+```markdown
+[[Note^my-block]] 'a bakın veya gömün: ![[Note^my-block]]
+```
+
+`Markdown Preview Enhanced: Copy Block Reference` komutu (Komut Paleti), imlecin bulunduğu paragraf için bir `^id` üretir (veya mevcut olanı yeniden kullanır) ve panonuza yapıştırmaya hazır bir `[[Note#^id]]` bağlantısı kopyalar.
+
+### Etiketler (Tags)
+
+Gövde metninde `#tag-name` sözdizimi:
+
+```markdown
+Bu düşünce #important ve #project/q1 etiketleriyle işaretlenmiştir.
+```
+
+- `/` ile **iç içe etiketler**: `#parent/child` ve daha derini (`#a/b/c`).
+- Bir satır yalnızca `#` 'lerden oluştuğunda etiketler tetiklenmez (yani `# Başlık`, `## Başlık` vb. çalışmaya devam eder).
+- Önizlemede bir etikete tıklayarak o etiketten bahseden tüm notları listeleyen bir Quick Pick açılır.
+- `enableTagSyntax` ayarı (varsayılan `true`) özelliği açar/kapar.
+
 ## Kaynaklar
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

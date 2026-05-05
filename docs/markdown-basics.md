@@ -287,6 +287,74 @@ There are five types of Critic marks:
 
 > Please see more information at https://squidfunk.github.io/mkdocs-material/reference/admonitions/
 
+### Wikilinks
+
+> Available since vscode-mpe 0.8.25 / crossnote 0.9.23. Obsidian-style note linking.
+
+```markdown
+[[Note]]                       <!-- link to Note (resolves to Note.md by default) -->
+[[Note|Display text]]          <!-- link with custom display text -->
+[[Note#Heading]]               <!-- link to a specific heading inside Note -->
+[[Note^block-id]]              <!-- link to a specific ^block-id inside Note -->
+[[Note#Heading^block-id]]      <!-- combined heading + block reference -->
+[[#Heading]]                   <!-- link to a heading in the current note -->
+[[^block-id]]                  <!-- link to a block in the current note -->
+```
+
+In the preview, click any wikilink to navigate. In the editor, alt+click (Ctrl+click on macOS) to follow. Hover over a wikilink for a preview of the target's content (full-file head, the heading section, or the block body — whatever the link points at).
+
+If you click `[[NewNote]]` and `NewNote.md` doesn't exist yet, the file is created with a `# NewNote` stub and opened — same behaviour as Obsidian's "click to create" flow.
+
+Configuration keys (notebook config):
+
+- `wikiLinkTargetFileExtension` (default `.md`) — the extension appended when the link has none. Set to `.markdown` / `.mdx` / `.qmd` for non-`.md` notebooks.
+- `useGitHubStylePipedLink` (default `false`) — when `true`, the order is `[[display|link]]` (GitHub-style); when `false`, `[[link|display]]` (Obsidian / Wikipedia-style).
+
+### Note embedding (`![[…]]`)
+
+The `!` prefix embeds the target's content inline:
+
+```markdown
+![[Note]]                      <!-- embed the entire note -->
+![[Note#Heading]]              <!-- embed only that heading section -->
+![[Note^block-id]]             <!-- embed only that block -->
+![[Note|Title to show]]        <!-- embed with a custom heading -->
+![[image.png]]                 <!-- standard image embed (any image extension) -->
+```
+
+Recursion is capped at 3 levels — an embed cycle won't blow up the preview.
+
+### Block references (`^block-id`)
+
+Append `^block-id` at the end of a paragraph or list item to mark it as a referenceable block:
+
+```markdown
+This paragraph can be referenced. ^my-block
+
+- A list item too. ^another-block
+```
+
+Reference it from anywhere in the workspace:
+
+```markdown
+See [[Note^my-block]] or embed it: ![[Note^my-block]]
+```
+
+The command `Markdown Preview Enhanced: Copy Block Reference` (Command Palette) generates a `^id` for the paragraph at the cursor (or reuses the existing one) and copies a ready-to-paste `[[Note#^id]]` link to your clipboard.
+
+### Tags
+
+Body-text `#tag-name` syntax:
+
+```markdown
+This thought is tagged #important and #project/q1.
+```
+
+- **Nested tags** via `/`: `#parent/child`, and deeper (`#a/b/c`).
+- Tags don't fire when a line starts with only `#`s (so `# Heading`, `## Heading` etc. still work).
+- Click a tag in the preview to open a Quick Pick listing every note that mentions it.
+- The setting `enableTagSyntax` (default `true`) toggles the feature.
+
 ## References
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)

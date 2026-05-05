@@ -287,6 +287,74 @@ CriticMarkup 缺省是禁用的，你可以通過插件設置來啟動它。
 
 > 请在 https://squidfunk.github.io/mkdocs-material/reference/admonitions/ 查看更多信息
 
+### Wiki 連結（Wikilinks）
+
+> 自 vscode-mpe 0.8.25 / crossnote 0.9.23 起支援。Obsidian 風格的筆記連結。
+
+```markdown
+[[Note]]                       <!-- 連結到 Note（預設解析為 Note.md） -->
+[[Note|顯示文字]]              <!-- 自訂顯示文字的連結 -->
+[[Note#Heading]]               <!-- 連結到 Note 中的某個標題 -->
+[[Note^block-id]]              <!-- 連結到 Note 中的某個 ^block-id -->
+[[Note#Heading^block-id]]      <!-- 同時指定標題 + 區塊引用 -->
+[[#Heading]]                   <!-- 連結到目前筆記中的標題 -->
+[[^block-id]]                  <!-- 連結到目前筆記中的區塊 -->
+```
+
+在預覽中點擊任一 wiki 連結即可跳轉。在編輯器中按住 alt 點擊（macOS 為 Ctrl+點擊）以跟隨連結。將滑鼠懸停在 wiki 連結上可預覽目標內容（整篇檔案開頭、標題所在小節，或被引用的區塊——視連結所指而定）。
+
+如果點擊 `[[NewNote]]` 而 `NewNote.md` 尚未存在,則會自動建立一個帶有 `# NewNote` 佔位標題的新檔案並開啟它——與 Obsidian 的「點擊建立」一致。
+
+設定項目（位於 notebook config 中）:
+
+- `wikiLinkTargetFileExtension`（預設 `.md`）——當連結未指定副檔名時附加的副檔名。對於非 `.md` 的筆記本,可設為 `.markdown` / `.mdx` / `.qmd` 等。
+- `useGitHubStylePipedLink`（預設 `false`）——為 `true` 時,順序為 `[[顯示文字|連結]]`（GitHub 風格）;為 `false` 時為 `[[連結|顯示文字]]`（Obsidian / 維基百科風格）。
+
+### 筆記嵌入（`![[…]]`）
+
+帶 `!` 前綴的寫法會將目標內容直接嵌入到目前位置:
+
+```markdown
+![[Note]]                      <!-- 嵌入整篇筆記 -->
+![[Note#Heading]]              <!-- 僅嵌入對應的標題小節 -->
+![[Note^block-id]]             <!-- 僅嵌入對應的區塊 -->
+![[Note|要顯示的標題]]         <!-- 嵌入並自訂顯示標題 -->
+![[image.png]]                 <!-- 一般圖片嵌入（支援各種圖片副檔名） -->
+```
+
+遞迴層級上限為 3 層——即使形成嵌入循環也不會撐爆預覽。
+
+### 區塊引用（`^block-id`）
+
+在段落或清單項目末尾附加 `^block-id`,將它標記為可被引用的區塊:
+
+```markdown
+這一段可以被引用。 ^my-block
+
+- 清單項目也可以。 ^another-block
+```
+
+之後可以在工作區任何位置引用它:
+
+```markdown
+請見 [[Note^my-block]],或者直接嵌入:![[Note^my-block]]
+```
+
+命令 `Markdown Preview Enhanced: Copy Block Reference`（命令面板）會為游標所在段落產生(或重用已有的)`^id`,並把可直接貼上使用的 `[[Note#^id]]` 連結複製到剪貼簿。
+
+### 標籤（Tags）
+
+正文中的 `#tag-name` 語法:
+
+```markdown
+這個想法被標記為 #important 和 #project/q1。
+```
+
+- 透過 `/` 實作**巢狀標籤**:`#parent/child`,可以更深（`#a/b/c`）。
+- 行首僅有 `#` 時不會觸發標籤（所以 `# 標題`、`## 標題` 等正常運作）。
+- 在預覽中點擊某個標籤,會開啟 Quick Pick 列出所有提及該標籤的筆記。
+- 透過 `enableTagSyntax` 設定（預設 `true`）開關此功能。
+
 ## 參考
 
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
