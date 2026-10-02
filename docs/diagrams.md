@@ -188,6 +188,25 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+Code block with `csv` notation will be rendered as a table. The first row is the header.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Wrap a value in double quotes if it contains a comma.
+- The delimiter is detected automatically, so `;` separated data works too.
+- Cells are shown as plain text. HTML or markdown inside a cell is not rendered.
+- If the CSV can't be parsed, for example because of an unterminated quote, the error is shown instead of the table.
+
+To render a `.csv` file as a table, [@import](file-imports.md) it instead.
+
 ---
 
 If you don't want to render graphs but only display code block, then you can add `{code_block=true}` like below:
