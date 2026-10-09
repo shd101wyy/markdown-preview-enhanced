@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+O bloco de código com a notação `csv` será renderizado como uma tabela. A primeira linha é o cabeçalho.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Coloque um valor entre aspas duplas se ele contiver uma vírgula.
+- O delimitador é detectado automaticamente, então dados separados por `;` também funcionam.
+- As células são exibidas como texto simples: o HTML ou o Markdown dentro de uma célula não é renderizado.
+- Se o CSV não puder ser analisado, por exemplo por causa de uma aspa não fechada, o erro é exibido no lugar da tabela.
+
+Para renderizar um arquivo `.csv` como tabela, use [@import](file-imports.md).
 ---
 
 Se você não quiser renderizar gráficos, mas apenas exibir o bloco de código, você pode adicionar `{code_block=true}` como abaixo:

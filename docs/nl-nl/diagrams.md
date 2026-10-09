@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+Een codeblok met `csv`-notatie wordt gerenderd als een tabel. De eerste rij is de koptekst.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Omring een waarde met dubbele aanhalingstekens als deze een komma bevat.
+- Het scheidingsteken wordt automatisch gedetecteerd, dus data gescheiden door `;` werkt ook.
+- Cellen worden als platte tekst weergegeven: HTML of Markdown in een cel wordt niet gerenderd.
+- Als de CSV niet geparseerd kan worden, bijvoorbeeld door een niet-afgesloten aanhalingsteken, wordt de foutmelding in plaats van de tabel getoond.
+
+Om een `.csv`-bestand als tabel te renderen, gebruik je [@import](file-imports.md).
 ---
 
 Als u grafieken niet wilt renderen maar alleen het codeblok wilt weergeven, kunt u `{code_block=true}` toevoegen zoals hieronder:

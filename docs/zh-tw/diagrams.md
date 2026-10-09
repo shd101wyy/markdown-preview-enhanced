@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+`csv` 表示法的程式碼區塊將被渲染為表格。第一行是表頭。
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- 如果值中包含逗號，請用雙引號將它包裹起來。
+- 分隔符會被自動檢測，因此使用 `;` 分隔的資料也可以。
+- 儲存格以純文字顯示：儲存格中的 HTML 或 Markdown 不會被渲染。
+- 如果 CSV 無法解析（例如引號未閉合），將顯示錯誤訊息而不是表格。
+
+要將 `.csv` 檔案渲染為表格，請改用 [@import](file-imports.md)。
 ---
 
 如果你只是想要顯示代碼塊而不想畫圖，則只要在後面添加 `{code_block=true}` 即可：

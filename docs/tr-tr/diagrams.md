@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+`csv` gösterimli kod bloğu tablo olarak render edilecektir. İlk satır başlık satırıdır.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Bir değer virgül içeriyorsa çift tırnak içine alın.
+- Sınırlayıcı otomatik olarak algılanır, bu yüzden `;` ile ayrılmış veriler de çalışır.
+- Hücreler düz metin olarak gösterilir: hücre içindeki HTML veya Markdown render edilmez.
+- CSV ayrıştırılamazsa, örneğin kapatılmamış bir tırnak nedeniyle, tablo yerine hata gösterilir.
+
+Bir `.csv` dosyasını tablo olarak render etmek için bunun yerine [@import](file-imports.md) kullanın.
 ---
 
 Grafikleri işlemek yerine yalnızca kod bloğunu göstermek istiyorsanız, aşağıdaki gibi `{code_block=true}` ekleyebilirsiniz:
