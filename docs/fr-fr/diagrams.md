@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+Un bloc de code avec la notation `csv` sera rendu sous forme de tableau. La première ligne est l’en-tête.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Entourez une valeur de guillemets doubles si elle contient une virgule.
+- Le délimiteur est détecté automatiquement, donc les données séparées par `;` fonctionnent aussi.
+- Les cellules sont affichées en texte brut : le HTML ou le Markdown dans une cellule n’est pas rendu.
+- Si le CSV ne peut pas être analysé, par exemple à cause d’un guillemet non fermé, l’erreur est affichée à la place du tableau.
+
+Pour rendre un fichier `.csv` sous forme de tableau, utilisez plutôt [@import](file-imports.md).
 ---
 
 Si vous ne souhaitez pas rendre les graphiques mais seulement afficher le bloc de code, vous pouvez ajouter `{code_block=true}` comme ci-dessous :

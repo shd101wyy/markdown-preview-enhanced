@@ -188,6 +188,24 @@ blockdiag {
 ```
 ````
 
+## CSV
+
+El bloque de código con la notación `csv` se renderizará como una tabla. La primera fila es el encabezado.
+
+````markdown
+```csv
+name,city,note
+Ali,Lahore,"big, busy"
+Sara,Karachi,42
+```
+````
+
+- Envuelve un valor entre comillas dobles si contiene una coma.
+- El delimitador se detecta automáticamente, así que los datos separados por `;` también funcionan.
+- Las celdas se muestran como texto sin formato: el HTML o el Markdown dentro de una celda no se renderiza.
+- Si el CSV no se puede analizar, por ejemplo por una comilla sin cerrar, se muestra el error en lugar de la tabla.
+
+Para renderizar un archivo `.csv` como tabla, usa [@import](file-imports.md) en su lugar.
 ---
 
 Si no deseas renderizar gráficos sino solo mostrar el bloque de código, puedes agregar `{code_block=true}` de la siguiente manera:
