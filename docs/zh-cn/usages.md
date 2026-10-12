@@ -126,6 +126,8 @@ _预览_
 
 ### VS Code
 
+使用VS Code打开md文件，右键选择 MPE：打开侧边栏预览
+
 运行 `Preferences: Open User Settings` 命令，然后搜索 `markdown-preview-enhanced`。
 
 ![screen shot 2017-07-14 at 12 34 04 am](https://user-images.githubusercontent.com/1908863/28199551-2719acb8-682c-11e7-8163-e064ad8fe41c.png)
